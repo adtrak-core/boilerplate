@@ -1,0 +1,7 @@
+@function color($request) {
+  @return map-get($color, $request);
+}
+
+@function sizes($request) {
+  @return map-get($sizes, $request);
+}

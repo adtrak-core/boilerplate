@@ -1,0 +1,20 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+/* Sticky Footer Solving with Flex. 
+ * Credit: https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
+ */
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
