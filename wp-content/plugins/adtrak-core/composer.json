@@ -1,0 +1,8 @@
+{
+	"autoload": {
+    	"psr-4": {"AdtrakCore\\": ""}
+	},
+	"require": {
+		"yahnis-elsts/plugin-update-checker": "^3.1"
+	}
+}
