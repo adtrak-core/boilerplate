@@ -1,6 +1,0 @@
-[submodule "wp-content/themes/adtrak-parent"]
-	path = wp-content/themes/adtrak-parent
-	url = https://github.com/adtrak-core/adtrak-parent
-[submodule "wp-content/plugins/adtrak-core"]
-	path = wp-content/plugins/adtrak-core
-	url = https://github.com/adtrak-core/adtrak-core
