@@ -8,9 +8,6 @@
  * @version 1.0.0
  */
 
-include_once __DIR__ . '/includes/acf/options-site.php';
-include_once __DIR__ . '/includes/acf/options-marketing.php';
-
 /**
  * setup the theme, register navs here, adds html5 support still
  */
@@ -104,3 +101,34 @@ function remove_default_description($bloginfo) {
   return ($bloginfo === $default_tagline) ? '' : $bloginfo;
 }
 add_filter('get_bloginfo_rss', 'remove_default_description');
+
+
+add_action('admin_init', function() {
+    if (function_exists('acf_add_options_page')) {
+
+        $specific_page = acf_add_options_page([
+            'page_title' 	=> 'Site Options',
+            'menu_title' 	=> 'Site Options',
+            'menu_slug' 	=> 'site-options',
+            'position' 		=> 75,
+            'capability' 	=> 'edit_themes',
+            'icon_url' 		=> 'dashicons-hammer',
+            'redirect' 		=> false
+        ]);
+
+        $marketing_page = acf_add_options_page([
+            'page_title' 	=> 'Marketing',
+            'menu_title' 	=> 'Marketing',
+            'menu_slug' 	=> 'marketing',
+            'position' 		=> 75,
+            'capability' 	=> 'edit_themes',
+            'icon_url' 		=> 'dashicons-randomize',
+            'redirect' 		=> false
+        ]);
+    }
+
+    if (function_exists('acf_add_local_field_group')) {
+        include_once __DIR__ . 'includes/acf/options-site.php';
+        include_once __DIR__ . 'includes/acf/options-marketing.php';
+    }
+});
