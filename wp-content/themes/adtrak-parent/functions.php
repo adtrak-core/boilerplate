@@ -102,10 +102,8 @@ function remove_default_description($bloginfo) {
 }
 add_filter('get_bloginfo_rss', 'remove_default_description');
 
-
-add_action('admin_init', function() {
+add_action('init', function() {
     if (function_exists('acf_add_options_page')) {
-
         $specific_page = acf_add_options_page([
             'page_title' 	=> 'Site Options',
             'menu_title' 	=> 'Site Options',
@@ -128,7 +126,7 @@ add_action('admin_init', function() {
     }
 
     if (function_exists('acf_add_local_field_group')) {
-        include_once __DIR__ . 'includes/acf/options-site.php';
-        include_once __DIR__ . 'includes/acf/options-marketing.php';
+        include_once __DIR__ . '/includes/acf/options-site.php';
+        include_once __DIR__ . '/includes/acf/options-marketing.php';
     }
 });
