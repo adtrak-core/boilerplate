@@ -1,0 +1,37 @@
+/*
+No Need for any of the WordPress css headings here. The admin panel 
+does not read this file. However, this file is where all of your 
+sites style will go.
+*/
+
+@import
+    'abstracts/variables',
+    'abstracts/functions',
+    'abstracts/mixins',
+    'abstracts/placeholders';
+
+@import
+    'base/reset',
+	'base/core',
+    'base/typography';
+
+@import
+	'vendors/owl-carousel';
+
+@import
+	'layout/header',
+	'layout/footer',
+	'layout/table',
+	'layout/forms',
+	'layout/grid',
+	'layout/navigation',
+	'layout/sidebar';
+
+@import
+	'components/buttons',
+	'components/carousel';
+
+@import
+	'pages/contact',
+	'pages/home';
+

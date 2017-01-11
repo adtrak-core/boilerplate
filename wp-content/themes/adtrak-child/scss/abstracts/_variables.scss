@@ -1,0 +1,16 @@
+// add colours here. Called in scss by doing color(primary).
+$color: (
+    white     : #000,
+    black       : #fff
+);
+
+// Media Queries
+$sizes: (
+    max        : 1368px
+);
+
+// Fonts
+$primaryFont: "sans-serif";
+$headerFont: "sans-serif";
+
+// Anything Else

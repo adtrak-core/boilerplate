@@ -18,10 +18,10 @@
  * @package WordPress
  */
 
-if (file_exists(__DIR__ . 'wp-config-local.php')) {
-	include_once __DIR__ . 'wp-config-local.php';
-} else if (file_exists(__DIR__ . 'wp-config-staging.php')) {
-	include_once __DIR__ . 'wp-config-staging.php';
+if (file_exists(__DIR__ . '/wp-config-local.php')) {
+	include_once __DIR__ . '/wp-config-local.php';
+} else if (file_exists(__DIR__ . '/wp-config-staging.php')) {
+	include_once __DIR__ . '/wp-config-staging.php';
 } else {
 	$dbName = '';
 	$dbUser = '';

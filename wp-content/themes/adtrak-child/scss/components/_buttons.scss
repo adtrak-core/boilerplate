@@ -1,0 +1,33 @@
+button,
+.button,
+input[type="submit"],
+input[type="reset"] {
+	transition: .3s;
+	text-decoration: none;
+	display: inline-block;
+	padding: 0.5em 0.8em;
+
+	&:disabled {
+		
+	}
+
+	&:active {
+
+	}
+
+	&:hover {
+
+	}
+
+	&:focus {
+
+	}
+}
+
+.button--black {
+	color: color(black);
+}
+
+.button--white {
+	color: color(white);
+}
