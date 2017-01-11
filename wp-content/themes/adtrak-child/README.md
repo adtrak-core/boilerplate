@@ -9,11 +9,11 @@
 Available fields to use with the plugin. Last updated Dec 7, 2016.
 
 ### Company
-* company_logo (image, array)
-* company_email (email)
-* company_address (repeater)
+* site_logo (image, array)
+* site_email (email)
+* site_address (repeater)
 	* address_line (text)
-* company_postcode (text)
+* site_postcode (text)
 * vat_number (text)
 * reg_number (text)
 
