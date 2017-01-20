@@ -26,8 +26,8 @@ add_action('after_setup_theme', function () {
 
     // Register wp_nav_menu() menus
     register_nav_menus([
-        'primary', __('Primary Menu', 'adtrak'),
-        'footer', __('Footer Menu', 'adtrak')
+        'primary' => __('Primary Menu', 'adtrak'),
+        'footer' => __('Footer Menu', 'adtrak')
     ]);
 
     add_image_size( 'hero-2000', 2000, 650, true );
