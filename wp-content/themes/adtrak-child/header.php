@@ -17,8 +17,8 @@
 
   	<?php wp_head(); ?>
 
-	<?php if (get_field('google_analytics', 'options')) get_field('google_analytics', 'options'); ?>
-	<?php if (get_field('schema', 'options')) get_field('schema', 'options'); ?>
+	<?php if (get_field('google_analytics', 'options')) echo get_field('google_analytics', 'options'); ?>
+	<?php if (get_field('schema', 'options')) echo get_field('schema', 'options'); ?>
 </head>
 <body <?php body_class(); ?>>
 
