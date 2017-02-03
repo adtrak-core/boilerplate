@@ -18,17 +18,49 @@
  * @package WordPress
  */
 
-if (file_exists(__DIR__ . '/wp-config-local.php')) {
-	include_once __DIR__ . '/wp-config-local.php';
-} else if (file_exists(__DIR__ . '/wp-config-staging.php')) {
-	include_once __DIR__ . '/wp-config-staging.php';
-} else {
-	$dbName = '';
-	$dbUser = '';
-	$dbPass = '';
-	$dbHost = '';
+//Local
+if ($_SERVER['HTTP_HOST'] == "dev-server" || $_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "localhost.wp_boilerplate" ) {
+    $dbName = "localhost.wp_boilerplate";
+    $dbUser = "root";
+    $dbPass = "";
+	$debug = true;
+}
+//demo
+else if ($_SERVER['HTTP_HOST'] == "demo.adtrakdesign.co.uk" || $_SERVER['HTTP_HOST'] == "www.adtrakdemo.co.uk" || $_SERVER['HTTP_HOST'] == "ad.trak.agency") {
+    $dbName = "";
+    $dbUser = "";
+    $dbPass = "";
+	$debug = true;
+}
+//live
+else {
+    $dbName = "";
+    $dbUser = "";
+    $dbPass = "";
 	$debug = false;
 }
+
+define('DB_NAME', $dbName);
+
+/** MySQL database username */
+define('DB_USER', $dbUser);
+
+/** MySQL database password */
+define('DB_PASSWORD', $dbPass);
+
+/** MySQL hostname */
+define('DB_HOST', 'localhost');
+
+/** Database Charset to use in creating database tables. */
+define('DB_CHARSET', 'utf8mb4');
+
+/** The Database Collate type. Don't change this if in doubt. */
+define('DB_COLLATE', '');
+
+define('WP_DEBUG', $debug);
+
+/** Limit the number of revisions per post **/
+define('WP_POST_REVISIONS', 2);
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -44,18 +76,6 @@ define('AUTH_SALT',        'put your unique phrase here');
 define('SECURE_AUTH_SALT', 'put your unique phrase here');
 define('LOGGED_IN_SALT',   'put your unique phrase here');
 define('NONCE_SALT',       'put your unique phrase here');
-
-/**#@-*/
-define('DB_NAME', $dbName);
-define('DB_USER', $dbUser);
-define('DB_PASSWORD', $dbPass);
-define('DB_HOST', $dbHost);
-define('DB_CHARSET', 'utf8');
-define('DB_COLLATE', '');
-
-$table_prefix  = 'adtkwp_';
-
-define('WP_DEBUG', $debug);
 
 /* That's all, stop editing! Happy blogging. */
 
