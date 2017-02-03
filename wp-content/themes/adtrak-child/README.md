@@ -1,9 +1,26 @@
 # Readme
+- Never edit the parent theme - this would be overwritten if we ever update it
+- Put your WP Parts within parts. Declare using `include locate_template('parts/part-name.php')`
+- Put all your files in the predefined folders
+- Use `get_theme_file_uri('images/logo.svg')` when referencing files withing (WordPress 4.7+)
+- Use `get_parent_theme_file_uri('css/style.scss')` if you need to reference anything in the parent theme (WordPress 4.7+)
+- There is currently no forms on this theme - the theme is built to be ready for the new form plugin
 
-- Put your WP Parts within parts. Declare using `get_template_part('parts/part-name.php')`. In some situations you may need to use `include locate_template('parts/part-name')` if you need to pass PHP in and out of it. Self contained php use `get_template_part`
-- Put all your files in the predefined folders.
-- Use `get_theme_file_uri('images/logo.svg')` when referencing files withing (WordPress 4.7+).
-- Use `get_parent_theme_file_uri('css/style.scss')` if you need to reference anything in the parent theme (WordPress 4.7+).
+## Name your theme
+Don't forget to rename your theme;
+- The folder name (from adtrak-web-design-child to something-else)
+- The style.css
+- Create a new screenshot.png with the client logo
+
+## Buckets	
+The buckets are built using relationship fields in the WordPress admin. It automatically pulls through the featured image from those pages into the buckets, as well as the title. The excerpt needs to be hand written on the "receiving" page. Excerpts for pages are already turned on in functions.php
+
+If you wish to use icons or HTML images instead of background images, you will need to create a new image field on the "receiving" page, and instead pull the image from there (presuming you don't wish to use an icon as the featured image).
+
+To pull through the featured image as an HTML image, use this code: <?php echo get_the_post_thumbnail( $p->ID, 'hero-600' ); ?>
+
+## Useful Resources
+Lots of useful resources like loops for ACF, video heres and menus can be found here: http://resources.ad.trak.agency/web-design/coding/wordpress/wordpress-snippets/
 
 ## Fields
 Available fields to use with the plugin. Last updated Dec 7, 2016.

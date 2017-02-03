@@ -1,14 +1,12 @@
 /*
-No Need for any of the WordPress css headings here. The admin panel 
+No need for any of the WordPress CSS headings here. The admin panel 
 does not read this file. However, this file is where all of your 
 sites style will go.
 */
 
 @import
     'abstracts/variables',
-    'abstracts/functions',
-    'abstracts/mixins',
-    'abstracts/placeholders';
+    'abstracts/mixins';
 
 @import
     'base/reset',
@@ -16,22 +14,23 @@ sites style will go.
     'base/typography';
 
 @import
-	'vendors/owl-carousel';
-
-@import
-	'layout/header',
-	'layout/footer',
-	'layout/table',
-	'layout/forms',
+	'layout/mobile-top-bar',
 	'layout/grid',
+	'layout/spacing',
+	'layout/header',
+	'layout/mmenu',
 	'layout/navigation',
-	'layout/sidebar';
+	'layout/hero',
+	'layout/copy',
+	'layout/aside',
+	'layout/forms',
+	'layout/footer';
 
 @import
 	'components/buttons',
-	'components/carousel';
+	'components/prev-next',
+	'components/buckets';
 
 @import
 	'pages/contact',
-	'pages/home';
-
+	'pages/news';

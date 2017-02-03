@@ -1,0 +1,60 @@
+/*---------------------------------------------------------------
+    Mobile Top Bar
+--------------------------------------------------------------- */
+
+.mobile-top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $mobile-top-bar-height;
+    background: #eee;    
+    
+    &:after {
+        clear: both;
+        content: '';
+        display: block;
+    }
+    
+    @include bp800 {
+        display: none;
+    }
+}
+
+.mobile-top-bar__btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.mobile-top-bar__phone {
+    float: left;
+    background: darken($blanc,20);
+    color: $noir;
+    width: 65%;
+}
+
+.mobile-top-bar__menu {
+    width: 35%;
+    float: right;
+    background: $noir;
+    color: $blanc;
+}
+
+.mobile-top-bar__location-numbers {
+    top: $mobile-top-bar-height;
+    position: absolute;
+    left: 0;
+    display: none;
+    padding: 1em 0.5em;
+    width: 100%;
+    background: darken($blanc,20);
+    p:first-of-type {
+        font-size: 1.1em;
+    }
+}
+
+.mobile-top-bar--visible {
+    display: block;
+}

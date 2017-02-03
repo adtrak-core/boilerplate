@@ -1,33 +1,33 @@
-button,
-.button,
-input[type="submit"],
-input[type="reset"] {
-	transition: .3s;
-	text-decoration: none;
-	display: inline-block;
-	padding: 0.5em 0.8em;
+/*---------------------------------------------------------------
+    Buttons
+--------------------------------------------------------------- */
 
-	&:disabled {
-		
-	}
+button, .btn {
+    border: 2px solid $noir;
+    color: $noir;
+    padding: 0.5em 0.8em;
+    display: inline-block;
+    text-decoration: none;      
+    border-radius: 15px;
+    transition: 0.3s;
 
-	&:active {
+    // Define the 1) button name, 2) text/border color & 3) background color
+    $btnColors :        noir $noir $blanc,
+                        blanc $blanc $noir;
 
-	}
-
-	&:hover {
-
-	}
-
-	&:focus {
-
-	}
-}
-
-.button--black {
-	color: color(black);
-}
-
-.button--white {
-	color: color(white);
+    // Loop through colours above and create classes
+    @each $colorOption in $btnColors {
+        &.btn-#{nth($colorOption, 1)} {
+            color: nth($colorOption,2);
+            border-color: nth($colorOption,2);
+            background-color: nth($colorOption,3);
+        }
+    }
+    
+    &:hover {
+        background: $noir;
+        color: $blanc;
+        border-color: $blanc;
+        text-decoration: none;
+    }
 }

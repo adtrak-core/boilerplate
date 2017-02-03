@@ -1,16 +1,29 @@
-// add colours here. Called in scss by doing color(primary).
-$color: (
-    white     : #000,
-    black       : #fff
-);
+/*---------------------------------------------------------------
+	Variables
+--------------------------------------------------------------- */
 
-// Media Queries
-$sizes: (
-    max        : 1368px
-);
+/* Colors
+--------------------------------------------------------------- */
 
-// Fonts
-$primaryFont: "sans-serif";
-$headerFont: "sans-serif";
+$blanc 				: #fff;
+$noir				: #333;
 
-// Anything Else
+/* Sizes
+--------------------------------------------------------------- */
+
+$x-small-width   	: 480px;
+$small-width  		: 800px;
+$medium-width   	: 1000px;
+$large-width    	: 1200px;
+$x-large-width    	: 1400px;
+$full-width     	: 1600px;
+
+/* Fonts
+--------------------------------------------------------------- */
+
+$primaryFont		: "sans-serif";
+
+/* Anything else
+--------------------------------------------------------------- */
+
+$mobile-top-bar-height 	: 40px;

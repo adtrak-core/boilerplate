@@ -17,23 +17,37 @@
 
   	<?php wp_head(); ?>
 
-	<?php if (get_field('google_analytics', 'options')) get_field('google_analytics', 'options'); ?>
-	<?php if (get_field('schema', 'options')) get_field('schema', 'options'); ?>
+	<?php if (get_field('google_analytics', 'options')) echo get_field('google_analytics', 'options'); ?>
+	<?php if (get_field('schema', 'options')) echo get_field('schema', 'options'); ?>
 </head>
+
 <body <?php body_class(); ?>>
 
-	<header role="header">
-		<div class="logo">
-			<h1><img src="<?php echo get_theme_file_uri('/images/logo.svg'); ?>" alt="<?php echo get_bloginfo('name'); ?>" class="logo__image"></h1>
-		</div>
+<div class="wrapper">
 
-		<nav role="navigation">
+	<?php include locate_template('parts/mobile-top-bar.php'); ?>
+
+	<header role="header">
+
+		<div class="container">
+
+			<a href="<?php echo home_url(); ?>">
+				<?php $image = get_field('site_logo','option'); if( !empty($image) ): ?>
+					<img class="logo" src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
+				<?php endif; ?>
+			</a>
+
+	        <?php include locate_template('parts/phone-top-right.php'); ?>
+
+	    </div>
+
+		<nav id="primary-navigation" role="navigation">
 			<?php wp_nav_menu([
 				'menu' => 'Primary Menu', 
 				'menu_class' => "nav nav--header", 
 				'container' => ''
 			]); ?>
 		</nav>
+
 	</header>
 
-	<main class="site-content">

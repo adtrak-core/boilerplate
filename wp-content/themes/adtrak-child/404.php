@@ -8,9 +8,22 @@
 
 get_header(); ?>
 
-	<section>
-		<h1>404 Error</h1>
-		<p>Sorry, the content you're looking for cannot be found.</p>
-	</section>
+	<main role="main" class="site-content container">
+
+			<article class="grid grid8_12">
+
+				<div class="pad-1-1 copy">
+
+					<h1>Sorry!</h1>
+
+					<p>This page can't be found.</p>
+
+					<p><a href="<?php echo site_url('/'); ?>">Please go home</a></p>
+
+				</div>
+
+			</article>
+
+	</main>
 	
 <?php get_foooter(); ?>

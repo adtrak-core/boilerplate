@@ -1,3 +1,7 @@
+/*---------------------------------------------------------------
+    Core 
+--------------------------------------------------------------- */
+
 * {
 	box-sizing: border-box;
 }
@@ -6,15 +10,16 @@ html {
 	font-size: 62.5%;
 }
 
-/* Sticky Footer Solving with Flex. 
- * Credit: https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
- */
 body {
-	display: flex;
+	background: $blanc;
+    color: $noir;
+    font: 16px/1.5 $primaryFont, sans-serif;
 	min-height: 100vh;
-	flex-direction: column;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
 }
 
-main {
-	flex: 1 0 auto;
+.container {
+	max-width: $full-width;
+	margin: 0 auto;
 }

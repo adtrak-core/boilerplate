@@ -7,21 +7,32 @@
  */
 ?>
 
-<?php get_header(); ?>
+<?php
+    get_header();
+    include locate_template('parts/hero.php');
+?>
 
-	<section>
+	<main role="main" class="site-content container">
+
 		<?php if (have_posts()): while (have_posts()): the_post(); ?>
-			
-			<article>
-				<?php the_title('<h1>', '</h1>'); ?>
-				<?php the_content(); ?>
+
+			<article class="grid grid8_12">
+
+				<div class="pad-1-1 copy">
+
+					<h1><?php the_field('h1'); ?></h1>
+					<?php the_content(); ?>
+
+				</div>
+
 			</article>
+
+			<aside class="grid grid4_12">
+			
+			</aside>
 	
-		<?php endwhile; else: ?>
-		
-			<p>Nothing to see.</p>
-	
-		<?php endif; ?>
-	</section>
+		<?php endwhile; endif; ?>
+
+	</main>
 
 <?php get_footer(); ?>

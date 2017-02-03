@@ -1,0 +1,120 @@
+
+/*---------------------------------------------------------------
+    Bucket Grid
+--------------------------------------------------------------- */
+
+/* Strip Unit from SASS Variable (requried for Buckets Grid)
+--------------------------------------------------------------- */
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+
+/* Bucket Grid
+--------------------------------------------------------------- */
+
+$bucketMargins : 2%;
+
+.buckets {
+
+    max-width: $full-width;
+    margin: 0 auto;
+    list-style: none;
+    @include flexbox();
+    @include flex-direction(column);
+
+    li {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    @include bp480 {
+
+        @include flex-direction(row);
+        @include flex-wrap(wrap);
+
+        li {
+            width: 50%;
+        }
+    }
+
+    @include bp800 {
+
+        @for $i from 1 through 8 {
+            $width: percentage((100 / $i) / 100);
+            &.num-#{$i} li {
+                width: $width;
+                float: left;
+            }
+        }
+    }
+
+    img {
+        width: auto;
+        max-width: 300px;
+        height: auto;
+    }
+
+    a {
+        display: block;
+        background: rgba($noir,0.6);
+        color: $blanc;
+        padding: 1em;
+        height: 100%;
+        min-height: 180px;
+    }
+}
+
+
+$marg : ($bucketMargins / 2);
+$bucketMargins : strip-unit($bucketMargins);
+
+.buckets.in-between {
+
+    li {
+        margin-bottom: 2%;
+    }
+
+    @include bp480 {
+
+        li {
+            width: 49%;
+            margin: 0 1% 2%;
+        }
+
+        li:nth-of-type(odd) {
+            margin-left: 0;
+        }
+
+        li:nth-of-type(even) {
+            margin-right: 0;
+        }
+    }
+
+    @include bp800 {
+
+        @for $i from 1 through 8 {
+            $marginsTotal : (($bucketMargins * $i) - $bucketMargins); // Multiply margins by no. of buckets and minus margins for first/last buckets = This equals the total % of all bucket margins
+            $spaceRemaining : (100 - $marginsTotal); // 100% minus the total % taken up by the bucket margins
+            $width: (percentage(($spaceRemaining / $i) / 100));
+            &.num-#{$i} li {
+                width: $width;
+                margin: 0 $marg;
+            }
+        }
+    }
+
+    li:first-of-type {
+        margin-left: 0;
+    }
+
+    li:last-of-type {
+        margin-right: 0;
+    }
+}

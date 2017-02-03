@@ -1,0 +1,21 @@
+
+/* Prev / Next
+--------------------------------------------------------------- */
+
+.prev-next {
+    a {
+        display: block;
+        background: $noir;
+        text-decoration: none;
+        color: $blanc;
+        padding: 1em;
+        &:hover {
+        }
+    }
+    .next-posts a {
+        background: lighten($noir,10);
+        text-align: right;
+        &:hover {
+        }
+    }
+}
