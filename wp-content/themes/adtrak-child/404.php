@@ -26,4 +26,4 @@ get_header(); ?>
 
 	</main>
 	
-<?php get_foooter(); ?>
+<?php get_footer(); ?>
