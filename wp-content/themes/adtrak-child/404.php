@@ -13,4 +13,4 @@ get_header(); ?>
 		<p>Sorry, the content you're looking for cannot be found.</p>
 	</section>
 	
-<?php get_foooter(); ?>
+<?php get_footer(); ?>
