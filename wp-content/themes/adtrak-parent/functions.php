@@ -29,10 +29,6 @@ add_action('after_setup_theme', function () {
         'primary' => __('Primary Menu', 'adtrak'),
         'footer' => __('Footer Menu', 'adtrak')
     ]);
-
-    add_image_size( 'hero-2000', 2000, 650, true );
-	add_image_size( 'hero-1200', 1200, 500, true );
-	add_image_size( 'hero-600', 600, 600, true );
 });
 
 /*
