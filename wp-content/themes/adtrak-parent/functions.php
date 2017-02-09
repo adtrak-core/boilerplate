@@ -8,6 +8,13 @@
  * @version 1.0.0
  */
 
+require 'plugin-update-checker/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+    'https://github.com/adtrak-core/adtrak-parent/',
+    __FILE__,
+    'adtrak-parent'
+);
+
 /**
  * setup the theme, register navs here, adds html5 support still
  */
