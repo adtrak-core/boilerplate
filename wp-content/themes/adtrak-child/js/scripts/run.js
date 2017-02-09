@@ -10,10 +10,10 @@
 		$("#primary-navigation").mmenu(
 			{
 			"offCanvas": {
-				"position": "right"
+				position: "right"
 				}
 			}, {
-				"clone": true
+				clone: true
 			}
 		);
 
