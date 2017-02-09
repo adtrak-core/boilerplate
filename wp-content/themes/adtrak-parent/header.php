@@ -1,11 +1,11 @@
 <?php
 /**
- * The header output and functionality. Most of the output of CSS, JS, 
+ * The header output and functionality. Most of the output of CSS, JS,
  * etc will be carried out via the functions and there should be minimal
  * need to change anything in the head.
  * @author  Adtrak
  * @package AdtrakParent
- * @version 1.0.0
+ * @version 2.0.0
  */
 ?>
 <!DOCTYPE html>
@@ -17,11 +17,11 @@
 
   	<?php wp_head(); ?>
 
-	<?php if (get_field('google_analytics', 'options')) get_field('google_analytics', 'options'); ?>
-	<?php if (get_field('schema', 'options')) get_field('schema', 'options'); ?>
+	<?php if (get_field('google_analytics', 'options')) echo get_field('google_analytics', 'options'); ?>
+	<?php if (get_field('schema', 'options')) echo get_field('schema', 'options'); ?>
 </head>
-<body <?php body_class(); ?>>
 
+<body <?php body_class(); ?>>
 	<header role="header">
 		<div class="logo">
 			<h1><img src="<?php echo get_theme_file_uri('/images/logo.svg'); ?>" alt="<?php echo get_bloginfo('name'); ?>" class="logo__image"></h1>

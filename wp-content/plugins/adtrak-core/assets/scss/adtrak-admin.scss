@@ -27,9 +27,9 @@ $url_0: url(https://www.adtrak.co.uk/wp-content/themes/adtrak.co.uk/images/logos
 //original selectors
 //.button, .acf-button, .add-new-h2, .button-primary
 %extend_1 {
-  height: 35px !important;
-  padding: 0 40px !important;
-  line-height: 35px !important;
+  height: 30px !important;
+  padding: 0 20px !important;
+  line-height: 30px !important;
   border: none !important;
   //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
   box-shadow: none !important;
@@ -272,24 +272,20 @@ body {
   #wpbody #wpbody-content {
 
     .wrap {
-      padding: 25px 40px 65px;
-      .nav-tab-wrapper {
-        width: 100%;
-        margin-left: -40px;
-        margin-top: -70px;
-        margin-bottom: 25px;
-        padding-top: 80px;
-        padding-left: 40px;
-        padding-right: 40px;
-        border-bottom: 0;
+      .nav-tab-wrapper {   
+        border-bottom: 1px solid #ddd;
+        margin-bottom: -23px;
+        margin-top: 15px;
         .nav-tab {
           margin: 0;
-          padding: 0 12px 6px;
-          border: none;
-          background: none;
+          padding: 6px 12px 6px;
+          border: 1px solid #eee;
+          background: transparent;
+          margin-bottom: -1px;
           &.nav-tab-active,
           &:hover {
-            background: transparent;
+            background: #fff;
+            border-bottom:1px solid #f15f48;
           }
         }
       }
@@ -406,10 +402,10 @@ input[type="search"] {
     background-color: $silver !important;
   }
   &.wc-reload {
-    height: 28px !important;
+    height: 24px !important;
     padding: 0 !important;
     &:after {
-      line-height: 28px !important;
+      line-height: 24px !important;
     }
   }
 }
@@ -508,7 +504,8 @@ input[type="search"] {
 }
 .page-title-action {
   @extend %extend_2;
-  padding: 9px 40px !important;
+  padding: 9px 20px !important;
+  margin-left: 10px !important;
   font-weight: normal !important;
   &:hover,
   &:focus {
@@ -1098,6 +1095,7 @@ img.help_tip {
 }
 #post-body #edit-slug-box {
   margin: 10px 0 !important;
+  padding: 0 !important;
 }
 #collapse-button div:after {
   transition: 0s;

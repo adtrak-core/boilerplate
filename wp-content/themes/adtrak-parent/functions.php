@@ -5,7 +5,7 @@
  * which are theme specific and clean up output.
  * @author  Adtrak
  * @package AdtrakParent
- * @version 1.0.0
+ * @version 2.0.0
  */
 
 require 'plugin-update-checker/plugin-update-checker.php';

@@ -3,7 +3,7 @@
  * The template for displaying the footer within your theme.
  * @author  Adtrak
  * @package AdtrakParent
- * @version 1.0.0
+ * @version 2.0.0
  */
 ?>
 	
