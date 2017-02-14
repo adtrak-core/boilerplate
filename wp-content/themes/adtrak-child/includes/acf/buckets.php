@@ -35,7 +35,7 @@ acf_add_local_field_group(array (
 			),
 			'taxonomy' => array (
 			),
-			'min' => 2,
+			'min' => 0,
 			'max' => 6,
 			'filters' => array (
 				0 => 'search',
