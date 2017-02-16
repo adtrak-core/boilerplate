@@ -1,92 +1,6 @@
 <?php
 
 /*
-*  acf_get_field_types
-*
-*  This function will return all available field types
-*
-*  @type	function
-*  @date	1/10/13
-*  @since	5.0.0
-*
-*  @param	n/a
-*  @return	(array)
-*/
-
-function acf_get_field_types() {
-
-	return apply_filters('acf/get_field_types', array());
-	
-}
-
-
-/*
-*  acf_get_field_type_label
-*
-*  This function will return the label of a field type
-*
-*  @type	function
-*  @date	1/10/13
-*  @since	5.0.0
-*
-*  @param	n/a
-*  @return	(array)
-*/
-
-function acf_get_field_type_label( $field_type ) {
-
-	// vars
-	$field_types = acf_get_field_types();
-	
-	
-	// loop through categories
-	foreach( $field_types as $category ) {
-		
-		if( isset( $category[ $field_type ] ) ) {
-		
-			return $category[ $field_type ];
-			
-		}
-		
-	}
-	
-	
-	// return
-	return '';
-	
-}
-
-
-/*
-*  acf_field_type_exists
-*
-*  This function will check if the field_type is available
-*
-*  @type	function
-*  @date	1/10/13
-*  @since	5.0.0
-*
-*  @param	$field_type (string)
-*  @return	(boolean)
-*/
-
-function acf_field_type_exists( $field_type ) {
-
-	// vars
-	$label = acf_get_field_type_label( $field_type );
-	
-	
-	// return true if label exists
-	if( $label !== '' ) return true;
-		
-	
-	// return
-	return false;
-	
-}
-
-
-/*
 *  acf_is_field_key
 *
 *  This function will return true or false for the given $field_key parameter
@@ -114,7 +28,7 @@ function acf_is_field_key( $key = '' ) {
 	
 	
 	// special - allow local field key to be any string
-	if( acf_is_local_field($key) ) return true;
+	if( acf_is_local_field_key($key) ) return true;
 	
 	
 	// return
@@ -168,22 +82,24 @@ function acf_get_valid_field( $field = false ) {
 			'id'				=> ''
 		),
 		'_name'				=> '',
-		'_input'			=> '',
+		'_prepare'			=> 0,
 		'_valid'			=> 0,
 	));
+	
+	
 	
 	
 	// _name
 	$field['_name'] = $field['name'];
 	
 	
-	// field specific defaults
-	$field = apply_filters( "acf/get_valid_field", $field );
-	$field = apply_filters( "acf/get_valid_field/type={$field['type']}", $field );
-	
-	
 	// field is now valid
 	$field['_valid'] = 1;
+	
+	
+	// field specific defaults
+	$field = apply_filters( "acf/validate_field", $field );
+	$field = apply_filters( "acf/validate_field/type={$field['type']}", $field );
 	
 	
 	// translate
@@ -192,9 +108,8 @@ function acf_get_valid_field( $field = false ) {
 	
 	// return
 	return $field;
+	
 }
-
-
 
 
 /*
@@ -285,42 +200,34 @@ function acf_clone_field( $field, $clone_field ) {
 function acf_prepare_field( $field ) {
 	
 	// bail early if already prepared
-	if( $field['_input'] ) return $field;
+	if( $field['_prepare'] ) return $field;
 	
 	
-	// _input
-	$field['_input'] = $field['name'];
-	
-
-	// _input: key overrides name
-	if( $field['key'] ) {
-		
-		$field['_input'] = $field['key'];
-		
-	}
+	// key overrides name
+	if( $field['key'] ) $field['name'] = $field['key'];
 
 	
-	// _input: prefix prepends name
-	if( $field['prefix'] ) {
-		
-		$field['_input'] = "{$field['prefix']}[{$field['_input']}]";
-		
-	}
+	// prefix
+	if( $field['prefix'] ) $field['name'] = $field['prefix'] . '[' . $field['name'] . ']';
 	
 	
-	// add id (may be custom set)
-	if( !$field['id'] ) {
-		
-		$field['id'] = str_replace(array('][', '[', ']'), array('-', '-', ''), $field['_input']);
-		
-	}
+	// field is now prepared
+	$field['_prepare'] = 1;
 	
 	
 	// filter to 3rd party customization
 	$field = apply_filters( "acf/prepare_field", $field );
 	$field = apply_filters( "acf/prepare_field/type={$field['type']}", $field );
-	$field = apply_filters( "acf/prepare_field/name={$field['name']}", $field );
+	$field = apply_filters( "acf/prepare_field/name={$field['_name']}", $field );
 	$field = apply_filters( "acf/prepare_field/key={$field['key']}", $field );
+	
+	
+	// bail ealry if no field
+	if( !$field ) return false;
+	
+	
+	// id attr is generated from name
+	$field['id'] = str_replace(array('][', '[', ']'), array('-', '-', ''), $field['name']);
 	
 	
 	// return
@@ -469,8 +376,8 @@ function acf_render_field( $field = false ) {
 	$field = acf_prepare_field( $field );
 	
 	
-	// update $field['name']
-	$field['name'] = $field['_input'];
+	// bail ealry if no field
+	if( !$field ) return;
 		
 	
 	// create field specific html
@@ -506,6 +413,10 @@ function acf_render_field_wrap( $field, $el = 'div', $instruction = 'label' ) {
 	$field = acf_prepare_field( $field );
 	
 	
+	// bail ealry if no field
+	if( !$field ) return;
+	
+	
 	// el
 	$elements = apply_filters('acf/render_field_wrap/elements', array(
 		'div'	=> 'div',
@@ -531,7 +442,7 @@ function acf_render_field_wrap( $field, $el = 'div', $instruction = 'label' ) {
 		'class'		=> 'acf-field',
 		'width'		=> '',
 		'style'		=> '',
-		'data-name'	=> $field['name'],
+		'data-name'	=> $field['_name'],
 		'data-type'	=> $field['type'],
 		'data-key'	=> '',
 	);
@@ -658,7 +569,7 @@ function acf_render_field_setting( $field, $setting, $global = false ) {
 	$setting = acf_get_valid_field( $setting );
 	
 	
-	// if this setting is not global, add a data attribute
+	// specific
 	if( !$global ) {
 		
 		$setting['wrapper']['data-setting'] = $field['type'];
@@ -666,29 +577,42 @@ function acf_render_field_setting( $field, $setting, $global = false ) {
 	}
 	
 	
+	// class
+	$setting['wrapper']['class'] .= ' acf-field-setting-' . $setting['name'];
+	
+	
 	// copy across prefix
 	$setting['prefix'] = $field['prefix'];
 		
+	
+	// attempt find value
+	if( $setting['value'] === null ) {
 		
-	// copy across the $setting value
-	if( isset($field[ $setting['name'] ]) ) {
+		// name
+		if( isset($field[ $setting['name'] ]) ) {
+			
+			$setting['value'] = $field[ $setting['name'] ];
 		
-		$setting['value'] = $field[ $setting['name'] ];
-		
-	} elseif( isset($setting['default_value']) ) {
-		
-		// use the default value
-		$setting['value'] = $setting['default_value'];
+		// default
+		} elseif( isset($setting['default_value']) ) {
+			
+			$setting['value'] = $setting['default_value'];
+			
+		}
 		
 	}
 	
 	
-	// vars
-	$instructions_placement = acf_extract_var( $setting, 'instructions_placement', 'label' );
+	// append (used by JS to join settings)
+	if( isset($setting['_append']) ) {
+		
+		$setting['wrapper']['data-append'] = $setting['_append'];
+		
+	}
 	
 	
 	// render
-	acf_render_field_wrap( $setting, 'tr', $instructions_placement );
+	acf_render_field_wrap( $setting, 'tr', 'label' );
 	
 }
 
@@ -1051,6 +975,14 @@ function _acf_get_field_by_key( $key = '', $db_only = false ) {
 
 function _acf_get_field_by_name( $name = '', $db_only = false ) {
 	
+	// try JSON before DB to save query time
+	if( !$db_only && acf_is_local_field( $name ) ) {
+		
+		return acf_get_local_field( $name );
+		
+	}
+	
+	
 	// vars
 	$args = array(
 		'posts_per_page'	=> 1,
@@ -1286,7 +1218,7 @@ function acf_update_field( $field = false, $specific = false ) {
 		'class',
 		'parent',
 		'_name',
-		'_input',
+		'_prepare',
 		'_valid',
 	));
 	
@@ -1728,13 +1660,14 @@ function acf_prepare_field_for_export( $field ) {
 		'class',
 		'parent',
 		'_name',
-		'_input',
+		'_prepare',
 		'_valid',
 	));
 	
 	
 	// filter for 3rd party customization
 	$field = apply_filters( "acf/prepare_field_for_export", $field );
+	$field = apply_filters( "acf/prepare_field_for_export/type={$field['type']}", $field );
 	
 	
 	// return
@@ -1826,13 +1759,14 @@ function acf_prepare_field_for_import( $field ) {
 		'id',
 		'class',
 		'_name',
-		'_input',
+		'_prepare',
 		'_valid',
 	));
 	
 	
 	// filter for 3rd party customization
 	$field = apply_filters( "acf/prepare_field_for_import", $field );
+	$field = apply_filters( "acf/prepare_field_for_import/type={$field['type']}", $field );
 	
 	
 	// return
@@ -1925,6 +1859,7 @@ function acf_maybe_get_sub_field( $selectors, $post_id = false, $strict = true )
 	
 	
 	// vars
+	$offset = acf_get_setting('row_index_offset');
 	$selector = acf_extract_var( $selectors, 0 );
 	$selectors = array_values( $selectors ); // reset keys
 	
@@ -1944,7 +1879,7 @@ function acf_maybe_get_sub_field( $selectors, $post_id = false, $strict = true )
 		$sub_i = $selectors[ $j ];
 		$sub_s = $selectors[ $j+1 ];
 		$field_name = $field['name'];
-
+		
 		
 		// find sub field
 		$field = acf_get_sub_field( $sub_s, $field );
@@ -1955,7 +1890,7 @@ function acf_maybe_get_sub_field( $selectors, $post_id = false, $strict = true )
 					
 		
 		// add to name
-		$field['name'] = $field_name . '_' . ($sub_i-1) . '_' . $field['name'];
+		$field['name'] = $field_name . '_' . ($sub_i-$offset) . '_' . $field['name'];
 		
 	}
 	

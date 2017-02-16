@@ -274,8 +274,14 @@ body {
     .wrap {
       .nav-tab-wrapper {   
         border-bottom: 1px solid #ddd;
-        margin-bottom: -23px;
+        // margin-bottom: -23px;
         margin-top: 15px;
+        width: 100%;
+            &:before, &:after {
+                clear: both;
+                content: '';
+                display: table;
+            }
         .nav-tab {
           margin: 0;
           padding: 6px 12px 6px;

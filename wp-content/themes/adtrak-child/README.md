@@ -8,7 +8,7 @@
 
 ## Name your theme
 Don't forget to rename your theme;
-- The folder name (from adtrak-web-design-child to something-else)
+- The folder name (from adtrak-child to something-else)
 - The style.css
 - Create a new screenshot.png with the client logo
 
@@ -23,9 +23,11 @@ To pull through the featured image as an HTML image, use this code: <?php echo g
 Lots of useful resources like loops for ACF, video heres and menus can be found here: http://resources.ad.trak.agency/web-design/coding/wordpress/wordpress-snippets/
 
 ## Fields
-Available fields to use with the plugin. Last updated Dec 7, 2016.
+Available fields to use with the plugin. Last updated Feb 16, 2017.
 
-### Company
+## Site Options
+
+#--- Company
 * site_logo (image, array)
 * site_email (email)
 * site_address (repeater)
@@ -34,39 +36,33 @@ Available fields to use with the plugin. Last updated Dec 7, 2016.
 * vat_number (text)
 * reg_number (text)
 
-### Phone / Location
+#--- Phone / Location
 * default_location (text)
 * prefix_phone_number (text)
 * default_phone_number (text)
 
-### Social Links
+#--- Social Links
 * social_twitter (url)
 * social_facebook (url)
 * social_google (url)
 * social_instagram (url)
 * social_pinterest (url)
+* social_linkedin (url)
 
-### Logos / Clients
+#--- Logos / Clients
 * logos_header (text)
 * logos (repeater)
 	* name (text)
 	* image (image, array)
 	* link (url)
 
-### Credit Cards
+#--- Credit Cards
 * cc_header (text)
 * credit_cards (repeater)
 	* card (image, array)
 
-### Why Choose Us
+#--- Why Choose Us
 * why_header (text)
 * why_choose_us (repeater)
 	* icon (text)
 	* reason (text)
-
-### Buckets
-* buckets_header (text)
-* buckets (repeater)
-	* image (image, array)
-	* text (text area)
-	* link (url) 

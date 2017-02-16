@@ -219,8 +219,12 @@ body.login {
       border-radius: 0 !important; }
   #wpcontent #wpbody #wpbody-content .wrap .nav-tab-wrapper {
     border-bottom: 1px solid #ddd;
-    margin-bottom: -23px;
-    margin-top: 15px; }
+    margin-top: 15px;
+    width: 100%; }
+    #wpcontent #wpbody #wpbody-content .wrap .nav-tab-wrapper:before, #wpcontent #wpbody #wpbody-content .wrap .nav-tab-wrapper:after {
+      clear: both;
+      content: '';
+      display: table; }
     #wpcontent #wpbody #wpbody-content .wrap .nav-tab-wrapper .nav-tab {
       margin: 0;
       padding: 6px 12px 6px;

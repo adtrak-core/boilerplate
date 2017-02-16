@@ -7,8 +7,10 @@ if( ! class_exists('acf_local') ) :
 class acf_local {
 	
 	// vars
-	var $groups = array(),
+	var $temp = array(),
+		$groups = array(),
 		$fields = array(),
+		$reference = array(),
 		$parents = array();
 		
 		
@@ -33,10 +35,40 @@ class acf_local {
 		
 		// actions
 		add_action('acf/delete_field',		array($this, 'acf_delete_field'), 20, 1);
+		add_action('acf/include_fields', 	array($this, 'acf_include_fields'), 10, 4);
 		
 		
 		// filters
 		add_filter('acf/get_field_groups',	array($this, 'acf_get_field_groups'), 20, 1);
+		
+	}
+	
+	
+	/*
+	*  get_key
+	*
+	*  This function will check for references and modify the key
+	*
+	*  @type	function
+	*  @date	30/06/2016
+	*  @since	5.4.0
+	*
+	*  @param	$key (string)
+	*  @return	$key
+	*/
+	
+	function get_key( $key = '' ) {
+		
+		// check for reference
+		if( isset($this->reference[ $key ]) ) {
+			
+			$key = $this->reference[ $key ];
+				
+		}
+		
+		
+		// return
+		return $key;
 		
 	}
 	
@@ -57,8 +89,10 @@ class acf_local {
 	function reset() {
 		
 		// vars
+		$this->temp = array();
 		$this->groups = array();
 		$this->fields = array();
+		$this->reference = array();
 		$this->parents = array();
 		
 	}
@@ -176,6 +210,10 @@ class acf_local {
 		// add field
 		$this->fields[ $key ] = $field;
 		
+		
+		// add reference for field name
+		$this->reference[ $field['name'] ] = $key;
+		
 	}
 	
 	
@@ -194,6 +232,10 @@ class acf_local {
 	
 	function is_field( $key = '' ) {
 		
+		// vars
+		$key = $this->get_key($key);
+		
+		
 		// bail early if not enabled
 		if( !$this->is_enabled() ) return false;
 		
@@ -201,6 +243,28 @@ class acf_local {
 		// return
 		return isset( $this->fields[ $key ] );
 				
+	}
+	
+	function is_field_key( $key ) {
+		
+		// bail early if not enabled
+		if( !$this->is_enabled() ) return false;
+		
+		
+		// return
+		return isset( $this->fields[ $key ] );
+		
+	}
+	
+	function is_field_name( $name ) {
+		
+		// bail early if not enabled
+		if( !$this->is_enabled() ) return false;
+		
+		
+		// return
+		return isset( $this->reference[ $name ] );
+		
 	}
 	
 	
@@ -218,6 +282,10 @@ class acf_local {
 	*/
 	
 	function get_field( $key = '' ) {
+		
+		// vars
+		$key = $this->get_key($key);
+		
 		
 		// bail early if no group
 		if( !$this->is_field($key) ) return false;
@@ -253,17 +321,52 @@ class acf_local {
 		
 		
 		// remove parent reference
-		$this->remove_parent_reference( $field['parent'], $field['key'] );
+		$this->remove_parent_reference( $field['parent'], $key );
 		
 		
 		// remove field
 		unset( $this->fields[ $key ] );
+		unset( $this->reference[ $field['name'] ] );
 		
 		
 		// remove children
 		if( acf_have_local_fields( $key) ) {
 			
 			acf_remove_local_fields( $key );
+			
+		}
+		
+	}
+	
+	
+	/*
+	*  acf_include_fields
+	*
+	*  description
+	*
+	*  @type	function
+	*  @date	8/2/17
+	*  @since	5.5.6
+	*
+	*  @param	$post_id (int)
+	*  @return	$post_id (int)
+	*/
+	
+	function acf_include_fields() {
+		
+		// bail ealry if no temp
+		if( empty($this->temp) ) return;
+		
+		
+		// loop
+		foreach( $this->temp as $i => $temp ) {
+			
+			// add
+			$this->add_field_group($temp);
+			
+			
+			// unset
+			unset($this->temp[ $i ]);
 			
 		}
 		
@@ -284,6 +387,16 @@ class acf_local {
 	*/
 	
 	function add_field_group( $field_group ) {
+		
+		// add field group to temp for import later during 'acf/include_fields'
+		if( !did_action('acf/include_fields') ) {
+			
+			$this->temp[] = $field_group;
+			
+			return;
+			
+		}
+		
 		
 		// validate
 		$field_group = acf_get_valid_field_group($field_group);
@@ -779,6 +892,18 @@ function acf_remove_local_field( $key = '' ) {
 function acf_is_local_field( $key = '' ) {
 	
 	return acf_local()->is_field( $key );
+	
+}
+
+function acf_is_local_field_key( $key = '' ) {
+	
+	return acf_local()->is_field_key( $key );
+	
+}
+
+function acf_is_local_field_name( $name = '' ) {
+	
+	return acf_local()->is_field_name( $name );
 	
 }
 

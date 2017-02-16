@@ -264,6 +264,10 @@ function get_field_objects( $post_id = false, $format_value = true, $load_value 
 		
 		$meta = get_comment_meta( $info['id'] );
 		
+	} elseif( $info['type'] == 'term' ) {
+		
+		$meta = get_term_meta( $info['id'] );
+		
 	} else {
 		
 		$rows = $wpdb->get_results($wpdb->prepare(
@@ -623,10 +627,11 @@ function get_row_index() {
 	
 	// vars
 	$i = acf_get_loop('active', 'i');
+	$offset = acf_get_setting('row_index_offset');
 	
 	
 	// return
-	return $i + 1;
+	return $offset + $i;
 	
 }
 
@@ -1291,8 +1296,8 @@ class acf_template_form {
 		));
 		
 		$args['form_attributes'] = wp_parse_args( $args['form_attributes'], array(
-			'id'					=> 'post',
-			'class'					=> '',
+			'id'					=> $args['id'],
+			'class'					=> 'acf-form',
 			'action'				=> '',
 			'method'				=> 'post',
 		));
@@ -1320,10 +1325,6 @@ class acf_template_form {
 			));
 			
 		}
-		
-		
-		// attributes
-		$args['form_attributes']['class'] .= ' acf-form';
 		
 		
 		// register local fields
@@ -1475,7 +1476,7 @@ class acf_template_form {
 			
 			
 			?>
-		</div><!-- acf-form-fields -->
+		</div>
 		
 		<?php if( $args['form'] ): ?>
 		
@@ -1576,13 +1577,14 @@ function update_field( $selector, $value, $post_id = false ) {
 	
 	
 	// create dummy field
-	if( !$field )
-	{
+	if( !$field ) {
+		
 		$field = acf_get_valid_field(array(
 			'name'	=> $selector,
 			'key'	=> '',
 			'type'	=> '',
 		));
+		
 	}
 	
 	
@@ -1713,7 +1715,7 @@ function add_row( $selector, $row = false, $post_id = false ) {
 	
 	
 	// get field
-	$field = acf_maybe_get_field( $selector, $post_id );
+	$field = acf_maybe_get_field( $selector, $post_id, false );
 	
 	
 	// bail early if no field
@@ -1733,7 +1735,11 @@ function add_row( $selector, $row = false, $post_id = false ) {
 	
 	
 	// update value
-	return acf_update_value( $value, $post_id, $field );
+	acf_update_value( $value, $post_id, $field );
+	
+	
+	// return
+	return count($value);
 		
 }
 
@@ -1792,8 +1798,12 @@ function add_sub_row( $selector, $row = false, $post_id = false ) {
 
 
 	// update
-	return acf_update_value( $value, $post_id, $sub_field );
-		
+	acf_update_value( $value, $post_id, $sub_field );
+	
+	
+	// return
+	return count($value);
+	
 }
 
 
@@ -1816,7 +1826,8 @@ function add_sub_row( $selector, $row = false, $post_id = false ) {
 function update_row( $selector, $i = 1, $row = false, $post_id = false ) {
 	
 	// vars
-	$i--;
+	$offset = acf_get_setting('row_index_offset');
+	$i = $i - $offset;
 	
 	
 	// filter post_id
@@ -1824,7 +1835,7 @@ function update_row( $selector, $i = 1, $row = false, $post_id = false ) {
 	
 	
 	// get field
-	$field = acf_maybe_get_field( $selector, $post_id );
+	$field = acf_maybe_get_field( $selector, $post_id, false );
 	
 	
 	// bail early if no field
@@ -1844,7 +1855,11 @@ function update_row( $selector, $i = 1, $row = false, $post_id = false ) {
 	
 	
 	// update value
-	return acf_update_value( $value, $post_id, $field );
+	acf_update_value( $value, $post_id, $field );
+	
+	
+	// return
+	return true;
 	
 }
 
@@ -1868,7 +1883,8 @@ function update_sub_row( $selector, $i = 1, $row = false, $post_id = false ) {
 	
 	// vars
 	$sub_field = false;
-	$i--;
+	$offset = acf_get_setting('row_index_offset');
+	$i = $i - $offset;
 	
 	
 	// filter post_id
@@ -1904,7 +1920,11 @@ function update_sub_row( $selector, $i = 1, $row = false, $post_id = false ) {
 
 
 	// update
-	return acf_update_value( $value, $post_id, $sub_field );
+	acf_update_value( $value, $post_id, $sub_field );
+	
+	
+	// return
+	return true;
 		
 }
 
@@ -1927,7 +1947,8 @@ function update_sub_row( $selector, $i = 1, $row = false, $post_id = false ) {
 function delete_row( $selector, $i = 1, $post_id = false ) {
 	
 	// vars
-	$i--;
+	$offset = acf_get_setting('row_index_offset');
+	$i = $i - $offset;
 	
 	
 	// filter post_id
@@ -1949,13 +1970,21 @@ function delete_row( $selector, $i = 1, $post_id = false ) {
 	// ensure array
 	$value = acf_get_array($value);
 	
+	
+	// bail early if index doesn't exist
+	if( !isset($value[ $i ]) ) return false;
+	
 		
 	// unset
 	unset( $value[ $i ] );
 	
 	
 	// update
-	return acf_update_value( $value, $post_id, $field );
+	acf_update_value( $value, $post_id, $field );
+	
+	
+	// return
+	return true;
 	
 }
 
@@ -1979,7 +2008,8 @@ function delete_sub_row( $selector, $i = 1, $post_id = false ) {
 	
 	// vars
 	$sub_field = false;
-	$i--;
+	$offset = acf_get_setting('row_index_offset');
+	$i = $i - $offset;
 	
 	
 	// filter post_id
@@ -2010,12 +2040,20 @@ function delete_sub_row( $selector, $i = 1, $post_id = false ) {
 	$value = acf_get_array( $value );
 	
 	
+	// bail early if index doesn't exist
+	if( !isset($value[ $i ]) ) return false;
+	
+	
 	// append
 	unset( $value[ $i ] );
 
 
 	// update
-	return acf_update_value( $value, $post_id, $sub_field );
+	acf_update_value( $value, $post_id, $sub_field );
+	
+	
+	// return
+	return true;
 		
 }
 
