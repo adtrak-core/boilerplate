@@ -32,10 +32,10 @@
 
 		        <p>Address: <?php address_inline(); ?></p>
 		        <p>Email: <a href="mailto:<?php the_field('site_email', 'option'); ?>"><?php the_field('site_email', 'option'); ?></a></p>
-		        <p><?php the_field('site_name', 'option'); ?> is a registered company in England.</p>
+		        <p><?php bloginfo('title'); ?> is a registered company in England.</p>
 		        <p><?php if(get_field('company_reg_number', 'option')) : ?>Registered Number: <?php the_field('company_reg_number', 'option'); ?></p><?php endif; ?>
 		        <p><?php if(get_field('company_vat_number', 'option')) : ?>VAT Number: <?php the_field('company_vat_number', 'option'); ?></p><?php endif; ?>
-		        <p>&copy; <?php the_field('site_name', 'option'); ?> <?php echo date('Y'); ?>. All Rights Reserved</p>
+		        <p>&copy; <?php bloginfo('title'); ?> <?php echo date('Y'); ?>. All Rights Reserved</p>
 
 		        <a class="adtrak" href="https://www.adtrak.co.uk" role="outgoing"><img src="http://static.adtrak.co.uk/email/201504/svg/adtrak-logo.svg" alt="Adtrak" /></a>
 		        <a class="adtrak" href="https://www.adtrak.co.uk" role="outgoing"><img src="http://static.adtrak.co.uk/email/201504/svg/adtrak-logo-white.svg" alt="Adtrak" /></a>

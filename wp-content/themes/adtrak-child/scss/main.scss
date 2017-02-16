@@ -14,6 +14,11 @@ sites style will go.
     'base/typography';
 
 @import
+	'components/buttons',
+	'components/prev-next',
+	'components/buckets';
+
+@import
 	'layout/mobile-top-bar',
 	'layout/grid',
 	'layout/spacing',
@@ -25,11 +30,6 @@ sites style will go.
 	'layout/aside',
 	'layout/forms',
 	'layout/footer';
-
-@import
-	'components/buttons',
-	'components/prev-next',
-	'components/buckets';
 
 @import
 	'pages/contact',
