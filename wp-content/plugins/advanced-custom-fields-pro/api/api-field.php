@@ -76,17 +76,17 @@ function acf_get_valid_field( $field = false ) {
 		'class'				=> '',
 		'conditional_logic'	=> 0,
 		'parent'			=> 0,
-		'wrapper'			=> array(
-			'width'				=> '',
-			'class'				=> '',
-			'id'				=> ''
-		),
+		'wrapper'			=> array(),
 		'_name'				=> '',
 		'_prepare'			=> 0,
 		'_valid'			=> 0,
 	));
 	
-	
+	$field['wrapper'] = wp_parse_args($field['wrapper'], array(
+		'width'				=> '',
+		'class'				=> '',
+		'id'				=> ''
+	));
 	
 	
 	// _name

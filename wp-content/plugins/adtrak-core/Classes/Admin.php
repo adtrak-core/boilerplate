@@ -25,8 +25,7 @@ class Admin
 	public function enqueue_styles() 
 	{
 		// wp_enqueue_style('core-admin', AC_PLUGIN_URL . 'assets/css/core-admin.css', [], $this->version, 'all');
-		wp_enqueue_style('adtrak-admin', AC_PLUGIN_URL . 'assets/css/adtrak-admin.css', [], $this->version, 'all');
-		wp_enqueue_style('adtrak-default', AC_PLUGIN_URL . 'assets/css/adtrak-default.css', [], $this->version, 'all');
+		wp_enqueue_style('adtrak-style', AC_PLUGIN_URL . 'assets/css/adtrak-style.css', [], $this->version, 'all');
 	}
 	
 	public function adjust_media_library_cols($cols)

@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields PRO
 Plugin URI: https://www.advancedcustomfields.com/
 Description: Customise WordPress with powerful, professional and intuitive fields
-Version: 5.5.7
+Version: 5.5.10
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 Copyright: Elliot Condon
@@ -58,7 +58,7 @@ class acf {
 			
 			// basic
 			'name'				=> __('Advanced Custom Fields', 'acf'),
-			'version'			=> '5.5.7',
+			'version'			=> '5.5.10',
 						
 			// urls
 			'basename'			=> plugin_basename( __FILE__ ),
@@ -107,8 +107,9 @@ class acf {
 		acf_include('core/cache.php');
 		acf_include('core/compatibility.php');
 		acf_include('core/deprecated.php');
-		acf_include('core/fields.php');
 		acf_include('core/field.php');
+		acf_include('core/fields.php');
+		acf_include('core/form.php');
 		acf_include('core/input.php');
 		acf_include('core/validation.php');
 		acf_include('core/json.php');

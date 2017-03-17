@@ -445,19 +445,15 @@ class acf_compatibility {
 	
 	function validate_field_group( $field_group ) {
 		
-		// global
-		global $wpdb;
-		
-		
 		// vars
-		$v = 5;
+		$version = 5;
 		
 		
 		// add missing 'key' (v5.0.0)
 		if( empty($field_group['key']) ) {
 			
 			// update version
-			$v = 4;
+			$version = 4;
 			
 			
 			// add missing key
@@ -497,11 +493,7 @@ class acf_compatibility {
 		 		foreach( $location['rules'] as $rule ) {
 			 		
 				 	// sperate groups?
-				 	if( $all_or_any == 'any' ) {
-				 	
-					 	$group++;
-					 	
-				 	}
+				 	if( $all_or_any == 'any' ) $group++;
 				 	
 				 	
 				 	// add to group
@@ -522,7 +514,7 @@ class acf_compatibility {
 		if( !empty($field_group['location']) ) {
 			
 			// param changes
-		 	$param_replace = array(
+		 	$replace = array(
 		 		'taxonomy'		=> 'post_taxonomy',
 		 		'ef_media'		=> 'attachment',
 		 		'ef_taxonomy'	=> 'taxonomy',
@@ -532,75 +524,43 @@ class acf_compatibility {
 		 	
 		 	
 		 	// remove conflicting param
-		 	if( $v == 5 ) {
+		 	if( $version == 5 ) {
 			 	
-			 	unset($param_replace['taxonomy']);
+			 	unset($replace['taxonomy']);
 			 	
 		 	}
 		 	
 		 	
 			// loop over location groups
-			foreach( array_keys($field_group['location']) as $i ) {
-				
-				// extract group
-				$group = acf_extract_var( $field_group['location'], $i );
-				
+			foreach( $field_group['location'] as $i => $group ) {
 				
 				// bail early if group is empty
-				if( empty($group) ) {
-					
-					continue;
-					
-				}
+				if( empty($group) ) continue;
 				
 				
 				// loop over group rules
-				foreach( array_keys($group) as $j ) {
-					
-					// extract rule
-					$rule = acf_extract_var( $group, $j );
-					
+				foreach( $group as $ii => $rule ) {
 					
 					// migrate param
-					if( isset($param_replace[ $rule['param'] ]) ) {
+					if( isset($replace[ $rule['param'] ]) ) {
 						
-						$rule['param'] = $param_replace[ $rule['param'] ];
+						$rule['param'] = $replace[ $rule['param'] ];
 						
 					}
-					
-					 	
-				 	// category / taxonomy terms are saved differently
-				 	if( $rule['param'] == 'post_category' || $rule['param'] == 'post_taxonomy' ) {
-					 	
-					 	if( is_numeric($rule['value']) ) {
-						 	
-						 	$term_id = $rule['value'];
-						 	$taxonomy = $wpdb->get_var( $wpdb->prepare( "SELECT taxonomy FROM $wpdb->term_taxonomy WHERE term_id = %d LIMIT 1", $term_id) );
-						 	$term = get_term( $term_id, $taxonomy );
-						 	
-						 	// update rule value
-						 	$rule['value'] = "{$term->taxonomy}:{$term->slug}";
-						 	
-					 	}
-					 	
-				 	}
+									 	
 				 	
-				 	
-				 	// append rule
-				 	$group[ $j ] = $rule;
+				 	// update
+				 	$group[ $ii ] = $rule;
 				 	
 				}
-				// foreach
 				
 				
-				// append group
+				// update
 				$field_group['location'][ $i ] = $group;
 				
 			}
-			// foreach
 			
 		}
-		// if
 		
 		
 		// change layout to style (v5.0.0)

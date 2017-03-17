@@ -2,7 +2,7 @@
 Contributors: elliotcondon
 Tags: acf, advanced, custom, field, fields, custom field, custom fields, simple fields, magic fields, more fields, repeater, edit
 Requires at least: 3.6.0
-Tested up to: 4.7.0
+Tested up to: 4.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,32 @@ http://support.advancedcustomfields.com/
 
 
 == Changelog ==
+
+= 5.5.10 =
+* API: Added new functionality to the `acf_form()` function:
+* - added new 'html_updated_message' setting
+* - added new 'html_submit_button' setting
+* - added new 'html_submit_spinner' setting
+* - added new 'acf/pre_submit_form' filter run when form is successfully submit (before saving $_POST)
+* - added new 'acf/submit_form' action run when form is successfully submit (after saving $_POST)
+* - added new '%post_id%' replace string to the 'return' setting
+* - added new encryption logic to prevent $_POST exploits
+* - added new `acf_register_form()` function
+* Core: Fixed bug preventing values being loaded on a new post/page preview
+* Core: Fixed missing 'Bulk Actions' dropdown on sync screen when no field groups exist
+* Core: Fixed bug ignoring PHP field groups if exists in JSON
+* Core: Minor fixes and improvements
+
+= 5.5.9 =
+* Core: Fixed bug causing ACF4 PHP field groups to be ignored if missing ‘key’ setting
+
+= 5.5.8 =
+* Flexible Content: Added logic to better 'clean up' data when re-ordering layouts
+* oEmbed field: Fixed bug causing incorrect width and height settings in embed HTML
+* Core: Fixed bug causing incorrect Select2 CSS version loading for WooCommerce 2.7
+* Core: Fixed bug preventing 'min-height' style being applied to floating width fields
+* Core: Added new JS 'init' actions for wysiwyg, date, datetime, time and select2 fields
+* Core: Minor fixes and improvements
 
 = 5.5.7 =
 * Core: Fixed bug causing `get_field()` to return incorrect data for sub fields registered via PHP code.

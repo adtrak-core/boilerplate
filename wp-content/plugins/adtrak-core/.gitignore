@@ -2,3 +2,4 @@
 *.sass-cache
 *.scssc
 *.config
+.idea

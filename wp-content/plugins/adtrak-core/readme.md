@@ -4,7 +4,7 @@ Contributors: jackabox
 Tags: core, functionality, acf  
 Requires at least: 4.6.0  
 Tested up to: 4.7.1  
-Stable tag: 0.9.10  
+Stable tag: 0.9.11  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -20,6 +20,11 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Frequently Asked Questions ==
 
 == Changelog ==
+
+= 0.9.14 =
+- Adding more width / reducing padding on sidebar. Should stop breaks
+- Amending some colour styles throughout
+- Combining stylesheets for quicker loads, removing redundant files.
 
 = 0.9.0 =
 - added in the site options after discussions

@@ -2834,14 +2834,26 @@ var acf;
 			if( !$ths.exists() ) return;
 			
 			
+			// vars
+			var $trs = $table.find('> tbody > tr'),
+				$tds = $trs.find('> td.acf-field');
+			
+			
+			// remove clones if has visible rows
+			if( $trs.hasClass('acf-clone') && $trs.length > 1 ) {
+				
+				$tds = $trs.not('.acf-clone').find('> td.acf-field');
+				
+			}
+			
+			
 			// render th/td visibility
 			$ths.each(function(){
 				
 				// vars
 				var $th = $(this),
 					key = $th.attr('data-key'),
-					$td = $table.find('td[data-key="' + key + '"]');
-				
+					$td = $tds.filter('[data-key="'+key+'"]');
 				
 				// clear class
 				$td.removeClass('appear-empty');
@@ -2931,10 +2943,10 @@ var acf;
 			var $groups = $el.find('.acf-fields:visible');
 			
 			
-			// appent self if is tr
-			if( $el.is('.acf-fields') ) {
+			// appent self if is '.acf-fields'
+			if( $el && $el.is('.acf-fields') ) {
 				
-				$group = $groups.add( $el.parent() );
+				$groups = $groups.add( $el );
 				
 			}
 			
@@ -3487,6 +3499,28 @@ var acf;
 		
 	}, 999);
 */
+
+
+	/*
+	*  indexOf
+	*
+	*  This function will provide compatibility for ie8
+	*
+	*  @type	function
+	*  @date	5/3/17
+	*  @since	5.5.10
+	*
+	*  @param	n/a
+	*  @return	n/a
+	*/
+	
+	if( !Array.prototype.indexOf ) {
+		
+	    Array.prototype.indexOf = function(val) {
+	        return $.inArray(val, this);
+	    };
+	    
+	}
 	
 })(jQuery);
 
@@ -4286,13 +4320,13 @@ var acf;
 			
 			
 			// calculate visibility
-			for( var i in groups ) {
+			for( var i = 0; i < groups.length; i++ ) {
 				
 				// vars
 				var group = groups[i],
 					match_group	= true;
 				
-				for( var k in group ) {
+				for( var k = 0; k < group.length; k++ ) {
 					
 					// vars
 					var rule = group[k];
@@ -4753,6 +4787,10 @@ var acf;
 			// add date picker
 			acf.datepicker.init( this.$input, args );
 			
+			
+			// action for 3rd party customization
+			acf.do_action('date_picker_init', this.$input, args, this.$field);
+			
 		},
 		
 		initialize2: function(){
@@ -4792,6 +4830,10 @@ var acf;
 			
 			// now change the format back to how it should be.
 			this.$input.datepicker( 'option', 'dateFormat', dateFormat );
+			
+			
+			// action for 3rd party customization
+			acf.do_action('date_picker_init', this.$input, args, this.$field);
 			
 		},
 		
@@ -4974,6 +5016,10 @@ var acf;
 			
 			// add date time picker
 			acf.datetimepicker.init( this.$input, args );
+			
+			
+			// action for 3rd party customization
+			acf.do_action('date_time_picker_init', this.$input, args, this.$field);
 			
 		},
 		
@@ -7834,8 +7880,7 @@ var acf;
 			var ajax_data = acf.prepare_for_ajax({
 				'action'	: 'acf/fields/oembed/search',
 				's'			: s,
-				'width'		: this.$el.data('width'),
-				'height'	: this.$el.data('height')
+				'field_key'	: this.$field.data('key')
 			});
 			
 			
@@ -7848,7 +7893,7 @@ var acf;
 				url: acf.get('ajaxurl'),
 				data: ajax_data,
 				type: 'post',
-				dataType: 'html',
+				dataType: 'json',
 				context: this,
 				success: this.search_success
 			});
@@ -7859,7 +7904,7 @@ var acf;
 			
 		},
 		
-		search_success: function( html ){
+		search_success: function( json ){
 			
 			// vars
 			var s = this.$search.val();
@@ -7870,7 +7915,7 @@ var acf;
 			
 			
 			// error
-			if( !html ) {
+			if( !json || !json.html ) {
 				
 				this.$el.removeClass('has-value').addClass('has-error');
 				return;
@@ -7885,7 +7930,7 @@ var acf;
 			// update vars
 			this.$input.val( s );
 			this.$title.html( s );
-			this.$embed.html( html );
+			this.$embed.html( json.html );
 			
 		},
 				
@@ -8746,13 +8791,18 @@ var acf;
 		*  @return	(mixed)
 		*/
 		
-		init: function( $select, args ){
+		init: function( $select, args, $field ){
 			
 			// bail early if no version found
 			if( !this.version ) return;
 			
 			
 			// defaults
+			args = args || {};
+			$field = $field || null;
+			
+			
+			// merge
 			args = $.extend({
 				allow_null:		false,
 				placeholder:	'',
@@ -8765,12 +8815,12 @@ var acf;
 			// v3
 			if( this.version == 3 ) {
 				
-				return this.init_v3( $select, args );
+				return this.init_v3( $select, args, $field );
 			
 			// v4
 			} else if( this.version == 4 ) {
 				
-				return this.init_v4( $select, args );
+				return this.init_v4( $select, args, $field );
 				
 			}
 			
@@ -8940,7 +8990,7 @@ var acf;
 		*  @return	$post_id (int)
 		*/
 		
-		get_ajax_data: function( args, params ){
+		get_ajax_data: function( args, params, $el, $field ){
 			
 			// vars
 			var data = acf.prepare_for_ajax({
@@ -8952,7 +9002,7 @@ var acf;
 			
 			
 			// filter
-			data = acf.apply_filters( 'select2_ajax_data', data, args, params );
+			data = acf.apply_filters( 'select2_ajax_data', data, args, $el, $field );
 			
 			
 			// return
@@ -9081,7 +9131,7 @@ var acf;
 		*  @return	args (object)
 		*/
 		
-		init_v3: function( $select, args ){
+		init_v3: function( $select, args, $field ){
 					
 			// vars
 			var $input = $select.siblings('input');
@@ -9200,7 +9250,7 @@ var acf;
 						
 						
 						// return
-						return acf.select2.get_ajax_data(args, params);
+						return acf.select2.get_ajax_data(args, params, $input, $field);
 						
 					},
 					results: function( data, page ){
@@ -9237,7 +9287,7 @@ var acf;
 			
 			
 			// filter for 3rd party customization
-			select2_args = acf.apply_filters( 'select2_args', select2_args, $select, args );
+			select2_args = acf.apply_filters( 'select2_args', select2_args, $select, args, $field );
 			
 			
 			// add select2
@@ -9295,6 +9345,10 @@ var acf;
 				
 			});
 			
+			
+			// action for 3rd party customization
+			acf.do_action('select2_init', $input, select2_args, args, $field);
+			
 		},
 		
 		
@@ -9347,7 +9401,7 @@ var acf;
 		},
 		
 		
-		init_v4: function( $select, args ){
+		init_v4: function( $select, args, $field ){
 					
 			// vars
 			var $input = $select.siblings('input');
@@ -9441,7 +9495,7 @@ var acf;
 					data: function( params ) {
 						
 						// return
-						return acf.select2.get_ajax_data(args, params);
+						return acf.select2.get_ajax_data(args, params, $select, $field);
 						
 					},
 					processResults: function( data, params ){
@@ -9509,7 +9563,7 @@ var acf;
 
 			
 			// filter for 3rd party customization
-			select2_args = acf.apply_filters( 'select2_args', select2_args, $select, args );
+			select2_args = acf.apply_filters( 'select2_args', select2_args, $select, args, $field );
 			
 			
 			// add select2
@@ -9522,6 +9576,10 @@ var acf;
 			
 			// add class
 			$container.addClass('-acf');
+			
+			
+			// action for 3rd party customization
+			acf.do_action('select2_init', $select, select2_args, args, $field);
 			
 		},
 		
@@ -9677,7 +9735,7 @@ var acf;
 			}
 			
 			
-			acf.select2.init( this.$select, this.o );
+			acf.select2.init( this.$select, this.o, this.$field );
 			
 		},
 		
@@ -10253,7 +10311,7 @@ var acf;
 			
 			
 			// add date picker
-			this.$input.addClass('active').timepicker( args );
+			this.$input.timepicker( args );
 			
 			
 			// wrap the datepicker (only if it hasn't already been wrapped)
@@ -10262,6 +10320,10 @@ var acf;
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
 				
 			}
+			
+			
+			// action for 3rd party customization
+			acf.do_action('time_picker_init', this.$input, args, this.$field);
 			
 		},
 		
@@ -12012,7 +12074,16 @@ var acf;
 			// initialize
 			try {
 				
+				// init
 				tinymce.init( mceInit );
+				
+				
+				// vars
+				var ed = tinyMCE.get( mceInit.id );
+				
+				
+				// action for 3rd party customization
+				acf.do_action('wysiwyg_tinymce_init', ed, ed.id, mceInit, this.$field);
 				
 			} catch(e){}
 			
@@ -12034,10 +12105,17 @@ var acf;
 			
 			// initialize
 			try {
-			
+				
+				// init
 				var qtag = quicktags( qtInit );
 				
+				
+				// buttons
 				this._buttonsInit( qtag );
+				
+				
+				// action for 3rd party customization
+				acf.do_action('wysiwyg_quicktags_init', qtag, qtag.id, qtInit, this.$field);
 				
 			} catch(e){}
 			
@@ -12161,7 +12239,7 @@ ed.on('ResizeEditor', function(e) {
 			
 			
 			// hook for 3rd party customization
-			mceInit = acf.apply_filters('wysiwyg_tinymce_settings', mceInit, mceInit.id);
+			mceInit = acf.apply_filters('wysiwyg_tinymce_settings', mceInit, mceInit.id, this.$field);
 			
 			
 			// return
@@ -12180,7 +12258,7 @@ ed.on('ResizeEditor', function(e) {
 			
 			
 			// hook for 3rd party customization
-			qtInit = acf.apply_filters('wysiwyg_quicktags_settings', qtInit, qtInit.id);
+			qtInit = acf.apply_filters('wysiwyg_quicktags_settings', qtInit, qtInit.id, this.$field);
 			
 			
 			// return
