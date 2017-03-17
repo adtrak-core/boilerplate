@@ -15,26 +15,22 @@
 
 	<main class="site-content container">
 
-		<?php if (have_posts()): while (have_posts()): the_post(); ?>
+		<article class="grid grid8_12">
 
-			<article class="grid grid8_12">
+			<div class="pad-1-1 copy">
 
-				<div class="pad-1-1 copy">
+				<?php the_title('<h1>', '</h1>'); ?>
+				<?php the_content(); ?>
 
-					<?php the_title('<h1>', '</h1>'); ?>
-					<?php the_content(); ?>
+			</div>
 
-				</div>
+		</article>
 
-			</article>
+		<aside class="grid grid4_12 news-aside">
 
-			<aside class="grid grid4_12 news-aside">
-
-				<?php get_sidebar(); ?>
-			
-			</aside>
-	
-		<?php endwhile; endif; ?>
+			<?php get_sidebar(); ?>
+		
+		</aside>
 
 	</main>
 

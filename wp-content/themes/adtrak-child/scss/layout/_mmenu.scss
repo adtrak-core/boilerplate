@@ -9,9 +9,9 @@
 }
 
 @media only screen and (max-width: ($medium-width)-1) {
-    ul.menu:not(#menu-main-nav-1) li.current-menu-item,
-    ul.menu:not(#menu-main-nav-1) li.current-menu-parent,
-    ul.sub-menu li.current-menu-item {
+    .menu:not(#menu-main-nav-1) li.current-menu-item,
+    .menu:not(#menu-main-nav-1) li.current-menu-parent,
+    .sub-menu li.current-menu-item {
         background: $noir;
         color: $blanc;
     }

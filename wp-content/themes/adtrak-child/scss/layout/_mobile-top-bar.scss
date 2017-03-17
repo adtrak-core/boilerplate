@@ -24,7 +24,7 @@
 .mobile-top-bar__btn {
     display: inline-block;
     text-decoration: none;
-    padding: 0.5em;
+    padding: .5em;
     text-align: center;
 }
 
@@ -47,7 +47,7 @@
     position: absolute;
     left: 0;
     display: none;
-    padding: 1em 0.5em;
+    padding: 1em .5em;
     width: 100%;
     background: darken($blanc,20);
     p:first-of-type {

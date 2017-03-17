@@ -23,7 +23,7 @@ footer[role="contentinfo"] {
         text-align: left;
     }
 
-    a.adtrak img {
+    .adtrak img {
         max-width: 100px;
     }
 
@@ -39,14 +39,14 @@ footer[role="contentinfo"] {
     right: 10px;
     bottom: 10px;
     z-index: 300;
-    opacity: 0.4;
+    opacity: .4;
     text-align: center;
     background: #fff;
-    padding: 0.3em;
+    padding: .3em;
 
     &:hover {
         opacity: 1;
-        transition: 0.3s all ease;
+        transition: .3s;
     }
 
     a {

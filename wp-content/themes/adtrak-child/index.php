@@ -15,28 +15,34 @@
 
 	<main class="site-content container">
 
-		<?php if (have_posts()): while (have_posts()): the_post(); ?>
+		<div class="grid grid8_12">
 
-			<article class="grid grid8_12">
+			<?php if (have_posts()): while (have_posts()): the_post(); ?>
 
-				<div class="pad-1-1 copy">
+				<article>
 
-					<?php the_post_thumbnail('medium'); ?>
+					<div class="pad-1-1 copy">
 
-					<?php the_title('<h1>', '</h1>'); ?>
-					<?php the_excerpt(); ?>
+						<?php the_post_thumbnail('medium'); ?>
 
-					<a href="<?php the_permalink(); ?>" class="btn btn-noir">Continue reading</a>
+						<?php the_title('<h1>', '</h1>'); ?>
+						<?php the_excerpt(); ?>
 
-				</div>
+						<a href="<?php the_permalink(); ?>" class="btn btn-noir">Continue reading</a>
 
-			</article>
+					</div>
 
-			<aside class="grid grid4_12 news-aside">
-			
-			</aside>
-	
-		<?php endwhile; endif; ?>
+				</article>
+		
+			<?php endwhile; endif; ?>
+
+		</div>
+
+		<aside class="grid grid4_12 news-aside">
+
+			<?php get_sidebar(); ?>
+		
+		</aside>
 
 	</main>
 
