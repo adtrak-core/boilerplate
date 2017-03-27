@@ -3,14 +3,12 @@
  * The template for displaying the footer within your theme.
  * @author  Adtrak
  * @package AdtrakChild
- * @version 1.0.0
+ * @version 2.1.0
  */
 ?>
 
 	<footer role="contentinfo">
-
 		<div class="container">
-
 			<div class="grid grid3_12">
 				<a href="<?php echo home_url(); ?>">
 					<?php $image = get_field('site_logo','option'); if( !empty($image) ): ?>
@@ -29,22 +27,26 @@
 			</div>
 
 			<div class="grid grid6_12">
-
 		        <p>Address: <?php address_inline(); ?></p>
-		        <p>Email: <a href="mailto:<?php the_field('site_email', 'option'); ?>"><?php the_field('site_email', 'option'); ?></a></p>
+		        <p>Email: <a href="mailto:<?php echo get_field('site_email', 'option'); ?>"><?php the_field('site_email', 'option'); ?></a></p>
 		        <p><?php bloginfo('title'); ?> is a registered company in England.</p>
-		        <p><?php if(get_field('company_reg_number', 'option')) : ?>Registered Number: <?php the_field('company_reg_number', 'option'); ?></p><?php endif; ?>
-		        <p><?php if(get_field('company_vat_number', 'option')) : ?>VAT Number: <?php the_field('company_vat_number', 'option'); ?></p><?php endif; ?>
+				<?php if(get_field('company_reg_number', 'option')): ?>
+					<p>Registered Number: <?php the_field('company_reg_number', 'option'); ?></p>
+				<?php endif; ?>
+				<?php if(get_field('company_vat_number', 'option')): ?>
+					<p>VAT Number: <?php the_field('company_vat_number', 'option'); ?></p>
+				<?php endif; ?>
 		        <p>&copy; <?php bloginfo('title'); ?> <?php echo date('Y'); ?>. All Rights Reserved</p>
 
-		        <a class="adtrak" href="https://www.adtrak.co.uk" role="outgoing"><img src="http://static.adtrak.co.uk/email/201504/svg/adtrak-logo.svg" alt="Adtrak" /></a>
-		        <a class="adtrak" href="https://www.adtrak.co.uk" role="outgoing"><img src="http://static.adtrak.co.uk/email/201504/svg/adtrak-logo-white.svg" alt="Adtrak" /></a>
-		        <a class="adtrak" href="https://www.adtrak.co.uk" role="outgoing"><img src="http://static.adtrak.co.uk/email/201504/svg/adtrak-logo-black.svg" alt="Adtrak" /></a>
-
+				<?php 
+				/** 
+				 * get_adtrak_logo accepts two arguments 
+				 * 'colour' (as white, black, orange/default) and 
+				 * 'icon' (as true or false) 
+				*/ ?>
+		        <a class="adtrak" href="https://www.adtrak.co.uk" role="outgoing"><?php echo get_adtrak_logo(); ?></a>
 		    </div>
-
 		</div>
-
 	</footer>
 
 	<!-- Back to top arrow -->
@@ -56,8 +58,7 @@
 
 </div><!-- wrapper -->
 
-	<?php include locate_template('parts/ld.php'); ?>
-	<?php wp_footer(); ?>
+<?php wp_footer(); ?>
 	
 </body>
 </html>
