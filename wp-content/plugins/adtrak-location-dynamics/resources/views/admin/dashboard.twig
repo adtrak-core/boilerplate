@@ -1,0 +1,66 @@
+{% include 'admin/partials/header.twig' %}
+
+<form name="ald-numbers" method="POST" action="#">
+
+	<div class="ald-left">
+
+		<div class="ald-table">
+		
+			<div class="ald-table__heading">
+				
+				<div class="ald-table__heading-label">Location</div>
+				<div class="ald-table__heading-label">Calltag</div>
+				<div class="ald-table__heading-label">SEO Number</div>
+				<div class="ald-table__heading-label">PPC Number</div>
+				<div class="ald-table__heading-label">Insights Class</div>
+				<div class="ald-table__heading-label">Controls</div>
+			
+			</div>
+
+			<div class="ald-table__fields">
+
+				{% for dynamic in numbers.dynamics %}
+
+					{% include 'admin/partials/new-row.twig' %}
+
+				{% endfor %}
+
+			</div>
+
+			<div class="ald-table__bottom">
+				<a href="#" class="new-row button button-primary button-large">+ New Row</a>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="ald-right">
+		<div class="ald-right__pane">
+			<p>Enter your Insights code here:</p>
+			<textarea name="insights-code">{% if numbers.insights_code %}{{numbers.insights_code}}{% endif %}</textarea>
+		</div>
+		<div class="ald-right__pane">
+			<input type="submit" name="submit" value="Save" class="button button-primary button-large">
+		</div>
+	</div>
+
+</form>
+
+{% include 'admin/partials/footer.twig' %}
+
+<script>
+jQuery(function ($) {
+	"use strict";
+	$(document).ready(function() {
+
+		$(".new-row").click(function(e) {
+	        $.get('{{ plugin.directory }}/resources/views/admin/partials/safe-new-row.twig', function (data) {
+	            $(data).appendTo(".ald-table__fields");
+	        });
+			e.preventDefault();
+		})
+
+	});
+});
+</script>

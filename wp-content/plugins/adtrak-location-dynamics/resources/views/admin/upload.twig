@@ -1,0 +1,12 @@
+{% include 'admin/partials/header.twig' %}
+
+<form name="ald-upload" enctype="multipart/form-data" method="POST"  action="admin.php?page=adtrak-location-dynamics-json">
+
+	<h2>Upload a V2 JSON file</h2>
+
+	<input required name="json" type="file" accept="application/json">
+	<input name="submit" vlaue="Process" type="submit" class="button button-large button-primary">
+
+</form>
+
+{% include 'admin/partials/footer.twig' %}

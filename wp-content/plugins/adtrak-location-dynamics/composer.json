@@ -1,0 +1,23 @@
+{
+	"name": "adtrak/location-dynamics",
+ 	"keywords": ["wordpress", "plugin", "orm", "eloquent", "sql", "framework"],
+    "homepage": "https://github.com/getbilly/boilerplate",
+    
+	"authors": [
+        {
+            "name": "Jack Whiting",
+            "email": "hi@jackwhiting.co.uk"
+        }
+    ],
+
+    "require": {
+        "getbilly/framework" : "0.2.*",
+        "sentry/sentry": "^1.6"
+    },
+
+	"autoload": {
+    	"psr-4": {
+			"Adtrak\\LocationDynamics\\": "app/"
+		}
+	}
+}

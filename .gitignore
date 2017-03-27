@@ -95,7 +95,9 @@ Thumbs.db
 !wp-content/plugins/wordpress-seo/
 !wp-content/plugins/wp-migrate-db-pro/
 !wp-content/plugins/wp-migrate-db-pro-media-files/
+!wp-content/plugins/adtrak-location-dynamics/
 !wp-content/plugins/adtrak-core/
+
 !wp-content/themes/adtrak-child/
 !wp-content/themes/adtrak-parent/
 
