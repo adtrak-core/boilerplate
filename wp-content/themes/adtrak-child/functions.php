@@ -82,4 +82,4 @@ function address_inline() {
 	the_field('site_postcode', 'option');
 }
 
-add_shortcode( 'address_inline', 'address_inline' );
+add_shortcode('address_inline', 'address_inline');

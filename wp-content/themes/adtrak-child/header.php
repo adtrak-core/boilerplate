@@ -28,7 +28,6 @@
 	<?php include locate_template('parts/mobile-top-bar.php'); ?>
 
 	<header role="header">
-
 		<div class="container">
 
 			<a href="<?php echo home_url(); ?>">
@@ -48,6 +47,4 @@
 				'container' => ''
 			]); ?>
 		</nav>
-
 	</header>
-

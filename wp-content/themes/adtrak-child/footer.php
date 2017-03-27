@@ -3,7 +3,7 @@
  * The template for displaying the footer within your theme.
  * @author  Adtrak
  * @package AdtrakChild
- * @version 2.1.0
+ * @version 1.1.0
  */
 ?>
 
@@ -43,6 +43,7 @@
 				 * get_adtrak_logo accepts two arguments 
 				 * 'colour' (as white, black, orange/default) and 
 				 * 'icon' (as true or false) 
+				 * e.g. for the black icon use get_adtrak_logo('black', true)
 				*/ ?>
 		        <a class="adtrak" href="https://www.adtrak.co.uk" role="outgoing"><?php echo get_adtrak_logo(); ?></a>
 		    </div>
