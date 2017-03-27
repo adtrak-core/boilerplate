@@ -5,7 +5,7 @@
  * which are theme specific and clean up output.
  * @author  Adtrak
  * @package AdtrakParent
- * @version 2.0.0
+ * @version 2.1.0
  */
 
 require 'plugin-update-checker/plugin-update-checker.php';
@@ -133,3 +133,26 @@ add_action('init', function() {
         include_once __DIR__ . '/includes/acf/options-marketing.php';
     }
 });
+
+/**
+ * @added 2.1.0
+ */
+function get_adtrak_logo($option = null, $icon = false) {
+    if ($icon == true) {
+        $end = '-icon.svg';
+    } else {
+        $end = '-logo.svg';
+    }
+
+    switch ($option) {
+        case 'white':
+            return '<img src="' . get_theme_file_uri('images/adtrak-white' . $end) . '" alt="Adtrak Logo">';
+            break;
+        case 'black':
+            return '<img src="' . get_theme_file_uri('images/adtrak-black' . $end) . '" alt="Adtrak Logo">';
+            break;
+        default:
+            return '<img src="' . get_theme_file_uri('images/adtrak' . $end) . '" alt="Adtrak Logo">';
+            break;
+    }
+}
