@@ -17,10 +17,11 @@ The buckets are built using relationship fields in the WordPress admin. It autom
 
 If you wish to use icons or HTML images instead of background images, you will need to create a new image field on the "receiving" page, and instead pull the image from there (presuming you don't wish to use an icon as the featured image).
 
-To pull through the featured image as an HTML image, use this code: <?php echo get_the_post_thumbnail( $p->ID, 'hero-600' ); ?>
+To pull through the featured image as an HTML image, use this code `<?php echo get_the_post_thumbnail( $p->ID, 'hero-600' ); ?>`
 
 ## Useful Resources
-Lots of useful resources like loops for ACF, video heres and menus can be found here: http://resources.ad.trak.agency/web-design/coding/wordpress/wordpress-snippets/
+- Lots of useful resources like loops for ACF, video heres and menus can be found here [http://resources.ad.trak.agency/web-design/coding/wordpress/wordpress-snippets/]()
+- Location Dynamics Information can be found at [http://docs.adtrakdev.com/plugins/location-dynamics](). Default license key is ADTRAKLOCATIONDYNAMICS
 
 ## Fields
 Available fields to use with the plugin. Last updated Feb 16, 2017.
@@ -48,6 +49,7 @@ Available fields to use with the plugin. Last updated Feb 16, 2017.
 * social_instagram (url)
 * social_pinterest (url)
 * social_linkedin (url)
+* social_youtube (url)
 
 #--- Logos / Clients
 * logos_header (text)
