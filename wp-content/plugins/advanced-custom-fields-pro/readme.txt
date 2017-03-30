@@ -106,6 +106,12 @@ http://support.advancedcustomfields.com/
 
 == Changelog ==
 
+= 5.5.11 =
+* Google Map field: Added new 'google_map_init' JS action
+* Core: Minor fixes and improvements
+* Language: Updated Swiss German translation - thanks to Raphael Hüni
+* Language: Updated French translation - thanks to Maxime Bernard-Jacquet
+
 = 5.5.10 =
 * API: Added new functionality to the `acf_form()` function:
 * - added new 'html_updated_message' setting
