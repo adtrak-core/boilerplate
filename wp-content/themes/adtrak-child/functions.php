@@ -22,6 +22,7 @@ add_action('after_setup_theme', function () {
     add_image_size( 'hero-2000', 2000, 650, true );
 	add_image_size( 'hero-1200', 1200, 500, true );
 	add_image_size( 'hero-600', 600, 600, true );
+	add_image_size( 'square-350', 350, 350, true );
 
 });
 
@@ -34,17 +35,6 @@ Allow excerpts on pages
 add_action( 'init', 'my_add_excerpts_to_pages' );
 function my_add_excerpts_to_pages() {
      add_post_type_support( 'page', 'excerpt' );
-}
-
-/* ========================================================================================================================
-	
-Advanced Custom Fields
-	
-======================================================================================================================== */
-
-if (function_exists('acf_add_local_field_group')) {
-    include_once __DIR__ . '/includes/acf/global.php';
-    include_once __DIR__ . '/includes/acf/buckets.php';
 }
 
 /* ========================================================================================================================

@@ -10,6 +10,7 @@
 <?php
     get_header();
     include locate_template('parts/hero.php');
+    include locate_template('parts/buckets.php');
 ?>
 
 	<main role="main" class="site-content container">

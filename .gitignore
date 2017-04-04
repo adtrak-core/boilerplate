@@ -88,6 +88,10 @@ Thumbs.db
 !mstile-*.png
 !safari-pinned-tab.svg
 
+# track acf options
+!acf-buckets.json
+!acf-global.json
+
 # track these mu-plugins, plugins, and themes
 # add your own entries here
 !wp-config.php
