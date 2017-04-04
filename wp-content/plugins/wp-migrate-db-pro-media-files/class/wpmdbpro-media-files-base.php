@@ -762,10 +762,10 @@ class WPMDBPro_Media_Files_Base extends WPMDBPro_Addon {
 		}
 
 		$args  = array(
-			'limit'    => false,
 			'spam'     => 0,
 			'deleted'  => 0,
 			'archived' => 0,
+			'number' => false
 		);
 
 		if ( version_compare( $GLOBALS['wp_version'], '4.6', '>=' ) ) {

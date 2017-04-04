@@ -28,6 +28,7 @@ Available fields to use with the plugin. Last updated Dec 7, 2016.
 * social_google (url)
 * social_instagram (url)
 * social_pinterest (url)
+* social_youtube (url)
 
 ### Logos / Clients
 * logos_header (text)

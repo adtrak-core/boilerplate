@@ -4,7 +4,7 @@
  * as the loop for any blog posts. In theory this is a "fallback" file. 
  * @author  Adtrak
  * @package AdtrakParent
- * @version 1.0.0
+ * @version 2.0.0
  */
 ?>
 

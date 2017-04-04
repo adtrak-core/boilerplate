@@ -1,0 +1,27 @@
+{
+	"name": "getbilly/framework",
+    "description": "Baaa? Billy.",
+    "license": "MIT",
+    "homepage": "https://github.com/getbilly/framework",
+	"authors": [
+        {
+            "name": "Jack Whiting",
+            "email": "hi@jackwhiting.co.uk"
+        }
+    ],
+    "require": {
+        "illuminate/database": "5.4.*",
+        "symfony/var-dumper": "^3.1",
+		"twig/twig": "^1.28",
+		"illuminate/events": "^5.4"
+    },
+	"autoload": {
+    	"psr-4": {
+			"Billy\\Framework\\": "Framework/"
+		}
+	},
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev"
+}

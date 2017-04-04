@@ -80,6 +80,14 @@ Thumbs.db
 *.tar
 *.zip
 
+*.codekit
+*.DS_store
+
+*/prepros-6.config
+*/config.codekit3
+*/node_modules/
+*.lock
+
 # -------------------------
 # BEGIN Whitelisted Files
 # -------------------------
@@ -103,13 +111,11 @@ Thumbs.db
 
 # track these mu-plugins, plugins, and themes
 # add your own entries here
-!wp-content/plugins/advanced-custom-fields-pro/
 !wp-content/plugins/adtrak-core/
+!wp-content/plugins/adtrak-location-dynamics/
+!wp-content/plugins/advanced-custom-fields-pro/
+!wp-content/plugins/wordpress-seo/
+!wp-content/plugins/wp-migrate-db-pro/
+!wp-content/plugins/wp-migrate-db-pro-media-files/
 !wp-content/themes/adtrak-child/
 !wp-content/themes/adtrak-parent/
-
-*.codekit
-*.DS_store
-
-prepros-6.config
-config.codekit3

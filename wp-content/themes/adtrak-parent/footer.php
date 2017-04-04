@@ -3,7 +3,7 @@
  * The template for displaying the footer within your theme.
  * @author  Adtrak
  * @package AdtrakParent
- * @version 1.0.0
+ * @version 2.1.0
  */
 ?>
 	
@@ -28,11 +28,10 @@
 		<div>
 			<p>&copy; <?= get_bloginfo('name'); ?> <?= date('Y'); ?>. All Rights Reserved</p>				
 			<p><a href="<?= site_url('cookies-privacy-policy/'); ?>">Cookies &amp; Privacy Policy</a></p>
-			<p><a class="adtrak" href="https://adtrak.co.uk" role="outgoing"><img src="http://static.adtrak.co.uk/email/201504/svg/adtrak-logo.svg" alt="Adtrak"></a></p>
+			<p><a class="adtrak" href="https://adtrak.co.uk" role="outgoing"><?php echo get_adtrak_logo(); ?></a></p>
 		</div>
 	</footer>
 
-	<?php get_template_part('parts/ld.php'); ?>
 	<?php wp_footer(); ?>
 </body>
 </html>

@@ -157,7 +157,7 @@ class WPMDB_Base {
 		$this->addons = array(
 			'wp-migrate-db-pro-media-files/wp-migrate-db-pro-media-files.php'         => array(
 				'name'             => 'Media Files',
-				'required_version' => '1.4.5',
+				'required_version' => '1.4.7',
 			),
 			'wp-migrate-db-pro-cli/wp-migrate-db-pro-cli.php'                         => array(
 				'name'             => 'CLI',
@@ -165,7 +165,7 @@ class WPMDB_Base {
 			),
 			'wp-migrate-db-pro-multisite-tools/wp-migrate-db-pro-multisite-tools.php' => array(
 				'name'             => 'Multisite Tools',
-				'required_version' => '1.1.4',
+				'required_version' => '1.1.5',
 			),
 		);
 
@@ -825,7 +825,7 @@ class WPMDB_Base {
 
 		$download_url = $this->get_plugin_update_download_url( $this->plugin_slug );
 
-		if ( 0 === strpos( $url, $download_url ) || 402 != $response['response']['code'] ) {
+		if ( false === strpos( $url, $download_url ) || 402 != $response['response']['code'] ) {
 			return $response;
 		}
 
@@ -1776,7 +1776,7 @@ class WPMDB_Base {
 
 
 		if ( version_compare( $GLOBALS['wp_version'], '4.6', '>=' ) ) {
-			$sites = get_sites( array( 'limit' => 0 ) );
+			$sites = get_sites( array( 'number' => false ) );
 		} else {
 			$sites = wp_get_sites( array( 'limit' => 0 ) );
 		}
@@ -1834,7 +1834,7 @@ class WPMDB_Base {
 		}
 
 		if ( version_compare( $GLOBALS['wp_version'], '4.6', '>=' ) ) {
-			$sites = get_sites( array( 'limit' => 0 ) );
+			$sites = get_sites( array( 'number' => false ) );
 		} else {
 			$sites = wp_get_sites( array( 'limit' => 0 ) );
 		}

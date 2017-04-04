@@ -24,7 +24,7 @@
 
 	<header role="header">
 		<div class="logo">
-			<h1><img src="<?php echo get_theme_file_uri('/images/logo.svg'); ?>" alt="<?php echo get_bloginfo('name'); ?>" class="logo__image"></h1>
+			<img src="<?= get_theme_file_uri('/images/logo.svg'); ?>" alt="<?= get_bloginfo('name'); ?>" class="logo__image">
 		</div>
 
 		<nav role="navigation">

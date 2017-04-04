@@ -1,0 +1,19 @@
+<div class="ald-table__row">
+	
+	<div class="ald-table__field"><input type="text" name="" placeholder="Location" class="location"></div>
+	<div class="ald-table__field"><input type="text" name="" placeholder="Calltag" class="calltag"></div>
+	<div class="ald-table__field"><input type="text" name="" placeholder="SEO Number" class="seo"></div>
+	<div class="ald-table__field"><input type="text" name="" placeholder="PPC Number" class="ppc"></div>
+	<div class="ald-table__field"><input type="text" name="" placeholder="Insights Class" class="insights"></div>
+	<div class="ald-table__field"><a href="#" class="delete-row button button-large button-secondary">Delete</a></div>
+
+</div>
+
+<script>
+	var rand = Math.floor(Math.random() * 1000);
+	jQuery(".ald-table__row").last().find(".location").attr("name", "dynamics[dynamic"+rand+"][location]");
+	jQuery(".ald-table__row").last().find(".calltag").attr("name", "dynamics[dynamic"+rand+"][calltag]");
+	jQuery(".ald-table__row").last().find(".seo").attr("name", "dynamics[dynamic"+rand+"][seo]");
+	jQuery(".ald-table__row").last().find(".ppc").attr("name", "dynamics[dynamic"+rand+"][ppc]");
+	jQuery(".ald-table__row").last().find(".insights").attr("name", "dynamics[dynamic"+rand+"][insights]");
+</script>

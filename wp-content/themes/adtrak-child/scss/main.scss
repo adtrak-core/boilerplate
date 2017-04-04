@@ -4,6 +4,9 @@ does not read this file. However, this file is where all of your
 sites style will go.
 */
 
+// This one goes here, mainly for extends.
+@import 'base/reset';
+
 @import
     'abstracts/variables',
     'abstracts/functions',
@@ -11,7 +14,6 @@ sites style will go.
     'abstracts/placeholders';
 
 @import
-    'base/reset',
 	'base/core',
     'base/typography';
 
