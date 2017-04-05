@@ -90,7 +90,7 @@ Thumbs.db
 
 # track acf options
 !acf-buckets.json
-!acf-global.json
+!acf-page-options.json
 
 # track these mu-plugins, plugins, and themes
 # add your own entries here
