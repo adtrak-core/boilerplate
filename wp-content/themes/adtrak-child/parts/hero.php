@@ -57,7 +57,7 @@ Home page
 				     // loop through the rows of data
 				    while ( have_rows('flexible_hero') ) : the_row();
 
-				        if( get_row_layout() == 'hero_text' ): ?>
+				        if( get_row_layout() == 'text' ): ?>
 
 				        	<p class="<?php the_sub_field('hero_text_class'); ?>"><?php the_sub_field('hero_text'); ?></p>
 

@@ -21,6 +21,144 @@
                 "prepend": "",
                 "append": "",
                 "maxlength": ""
+            },
+            {
+                "key": "field_58e4a5a6f9247",
+                "label": "Flexible Hero",
+                "name": "flexible_hero",
+                "type": "flexible_content",
+                "instructions": "Flexible hero allows you to build your own hero per page, with buttons and text.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "button_label": "Add Item",
+                "min": "",
+                "max": "",
+                "layouts": [
+                    {
+                        "key": "58e4a5bbbb267",
+                        "name": "text",
+                        "label": "Text",
+                        "display": "table",
+                        "sub_fields": [
+                            {
+                                "key": "field_58e4a5c1f9248",
+                                "label": "Hero Text",
+                                "name": "hero_text",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
+                            },
+                            {
+                                "key": "field_58e4a5dff9249",
+                                "label": "Hero Text Class",
+                                "name": "hero_text_class",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
+                            }
+                        ],
+                        "min": "",
+                        "max": ""
+                    },
+                    {
+                        "key": "58e4a602f924e",
+                        "name": "button",
+                        "label": "Button",
+                        "display": "table",
+                        "sub_fields": [
+                            {
+                                "key": "field_58e4a610f924f",
+                                "label": "Button Text",
+                                "name": "button_text",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "Button Text",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
+                            },
+                            {
+                                "key": "field_58e4a61bf9250",
+                                "label": "Button Link",
+                                "name": "button_link",
+                                "type": "page_link",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "post_type": [
+
+                                ],
+                                "taxonomy": [
+
+                                ],
+                                "allow_null": 0,
+                                "allow_archives": 1,
+                                "multiple": 0
+                            },
+                            {
+                                "key": "field_58e4a677f9251",
+                                "label": "Button Class",
+                                "name": "button_class",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "btn btn-blanc",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
+                            }
+                        ],
+                        "min": "",
+                        "max": ""
+                    }
+                ]
             }
         ],
         "location": [
