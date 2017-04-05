@@ -30,11 +30,11 @@
 		        <p>Address: <?php address_inline(); ?></p>
 		        <p>Email: <a href="mailto:<?php echo get_field('site_email', 'option'); ?>"><?php the_field('site_email', 'option'); ?></a></p>
 		        <p><?php bloginfo('title'); ?> is a registered company in England.</p>
-				<?php if(get_field('company_reg_number', 'option')): ?>
-					<p>Registered Number: <?php the_field('company_reg_number', 'option'); ?></p>
+				<?php if(get_field('reg_number', 'option')): ?>
+					<p>Registered Number: <?php the_field('reg_number', 'option'); ?></p>
 				<?php endif; ?>
-				<?php if(get_field('company_vat_number', 'option')): ?>
-					<p>VAT Number: <?php the_field('company_vat_number', 'option'); ?></p>
+				<?php if(get_field('vat_number', 'option')): ?>
+					<p>VAT Number: <?php the_field('vat_number', 'option'); ?></p>
 				<?php endif; ?>
 		        <p>&copy; <?php bloginfo('title'); ?> <?php echo date('Y'); ?>. All Rights Reserved</p>
 
