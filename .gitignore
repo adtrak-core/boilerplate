@@ -89,8 +89,7 @@ Thumbs.db
 !safari-pinned-tab.svg
 
 # track acf options
-!acf-buckets.json
-!acf-page-options.json
+!acf-options/
 
 # track these mu-plugins, plugins, and themes
 # add your own entries here
