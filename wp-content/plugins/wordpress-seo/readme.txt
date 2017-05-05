@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Google Search Console, Content analysis, Readability
 Requires at least: 4.6
 Tested up to: 4.7
-Stable tag: 4.5
+Stable tag: 4.7
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.
 
@@ -124,44 +124,30 @@ You'll find answers to many of your questions on [kb.yoast.com](https://kb.yoast
 
 == Changelog ==
 
-= 4.5.0 =
+= 4.7.0 =
 
-Release Date: March 21st, 2017
-
-* Additions
-	* Adds a message about the PHP version for WordPress installations that run on PHP 5.2. The warning also has pointers on how to address this situation. [We have an article about why we are doing this on yoast.com](https://yoa.st/x6).
-
-* Bugfixes
-	* Adds a check for the breadcrumbs-home option to prevent a blank entry being added to the crumbs array, props [codemonkeynorth](https://github.com/codemonkeynorth)
+Release Date: May 2nd, 2017
 
 * Enhancements
-	* Throws a warning in the admin for the RS Head Cleaner plugin, because the plugin cloaks.
-	* Improves copy about Yoast SEO Premium benefits.
-	* Adds link to our knowledge base article about connecting your website to Google Search Console.
-
-= 4.4.0 =
-
-Release date: February 28th, 2017
-
-* Bugfixes:
-	* Fixes a bug where a `span` tag wasn't closed correctly, props [lubobill1990](https://github.com/lubobill1990).
-	* Fixes a bug where there were deprecation warnings shown when an existing author was being updated.
-	* Fixes a bug where the user received an 'insufficient rights' error when the advanced settings are disabled, but an advanced page is visited.
-
-* Enhancements:
-	* Moves the options to disable keyword and content analysis from the general tab to the features tab.
-	* Improves styling of tables so they are viewable on mobile.
-	* Changes the links into shortlinks for the extensions page, helpcenter, facebook settings and premium popup.
-
-= 4.3.0 =
-
-Release Date: February 14th, 2017
+	* Adds transition words for Italian.
+	* Adds a new check in the analysis for the presence of at least one internal link.
 
 * Bugfixes
-    * Fixes the width of the readability column on post overview, props [rikayla](https://github.com/rikayla).
+	* Fixes a bug where the `_yst_is_cornerstone` meta value was not prefixed, causing some themes/plugins to output this meta value.
+	* Fixes a bug where style and script elements were parsed for the prominent words.
+	* Fixes a bug where the cursor pointer was in front of the metabox.
+
+= 4.6.0 =
+
+Release Date: April 11th, 2017
 
 * Enhancements
-    * Improves feedback text for subheading too long assessment.
+	* Improves a language string, props [Sören Wrede](https://github.com/Soean).
+	* Improves the configuration wizard with clear information about the configuration.
+	* Adds the ability to mark posts as cornerstone content.
+
+* Bugfixes
+	* Fixes an issue in combination with WooCommerce 3.0 where the plugins would load incompatible select2 versions.
 
 = Earlier versions =
 
