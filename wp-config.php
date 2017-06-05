@@ -20,23 +20,23 @@
 
 //Local
 if ($_SERVER['HTTP_HOST'] == "dev-server" || $_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "localhost.shared_boilerplate" ) {
-    $dbName = "localhost.shared_boilerplate";
-    $dbUser = "root";
-    $dbPass = "";
+    $dbName = 'localhost.shared_boilerplate';
+    $dbUser = 'root';
+    $dbPass = '';
 	$debug = true;
 }
 //demo
 else if ($_SERVER['HTTP_HOST'] == "demo.adtrakdesign.co.uk" || $_SERVER['HTTP_HOST'] == "www.adtrakdemo.co.uk" || $_SERVER['HTTP_HOST'] == "ad.trak.agency") {
-    $dbName = "";
-    $dbUser = "";
-    $dbPass = "";
+    $dbName = '';
+    $dbUser = '';
+    $dbPass = '';
 	$debug = true;
 }
 //live
 else {
-    $dbName = "";
-    $dbUser = "";
-    $dbPass = "";
+    $dbName = '';
+    $dbUser = '';
+    $dbPass = '';
 	$debug = false;
 }
 
@@ -64,8 +64,10 @@ define('WP_DEBUG', $debug);
 define('WP_POST_REVISIONS', 2);
 
 /**#@+
- * Authentication Unique Keys and Salts.
  * UPDATE THESE! Change these to different unique phrases!
+ * PLEASE UPDATE THESE
+ * IF YOU DON'T UPDATE THESE ALL SITES COULD BE INSECURE
+ * ---------------------------------------------------------
  * You can generate these using the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}
  * You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.
  */
