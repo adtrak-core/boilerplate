@@ -19,27 +19,22 @@ class acf_pro {
 	
 	function __construct() {
 		
+		// constants
+		acf()->define( 'ACF_PRO', true );
+		
+		
 		// update setting
 		acf_update_setting( 'pro', true );
 		acf_update_setting( 'name', __('Advanced Custom Fields PRO', 'acf') );
 		
 
-		// api
-		acf_include('pro/api/api-pro.php');
+		// includes
 		acf_include('pro/api/api-options-page.php');
-		
-		
-		// updates
 		acf_include('pro/core/updates.php');
-			
-			
-		// admin
+		
 		if( is_admin() ) {
 			
-			// options page
 			acf_include('pro/admin/options-page.php');
-			
-			// settings
 			acf_include('pro/admin/settings-updates.php');
 			
 		}
@@ -124,11 +119,7 @@ class acf_pro {
 	
 	function input_admin_enqueue_scripts() {
 		
-		// scripts
 		wp_enqueue_script('acf-pro-input');
-	
-	
-		// styles
 		wp_enqueue_style('acf-pro-input');
 		
 	}
@@ -149,11 +140,7 @@ class acf_pro {
 	
 	function field_group_admin_enqueue_scripts() {
 		
-		// scripts
 		wp_enqueue_script('acf-pro-field-group');
-	
-	
-		// styles
 		wp_enqueue_style('acf-pro-field-group');
 		
 	}

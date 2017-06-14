@@ -389,7 +389,7 @@ class acf_settings_updates {
 	function html() {
 		
 		// load view
-		acf_pro_get_view('settings-updates', $this->view);
+		acf_get_view( dirname(__FILE__) . '/views/settings-updates.php', $this->view);
 		
 	}
 	

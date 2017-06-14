@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit277da096d3c04f10ee45ce79227db81d
+class ComposerStaticInit87fae0ccab18ea7a6bfc3ed5a918ff81
 {
     public static $files = array (
         '995b589e693a50f54393aa31ee1c3763' => __DIR__ . '/..' . '/yoast/whip/src/facades/wordpress.php',
@@ -148,6 +148,7 @@ class ComposerStaticInit277da096d3c04f10ee45ce79227db81d
         'WPSEO_Configuration_Service' => __DIR__ . '/../..' . '/admin/config-ui/class-configuration-service.php',
         'WPSEO_Configuration_Storage' => __DIR__ . '/../..' . '/admin/config-ui/class-configuration-storage.php',
         'WPSEO_Configuration_Structure' => __DIR__ . '/../..' . '/admin/config-ui/class-configuration-structure.php',
+        'WPSEO_Configuration_Translations' => __DIR__ . '/../..' . '/admin/config-ui/class-configuration-translations.php',
         'WPSEO_Cornerstone' => __DIR__ . '/../..' . '/admin/class-cornerstone.php',
         'WPSEO_Cornerstone_Field' => __DIR__ . '/../..' . '/admin/class-cornerstone-field.php',
         'WPSEO_Cornerstone_Filter' => __DIR__ . '/../..' . '/admin/class-cornerstone-filter.php',
@@ -319,8 +320,8 @@ class ComposerStaticInit277da096d3c04f10ee45ce79227db81d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixesPsr0 = ComposerStaticInit277da096d3c04f10ee45ce79227db81d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit277da096d3c04f10ee45ce79227db81d::$classMap;
+            $loader->prefixesPsr0 = ComposerStaticInit87fae0ccab18ea7a6bfc3ed5a918ff81::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit87fae0ccab18ea7a6bfc3ed5a918ff81::$classMap;
 
         }, null, ClassLoader::class);
     }
