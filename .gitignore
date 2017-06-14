@@ -100,6 +100,7 @@ Thumbs.db
 !wp-content/plugins/wp-migrate-db-pro-media-files/
 !wp-content/plugins/adtrak-location-dynamics/
 !wp-content/plugins/adtrak-core/
+!wp-content/plugins/redirection/
 
 !wp-content/themes/adtrak-child/
 !wp-content/themes/adtrak-parent/
