@@ -20,6 +20,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Frequently Asked Questions ==
 
 == Changelog ==
+= 0.9.16 =
+- [Bug] Fixes a minor issue with menu
 
 = 0.9.14 =
 - Adding more width / reducing padding on sidebar. Should stop breaks
@@ -36,7 +38,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 - added in default dashboard widgets
 - added in admin theme to core
 - added in marketing options
-- added in site options placeholder 
+- added in site options placeholder
 
 = 0.2.5 =
 - added in new updater

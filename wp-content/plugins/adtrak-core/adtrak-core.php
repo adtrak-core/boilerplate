@@ -15,7 +15,7 @@
  * Plugin Name: 	Adtrak Core
  * Plugin URI: 		http://github.com/adtrak-core/plugin
  * Description: 	Core functionality for WordPress Development.
- * Version: 		0.9.14
+ * Version: 		0.9.16
  * Author: 			Adtrak
  * Author URI: 		https://adtrak.co.uk
  * License: 		GPL-2.0+
@@ -40,7 +40,7 @@ defined('AC_PLUGIN_URL') or define('AC_PLUGIN_URL', plugin_dir_url( __FILE__ ));
  * The code that runs during plugin activation.
  * This action is documented in classes/Activator.php
  */
-function activate_core() 
+function activate_core()
 {
 	\AdtrakCore\Classes\Activator::activate();
 }
@@ -49,7 +49,7 @@ function activate_core()
  * The code that runs during plugin deactivation.
  * This action is documented in classes/Deactivator.php
  */
-function deactivate_core() 
+function deactivate_core()
 {
 	\AdtrakCore\Classes\Deactivator::deactivate();
 }
@@ -73,7 +73,7 @@ $updater = new $className(
  * @since    1.0.0
  */
 function ac_run_core() {
-	$plugin = \AdtrakCore\Classes\Core::instance(); 
+	$plugin = \AdtrakCore\Classes\Core::instance();
 	$plugin->run();
 }
 

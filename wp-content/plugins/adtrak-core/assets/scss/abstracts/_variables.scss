@@ -1,0 +1,29 @@
+// add colours here. Called in scss by doing color(primary).
+$color: (
+    white: #ffffff,
+	black: #090909,
+	oxfordBlue: #364052,
+	lightGrey: #e0e0e0,
+	silver: #c0c0c0,
+	adtrakOrange: #f15f48,
+	green: #7ad03a,
+	blue: #4ba0d9,
+	teal: #4bd9ac,
+	salmon: #ff8174,
+	concrete: #f2f2f2,
+	ghost: #c5c9d0,
+	charcoal: #222222,
+	pink: #d8877e
+);
+
+// Media Queries
+$size: (
+    max: 1368px
+);
+
+// Fonts
+$primaryFont: 'Open Sans', "sans-serif";
+$headerFont: "sans-serif";
+
+// Anything Else
+$url_0: url(https://www.adtrak.co.uk/wp-content/themes/adtrak.co.uk/images/logos/logo-white.svg);

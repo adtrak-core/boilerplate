@@ -67,7 +67,8 @@ class CookieNotification
 	 */
 	public function enqueue_public_styles() 
 	{
-		wp_enqueue_style('adtrak-cookie', AC_PLUGIN_URL . 'assets/css/cookie-public.css', [], $this->version, 'all');
+		if(! isset($_COOKIE['PrivacyPolicy']) && $_COOKIE['PrivacyPolicy'] == 'closed')
+			wp_enqueue_style('adtrak-cookie', AC_PLUGIN_URL . 'assets/css/cookie-public.css', [], $this->version, 'all');
 	}
 
 	/**
@@ -76,7 +77,7 @@ class CookieNotification
 	 */
 	public function enqueue_public_scripts() 
 	{
-		wp_enqueue_script('adtrak-cookie', AC_PLUGIN_URL . 'assets/js/min/cookie-public-min.js', [ 'jquery' ], $this->version, false);
+		if(! isset($_COOKIE['PrivacyPolicy']) && $_COOKIE['PrivacyPolicy'] == 'closed')	
+			wp_enqueue_script('adtrak-cookie', AC_PLUGIN_URL . 'assets/js/min/cookie-public-min.js', [ 'jquery' ], $this->version, false);
 	}
-
 }
