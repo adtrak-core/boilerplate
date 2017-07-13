@@ -12,10 +12,10 @@ namespace AdtrakCore\Classes;
 
 class CookieNotification
 {
-	public function __construct($version) 
+	public function __construct($version)
 	{
 		$this->version = $version;
-		
+
 		$this->create_page();
 	}
 
@@ -65,9 +65,9 @@ class CookieNotification
 	 * Register the stylesheets for the public-facing side of the site.
 	 * @since    1.0.0
 	 */
-	public function enqueue_public_styles() 
+	public function enqueue_public_styles()
 	{
-		if(! isset($_COOKIE['PrivacyPolicy']) && $_COOKIE['PrivacyPolicy'] == 'closed')
+		if(! isset($_COOKIE['PrivacyPolicy']) || $_COOKIE['PrivacyPolicy'] == 'closed')
 			wp_enqueue_style('adtrak-cookie', AC_PLUGIN_URL . 'assets/css/cookie-public.css', [], $this->version, 'all');
 	}
 
@@ -75,9 +75,9 @@ class CookieNotification
 	 * Register the JavaScript for the public-facing side of the site.
 	 * @since    1.0.0
 	 */
-	public function enqueue_public_scripts() 
+	public function enqueue_public_scripts()
 	{
-		if(! isset($_COOKIE['PrivacyPolicy']) && $_COOKIE['PrivacyPolicy'] == 'closed')	
+		if(! isset($_COOKIE['PrivacyPolicy']) || $_COOKIE['PrivacyPolicy'] == 'closed')
 			wp_enqueue_script('adtrak-cookie', AC_PLUGIN_URL . 'assets/js/min/cookie-public-min.js', [ 'jquery' ], $this->version, false);
 	}
 }
