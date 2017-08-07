@@ -105,10 +105,6 @@
 }
 
 #adminmenuwrap {
-	@media(min-width: 960px) {
-		// width: 205px;
-		// position: fixed;
-	}
 	background: color(charcoal);
 
 	ul#adminmenu {
@@ -128,6 +124,10 @@
 				.wp-menu-image:before,
 				.wp-menu-name {
 					color: color(white);
+				}
+
+				.wp-menu-name {
+					word-break: break-word;					
 				}
 			}
 

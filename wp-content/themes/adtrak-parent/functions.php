@@ -41,16 +41,20 @@ add_action('after_setup_theme', function () {
 /*
  * Set custom excerpt more.
  */
-add_filter('excerpt_more', function () {
-    return '...';
-});
+if (! function_exists('atk_excerpt_more')) {
+    add_filter('excerpt_more', function () {
+        return '...';
+    });
+}
 
 /*
  * Set custom excerpt length.
  */
-add_filter('excerpt_length', function () {
-    return 101;
-});
+if (! function_exists('atk_excerpt_length')) {
+    add_filter('excerpt_length', function () {
+        return 101;
+    });
+}
 
 add_filter('upload_mimes', function($mimes) {
     $mimes['svg'] = 'image/svg+xml';

@@ -871,6 +871,8 @@ img.help_tip {
     #adminmenuwrap ul#adminmenu li a .wp-menu-image:before,
     #adminmenuwrap ul#adminmenu li a .wp-menu-name {
       color: #ffffff; }
+    #adminmenuwrap ul#adminmenu li a .wp-menu-name {
+      word-break: break-word; }
     #adminmenuwrap ul#adminmenu li.wp-menu-separator {
       height: 15px !important; }
     #adminmenuwrap ul#adminmenu li:first-child > a {

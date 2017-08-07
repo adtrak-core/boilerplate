@@ -28,6 +28,16 @@ class Red_Csv_File extends Red_FileIO {
 		}
 	}
 
+	public function get( array $items ) {
+		$lines[] = implode( ',', array( 'source', 'target', 'regex', 'type', 'code', 'match', 'hits', 'title' ) );
+
+		foreach ( $items as $line ) {
+			$lines[] = $this->item_as_csv( $line );
+		}
+
+		return implode( PHP_EOL, $lines );
+	}
+
 	public function item_as_csv( $item ) {
 		$csv = array(
 			$item->get_url(),
@@ -91,12 +101,12 @@ class Red_Csv_File extends Red_FileIO {
 	public function csv_as_item( $csv, $group ) {
 		if ( $csv[ self::CSV_SOURCE ] !== 'source' && $csv[ self::CSV_TARGET ] !== 'target' && count( $csv ) > 1 ) {
 			return array(
-				'source'      => trim( $csv[ self::CSV_SOURCE ] ),
-				'target'      => trim( $csv[ self::CSV_TARGET ] ),
+				'url'         => trim( $csv[ self ::CSV_SOURCE ] ),
+				'action_data' => trim( $csv[ self ::CSV_TARGET ] ),
 				'regex'       => isset( $csv[ self::CSV_REGEX ] ) ? $this->parse_regex( $csv[ self::CSV_REGEX ] ) : $this->is_regex( $csv[ self::CSV_SOURCE ] ),
 				'group_id'    => $group,
-				'match'       => 'url',
-				'red_action'  => 'url',
+				'match_type'  => 'url',
+				'action_type' => 'url',
 				'action_code' => isset( $csv[ self::CSV_CODE ] ) ? $this->get_valid_code( $csv[ self::CSV_CODE ] ) : 301,
 			);
 		}
