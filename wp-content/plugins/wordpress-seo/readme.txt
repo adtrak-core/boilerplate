@@ -5,9 +5,9 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Google Search Console, Content analysis, Readability
 Requires at least: 4.6
-Tested up to: 4.8
-Stable tag: 5.1
-Minimum PHP: 5.2.4
+Tested up to: 4.8.1
+Stable tag: 5.3.3
+Requires PHP: 5.2.4
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.
 
@@ -124,6 +124,61 @@ You'll find answers to many of your questions on [kb.yoast.com](https://kb.yoast
 6. The advanced section of the Yoast SEO meta box.
 
 == Changelog ==
+
+= 5.3.3 =
+
+Release Date: August 28th, 2017
+
+* Bugfixes
+	* Fixes a bug where table listings were not giving expected content, props [Kyle B. Johnson](https://github.com/kjohnson).
+
+= 5.3.2 =
+
+Release Date: August 23th, 2017
+
+* Bugfixes
+	* Fixes a bug where an invalid license notification could be shown in certain situations.
+
+= 5.3.1 =
+
+Release Date: August 22nd, 2017
+
+* Bugfixes
+	* Fixes a bug where "mark as fixed" on the search console page didn't work.
+	* Fixes a bug where the configuration wizard JavaScript file was too large.
+
+= 5.3.0 =
+
+Release Date: August 22nd, 2017
+
+* Enhancements
+	* Adds missing I18n function call to make a string translatable
+	* Adds XML schema for image sitemap, props: [stodorovic](https://github.com/stodorovic)
+	* Adds schema.org meta-data on every page, instead of only on the homepage
+	* Adds the possibility to filter posts by readability score.
+	* Exposes tinyMCEHelper as window.YoastSEO.wp._tinyMCEHelper in JavaScript
+	* Exposes the ReplaceVar class in YoastReplaceVarPlugin as window.YoastReplaceVarPlugin.ReplaceVar in JavaScript
+
+* Bugfixes
+	* Adds sanitization for the Twitter Image meta field
+	* Fixes use of `register_meta` for usage in WordPress 4.6 and higher
+	* Initialize the providers on hook `after_theme_setup` to make sure custom providers are added properly, props: [stodorovic](https://github.com/stodorovic)
+	* Changes the label of the "Bad" score to "Needs improvement" while filtering on SEO or readability scores.
+
+= 5.2.0 =
+
+Release Date: August 8th, 2017
+
+* Enhancements
+	* Added wpseo_pre_adjacent_rel_links filter to bypass built-in rel prev/next functionality.
+	* Introduces classes to allow collecting data in the Premium plugin.
+	* Renamed OnPage.org to Ryte.
+	* Allow WordPress WHIP messages to be dismissed for a period of 4 weeks.
+	* Adds a filter for word combinations that consist of a single one-character word.
+	* Adds aria-current to the onboarding wizard active step.
+
+* Bugfixes
+	* Removes JQMIGRATE JavaScript warnings.
 
 = 5.1.0 =
 

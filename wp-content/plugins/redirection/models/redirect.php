@@ -101,9 +101,23 @@ class Red_Item {
 		return $items;
 	}
 
+	static function get_all() {
+		global $wpdb;
+
+		$rows = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}redirection_items" );
+		$items = array();
+
+		foreach ( (array) $rows as $row ) {
+			$items[] = new Red_Item( $row );
+		}
+
+		return $items;
+	}
+
 	static function sort_urls( $first, $second ) {
-		if ( $first['position'] === $second['position'] )
+		if ( $first['position'] === $second['position'] ) {
 			return 0;
+		}
 
 		return ($first['position'] < $second['position']) ? -1 : 1;
 	}
@@ -303,7 +317,7 @@ class Red_Item {
 		$offset = 0;
 		$where = '';
 
-		if ( isset( $params['orderBy'] ) && in_array( $params['orderBy'], array( 'url', 'last_count', 'last_access' ), true ) ) {
+		if ( isset( $params['orderBy'] ) && in_array( $params['orderBy'], array( 'url', 'last_count', 'last_access', 'position' ), true ) ) {
 			$orderby = $params['orderBy'];
 		}
 
@@ -311,7 +325,7 @@ class Red_Item {
 			$direction = strtoupper( $params['direction'] );
 		}
 
-		if ( isset( $params['filter'] ) && strlen( $params['filter'] ) > 0 ) {
+		if ( isset( $params['filter'] ) && strlen( $params['filter'] ) > 0 && $params['filter'] !== '0' ) {
 			if ( isset( $params['filterBy'] ) && $params['filterBy'] === 'group' ) {
 				$where = $wpdb->prepare( "WHERE group_id=%d", intval( $params['filter'], 10 ) );
 			} else {
@@ -322,7 +336,7 @@ class Red_Item {
 		if ( isset( $params['perPage'] ) ) {
 			$limit = intval( $params['perPage'], 10 );
 			$limit = min( 100, $limit );
-			$limit = max( 10, $limit );
+			$limit = max( 5, $limit );
 		}
 
 		if ( isset( $params['page'] ) ) {
@@ -361,6 +375,7 @@ class Red_Item {
 			'hits' => $this->get_hits(),
 			'regex' => $this->is_regex(),
 			'group_id' => $this->get_group_id(),
+			'position' => $this->get_position(),
 			'last_access' => $this->get_last_hit() > 0 ? date_i18n( get_option( 'date_format' ), $this->get_last_hit() ) : '-',
 			'enabled' => $this->is_enabled(),
 		);
@@ -374,10 +389,11 @@ class Red_Item_Sanitize {
 		$details = array_map( 'trim', $details );
 		$details = array_map( 'stripslashes', $details );
 
-		$data['regex'] = isset( $details['regex'] ) && $details['regex'] === 'true' ? 1 : 0;
+		$data['regex'] = isset( $details['regex'] ) && ( $details['regex'] === 'true' || $details['regex'] === '1' ) ? 1 : 0;
 		$data['title'] = isset( $details['title'] ) ? $details['title'] : null;
-		$data['url'] = $this->get_url( isset( $details['url'] ) ? $details['url'] : $this->auto_generate(), $data['regex'] );
+		$data['url'] = $this->get_url( empty( $details['url'] ) ? $this->auto_generate() : $details['url'], $data['regex'] );
 		$data['group_id'] = $this->get_group( isset( $details['group_id'] ) ? $details['group_id'] : 0 );
+		$data['position'] = $this->get_position( $details );
 
 		$matcher = Red_Match::create( isset( $details['match_type'] ) ? $details['match_type'] : false );
 		if ( ! $matcher ) {
@@ -406,6 +422,14 @@ class Red_Item_Sanitize {
 		}
 
 		return apply_filters( 'redirection_validate_redirect', $data );
+	}
+
+	protected function get_position( $details ) {
+		if ( isset( $details['position'] ) ) {
+			return max( 0, intval( $details['position'], 10 ) );
+		}
+
+		return 0;
 	}
 
 	protected function is_url_type( $type ) {
@@ -469,9 +493,6 @@ class Red_Item_Sanitize {
 		// Make sure that the old URL is relative
 		$url = preg_replace( '@^https?://(.*?)/@', '/', $url );
 		$url = preg_replace( '@^https?://(.*?)$@', '/', $url );
-
-		// No hash
-		$url = preg_replace( '/#.*$/', '', $url );
 
 		// No new lines
 		$url = preg_replace( "/[\r\n\t].*?$/s", '', $url );
