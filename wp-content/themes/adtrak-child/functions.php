@@ -9,6 +9,26 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('fontawesome', 'https://use.fontawesome.com/731f5cd381.js', [], '', true );
 });
 
+// Deactivate some plugins from some pages
+
+/* 
+function remove_unwanted_plugins() {
+    // Turn off map other than coverage area
+    if (!is_page('coverage-area')) {
+        remove_action('wp_head', 'bf_head');
+        remove_action('wp_footer', 'bf_footer', 30);
+    }
+    // Turn forms other than contact page
+    if (!is_page('contact-us')) {
+        wp_dequeue_script('parsleyjs');
+        wp_dequeue_script('forms-front-js');
+    }
+}
+
+add_action('wp_head', 'remove_unwanted_plugins', 1);
+
+*/
+
 /* ========================================================================================================================
 	
 Custom
@@ -23,6 +43,12 @@ add_action('after_setup_theme', function () {
 	add_image_size( 'hero-1200', 1200, 500, true );
 	add_image_size( 'hero-600', 600, 600, true );
 	add_image_size( 'square-350', 350, 350, true );
+
+	// More navs
+
+	register_nav_menus([
+		'secondary' => __('Secondary Menu', 'adtrak')
+	]);
 
 });
 

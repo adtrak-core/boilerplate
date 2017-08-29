@@ -2,7 +2,9 @@
     Navigation (Desktop)
 --------------------------------------------------------------- */
 
-#primary-navigation {
+// Primary 
+
+#menu-primary-menu {
     background: $blanc;
     display: none;
 
@@ -66,7 +68,7 @@
                 float: left;
             }
 
-            .current-menu-item a {
+            .current-menu-item > a {
                 color: $blanc;
                 background: $noir;
             }
@@ -111,4 +113,54 @@
 
     }
 
+}
+
+
+// Secondary
+
+#menu-secondary-menu {
+    display: none;
+    @include bp800 {
+        clear: both;
+        display: block;
+        text-align: right;
+
+        li {
+            display: inline;
+            position: relative;
+
+            &.menu-item-has-children > a:after {
+                content: "\f107";
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                margin-left: -8px;
+                font: 1em/1 FontAwesome;
+            }
+        }
+
+        .current-menu-item a,
+        .current-menu-parent a {
+            color: $blanc;
+            background: lighten($noir,20);
+
+            &:hover {
+                color: $blanc;
+            }
+
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: $noir;
+            padding: 14px 6px;
+            font-size: 1.4rem;
+
+            &:hover {
+                color: $noir;
+            }
+
+        }
+    }
 }

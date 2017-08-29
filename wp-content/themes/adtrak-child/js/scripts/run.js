@@ -7,7 +7,7 @@
 
 		// MMenu (clones for mobile)
 
-		$("#primary-navigation").mmenu(
+		$("#navigation").mmenu(
 			{
 			"offCanvas": {
 				position: "right"
@@ -17,7 +17,12 @@
 			}
 		);
 
+		// Moves the non-cloned top-menu div to the top bar
+
+		$("#menu-secondary-menu").prependTo(".top-bar .container");
+
 		// Back to top
+
 		$("#back-top").hide();
 		$(function () {
 			$(window).scroll(function () {
@@ -36,9 +41,23 @@
 
 		
 		// Toggle location numbers
+
 		$('.js-toggle-location-numbers').click(function(){
 			$('.mobile-top-bar__location-numbers').toggleClass('mobile-top-bar--visible');
 		});
+
+		// Defer loading of iframes and images
+
+		function init() {
+		    var imgDefer = document.querySelectorAll('iframe, img');
+		    for (var i=0; i<imgDefer.length; i++) {
+		        if(imgDefer[i].getAttribute('data-src')) {
+		            imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
+		            imgDefer[i].setAttribute('style','opacity:1;');
+		        }
+		    }
+		}
+		window.onload = init;
 
 	});
 

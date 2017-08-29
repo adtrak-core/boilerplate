@@ -2,18 +2,28 @@
     Navigation (MMenu, Mobile, hides at bp800-1)
 --------------------------------------------------------------- */
 
+// Variables
+
+    $activeBackground          : $noir;
+    $activeColor               : $blanc; 
+
+    // You can change the theme to dark theme rather than amending below
+    // Visit http://mmenu.frebsite.nl/documentation/extensions/themes.html for more info
+    $panelBackground            : #f3f3f3;
+
+// The rest
+
 @include bp800 {
-    #mm-primary-navigation {
+    #mm-navigation {
         display: none;
     }
 }
 
 @media only screen and (max-width: ($medium-width)-1) {
-    .menu:not(#menu-main-nav-1) li.current-menu-item,
-    .menu:not(#menu-main-nav-1) li.current-menu-parent,
-    .sub-menu li.current-menu-item {
-        background: $noir;
-        color: $blanc;
+    .mm-listview > li.current-menu-item > a,
+    .mm-listview > li.current-menu-parent > a {
+        background: $activeBackground;
+        color: $activeColor;
     }
 
 // Default MMenu styles
@@ -326,7 +336,7 @@ li.mm-vertical.mm-opened > .mm-panel {
     right: 20px;
 }
 .mm-menu {
-    background: #f3f3f3;
+    background: $panelBackground;
     border-color: rgba(0, 0, 0, 0.1);
     color: rgba(0, 0, 0, 0.7);
 }

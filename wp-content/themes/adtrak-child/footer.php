@@ -7,12 +7,12 @@
  */
 ?>
 
-	<footer role="contentinfo">
+	<footer>
 		<div class="container">
 			<div class="grid grid3_12">
 				<a href="<?php echo home_url(); ?>">
 					<?php $image = get_field('site_logo','option'); if( !empty($image) ): ?>
-						<img src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
+						<img src="" data-src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
 					<?php endif; ?>
 				</a>
 			</div>
@@ -45,7 +45,7 @@
 				 * 'icon' (as true or false) 
 				 * e.g. for the black icon use get_adtrak_logo('black', true)
 				*/ ?>
-		        <a class="adtrak" href="https://www.adtrak.co.uk" role="outgoing"><?php echo get_adtrak_logo(); ?></a>
+		        <a class="adtrak" href="https://www.adtrak.co.uk"><?php echo get_adtrak_logo(); ?></a>
 		    </div>
 		</div>
 	</footer>

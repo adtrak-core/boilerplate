@@ -44,12 +44,24 @@
 
 	<?php include locate_template('parts/mobile-top-bar.php'); ?>
 
-	<header role="header">
+	<header>
+
+		<div class="top-bar">
+
+			<div class="container">
+
+				<?php /* run.js will move the secondary nav in here on desktop */ ?>
+			
+			</div>
+
+		</div>
+
 		<div class="container">
 
 			<a href="<?php echo home_url(); ?>">
 				<?php $image = get_field('site_logo','option'); if( !empty($image) ): ?>
-					<img class="logo" src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
+					<?php /* Logo is deferred - see run.js */ ?>
+					<img class="logo" src="" data-src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
 				<?php endif; ?>
 			</a>
 
@@ -57,11 +69,22 @@
 
 	    </div>
 
-		<nav id="primary-navigation" role="navigation">
-			<?php wp_nav_menu([
-				'menu' => 'Primary Menu', 
-				'menu_class' => "nav nav--header", 
-				'container' => ''
-			]); ?>
+		<nav id="navigation">
+			<div>
+				<?php 
+				// Both primary and secondary menus for Mmenu
+					wp_nav_menu([
+						'menu' => 'Primary Menu', 
+						'menu_class' => "menu-primary", 
+						'container' => ''
+					]);
+					wp_nav_menu([
+						'menu' => 'Secondary Menu', 
+						'menu_class' => "menu-secondary", 
+						'container' => ''
+					]);
+				?>
+			</div>
 		</nav>
+
 	</header>

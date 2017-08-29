@@ -2,7 +2,11 @@
     Header
 --------------------------------------------------------------- */
 
-header[role="header"] {
+.top-bar {
+    background: $blanc;
+}
+
+header {
     background: #e1e1e1;
 
     &:before {

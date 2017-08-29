@@ -23,3 +23,8 @@ body {
 	max-width: $full-width;
 	margin: 0 auto;
 }
+
+/* Hides all images with data-src - good for deferring images */
+[data-src] {
+    opacity: 0;
+}
