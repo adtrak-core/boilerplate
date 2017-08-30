@@ -43,7 +43,7 @@
 		// Toggle location numbers
 
 		$('.js-toggle-location-numbers').click(function(){
-			$('.mobile-top-bar__location-numbers').toggleClass('mobile-top-bar--visible');
+			$('.location-numbers').toggleClass('location-numbers-visible');
 		});
 
 		// Defer loading of iframes and images

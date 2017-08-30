@@ -11,6 +11,7 @@ sites style will go.
 @import
     'base/reset',
 	'base/core',
+	'base/grid-spacing',
     'base/typography';
 
 @import
@@ -20,8 +21,6 @@ sites style will go.
 
 @import
 	'layout/mobile-top-bar',
-	'layout/grid',
-	'layout/spacing',
 	'layout/header',
 	'layout/mmenu',
 	'layout/navigation',
@@ -32,5 +31,4 @@ sites style will go.
 	'layout/footer';
 
 @import
-	'pages/contact',
-	'pages/news';
+	'pages/contact';

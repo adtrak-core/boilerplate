@@ -8,21 +8,21 @@
 
 get_header(); ?>
 
-	<main role="main" class="site-content container">
+	<main class="site-content container">
 
-			<article class="grid grid8_12">
+		<article class="grid grid12_12">
 
-				<div class="pad-1-1 copy">
+			<div class="pad-1-1 copy">
 
-					<h1>Sorry!</h1>
+				<h1>Sorry!</h1>
 
-					<p>This page can't be found.</p>
+				<p>This page can't be found.</p>
 
-					<p><a href="<?php echo site_url('/'); ?>">Please go home</a></p>
+				<p><a href="<?php echo site_url('/'); ?>">Please go home</a></p>
 
-				</div>
+			</div>
 
-			</article>
+		</article>
 
 	</main>
 	

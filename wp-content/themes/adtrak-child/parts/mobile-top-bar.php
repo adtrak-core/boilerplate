@@ -1,12 +1,26 @@
 <div class="mobile-top-bar Fixed">
 
-    <?php do_action("ld_mobile_top", "Call us"); ?>
+	<span class="single-number"><?php do_action('ld_default', false); ?></span>
 
-	<a class="mobile-top-bar__btn mobile-top-bar__menu menu-btn" href="#navigation"><i class="fa fa-bars"></i> Menu</a>
+	<?php
 
-	<div class="mobile-top-bar__location-numbers">
-			<?php do_action("ld_default"); ?>
-			<?php do_action("ld_list", false, "inline"); ?>
-	</div>
+		/* 
+
+		---------------------------------------------------------------------------------------
+		Output the drop down trigger and drop down list
+		---------------------------------------------------------------------------------------
+
+		    <?php do_action("ld_mobile_top", "Call us today <i class='fa fa-caret-down' aria-hidden='true'></i>"); ?>
+
+			<div class="location-numbers">
+				<?php do_action("ld_default",true); ?>
+				<?php do_action("ld_list", false, "inline"); ?>
+			</div>
+
+		*/
+
+	?>
+    
+	<a class="menu-btn" href="#navigation"><i class="fa fa-bars"></i> Menu</a>
 
 </div>

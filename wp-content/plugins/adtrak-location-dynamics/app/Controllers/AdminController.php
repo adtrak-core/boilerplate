@@ -25,7 +25,7 @@ class AdminController
 		add_menu_page ( 
 			'Location Dynamics',
 			'Location Dynamics',
-			'edit_posts',  
+			'edit_pages',  
 			'adtrak-location-dynamics',
 			[$this, 'displayNumbers']
 		);
@@ -87,10 +87,13 @@ class AdminController
 
 		}
 
-		// dd($dynamics);
+		$uknumber = $dynamics['dynamics'][0];
+
+		unset($dynamics['dynamics'][0]);
 
 		# Show the view with numbers
 		View::render('admin/dashboard.twig', [
+			'uknumber' => $uknumber,
 			'numbers' => $dynamics
 		]);
 	}

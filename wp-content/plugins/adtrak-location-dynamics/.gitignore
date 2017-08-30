@@ -1,2 +1,5 @@
 composer.lock
 .idea
+/app/Controllers/.DS_Store
+/app/.DS_Store
+/.DS_Store

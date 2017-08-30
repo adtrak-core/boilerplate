@@ -13,7 +13,7 @@
     include locate_template('parts/buckets.php');
 ?>
 
-	<main role="main" class="site-content container">
+	<main class="site-content container">
 
 		<?php if (have_posts()): while (have_posts()): the_post(); ?>
 
@@ -29,6 +29,8 @@
 			</article>
 
 			<aside class="grid grid4_12">
+
+				<?php get_sidebar(); ?>
 			
 			</aside>
 	

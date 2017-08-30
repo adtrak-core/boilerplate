@@ -40,7 +40,6 @@ class View
 			'auto_reload' 		=> true,
             'strict_variables' 	=> false,
             'autoescape' 		=> true,
-			'cache' 			=> content_directory() . '/twig_cache',
 			'debug'				=> true
 		];
 
