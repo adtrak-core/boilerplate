@@ -34,7 +34,7 @@ class WPMDBPro_Media_Files extends WPMDBPro_Addon {
 		$this->plugin_slug    = 'wp-migrate-db-pro-media-files';
 		$this->plugin_version = $GLOBALS['wpmdb_meta']['wp-migrate-db-pro-media-files']['version'];
 
-		if ( ! $this->meets_version_requirements( '1.7.1' ) ) {
+		if ( ! $this->meets_version_requirements( '1.8' ) ) {
 			return;
 		}
 

@@ -1,4 +1,4 @@
-<div class="option-section" style="display: block;">
+<div class="option-section exclude-post-types-options" style="display: block;">
 	<label for="exclude-post-types" class="exclude-post-types-checkbox checkbox-label">
 		<input type="checkbox" id="exclude-post-types" value="1" autocomplete="off" name="exclude_post_types"<?php $this->maybe_checked( $loaded_profile['exclude_post_types'] ); ?> />
 		<?php _e( 'Exclude Post Types', 'wp-migrate-db' ); ?>
@@ -8,8 +8,8 @@
 		<div class="select-post-types-wrap select-wrap">
 			<div class="exclude-post-types-warning" style="display: none; opacity: 0;">
 				<p>
-					<span class="migrate-msg"><?php _e( 'WARNING: All of the following post types will be absent in the destination posts table after migration:', 'wp-migrate-db' ); ?></span>
-					<span class="find-replace-msg"><?php _e( 'WARNING: The following post types will not be included in the find &amp; replace:', 'wp-migrate-db' ); ?></span>
+					<span class="action-text push pull savefile"><?php _e( 'WARNING: All of the following post types will be absent in the destination posts table after migration:', 'wp-migrate-db' ); ?></span>
+					<span class="action-text find_replace import"><?php _e( 'WARNING: The following post types will not be included in the find &amp; replace:', 'wp-migrate-db' ); ?></span>
 					<br>
 					<span class="excluded-post-types">
 						<?php

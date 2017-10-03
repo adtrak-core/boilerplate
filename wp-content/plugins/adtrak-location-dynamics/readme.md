@@ -1,6 +1,10 @@
 # Adtrak Location Dynamics
 ## Changelog
 
+### v3.3.2
+- [Bug] Fixed slashes appearing in fields
+- [Bug] Fixed UK number Location Label causing issues
+
 ### v3.3.1
 - [Bug] Fixed shortcodes not defaulting to linked
 

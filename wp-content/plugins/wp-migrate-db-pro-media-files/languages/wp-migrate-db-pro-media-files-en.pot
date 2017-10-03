@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-migrate-db-pro-media-files\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2016-12-15 11:23-0800\n"
+"POT-Creation-Date: 2017-09-14 15:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,7 @@ msgid "Could not download file: %1$s - %2$s"
 msgstr ""
 
 #: class/wpmdbpro-media-files-local.php:238
-#: class/wpmdbpro-media-files-remote.php:240
+#: class/wpmdbpro-media-files-remote.php:244
 #, php-format
 msgid "Error attempting to create required directory: %s"
 msgstr ""
@@ -69,21 +69,21 @@ msgstr ""
 msgid "Could not create Temporary file."
 msgstr ""
 
-#: class/wpmdbpro-media-files-remote.php:219
+#: class/wpmdbpro-media-files-remote.php:223
 msgid "$_FILES is empty, the upload appears to have failed"
 msgstr ""
 
-#: class/wpmdbpro-media-files-remote.php:249
+#: class/wpmdbpro-media-files-remote.php:253
 #, php-format
 msgid ""
 "A problem occurred when attempting to move the temp file \"%1$s\" to \"%2$s\""
 msgstr ""
 
-#: class/wpmdbpro-media-files-remote.php:264
+#: class/wpmdbpro-media-files-remote.php:268
 msgid "Failed attempting to respond to push request"
 msgstr ""
 
-#: class/wpmdbpro-media-files-remote.php:424
+#: class/wpmdbpro-media-files-remote.php:428
 msgid "There were errors when removing local media files from the remote site"
 msgstr ""
 
@@ -179,8 +179,9 @@ msgid ""
 "Compare remote and local media files determining what files are missing or "
 "have been updated and need to be uploaded. Great for syncing two Media "
 "Libraries that only differ a little. For more details, see the <a href="
-"\"https://deliciousbrains.com/wp-migrate-db-pro/doc/media-files-addon\" "
-"target=\"_blank\">Media Files doc</a>."
+"\"https://deliciousbrains.com/wp-migrate-db-pro/doc/media-files-addon?"
+"utm_campaign=addons%2Binstall&utm_source=MDB%2BPaid&utm_medium=insideplugin"
+"\" target=\"_blank\">Media Files doc</a>."
 msgstr ""
 
 #: template/migrate.php:31
@@ -192,8 +193,9 @@ msgid ""
 "Compare remote and local media files determining what files are missing or "
 "have been updated and need to be downloaded. Great for syncing two Media "
 "Libraries that only differ a little. For more details, see the <a href="
-"\"https://deliciousbrains.com/wp-migrate-db-pro/doc/media-files-addon\" "
-"target=\"_blank\">Media Files doc</a>."
+"\"https://deliciousbrains.com/wp-migrate-db-pro/doc/media-files-addon?"
+"utm_campaign=addons%2Binstall&utm_source=MDB%2BPaid&utm_medium=insideplugin"
+"\" target=\"_blank\">Media Files doc</a>."
 msgstr ""
 
 #: template/migrate.php:43

@@ -4,6 +4,7 @@
 		<span class="action-text pull"><?php _e( 'Backup the local database before replacing it', 'wp-migrate-db' ); ?></span>
 		<span class="action-text push"><?php _e( 'Backup the remote database before replacing it', 'wp-migrate-db' ); ?></span>
 		<span class="action-text find_replace"><?php _e( 'Backup the database before running the find &amp; replace', 'wp-migrate-db' ); ?></span>
+		<span class="action-text import"><?php _e( 'Backup the database before running the import', 'wp-migrate-db' ); ?></span>
 		<br/>
 		<span class="option-description backup-description"><?php _e( 'An SQL file will be saved to', 'wp-migrate-db' ); ?> <span class="uploads-dir"><?php echo $this->get_short_uploads_dir(); ?></span></span>
 	</label>
@@ -19,7 +20,8 @@
 			<li>
 				<label for="backup-selected">
 					<input type="radio" id="backup-selected" value="backup_selected" name="backup_option"<?php echo( $loaded_profile['backup_option'] == 'backup_selected' ? ' checked="checked"' : '' ); ?> >
-					<?php _e( 'Backup only tables selected for migration', 'wp-migrate-db' ); ?>
+					<span class="action-text pull push find_replace"><?php _e( 'Backup only tables selected for migration', 'wp-migrate-db' ); ?></span>
+					<span class="action-text import"><?php _e( 'Backup only the tables that will be replaced during the import', 'wp-migrate-db' ); ?></span>
 				</label>
 			</li>
 			<li>
@@ -49,5 +51,14 @@
 			<a href="#" class="multiselect-invert-selection js-action-link"><?php _e( 'Invert Selection', 'wp-migrate-db' ); ?></a>
 		</div>
 	</div>
-	<p class="backup-option-disabled inline-message error-notice notification-message" style="display: none;"><?php printf( __( 'The backup option has been disabled as your local uploads directory is currently not writeable. The following directory should have 755 permissions: <span class="upload-directory-location">%s</span></p>', 'wp-migrate-db' ), $this->get_upload_info( 'path' ) ); ?>
+	<div class="backup-option-disabled inline-message error-notice notification-message" style="display: none;">
+		<p class="action-text pull find_replace import">
+			<?php _e( 'The backup option has been disabled because the local uploads directory is not writable.', 'wp-migrate-db' ); ?>
+		</p>
+		<p class="action-text push">
+			<?php _e( 'The backup option has been disabled because the remote uploads directory is not writable.', 'wp-migrate-db' ); ?>
+		</p>
+		<p><?php printf( __( 'We can\'t save the backup to the following folder: <br><span class="upload-directory-location">%s</span>' ), $this->get_upload_info( 'path' ) ); ?></p>
+		<p><?php _e( 'Please adjust the permissions on this folder. <a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/uploads-folder-permissions/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin" target="_blank">See our documentation for more information »</a>', 'wp-migrate-db' ); ?></p>
+	</div>
 </div>

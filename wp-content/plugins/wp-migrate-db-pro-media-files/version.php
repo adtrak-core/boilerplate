@@ -1,2 +1,2 @@
 <?php
-$GLOBALS['wpmdb_meta']['wp-migrate-db-pro-media-files']['version'] = '1.4.7';
+$GLOBALS['wpmdb_meta']['wp-migrate-db-pro-media-files']['version'] = '1.4.8';

@@ -24,14 +24,14 @@
 						<?php _e( 'Compare then upload', 'wp-migrate-db-pro-media-files' ); ?>
 						<a href="#" class="general-helper replace-guid-helper js-action-link"></a>
 						<div class="mf-compare-message helper-message">
-							<?php _e( 'Compare remote and local media files determining what files are missing or have been updated and need to be uploaded. Great for syncing two Media Libraries that only differ a little. For more details, see the <a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/media-files-addon" target="_blank">Media Files doc</a>.', 'wp-migrate-db' ); ?>
+							<?php _e( 'Compare remote and local media files determining what files are missing or have been updated and need to be uploaded. Great for syncing two Media Libraries that only differ a little. For more details, see the <a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/media-files-addon?utm_campaign=addons%2Binstall&utm_source=MDB%2BPaid&utm_medium=insideplugin" target="_blank">Media Files doc</a>.', 'wp-migrate-db' ); ?>
 						</div>
 					</span>
 					<span class="action-text pull">
 						<?php _e( 'Compare then download', 'wp-migrate-db-pro-media-files' ); ?>
 						<a href="#" class="general-helper replace-guid-helper js-action-link"></a>
 						<div class="mf-compare-message helper-message">
-							<?php _e( 'Compare remote and local media files determining what files are missing or have been updated and need to be downloaded. Great for syncing two Media Libraries that only differ a little. For more details, see the <a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/media-files-addon" target="_blank">Media Files doc</a>.', 'wp-migrate-db' ); ?>
+							<?php _e( 'Compare remote and local media files determining what files are missing or have been updated and need to be downloaded. Great for syncing two Media Libraries that only differ a little. For more details, see the <a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/media-files-addon?utm_campaign=addons%2Binstall&utm_source=MDB%2BPaid&utm_medium=insideplugin" target="_blank">Media Files doc</a>.', 'wp-migrate-db' ); ?>
 						</div>
 					</span>
 				</label>

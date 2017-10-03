@@ -20,6 +20,7 @@ class FrontController
 
     /**
     * Create the shortcodes
+    * @return void
     */
     public function addShortcodes()
     {
@@ -30,8 +31,12 @@ class FrontController
     }
 
     /**
-    * Code to show a number or dropdown button
-    */
+     * Code to show a number or dropdown button
+     *
+     * @param string $text
+     * @param boolean $linked
+     * @return void
+     */
     public function ld_mobile_top($text, $linked = true)
     {
         # Get dynamics data from database
@@ -79,8 +84,10 @@ class FrontController
     }
 
     /**
-    * Get if GET is set and set a cookie for 30 days
-    */
+     * Get if GET is set and set a cookie for 30 days
+     *
+     * @return void
+     */
     public function getCookie()
     {
         if (isset($_GET['a'])) {
@@ -90,7 +97,7 @@ class FrontController
 
     /**
     *	Gets and returns insights js code
-    * 	@return mixed
+    * 	@return void
     */
     public function getInsightCode()
     {
@@ -109,16 +116,22 @@ class FrontController
     }
 
     /**
-    * Passthrough for the ld_single shortcode
-    */
+     * Passthrough for the ld_single shortcode
+     *
+     * @param array $atts
+     * @return void
+     */
     public function ld_location_shortcode($atts)
     {
         return $this->ld_location(true);
     }
 
     /**
-    * ld_single action which displays a single number for a given lcoation
-    */
+     * ld_single action which displays a single number for a given lcoation
+     *
+     * @param boolean $short
+     * @return void
+     */
     public function ld_location($short = false)
     {
         ob_start();
@@ -152,8 +165,11 @@ class FrontController
     }
 
     /**
-    * Passthrough for the ld_single shortcode
-    */
+     * Passthrough for the ld_single shortcode
+     *
+     * @param array $atts
+     * @return void
+     */
     public function ld_single_shortcode($atts)
     {
         if (!isset($atts['location'])) {
@@ -169,8 +185,14 @@ class FrontController
     }
 
     /**
-    * ld_single action which displays a single number for a given lcoation
-    */
+     * ld_single action which displays a single number for a given lcoation
+     *
+     * @param string $location
+     * @param boolean $calltag
+     * @param boolean $linked
+     * @param boolean $short
+     * @return void
+     */
     public function ld_single($location = null, $calltag = false, $linked = true, $short = false)
     {
         ob_start();
@@ -240,8 +262,11 @@ class FrontController
     }
 
     /**
-    * Passthrough for the ld_default shortcode
-    */
+     * Passthrough for the ld_default shortcode
+     *
+     * @param array $atts
+     * @return void
+     */
     public function ld_default_shortcode($atts)
     {
         if (empty($atts)) {
@@ -257,8 +282,13 @@ class FrontController
     }
 
     /**
-    * Function to work out and show the default number
-    */
+     * Function to work out and show the default number
+     *
+     * @param boolean $calltag
+     * @param boolean $linked
+     * @param boolean $short
+     * @return void
+     */
     public function ld_default($calltag, $linked = true, $short = false)
     {
         ob_start();
@@ -328,8 +358,11 @@ class FrontController
     }
 
     /**
-    * Passthrough for the ld_list shortcode
-    */
+     * Passthrough for the ld_list shortcode
+     *
+     * @param array $atts
+     * @return void
+     */
     public function ld_list_shortcode($atts)
     {
         if (!isset($atts['ppc'])) {
@@ -345,8 +378,14 @@ class FrontController
     }
 
     /**
-    * Function to show a number list excluding uk
-    */
+     * Function to show a number list excluding uk
+     *
+     * @param boolean $ppc
+     * @param string $listType
+     * @param string $listLabel
+     * @param boolean $short
+     * @return void
+     */
     public function ld_list($ppc, $listType = null, $listLabel = null, $short = false)
     {
         ob_start();
@@ -482,8 +521,15 @@ class FrontController
     }
 
     /**
-    * Function to build a number based on given information
-    */
+     * Function to build a number based on given information
+     *
+     * @param array $numbers
+     * @param string $location
+     * @param string $type
+     * @param boolean $calltag
+     * @param boolean $linked
+     * @return void
+     */
     public function buildNumber($numbers, $location, $type, $calltag, $linked = true)
     {
         if (!empty($numbers[$location]['insights'])) {

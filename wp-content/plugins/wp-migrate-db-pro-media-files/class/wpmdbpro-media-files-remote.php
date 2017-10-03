@@ -66,8 +66,12 @@ class WPMDBPro_Media_Files_Remote extends WPMDBPro_Media_Files_Base {
 			}
 		}
 
+		if ( ! filter_var( $upload_url, FILTER_VALIDATE_URL ) ) {
+			$upload_url = home_url() . $upload_url;
+		}
+
 		$return['remote_total_attachments'] = $this->get_local_attachments_count();
-		$return['remote_uploads_url']       = $upload_url;
+		$return['remote_uploads_url']       = apply_filters( 'wpmdbmf_remote_wp_content_url', $upload_url );
 		$return['blogs']                    = serialize( $this->get_blogs() );
 		$return['remote_max_upload_size']   = $this->get_max_upload_size();
 
