@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the public-post-preview-configurator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: public-post-preview-configurator 1.0.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-10 21:35+0100\n"
+"PO-Revision-Date: 2017-02-10 21:38+0100\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/admin/class-public-post-preview-configurator-admin.php:94
+#: src/admin/class-public-post-preview-configurator-admin.php:95
+msgid "Public Post Preview Configurator"
+msgstr "Konfigurator für Öffentliche Vorschau"
+
+#: src/admin/class-public-post-preview-configurator-admin.php:121
+#, php-format
+msgctxt "Error message"
+msgid "Invalid value for '%s'. Must be a positive integer."
+msgstr "Ungültiger Wert für '%s'. Positive Ganzzahl erwartet."
+
+#: src/admin/class-public-post-preview-configurator-admin.php:122
+#: src/admin/views/admin.php:27
+msgid "Expiration hours"
+msgstr "Gültigkeit in Stunden"
+
+#: src/admin/class-public-post-preview-configurator-admin.php:145
+msgctxt "Link from plugin page to settings"
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: src/admin/views/admin.php:30
+msgctxt "Explanation text for input field"
+msgid "Expiration of the preview link in hours (default = 48)"
+msgstr "Gültigkeit des Vorschau-Links in Stunden (Default = 48)"
+
+#: Project description
+msgid ""
+"Enables you to configure 'public post preview' plugin with a user interface."
+msgstr ""
+"Ermöglicht die Konfiguration des Plugins 'Öffentliche Vorschau' per "
+"Benutzeroberfläche."
