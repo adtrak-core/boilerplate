@@ -3,10 +3,10 @@
 # By default all files are ignored.  You'll need to whitelist
 # any mu-plugins, plugins, or themes you want to include in the repo.
 #
-# To ignore uncommitted changes in a file that is already tracked, use 
+# To ignore uncommitted changes in a file that is already tracked, use
 # git update-index --assume-unchanged
 #
-# To stop tracking a file that is currently tracked, use 
+# To stop tracking a file that is currently tracked, use
 # git rm --cached
 # -----------------------------------------------------------------
 
@@ -101,6 +101,8 @@ Thumbs.db
 !wp-content/plugins/adtrak-location-dynamics/
 !wp-content/plugins/adtrak-core/
 !wp-content/plugins/redirection/
+!wp-content/plugins/public-post-preview/
+!wp-content/plugins/public-post-preview-configurator/
 
 !wp-content/themes/adtrak-child/
 !wp-content/themes/adtrak-parent/
