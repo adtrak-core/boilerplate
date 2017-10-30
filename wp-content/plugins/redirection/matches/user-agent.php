@@ -1,6 +1,11 @@
 <?php
 
 class Agent_Match extends Red_Match {
+	public $agent;
+	public $regex;
+	public $url_from;
+	public $url_notfrom;
+
 	function name() {
 		return __( 'URL and user agent', 'redirection' );
 	}
@@ -42,5 +47,22 @@ class Agent_Match extends Red_Match {
 		}
 
 		return $target;
+	}
+
+	public function get_data() {
+		return array(
+			'url_from' => $this->url_from,
+			'url_notfrom' => $this->url_notfrom,
+			'regex' => $this->regex,
+			'agent' => $this->agent,
+		);
+	}
+
+	public function load( $values ) {
+		$values = unserialize( $values );
+		$this->url_from = $values['url_from'];
+		$this->url_notfrom = $values['url_notfrom'];
+		$this->regex = $values['regex'];
+		$this->agent = $values['agent'];
 	}
 }

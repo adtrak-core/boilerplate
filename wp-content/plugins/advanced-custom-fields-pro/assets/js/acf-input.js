@@ -2288,6 +2288,39 @@ var acf;
 		},
 		
 		
+		/**
+		*  esc_html
+		*
+		*  This function will escape HTML characters for safe use
+		*
+		*  @source	https://stackoverflow.com/questions/24816/escaping-html-strings-with-jquery
+		*  @date	20/9/17
+		*  @since	5.6.3
+		*
+		*  @param	n/a
+		*  @return	n/a
+		*/
+		
+		esc_html: function( string ){
+			
+			var entityMap = {
+			  '&': '&amp;',
+			  '<': '&lt;',
+			  '>': '&gt;',
+			  '"': '&quot;',
+			  "'": '&#39;',
+			  '/': '&#x2F;',
+			  '`': '&#x60;',
+			  '=': '&#x3D;'
+			};
+			
+			return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+				return entityMap[s];
+			});
+
+		},
+		
+		
 		/*
 		*  render_select
 		*
@@ -2344,7 +2377,7 @@ var acf;
 				
 				
 				// append select
-				$optgroup.append( '<option value="' + item.value + '">' + item.label + '</option>' );
+				$optgroup.append( '<option value="' + item.value + '">' + acf.esc_html(item.label) + '</option>' );
 				
 				
 				// selectedIndex
@@ -4388,6 +4421,65 @@ var acf;
 
 (function($){
 	
+	acf.fields.button_group = acf.field.extend({
+		
+		type: 'button_group',
+		$div: null,
+		
+		events: {
+			'click input[type="radio"]': 'click'
+		},
+		
+		focus: function(){
+			
+			// focus on $select
+			this.$div = this.$field.find('.acf-button-group');
+			
+			
+			// get options
+			this.o = acf.get_data(this.$div, {
+				allow_null: 0
+			});
+			
+		},
+		
+		click: function( e ){
+			
+			// vars
+			var $radio = e.$el;
+			var $label = $radio.parent('label');
+			var selected = $label.hasClass('selected');
+				
+				
+			// remove previous selected
+			this.$div.find('.selected').removeClass('selected');
+				
+			
+			// add active class
+			$label.addClass('selected');
+			
+			
+			// allow null
+			if( this.o.allow_null && selected ) {
+				
+				// unselect
+				e.$el.prop('checked', false);
+				$label.removeClass('selected');
+				
+				
+				// trigger change
+				e.$el.trigger('change');
+				
+			}
+			
+		}
+		
+	});	
+
+})(jQuery);
+
+(function($){
+	
 	acf.fields.checkbox = acf.field.extend({
 		
 		type: 'checkbox',
@@ -5023,7 +5115,7 @@ var acf;
 			
 			
 			// input with :checked
-			if( type == 'true_false' || type == 'checkbox' || type == 'radio' ) {
+			if( type == 'true_false' || type == 'checkbox' || type == 'radio' || type == 'button_group' ) {
 				
 				match = this.calculate_checkbox( rule, $trigger );
 	        
@@ -11406,24 +11498,20 @@ var acf;
 		active: 1,
 		
 		actions: {
-			'add_field_error': 'add_field_error'
+			'invalid_field': 'invalid_field',
 		},
 		
-		add_field_error: function( $field ){
+		invalid_field: function( $field ){
 			
 			// bail early if already focused
 			if( !this.active ) {
-				
 				return;
-				
 			}
 			
 			
 			// bail early if not hidden by tab
 			if( !$field.hasClass('hidden-by-tab') ) {
-				
 				return;
-				
 			}
 			
 			
@@ -11826,7 +11914,11 @@ var acf;
 			
 			
 			// get options
-			this.o = acf.get_data( this.$el );
+			this.o = acf.get_data(this.$el, {
+				save: '',
+				type: '',
+				taxonomy: ''
+			});
 			
 			
 			// extra
@@ -12330,23 +12422,51 @@ var acf;
 		
 		ready: function( $el ){
 			
+			// vars
+			var $inputs = $('.acf-field input, .acf-field textarea, .acf-field select');
+			
+			
+			// bail early if no inputs
+			if( !$inputs.length ) return;
+			
+			
 			// reference
-			$el.find('.acf-field input').filter('[type="number"], [type="email"], [type="url"]').on('invalid', function( e ){
+			var self = this;
+			
+			
+			// event
+			$inputs.on('invalid', function( e ){
 				
-				// prvent defual
-				// fixes chrome bug where 'hidden-by-tab' field throws focus error
+				// vars
+				var $input = $(this);
+				var $field = acf.get_field_wrap( $input );
+				
+				
+				// action
+				acf.do_action('invalid', $input);
+				acf.do_action('invalid_field', $field);
+				
+				
+				// save draft (ignore validation)
+				if( acf.validation.ignore ) return;
+				
+				
+				// prevent default
+				// - prevents browser error message
+				// - also fixes chrome bug where 'hidden-by-tab' field throws focus error
 				e.preventDefault();
 				
 				
 				// append to errors
 				acf.validation.errors.push({
-					input: $(this).attr('name'),
+					input: $input.attr('name'),
 					message: e.target.validationMessage
 				});
 				
 				
-				// run validation
-				acf.validation.fetch( $(this).closest('form') );
+				// invalid event has prevented the form from submitting
+				// trigger acf validation fetch (safe to call multiple times)
+				acf.validation.fetch( $input.closest('form') );
 			
 			});
 			
@@ -12464,9 +12584,65 @@ var acf;
 		
 		click_ignore: function( e ) {
 			
+			// reference
+			var self = this;
+			
+			
+			// vars
 			this.ignore = 1;
 			this.$trigger = e.$el;
+			this.$form = e.$el.closest('form');
 			
+			
+			// remove error message
+			$('.'+this.message_class).each(function(){
+				acf.remove_el( $(this) );
+			});
+			
+			
+			// ignore required inputs
+			this.ignore_required_inputs();
+			
+			
+			// maybe show errors
+			setTimeout(function(){
+				self.ignore = 0;
+			}, 100);
+			
+		},
+		
+		
+		/**
+		*  ignore_required_inputs
+		*
+		*  This function will temporarily remove the 'required' attribute from all ACF inputs
+		*
+		*  @date	23/10/17
+		*  @since	5.6.3
+		*
+		*  @param	n/a
+		*  @return	n/a
+		*/
+		
+		ignore_required_inputs: function(){
+			
+			// vars
+			var $inputs = $('.acf-field input[required], .acf-field textarea[required], .acf-field select[required]');
+			
+			
+			// bail early if no inputs
+			if( !$inputs.length ) return;
+			
+			
+			// remove required
+			$inputs.prop('required', false);
+			
+			
+			// timeout
+			setTimeout(function(){
+				$inputs.prop('required', true);
+			}, 100);
+				
 		},
 		
 		
@@ -12741,8 +12917,6 @@ var acf;
 			if( !this.valid ) return;
 			
 			
-			
-			
 			// update ignore (allow form submit to not run validation)
 			this.ignore = 1;
 				
@@ -12840,95 +13014,97 @@ var acf;
 			this.$trigger = null;
 			
 			
+			// display errors
+			this.display_errors( json.errors, $form );
+			
+		},
+		
+		
+		/**
+		*  display_errors
+		*
+		*  This function will display errors
+		*
+		*  @date	23/10/17
+		*  @since	5.6.3
+		*
+		*  @param	array errors
+		*  @return	n/a
+		*/
+		
+		display_errors: function( errors, $form ){
+			
+			// bail early if no errors
+			if( !errors || !errors.length ) return;
+			
+			
 			// vars
-			var $scrollTo = null,
-				count = 0,
-				message = acf._e('validation_failed');
+			var $message = $form.children('.acf-error-message');
+			var message = acf._e('validation_failed');
+			var count = 0;
+			var $scrollTo = null;
 			
 			
-			// show field error messages
-			if( json.errors && json.errors.length > 0 ) {
+			// loop
+			for( i = 0; i < errors.length; i++ ) {
 				
-				for( var i in json.errors ) {
-					
-					// get error
-					var error = json.errors[ i ];
-					
-					
-					// is error for a specific field?
-					if( !error.input ) {
-						
-						// update message
-						message += '. ' + error.message;
-						
-						
-						// ignore following functionality
-						continue;
-						
-					}
-					
-					
-					// get input
-					var $input = $form.find('[name="' + error.input + '"]').first();
-					
-					
-					// if $_POST value was an array, this $input may not exist
-					if( !$input.exists() ) {
-						
-						$input = $form.find('[name^="' + error.input + '"]').first();
-						
-					}
-					
-					
-					// bail early if input doesn't exist
-					if( !$input.exists() ) continue;
-					
-					
-					// increase
-					count++;
-					
-					
-					// now get field
-					var $field = acf.get_field_wrap( $input );
-					
-					
-					// add error
-					this.add_error( $field, error.message );
-					
-					
-					// set $scrollTo
-					if( $scrollTo === null ) {
-						
-						$scrollTo = $field;
-						
-					}
-					
+				// vars
+				var error = errors[ i ];
+				
+				
+				// general error
+				if( !error.input ) {
+					message += '. ' + error.message;
+					continue;
 				}
 				
 				
-				// message
-				if( count == 1 ) {
-					
-					message += '. ' + acf._e('validation_failed_1');
-					
-				} else if( count > 1 ) {
-					
-					message += '. ' + acf._e('validation_failed_2').replace('%d', count);
-					
+				// get input
+				var $input = $form.find('[name="' + error.input + '"]').first();
+				
+				
+				// if $_POST value was an array, this $input may not exist
+				if( !$input.exists() ) {
+					$input = $form.find('[name^="' + error.input + '"]').first();
 				}
-			
+				
+				
+				// bail early if input doesn't exist
+				if( !$input.exists() ) continue;
+				
+				
+				// increase
+				count++;
+				
+				
+				// now get field
+				var $field = acf.get_field_wrap( $input );
+				
+				
+				// add error
+				this.add_error( $field, error.message );
+				
+				
+				// set $scrollTo
+				if( $scrollTo === null ) {
+					$scrollTo = $field;
+				}
+				
 			}
 			
-				
-			// get $message
-			var $message = $form.children('.acf-error-message');
 			
+			// message
+			if( count == 1 ) {
+				message += '. ' + acf._e('validation_failed_1');
+			} else if( count > 1 ) {
+				message += '. ' + acf._e('validation_failed_2').replace('%d', count);
+			}
+			
+			
+			// maybe create $message
 			if( !$message.exists() ) {
-				
 				$message = $('<div class="acf-error-message"><p></p><a href="#" class="acf-icon -cancel small"></a></div>');
-				
 				$form.prepend( $message );
-				
 			}
 			
 			
@@ -12938,18 +13114,14 @@ var acf;
 			
 			// if no $scrollTo, set to message
 			if( $scrollTo === null ) {
-				
 				$scrollTo = $message;
-				
 			}
 			
 			
-			// timeout avoids flicker jump
+			// timeout
 			setTimeout(function(){
-				
 				$("html, body").animate({ scrollTop: $scrollTo.offset().top - ( $(window).height() / 2 ) }, 500);
-				
-			}, 1);
+			}, 10);
 			
 		},
 		
@@ -13004,6 +13176,7 @@ var acf;
 			
 			// hook for 3rd party customization
 			acf.do_action('add_field_error', $field);
+			acf.do_action('invalid_field', $field);
 			
 		},
 		
@@ -13041,6 +13214,7 @@ var acf;
 			
 			// hook for 3rd party customization
 			acf.do_action('remove_field_error', $field);
+			acf.do_action('valid_field', $field);
 			
 		},
 		
@@ -13551,10 +13725,10 @@ var acf;
 			init = acf.apply_filters('wysiwyg_tinymce_settings', init, id, $field);
 			
 			
-			// z-index fix
-			if( acf.isset(tinymce,'ui','FloatPanel') ) {
-				tinymce.ui.FloatPanel.zIndex = 900000;
-			}
+			// z-index fix (caused too many conflicts)
+			//if( acf.isset(tinymce,'ui','FloatPanel') ) {
+			//	tinymce.ui.FloatPanel.zIndex = 900000;
+			//}
 			
 			
 			// store settings
@@ -13749,6 +13923,10 @@ var acf;
 			// bail early
 			if( typeof switchEditors === 'undefined' ) return false;
 			
+			
+			// bail ealry if not initialized
+			if( typeof tinyMCEPreInit.mceInit[ id ] === 'undefined' ) return false;
+			
 						
 			// toggle			
 			switchEditors.go( id, 'tmce');
@@ -13767,6 +13945,7 @@ var acf;
 // @codekit-prepend "../js/event-manager.js";
 // @codekit-prepend "../js/acf.js";
 // @codekit-prepend "../js/acf-ajax.js";
+// @codekit-prepend "../js/acf-button-group.js";
 // @codekit-prepend "../js/acf-checkbox.js";
 // @codekit-prepend "../js/acf-color-picker.js";
 // @codekit-prepend "../js/acf-conditional-logic.js";

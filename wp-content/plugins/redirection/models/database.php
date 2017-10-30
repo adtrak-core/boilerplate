@@ -23,7 +23,7 @@ class RE_Database {
 			`regex` int(11) unsigned NOT NULL DEFAULT '0',
 			`position` int(11) unsigned NOT NULL DEFAULT '0',
 			`last_count` int(10) unsigned NOT NULL DEFAULT '0',
-			`last_access` datetime NOT NULL,
+			`last_access` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 			`group_id` int(11) NOT NULL DEFAULT '0',
 			`status` enum('enabled','disabled') NOT NULL DEFAULT 'enabled',
 			`action_type` varchar(20) NOT NULL,
@@ -42,7 +42,7 @@ class RE_Database {
 
 	private function create_groups_sql( $prefix, $charset_collate ) {
 		return "CREATE TABLE IF NOT EXISTS `{$prefix}redirection_groups` (
-			`id` int(11) NOT NULL AUTO_INCREMENT,
+			`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			`name` varchar(50) NOT NULL,
 			`tracking` int(11) NOT NULL DEFAULT '1',
 			`module_id` int(11) unsigned NOT NULL DEFAULT '0',
@@ -104,6 +104,17 @@ class RE_Database {
 		);
 	}
 
+	public function create_tables() {
+		global $wpdb;
+
+		foreach ( $this->get_all_tables() as $sql ) {
+			if ( $wpdb->query( $sql ) === false ) {
+				throw new Exception( 'There was a database error installing Redirection - please post these details to https://github.com/johngodley/redirection/issues - '.$sql.' = '.$wpdb->print_error() );
+				return false;
+			}
+		}
+	}
+
 	public function createDefaults() {
 		$this->createDefaultGroups();
 
@@ -126,14 +137,7 @@ class RE_Database {
 		global $wpdb;
 
 		$wpdb->show_errors();
-
-		foreach ( $this->get_all_tables() as $sql ) {
-			if ( $wpdb->query( $sql ) === false ) {
-				throw new Exception( 'There was a database error installing Redirection - please post these details to https://github.com/johngodley/redirection/issues - '.$sql.' = '.$wpdb->print_error() );
-				return false;
-			}
-		}
-
+		$this->create_tables();
 		$this->createDefaults();
 		$wpdb->hide_errors();
 
@@ -255,5 +259,24 @@ class RE_Database {
 		delete_option( 'redirection_root' );
 		delete_option( 'redirection_index' );
 		delete_option( 'redirection_version' );
+	}
+
+	public function get_status() {
+		global $wpdb;
+
+		$missing = array();
+
+		foreach ( $this->get_all_tables() as $table => $sql ) {
+			$result = $wpdb->query( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) );
+
+			if ( intval( $result, 10 ) !== 1 ) {
+				$missing[] = $table;
+			}
+		}
+
+		return array(
+			'status' => count( $missing ) === 0 ? 'good' : 'error',
+			'message' => count( $missing ) === 0 ? __( 'All tables present', 'redirection' ) : __( 'The following tables are missing:', 'redirection' ).' '.join( ',', $missing ),
+		);
 	}
 }

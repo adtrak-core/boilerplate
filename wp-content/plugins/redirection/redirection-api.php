@@ -18,6 +18,7 @@ class Redirection_Api {
 		'import_data',
 		'export_data',
 		'ping',
+		'plugin_status',
 	);
 
 	public function __construct() {
@@ -212,7 +213,7 @@ class Redirection_Api {
 				$result = $redirect->update( $params );
 
 				if ( is_wp_error( $result ) ) {
-					$result = $this->getError( $redirect->get_error_message(), __LINE__ );
+					$result = $this->getError( $result->get_error_message(), __LINE__ );
 				} else {
 					$result = array( 'item' => $redirect->to_json() );
 				}
@@ -277,9 +278,37 @@ class Redirection_Api {
 	public function ajax_save_settings( $settings = array() ) {
 		$settings = $this->get_params( $settings );
 		$options = red_get_options();
+		$monitor_types = array();
+
+		if ( isset( $settings['monitor_type_post'] ) && $settings['monitor_type_post'] === 'true' ) {
+			$monitor_types[] = 'post';
+		}
+
+		if ( isset( $settings['monitor_type_page'] ) && $settings['monitor_type_page'] === 'true' ) {
+			$monitor_types[] = 'page';
+		}
+
+		if ( isset( $settings['monitor_type_trash'] ) && $settings['monitor_type_trash'] === 'true' ) {
+			$monitor_types[] = 'trash';
+		}
 
 		if ( isset( $settings['monitor_post'] ) ) {
 			$options['monitor_post'] = max( 0, intval( $settings['monitor_post'], 10 ) );
+
+			if ( ! Red_Group::get( $options['monitor_post'] ) ) {
+				$groups = Red_Group::get_all();
+				$options['monitor_post'] = $groups[ 0 ]['id'];
+			}
+		}
+
+		if ( isset( $settings['associated_redirect'] ) ) {
+			$sanitizer = new Red_Item_Sanitize();
+			$options['associated_redirect'] = trim( $sanitizer->sanitize_url( $settings['associated_redirect'] ) );
+		}
+
+		if ( count( $monitor_types ) === 0 ) {
+			$options['monitor_post'] = 0;
+			$options['associated_redirect'] = '';
 		}
 
 		if ( isset( $settings['auto_target'] ) ) {
@@ -312,6 +341,7 @@ class Redirection_Api {
 
 		$module = Red_Module::get( 2 );
 		$options['modules'][2] = $module->update( $settings );
+		$options['monitor_types'] = $monitor_types;
 
 		update_option( 'redirection_options', $options );
 		do_action( 'redirection_save_options', $options );
@@ -347,16 +377,47 @@ class Redirection_Api {
 
 	public function ajax_delete_all( $params ) {
 		$params = $this->get_params( $params );
+		$filter = '';
+		$filterBy = '';
+		if ( isset( $params['filter'] ) ) {
+			$filter = $params['filter'];
+		}
+
+		if ( isset( $params['filterBy'] ) && in_array( $params['filterBy'], array( 'url', 'ip', 'url-exact' ), true ) ) {
+			$filterBy = $params['filterBy'];
+			unset( $params['filter'] );
+			unset( $params['filterBy'] );
+		}
 
 		if ( isset( $params['logType'] ) ) {
 			if ( $params['logType'] === 'log' ) {
-				RE_Log::delete_all();
+				RE_Log::delete_all( $filterBy, $filter );
 			} else {
-				RE_404::delete_all();
+				RE_404::delete_all( $filterBy, $filter );
 			}
 		}
 
 		$result = $this->get_logs( $params );
+
+		return $this->output_ajax_response( $result );
+	}
+
+	public function ajax_plugin_status( $params ) {
+		$params = $this->get_params( $params );
+
+		$fixit = false;
+		if ( isset( $params['fixIt'] ) && $params['fixIt'] === 'true' ) {
+			$fixit = true;
+		}
+
+		include_once dirname( REDIRECTION_FILE ).'/models/fixer.php';
+
+		$fixer = new Red_Fixer();
+		$result = $fixer->get_status();
+
+		if ( $fixit ) {
+			$result = $fixer->fix( $result );
+		}
 
 		return $this->output_ajax_response( $result );
 	}

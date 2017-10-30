@@ -10,11 +10,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.1\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;"
+"esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: acf.php\n"
 "X-Textdomain-Support: yes\n"
@@ -34,8 +33,7 @@ msgstr ""
 msgid "Field Group"
 msgstr "קבוצת שדות"
 
-#: acf.php:207 acf.php:239 admin/admin.php:62
-#: pro/fields/flexible-content.php:517
+#: acf.php:207 acf.php:239 admin/admin.php:62 pro/fields/flexible-content.php:517
 msgid "Add New"
 msgstr "הוספת חדש"
 
@@ -67,8 +65,7 @@ msgstr "אף קבוצת שדות לא נמצאה"
 msgid "No Field Groups found in Trash"
 msgstr "אף קבוצת שדות לא נמצאה בפח"
 
-#: acf.php:237 admin/field-group.php:182 admin/field-group.php:213
-#: admin/field-groups.php:519
+#: acf.php:237 admin/field-group.php:182 admin/field-group.php:213 admin/field-groups.php:519
 msgid "Fields"
 msgstr "שדות"
 
@@ -84,8 +81,7 @@ msgstr "הוספת שדה חדש"
 msgid "Edit Field"
 msgstr "עריכת השדה"
 
-#: acf.php:242 admin/views/field-group-fields.php:18
-#: admin/views/settings-info.php:111
+#: acf.php:242 admin/views/field-group-fields.php:18 admin/views/settings-info.php:111
 msgid "New Field"
 msgstr "שדה חדש"
 
@@ -105,8 +101,7 @@ msgstr "לא נמצאו שדות"
 msgid "No Fields found in Trash"
 msgstr "לא נמצאו שדות בפח"
 
-#: acf.php:268 admin/field-group.php:283 admin/field-groups.php:583
-#: admin/views/field-group-options.php:18
+#: acf.php:268 admin/field-group.php:283 admin/field-groups.php:583 admin/views/field-group-options.php:18
 msgid "Disabled"
 msgstr ""
 
@@ -169,10 +164,8 @@ msgstr "כותרת קבוצת שדות - חובה"
 msgid "copy"
 msgstr "העתק"
 
-#: admin/field-group.php:181
-#: admin/views/field-group-field-conditional-logic.php:67
-#: admin/views/field-group-field-conditional-logic.php:162
-#: admin/views/field-group-locations.php:23
+#: admin/field-group.php:181 admin/views/field-group-field-conditional-logic.php:67
+#: admin/views/field-group-field-conditional-logic.php:162 admin/views/field-group-locations.php:23
 #: admin/views/field-group-locations.php:131 api/api-helpers.php:3262
 msgid "or"
 msgstr "או"
@@ -261,10 +254,9 @@ msgstr ""
 msgid "Super Admin"
 msgstr "מנהל על"
 
-#: admin/field-group.php:818 admin/field-group.php:826
-#: admin/field-group.php:840 admin/field-group.php:847
-#: admin/field-group.php:862 admin/field-group.php:872 fields/file.php:235
-#: fields/image.php:226 pro/fields/gallery.php:653
+#: admin/field-group.php:818 admin/field-group.php:826 admin/field-group.php:840 admin/field-group.php:847
+#: admin/field-group.php:862 admin/field-group.php:872 fields/file.php:235 fields/image.php:226
+#: pro/fields/gallery.php:653
 msgid "All"
 msgstr "הכל"
 
@@ -336,8 +328,8 @@ msgstr "סנכרון זמין"
 msgid "Title"
 msgstr "כותרת"
 
-#: admin/field-groups.php:517 admin/views/field-group-options.php:98
-#: admin/views/update-network.php:20 admin/views/update-network.php:28
+#: admin/field-groups.php:517 admin/views/field-group-options.php:98 admin/views/update-network.php:20
+#: admin/views/update-network.php:28
 msgid "Description"
 msgstr ""
 
@@ -345,8 +337,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: admin/field-groups.php:616 admin/settings-info.php:76
-#: pro/admin/views/settings-updates.php:111
+#: admin/field-groups.php:616 admin/settings-info.php:76 pro/admin/views/settings-updates.php:111
 msgid "Changelog"
 msgstr "גרסאות"
 
@@ -366,8 +357,7 @@ msgstr "עזרה"
 msgid "Getting Started"
 msgstr "תחילת עבודה"
 
-#: admin/field-groups.php:622 pro/admin/settings-updates.php:73
-#: pro/admin/views/settings-updates.php:17
+#: admin/field-groups.php:622 pro/admin/settings-updates.php:73 pro/admin/views/settings-updates.php:17
 msgid "Updates"
 msgstr "עדכונים"
 
@@ -403,15 +393,15 @@ msgstr "נוצר בידי"
 msgid "Duplicate this item"
 msgstr "שכפל את הפריט הזה"
 
-#: admin/field-groups.php:673 admin/field-groups.php:685
-#: admin/views/field-group-field.php:58 pro/fields/flexible-content.php:516
+#: admin/field-groups.php:673 admin/field-groups.php:685 admin/views/field-group-field.php:58
+#: pro/fields/flexible-content.php:516
 msgid "Duplicate"
 msgstr "שיכפול"
 
 #: admin/field-groups.php:724
 #, php-format
 msgid "Select %s"
-msgstr ""
+msgstr "בחירה %s"
 
 #: admin/field-groups.php:730
 msgid "Synchronise field group"
@@ -437,8 +427,7 @@ msgstr "מידע"
 msgid "What's New"
 msgstr "מה חדש"
 
-#: admin/settings-tools.php:54 admin/views/settings-tools-export.php:9
-#: admin/views/settings-tools.php:31
+#: admin/settings-tools.php:54 admin/views/settings-tools-export.php:9 admin/views/settings-tools.php:31
 msgid "Tools"
 msgstr ""
 
@@ -469,12 +458,8 @@ msgstr "‏<b>הצלחה</b>. כלי הייבוא הוסיף %s קבוצות ש�
 
 #: admin/settings-tools.php:332
 #, php-format
-msgid ""
-"<b>Warning</b>. Import tool detected %s field groups already exist and have "
-"been ignored: %s"
-msgstr ""
-"‏<b>אזהרה</b>. כלי הייבוא זיהה %s קבוצות שדה שכבר קיימות, ולפיכך הן לא יובאו: "
-"%s"
+msgid "<b>Warning</b>. Import tool detected %s field groups already exist and have been ignored: %s"
+msgstr "‏<b>אזהרה</b>. כלי הייבוא זיהה %s קבוצות שדה שכבר קיימות, ולפיכך הן לא יובאו: %s"
 
 #: admin/update.php:113
 msgid "Upgrade ACF"
@@ -496,27 +481,21 @@ msgstr ""
 msgid "Conditional Logic"
 msgstr "תנאי לוגי"
 
-#: admin/views/field-group-field-conditional-logic.php:40
-#: admin/views/field-group-field.php:137 fields/checkbox.php:246
-#: fields/message.php:117 fields/page_link.php:568 fields/page_link.php:582
-#: fields/post_object.php:434 fields/post_object.php:448 fields/select.php:411
-#: fields/select.php:425 fields/select.php:439 fields/select.php:453
-#: fields/tab.php:172 fields/taxonomy.php:770 fields/taxonomy.php:784
-#: fields/taxonomy.php:798 fields/taxonomy.php:812 fields/user.php:457
-#: fields/user.php:471 fields/wysiwyg.php:384
-#: pro/admin/views/settings-updates.php:93
+#: admin/views/field-group-field-conditional-logic.php:40 admin/views/field-group-field.php:137
+#: fields/checkbox.php:246 fields/message.php:117 fields/page_link.php:568 fields/page_link.php:582
+#: fields/post_object.php:434 fields/post_object.php:448 fields/select.php:411 fields/select.php:425
+#: fields/select.php:439 fields/select.php:453 fields/tab.php:172 fields/taxonomy.php:770
+#: fields/taxonomy.php:784 fields/taxonomy.php:798 fields/taxonomy.php:812 fields/user.php:457
+#: fields/user.php:471 fields/wysiwyg.php:384 pro/admin/views/settings-updates.php:93
 msgid "Yes"
 msgstr "כן"
 
-#: admin/views/field-group-field-conditional-logic.php:41
-#: admin/views/field-group-field.php:138 fields/checkbox.php:247
-#: fields/message.php:118 fields/page_link.php:569 fields/page_link.php:583
-#: fields/post_object.php:435 fields/post_object.php:449 fields/select.php:412
-#: fields/select.php:426 fields/select.php:440 fields/select.php:454
-#: fields/tab.php:173 fields/taxonomy.php:685 fields/taxonomy.php:771
-#: fields/taxonomy.php:785 fields/taxonomy.php:799 fields/taxonomy.php:813
-#: fields/user.php:458 fields/user.php:472 fields/wysiwyg.php:385
-#: pro/admin/views/settings-updates.php:103
+#: admin/views/field-group-field-conditional-logic.php:41 admin/views/field-group-field.php:138
+#: fields/checkbox.php:247 fields/message.php:118 fields/page_link.php:569 fields/page_link.php:583
+#: fields/post_object.php:435 fields/post_object.php:449 fields/select.php:412 fields/select.php:426
+#: fields/select.php:440 fields/select.php:454 fields/tab.php:173 fields/taxonomy.php:685
+#: fields/taxonomy.php:771 fields/taxonomy.php:785 fields/taxonomy.php:799 fields/taxonomy.php:813
+#: fields/user.php:458 fields/user.php:472 fields/wysiwyg.php:385 pro/admin/views/settings-updates.php:103
 msgid "No"
 msgstr "לא"
 
@@ -524,23 +503,19 @@ msgstr "לא"
 msgid "Show this field if"
 msgstr "הצגת השדה בתנאי ש"
 
-#: admin/views/field-group-field-conditional-logic.php:111
-#: admin/views/field-group-locations.php:88
+#: admin/views/field-group-field-conditional-logic.php:111 admin/views/field-group-locations.php:88
 msgid "is equal to"
 msgstr "שווה ל"
 
-#: admin/views/field-group-field-conditional-logic.php:112
-#: admin/views/field-group-locations.php:89
+#: admin/views/field-group-field-conditional-logic.php:112 admin/views/field-group-locations.php:89
 msgid "is not equal to"
 msgstr "לא שווה ל"
 
-#: admin/views/field-group-field-conditional-logic.php:149
-#: admin/views/field-group-locations.php:118
+#: admin/views/field-group-field-conditional-logic.php:149 admin/views/field-group-locations.php:118
 msgid "and"
 msgstr "וגם"
 
-#: admin/views/field-group-field-conditional-logic.php:164
-#: admin/views/field-group-locations.php:133
+#: admin/views/field-group-field-conditional-logic.php:164 admin/views/field-group-locations.php:133
 msgid "Add rule group"
 msgstr "הוספת קבוצת כללים"
 
@@ -572,8 +547,7 @@ msgstr "מחיקת שדה"
 msgid "Delete"
 msgstr "מחיקה"
 
-#: admin/views/field-group-field.php:68 fields/oembed.php:212
-#: fields/taxonomy.php:886
+#: admin/views/field-group-field.php:68 fields/oembed.php:212 fields/taxonomy.php:886
 msgid "Error"
 msgstr "שגיאה"
 
@@ -654,12 +628,8 @@ msgid "Type"
 msgstr "סוג"
 
 #: admin/views/field-group-fields.php:44
-msgid ""
-"No fields. Click the <strong>+ Add Field</strong> button to create your first "
-"field."
-msgstr ""
-"אין שדות. לחצו על כפתור <strong>+ הוספת שדה</strong> כדי ליצור את השדה הראשון "
-"שלכם."
+msgid "No fields. Click the <strong>+ Add Field</strong> button to create your first field."
+msgstr "אין שדות. לחצו על כפתור <strong>+ הוספת שדה</strong> כדי ליצור את השדה הראשון שלכם."
 
 #: admin/views/field-group-fields.php:51
 msgid "Drag and drop to reorder"
@@ -674,17 +644,14 @@ msgid "Rules"
 msgstr "כללים"
 
 #: admin/views/field-group-locations.php:6
-msgid ""
-"Create a set of rules to determine which edit screens will use these advanced "
-"custom fields"
+msgid "Create a set of rules to determine which edit screens will use these advanced custom fields"
 msgstr "יצירת מערכת כללים כדי לקבוע באילו מסכי עריכה יופיעו השדות המיוחדים"
 
 #: admin/views/field-group-locations.php:21
 msgid "Show this field group if"
 msgstr "הצגת קבוצת השדות הזו בתנאי ש"
 
-#: admin/views/field-group-locations.php:41
-#: admin/views/field-group-locations.php:47
+#: admin/views/field-group-locations.php:41 admin/views/field-group-locations.php:47
 msgid "Post"
 msgstr "פוסט"
 
@@ -708,8 +675,7 @@ msgstr "קטגורית פוסטים"
 msgid "Post Taxonomy"
 msgstr "טקסונומית פוסט"
 
-#: admin/views/field-group-locations.php:49
-#: admin/views/field-group-locations.php:53
+#: admin/views/field-group-locations.php:49 admin/views/field-group-locations.php:53
 msgid "Page"
 msgstr "עמוד"
 
@@ -839,8 +805,8 @@ msgstr ""
 
 #: admin/views/field-group-options.php:110
 msgid ""
-"If multiple field groups appear on an edit screen, the first field group's "
-"options will be used (the one with the lowest order number)"
+"If multiple field groups appear on an edit screen, the first field group's options will be used (the "
+"one with the lowest order number)"
 msgstr ""
 
 #: admin/views/field-group-options.php:117
@@ -913,11 +879,8 @@ msgstr "ברוכים הבאים לשדות מיוחדים מתקדמים"
 
 #: admin/views/settings-info.php:10
 #, php-format
-msgid ""
-"Thank you for updating! ACF %s is bigger and better than ever before. We hope "
-"you like it."
-msgstr ""
-"תודה שעידכנתם! ACF %s הוא גדול יותר וטוב יותר מאי פעם. מקווים שתאהבו אותו."
+msgid "Thank you for updating! ACF %s is bigger and better than ever before. We hope you like it."
+msgstr "תודה שעידכנתם! ACF %s הוא גדול יותר וטוב יותר מאי פעם. מקווים שתאהבו אותו."
 
 #: admin/views/settings-info.php:23
 msgid "A smoother custom field experience"
@@ -929,12 +892,11 @@ msgstr "שימושיות משופרת"
 
 #: admin/views/settings-info.php:29
 msgid ""
-"Including the popular Select2 library has improved both usability and speed "
-"across a number of field types including post object, page link, taxonomy and "
-"select."
+"Including the popular Select2 library has improved both usability and speed across a number of field "
+"types including post object, page link, taxonomy and select."
 msgstr ""
-"הוספה של הספרייה הפופולרית Select2 שיפרה גם את השימושיות ואת המהירות בכמה "
-"סוגי שדות, כולל: אובייקט פוסט, קישור דף, טקסונומיה ובחירה."
+"הוספה של הספרייה הפופולרית Select2 שיפרה גם את השימושיות ואת המהירות בכמה סוגי שדות, כולל: אובייקט "
+"פוסט, קישור דף, טקסונומיה ובחירה."
 
 #: admin/views/settings-info.php:33
 msgid "Improved Design"
@@ -942,12 +904,11 @@ msgstr "עיצוב משופר"
 
 #: admin/views/settings-info.php:34
 msgid ""
-"Many fields have undergone a visual refresh to make ACF look better than "
-"ever! Noticeable changes are seen on the gallery, relationship and oEmbed "
-"(new) fields!"
+"Many fields have undergone a visual refresh to make ACF look better than ever! Noticeable changes are "
+"seen on the gallery, relationship and oEmbed (new) fields!"
 msgstr ""
-"הרבה שדות עברו רענון ויזואלי כדי לגרום ל-ACF להיראות טוב מאי פעם! ניתן לראות "
-"שינויים בולטים בשדה הגלריה, שדה היחסים, ובשדה ההטמעה (החדש)!"
+"הרבה שדות עברו רענון ויזואלי כדי לגרום ל-ACF להיראות טוב מאי פעם! ניתן לראות שינויים בולטים בשדה "
+"הגלריה, שדה היחסים, ובשדה ההטמעה (החדש)!"
 
 #: admin/views/settings-info.php:38
 msgid "Improved Data"
@@ -955,12 +916,11 @@ msgstr "נתונים משופרים"
 
 #: admin/views/settings-info.php:39
 msgid ""
-"Redesigning the data architecture has allowed sub fields to live "
-"independently from their parents. This allows you to drag and drop fields in "
-"and out of parent fields!"
+"Redesigning the data architecture has allowed sub fields to live independently from their parents. This "
+"allows you to drag and drop fields in and out of parent fields!"
 msgstr ""
-"עיצוב מחדש של ארכיטקטורת המידע איפשר לשדות משנה להיות נפרדים מההורים שלהם. "
-"דבר זה מאפשר לכם לגרור ולשחרר שדות לתוך ומחוץ לשדות אב."
+"עיצוב מחדש של ארכיטקטורת המידע איפשר לשדות משנה להיות נפרדים מההורים שלהם. דבר זה מאפשר לכם לגרור "
+"ולשחרר שדות לתוך ומחוץ לשדות אב."
 
 #: admin/views/settings-info.php:45
 msgid "Goodbye Add-ons. Hello PRO"
@@ -971,20 +931,18 @@ msgid "Introducing ACF PRO"
 msgstr "הכירו את ACF PRO"
 
 #: admin/views/settings-info.php:51
-msgid ""
-"We're changing the way premium functionality is delivered in an exciting way!"
+msgid "We're changing the way premium functionality is delivered in an exciting way!"
 msgstr ""
 
 #: admin/views/settings-info.php:52
 #, php-format
 msgid ""
-"All 4 premium add-ons have been combined into a new <a href=\"%s\">Pro "
-"version of ACF</a>. With both personal and developer licenses available, "
-"premium functionality is more affordable and accessible than ever before!"
+"All 4 premium add-ons have been combined into a new <a href=\"%s\">Pro version of ACF</a>. With both "
+"personal and developer licenses available, premium functionality is more affordable and accessible than "
+"ever before!"
 msgstr ""
-"כל ארבעת הרחבות הפרימיום אוחדו לתוך <a href=\"%s\">גרסת הפרו החדשה של ACF</"
-"a>. עם הרשיונות הזמינים לשימוש אישי ולמפתחים, יכולות הפרימיום זולות יותר "
-"ונגישות יותר מאי פעם."
+"כל ארבעת הרחבות הפרימיום אוחדו לתוך <a href=\"%s\">גרסת הפרו החדשה של ACF</a>. עם הרשיונות הזמינים "
+"לשימוש אישי ולמפתחים, יכולות הפרימיום זולות יותר ונגישות יותר מאי פעם."
 
 #: admin/views/settings-info.php:56
 msgid "Powerful Features"
@@ -992,12 +950,11 @@ msgstr "תכונות עצמתיות"
 
 #: admin/views/settings-info.php:57
 msgid ""
-"ACF PRO contains powerful features such as repeatable data, flexible content "
-"layouts, a beautiful gallery field and the ability to create extra admin "
-"options pages!"
+"ACF PRO contains powerful features such as repeatable data, flexible content layouts, a beautiful "
+"gallery field and the ability to create extra admin options pages!"
 msgstr ""
-"‏ACF PRO כולל תכונות עצמתיות כמו מידע שחוזר על עצמו, פריסות תוכן גמישות, שדה "
-"גלריה יפה ואת היכולת ליצור דפי אפשרויות נוספים בממשק הניהול!"
+"‏ACF PRO כולל תכונות עצמתיות כמו מידע שחוזר על עצמו, פריסות תוכן גמישות, שדה גלריה יפה ואת היכולת ליצור "
+"דפי אפשרויות נוספים בממשק הניהול!"
 
 #: admin/views/settings-info.php:58
 #, php-format
@@ -1011,22 +968,18 @@ msgstr "שדרוג קל"
 #: admin/views/settings-info.php:63
 #, php-format
 msgid ""
-"To help make upgrading easy, <a href=\"%s\">login to your store account</a> "
-"and claim a free copy of ACF PRO!"
-msgstr ""
-"כדי להקל על השידרוג, <a href=\"%s\">התחברו לחשבון שלכם</a> וקבלו חינם עותק של "
+"To help make upgrading easy, <a href=\"%s\">login to your store account</a> and claim a free copy of "
 "ACF PRO!"
+msgstr "כדי להקל על השידרוג, <a href=\"%s\">התחברו לחשבון שלכם</a> וקבלו חינם עותק של ACF PRO!"
 
 #: admin/views/settings-info.php:64
 #, php-format
 msgid ""
-"We also wrote an <a href=\"%s\">upgrade guide</a> to answer any questions, "
-"but if you do have one, please contact our support team via the <a href=\"%s"
-"\">help desk</a>"
+"We also wrote an <a href=\"%s\">upgrade guide</a> to answer any questions, but if you do have one, "
+"please contact our support team via the <a href=\"%s\">help desk</a>"
 msgstr ""
-"כתבנו גם <a href=\"%s\">מדריך שידרוג</a> כדי לענות על כל השאלות, אך אם עדיין "
-"יש לכם שאלה, בבקשה צרו קשר עם צוות התמיכה שלנו דרך <a href=\"%s\">מוקד "
-"התמיכה</a>"
+"כתבנו גם <a href=\"%s\">מדריך שידרוג</a> כדי לענות על כל השאלות, אך אם עדיין יש לכם שאלה, בבקשה צרו קשר "
+"עם צוות התמיכה שלנו דרך <a href=\"%s\">מוקד התמיכה</a>"
 
 #: admin/views/settings-info.php:72
 msgid "Under the Hood"
@@ -1061,8 +1014,7 @@ msgid "Better version control"
 msgstr "בקרת גרסאות טובה יותר"
 
 #: admin/views/settings-info.php:95
-msgid ""
-"New auto export to JSON feature allows field settings to be version controlled"
+msgid "New auto export to JSON feature allows field settings to be version controlled"
 msgstr "תכונת חדש לייצוא אוטומטי ל-JSON מאפשר להגדרות השדות להיות מבוקרי גרסה"
 
 #: admin/views/settings-info.php:99
@@ -1098,9 +1050,7 @@ msgid "New Settings"
 msgstr "הגדרות חדשות"
 
 #: admin/views/settings-info.php:122
-msgid ""
-"Field group settings have been added for label placement and instruction "
-"placement"
+msgid "Field group settings have been added for label placement and instruction placement"
 msgstr "הגדרות קבוצות שדות נוספה למיקום התוויות ולמיקום ההוראות"
 
 #: admin/views/settings-info.php:128
@@ -1124,8 +1074,7 @@ msgid "Relationship Field"
 msgstr "שדה יחסים"
 
 #: admin/views/settings-info.php:139
-msgid ""
-"New Relationship field setting for 'Filters' (Search, Post Type, Taxonomy)"
+msgid "New Relationship field setting for 'Filters' (Search, Post Type, Taxonomy)"
 msgstr "הגדרת שדה יחסים חדשה בשביל ׳סינונים׳ (חיפוש, סוג פוסט, טקסונומיה)"
 
 #: admin/views/settings-info.php:145
@@ -1133,9 +1082,7 @@ msgid "Moving Fields"
 msgstr "שינוי מיקום שדות"
 
 #: admin/views/settings-info.php:146
-msgid ""
-"New field group functionality allows you to move a field between groups & "
-"parents"
+msgid "New field group functionality allows you to move a field between groups & parents"
 msgstr "פונקציונליות קבוצות שדות חדשה מאפשרת לכם להעביר שדה בין קבוצות והורים"
 
 #: admin/views/settings-info.php:150 fields/page_link.php:36
@@ -1151,9 +1098,7 @@ msgid "Better Options Pages"
 msgstr "דף אפשרויות משופר"
 
 #: admin/views/settings-info.php:156
-msgid ""
-"New functions for options page allow creation of both parent and child menu "
-"pages"
+msgid "New functions for options page allow creation of both parent and child menu pages"
 msgstr "פונקציות חדשות לדף האפשרויות נותנות לכם ליצור דפי תפריט ראשיים ומשניים"
 
 #: admin/views/settings-info.php:165
@@ -1167,16 +1112,14 @@ msgstr "יצוא קבוצות שדות לphp"
 
 #: admin/views/settings-tools-export.php:17
 msgid ""
-"The following code can be used to register a local version of the selected "
-"field group(s). A local field group can provide many benefits such as faster "
-"load times, version control & dynamic fields/settings. Simply copy and paste "
-"the following code to your theme's functions.php file or include it within an "
-"external file."
+"The following code can be used to register a local version of the selected field group(s). A local "
+"field group can provide many benefits such as faster load times, version control & dynamic fields/"
+"settings. Simply copy and paste the following code to your theme's functions.php file or include it "
+"within an external file."
 msgstr ""
-"ניתן להשתמש בקוד הבא כדי לרשום גרסה מקומית של קבוצות השדה הנבחרות. קבוצת שדות "
-"מקומית יכולה להביא לתועלות רבות כמו זמני טעינה מהירים יותר, בקרת גרסאות ושדות/"
-"הגדרות דינמיות. פשוט העתיקו והדביקו את הקוד הבא לקובץ functions‪.‬php שבערכת "
-"העיצוב שלכם או הוסיפו אותו דרך קובץ חיצוני."
+"ניתן להשתמש בקוד הבא כדי לרשום גרסה מקומית של קבוצות השדה הנבחרות. קבוצת שדות מקומית יכולה להביא "
+"לתועלות רבות כמו זמני טעינה מהירים יותר, בקרת גרסאות ושדות/הגדרות דינמיות. פשוט העתיקו והדביקו את הקוד "
+"הבא לקובץ functions‪.‬php שבערכת העיצוב שלכם או הוסיפו אותו דרך קובץ חיצוני."
 
 #: admin/views/settings-tools.php:5
 msgid "Select Field Groups"
@@ -1188,14 +1131,13 @@ msgstr "יצוא קבוצות שדות"
 
 #: admin/views/settings-tools.php:38
 msgid ""
-"Select the field groups you would like to export and then select your export "
-"method. Use the download button to export to a .json file which you can then "
-"import to another ACF installation. Use the generate button to export to PHP "
-"code which you can place in your theme."
+"Select the field groups you would like to export and then select your export method. Use the download "
+"button to export to a .json file which you can then import to another ACF installation. Use the "
+"generate button to export to PHP code which you can place in your theme."
 msgstr ""
-"בחרו בקבוצות השדות שברצונכם לייצא ואז בחרו במתודת הייצוא. השתמש בכפתור ההורדה "
-"כדי לייצא קובץ json אותו תוכלו לייבא להתקנת ACF אחרת. השתמשו בכפתור היצירה "
-"כדי לייצא קוד php אותו תוכלו להכניס לתוך ערכת העיצוב שלכם."
+"בחרו בקבוצות השדות שברצונכם לייצא ואז בחרו במתודת הייצוא. השתמש בכפתור ההורדה כדי לייצא קובץ json אותו "
+"תוכלו לייבא להתקנת ACF אחרת. השתמשו בכפתור היצירה כדי לייצא קוד php אותו תוכלו להכניס לתוך ערכת העיצוב "
+"שלכם."
 
 #: admin/views/settings-tools.php:50
 msgid "Download export file"
@@ -1211,11 +1153,11 @@ msgstr "ייבוא קבוצות שדות"
 
 #: admin/views/settings-tools.php:67
 msgid ""
-"Select the Advanced Custom Fields JSON file you would like to import. When "
-"you click the import button below, ACF will import the field groups."
+"Select the Advanced Custom Fields JSON file you would like to import. When you click the import button "
+"below, ACF will import the field groups."
 msgstr ""
-"בחרו בקובץ השדות המיוחדים מסוג JSON שברצונכם לייבא. כשתלחצו על כפתור הייבוא "
-"שמתחת, ACF ייבא את קבוצות השדות."
+"בחרו בקובץ השדות המיוחדים מסוג JSON שברצונכם לייבא. כשתלחצו על כפתור הייבוא שמתחת, ACF ייבא את קבוצות "
+"השדות."
 
 #: admin/views/settings-tools.php:77 fields/file.php:46
 msgid "Select File"
@@ -1231,8 +1173,8 @@ msgstr ""
 
 #: admin/views/update-network.php:10
 msgid ""
-"The following sites require a DB upgrade. Check the ones you want to update "
-"and then click “Upgrade Database”."
+"The following sites require a DB upgrade. Check the ones you want to update and then click “Upgrade "
+"Database”."
 msgstr ""
 
 #: admin/views/update-network.php:19 admin/views/update-network.php:27
@@ -1254,11 +1196,9 @@ msgstr ""
 
 #: admin/views/update-network.php:101 admin/views/update-notice.php:35
 msgid ""
-"It is strongly recommended that you backup your database before proceeding. "
-"Are you sure you wish to run the updater now?"
-msgstr ""
-"מומלץ בחום לגבות את מאגר הנתונים לפני שממשיכים. האם אתם בטוחים שאתם רוצים "
-"להריץ את העדכון כעת?"
+"It is strongly recommended that you backup your database before proceeding. Are you sure you wish to "
+"run the updater now?"
+msgstr "מומלץ בחום לגבות את מאגר הנתונים לפני שממשיכים. האם אתם בטוחים שאתם רוצים להריץ את העדכון כעת?"
 
 #: admin/views/update-network.php:157
 msgid "Upgrade complete"
@@ -1279,11 +1219,8 @@ msgstr "תודה שעדכנתם ל-%s גרסה %s!"
 
 #: admin/views/update-notice.php:25
 msgid ""
-"Before you start using the new awesome features, please update your database "
-"to the newest version."
-msgstr ""
-"לפני שאתם מתחילים להשתמש בתכונות המדהימות החדשות, בבקשה עדכנו את מאגר הנתונים "
-"שלכם לגרסה העדכנית."
+"Before you start using the new awesome features, please update your database to the newest version."
+msgstr "לפני שאתם מתחילים להשתמש בתכונות המדהימות החדשות, בבקשה עדכנו את מאגר הנתונים שלכם לגרסה העדכנית."
 
 #: admin/views/update.php:12
 msgid "Reading upgrade tasks..."
@@ -1385,8 +1322,8 @@ msgstr "יחסי"
 msgid "jQuery"
 msgstr "jQuery"
 
-#: core/field.php:136 fields/checkbox.php:226 fields/radio.php:231
-#: pro/fields/flexible-content.php:512 pro/fields/repeater.php:392
+#: core/field.php:136 fields/checkbox.php:226 fields/radio.php:231 pro/fields/flexible-content.php:512
+#: pro/fields/repeater.php:392
 msgid "Layout"
 msgstr "פריסת תוכן"
 
@@ -1448,10 +1385,9 @@ msgstr "לשליטה רבה יותר, אפשר לציין את הערך ואת �
 msgid "red : Red"
 msgstr "red : אדום "
 
-#: fields/checkbox.php:217 fields/color_picker.php:158 fields/email.php:124
-#: fields/number.php:150 fields/radio.php:222 fields/select.php:397
-#: fields/text.php:148 fields/textarea.php:145 fields/true_false.php:115
-#: fields/url.php:117 fields/wysiwyg.php:345
+#: fields/checkbox.php:217 fields/color_picker.php:158 fields/email.php:124 fields/number.php:150
+#: fields/radio.php:222 fields/select.php:397 fields/text.php:148 fields/textarea.php:145
+#: fields/true_false.php:115 fields/url.php:117 fields/wysiwyg.php:345
 msgid "Default Value"
 msgstr "ערך ברירת המחדל"
 
@@ -1531,39 +1467,34 @@ msgstr "השבוע מתחיל ביום"
 msgid "Email"
 msgstr "אימייל"
 
-#: fields/email.php:125 fields/number.php:151 fields/radio.php:223
-#: fields/text.php:149 fields/textarea.php:146 fields/url.php:118
-#: fields/wysiwyg.php:346
+#: fields/email.php:125 fields/number.php:151 fields/radio.php:223 fields/text.php:149
+#: fields/textarea.php:146 fields/url.php:118 fields/wysiwyg.php:346
 msgid "Appears when creating a new post"
 msgstr "מופיע כאשר יוצרים פוסט חדש"
 
-#: fields/email.php:133 fields/number.php:159 fields/password.php:137
-#: fields/text.php:157 fields/textarea.php:154 fields/url.php:126
+#: fields/email.php:133 fields/number.php:159 fields/password.php:137 fields/text.php:157
+#: fields/textarea.php:154 fields/url.php:126
 msgid "Placeholder Text"
 msgstr "מציין טקסט"
 
-#: fields/email.php:134 fields/number.php:160 fields/password.php:138
-#: fields/text.php:158 fields/textarea.php:155 fields/url.php:127
+#: fields/email.php:134 fields/number.php:160 fields/password.php:138 fields/text.php:158
+#: fields/textarea.php:155 fields/url.php:127
 msgid "Appears within the input"
 msgstr "מופיע בתוך השדה"
 
-#: fields/email.php:142 fields/number.php:168 fields/password.php:146
-#: fields/text.php:166
+#: fields/email.php:142 fields/number.php:168 fields/password.php:146 fields/text.php:166
 msgid "Prepend"
 msgstr "לפני"
 
-#: fields/email.php:143 fields/number.php:169 fields/password.php:147
-#: fields/text.php:167
+#: fields/email.php:143 fields/number.php:169 fields/password.php:147 fields/text.php:167
 msgid "Appears before the input"
 msgstr "מופיע לפני השדה"
 
-#: fields/email.php:151 fields/number.php:177 fields/password.php:155
-#: fields/text.php:175
+#: fields/email.php:151 fields/number.php:177 fields/password.php:155 fields/text.php:175
 msgid "Append"
 msgstr "אחרי"
 
-#: fields/email.php:152 fields/number.php:178 fields/password.php:156
-#: fields/text.php:176
+#: fields/email.php:152 fields/number.php:178 fields/password.php:156 fields/text.php:176
 msgid "Appears after the input"
 msgstr "מופיע לאחר השדה"
 
@@ -1639,8 +1570,8 @@ msgstr ""
 msgid "Restrict which files can be uploaded"
 msgstr ""
 
-#: fields/file.php:247 fields/file.php:258 fields/image.php:257
-#: fields/image.php:290 pro/fields/gallery.php:684 pro/fields/gallery.php:717
+#: fields/file.php:247 fields/file.php:258 fields/image.php:257 fields/image.php:290
+#: pro/fields/gallery.php:684 pro/fields/gallery.php:717
 msgid "File size"
 msgstr ""
 
@@ -1696,8 +1627,8 @@ msgstr "זום"
 msgid "Set the initial zoom level"
 msgstr "הגדרת רמת הזום הראשונית"
 
-#: fields/google-map.php:208 fields/image.php:246 fields/image.php:279
-#: fields/oembed.php:262 pro/fields/gallery.php:673 pro/fields/gallery.php:706
+#: fields/google-map.php:208 fields/image.php:246 fields/image.php:279 fields/oembed.php:262
+#: pro/fields/gallery.php:673 pro/fields/gallery.php:706
 msgid "Height"
 msgstr "גובה"
 
@@ -1723,11 +1654,11 @@ msgstr "עדכון תמונה"
 
 #: fields/image.php:54
 msgid "Uploaded to this post"
-msgstr ""
+msgstr "משוייך לפוסט"
 
 #: fields/image.php:55
 msgid "All images"
-msgstr ""
+msgstr "כל פריטי המדיה"
 
 #: fields/image.php:147
 msgid "No image selected"
@@ -1757,13 +1688,12 @@ msgstr "גודל תצוגה"
 msgid "Shown when entering data"
 msgstr "מוצג בעת הזנת נתונים"
 
-#: fields/image.php:235 fields/image.php:268 pro/fields/gallery.php:662
-#: pro/fields/gallery.php:695
+#: fields/image.php:235 fields/image.php:268 pro/fields/gallery.php:662 pro/fields/gallery.php:695
 msgid "Restrict which images can be uploaded"
 msgstr ""
 
-#: fields/image.php:238 fields/image.php:271 fields/oembed.php:251
-#: pro/fields/gallery.php:665 pro/fields/gallery.php:698
+#: fields/image.php:238 fields/image.php:271 fields/oembed.php:251 pro/fields/gallery.php:665
+#: pro/fields/gallery.php:698
 msgid "Width"
 msgstr ""
 
@@ -1833,33 +1763,28 @@ msgstr "גודל ההטמעה "
 msgid "Archives"
 msgstr "ארכיונים"
 
-#: fields/page_link.php:535 fields/post_object.php:401
-#: fields/relationship.php:690
+#: fields/page_link.php:535 fields/post_object.php:401 fields/relationship.php:690
 msgid "Filter by Post Type"
 msgstr "סינון על פי סוג פוסט"
 
-#: fields/page_link.php:543 fields/post_object.php:409
-#: fields/relationship.php:698
+#: fields/page_link.php:543 fields/post_object.php:409 fields/relationship.php:698
 msgid "All post types"
 msgstr "כל סוגי הפוסטים"
 
-#: fields/page_link.php:549 fields/post_object.php:415
-#: fields/relationship.php:704
+#: fields/page_link.php:549 fields/post_object.php:415 fields/relationship.php:704
 msgid "Filter by Taxonomy"
 msgstr "סינון לפי טקסונומיה"
 
-#: fields/page_link.php:557 fields/post_object.php:423
-#: fields/relationship.php:712
+#: fields/page_link.php:557 fields/post_object.php:423 fields/relationship.php:712
 msgid "All taxonomies"
 msgstr ""
 
-#: fields/page_link.php:563 fields/post_object.php:429 fields/select.php:406
-#: fields/taxonomy.php:765 fields/user.php:452
+#: fields/page_link.php:563 fields/post_object.php:429 fields/select.php:406 fields/taxonomy.php:765
+#: fields/user.php:452
 msgid "Allow Null?"
 msgstr "לאפשר שדה ריק?"
 
-#: fields/page_link.php:577 fields/post_object.php:443 fields/select.php:420
-#: fields/user.php:466
+#: fields/page_link.php:577 fields/post_object.php:443 fields/select.php:420 fields/user.php:466
 msgid "Select multiple values?"
 msgstr "בחירת ערכים מרובים?"
 
@@ -1867,8 +1792,7 @@ msgstr "בחירת ערכים מרובים?"
 msgid "Password"
 msgstr "ססמה"
 
-#: fields/post_object.php:36 fields/post_object.php:462
-#: fields/relationship.php:769
+#: fields/post_object.php:36 fields/post_object.php:462 fields/relationship.php:769
 msgid "Post Object"
 msgstr "אובייקט פוסט"
 
@@ -1978,26 +1902,21 @@ msgstr "זהירות"
 
 #: fields/tab.php:133
 msgid ""
-"The tab field will display incorrectly when added to a Table style repeater "
-"field or flexible content field layout"
-msgstr ""
-"שדה הלשונית יוצג באופן שגוי כשמוסיפים אותו לשדה חזרה שמוצג כטבלה או לשדה "
-"פריסת תוכן גמישה"
+"The tab field will display incorrectly when added to a Table style repeater field or flexible content "
+"field layout"
+msgstr "שדה הלשונית יוצג באופן שגוי כשמוסיפים אותו לשדה חזרה שמוצג כטבלה או לשדה פריסת תוכן גמישה"
 
 #: fields/tab.php:146
-msgid ""
-"Use \"Tab Fields\" to better organize your edit screen by grouping fields "
-"together."
-msgstr ""
-"השתמשו בלשוניות כדי לארגן את ממשק העריכה טוב יותר באמצעות קיבוץ השדות יחד."
+msgid "Use \"Tab Fields\" to better organize your edit screen by grouping fields together."
+msgstr "השתמשו בלשוניות כדי לארגן את ממשק העריכה טוב יותר באמצעות קיבוץ השדות יחד."
 
 #: fields/tab.php:148
 msgid ""
-"All fields following this \"tab field\" (or until another \"tab field\" is "
-"defined) will be grouped together using this field's label as the tab heading."
+"All fields following this \"tab field\" (or until another \"tab field\" is defined) will be grouped "
+"together using this field's label as the tab heading."
 msgstr ""
-"כל השדות שאחרי \"שדה הלשונית\" הזה (או עד להגדרת שדה לשונית נוסף) יהיו "
-"מקובצים יחד, כשהתווית של שדה זה תופיע ככותרת הלשונית."
+"כל השדות שאחרי \"שדה הלשונית\" הזה (או עד להגדרת שדה לשונית נוסף) יהיו מקובצים יחד, כשהתווית של שדה זה "
+"תופיע ככותרת הלשונית."
 
 #: fields/tab.php:155
 msgid "Placement"
@@ -2262,11 +2181,8 @@ msgstr "רשיון"
 
 #: pro/admin/views/settings-updates.php:24
 msgid ""
-"To unlock updates, please enter your license key below. If you don't have a "
-"licence key, please see"
-msgstr ""
-"כדי לאפשר קבלת עדכונים, נא להקליד את מפתח הרשיון שלך להלן. אם אין לכך מפתח "
-"רשיון, בבקשה בקר בדף "
+"To unlock updates, please enter your license key below. If you don't have a licence key, please see"
+msgstr "כדי לאפשר קבלת עדכונים, נא להקליד את מפתח הרשיון שלך להלן. אם אין לכך מפתח רשיון, בבקשה בקר בדף "
 
 #: pro/admin/views/settings-updates.php:24
 msgid "details & pricing"
@@ -2315,12 +2231,11 @@ msgstr "אפשרויות"
 #: pro/core/updates.php:186
 #, php-format
 msgid ""
-"To enable updates, please enter your license key on the <a href=\"%s"
-"\">Updates</a> page. If you don't have a licence key, please see <a href=\"%s"
-"\">details & pricing</a>"
+"To enable updates, please enter your license key on the <a href=\"%s\">Updates</a> page. If you don't "
+"have a licence key, please see <a href=\"%s\">details & pricing</a>"
 msgstr ""
-"כדי לאפשר עדכונים, בבקשה הקלד את מפתח הרשיון שלך בדף <a href=\"%s\">העדכונים</"
-"a>. אם אין לך מפתח רשיון, בבקשה עבור לדף <a href=\"%s\">פרטים ומחירים</a>"
+"כדי לאפשר עדכונים, בבקשה הקלד את מפתח הרשיון שלך בדף <a href=\"%s\">העדכונים</a>. אם אין לך מפתח רשיון, "
+"בבקשה עבור לדף <a href=\"%s\">פרטים ומחירים</a>"
 
 #: pro/fields/flexible-content.php:36
 msgid "Flexible Content"
@@ -2557,8 +2472,7 @@ msgstr ""
 #~ msgid "Field&nbsp;Groups"
 #~ msgstr "שדות וקבוצות"
 
-#~ msgid ""
-#~ "Load value based on the post's terms and update the post's terms on save"
+#~ msgid "Load value based on the post's terms and update the post's terms on save"
 #~ msgstr "טעינת ערך המבוסס על המונחים של הפוסט ועדכון המונחים של הפוסט בשמירה"
 
 #~ msgid "Load & Save Terms to Post"
@@ -2585,9 +2499,7 @@ msgstr ""
 #~ msgid "Data Upgrade"
 #~ msgstr "שדרוג נתונים"
 
-#~ msgid ""
-#~ "We're changing the way premium functionality is delivered in an exiting "
-#~ "way!"
+#~ msgid "We're changing the way premium functionality is delivered in an exiting way!"
 #~ msgstr "אנחנו משנים את אופן ההפצה של יכולות הפרימיום בצורה מלהיבה!"
 
 #~ msgid "Update Database"
@@ -2602,26 +2514,21 @@ msgstr ""
 #~ msgid "Roll back to ACF v%s"
 #~ msgstr "שינמוך ל-ACF גרסה %s"
 
-#~ msgid ""
-#~ "Don't panic, you can simply roll back the plugin and continue using ACF as "
-#~ "you know it!"
-#~ msgstr ""
-#~ "אל תלחצו, אתם יכולים פשוט לשנמך את גרסת התוסיף ולהמשיך להשתמש ב-ACF שאתם "
-#~ "מכירים!"
+#~ msgid "Don't panic, you can simply roll back the plugin and continue using ACF as you know it!"
+#~ msgstr "אל תלחצו, אתם יכולים פשוט לשנמך את גרסת התוסיף ולהמשיך להשתמש ב-ACF שאתם מכירים!"
 
 #~ msgid ""
-#~ "We have detected an issue which requires your attention: This website "
-#~ "makes use of premium add-ons (%s) which are no longer compatible with ACF."
+#~ "We have detected an issue which requires your attention: This website makes use of premium add-ons "
+#~ "(%s) which are no longer compatible with ACF."
 #~ msgstr ""
-#~ "זיהינו בעיה שמחייבת את תשומת הלב שלכם: האתר הזה משתמש בהרחבות פרימיום (%s) "
-#~ "שאינן תואמות עם ACF יותר."
+#~ "זיהינו בעיה שמחייבת את תשומת הלב שלכם: האתר הזה משתמש בהרחבות פרימיום (%s) שאינן תואמות עם ACF יותר."
 
 #~ msgid ""
-#~ "If multiple field groups appear on an edit screen, the first field group's "
-#~ "options will be used. (the one with the lowest order number)"
+#~ "If multiple field groups appear on an edit screen, the first field group's options will be used. "
+#~ "(the one with the lowest order number)"
 #~ msgstr ""
-#~ "אם קבוצות שדות רבות מופיעות במסך העריכה של העמוד, הסדר ייקבע לפי ההגדרות "
-#~ "בקבוצת השדות הראשונה. (זאת עם מספר הסדר הנמוך ביותר)"
+#~ "אם קבוצות שדות רבות מופיעות במסך העריכה של העמוד, הסדר ייקבע לפי ההגדרות בקבוצת השדות הראשונה. (זאת "
+#~ "עם מספר הסדר הנמוך ביותר)"
 
 #~ msgid "<b>Select</b> items to <b>hide</b> them from the edit screen"
 #~ msgstr "בחרו פריטים שיוסתרו במסך העריכה"

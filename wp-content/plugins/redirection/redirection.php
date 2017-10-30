@@ -3,7 +3,7 @@
 Plugin Name: Redirection
 Plugin URI: http://urbangiraffe.com/plugins/redirection/
 Description: Manage all your 301 redirects and monitor 404 errors
-Version: 2.7.3
+Version: 2.8.1
 Author: John Godley
 Author URI: http://urbangiraffe.com
 Text Domain: redirection
@@ -45,20 +45,27 @@ function red_get_options() {
 	}
 
 	$defaults = apply_filters( 'red_default_options', array(
-		'support'         => false,
-		'token'           => md5( uniqid() ),
-		'monitor_post'    => 0,
-		'auto_target'     => '',
-		'expire_redirect' => 7,
-		'expire_404'      => 7,
-		'modules'         => array(),
-		'newsletter'      => false,
+		'support'             => false,
+		'token'               => md5( uniqid() ),
+		'monitor_post'        => 0,
+		'monitor_types'       => array(),
+		'associated_redirect' => '',
+		'auto_target'         => '',
+		'expire_redirect'     => 7,
+		'expire_404'          => 7,
+		'modules'             => array(),
+		'newsletter'          => false,
 	) );
 
 	foreach ( $defaults as $key => $value ) {
 		if ( ! isset( $options[ $key ] ) ) {
 			$options[ $key ] = $value;
 		}
+	}
+
+	// Back-compat. If monitor_post is set without types then it's from an older Redirection
+	if ( $options['monitor_post'] > 0 && count( $options['monitor_types'] ) === 0 ) {
+		$options['monitor_types'] = array( 'post' );
 	}
 
 	return $options;

@@ -158,12 +158,12 @@ class Red_Item {
 			return $data;
 		}
 
-		$data['status'] = 'enabled';
+		$data['status'] = isset( $details['status'] ) && $details['status'] === 'disabled' ? 'disabled' : 'enabled';
 		$data['position'] = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}redirection_items WHERE group_id=%d", $data['group_id'] ) );
 		$data = apply_filters( 'redirection_create_redirect', $data );
 
 		// Create
-		if ( $wpdb->insert( $wpdb->prefix.'redirection_items', $data ) ) {
+		if ( $wpdb->insert( $wpdb->prefix.'redirection_items', $data ) !== false ) {
 			Red_Module::flush( $data['group_id'] );
 			return self::get_by_id( $wpdb->insert_id );
 		}
@@ -201,6 +201,10 @@ class Red_Item {
 	}
 
 	public function matches( $url ) {
+		if ( ! $this->is_enabled() ) {
+			return false;
+		}
+
 		$this->url = str_replace( ' ', '%20', $this->url );
 		$matches   = false;
 
@@ -209,11 +213,14 @@ class Red_Item {
 			// Check if our match wants this URL
 			$target = $this->match->get_target( $url, $this->url, $this->regex );
 			$target = apply_filters( 'redirection_url_target', $target, $this->url );
+			$target = $this->action->process_before( $this->action_code, $target );
 
-			if ( $target && $this->is_enabled() ) {
-				$this->visit( $url, $target );
-				return $this->action->process_before( $this->action_code, $target );
+			if ( $target ) {
+				do_action( 'redirection_visit', $this, $url, $target );
+				return $this->action->process_after( $this->action_code, $target );
 			}
+
+			return true;
 		}
 
 		return false;
@@ -228,8 +235,8 @@ class Red_Item {
 		$this->last_count++;
 		$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}redirection_items SET last_count=last_count+1, last_access=NOW() WHERE id=%d", $this->id ) );
 
-		if ( isset( $options['expire_redirect'] ) && $options['expire_redirect'] > 0 ) {
-			$log = RE_Log::create( $url, $target, Redirection_Request::get_user_agent(), Redirection_Request::get_ip(), Redirection_Request::get_referrer(), array( 'redirect_id' => $this->id, 'group_id' => $this->group_id ) );
+		if ( isset( $options['expire_redirect'] ) && $options['expire_redirect'] !== -1 && $target ) {
+			RE_Log::create( $url, $target, Redirection_Request::get_user_agent(), Redirection_Request::get_ip(), Redirection_Request::get_referrer(), array( 'redirect_id' => $this->id, 'group_id' => $this->group_id ) );
 		}
 	}
 
@@ -335,7 +342,7 @@ class Red_Item {
 
 		if ( isset( $params['perPage'] ) ) {
 			$limit = intval( $params['perPage'], 10 );
-			$limit = min( 100, $limit );
+			$limit = min( RED_MAX_PER_PAGE, $limit );
 			$limit = max( 5, $limit );
 		}
 
@@ -369,7 +376,7 @@ class Red_Item {
 			'url' => $this->get_url(),
 			'action_code' => $this->get_action_code(),
 			'action_type' => $this->get_action_type(),
-			'action_data' => maybe_unserialize( $this->get_action_data() ),
+			'action_data' => $this->match->get_data(),
 			'match_type' => $this->get_match_type(),
 			'title' => $this->get_title(),
 			'hits' => $this->get_hits(),
@@ -394,6 +401,10 @@ class Red_Item_Sanitize {
 		$data['url'] = $this->get_url( empty( $details['url'] ) ? $this->auto_generate() : $details['url'], $data['regex'] );
 		$data['group_id'] = $this->get_group( isset( $details['group_id'] ) ? $details['group_id'] : 0 );
 		$data['position'] = $this->get_position( $details );
+
+		if ( $data['title'] ) {
+			$data['title'] = substr( $data['title'], 0, 50 );
+		}
 
 		$matcher = Red_Match::create( isset( $details['match_type'] ) ? $details['match_type'] : false );
 		if ( ! $matcher ) {

@@ -29,7 +29,7 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 	public function enqueue_assets() {
 		global $pagenow;
 
-		if ( ! in_array( $pagenow, array( 'edit.php' ), true )  ) {
+		if ( ! in_array( $pagenow, array( 'edit.php' ), true ) ) {
 			return;
 		}
 
@@ -105,7 +105,7 @@ class WPSEO_Slug_Change_Watcher implements WPSEO_WordPress_Integration {
 					'wordpress-seo'
 				),
 				$post_type_label,
-				'<a href="https://yoa.st/1d0" target="_blank">',
+				'<a href="' . WPSEO_Shortlinker::get( 'https://yoa.st/1d0' ) . '" target="_blank">',
 				'</a>'
 			), array( 'type' => 'notice-info' )
 		);

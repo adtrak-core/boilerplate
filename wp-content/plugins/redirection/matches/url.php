@@ -1,6 +1,8 @@
 <?php
 
 class URL_Match extends Red_Match {
+	public $url;
+
 	function name () {
 		return __( 'URL only', 'redirection' );
 	}
@@ -28,5 +30,13 @@ class URL_Match extends Red_Match {
 		}
 
 		return $target;
+	}
+
+	public function get_data() {
+		return $this->url;
+	}
+
+	public function load( $values ) {
+		$this->url = $values;
 	}
 }
