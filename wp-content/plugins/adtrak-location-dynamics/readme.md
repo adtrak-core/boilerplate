@@ -1,6 +1,11 @@
 # Adtrak Location Dynamics
 ## Changelog
 
+### v3.3.3
+- [Improvement] Updated vendors
+- [Bug] Fixed single numbers not being ppc disableable
+- [Bug] Moves insights code into the correct place
+
 ### v3.3.2
 - [Bug] Fixed slashes appearing in fields
 - [Bug] Fixed UK number Location Label causing issues

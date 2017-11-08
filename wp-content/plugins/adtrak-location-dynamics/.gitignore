@@ -3,3 +3,6 @@ composer.lock
 /app/Controllers/.DS_Store
 /app/.DS_Store
 /.DS_Store
+/resources/.DS_Store
+/readme.html
+/prepros-6.config

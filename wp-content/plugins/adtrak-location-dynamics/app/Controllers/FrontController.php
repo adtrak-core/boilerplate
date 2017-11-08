@@ -103,13 +103,12 @@ class FrontController
     {
         # Get dynamics data from database
         $dynamics = Option::where(['option_name' => 'ald_numbers'])->first();
+        $dynamics = unserialize($dynamics->option_value);
 
         # If plugin isnt setup, return
         if (!isset($dynamics['insights-code'])) {
             return;
         }
-
-        $dynamics = unserialize($dynamics->option_value);
 
         # Remove backslasges and display code
         echo str_replace("\\", "", $dynamics['insights-code']);
@@ -190,10 +189,11 @@ class FrontController
      * @param string $location
      * @param boolean $calltag
      * @param boolean $linked
+     * @param boolean $ppc
      * @param boolean $short
      * @return void
      */
-    public function ld_single($location = null, $calltag = false, $linked = true, $short = false)
+    public function ld_single($location = null, $calltag = false, $linked = true, $ppc = true, $short = false)
     {
         ob_start();
         # Get dynamics data from database
@@ -244,7 +244,7 @@ class FrontController
         }
 
         # If PPC number is the same as this single show the PPC number else show the seo number
-        if (isset($loc) && $loc == $location) {
+        if (isset($loc) && $loc == $location && $ppc == false) {
             echo "<span class='ld-phonenumber ".  $order[$location]['insights'] ."'>". $order[$location]['ppc'] . "</span>";
         } elseif ($linked) {
             echo "<span class='ld-phonenumber'><a href='tel:". str_replace(' ', '', $order[$location]['seo']) ."'>". $order[$location]['seo'] . "</a></span>";

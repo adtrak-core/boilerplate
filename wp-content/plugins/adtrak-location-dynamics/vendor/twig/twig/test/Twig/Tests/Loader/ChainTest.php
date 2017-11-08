@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-class Twig_Tests_Loader_ChainTest extends PHPUnit_Framework_TestCase
+class Twig_Tests_Loader_ChainTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @group legacy
@@ -74,8 +74,8 @@ class Twig_Tests_Loader_ChainTest extends PHPUnit_Framework_TestCase
             new Twig_Loader_Array(array('foo' => 'foobar', 'bar' => 'foo')),
         ));
 
-        $this->assertEquals('bar', $loader->getCacheKey('foo'));
-        $this->assertEquals('foo', $loader->getCacheKey('bar'));
+        $this->assertEquals('foo:bar', $loader->getCacheKey('foo'));
+        $this->assertEquals('bar:foo', $loader->getCacheKey('bar'));
     }
 
     /**

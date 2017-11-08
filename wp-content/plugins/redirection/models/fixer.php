@@ -12,7 +12,7 @@ class Red_Fixer {
 		$groups = intval( $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}redirection_groups" ), 10 );
 		$bad_group = $this->get_missing();
 		$monitor_group = $options['monitor_post'];
-		$valid_monitor = Red_Group::get( $monitor_group );
+		$valid_monitor = Red_Group::get( $monitor_group ) || $monitor_group === 0;
 
 		$result = array(
 			array_merge( array( 'id' => 'db', 'name' => __( 'Database tables', 'redirection' ) ), $db->get_status() ),
@@ -91,10 +91,7 @@ class Red_Fixer {
 	}
 
 	private function fix_monitor() {
-		$options = red_get_options();
-		$options['monitor_post'] = $this->get_valid_group();
-
-		update_option( 'redirection_options', $options );
+		red_set_options( array( 'monitor_post' => $this->get_valid_group() ) );
 	}
 
 	private function get_valid_group() {

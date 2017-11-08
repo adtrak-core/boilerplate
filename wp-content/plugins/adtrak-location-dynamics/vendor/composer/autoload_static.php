@@ -14,6 +14,10 @@ class ComposerStaticInitd29ea5a8c3214e2f5ae7c0ed35fa5de8
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'Twig\\' => 5,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
@@ -27,6 +31,10 @@ class ComposerStaticInitd29ea5a8c3214e2f5ae7c0ed35fa5de8
             'Illuminate\\Database\\' => 20,
             'Illuminate\\Contracts\\' => 21,
             'Illuminate\\Container\\' => 21,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Inflector\\' => 26,
         ),
         'C' => 
         array (
@@ -43,6 +51,10 @@ class ComposerStaticInitd29ea5a8c3214e2f5ae7c0ed35fa5de8
     );
 
     public static $prefixDirsPsr4 = array (
+        'Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
@@ -75,6 +87,10 @@ class ComposerStaticInitd29ea5a8c3214e2f5ae7c0ed35fa5de8
         array (
             0 => __DIR__ . '/..' . '/illuminate/container',
         ),
+        'Doctrine\\Common\\Inflector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
+        ),
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
@@ -102,13 +118,6 @@ class ComposerStaticInitd29ea5a8c3214e2f5ae7c0ed35fa5de8
             'Raven_' => 
             array (
                 0 => __DIR__ . '/..' . '/sentry/sentry/lib',
-            ),
-        ),
-        'D' => 
-        array (
-            'Doctrine\\Common\\Inflector\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
             ),
         ),
     );
