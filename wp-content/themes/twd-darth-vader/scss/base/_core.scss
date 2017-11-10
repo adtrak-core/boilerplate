@@ -1,0 +1,30 @@
+/*---------------------------------------------------------------
+    Core 
+--------------------------------------------------------------- */
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	background: $blanc;
+    color: $noir;
+    font: 16px/1.5 $primaryFont, sans-serif;
+	min-height: 100vh;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+	max-width: $full-width;
+	margin: 0 auto;
+}
+
+/* Hides all images with data-src - good for deferring images */
+[data-src] {
+    opacity: 0;
+}

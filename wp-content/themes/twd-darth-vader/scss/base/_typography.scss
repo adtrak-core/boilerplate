@@ -1,0 +1,81 @@
+/*---------------------------------------------------------------
+	Typography
+--------------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 3.6rem; //36px
+}
+
+h2 {
+	font-size: 2.8rem; //28px
+}
+
+h3 {
+	font-size: 2.4rem; //24px
+}
+
+h4 {
+	font-size: 2rem; //20px
+}
+
+h5 {
+	font-size: 1.8rem; //18px
+}
+
+h6 {
+	font-size: 1.6rem; //16px
+}
+
+p {
+	font-size: 1.6rem; //16px
+}
+
+ul, ol {
+	font-size: 1.6rem; //16px	
+}
+
+ul {
+
+}
+
+ol {
+
+}
+
+b, 
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+a {
+	transition: .3s;
+
+	&:visited {
+
+	}
+
+	&:focus {
+
+	}
+
+	&:hover {
+
+	}
+}
+
+small {
+	font-size: 1.4rem; // 14px;
+}
