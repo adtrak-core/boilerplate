@@ -28,6 +28,8 @@
     padding: .5em;
     width: 65%;
     float: left;
+    background: $twd-secondary;
+    color: $twd-secondary-opp;
 }
 
 // Used when only one number is in the mobile top bar
@@ -39,6 +41,8 @@
         padding: .5em .5em .5em 1.8em;
         text-decoration: none;
         color: $noir;
+        background: $twd-secondary;
+        color: $twd-secondary-opp;
         &:before {
             content: '\f095';
             font-family: "FontAwesome";
@@ -58,8 +62,8 @@
     padding: .5em;
     width: 35%;
     float: right;
-    background: $noir;
-    color: $blanc;
+    background: $twd-primary;
+    color: $twd-primary-opp;
 }
 
 .location-numbers {
@@ -69,11 +73,13 @@
     padding: 1em;
     display: none;
     width: 100%;
-    background: darken($blanc,20);
     overflow-y: scroll;
     max-height: 80vh;
+    background: $twd-secondary;
+    color: $twd-secondary-opp;
     a {
         white-space: nowrap;
+        color: $twd-secondary-opp;
     }
     .ld-phonenumber {
         font-size: 2rem;
