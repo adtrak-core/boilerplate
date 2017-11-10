@@ -49,35 +49,18 @@ Home page
 
 			<div class="hero-content">
 
-			<?php
+				<p class="hero-primary"><?php the_field('hero_primary'); ?></p>
+				<p class="hero-secondary"><?php the_field('hero_secondary'); ?></p>
 
-				// check if the flexible hero has rows of data
-				if( have_rows('flexible_hero') ):
+				<?php if (have_rows('hero_ticks')) :?>
 
-				     // loop through the rows of data
-				    while ( have_rows('flexible_hero') ) : the_row();
+				<ul class="hero-ticks">
+					<?php while( have_rows('hero_ticks') ): the_row(); ?>
+						<li><?php the_sub_field('item'); ?></li>
+					<?php endwhile; ?>
+				</ul>
 
-				        if( get_row_layout() == 'text' ): ?>
-
-				        	<p class="<?php the_sub_field('hero_text_class'); ?>"><?php the_sub_field('hero_text'); ?></p>
-
-				        <?php
-
-				        elseif( get_row_layout() == 'button' ): ?>
-
-							<a class="<?php the_sub_field('button_class'); ?>" href="<?php the_sub_field('button_link') ?>">
-								<?php the_sub_field('button_text') ?>
-							</a>
-
-				    	<?php endif;
-
-				    endwhile; ?>
-
-				<?php /* Else display the title */ else : ?>
-
-				<p class="primary"><?php the_title(); ?></p>
-
-			<?php endif; ?>
+				<?php endif; ?>
 
 			</div>	
 
