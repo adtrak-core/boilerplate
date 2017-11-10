@@ -43,11 +43,15 @@ $bucketMargins : 2%;
 
     a {
         display: block;
-        background: rgba($noir,.6);
+        background: rgba($noir,.3);
         color: $blanc;
         padding: 6em 1em 1em 1em;
         height: 100%;
         text-decoration: none;
+
+        &:hover {
+            background: none;
+        }
     }
 
     span {
