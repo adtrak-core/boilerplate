@@ -8,8 +8,13 @@
 $blanc 				: #fff;
 $noir				: #333;
 
-$twd-primary		: orange;
-$twd-secondary		: red;
+// Primary colour and its opposite
+$twd-primary				: orange;
+$twd-primary-opp			: black;
+
+// Secondayr colour and its opposite
+$twd-secondary				: red;
+$twd-secondary-opp		: white;
 
 /* Sizes
 --------------------------------------------------------------- */
