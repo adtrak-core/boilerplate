@@ -4,14 +4,19 @@
 
 // Primary 
 
+#navigation {
+    background: $noir;
+}
+
 #menu-primary-menu {
-    background: $blanc;
     display: none;
+    max-width: $full-width;
+    margin: 0 auto;
 
     @include bp800 {
         clear: both;
         display: block;
-        text-align: center;
+        text-align: right;
 
         li {
             display: inline;
@@ -41,12 +46,12 @@
         a {
             display: inline-block;
             text-decoration: none;
-            color: $noir;
+            color: $blanc;
             padding: 20px 9px;
             font-size: 1.5rem;
 
             &:hover {
-                color: $noir;
+                color: $twd-primary;
             }
 
         }
@@ -153,12 +158,12 @@
         a {
             display: inline-block;
             text-decoration: none;
-            color: $noir;
+            color: $blanc;
             padding: 14px 6px;
             font-size: 1.4rem;
 
             &:hover {
-                color: $noir;
+                color: $twd-primary;
             }
 
         }
