@@ -66,6 +66,7 @@ $bucketMargins : 2%;
         color: $twd-primary-opp;
         border-radius: 10px;
         text-align: center;
+        transition: .3s;
     }
 
     @include bp480 {
