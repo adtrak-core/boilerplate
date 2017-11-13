@@ -11,7 +11,7 @@
 			    <ul>
 			        <?php foreach( $images as $image ): ?>
 			            <li>
-			                <a href="<?php echo $image['sizes']['large']; ?>">
+			                <a class="swipebox" href="<?php echo $image['sizes']['large']; ?>">
 			                     <img src="<?php echo $image['sizes']['gallery-300']; ?>" alt="<?php echo $image['alt']; ?>" />
 			                </a>
 			            </li>

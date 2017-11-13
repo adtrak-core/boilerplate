@@ -6,6 +6,7 @@ footer {
     clear: both;
     overflow: hidden;
     text-align: center;
+    background: $twd-primary;
 
     ul {
         list-style: none;
@@ -25,6 +26,14 @@ footer {
 
     .adtrak img {
         max-width: 100px;
+        @include bp800 {
+            float: right;
+        }
+    }
+
+    .bottom-row {
+        padding: 1em 0;
+       p { font-size: 1.3rem; }
     }
 
 }

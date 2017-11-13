@@ -17,6 +17,10 @@
 			}
 		);
 
+		// Swipebox
+
+		$( '.swipebox' ).swipebox();
+
 		// Moves the non-cloned top-menu div to the top bar
 
 		$("#menu-secondary-menu").prependTo(".top-bar .container");
