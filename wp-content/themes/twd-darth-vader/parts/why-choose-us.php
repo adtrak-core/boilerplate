@@ -1,4 +1,4 @@
-	<div class="why-choose-us pad-1-1">
+	<div class="grid grid12_12 why-choose-us pad-1-1">
 
 		<div class="container">
 

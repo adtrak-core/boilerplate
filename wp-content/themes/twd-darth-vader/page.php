@@ -10,8 +10,6 @@
 <?php
     get_header();
     include locate_template('parts/hero.php');
-    include locate_template('parts/buckets.php');
-    include locate_template('parts/why-choose-us.php');
 ?>
 
 	<main class="site-content container">
@@ -38,5 +36,10 @@
 		<?php endwhile; endif; ?>
 
 	</main>
+
+<?php
+	include locate_template('parts/why-choose-us.php');
+	include locate_template('parts/gallery.php');
+?>
 
 <?php get_footer(); ?>

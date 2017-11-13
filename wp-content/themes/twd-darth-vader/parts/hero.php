@@ -1,6 +1,6 @@
 <?php 
 
-if ( is_front_page() ) { 
+if ( is_front_page() || is_page() ) { 
 
 /* -----------------------------------------------------------------
 Home page
@@ -8,7 +8,7 @@ Home page
 
 ?>
 
-	<div class="hero">
+	<div class="hero <?php if (!is_front_page()){echo('internal-hero');}?>">
 
 	<?php
 
@@ -76,15 +76,6 @@ Contact page
 
 ?>
 
-
-
-<?php } elseif (is_page()) {
-
-/* -----------------------------------------------------------------
-Internal page
------------------------------------------------------------------ */
-
-?>
 
 
 
