@@ -43,6 +43,7 @@ add_action('after_setup_theme', function () {
 	add_image_size( 'hero-1200', 1200, 500, true );
 	add_image_size( 'hero-600', 600, 600, true );
 	add_image_size( 'square-350', 350, 350, true );
+	add_image_size( 'gallery-300', 300, 220, true );
 
 	// More navs
 

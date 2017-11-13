@@ -39,4 +39,6 @@
 
 	</main>
 
+<?php include locate_template('parts/gallery.php'); ?>
+
 <?php get_footer(); ?>
