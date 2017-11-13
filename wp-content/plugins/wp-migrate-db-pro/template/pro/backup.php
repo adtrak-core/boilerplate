@@ -51,14 +51,21 @@
 			<a href="#" class="multiselect-invert-selection js-action-link"><?php _e( 'Invert Selection', 'wp-migrate-db' ); ?></a>
 		</div>
 	</div>
+
 	<div class="backup-option-disabled inline-message error-notice notification-message" style="display: none;">
-		<p class="action-text pull find_replace import">
-			<?php _e( 'The backup option has been disabled because the local uploads directory is not writable.', 'wp-migrate-db' ); ?>
+		<p>
+			<strong><?php _e( 'Uploads Directory Not Writable', 'wp-migrate-db' ); ?></strong> &mdash;
+			<span class="action-text pull find_replace"><?php _e( 'The backup option has been disabled because the local uploads directory is not writable:', 'wp-migrate-db' ); ?></span>
+			<span class="action-text push"><?php _e( 'The backup option has been disabled because the remote uploads directory is not writable:', 'wp-migrate-db' ); ?></span>
 		</p>
-		<p class="action-text push">
-			<?php _e( 'The backup option has been disabled because the remote uploads directory is not writable.', 'wp-migrate-db' ); ?>
+
+		<p><span class="upload-directory-location"><?php echo esc_html( $this->get_upload_info( 'path' ) ); ?></span></p>
+
+		<p>
+			<?php printf( '%s <a href="%s">%s »</a>',
+				__( 'Please adjust the permissions on this directory.', 'wp-migrate-db' ),
+				'https://deliciousbrains.com/wp-migrate-db-pro/doc/uploads-folder-permissions/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin',
+				__( 'More info', 'wp-migrate-db' ) ); ?>
 		</p>
-		<p><?php printf( __( 'We can\'t save the backup to the following folder: <br><span class="upload-directory-location">%s</span>' ), $this->get_upload_info( 'path' ) ); ?></p>
-		<p><?php _e( 'Please adjust the permissions on this folder. <a href="https://deliciousbrains.com/wp-migrate-db-pro/doc/uploads-folder-permissions/?utm_campaign=error%2Bmessages&utm_source=MDB%2BPaid&utm_medium=insideplugin" target="_blank">See our documentation for more information »</a>', 'wp-migrate-db' ); ?></p>
 	</div>
 </div>

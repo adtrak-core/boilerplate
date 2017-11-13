@@ -4,19 +4,19 @@ Donate link: http://urbangiraffe.com/about/
 Tags: redirect, htaccess, 301, 404, seo, permalink, apache, nginx, post, admin
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 2.9.1
-Requires PHP: 5.3
+Stable tag: 2.9.2
+Requires PHP: 5.4
 License: GPLv3
 
 Manage 301 redirections, keep track of 404 errors, and improve your site, with no knowledge of Apache or Nginx needed.
 
 == Description ==
 
-Redirection is the oldest and most popular redirect manager for WordPress. With it you can easily manage 301 redirections, with full logging, as well as keep track of 404 errors, and generally tidy up any loose ends your site may have. This can help reduce errors and improve your site ranking.
+Redirection is the most popular redirect manager for WordPress. With it you can easily manage 301 redirections, keep track of 404 errors, and generally tidy up any loose ends your site may have. This can help reduce errors and improve your site ranking.
 
 Redirection is designed to be used on sites with a few redirects to sites with thousands of redirects.
 
-It has been a WordPress plugin for over 10 years and has been recommended countless times. Best of all, it free!
+It has been a WordPress plugin for over 10 years and has been recommended countless times. And it's free!
 
 = Redirect manager =
 
@@ -24,7 +24,7 @@ Create and manage redirects quickly and easily without needing Apache or Nginx k
 
 There is full support for regular expressions so you can create redirect patterns to match any number of URLs.
 
-The plugin can also be configured to monitor when posts permalinks are changed and automatically create a redirect to the new post. It will also monitor pages, and even when something is deleted.
+The plugin can also be configured to monitor when post or page permalinks are changed and automatically create a redirect to the new URL.
 
 = Conditional redirects =
 
@@ -69,7 +69,7 @@ You can also import from the following plugins:
 
 = Wait, it's free? =
 
-Yes, it's really free. There's no premium version and no need to pay money to get access to other features. This is a dedicated redirect management plugin.
+Yes, it's really free. There's no premium version and no need to pay money to get access to features. This is a dedicated redirect management plugin.
 
 == Support ==
 
@@ -114,6 +114,11 @@ The plugin works in a similar manner to how WordPress handles permalinks and sho
 * Another database change. Please backup your data
 
 == Changelog ==
+
+= 2.9.2 - 11th November 2017 =
+* Fix regex breaking .htaccess export
+* Fix error when saving Error or No action
+* Restore sortable table headers
 
 = 2.9.1 - 4th November 2017 =
 * Fix const issues with PHP 5
