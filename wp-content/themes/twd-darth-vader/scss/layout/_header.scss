@@ -27,13 +27,20 @@ header {
 
     .logo {
         display: block;
-        width: 100%;
-        height: auto;
-        max-width: 250px;
         transition: .3s;
         margin: 0 auto;
         background: $blanc;
         padding: 1em .5em;
+        text-align: center;
+        @include flexbox();
+
+        img {
+            width: 100%;
+            max-width: 220px;
+            display: block;
+            height: auto;
+            margin: auto;
+        }
 
         &:hover {
             opacity: 0.8;
@@ -44,18 +51,58 @@ header {
             top: -49px;
             left: 0;
             z-index: 10;
-            max-height: 137px;
+            height: 155px;
             width: auto;
+        }
+
+        @include bp1200 {
+            height: 220px;
         }
     }
 
     .phone-top-right {
         display: none;
+        padding: 2em 0;
+        color: $blanc;
+        float: right;
+
+        a {
+            color: $twd-primary; 
+            text-decoration: none;
+        }
+
+        .ld-toggle {
+            display: inline-block;
+            padding: .5em;
+            border: 1px solid $twd-primary;
+            border-radius: 5px;
+            margin: 0 .5em;
+            &:hover {
+                background: $twd-primary;
+                color: $twd-primary-opp;
+            }
+        }
+
+        .ld-locations-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .ld-dropdown {
+            position: absolute;
+            top: 38px;
+            right: .5em;
+            min-width: 200px;
+            padding: .5em;
+            display: block;
+            background: $noir;
+            border: 1px solid $twd-primary;
+            z-index: 100;
+            border-radius: 5px 0 5px 5px;
+        }
 
         @include bp800 {
-            float: right;
             display: block;
-            padding: 2em 0;
         }
     }
 

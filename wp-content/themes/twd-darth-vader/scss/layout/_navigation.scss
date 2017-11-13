@@ -34,13 +34,8 @@
 
         .current-menu-item a,
         .current-menu-parent a {
-            color: $blanc;
-            background: lighten($noir,20);
-
-            &:hover {
-                color: $blanc;
-            }
-
+            color: $twd-primary-opp;
+            background: $twd-primary;
         }
 
         a {
@@ -51,7 +46,8 @@
             font-size: 1.5rem;
 
             &:hover {
-                color: $twd-primary;
+                color: $twd-secondary-opp;
+                background: $twd-secondary;
             }
 
         }
