@@ -62,6 +62,9 @@ class WPMDBPro extends WPMDB {
 		// Seen when the user clicks "view details" on the plugin listing page
 		add_action( 'install_plugins_pre_plugin-information', array( $this, 'plugin_update_popup' ) );
 
+		//Remove 'Expect' header which some setups have issues with
+		add_filter( 'http_request_args', 'WPMDB_Utils::preempt_expect_header', 10, 2 );
+
 		// Updates the database backup header for pro version backups
 		add_filter( 'wpmdb_backup_header_included_tables', array( $this, 'backup_header_included_tables' ) );
 
@@ -186,6 +189,10 @@ class WPMDBPro extends WPMDB {
 
 	function template_unrecognized_import_file() {
 		$this->template( 'unrecognized-import-file', 'pro' );
+	}
+
+	function template_mst_required() {
+		$this->template( 'mst-required', 'pro' );
 	}
 
 	function template_import_find_replace_option( $loaded_profile ) {
@@ -332,14 +339,18 @@ class WPMDBPro extends WPMDB {
 	function ajax_verify_connection_to_remote_site() {
 		$this->check_ajax_referer( 'verify-connection-to-remote-site' );
 
-		$key_rules = array(
-			'action'                      => 'key',
-			'url'                         => 'url',
-			'key'                         => 'string',
-			'intent'                      => 'key',
-			'nonce'                       => 'key',
-			'convert_post_type_selection' => 'numeric',
-			'profile'                     => 'numeric',
+		$key_rules = apply_filters(
+			'wpmdb_key_rules',
+			array(
+				'action'                      => 'key',
+				'url'                         => 'url',
+				'key'                         => 'string',
+				'intent'                      => 'key',
+				'nonce'                       => 'key',
+				'convert_post_type_selection' => 'numeric',
+				'profile'                     => 'numeric',
+			),
+			__FUNCTION__
 		);
 		$this->set_post_data( $key_rules );
 
@@ -357,6 +368,7 @@ class WPMDBPro extends WPMDB {
 			'referer' => $this->get_short_home_address_from_url( home_url() ),
 			'version' => $this->plugin_version,
 		);
+		$data = apply_filters( 'wpmdb_verify_connection_to_remote_site_args', $data, $this->state_data );
 
 		$data['sig']         = $this->create_signature( $data, $this->state_data['key'] );
 		$ajax_url            = $this->ajax_url();
@@ -771,18 +783,23 @@ class WPMDBPro extends WPMDB {
 	 * @return mixed
 	 */
 	function respond_to_verify_connection_to_remote_site() {
-		$key_rules = array(
-			'action'  => 'key',
-			'intent'  => 'key',
-			'referer' => 'string',
-			'version' => 'string',
-			'sig'     => 'string',
+		$key_rules = apply_filters(
+			'wpmdb_key_rules',
+			array(
+				'action'  => 'key',
+				'intent'  => 'key',
+				'referer' => 'string',
+				'version' => 'string',
+				'sig'     => 'string',
+			),
+			__FUNCTION__
 		);
 		$this->set_post_data( $key_rules );
 
 		$return = array();
 
-		$filtered_post = $this->filter_post_elements( $this->state_data, array( 'action', 'intent', 'referer', 'version' ) );
+		unset( $key_rules['sig'] );
+		$filtered_post = $this->filter_post_elements( $this->state_data, array_keys( $key_rules ) );
 
 		// Only scramble response once we know it can be handled.
 		add_filter( 'wpmdb_before_response', array( $this, 'scramble' ) );
@@ -863,7 +880,7 @@ class WPMDBPro extends WPMDB {
 		$return['gzip']                   = ( $this->gzip() ? '1' : '0' );
 		$return['post_types']             = $this->get_post_types();
 		// TODO: Use WP_Filesystem API.
-		$return['write_permissions']      = ( is_writeable( $this->get_upload_info( 'path' ) ) ? '1' : '0' );
+		$return['write_permissions']      = ( is_writeable( $this->get_upload_info( 'path' ) ) ? 'true' : 'false' );
 		$return['upload_dir_long']        = $this->get_upload_info( 'path' );
 		$return['temp_prefix']            = $this->temp_prefix;
 		$return['lower_case_table_names'] = $this->get_lower_case_table_names_setting();
@@ -984,7 +1001,7 @@ class WPMDBPro extends WPMDB {
 		return sprintf(
 			'<p class="masked-licence">%s <a href="%s">%s</a></p>',
 			$this->mask_licence( $this->settings['licence'] ),
-			network_admin_url( $this->plugin_base . '&nonce=' . wp_create_nonce( 'wpmdb-remove-licence' ) . '&wpmdb-remove-licence=1#settings' ),
+			network_admin_url( $this->plugin_base . '&nonce=' . WPMDB_Utils::create_nonce( 'wpmdb-remove-licence' ) . '&wpmdb-remove-licence=1#settings' ),
 			_x( 'Remove', 'Delete license', 'wp-migrate-db' )
 		);
 	}
@@ -1080,7 +1097,7 @@ class WPMDBPro extends WPMDB {
 		$src = plugins_url( "asset/dist/js/plugin-update{$ver_string}{$min}.js", dirname( __FILE__ ) );
 		wp_enqueue_script( 'wp-migrate-db-pro-plugin-update-script', $src, array( 'jquery' ), false, true );
 
-		wp_localize_script( 'wp-migrate-db-pro-plugin-update-script', 'wpmdb_nonces', array( 'check_licence' => wp_create_nonce( 'check-licence' ), 'process_notice_link' => wp_create_nonce( 'process-notice-link' ), ) );
+		wp_localize_script( 'wp-migrate-db-pro-plugin-update-script', 'wpmdb_nonces', array( 'check_licence' => WPMDB_Utils::create_nonce( 'check-licence' ), 'process_notice_link' => WPMDB_Utils::create_nonce( 'process-notice-link' ), ) );
 		wp_localize_script( 'wp-migrate-db-pro-plugin-update-script', 'wpmdb_update_strings', array( 'check_license_again' => __( 'Check my license again', 'wp-migrate-db' ), 'license_check_problem' => __( 'A problem occurred when trying to check the license, please try again.', 'wp-migrate-db' ), ) );
 	}
 

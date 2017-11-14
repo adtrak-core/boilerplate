@@ -31,7 +31,6 @@ class WPMDBPro_Import {
 	public function __construct( $wpmdbpro ) {
 		$this->wpmdbpro = $wpmdbpro;
 
-		add_action( 'wpmdb_load_assets', array( $this, 'enqueue_import_script' ) );
 		add_action( 'wp_ajax_wpmdb_get_import_info', array( $this, 'ajax_get_import_info' ) );
 		add_action( 'wp_ajax_wpmdb_upload_file', array( $this, 'ajax_upload_file' ) );
 		add_action( 'wp_ajax_wpmdb_prepare_import_file', array( $this, 'ajax_prepare_import_file' ) );
@@ -39,14 +38,7 @@ class WPMDBPro_Import {
 		add_filter( 'wpmdb_preserved_options', array( $this, 'filter_preserved_options' ), 10, 2 );
 		add_filter( 'wpmdb_preserved_options_data', array( $this, 'filter_preserved_options_data' ), 10, 2 );
 	}
-
-	public function enqueue_import_script( $hook ) {
-		$ver_string  = '-' . str_replace( '.', '', $this->wpmdbpro->get( 'plugin_version' ) );
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$src = plugins_url( "asset/dist/js/import{$ver_string}{$min}.js", dirname( __FILE__ ) );
-		wp_enqueue_script( 'wp-migrate-db-pro-import-script', $src, array( 'jquery' ), false, true );
-	}
-
+	
 	/**
 	 * Returns info about the import file.
 	 *
@@ -70,7 +62,7 @@ class WPMDBPro_Import {
 			$is_gzipped = true;
 		}
 
-		if ( ! $data ) {
+		if ( ! $data && ! $is_gzipped ) {
 			$error_msg = __( 'Unable to read data from the import file', 'wp-migrate-db' );
 			$return    = array( 'wpmdb_error' => 1, 'body' => $error_msg );
 			$this->wpmdbpro->log_error( $error_msg );
@@ -119,6 +111,14 @@ class WPMDBPro_Import {
 
 			if ( '# Protocol:' === substr( $lines[10], 0, 11 ) ) {
 				$return['protocol'] = substr( $lines[10], 12 );
+			}
+
+			if ( '# Multisite:' === substr( $lines[11], 0, 12 ) ) {
+				$return['multisite'] = substr( $lines[11], 13 );
+			}
+
+			if ( '# Subsite Export:' === substr( $lines[12], 0, 17 ) ) {
+				$return['subsite_export'] = substr( $lines[12], 18 );
 			}
 		}
 
