@@ -1,0 +1,49 @@
+/*---------------------------------------------------------------
+	Forms
+--------------------------------------------------------------- */
+
+form {
+
+    > * + * {
+        margin: 1em 0;
+    }
+
+	label {
+ 		display: block;
+        position: relative;
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="url"],
+	input[type="tel"],
+	input[type="date"],
+	input[type="number"] {
+ 		width: 100%;
+	}
+
+	textarea {
+ 		width: 100%;
+	}
+
+	select {
+ 		width: 100%;
+	}
+
+	input[type="checkbox"],
+	input[type="radio"] {
+		font-size: 1.4rem;
+	}
+
+	input[type="file"] {
+		font-size: 1.4rem;
+	}
+
+	fieldset {
+
+	}
+
+	legend {
+		
+	}
+}

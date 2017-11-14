@@ -1,0 +1,95 @@
+/*---------------------------------------------------------------
+    Mobile Top Bar
+--------------------------------------------------------------- */
+
+.mobile-top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $mobile-top-bar-height;
+    background: #eee;
+    @include flexbox();
+    
+    &:after {
+        clear: both;
+        content: '';
+        display: block;
+    }
+    
+    @include bp800 {
+        display: none;
+    }
+}
+
+// Used to trigger multiple numbers in the mobile top bar
+.js-toggle-location-numbers {
+    display: block;
+    padding: .5em;
+    width: 65%;
+    float: left;
+    background: $twd-secondary;
+    color: $twd-secondary-opp;
+}
+
+// Used when only one number is in the mobile top bar
+.single-number {
+    display: block;
+    width: 65%;
+    a {
+        display: block;
+        padding: .5em .5em .5em 1.8em;
+        text-decoration: none;
+        color: $noir;
+        background: $twd-secondary;
+        color: $twd-secondary-opp;
+        &:before {
+            content: '\f095';
+            font-family: "FontAwesome";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: block;
+        }
+    }
+}
+
+.menu-btn {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    padding: .5em;
+    width: 35%;
+    float: right;
+    background: $twd-primary;
+    color: $twd-primary-opp;
+}
+
+.location-numbers {
+    top: $mobile-top-bar-height;
+    position: absolute;
+    left: 0;
+    padding: 1em;
+    display: none;
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 80vh;
+    background: $twd-secondary;
+    color: $twd-secondary-opp;
+    a {
+        white-space: nowrap;
+        color: $twd-secondary-opp;
+    }
+    .ld-phonenumber {
+        font-size: 2rem;
+        display: block;
+    }
+    .ld-location {
+        padding: .5em 0;
+    }
+}
+
+.location-numbers-visible {
+    display: block;
+}

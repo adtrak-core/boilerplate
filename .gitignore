@@ -106,6 +106,7 @@ Thumbs.db
 
 !wp-content/themes/adtrak-child/
 !wp-content/themes/adtrak-parent/
+!wp-content/themes/twd-darth-vader/
 
 *.codekit
 *.DS_store

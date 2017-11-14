@@ -1,0 +1,163 @@
+/*---------------------------------------------------------------
+    Navigation (Desktop)
+--------------------------------------------------------------- */
+
+// Primary 
+
+#navigation {
+    background: $noir;
+}
+
+#menu-primary-menu {
+    display: none;
+    max-width: $full-width;
+    margin: 0 auto;
+
+    @include bp800 {
+        clear: both;
+        display: block;
+        text-align: right;
+
+        li {
+            display: inline;
+            position: relative;
+
+            &.menu-item-has-children > a:after {
+                content: "\f107";
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                margin-left: -8px;
+                font: 1em/1 FontAwesome;
+            }
+        }
+
+        .current-menu-item a,
+        .current-menu-parent a {
+            color: $twd-primary-opp;
+            background: $twd-primary;
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: $blanc;
+            padding: 20px 9px;
+            font-size: 1.5rem;
+
+            &:hover {
+                color: $twd-secondary-opp;
+                background: $twd-secondary;
+            }
+
+        }
+
+        .sub-menu {
+            position: absolute;
+            background: $blanc;
+            top: 40px;
+            left: 0;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            width: 160px;
+            -webkit-transition: .3s;
+            transition: .3s;
+
+            li {
+                width: 100%;
+                float: left;
+            }
+
+            .current-menu-item > a {
+                color: $blanc;
+                background: $noir;
+            }
+
+            a {
+                color: $noir;
+                display: block;
+                border-bottom: 1px solid rgba(255,255,255,.1);
+
+                &:hover {
+                    color: $noir;
+                }
+
+            }
+
+            &:hover {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+            }
+
+        }
+
+        a:hover + .sub-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+    }
+
+    @include bp1200 {
+
+        a {
+            font-size: 1.6rem;
+            padding: 20px 25px;
+        }
+
+    }
+
+}
+
+
+// Secondary
+
+#menu-secondary-menu {
+    display: none;
+    @include bp800 {
+        clear: both;
+        display: block;
+        text-align: right;
+
+        li {
+            display: inline;
+            position: relative;
+
+            &.menu-item-has-children > a:after {
+                content: "\f107";
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                margin-left: -8px;
+                font: 1em/1 FontAwesome;
+            }
+        }
+
+        .current-menu-item a,
+        .current-menu-parent a {
+            color: $blanc;
+            background: lighten($noir,20);
+
+            &:hover {
+                color: $blanc;
+            }
+
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: $blanc;
+            padding: 14px 6px;
+            font-size: 1.4rem;
+
+            &:hover {
+                color: $twd-primary;
+            }
+
+        }
+    }
+}

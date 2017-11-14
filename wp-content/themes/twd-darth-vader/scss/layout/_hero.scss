@@ -1,0 +1,79 @@
+/*---------------------------------------------------------------
+    Hero
+--------------------------------------------------------------- */
+
+.hero {
+
+    background-size: cover;
+    background-position: center;
+
+    .container {
+        position: relative;   
+        background: rgba(0,0,0,.6);
+        max-width: 100%;
+    }
+    
+}
+    
+.hero-content {
+    padding: 2em 1em;
+    color: $twd-primary;
+    line-height: 1em;
+    max-width: $full-width;
+    margin: 0 auto;
+}
+
+.hero-primary {
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 1em;
+}
+
+.hero-secondary {
+    font-size: 2rem;
+    line-height: 1em;
+    padding: 1em 0;
+    &:after {
+        content: '';
+        width: 100%;
+        background: $twd-primary;
+        height: 2px;
+        display: block;
+        max-width: 260px;
+        margin: 1em 0 0 0;
+    }
+}
+
+,.hero-ticks {
+    list-style: none;
+    li {
+        margin: .5em 0;
+        &:before {
+            font-family: "FontAwesome";
+            width: 30px;
+            content: '\f05d';
+            display: inline-block;
+        }
+    }
+}
+
+@include bp800 {
+    .hero-content {
+        padding: 6em 1em;
+    }
+    .hero-primary {
+        font-size: 5rem;
+    }
+    .hero-secondary {
+        font-size: 3rem;
+        &:after {
+            max-width: 330px;
+        }
+    }
+    .hero-ticks { 
+        font-size: 1.7rem;
+    }
+    .internal-hero .hero-content {
+        padding: 3em 1em;
+    }
+}

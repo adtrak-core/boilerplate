@@ -1,0 +1,74 @@
+/*---------------------------------------------------------------
+    Footer
+--------------------------------------------------------------- */
+
+footer {    
+    clear: both;
+    overflow: hidden;
+    text-align: center;
+    background: $twd-primary;
+
+    ul {
+        list-style: none;
+    }
+
+    li {
+        display: block;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    @include bp800 {
+        text-align: left;
+    }
+
+    .adtrak img {
+        max-width: 100px;
+        @include bp800 {
+            float: right;
+        }
+    }
+
+    .bottom-row {
+        padding: 1em 0;
+       p { font-size: 1.3rem; }
+    }
+
+}
+
+/* Back to top
+--------------------------------------------------------------- */
+
+#back-top {
+    border-radius: 10px;
+    position: fixed;
+    cursor: pointer;
+    right: 10px;
+    bottom: 10px;
+    z-index: 300;
+    opacity: .4;
+    text-align: center;
+    background: #fff;
+    padding: .3em;
+
+    &:hover {
+        opacity: 1;
+        transition: .3s;
+    }
+
+    a {
+        color: #333;
+        text-shadow: 1px 1px 1px #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+        
+        i {
+            display: block;
+            font-size: 4rem;
+        }
+    }
+}
