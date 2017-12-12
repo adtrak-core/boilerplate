@@ -78,10 +78,7 @@
 
 </div><!-- wrapper -->
 
-<?php
-	if ( shortcode_exists( 'cookie_notification' ) ) { do_shortcode('[cookie_notification]'); }
-	wp_footer();
-?>
+<?php wp_footer(); ?>
 	
 </body>
 </html>
