@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: johnny5
-Donate link: http://urbangiraffe.com/about/
+Donate link: https://redirection.me/donation/
 Tags: redirect, htaccess, 301, 404, seo, permalink, apache, nginx, post, admin
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 2.9.2
+Stable tag: 2.10.1
 Requires PHP: 5.4
 License: GPLv3
 
@@ -17,6 +17,8 @@ Redirection is the most popular redirect manager for WordPress. With it you can 
 Redirection is designed to be used on sites with a few redirects to sites with thousands of redirects.
 
 It has been a WordPress plugin for over 10 years and has been recommended countless times. And it's free!
+
+Full documentation can be found at [https://redirection.me](https://redirection.me)
 
 = Redirect manager =
 
@@ -91,9 +93,18 @@ The plugin is simple to install:
 1. Go to the plugin management page and enable the plugin
 1. Configure the options from the `Manage/Redirection` page
 
-You can find full details of installing a plugin on the [plugin installation page](http://urbangiraffe.com/articles/how-to-install-a-wordpress-plugin/).
+You can find full details of installing a plugin on the [plugin installation page](https://redirection.me/support/installation/).
 
-Full documentation can be found on the [Redirection](http://urbangiraffe.com/plugins/redirection/) page.
+Full documentation can be found on the [Redirection](https://redirection.me/support/) page.
+
+== Screenshots ==
+
+1. Redirection management interface
+2. Adding a redirection
+3. Redirect logs
+4. Import/Export
+5. Options
+6. Support
 
 == Frequently Asked Questions ==
 
@@ -114,6 +125,12 @@ The plugin works in a similar manner to how WordPress handles permalinks and sho
 * Another database change. Please backup your data
 
 == Changelog ==
+
+= 2.10 - 18th November 2017 =
+* Add support for WordPress multisite
+* Add new Redirection documentation
+* Add extra actions when creating redirects
+* Fix user agent dropdown not setting agent
 
 = 2.9.2 - 11th November 2017 =
 * Fix regex breaking .htaccess export

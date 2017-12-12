@@ -4,9 +4,9 @@ Donate link: https://yoast.com/
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Google Search Console, Content analysis, Readability
-Requires at least: 4.6
-Tested up to: 4.8.2
-Stable tag: 5.7.1
+Requires at least: 4.8
+Tested up to: 4.9.1
+Stable tag: 5.9.3
 Requires PHP: 5.2.4
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.
@@ -125,79 +125,88 @@ You'll find answers to many of your questions on [kb.yoast.com](https://kb.yoast
 
 == Changelog ==
 
-= 5.7.1 =
+= 5.9.3 =
 
-Release Date: October 25th, 2017
+Release Date: December 11th, 2017
 
-Bugfixes:
-	* Fixes a bug where the message "You are not receiving updates or support!" is shown incorrectly.
-	* Changes the reference to the correct ACF Content Analysis for Yoast SEO plugin.
+Security:
 
-Enhancements:
-	* Adds a plugin suggestion for WooCommerce SEO when WooCommerce is installed.
+* Fixes an issue where a part of the excerpt would be leaked on password protected posts when used as a replacement variable. Such as `%%excerpt%%` and `%%excerpt_only%%`. Props to [Rolands Umbrovskis](https://profiles.wordpress.org/rolandinsh) for reporting this issue to us.
 
-= 5.7.0 =
-
-Release Date: October 24th, 2017
-
-Enhancements:
-	* Adds notifications when we detect certain plugins are installed to suggest our AMP and ACF glue plugins.
-	* Adds the ability to start the configuration wizard from the admin bar menu.
-	* Adds better responsive styling for the video tabs in the Help Center.
-	* Replaces the link to Google AdWords with the https variant, props [Shane Gray](https://github.com/shane-gray).
-	* Changes to the desired spelling of `plugin` and `setup`, props [Pedro Mendonça](https://github.com/pedro-mendonca).
+= 5.9.2 =
+Release Date: December 11th, 2017
 
 Bugfixes:
-	* Fixes a bug where the text link counter doesn't count links for scheduled posts when they get published.
-	* Fixes a bug where the internal link count is not updated when a post is removed permanently.
 
-= 5.6.1 =
+* Fixes a bug where older browsers couldn't load the content analysis. This applies to Internet Explorer (10 and lower) and Safari (9.1 and lower).
+* Fixes a bug where the Yoast Metabox wouldn't be shown for posts set to `noindex`, therefore making it impossible to change it back to `index`, view Readability scores and not being able to optimize a post, before allowing it to be indexed.
+* Fixes a bug where translations wouldn't be applied in the Yoast SEO Metabox for SEO and Readability scores.
 
-Release Date: October 13th, 2017
+= 5.9.1 =
+Release Date: December 5th, 2017
 
-Bugfixes
-	* Fixes a bug where the SEO Manager role was not being able to save SEO settings.
+Bugfixes:
 
-= 5.6.0 =
+* Fixes a bug where the configuration wizard could not be loaded, caused by a missing JavaScript dependency.
 
-Release Date: October 10th, 2017
+= 5.9.0 =
+Release Date: December 5th, 2017
+
+Bugfixes:
+
+* Fixes a bug where the title isn't added back to the HTML when the debug marker has been disabled.
+* Fixes a bug where multiple help panels showed up when clicking on different help buttons.
+* Fixes a bug where the Help Center wouldn't be closed when clicking the Go Premium link.
+* Fixes a bug where the cornerstone setting for a post would be lost when quick editing the post.
+* Fixes a bug where newly created posts were taken into account for the link count, resulting in MySQL errors. Props to [stodorovic](https://github.com/stodorovic).
+* Fixes a bug where Premium plugins were being treated as WordPress.org plugins in the 'suggested plugin' notifications, resulting in download errors.
+* Fixes a bug where an empty div was visible when both Content and Readability analysis are disabled.
 
 Enhancements
-	* Removes legacy license page and shows the new license page by default.
-	* Changes references from licenses to subscriptions and sites on the premium submenu page.
-	* Changes the appearance of the Help Center in line with our design approach.
-	* Introduces an explanation bar when the `Cornerstone content` filter is active.
 
-Bugfixes
-	* Fixes a bug where Hebrew slugs aren't decoded on display in the bulk editor.
-	* Fixes a bug where the internal link count is not updated when there are no links to that page or post anymore.
-	* Fixes the `Cornerstone content` filter to behave consistently with existing WordPress filters.
+* Shows a notice regarding opening the Onboarding Wizard when the plugin is installed for the first time.
+* Makes it easier to unhook the debug code rendered as HTML comment.
+* Implements the Reactified content analysis.
+* Introduces the `wpseo_add_opengraph_additional_images` filter to allow additional OpenGraph Images to be added at a low priority.
+* Changes the Dashboard widget's progress bar height to 24px.
+* Makes the 'Next' and 'Back' buttons in the Onboarding Wizard focusable.
+* Adds grouping of feedback within the content analysis, in the following categories: 'errors', 'problems', 'needs improvement', 'considerations', and 'good'. Each category can be expanded and collapsed.
 
-= 5.5.1 =
+= 5.8.0 =
 
-Release Date: September 28th, 2017
+Release Date: November 15th, 2017
 
-* Bugfixes
-	* Fixes Snippet preview error when Yoast metabox has been removed.
+Security:
 
-* Changes
-	* Change Yoast Blog feed to new endpoint.
+* Fixes an XSS vulnerability in the Google Search Console configuration page, when connected to any profile. Thanks [Dimopoulos Elias](https://twitter.com/dimopouloselias) for discovering and responsibly disclosing this issue.
 
-= 5.5.0 =
+Bugfixes:
 
-Release Date: September 26th, 2017
+* Fixes a bug where inactive suggested plugins weren't displaying a notification.
+* Fixes a bug where an error would be thrown if a Yoast SEO custom database table was missing.
+* Fixes a bug where the layout of the metabox would break if too little content was present. Props to [shane-gray](https://github.com/shane-gray).
+* Fixes a bug where the WordPress editor was being displayed for custom, private taxonomies. Props to [stodorovic](https://github.com/stodorovic).
+* Fixes a bug where the analysis heading is shown when readability and keyword analysis has been turned off. Props to [daim2k5](https://github.com/daim2k5).
+* Fixes a bug where outputting on `the_content` filter calls could result in faulty AJAX requests.
 
-* Enhancements
-	* Updated the Dashboard Widget with a new design.
-	* Added additional explanations to the Configuration wizard.
-	* Added `contentinfo` landmark for assistive technologies to the Configuration wizard page.
-	* Introduces `wpseo_manager` and `wpseo_editor` roles.
-	* Introduces `wpseo_manage_options` capability to control which users have access to all SEO settings.
-	* Introduces `wpseo_edit_advanced_metadata` capability to control which users have access to the advanced SEO settings.
+Enhancements:
 
-* Bugfixes
-	* Fixed a bug where certain options (`site_type`, `environment_type` and `has_multiple_authors`) would be reset to their default value whenever one of the feature toggles were changed.
-	* Ensured that `has_multiple_authors` gets validated.
+* Introduces `wpseo_breadcrumb_single_link_info` filter for modifying breadcrumb data. Props to [slushman](https://github.com/slushman) and [forsvunnet](https://github.com/forsvunnet).
+* Introduces `wpseo_redirect_orphan_attachment` action to allow unattached attachment pages to be redirected in tune with the relevant setting. Props to [soulseekah](https://github.com/soulseekah).
+* Enhances integration with most role/capability manager plugins using the `members_get_capabilities` filter. Props to [JoryHogeveen](https://github.com/JoryHogeveen).
+* Adds a Yoast group to the Members and User Role Editor plugins to easily find the Yoast SEO capabilities. Props to [JoryHogeveen](https://github.com/JoryHogeveen).
+* Made link for Premium buy button changeable. Props to [leesto](https://github.com/leesto).
+* Removes the max-width on alerts to present a better UI. Props to [timnolte](https://github.com/timnolte).
+* Sets default Twitter Card option to 'Summary with large image'. Props to [pattonwebz](https://github.com/pattonwebz).
+* Makes the content accessible by adding scroll functionality in the help center tabs.
+* Improves the suggested plugins messages and adds installation and activation links when appropriate.
+* Makes sure that the `yoast_seo_links` table is accessible before attempting to run a query against it.
+* Uses Gutenberg content if it is available.
+
+Maintenance:
+
+* Cleaned up codebase by removing old Knowledge Base Search code.
+* Improved the codebase to make it comply with the latest WordPress Coding Standards.
 
 = Earlier versions =
 

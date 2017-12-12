@@ -167,7 +167,7 @@ class Red_Htaccess {
 
 		$text[] = '# Created by Redirection';
 		$text[] = '# '.date( 'r' );
-		$text[] = '# Redirection '.trim( $version['Version'] ).' - http://urbangiraffe.com/plugins/redirection/';
+		$text[] = '# Redirection '.trim( $version['Version'] ).' - https://redirection.me';
 		$text[] = '';
 
 		// mod_rewrite section
@@ -199,7 +199,7 @@ class Red_Htaccess {
 
 		if ( $existing ) {
 			if ( preg_match( self::INSERT_REGEX, $existing ) > 0 ) {
-				$text = preg_replace( self::INSERT_REGEX, $text, $existing );
+				$text = preg_replace( self::INSERT_REGEX, str_replace( '$', '\\$', $text ), $existing );
 			} else {
 				$text = trim( $existing )."\n".$text;
 			}

@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Redirection
-Plugin URI: http://urbangiraffe.com/plugins/redirection/
+Plugin URI: https://redirection.me/
 Description: Manage all your 301 redirects and monitor 404 errors
-Version: 2.9.2
+Version: 2.10.1
 Author: John Godley
 Author URI: http://urbangiraffe.com
 Text Domain: redirection
@@ -25,7 +25,7 @@ define( 'REDIRECTION_DB_VERSION', '2.3.3' );     // DB schema version. Only chan
 define( 'REDIRECTION_FILE', __FILE__ );
 define( 'REDIRECTION_DEV_MODE', false );
 
-if ( !defined( 'REDIRECTION_FLYING_SOLO' ) ) {
+if ( ! defined( 'REDIRECTION_FLYING_SOLO' ) ) {
 	define( 'REDIRECTION_FLYING_SOLO', apply_filters( 'redirection_flying_solo', true ) );
 }
 
