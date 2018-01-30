@@ -19,14 +19,14 @@
  */
 
 //Local
-if ($_SERVER['HTTP_HOST'] == "dev-server" || $_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "localhost.shared_boilerplate" ) {
+if ($_SERVER['HTTP_HOST'] == "dev-server" || $_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "localhost:8888" || $_SERVER['HTTP_HOST'] == "localhost.shared_boilerplate" ) {
     $dbName = 'localhost.shared_boilerplate';
     $dbUser = 'root';
     $dbPass = '';
 	$debug = true;
 }
 //demo
-else if ($_SERVER['HTTP_HOST'] == "demo.adtrakdesign.co.uk" || $_SERVER['HTTP_HOST'] == "www.adtrakdemo.co.uk" || $_SERVER['HTTP_HOST'] == "ad.trak.agency") {
+else if ($_SERVER['HTTP_HOST'] == "ad.trak.agency") {
     $dbName = '';
     $dbUser = '';
     $dbPass = '';
