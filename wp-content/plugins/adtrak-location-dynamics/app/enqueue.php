@@ -11,10 +11,12 @@ $enqueue->admin([
 
 $enqueue->admin([
 	'as' => 'location-dynamics-admin',
-	'src' => Helper::assetUrl('js/location-dynamics-admin.js')
+	'src' => Helper::assetUrl('js/location-dynamics-admin.js'),
+    'uses' => ['jquery']
 ]);
 
 $enqueue->front([
 	'as' => 'location-dynamics-front',
-	'src' => Helper::assetUrl('js/location-dynamics-front.js')
+	'src' => Helper::assetUrl('js/location-dynamics-front.js'),
+    'uses' => ['jquery']
 ]);

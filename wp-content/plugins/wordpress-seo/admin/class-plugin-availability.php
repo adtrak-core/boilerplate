@@ -27,7 +27,7 @@ class WPSEO_Plugin_Availability {
 	protected function register_yoast_plugins() {
 		$this->plugins = array(
 			'yoast-seo-premium' => array(
-				'url'          => 'https://yoast.com/wordpress/plugins/seo-premium/',
+				'url'          => WPSEO_Shortlinker::get( 'https://yoa.st/1y7' ),
 				'title'        => 'Yoast SEO Premium',
 				'description'  => sprintf(
 					/* translators: %1$s expands to Yoast SEO */
@@ -37,37 +37,37 @@ class WPSEO_Plugin_Availability {
 				'installed'    => false,
 				'slug'         => 'wordpress-seo-premium/wp-seo-premium.php',
 				'version_sync' => true,
-				'premium'       => true,
+				'premium'      => true,
 			),
 
 			'video-seo-for-wordpress-seo-by-yoast' => array(
-				'url'          => 'https://yoast.com/wordpress/plugins/video-seo/',
+				'url'          => WPSEO_Shortlinker::get( 'https://yoa.st/1y8' ),
 				'title'        => 'Video SEO',
 				'description'  => __( 'Optimize your videos to show them off in search results and get more clicks!', 'wordpress-seo' ),
 				'installed'    => false,
 				'slug'         => 'wpseo-video/video-seo.php',
 				'version_sync' => true,
-				'premium'       => true,
+				'premium'      => true,
 			),
 
 			'yoast-news-seo' => array(
-				'url'          => 'https://yoast.com/wordpress/plugins/news-seo/',
+				'url'          => WPSEO_Shortlinker::get( 'https://yoa.st/1y9' ),
 				'title'        => 'News SEO',
 				'description'  => __( 'Are you in Google News? Increase your traffic from Google News by optimizing for it!', 'wordpress-seo' ),
 				'installed'    => false,
 				'slug'         => 'wpseo-news/wpseo-news.php',
 				'version_sync' => true,
-				'premium'       => true,
+				'premium'      => true,
 			),
 
 			'local-seo-for-yoast-seo' => array(
-				'url'          => 'https://yoast.com/wordpress/plugins/local-seo/',
+				'url'          => WPSEO_Shortlinker::get( 'https://yoa.st/1ya' ),
 				'title'        => 'Local SEO',
 				'description'  => __( 'Rank better locally and in Google Maps, without breaking a sweat!', 'wordpress-seo' ),
 				'installed'    => false,
 				'slug'         => 'wordpress-seo-local/local-seo.php',
 				'version_sync' => true,
-				'premium'       => true,
+				'premium'      => true,
 			),
 
 			'yoast-woocommerce-seo' => array(

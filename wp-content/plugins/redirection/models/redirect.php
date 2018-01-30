@@ -159,8 +159,15 @@ class Red_Item {
 			return $data;
 		}
 
-		$data['status'] = isset( $details['status'] ) && $details['status'] === 'disabled' ? 'disabled' : 'enabled';
-		$data['position'] = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}redirection_items WHERE group_id=%d", $data['group_id'] ) );
+		$data['status'] = 'enabled';
+		if ( ( isset( $details['enabled'] ) && $details['enabled'] === 'disabled' ) || ( isset( $details['status'] ) && $details['status'] === 'disabled' ) ) {
+			$data['status'] = 'disabled';
+		}
+
+		if ( ! isset( $details['position'] ) || $details['position'] === 0 ) {
+			$data['position'] = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}redirection_items WHERE group_id=%d", $data['group_id'] ) );
+		}
+
 		$data = apply_filters( 'redirection_create_redirect', $data );
 
 		// Create
@@ -332,8 +339,8 @@ class Red_Item {
 		$offset = 0;
 		$where = '';
 
-		if ( isset( $params['orderBy'] ) && in_array( $params['orderBy'], array( 'url', 'last_count', 'last_access', 'position' ), true ) ) {
-			$orderby = $params['orderBy'];
+		if ( isset( $params['orderby'] ) && in_array( $params['orderby'], array( 'url', 'last_count', 'last_access', 'position' ), true ) ) {
+			$orderby = $params['orderby'];
 		}
 
 		if ( isset( $params['direction'] ) && in_array( $params['direction'], array( 'asc', 'desc' ), true ) ) {
@@ -348,8 +355,8 @@ class Red_Item {
 			}
 		}
 
-		if ( isset( $params['perPage'] ) ) {
-			$limit = intval( $params['perPage'], 10 );
+		if ( isset( $params['per_page'] ) ) {
+			$limit = intval( $params['per_page'], 10 );
 			$limit = min( RED_MAX_PER_PAGE, $limit );
 			$limit = max( 5, $limit );
 		}
@@ -422,7 +429,7 @@ class Red_Item_Sanitize {
 		$data['position'] = $this->get_position( $details );
 
 		if ( $data['title'] ) {
-			$data['title'] = substr( $data['title'], 0, 50 );
+			$data['title'] = substr( $data['title'], 0, 500 );
 		}
 
 		$matcher = Red_Match::create( isset( $details['match_type'] ) ? $details['match_type'] : false );

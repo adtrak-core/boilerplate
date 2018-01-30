@@ -13,8 +13,11 @@ class Red_Fixer {
 		$bad_group = $this->get_missing();
 		$monitor_group = $options['monitor_post'];
 		$valid_monitor = Red_Group::get( $monitor_group ) || $monitor_group === 0;
+		$rest_status = $this->get_rest_status();
 
 		$result = array(
+			$rest_status,
+			$this->get_rest_route_status( $rest_status ),
 			array_merge( array( 'id' => 'db', 'name' => __( 'Database tables', 'redirection' ) ), $db->get_status() ),
 			array(
 				'name' => __( 'Valid groups', 'redirection' ),
@@ -33,10 +36,62 @@ class Red_Fixer {
 				'id' => 'monitor',
 				'message' => $valid_monitor === false ? __( 'Post monitor group is invalid', 'redirection' ) : __( 'Post monitor group is valid' ),
 				'status' => $valid_monitor === false ? 'problem' : 'good',
-			)
+			),
 		);
 
 		return $result;
+	}
+
+	private function get_rest_route_status( $status ) {
+		$result = array(
+			'name' => __( 'Redirection routes', 'redirection' ),
+			'id' => 'routes',
+			'status' => 'problem',
+		);
+
+		if ( $status['status'] === 'good' ) {
+			$rest_api = red_get_rest_api();
+
+			$result['message'] = __( 'Redirection does not appear in your REST API routes. Have you disabled it with a plugin?', 'redirection' );
+
+			if ( strpos( $rest_api, 'admin-ajax.php' ) !== false ) {
+				$result['message'] = __( 'Redirection routes are working', 'redirection' );
+				$result['status'] = 'good';
+			} else {
+				$response = wp_remote_get( $rest_api, array( 'cookies' => $_COOKIE ) );
+
+				if ( $response && is_array( $response ) && isset( $response['body'] ) ) {
+					$json = @json_decode( $response['body'], true );
+
+					if ( isset( $json['routes']['/redirection/v1'] ) ) {
+						$result['message'] = __( 'Redirection routes are working', 'redirection' );
+						$result['status'] = 'good';
+					}
+				}
+			}
+		} else {
+			$result['message'] = __( 'REST API is not working so routes not checked', 'redirection' );
+		}
+
+		return $result;
+	}
+
+	public function get_rest_status() {
+		$status = array(
+			'name' => __( 'WordPress REST API', 'redirection' ),
+			'id' => 'rest',
+			'status' => 'good',
+			'message' => sprintf( __( 'WordPress REST API is working at %s', 'redirection' ), red_get_rest_api() ),
+		);
+
+		$result = $this->check_api( red_get_rest_api() );
+
+		if ( is_wp_error( $result ) ) {
+			$status['status'] = 'problem';
+			$status['message'] = $result->get_error_message();
+		}
+
+		return $status;
 	}
 
 	public function fix( $status ) {
@@ -58,6 +113,63 @@ class Red_Fixer {
 		global $wpdb;
 
 		return $wpdb->get_results( "SELECT {$wpdb->prefix}redirection_items.id FROM {$wpdb->prefix}redirection_items LEFT JOIN {$wpdb->prefix}redirection_groups ON {$wpdb->prefix}redirection_items.group_id = {$wpdb->prefix}redirection_groups.id WHERE {$wpdb->prefix}redirection_groups.id IS NULL" );
+	}
+
+	public function fix_routes() {
+	}
+
+	public function fix_rest() {
+		// First check the default REST API
+		$result = $this->check_api( get_rest_url() );
+
+		if ( is_wp_error( $result ) ) {
+			// Try directly at index.php?rest_route
+			$rest_api = home_url( '/index.php?rest_route=/' );
+			$result = $this->check_api( $rest_api );
+
+			if ( is_wp_error( $result ) ) {
+				$rest_api = admin_url( 'admin-ajax.php' );
+				$response = wp_remote_get( $rest_api );
+
+				if ( is_array( $response ) && isset( $response['body'] ) && $response['body'] === '0' ) {
+					red_set_options( array( 'rest_api' => 2 ) );
+					return true;
+				}
+
+				red_set_options( array( 'rest_api' => 0 ) );
+				return false;
+			}
+
+			// It worked! Save the URL
+			red_set_options( array( 'rest_api' => 1 ) );
+			return true;
+		}
+
+		// Working
+		red_set_options( array( 'rest_api' => 0 ) );
+		return true;
+	}
+
+	private function check_api( $url ) {
+		$response = wp_remote_get( $url, array( 'cookies' => $_COOKIE ) );
+		$http_code = wp_remote_retrieve_response_code( $response );
+
+		$specific = 'REST API returns an error code';
+		if ( $http_code === 200 ) {
+			$json = @json_decode( $response['body'], true );
+
+			if ( $json || $response['body'] === '0' ) {
+				return true;
+			} else {
+				$specific = 'REST API returned invalid JSON data. This is probably an error page of some kind and indicates it has been disabled';
+			}
+		} elseif ( $http_code === 301 || $http_code === 302 ) {
+			$specific = 'REST API is being redirected. This indicates it has been disabled.';
+		} elseif ( $http_code === 404 ) {
+			$specific = 'REST API is returning 404 error. This indicates it has been disabled.';
+		}
+
+		return new WP_Error( 'redirection', $specific.' ('.( $http_code ? $http_code : '40x' ) .' - '.$url.')' );
 	}
 
 	private function fix_db() {

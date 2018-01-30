@@ -4,7 +4,7 @@
  * Plugin Name: 	Adtrak Location Dynamics
  * Plugin URI: 		http://plugins.adtrakdev.com/downloads/location-dynamics/
  * Description: 	Plugin for displaying number easily.
- * Version: 		3.3.3
+ * Version: 		3.3.4
  * Author: 			Adtrak
  * Author URI: 		http://adtrak.co.uk
  * License: 		GPL-2.0+

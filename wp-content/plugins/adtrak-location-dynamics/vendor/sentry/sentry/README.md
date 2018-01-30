@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://sentry.io" target="_blank" align="center">
-        <img src="https://sentry.io/_static/getsentry/images/branding/png/sentry-horizontal-black.png" width="280">
+        <img src="https://sentry-brand.storage.googleapis.com/sentry-logo-black.png" width="280">
     </a>
 </p>
 
@@ -47,9 +47,23 @@ For more information, see our [documentation](https://docs.getsentry.com/hosted/
 
 Other packages exists to integrate this SDK into the most common frameworks.
 
+### Official integrations
+
+The following integrations are fully supported and maintained by the Sentry team.
+
 - [Symfony](https://github.com/getsentry/sentry-symfony)
 - [Laravel](https://github.com/getsentry/sentry-laravel)
 
+### 3rd party integrations
+
+The following integrations are available and maintained by members of the Sentry community.
+
+- [Nette](https://github.com/Salamek/raven-nette)
+- [ZendFramework](https://github.com/facile-it/sentry-module)
+- [WordPress](https://wordpress.org/plugins/wp-sentry-integration/)
+- [Drupal](https://www.drupal.org/project/raven)
+- [OpenCart](https://github.com/BurdaPraha/oc_sentry)
+- ... feel free to be famous, create a port to your favourite platform!
 
 ## Community
 
@@ -84,7 +98,7 @@ Tagging a Release
 2. Create a new branch for the minor version (if not present):
 
 ```
-$ git checkout -b releases/1.7.x
+$ git checkout -b releases/1.9.x
 ```
 
 3. Update the hardcoded version tag in ``Client.php``:
@@ -92,20 +106,20 @@ $ git checkout -b releases/1.7.x
 ```
 class Raven_Client
 {
-    const VERSION = '1.7.0';
+    const VERSION = '1.9.0';
 }
 ```
 
 4. Commit the change:
 
 ```
-$ git commit -a -m "1.7.0"
+$ git commit -a -m "1.9.0"
 ```
 
 5. Tag the branch:
 
 ```
-git tag 1.7.0
+git tag 1.9.0
 ```
 
 6. Push the tag:
@@ -123,7 +137,7 @@ git checkout master
 8. Add the next minor release to the ``CHANGES`` file:
 
 ```
-## 1.8.0 (unreleased)
+## 1.10.0 (unreleased)
 ```
 
 9. Update the version in ``Client.php``:
@@ -131,7 +145,7 @@ git checkout master
 ```
 class Raven_Client
 {
-    const VERSION = '1.8.x-dev';
+    const VERSION = '1.10.x-dev';
 }
 ```
 
@@ -140,7 +154,7 @@ class Raven_Client
 ```
     "extra": {
         "branch-alias": {
-            "dev-master": "1.8.x-dev"
+            "dev-master": "1.10.x-dev"
         }
     }
 ```

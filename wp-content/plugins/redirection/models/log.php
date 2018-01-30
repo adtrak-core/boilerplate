@@ -35,7 +35,7 @@ class RE_Log {
 		$insert = array(
 			'url'     => urldecode( $url ),
 			'created' => current_time( 'mysql' ),
-			'ip'      => $ip,
+			'ip'      => substr( $ip, 0, 45 ),
 		);
 
 		if ( ! empty( $agent ) ) {
@@ -181,7 +181,7 @@ class RE_404 {
 		$insert = array(
 			'url'     => substr( urldecode( $url ), 0, 255 ),
 			'created' => current_time( 'mysql' ),
-			'ip'      => ip2long( $ip ),
+			'ip'      => substr( $ip, 0, 45 ),
 		);
 
 		if ( ! empty( $agent ) ) {
@@ -220,7 +220,7 @@ class RE_404 {
 		} if ( $filterBy === 'url' && $filter ) {
 			$where[] = $wpdb->prepare( 'url LIKE %s', '%'.$wpdb->esc_like( $filter ).'%' );
 		} else if ( $filterBy === 'ip' ) {
-			$where[] = $wpdb->prepare( 'ip=INET_ATON(%s)', $filter );
+			$where[] = $wpdb->prepare( 'ip=%s', $filter );
 		}
 
 		$where_cond = '';
@@ -247,8 +247,6 @@ class RE_404 {
 
 		$extra = '';
 		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}redirection_404";
-		// if ( isset( $_REQUEST['s'] ) )
-		// 	$extra = $wpdb->prepare( ' WHERE url LIKE %s', '%'.$wpdb->esc_like( $_REQUEST['s'] ).'%' );
 
 		$total_items = $wpdb->get_var( $sql.$extra );
 		$exported = 0;
@@ -261,7 +259,7 @@ class RE_404 {
 				$csv = array(
 					$row->created,
 					$row->url,
-					long2ip( $row->ip ),
+					$row->ip,
 					$row->referrer,
 				);
 
@@ -275,7 +273,7 @@ class RE_404 {
 
 	public function to_json() {
 		return array(
-			'ip' => long2ip( $this->ip ),
+			'ip' => $this->ip,
 		);
 	}
 }
@@ -290,8 +288,8 @@ class RE_Filter_Log {
 		$offset = 0;
 		$where = '';
 
-		if ( isset( $params['orderBy'] ) && in_array( $params['orderBy'], array( 'ip', 'url' ), true ) ) {
-			$orderby = $params['orderBy'];
+		if ( isset( $params['orderby'] ) && in_array( $params['orderby'], array( 'ip', 'url' ), true ) ) {
+			$orderby = $params['orderby'];
 		}
 
 		if ( isset( $params['direction'] ) && in_array( $params['direction'], array( 'asc', 'desc' ), true ) ) {
@@ -306,8 +304,8 @@ class RE_Filter_Log {
 			}
 		}
 
-		if ( isset( $params['perPage'] ) ) {
-			$limit = intval( $params['perPage'], 10 );
+		if ( isset( $params['per_page'] ) ) {
+			$limit = intval( $params['per_page'], 10 );
 			$limit = min( RED_MAX_PER_PAGE, $limit );
 			$limit = max( 5, $limit );
 		}
@@ -329,7 +327,8 @@ class RE_Filter_Log {
 			$item = new $construct( $row );
 			$items[] = array_merge( $item->to_json(), array(
 				'id' => intval( $item->id, 10 ),
-				'created' => date_i18n( get_option( 'date_format' ), $item->created ).' '.gmdate( get_option( 'time_format' ), $item->created ),
+				'created' => date_i18n( get_option( 'date_format' ), $item->created ),
+				'created_time' => gmdate( get_option( 'time_format' ), $item->created ),
 				'url' => $item->url,
 				'agent' => $item->agent,
 				'referrer' => $item->referrer,

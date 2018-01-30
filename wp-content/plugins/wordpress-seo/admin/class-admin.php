@@ -207,7 +207,7 @@ class WPSEO_Admin {
 	}
 
 	/**
-	 * Add a link to the settings page to the plugins list.
+	 * Adds links to Premium Support and FAQ under the plugin in the plugin overview page.
 	 *
 	 * @staticvar string $this_plugin Holds the directory & filename for the plugin.
 	 *
@@ -223,18 +223,20 @@ class WPSEO_Admin {
 		}
 
 		if ( class_exists( 'WPSEO_Product_Premium' ) ) {
-			$license_manager = new Yoast_Plugin_License_Manager( new WPSEO_Product_Premium() );
-			if ( $license_manager->license_is_valid() ) {
+			$product_premium   = new WPSEO_Product_Premium();
+			$extension_manager = new WPSEO_Extension_Manager();
+
+			if ( $extension_manager->is_activated( $product_premium->get_slug() ) ) {
 				return $links;
 			}
 		}
 
 		// Add link to premium support landing page.
-		$premium_link = '<a href="https://yoast.com/wordpress/plugins/seo-premium/support/#utm_source=wordpress-seo-settings-link&amp;utm_medium=textlink&amp;utm_campaign=support-link">' . __( 'Premium Support', 'wordpress-seo' ) . '</a>';
+		$premium_link = '<a href="' . esc_url( WPSEO_Shortlinker::get( 'https://yoa.st/1yb' ) ) . '">' . __( 'Premium Support', 'wordpress-seo' ) . '</a>';
 		array_unshift( $links, $premium_link );
 
 		// Add link to docs.
-		$faq_link = '<a href="https://kb.yoast.com/kb/category/yoast-seo/#utm_source=wordpress-seo-faq-link&amp;utm_medium=textlink&amp;utm_campaign=faq-link">' . __( 'FAQ', 'wordpress-seo' ) . '</a>';
+		$faq_link = '<a href="' . esc_url( WPSEO_Shortlinker::get( 'https://yoa.st/1yc' ) ) . '">' . __( 'FAQ', 'wordpress-seo' ) . '</a>';
 		array_unshift( $links, $faq_link );
 
 		return $links;
@@ -450,6 +452,14 @@ class WPSEO_Admin {
 		$link_table_compatibility_notifier->remove_notification();
 
 		// When the table doesn't exists, just add the notification and return early.
+		if ( ! WPSEO_Link_Table_Accessible::is_accessible() ) {
+			WPSEO_Link_Table_Accessible::cleanup();
+		}
+
+		if ( ! WPSEO_Meta_Table_Accessible::is_accessible() ) {
+			WPSEO_Meta_Table_Accessible::cleanup();
+		}
+
 		if ( ! WPSEO_Link_Table_Accessible::is_accessible() || ! WPSEO_Meta_Table_Accessible::is_accessible() ) {
 			$link_table_accessible_notifier->add_notification();
 

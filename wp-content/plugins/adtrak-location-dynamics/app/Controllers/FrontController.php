@@ -374,7 +374,7 @@ class FrontController
         if (!isset($atts['label'])) {
             $atts['label'] = null;
         }
-        return $this->ld_list($atts['ppc'], $atts['type'], $atts['label']. true);
+        return $this->ld_list($atts['ppc'], $atts['type'], $atts['label'], true);
     }
 
     /**

@@ -19,27 +19,36 @@ $version = '3.4';
 function wpseo_display_contributors( $contributors ) {
 	foreach ( $contributors as $username => $dev ) {
 		echo '<li class="wp-person">';
-		echo '<a href="', esc_url( 'https://github.com/' . $username ), '" class="web"><img src="//gravatar.com/avatar/', $dev->gravatar, '?s=120" class="gravatar" alt="">', $dev->name, '</a>';
-		echo '<span class="title">', $dev->role, "</span></li>\n";
+		echo '<a href="', esc_url( 'https://github.com/' . $username ), '" class="web"><img src="//gravatar.com/avatar/', rawurlencode( $dev->gravatar ), '?s=120" class="gravatar" alt="">', esc_html( $dev->name ), '</a>';
+		echo '<span class="title">', esc_html( $dev->role ), "</span></li>\n";
 	}
 }
+
+/* translators: %1$s expands to Yoast SEO */
+$wpseo_thanks_for_updating = sprintf( __( 'Thank you for updating %1$s!', 'wordpress-seo' ), 'Yoast SEO' );
 
 ?>
 
 <div class="wrap about-wrap">
 
-	<h1><?php
-		/* translators: %1$s expands to Yoast SEO */
-		printf( __( 'Thank you for updating %1$s!', 'wordpress-seo' ), 'Yoast SEO' );
-		?></h1>
+	<h1><?php echo esc_html( $wpseo_thanks_for_updating ); ?></h1>
 
 	<p class="about-text">
 		<?php
-		/* translators: %1$s and %2$s expands to anchor tags, %3$s expands to Yoast SEO */
-		printf( __( 'While most of the development team is at %1$sYoast%2$s in the Netherlands, %3$s is created by a worldwide team.', 'wordpress-seo' ), '<a target="_blank" href="https://yoast.com/">', '</a>', 'Yoast SEO' );
+		printf(
+			/* translators: %1$s and %2$s expands to anchor tags, %3$s expands to Yoast SEO */
+			esc_html__( 'While most of the development team is at %1$sYoast%2$s in the Netherlands, %3$s is created by a worldwide team.', 'wordpress-seo' ),
+			'<a target="_blank" href="' . esc_url( WPSEO_Shortlinker::get( 'https://yoa.st/1ye' ) ) . '" rel="noopener noreferrer">',
+			'</a>',
+			'Yoast SEO'
+		);
 		echo ' ';
-		/* translators: 1: link open tag; 2: link close tag. */
-		printf( __( 'Want to help us develop? Read our %1$scontribution guidelines%2$s!', 'wordpress-seo' ), '<a target="_blank" href="' . WPSEO_Shortlinker::get( 'https://yoa.st/wpseocontributionguidelines' ) . '">', '</a>' );
+		printf(
+			/* translators: 1: link open tag; 2: link close tag. */
+			esc_html__( 'Want to help us develop? Read our %1$scontribution guidelines%2$s!', 'wordpress-seo' ),
+			'<a target="_blank" href="' . esc_url( WPSEO_Shortlinker::get( 'https://yoa.st/wpseocontributionguidelines' ) ) . '" rel="noopener noreferrer">',
+			'</a>'
+		);
 		?>
 	</p>
 
