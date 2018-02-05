@@ -180,7 +180,7 @@ class FrontController
         if (!isset($atts['linked'])) {
             $atts['linked'] = true;
         }
-        return $this->ld_single($atts['location'], $atts['calltag'], filter_var($atts['linked'], FILTER_VALIDATE_BOOLEAN), true);
+        return $this->ld_single($atts['location'], $atts['calltag'], filter_var($atts['linked'], FILTER_VALIDATE_BOOLEAN), true, true);
     }
 
     /**

@@ -1,6 +1,10 @@
 # Adtrak Location Dynamics
 ## Changelog
 
+### v3.3.5
+- [Bug] Should fix incorrect update notification
+- [Bug] Fixes the shortcode ld_single not displaying correctly.
+
 ### v3.3.3
 - [Improvement] Updated vendors
 - [Bug] Fixed single numbers not being ppc disableable
