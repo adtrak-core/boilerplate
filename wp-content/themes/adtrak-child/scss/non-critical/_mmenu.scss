@@ -2,6 +2,11 @@
     Navigation (MMenu, Mobile, hides at bp800-1)
 --------------------------------------------------------------- */
 
+// FOUC fix
+#mm-navigation.mm-menu.mm-current {
+    display: block;  
+}
+
 // Variables
 
     $activeBackground          : $noir;
@@ -13,10 +18,8 @@
 
 // The rest
 
-@include bp800 {
-    #mm-navigation {
-        display: none;
-    }
+#mm-navigation {
+    display: none;
 }
 
 @media only screen and (max-width: ($medium-width)-1) {
