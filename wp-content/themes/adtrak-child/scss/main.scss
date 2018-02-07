@@ -5,30 +5,17 @@ sites style will go.
 */
 
 @import
-    'abstracts/variables',
-    'abstracts/mixins';
+    'global/_variables',
+    'global/_mixins';
+
+// Import the non-critical CSS
 
 @import
-    'base/reset',
-	'base/core',
-	'base/grid-spacing',
-    'base/typography';
-
-@import
-	'components/buttons',
-	'components/prev-next',
-	'components/buckets';
-
-@import
-	'layout/mobile-top-bar',
-	'layout/header',
-	'layout/mmenu',
-	'layout/navigation',
-	'layout/hero',
-	'layout/copy',
-	'layout/sidebar',
-	'layout/forms',
-	'layout/footer';
-
-@import
-	'pages/contact';
+	'non-critical/_buckets',
+	'non-critical/_buttons',
+	'non-critical/_copy',
+	'non-critical/_footer',
+	'non-critical/_forms',
+	'non-critical/_mmenu',
+	'non-critical/_prev-next',
+	'non-critical/_sidebar';

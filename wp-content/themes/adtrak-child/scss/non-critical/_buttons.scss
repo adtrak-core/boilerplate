@@ -10,24 +10,24 @@ button, .btn {
     text-decoration: none;      
     border-radius: 15px;
     transition: 0.3s;
-
-    // Define the 1) button name, 2) text/border color & 3) background color
-    $btnColors :        noir $noir $blanc,
-                        blanc $blanc $noir;
-
-    // Loop through colours above and create classes
-    @each $colorOption in $btnColors {
-        &.btn-#{nth($colorOption, 1)} {
-            color: nth($colorOption,2);
-            border-color: nth($colorOption,2);
-            background-color: nth($colorOption,3);
-        }
-    }
     
     &:hover {
         background: $noir;
         color: $blanc;
         border-color: $blanc;
         text-decoration: none;
+    }
+}
+
+// Define the 1) button name, 2) text/border color & 3) background color
+$btnColors :        noir $noir $blanc,
+                    blanc $blanc $noir;
+
+// Loop through colours above and create classes
+@each $colorOption in $btnColors {
+    .btn--#{nth($colorOption, 1)} {
+        color: nth($colorOption,2);
+        border-color: nth($colorOption,2);
+        background-color: nth($colorOption,3);
     }
 }

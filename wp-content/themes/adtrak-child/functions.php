@@ -4,7 +4,6 @@
  * Enqueue and register scripts the right way.
  */
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('base-theme', get_theme_file_uri() . '/css/main.css', [], '', 'all');
     wp_enqueue_script('production', get_theme_file_uri() . '/js/production-dist.js', ['jquery'], '', true);
     wp_enqueue_script('fontawesome', 'https://use.fontawesome.com/731f5cd381.js', [], '', true );
 });
