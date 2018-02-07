@@ -1,7 +1,7 @@
 <?php
 
 	// Choose image size
-	$imageSize = "square-350";
+	$imageSize = "img-350-350";
 
 	// Get Bucket Layout Choice
 	if 		(get_field('buckets_layout') == 'nomargin') { 			$bucketsLayout = 'no-margins'; }
