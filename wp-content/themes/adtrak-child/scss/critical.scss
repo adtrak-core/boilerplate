@@ -5,17 +5,19 @@ sites style will go.
 */
 
 @import
-    'global/_variables',
-    'global/_mixins';
+    'abstracts/_variables',
+    'abstracts/_mixins';
 
 // Import the critical CSS
 
 @import
-	'critical/_core',
-	'critical/_grid-spacing',
-	'critical/_header',
-	'critical/_hero',
-	'critical/_mobile-top-bar',
-	'critical/_navigation',
-	'critical/_reset',
-	'critical/_typography';
+	'base/_core',
+	'base/_grid-spacing',
+	'base/_reset',
+	'base/_typography';
+
+@import
+	'layout/_header',
+	'layout/_hero',
+	'layout/_mobile-top-bar',
+	'layout/_navigation';
