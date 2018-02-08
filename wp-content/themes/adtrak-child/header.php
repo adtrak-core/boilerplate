@@ -27,16 +27,17 @@
 		loadCSS( "<?php echo get_theme_file_uri('/css/main.css'); ?>" );
 	</script>
 
-  	<?php /* no JS support */ ?>
+  	<?php /* No JS support */ ?>
 	<noscript>
 		<link rel="stylesheet" href="<?php echo get_theme_file_uri('/css/main.css'); ?>">
 	</noscript>
 
   	<?php wp_head(); ?>
 
-	<?php if (get_field('google_analytics', 'options')) echo get_field('google_analytics', 'options'); ?>
-	<?php if (get_field('schema', 'options')) echo get_field('schema', 'options'); ?>
-
+	<?php
+		if (get_field('google_analytics', 'options')) echo get_field('google_analytics', 'options');
+		if (get_field('schema', 'options')) echo get_field('schema', 'options');
+	?>
 
 	<?php /* Typekit async loading
 	
