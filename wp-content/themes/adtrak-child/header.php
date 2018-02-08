@@ -20,16 +20,16 @@
   		<?php include ('css/critical.css'); ?>
   	</style>
 
+  	<?php /* Load CSS async */ ?>
   	<script>
-		// load CSS async
 		function loadCSS(e,t,n){"use strict";function o(){var t;for(var i=0;i<s.length;i++){if(s[i].href&&s[i].href.indexOf(e)>-1){t=true}}if(t){r.media=n||"all"}else{setTimeout(o)}}var r=window.document.createElement("link");var i=t||window.document.getElementsByTagName("script")[0];var s=window.document.styleSheets;r.rel="stylesheet";r.href=e;r.media="only x";i.parentNode.insertBefore(r,i);o();return r}
 
-		loadCSS( "<?php echo get_stylesheet_directory_uri(); ?>/css/main.css" );
+		loadCSS( "<?php echo get_theme_file_uri('/css/main.css'); ?>" );
 	</script>
 
-	<!-- no js support -->
+  	<?php /* no JS support */ ?>
 	<noscript>
-		<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/css/main.css">
+		<link rel="stylesheet" href="<?php echo get_theme_file_uri('/css/main.css'); ?>">
 	</noscript>
 
   	<?php wp_head(); ?>
