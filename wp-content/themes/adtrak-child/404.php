@@ -12,7 +12,7 @@ get_header(); ?>
 
 		<article class="grid grid12_12">
 
-			<div class="pad-1-1 copy">
+			<div class="pad-10-10 copy">
 
 				<h1>Sorry!</h1>
 

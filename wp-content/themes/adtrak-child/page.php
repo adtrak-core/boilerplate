@@ -19,7 +19,7 @@
 
 			<article class="grid grid8_12">
 
-				<div class="pad-1-1 copy">
+				<div class="pad-10-10 copy">
 
 					<h1><?php the_field('h1'); ?></h1>
 					<?php the_content(); ?>

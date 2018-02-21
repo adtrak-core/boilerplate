@@ -21,7 +21,7 @@
 
 				<article>
 
-					<div class="pad-1-1 copy">
+					<div class="pad-10-10 copy">
 
 						<?php the_post_thumbnail('medium'); ?>
 

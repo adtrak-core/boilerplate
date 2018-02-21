@@ -10,25 +10,25 @@
     }
 
     p {
-        margin: 1em 0;
+        margin: 10px 0;
     }
 
     ul {
         list-style: none;
-        margin: 1em 0;
+        margin: 10px 0;
     }
 
     > ul li {
         &:before {
             display: inline-block;
-            padding-right: .5em;
+            padding-right: 5px;
             font-family: FontAwesome;
             content: '\f0da';
         }    
     }
 
     ol {
-        margin-left: 1em;
+        margin-left: 10px;
     }
 
     img {
@@ -40,7 +40,7 @@
         @include bp480 {
             &.left {
                 float: left;
-                margin: .5em .5em .5em 0;
+                margin: 5px 5px 5px 0;
             }
 
             &.center {
@@ -50,7 +50,7 @@
 
             &.right {
                 float: right;
-                margin: .5em 0 .5em .5em;
+                margin: 5px 0 5px 5px;
             }
         }
     }
