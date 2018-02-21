@@ -3,12 +3,12 @@
 --------------------------------------------------------------- */
 
 button, .btn {
-    border: 2px solid $noir;
-    color: $noir;
-    padding: .5em .8em;
     display: inline-block;
-    text-decoration: none;      
-    border-radius: 15px;
+    padding: 10px;
+    color: $noir;
+    text-decoration: none; 
+    border: 2px solid $noir;     
+    border-radius: 10px;
     transition: 0.3s;
     
     &:hover {
