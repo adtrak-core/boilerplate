@@ -4,7 +4,6 @@
  * Enqueue and register scripts the right way.
  */
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('base-theme', get_theme_file_uri() . '/css/main.css', [], '', 'all');
     wp_enqueue_script('production', get_theme_file_uri() . '/js/production-dist.js', ['jquery'], '', true);
     wp_enqueue_script('fontawesome', 'https://use.fontawesome.com/731f5cd381.js', [], '', true );
 });
@@ -39,10 +38,10 @@ add_action('after_setup_theme', function () {
 
 // Custom image sizes
 
-    add_image_size( 'hero-2000', 2000, 650, true );
-	add_image_size( 'hero-1200', 1200, 500, true );
-	add_image_size( 'hero-600', 600, 600, true );
-	add_image_size( 'square-350', 350, 350, true );
+    add_image_size( 'img-2000-650', 2000, 650, true );
+	add_image_size( 'img-1200-500', 1200, 500, true );
+	add_image_size( 'img-600-600', 600, 600, true );
+	add_image_size( 'img-350-350', 350, 350, true );
 
 	// More navs
 

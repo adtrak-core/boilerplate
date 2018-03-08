@@ -17,7 +17,7 @@
 
 		<?php if (have_posts()): ?>
 
-		<div class="grid grid8_12 pad-1-1">
+		<div class="grid grid8_12 pad-10-10">
 
 			<h1>Results for <?php the_search_query(); ?> </h1>
 

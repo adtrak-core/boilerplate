@@ -1,34 +1,23 @@
 /*
 No need for any of the WordPress CSS headings here. The admin panel 
-does not read this file. However, this file is where all of your 
+does not read this file. However, this file is where all of your non-critical
 sites style will go.
 */
 
 @import
-    'abstracts/variables',
-    'abstracts/mixins';
+    'abstracts/_variables',
+    'abstracts/_mixins';
+
+// Import the non-critical CSS
 
 @import
-    'base/reset',
-	'base/core',
-	'base/grid-spacing',
-    'base/typography';
+	'components/_buckets',
+	'components/_buttons',
+	'components/_prev-next';
 
 @import
-	'components/buttons',
-	'components/prev-next',
-	'components/buckets';
-
-@import
-	'layout/mobile-top-bar',
-	'layout/header',
-	'layout/mmenu',
-	'layout/navigation',
-	'layout/hero',
-	'layout/copy',
-	'layout/sidebar',
-	'layout/forms',
-	'layout/footer';
-
-@import
-	'pages/contact';
+	'layout/_copy',
+	'layout/_footer',
+	'layout/_forms',
+	'layout/_mmenu',
+	'layout/_sidebar';
