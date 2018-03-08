@@ -97,7 +97,7 @@ class Redirection_Admin {
 
 		Red_Flusher::schedule();
 
-		if ( $version !== REDIRECTION_DB_VERSION ) {
+		if ( $version !== REDIRECTION_DB_VERSION || ( defined( 'REDIRECTION_FORCE_UPDATE' ) && REDIRECTION_FORCE_UPDATE ) ) {
 			include_once dirname( REDIRECTION_FILE ).'/models/database.php';
 
 			$database = new RE_Database();
@@ -159,6 +159,27 @@ class Redirection_Admin {
 	function redirection_head() {
 		global $wp_version;
 
+		$this->check_rest_api();
+
+		if ( isset( $_REQUEST['action'] ) && isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'wp_rest' ) ) {
+			if ( $_REQUEST['action'] === 'fixit' ) {
+				$this->run_fixit();
+			} else if ( $_REQUEST['action'] === 'rest_api' ) {
+				$this->set_rest_api( intval( $_REQUEST['rest_api'], 10 ) );
+			} else if ( $_REQUEST['action'] === 'red_proxy' ) {
+				// Hack to get around clash with WP page param
+				if ( isset( $_GET['page'] ) && $_GET['page'] === 'redirection.php' ) {
+					unset( $_GET['page'] );
+				}
+
+				if ( isset( $_GET['ppage'] ) ) {
+					$_GET['page'] = $_GET['ppage'];
+				}
+
+				$this->red_proxy();
+			}
+		}
+
 		$build = REDIRECTION_VERSION.'-'.REDIRECTION_BUILD;
 		$preload = $this->get_preload_data();
 		$options = red_get_options();
@@ -167,15 +188,11 @@ class Redirection_Admin {
 			'WordPress: '.$wp_version.' ('.( is_multisite() ? 'multi' : 'single' ).')',
 			'PHP: '.phpversion(),
 			'Browser: '.Redirection_Request::get_user_agent(),
+			'JavaScript: '.plugin_dir_url( REDIRECTION_FILE ).'redirection.js',
 			'REST API: '.red_get_rest_api(),
 		);
 
 		$this->inject();
-
-		if ( $options['rest_api'] === false ) {
-			// Compatibility fix
-			$this->initial_set_api();
-		}
 
 		if ( ! isset( $_GET['sub'] ) || ( isset( $_GET['sub'] ) && ( in_array( $_GET['sub'], array( 'log', '404s', 'groups' ) ) ) ) ) {
 			add_screen_option( 'per_page', array( 'label' => sprintf( __( 'Log entries (%d max)', 'redirection' ), RED_MAX_PER_PAGE ), 'default' => RED_DEFAULT_PER_PAGE, 'option' => 'redirection_log_per_page' ) );
@@ -188,10 +205,6 @@ class Redirection_Admin {
 		}
 
 		wp_enqueue_style( 'redirection', plugin_dir_url( REDIRECTION_FILE ).'redirection.css', array(), $build );
-
-		if ( isset( $_POST['action'] ) && $_POST['action'] === 'fixit' && wp_verify_nonce( $_POST['_wpnonce'], 'wp_rest' ) ) {
-			$this->run_fixit();
-		}
 
 		wp_localize_script( 'redirection', 'Redirectioni10n', array(
 			'WP_API_root' => esc_url_raw( red_get_rest_api() ),
@@ -206,21 +219,26 @@ class Redirection_Admin {
 			'preload' => $preload,
 			'versions' => implode( "\n", $versions ),
 			'version' => REDIRECTION_VERSION,
+			'api_setting' => $options['rest_api'],
 		) );
 
 		$this->add_help_tab();
 	}
 
-	public function initial_set_api() {
-		include_once dirname( REDIRECTION_FILE ).'/models/fixer.php';
+	public function check_rest_api() {
+		$options = red_get_options();
 
-		$fixer = new Red_Fixer();
-		$status = $fixer->get_rest_status();
+		if ( $options['version'] !== REDIRECTION_VERSION || $options['rest_api'] === false || ( defined( 'REDIRECTION_FORCE_UPDATE' ) && REDIRECTION_FORCE_UPDATE ) ) {
+			include_once dirname( REDIRECTION_FILE ).'/models/fixer.php';
 
-		if ( $status['status'] === 'problem' ) {
-			$fixer->fix_rest();
-		} else {
-			red_set_options( array( 'rest_api' => 0 ) );
+			$fixer = new Red_Fixer();
+			$status = $fixer->get_rest_status();
+
+			if ( $status['status'] === 'problem' ) {
+				$fixer->fix_rest();
+			} elseif ( $options['rest_api'] === false ) {
+				red_set_options( array( 'rest_api' => 0 ) );
+			}
 		}
 	}
 
@@ -230,6 +248,12 @@ class Redirection_Admin {
 
 			$fixer = new Red_Fixer();
 			$fixer->fix( $fixer->get_status() );
+		}
+	}
+
+	private function set_rest_api( $api ) {
+		if ( $api >= 0 && $api <= REDIRECTION_API_POST ) {
+			red_set_options( array( 'rest_api' => intval( $api, 10 ) ) );
 		}
 	}
 
@@ -422,7 +446,7 @@ class Redirection_Admin {
 	public function red_proxy() {
 		if ( $this->user_has_access() && isset( $_GET['rest_path'] ) && substr( $_GET['rest_path'], 0, 15 ) === 'redirection/v1/' ) {
 			$server = rest_get_server();
-			$server->serve_request( '/'.$_GET['rest_path'] );
+			$server->serve_request( rtrim( '/'.$_GET['rest_path'], '/' ) );
 			die();
 		}
 	}

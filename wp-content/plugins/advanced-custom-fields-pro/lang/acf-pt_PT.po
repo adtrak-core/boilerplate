@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Advanced Custom Fields PRO\n"
 "Report-Msgid-Bugs-To: http://support.advancedcustomfields.com\n"
 "POT-Creation-Date: 2018-02-02 12:00+0000\n"
-"PO-Revision-Date: 2018-02-05 12:44+1000\n"
+"PO-Revision-Date: 2018-02-06 10:06+1000\n"
 "Last-Translator: Elliot Condon <e@elliotcondon.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language: pt_PT\n"
@@ -747,7 +747,7 @@ msgstr "Alinhado acima"
 
 #: includes/admin/views/field-group-options.php:63
 #: includes/fields/class-acf-field-tab.php:107
-msgid "Left Aligned"
+msgid "Left aligned"
 msgstr "Alinhado à esquerda"
 
 #: includes/admin/views/field-group-options.php:70

@@ -19,8 +19,8 @@
  */
 
 //Local
-if ($_SERVER['HTTP_HOST'] == "dev-server" || $_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "localhost:8888" || $_SERVER['HTTP_HOST'] == "localhost.shared_boilerplate" ) {
-    $dbName = 'localhost.shared_boilerplate';
+if ($_SERVER['HTTP_HOST'] == "dev-server" || $_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "localhost:8888" || $_SERVER['HTTP_HOST'] == "localhost.shared-boilerplate" ) {
+    $dbName = 'localhost.shared-boilerplate';
     $dbUser = 'root';
     $dbPass = '';
 	$debug = true;

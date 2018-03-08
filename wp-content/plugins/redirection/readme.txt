@@ -2,9 +2,9 @@
 Contributors: johnny5
 Donate link: https://redirection.me/donation/
 Tags: redirect, htaccess, 301, 404, seo, permalink, apache, nginx, post, admin
-Requires at least: 4.4
-Tested up to: 4.9.2
-Stable tag: 3.1.1
+Requires at least: 4.5
+Tested up to: 4.9.4
+Stable tag: 3.2
 Requires PHP: 5.4
 License: GPLv3
 
@@ -35,12 +35,17 @@ In addition to straightforward URL matching you can redirect based on other cond
 - Login status - redirect only if the user is logged in or logged out
 - Browser - redirect if the user is using a certain browser
 - Referrer - redirect if the user visited the link from another page
+- Cookies - redirect if a particular cookie is set
+- HTTP headers - redirect based on a HTTP header
+- Custom filter - redirect based on your own WordPress filter
 
 = Full logging =
 
 A configurable logging option allows to view all redirects occurring on your site, including information about the visitor, the browser used, and the referrer. A 'hit' count is maintained for each redirect so you can see if a URL is being used.
 
 Logs can be exported for external viewing, and can be searched and filtered for more detailed investigation.
+
+Display geographic information about an IP address, as well as a full user agent information, to try and understand who the visitor is.
 
 = Track 404 errors =
 
@@ -131,10 +136,21 @@ The plugin works in a similar manner to how WordPress handles permalinks and sho
 
 == Changelog ==
 
-= 3.1.1 =
+= 3.2 - 11th February 2018 =
+* Add cookie match - redirect based on a cookie
+* Add HTTP header match - redirect based on an HTTP header
+* Add custom filter match - redirect based on a custom WordPress filter
+* Add detection of REST API redirect, causing 'fetch error' on some sites
+* Update table responsiveness
+* Allow redirects for canonical WordPress URLs
+* Fix double include error on some sites
+* Fix delete action on some sites
+* Fix trailing slash redirect of API on some sites
+
+= 3.1.1 - 29th January 2018 =
 * Fix problem fetching data on sites without https
 
-= 3.1 =
+= 3.1 - 27th January 2018 =
 * Add alternative REST API routes to help servers that block the API
 * Move DELETE API calls to POST, to help servers that block DELETE
 * Move API nonce to query param, to help servers that don't pass HTTP headers
