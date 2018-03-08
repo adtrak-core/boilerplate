@@ -34,24 +34,29 @@
     img {
         display: block;
         max-width: 100%;
-        width: auto;
+        width: 100%;
         height: auto;
+    }
 
-        @include bp480 {
-            &.left {
-                float: left;
-                margin: 5px 5px 5px 0;
-            }
+    @include bp480 {
 
-            &.center {
-                clear: both;
-                margin: 0 auto;
-            }
+        img {
+            width: auto;
+        }
 
-            &.right {
-                float: right;
-                margin: 5px 0 5px 5px;
-            }
+        .alignleft {
+            float: left;
+            margin: 10px 10px 10px 0;
+        }
+
+        .aligncenter {
+            clear: both;
+            margin: 0 auto;
+        }
+
+        .alignright {
+            float: right;
+            margin: 10px 0 10px 10px;
         }
     }
 
