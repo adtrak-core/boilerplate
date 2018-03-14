@@ -26,7 +26,7 @@ if ($_SERVER['HTTP_HOST'] == "dev-server") {
     $debug = true;
 }
 // Localhost
-if ($_SERVER['HTTP_HOST'] == "localhost.shared-boilerplate" ) {
+else if ($_SERVER['HTTP_HOST'] == "localhost.shared-boilerplate" ) {
     $dbName = 'localhost.shared-boilerplate';
     $dbUser = 'root';
     $dbPass = '';
