@@ -18,21 +18,28 @@
  * @package WordPress
  */
 
-//Local
-if ($_SERVER['HTTP_HOST'] == "dev-server" || $_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "localhost:8888" || $_SERVER['HTTP_HOST'] == "localhost.shared-boilerplate" ) {
+// Dev-Server
+if ($_SERVER['HTTP_HOST'] == "dev-server") {
+    $dbName = '';
+    $dbUser = 'root';
+    $dbPass = '';
+    $debug = true;
+}
+// Localhost
+if ($_SERVER['HTTP_HOST'] == "localhost.shared-boilerplate" ) {
     $dbName = 'localhost.shared-boilerplate';
     $dbUser = 'root';
     $dbPass = '';
-	$debug = true;
+    $debug = true;
 }
-//demo
+// Staging
 else if ($_SERVER['HTTP_HOST'] == "ad.trak.agency") {
     $dbName = '';
     $dbUser = '';
     $dbPass = '';
 	$debug = true;
 }
-//live
+// Production
 else {
     $dbName = '';
     $dbUser = '';
