@@ -5,8 +5,8 @@
 	// add all of your code within here, not above or below
 	$(function() {
 
-		// MMenu (clones for mobile)
 
+		// MMenu (clones for mobile)
 		$("#navigation").mmenu(
 			{
 			"offCanvas": {
@@ -17,12 +17,12 @@
 			}
 		);
 
-		// Moves the non-cloned top-menu div to the top bar
 
+		// Moves the non-cloned top-menu div to the top bar
 		$("#menu-secondary-menu").prependTo(".top-bar .container");
 
-		// Back to top
 
+		// Back to top
 		$("#back-top").hide();
 		$(function () {
 			$(window).scroll(function () {
@@ -39,15 +39,14 @@
 			}, 750);
 		});
 
-		
-		// Toggle location numbers
 
+		// Toggle location numbers
 		$('.js-toggle-location-numbers').click(function(){
 			$('.location-numbers').toggleClass('location-numbers-visible');
 		});
 
-		// Defer loading of iframes and images
 
+		// Defer loading of iframes and images
 		function init() {
 		    var imgDefer = document.querySelectorAll('iframe, img');
 		    for (var i=0; i<imgDefer.length; i++) {
