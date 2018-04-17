@@ -1,7 +1,18 @@
 # Adtrak Location Dynamics
 ## Changelog
 
-### v3.3.5
+### v3.3.8
+- [Bug] Added isset
+
+### v3.3.7
+- [Bug] PPC queries to non-existent locations now show default SEO number
+
+### v3.3.6
+- [Bug] Permissions are now set to admin only
+- [Bug] Single PPC numbers now link
+- [Bug] PPC queries to non-existent locations now show default PPC number
+
+### v3.3.5
 - [Bug] Should fix incorrect update notification
 - [Bug] Fixes the shortcode ld_single not displaying correctly.
 

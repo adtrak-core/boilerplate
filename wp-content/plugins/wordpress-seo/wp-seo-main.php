@@ -1,5 +1,7 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Main
  */
 
@@ -13,7 +15,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * {@internal Nobody should be able to overrule the real version number as this can cause
  *            serious issues with the options, so no if ( ! defined() ).}}
  */
-define( 'WPSEO_VERSION', '7.0.2' );
+define( 'WPSEO_VERSION', '7.2' );
 
 if ( ! defined( 'WPSEO_PATH' ) ) {
 	define( 'WPSEO_PATH', plugin_dir_path( WPSEO_FILE ) );
@@ -182,6 +184,10 @@ function _wpseo_activate() {
 	$notifier = new WPSEO_Link_Notifier();
 	$notifier->manage_notification();
 
+	// Schedule cronjob when it doesn't exists on activation.
+	$wpseo_onpage = new WPSEO_OnPage();
+	$wpseo_onpage->activate_hooks();
+
 	do_action( 'wpseo_activate' );
 }
 /**
@@ -292,6 +298,10 @@ function wpseo_init() {
 	 */
 	$link_watcher = new WPSEO_Link_Watcher_Loader();
 	$link_watcher->load();
+
+	// Loading Ryte integration.
+	$wpseo_onpage = new WPSEO_OnPage();
+	$wpseo_onpage->register_hooks();
 }
 
 /**
@@ -299,18 +309,22 @@ function wpseo_init() {
  */
 function wpseo_init_rest_api() {
 	// We can't do anything when requirements are not met.
-	if ( WPSEO_Utils::is_api_available() ) {
-		// Boot up REST API.
-		$configuration_service = new WPSEO_Configuration_Service();
-		$configuration_service->initialize();
+	if ( ! WPSEO_Utils::is_api_available() ) {
+		return;
+	}
 
-		$link_reindex_endpoint = new WPSEO_Link_Reindex_Post_Endpoint( new WPSEO_Link_Reindex_Post_Service() );
-		$link_reindex_endpoint->register();
+	// Boot up REST API.
+	$configuration_service = new WPSEO_Configuration_Service();
+	$configuration_service->initialize();
 
-		$statistics_service  = new WPSEO_Statistics_Service( new WPSEO_Statistics() );
-		$statistics_endpoint = new WPSEO_Endpoint_Statistics( $statistics_service );
-		$statistics_endpoint->register();
+	$link_reindex_endpoint = new WPSEO_Link_Reindex_Post_Endpoint( new WPSEO_Link_Reindex_Post_Service() );
+	$link_reindex_endpoint->register();
 
+	$statistics_service  = new WPSEO_Statistics_Service( new WPSEO_Statistics() );
+	$statistics_endpoint = new WPSEO_Endpoint_Statistics( $statistics_service );
+	$statistics_endpoint->register();
+
+	if ( WPSEO_OnPage::is_active() ) {
 		$ryte_endpoint_service = new WPSEO_Ryte_Service( new WPSEO_OnPage_Option() );
 		$ryte_endpoint         = new WPSEO_Endpoint_Ryte( $ryte_endpoint_service );
 		$ryte_endpoint->register();
@@ -405,9 +419,6 @@ register_activation_hook( WPSEO_FILE, 'wpseo_activate' );
 register_deactivation_hook( WPSEO_FILE, 'wpseo_deactivate' );
 add_action( 'wpmu_new_blog', 'wpseo_on_activate_blog' );
 add_action( 'activate_blog', 'wpseo_on_activate_blog' );
-
-// Loading Ryte integration.
-new WPSEO_OnPage();
 
 // Registers SEO capabilities.
 $wpseo_register_capabilities = new WPSEO_Register_Capabilities();
