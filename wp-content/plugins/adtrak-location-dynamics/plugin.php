@@ -4,7 +4,7 @@
  * Plugin Name: 	Adtrak Location Dynamics
  * Plugin URI: 		http://plugins.adtrakdev.com/downloads/location-dynamics/
  * Description: 	Plugin for displaying number easily.
- * Version: 		3.3.5
+ * Version: 		3.3.8
  * Author: 			Adtrak
  * Author URI: 		http://adtrak.co.uk
  * License: 		GPL-2.0+
@@ -28,7 +28,7 @@ $license_key = 'ADTRAKLOCATIONDYNAMICS';
 
 // setup the updater
 $edd_updater = new EDD_SL_Plugin_Updater(ADTK_HOME_URL, __FILE__, array(
-    'version'      => '3.3.5',        // current version number
+    'version'      => '3.3.8',        // current version number
     'license'      => $license_key,    // license key (used get_option above to retrieve from DB)
     'item_name'    => 'Location Dynamics',    // name of this plugin
     'author'       => 'Adtrak'        // author of this plugin

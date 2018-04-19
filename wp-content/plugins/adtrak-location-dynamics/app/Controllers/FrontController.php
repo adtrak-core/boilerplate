@@ -11,7 +11,7 @@ class FrontController
     */
     public function __construct()
     {
-        add_action('ld_single', [$this, 'ld_single'], 10, 2);
+        add_action('ld_single', [$this, 'ld_single'], 10, 4);
         add_action('ld_default', [$this, 'ld_default'], 10, 2);
         add_action('ld_list', [$this, 'ld_list'], 10, 3);
         add_action('ld_mobile_top', [$this, 'ld_mobile_top'], 10, 1);
@@ -60,9 +60,12 @@ class FrontController
         }
 
         # Check if a GET request is used or cookie
-        if (isset($_GET['a']) && $_GET['a'] != 'uk') {
+        if (isset($_GET['a'])) {
             # Check if a GET request is used
             $loc = $_GET['a'];
+            if($loc == 'gen') {
+                $loc = 'uk';
+            }
             $type = 'ppc';
             echo $this->buildNumber($order, $loc, $type, false, $linked);
         } elseif (isset($_COOKIE['area']) && $_COOKIE['area']) {
@@ -245,7 +248,7 @@ class FrontController
 
         # If PPC number is the same as this single show the PPC number else show the seo number
         if (isset($loc) && $loc == $location && $ppc == false) {
-            echo "<span class='ld-phonenumber ".  $order[$location]['insights'] ."'>". $order[$location]['ppc'] . "</span>";
+            echo "<span class='ld-phonenumber ".  $order[$location]['insights'] ."'><a href='tel:". str_replace(' ', '', $order[$location]['ppc']) ."'>". $order[$location]['ppc'] . "</a></span>";
         } elseif ($linked) {
             echo "<span class='ld-phonenumber'><a href='tel:". str_replace(' ', '', $order[$location]['seo']) ."'>". $order[$location]['seo'] . "</a></span>";
         } else {
@@ -320,7 +323,7 @@ class FrontController
         $order = [];
         foreach ($dynamics['dynamics'] as $dynamic) {
             $order[$dynamic['location']] = $dynamic;
-        }
+        }  
 
         # If area is set to gen show the default uk number
         if ((isset($_GET['a']) && $_GET['a'] == 'gen') || (isset($_COOKIE['area']) && $_COOKIE['area'] && $_COOKIE['area'] == 'gen')) {
@@ -331,7 +334,14 @@ class FrontController
         }
 
         # Check if a GET request is used or cookie
-        if (isset($_GET['a']) && $_GET['a'] != 'uk') {
+        
+        if (isset($_GET['a']) && !isset($order[$_GET['a']]['ppc'])) {
+            $loc = 'uk';
+            $type = 'seo';
+            echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
+            return;
+        } else if (isset($_GET['a'])) {
+            # If location doesnt exist
             # Check if a GET request is used
             $loc = $_GET['a'];
             $type = 'ppc';

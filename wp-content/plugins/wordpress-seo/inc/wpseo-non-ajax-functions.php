@@ -1,5 +1,7 @@
 <?php
 /**
+ * WPSEO plugin file.
+ *
  * @package WPSEO\Internals
  */
 
@@ -238,13 +240,6 @@ function wpseo_admin_bar_menu() {
 				'id'     => 'wpseo-pagespeed',
 				'title'  => __( 'Google Page Speed Test', 'wordpress-seo' ),
 				'href'   => '//developers.google.com/speed/pagespeed/insights/?url=' . urlencode( $url ),
-				'meta'   => array( 'target' => '_blank' ),
-			) );
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'wpseo-analysis',
-				'id'     => 'wpseo-microsoftedge',
-				'title'  => __( 'Microsoft Edge Site Scan', 'wordpress-seo' ),
-				'href'   => 'https://developer.microsoft.com/en-us/microsoft-edge/tools/staticscan/?url=' . urlencode( $url ),
 				'meta'   => array( 'target' => '_blank' ),
 			) );
 			$wp_admin_bar->add_menu( array(

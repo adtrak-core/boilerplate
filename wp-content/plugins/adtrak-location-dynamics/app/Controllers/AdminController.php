@@ -26,7 +26,7 @@ class AdminController
         add_menu_page(
             'Location Dynamics',
             'Location Dynamics',
-            'edit_pages',
+            'manage_options',
             'adtrak-location-dynamics',
             [$this, 'displayNumbers']
         );
