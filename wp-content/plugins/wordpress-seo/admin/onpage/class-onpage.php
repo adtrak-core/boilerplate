@@ -102,7 +102,11 @@ class WPSEO_OnPage implements WPSEO_WordPress_Integration {
 	 *
 	 * @return array Enriched list of schedules.
 	 */
-	public function add_weekly_schedule( array $schedules ) {
+	public function add_weekly_schedule( $schedules ) {
+		if ( ! is_array( $schedules ) ) {
+			$schedules = array();
+		}
+
 		$schedules['weekly'] = array(
 			'interval' => WEEK_IN_SECONDS,
 			'display'  => __( 'Once Weekly', 'wordpress-seo' ),
@@ -251,7 +255,7 @@ class WPSEO_OnPage implements WPSEO_WordPress_Integration {
 			return;
 		}
 
-		wp_unschedule_event( time(), 'wpseo_onpage_fetch' );
+		wp_clear_scheduled_hook( 'wpseo_onpage_fetch' );
 	}
 
 	/**

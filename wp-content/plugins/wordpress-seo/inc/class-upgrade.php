@@ -70,7 +70,7 @@ class WPSEO_Upgrade {
 		}
 
 		if ( version_compare( $version, '5.0', '>=' )
-			 && version_compare( $version, '5.1', '<' )
+			&& version_compare( $version, '5.1', '<' )
 		) {
 			$this->upgrade_50_51();
 		}
@@ -97,6 +97,14 @@ class WPSEO_Upgrade {
 
 		if ( version_compare( $version, '7.1-RC0', '<' ) ) {
 			$this->upgrade_71();
+		}
+
+		if ( version_compare( $version, '7.3-RC0', '<' ) ) {
+			$this->upgrade_73();
+		}
+
+		if ( version_compare( $version, '7.4-RC0', '<' ) ) {
+			$this->upgrade_74();
 		}
 
 		// Since 3.7.
@@ -509,6 +517,8 @@ class WPSEO_Upgrade {
 
 	/**
 	 * Perform the 7.1 upgrade.
+	 *
+	 * @return void
 	 */
 	private function upgrade_71() {
 		$this->cleanup_option_data( 'wpseo_social' );
@@ -521,6 +531,43 @@ class WPSEO_Upgrade {
 
 			$this->cleanup_option_data( 'wpseo_titles' );
 		}
+	}
+
+	/**
+	 * Perform the 7.3 upgrade.
+	 *
+	 * @return void
+	 */
+	private function upgrade_73() {
+		global $wpdb;
+		// We've moved the cornerstone checkbox to our proper namespace.
+		$wpdb->query( "UPDATE $wpdb->postmeta SET meta_key = '_yoast_wpseo_is_cornerstone' WHERE meta_key = '_yst_is_cornerstone'" );
+
+		// Remove the previous Whip dismissed message, as this is a new one regarding PHP 5.2.
+		delete_option( 'whip_dismiss_timestamp' );
+	}
+
+	/**
+	 * Performs the 7.4 upgrade.
+	 *
+	 * @return void
+	 */
+	private function upgrade_74() {
+		$this->remove_sitemap_validators();
+	}
+
+	/**
+	 * Removes all sitemap validators.
+	 *
+	 * This should be executed on every upgrade routine until we have removed the sitemap caching in the database.
+	 *
+	 * @return void
+	 */
+	private function remove_sitemap_validators() {
+		global $wpdb;
+
+		// Remove all sitemap validators.
+		$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'wpseo_sitemap%validator%'" );
 	}
 
 	/**

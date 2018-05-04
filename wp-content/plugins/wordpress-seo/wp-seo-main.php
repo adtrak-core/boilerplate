@@ -15,7 +15,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * {@internal Nobody should be able to overrule the real version number as this can cause
  *            serious issues with the options, so no if ( ! defined() ).}}
  */
-define( 'WPSEO_VERSION', '7.2' );
+define( 'WPSEO_VERSION', '7.4.2' );
 
 if ( ! defined( 'WPSEO_PATH' ) ) {
 	define( 'WPSEO_PATH', plugin_dir_path( WPSEO_FILE ) );
@@ -273,6 +273,10 @@ function wpseo_init() {
 	WPSEO_Meta::init();
 
 	if ( version_compare( WPSEO_Options::get( 'version', 1 ), WPSEO_VERSION, '<' ) ) {
+		if ( function_exists( 'opcache_reset' ) ) {
+			opcache_reset();
+		}
+
 		new WPSEO_Upgrade();
 		// Get a cleaned up version of the $options.
 	}
@@ -302,6 +306,9 @@ function wpseo_init() {
 	// Loading Ryte integration.
 	$wpseo_onpage = new WPSEO_OnPage();
 	$wpseo_onpage->register_hooks();
+
+	$wpseo_content_images = new WPSEO_Content_Images();
+	$wpseo_content_images->register_hooks();
 }
 
 /**
@@ -324,11 +331,9 @@ function wpseo_init_rest_api() {
 	$statistics_endpoint = new WPSEO_Endpoint_Statistics( $statistics_service );
 	$statistics_endpoint->register();
 
-	if ( WPSEO_OnPage::is_active() ) {
-		$ryte_endpoint_service = new WPSEO_Ryte_Service( new WPSEO_OnPage_Option() );
-		$ryte_endpoint         = new WPSEO_Endpoint_Ryte( $ryte_endpoint_service );
-		$ryte_endpoint->register();
-	}
+	$ryte_endpoint_service = new WPSEO_Ryte_Service( new WPSEO_OnPage_Option() );
+	$ryte_endpoint         = new WPSEO_Endpoint_Ryte( $ryte_endpoint_service );
+	$ryte_endpoint->register();
 }
 
 /**
