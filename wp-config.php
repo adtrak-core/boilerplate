@@ -32,6 +32,12 @@ else if ($_SERVER['HTTP_HOST'] == "shared-boilerplate.vm" ) {
     $dbPass = '';
     $debug = true;
 }
+else if ($_SERVER['HTTP_HOST'] == "boilerplate.vm" ) {
+    $dbName = 'boilerplate.vm';
+    $dbUser = 'root';
+    $dbPass = '';
+    $debug = true;
+}
 // Staging
 else if ($_SERVER['HTTP_HOST'] == "ad.trak.agency") {
     $dbName = '';
