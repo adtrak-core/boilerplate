@@ -1,6 +1,6 @@
 <?php
 /**
- * The header output and functionality. Most of the output of CSS, JS, 
+ * The header output and functionality. Most of the output of CSS, JS,
  * etc will be carried out via the functions and there should be minimal
  * need to change anything in the head.
  * @author  Adtrak
@@ -18,6 +18,7 @@
 	<?php /* Path dependent critical CSS */ ?>
   	<style type="text/css">
   		<?php include ('css/critical.css'); ?>
+        #mm-navigation { display: none; }
   	</style>
 
   	<?php /* Load CSS async */ ?>
@@ -40,7 +41,7 @@
 	?>
 
 	<?php /* Typekit async loading
-	
+
 	<script>
 	   WebFontConfig = {
 	      typekit: { id: 'xxxxxx' }
@@ -69,7 +70,7 @@
 			<div class="container">
 
 				<?php /* run.js will move the secondary nav in here on desktop */ ?>
-			
+
 			</div>
 
 		</div>
@@ -89,16 +90,16 @@
 
 		<nav id="navigation">
 			<div>
-				<?php 
+				<?php
 				// Both primary and secondary menus for Mmenu
 					wp_nav_menu([
-						'menu' => 'Primary Menu', 
-						'menu_class' => "menu-primary", 
+						'menu' => 'Primary Menu',
+						'menu_class' => "menu-primary",
 						'container' => ''
 					]);
 					wp_nav_menu([
-						'menu' => 'Secondary Menu', 
-						'menu_class' => "menu-secondary", 
+						'menu' => 'Secondary Menu',
+						'menu_class' => "menu-secondary",
 						'container' => ''
 					]);
 				?>

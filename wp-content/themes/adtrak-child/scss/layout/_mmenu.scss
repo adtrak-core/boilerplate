@@ -4,22 +4,30 @@
 
 // FOUC fix
 #mm-navigation.mm-menu.mm-current {
-    display: block;  
+    display: block;
 }
 
 // Variables
 
     $activeBackground          : $noir;
-    $activeColor               : $blanc; 
+    $activeColor               : $blanc;
 
     // You can change the theme to dark theme rather than amending below
     // Visit http://mmenu.frebsite.nl/documentation/extensions/themes.html for more info
     $panelBackground            : #f3f3f3;
 
 // The rest
+#mm-navigation.mm-opened { display: block; }
 
 #mm-navigation {
     display: none;
+}
+
+@include bp800 {
+   #mm-navigation,
+   #mm-navigation.mm-opened {
+       display: none;
+   }
 }
 
 @media only screen and (max-width: ($medium-width)-1) {
