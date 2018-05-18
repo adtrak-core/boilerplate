@@ -815,10 +815,6 @@ input[type="search"] {
 }
 
 .woocommerce_options_panel {
-	.short {
-		width: 100% !important;
-	}
-
 	textarea {
 		width: 100% !important;
 		height: 10em !important;

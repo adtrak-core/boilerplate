@@ -3,8 +3,8 @@
 Contributors: jackabox
 Tags: core, functionality, acf  
 Requires at least: 4.6.0  
-Tested up to: 4.7.1  
-Stable tag: 0.9.11  
+Tested up to: 4.8.1  
+Stable tag: 0.9.20  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -20,6 +20,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Frequently Asked Questions ==
 
 == Changelog ==
+= 0.9.20 =
+- [Bug] Fixes a minor bug with WooCommerce
+
 = 0.9.16 =
 - [Bug] Fixes a minor issue with menu
 

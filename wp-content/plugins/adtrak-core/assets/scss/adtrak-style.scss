@@ -1,3 +1,471 @@
-@import 'abstracts/variables', 'abstracts/functions', 'abstracts/mixins', 'abstracts/placeholders';
-@import 'admin';
-@import 'default';
+@import 
+  'abstracts/variables',
+  'abstracts/functions',
+  'abstracts/mixins',
+  'abstracts/placeholders';
+
+/** BEGIN **/
+
+input[type=number]::-webkit-inner-spin-button {
+  margin: 0;
+}
+
+input[type=number]::-webkit-outer-spin-button {
+  margin: 0;
+}
+
+ul {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+ol {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+dl {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+a {
+  color: color(oxfordBlue);
+  &:focus {
+    box-shadow: none;
+  }
+  &:hover {
+    color: color(black);
+  }
+}
+
+// GENERAL
+
+#wpcontent,
+#wpfooter {
+  margin-left: 210px;
+}
+
+#wpwrap {
+  background: color(concrete);
+}
+
+#wp-admin-bar-wp-logo {
+  display: none;
+}
+
+#adminmenuback {
+	width: 210px;
+	background: color(charcoal);
+}
+
+#adminmenu {
+  width: 210px;
+	background: color(charcoal);  
+}
+
+#adminmenu .wp-submenu {
+  width: 210px;
+  box-sizing: border-box;
+}
+
+// Top Bar
+
+#wpadminbar {
+  border-bottom: 1px solid darken(color(concrete), 5%);  
+  margin-left: 210px;
+  max-width: calc(100% - 234px);
+  background: color(concrete);  
+  padding-left: 12px;
+  padding-right: 12px;
+
+	li {
+		a {
+      background-color: color(concrete) !important;
+      
+      &.ab-item {
+				color: color(charcoal) !important;
+			}
+
+			&:before {
+				color: color(charcoal) !important;
+			}
+
+			&:focus span {
+				color: color(adtrakOrange) !important;
+			}
+
+			span.ab-icon {
+				color: color(charcoal) !important;
+
+				&:before {
+					color: color(charcoal) !important;
+				}
+			}
+		}
+
+		.ab-sub-wrapper {
+      color: color(charcoal) !important;
+      background-color: color(concrete) !important;
+		}
+
+		span {
+			color: color(charcoal) !important;
+		}
+
+		&:hover > a {
+			color: color(adtrakOrange) !important;
+      background-color: color(concrete) !important;
+      
+      span,
+      span:before,
+      &:before {
+				color: color(adtrakOrange) !important;
+			}
+		}
+	}
+}
+
+// MENU
+
+#adminmenuwrap {
+	background: color(charcoal);
+
+	ul#adminmenu {
+    box-sizing: border-box;
+    
+    li {
+      background: transparent;
+
+      &:hover, &:focus, &:active {
+        a, .wp-submenu {
+          background: transparent;
+        }
+      }
+    }
+
+    li {
+      &.wp-has-current-submenu:hover,
+      &.wp-has-current-submenu:hover a,
+      &.wp-has-current-submenu {
+        .wp-submenu,
+        .wp-submenu:hover, {
+          background: transparent;
+          padding-left: 25px;
+          box-sizing: border-box;
+        }
+      }
+
+      &.wp-not-current-submenu:hover ul.wp-submenu {
+			  top: 0;
+			  background: color(charcoal);
+      }
+    
+      a {
+        font-weight: normal;
+  
+        .wp-menu-image:before,
+        .wp-menu-name {
+          color: #999;
+        }
+
+        .wp-menu-name {
+          word-break: break-word;					
+        }
+      }
+
+      & a.wp-has-current-submenu,
+      &.current.menu-top a {
+        background: color(charcoal);
+        .wp-menu-name,
+        .wp-menu-image:before {
+          color: color(white);
+        }
+      }
+
+      &.wp-has-submenu ul.wp-submenu {
+        background: color(charcoal) !important;
+        
+        li a {
+          &.current,
+          &:focus,
+          &:hover,
+          &:active {
+            color: color(white);
+            background: transparent;
+          }
+        }
+      }
+
+      &:hover .wp-menu-name,
+      &:hover .wp-menu-image:before {
+        color: color(white);
+      }
+
+      &.wp-not-current-submenu ul.wp-submenu {
+        left: 36px;
+
+        @media (min-width: 960px) {
+          left: 210px;
+        }
+
+        a:focus,
+        a:hover {
+          cursor: pointer;
+        }
+
+        li:hover, 
+        li:focus {
+          opacity: 1;
+  
+          .wp-menu-image:before {
+            transition: all 0s;
+            color: color(adtrakOrange);
+          }
+        }
+      }
+      
+    }
+  }
+}
+
+#collapse-button:focus, #collapse-button:hover {
+  color: color(adtrakOrange);
+}
+
+#adminmenu li.menu-top:hover, #adminmenu li.opensub>a.menu-top, #adminmenu li>a.menu-top:focus {
+    background-color: darken(color(charcoal), 5%);
+}
+
+#adminmenu,
+#adminmenu li a.wp-has-current-submenu,
+#adminmenu li a.current {
+  a .awaiting-mod, .update-plugins {
+    background-color: color(adtrakOrange);
+  }
+}
+
+// Fold content
+.autofold, .folded {
+  li.wp-not-current-submenu ul.wp-submenu {
+    left: 36px !important;
+  }
+  #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head {
+    background: color(adtrakOrange);
+    color: color(white);
+  }
+  #adminmenuwrap ul#adminmenu li {
+    &.wp-has-current-submenu {
+      .wp-submenu.wp-submenu-wrap {
+        background: color(charcoal);
+        padding-left: 0;
+      }
+    }
+    & a.wp-has-current-submenu,
+    &.current.menu-top a {
+      background: color(adtrakOrange);
+      .wp-menu-image:before,
+      .wp-menu-name {
+        color: color(white);
+      }
+    }
+  }
+  #adminmenuwrap ul#adminmenu {
+    margin-left: 0; 
+  } 
+}
+
+// buttons
+.button-primary {
+  background-color: color(adtrakOrange) !important;
+
+	&:hover {
+		background-color: darken(color(adtrakOrange), 5%) !important;
+	}
+}
+
+%button {
+  transition: .3s color ease-in-out, .3s background-color ease-in-out;  
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+
+button,
+.button,
+.acf-button, {
+	&.blue,
+	&.button-primary {
+    @extend %button;
+    background-color: color(adtrakOrange) !important;
+    
+    &:hover,
+    &:focus {
+      background-color: darken(color(adtrakOrange), 8%) !important;  
+    }
+	}
+
+	&:active,
+	&:focus {
+		outline: none !important;
+	}
+}
+
+.wrap .page-title-action {
+  @extend %button;
+  border: 1px solid #ddd;
+  padding: 6px 15px !important;
+  color: color(charcoal);
+
+  &:hover, &:focus, &:active {
+    color: color(white);
+    background-color: color(adtrakOrange);
+    border: 1px solid color(adtrakOrange);
+  }
+}
+
+.wp-core-ui {
+  .acf-button,
+	.add-new-h2,
+	.button,
+  .button-primary,
+  .button-large,
+  .button-hero {    
+    height: auto;
+    padding: 0 12px;
+    line-height: 26px;
+    border-radius: 3px;
+    transition: .3s color ease-in-out, .3s background-color ease-in-out;
+    box-shadow: none !important;
+    transform: translateY(0px) !important;
+  }
+
+  .button,
+  .button-secondary {
+    background-color: color(concrete);
+    box-shadow: none;
+
+    &:hover,
+    &:focus {
+      background-color: color(adtrakOrange);
+      border-color: color(adtrakOrange);
+      color: color(white);
+
+      .wp-media-buttons-icon:before {
+        color: color(white);
+      }
+    }
+  }
+
+  .wp-media-buttons-icon {
+    transition: .3s all ease-in-out;
+  }
+
+	.button-primary {
+		&.disabled,
+		&:disabled {
+			color: color(concrete) !important;
+			background-color: color(adtrakOrange) !important;
+		}
+  }
+
+	.button-primary-disabled,
+	.button-primary[disabled] {
+		color: color(concrete) !important;
+		background-color: color(adtrakOrange) !important;
+	}
+}
+
+input[type=radio] {
+	&:focus {
+		border-color: color(adtrakOrange) !important;
+	}
+
+	&:checked:before {
+		background-color: color(adtrakOrange);
+	}
+}
+
+input[type=checkbox]:focus,
+input[type=color]:focus,
+input[type=date]:focus,
+input[type=datetime-local]:focus,
+input[type=datetime]:focus,
+input[type=email]:focus,
+input[type=month]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
+input[type=search]:focus,
+input[type=tel]:focus,
+input[type=text]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=week]:focus,
+select:focus,
+textarea:focus {
+  border-color: color(adtrakOrange) !important;
+  box-shadow: 0 0 2px rgba(color(adtrakOrange), .8);
+}
+
+input[type="search"] {
+	box-shadow: none !important;
+  border-radius: 3px !important;
+  font-size: 14px !important;
+}
+
+.view-switch a.current:before,
+input[type="checkbox"]:before {
+	color: color(adtrakOrange) !important;
+}
+
+#post-preview,
+#save-post {
+	width: 100% !important;
+}
+
+// LOGIN
+body.login {
+  background-color: color(adtrakOrange);
+}
+
+.login #login h1 {
+	height: 150px;
+
+	a {
+		width: 50% !important;
+		height: 80% !important;
+		background-size: contain !important;
+		background-image: $url_0 !important;
+		background-position: center bottom;
+	}
+}
+
+.login .message,
+.login #login_error {
+  margin-top: 20px;
+}
+
+.login #backtoblog a, .login #nav a {
+  color: color(white);
+
+  &:hover {
+    color: color(white);
+    text-decoration: underline;
+  }
+}
+
+// PLUGINS
+.active th.check-column,
+.login .message {
+	border-left: 4px solid #00B4AE !important;
+}
+
+.subsubsub {
+  margin: 18px 0 5px;
+}
+
+.tablenav {
+  margin: 10px 0;
+  height: 40px;
+}

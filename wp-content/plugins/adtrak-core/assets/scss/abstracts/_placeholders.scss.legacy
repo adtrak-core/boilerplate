@@ -1,0 +1,151 @@
+
+//.button, .acf-button, .add-new-h2, .button-primary
+%extend_1 {
+  height: 30px !important;
+  padding: 0 20px !important;
+  line-height: 30px !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: color(lightGrey) !important;
+  border-radius: 3px !important;
+  text-shadow: none !important;
+}
+
+//original selectors
+//.actions .button, .actions .acf-button, .actions .add-new-h2, .actions .button-primary, .search-box .button, .search-box .acf-button, .search-box .add-new-h2, .search-box .button-primary, .wp-filter .button, .wp-filter .acf-button, .wp-filter .add-new-h2, .wp-filter .button-primary, .button-small, .tagadd, .page-title-action
+%extend_2 {
+  height: auto !important;
+  padding: 0 10px !important;
+  line-height: 26px !important;
+  border-radius: 3px !important;
+}
+
+//original selectors
+//.actions .button:hover, .actions .acf-button:hover, .actions .add-new-h2:hover, .actions .button-primary:hover, .actions .button:focus, .actions .acf-button:focus, .actions .add-new-h2:focus, .actions .button-primary:focus, .search-box .button:hover, .search-box .acf-button:hover, .search-box .add-new-h2:hover, .search-box .button-primary:hover, .search-box .button:focus, .search-box .acf-button:focus, .search-box .add-new-h2:focus, .search-box .button-primary:focus, .wp-filter .button:hover, .wp-filter .acf-button:hover, .wp-filter .add-new-h2:hover, .wp-filter .button-primary:hover, .wp-filter .button:focus, .wp-filter .acf-button:focus, .wp-filter .add-new-h2:focus, .wp-filter .button-primary:focus, .button-small:hover, .button-small:focus, .tagadd:hover, .tagadd:focus, .page-title-action:hover, .page-title-action:focus
+%extend_3 {
+  color: color(white) !important;
+  background-color: color(adtrakOrange) !important;
+  border-color: color(adtrakOrange) !important;
+}
+
+//original selectors
+//.postbox .button.pip-link, .postbox .pip-link.acf-button, .postbox .pip-link.add-new-h2, .postbox .pip-link.button-primary
+%extend_4 {
+  width: 100% !important;
+  margin: 5px 0 !important;
+  text-align: center !important;
+}
+
+//original selectors
+//table.wp-list-table .order_actions .button, table.wp-list-table .order_actions .acf-button, table.wp-list-table .order_actions .add-new-h2, table.wp-list-table .order_actions .button-primary
+%extend_5 {
+  width: 25px !important;
+  height: 25px !important;
+  padding: 0 !important;
+  line-height: 25px !important;
+}
+
+//original selectors
+//table.wp-list-table .order_actions .button img, table.wp-list-table .order_actions .acf-button img, table.wp-list-table .order_actions .add-new-h2 img, table.wp-list-table .order_actions .button-primary img
+%extend_6 {
+  width: auto !important;
+  height: 12px !important;
+  margin: 6px auto !important;
+}
+
+//original selectors
+//#message, .updated, .error
+%extend_7 {
+  position: relative;
+  box-shadow: none !important;
+  border-radius: 3px !important;
+  padding: 5px 12px !important;
+}
+
+//original selectors
+//.wp-editor-tabs button, .wp-editor-tabs a
+%extend_8 {
+  height: 20px;
+  padding: 5px 15px !important;
+  border: none !important;
+  border-radius: 3px !important;
+}
+
+//original selectors
+//#submitpost #save-action .button, #submitpost #save-action .acf-button, #submitpost #save-action .add-new-h2, #submitpost #save-action .button-primary
+%extend_9 {
+  width: calc(100% - 50px);
+  max-width: 300px;
+  margin-bottom: 10px;
+}
+
+//original selectors
+//#submitpost #preview-action .button, #submitpost #preview-action .acf-button, #submitpost #preview-action .add-new-h2, #submitpost #preview-action .button-primary
+%extend_10 {
+  width: calc(100% - 50px);
+  max-width: 300px;
+  float: left;
+}
+
+//original selectors
+//#wpadminbar ul#wp-admin-bar-root-default li a, #wpadminbar ul#wp-admin-bar-top-secondary li a
+%extend_11 {
+  height: 44px;
+  padding: 0 10px !important;
+  color: color(white);
+  font: 400 13px/44px $primaryFont;
+}
+
+//original selectors
+//#wpadminbar ul#wp-admin-bar-root-default li a:before, #wpadminbar ul#wp-admin-bar-root-default li a span.ab-icon, #wpadminbar ul#wp-admin-bar-top-secondary li a:before, #wpadminbar ul#wp-admin-bar-top-secondary li a span.ab-icon
+%extend_12 {
+  top: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  color: color(white);
+  font: 400 20px/42px dashicons !important;
+}
+
+//original selectors
+//.adtrak-wrap .adtrak-box .adtrak-box-header, .adtrak-wrap .adtrak-box .adtrak-box-body
+%extend_13 {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+//original selectors
+//.adtrak-wrap .adtrak-box .adtrak-box-header >p, .adtrak-wrap .adtrak-box .adtrak-box-header >strong, .adtrak-wrap .adtrak-box .adtrak-box-body >p, .adtrak-wrap .adtrak-box .adtrak-box-body >strong
+%extend_14 {
+  display: block;
+  max-width: 500px;
+  margin-bottom: 60px;
+}
+
+//original selectors
+//.adtrak-wrap .adtrak-box .adtrak-box-body >div:before, .adtrak-wrap .adtrak-box .adtrak-box-body >div:after
+%extend_15 {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+//original selectors
+//.adtrak-wrap #adtrak-custom-login >div #adtrak_logo_preview, .adtrak-wrap #adtrak-custom-login >div #adtrak_bg_preview
+%extend_16 {
+  float: left;
+  width: auto;
+  height: 150px;
+  margin-bottom: 0;
+  margin-right: 1em;
+}
+
+//original selectors
+//.adtrak-wrap #adtrak-custom-login >div >div #upload_image_button, .adtrak-wrap #adtrak-custom-login >div >div #upload_bg_image_button, .adtrak-wrap #adtrak-custom-login >div >div #remove_image_button, .adtrak-wrap #adtrak-custom-login >div >div #remove_bg_image_button
+%extend_17 {
+  width: 100%;
+  display: block;
+  border-radius: 3px !important;
+}

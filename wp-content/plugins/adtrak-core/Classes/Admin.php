@@ -52,6 +52,7 @@ class Admin
 		remove_meta_box('dashboard_activity', 'dashboard', 'normal');
 		remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
 		remove_meta_box('dashboard_quick_press', 'dashboard', 'normal');
+		remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker');
 	}
 
 	/*
