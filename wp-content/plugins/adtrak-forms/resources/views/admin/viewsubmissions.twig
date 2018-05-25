@@ -1,0 +1,58 @@
+{% include 'admin/partials/header.twig' %}
+
+	<h1>Submissions for {{ form_name }}</h1>
+
+	<div class="apcf-control-panel">
+		
+		<div class="apcf-control-panel__top">
+
+			<div class="apcf-control-panel__heading-label">Contact</div>
+			<div class="apcf-control-panel__heading-label">Date Submitted</div>
+			<div class="apcf-control-panel__heading-label">Controls</div>
+
+		</div>
+
+		{% for data in submission_data %}
+
+			<div class="apcf-control-panel__field">
+	
+				<div class="apcf-control-panel__panel">
+
+					<div class="apcf-control-panel__panel-item">
+						<span class="name">{{ data.data['acpf-email'] }}</span>
+					</div>
+
+					<div class="apcf-control-panel__panel-item">{{ data.created_at|date("d/m/Y g:iA") }}</div>
+
+					<div class="apcf-control-panel__panel-item">
+						<a class="open-details button button-primary button-large" href="#">View Details</a>
+					</div>
+
+				</div>
+
+				<div class="apcf-control-panel__edit-fields grid grid12_12">
+					{% for key, info in data.data %}
+						<div class="apcf-control-panel__field-row">
+							<div class="apcf-control-panel__desc">
+								<div class="apcf-control-panel__row-name">{{ key|replace({'acpf-':''}) }}</div>
+								{# <div class="apcf-control-panel__row-desc">Enter your field name here</div> #}
+							</div>
+							<div class="apcf-control-panel__field-input">{{ info }}</div>
+						</div>
+					{% endfor %}
+						<div class="apcf-control-panel__field-row">
+							<div class="apcf-control-panel__desc">
+								<div class="apcf-control-panel__row-name">IP</div>
+								{# <div class="apcf-control-panel__row-desc">Enter your field name here</div> #}
+							</div>
+							<div class="apcf-control-panel__field-input">{{ data.ip }}</div>
+						</div>
+				</div>
+
+			</div>
+
+		{% endfor %}
+
+	</div>
+
+{% include 'admin/partials/footer.twig' %}

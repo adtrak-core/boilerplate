@@ -1,0 +1,10 @@
+<input 
+	id="acpf-{{ fields.name }}"
+	name="upload[]"
+	type="{{ fields.type|lower }}"
+	class="{{ fields.classes }}"
+	data-parsley-trigger="change"
+	{% if (fields.required) %}required{% endif %}
+	data-parsley-filemaxmegabytes="{{ fields.max_size }}"
+	data-parsley-filemimetypes="{{ fields.file_exts }}"
+>

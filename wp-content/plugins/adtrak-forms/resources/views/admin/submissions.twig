@@ -1,0 +1,36 @@
+{% include 'admin/partials/header.twig' %}
+
+	<h1>Form List</h1>
+
+	<table class="atk-table">
+		
+		<thead>
+			<th>Form Name</th>
+			<th>Amount</th>
+			<th></th>
+		</thead>
+
+		<tbody>
+
+		{% for form in forms %}
+
+			{% set i = 0 %}
+			{% for sub in submissions %}
+				{% if (sub.form_id == form.form_id) %}
+					{% set i = i + 1 %}
+				{% endif %}
+			{% endfor %}
+			
+			<tr>
+				<td><a href="admin.php?page=adtrak-forms-viewsubmissions&id={{ form.form_id }}">{{ form.name }}</a></td>
+				<td>{{ i }}</td>
+				<td><a href="admin.php?page=adtrak-forms-viewsubmissions&id={{ form.form_id }}" class="button button-primary button-large">View</a></td>
+			</tr>
+
+		{% endfor %}
+
+		</tbody>
+
+	</table>
+
+{% include 'admin/partials/footer.twig' %}

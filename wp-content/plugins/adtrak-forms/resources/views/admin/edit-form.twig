@@ -1,0 +1,122 @@
+{% include 'admin/partials/header.twig' %}
+
+	<h1>Edit Form</h1>
+
+	{% set email_data = form_data.emails|split('::')  %}
+
+	<form method="POST" action="#" name="new-form" class="apcf-admin-form">
+
+		<div class="apcf-admin-form__left-pane">
+
+			<input placeholder="Form Name" required type="text" class="apcf-admin-form__large-input" name="form-name" {% if form_data %} value="{{ form_data.name }}" {% endif %}>
+
+			<div class="apcf-control-panel">
+
+				<div class="apcf-control-panel__top">
+					<div class="apcf-control-panel__heading-label apcf-control-panel__heading-label--width"></div>
+					<div class="apcf-control-panel__heading-label apcf-control-panel__heading-label--large">Name</div>
+					<div class="apcf-control-panel__heading-label apcf-control-panel__heading-label--large">Type</div>
+					<div class="apcf-control-panel__heading-label">Controls</div>
+				</div>
+
+				<ul class="sortable">
+
+					{% for field in field_data %}
+
+						{% include "admin/partials/field.twig" %}
+
+					{% endfor %}
+					
+				</ul>
+
+				<div class="apcf-control-panel__bottom">
+					<button type="button" class="add-field button button-primary button-large">+ Add Field</button>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="apcf-admin-form__sidebar">
+{# 			<div class="apcf-admin-form__right-pane">
+				<button type="button" class="add-field button button-secondary button-large">+ Add Field</button>
+			</div> #}
+
+			<div class="apcf-admin-form__right-pane">
+				<p>Delete this form?</p>
+				<a href="admin.php?page=adtrak-forms-deleteform&id={{ form_data.form_id }}" class="button button-primary button-large button-dmodal">Delete</a>
+			</div>
+
+			<div class="apcf-admin-form__right-pane">
+				<p>Enter where to send your emails below.</p>
+				<label for="emailTo">Email To: <input value="{{ emails.emailTo }}" type="text" name="emailTo"></label>
+				<label for="emailCC">Email CC: <input value="{{ emails.emailCC }}" type="text" name="emailCC"></label>
+				<label for="emailBCC">Email BCC: <input value="{{ emails.emailBCC }}" type="text" name="emailBCC"></label>
+				<label for="customerCopy">Customer Copy<input {% if(emails.customer_copy == "1") %} checked {% endif %} value="1" type="checkbox" name="customerCopy"></label>
+			</div>
+
+			<div class="apcf-admin-form__right-pane">
+				<p>Enter your Mailchimp details below.</p>
+				<p><a target="newtab" href="http://resources.ad.trak.agency/setting-up-mailchimp/">How to setup Mailchimp</a></p>
+				<label for="mcID">Mailchimp ID: <input value="{{ mailchimp.mailchimp_id }}" type="text" name="mcID"></label>
+				<label for="mcKey">Mailchimp API: <input value="{{ mailchimp.mailchimp_key }}" type="text" name="mcKey"></label>
+				<label for="mcLabel">Mailchimp Label: <input value="{{ mailchimp.mailchimp_label }}" type="text" name="mcLabel"></label>
+			</div>
+
+			<div class="apcf-admin-form__right-pane">
+				<p>Enter the text for your submit button here.</p>
+				<label for="submit_name">Submit Button Label: <input required value="{{ form_data.submit_name }}" type="text" name="submit_name"></label>
+				<p>Enter your success message here.</p>
+				<label for="success_message">Success Message: <input required value="{{ form_data.success_message }}" type="text" name="success_message"></label>
+			</div>
+
+			<div class="apcf-admin-form__right-pane">
+				{% if form_data %}<p class="apcf-admin-form__right-pane_date"><strong>Last Updated:</strong> {{ form_data.updated_at|date("d/m/Y g:iA") }}</p>{% endif %}
+				<input type="submit" class="button button-primary button-large" name="submit" value="Save">
+			</div>
+		</div>
+
+	</form>
+
+	<script>
+		jQuery(function ($) {
+			$(document).ready(function() {
+			    $( ".sortable" ).sortable({
+			      revert: true
+			    });
+				$(".add-field").click(function(e) {
+	                $.get('{{ site.directory }}/resources/views/admin/partials/safe-field.twig', function (data) {
+	                    $(data).appendTo(".sortable");
+	                });
+					e.preventDefault();
+				});
+				$(".button-dmodal").click(function(e) {
+					e.preventDefault();
+					var confirm = window.confirm('Are you sure?');
+					if(confirm) {
+						window.location.href = $(this).attr('href');
+					}
+				});
+			});
+
+			$(document).on("click", ".add-list-item", function(e) {
+				var place = $(this).parent().parent().find(".sortable-list");
+				var id = $(this).parent().parent().parent().parent().parent().find(".hid-id").val();
+		        $.get('{{ site.directory }}/resources/views/admin/partials/safe-list-item.twig', function (data) {
+		            $(data).appendTo( place );
+		        });
+
+		        var i = 0;
+
+		        setTimeout(function() {
+			        $(place).find(".apcf-control-panel__panel").each(function() {
+						$(this).find(".list-item-name").attr("name", "fields[field"+id+"][list]["+ i +"][name]");
+						$(this).find(".list-item-value").attr("name", "fields[field"+id+"][list]["+ i +"][value]");
+						i++;
+			        });
+		        }, 500);
+				e.preventDefault();
+			});
+		});
+	</script>
+
+{% include 'admin/partials/footer.twig' %}

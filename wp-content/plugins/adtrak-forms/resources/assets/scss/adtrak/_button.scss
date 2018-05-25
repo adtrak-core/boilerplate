@@ -1,0 +1,39 @@
+.atk-button {
+    color: $button-color;
+    border: 0;
+    font-size: $button-font-size;
+    padding: $button-padding;
+    border-radius: 3px;
+    background: $button-bg;
+    transition: all ease-in-out .3s;
+    text-decoration: none;
+
+    &:hover, &:focus {
+        cursor: pointer;
+    }
+
+    &--orange {
+        background: #F2533A;
+        color: #fff;
+        &:hover {
+            color: #fff;
+            background: darken(#f2533a, 10%);
+        }
+    }
+    &--grey {
+        background: #1D2024;
+        color: #fff;
+        &:hover {
+            color: #fff;
+            background: darken(#1D2024, 10%);
+        }
+    }
+    &--green {
+        background: #63BB62;
+        color: #fff;
+        &:hover {
+            color: #fff;
+            background: darken(#63BB62, 10%);
+        }
+    }
+}

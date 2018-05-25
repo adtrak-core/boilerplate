@@ -1,0 +1,187 @@
+<li class="apcf-control-panel__field">
+	
+	<div class="apcf-control-panel__panel">
+
+		<div class="apcf-control-panel__panel-item apcf-control-panel__panel-item--width">
+			<i class="fa fa-sort fa-2x" aria-hidden="true"></i>
+		</div>
+
+		<div class="apcf-control-panel__panel-item apcf-control-panel__panel-item--large">
+			<span class="name">Name</span>
+		</div>
+
+		<div class="apcf-control-panel__panel-item apcf-control-panel__panel-item--large"><span class="type">Type</span></div>
+
+		<div class="apcf-control-panel__panel-item">
+			<div class="apcf-control-panel__controls">
+				<a href="#" class="delete button button-secondary button-large">Delete</a>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="apcf-control-panel__edit-fields grid grid12_12">
+
+		<input type="hidden" class="field-id hid-id">
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Field Name <span class="required">*</span></div>
+				<div class="apcf-control-panel__row-desc">Enter your field name here</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+				<input class="apcf-control-panel__field-name" required type="text">
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Field Type <span class="required">*</span></div>
+				<div class="apcf-control-panel__row-desc">Select your field type</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+				<select class="apcf-control-panel__field-type">
+					<option selecteddisabled>Please Select...</option>
+					<option>Text</option>
+					<option>Email</option>
+					<option value="tel">Telephone</option>
+					<option>Textarea</option>
+					<option>File</option>
+					<option>List - Dropdown</option>
+					<option>List - Checkbox</option>
+					<option>List - Radio</option>
+					<option>Date</option>
+					<option>Hidden</option>
+					<option>Fieldset</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row apcf-control-panel__list-values">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">List Values <span class="required">*</span></div>
+				<div class="apcf-control-panel__row-desc">Enter your list values here</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+
+				<ul class="sortable-list">
+
+				</ul>
+
+				<div class="apcf-control-panel__bottom">
+					<button type="button" class="add-list-item button button-primary button-large">+ Add Item</button>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row apcf-control-panel__file-limits">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">File Limits <span class="required">*</span></div>
+				<div class="apcf-control-panel__row-desc">Enter your file upload limitations here</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+
+				<div>
+					<p>Enter your MIME Media types here, comma seperated (<strong>Not Extensions</strong>) <a href="https://www.sitepoint.com/web-foundations/mime-types-complete-list/" target="newtab">Full List</a></p>
+					<label>MIME Types: <input class="file-exts" placeholder="application/pdf, image/jpeg" type="text"></label>
+				</div>
+
+				<div>
+					<label>Max Size (MB): <input class="max-size" type="text"></label>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Character Limit</div>
+				<div class="apcf-control-panel__row-desc">How many characters can a user type in this field?</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" class="character-limit"></div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Label</div>
+				<div class="apcf-control-panel__row-desc">Enter the field's label</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" class="label"></div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Placeholder</div>
+				<div class="apcf-control-panel__row-desc">Enter the field's placeholder</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" class="placeholder"></div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Additional Classes</div>
+				<div class="apcf-control-panel__row-desc">Do you have any classes?</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" class="additional-classes"></div>
+		</div>
+		
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Validation Rules</div>
+				<div class="apcf-control-panel__row-desc">Enter your validation rules here</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+				<select class="validation-options">
+					<option>None</option>
+					<option value="^[\d\+\-\.\(\)\/\s]*$">Numbers Only</option>
+					<option value="^[a-z- A-Z]+$">Text Only</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Required</div>
+				<div class="apcf-control-panel__row-desc">Is this field required?</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+				<label for="validation-required">Required:<input value="1" class="validation-required" type="checkbox"></label>
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Mailchimp</div>
+				<div class="apcf-control-panel__row-desc">Enter your Mailchimp field name here.</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" class="mailchimp"></div>
+		</div>
+
+	</div>
+
+</li>
+
+<script>
+
+	var rand = Math.floor(Math.random() * 1000);
+
+	jQuery(".apcf-control-panel__field").last().find(".field-id").attr("name", "fields[field"+rand+"][id]");
+	jQuery(".apcf-control-panel__field").last().find(".order-id").attr("name", "fields[field"+rand+"][sort]");
+	jQuery(".apcf-control-panel__field").last().find(".field-id").attr("value", rand);
+	jQuery(".apcf-control-panel__field").last().find(".apcf-control-panel__field-name").attr("name", "fields[field"+rand+"][name]");
+	jQuery(".apcf-control-panel__field").last().find(".apcf-control-panel__field-type").attr("name", "fields[field"+rand+"][type]");
+	jQuery(".apcf-control-panel__field").last().find(".character-limit").attr("name", "fields[field"+rand+"][character-limit]");
+	jQuery(".apcf-control-panel__field").last().find(".label").attr("name", "fields[field"+rand+"][label]");
+	jQuery(".apcf-control-panel__field").last().find(".placeholder").attr("name", "fields[field"+rand+"][placeholder]");
+	jQuery(".apcf-control-panel__field").last().find(".additional-classes").attr("name", "fields[field"+rand+"][additional-classes]");
+	jQuery(".apcf-control-panel__field").last().find(".validation-options").attr("name", "fields[field"+rand+"][validation-options]");
+	jQuery(".apcf-control-panel__field").last().find(".validation-required").attr("name", "fields[field"+rand+"][required]");
+	jQuery(".apcf-control-panel__field").last().find(".mailchimp").attr("name", "fields[field"+rand+"][mailchimp]");
+	jQuery(".apcf-control-panel__field").last().find(".file-exts").attr("name", "fields[field"+rand+"][file-exts]");
+	jQuery(".apcf-control-panel__field").last().find(".max-size").attr("name", "fields[field"+rand+"][max-size]");
+
+	jQuery(".apcf-control-panel__field").last().find(".apcf-control-panel__list-values").hide();
+	jQuery(".apcf-control-panel__field").last().find(".apcf-control-panel__file-limits").hide();
+
+</script>

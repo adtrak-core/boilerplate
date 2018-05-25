@@ -1,0 +1,106 @@
+{% include 'admin/partials/header.twig' %}
+
+	<h1>New Form</h1>
+
+	<form method="POST" action="#" name="new-form" class="apcf-admin-form">
+
+		<div class="apcf-admin-form__left-pane">
+
+			<input placeholder="Form Name" required type="text" class="apcf-admin-form__large-input" name="form-name" {% if form_data %} value="{{ form_data.name }}" {% endif %}>
+
+			<div class="apcf-control-panel">
+
+				<div class="apcf-control-panel__top">
+					<div class="apcf-control-panel__heading-label apcf-control-panel__heading-label--width"></div>
+					<div class="apcf-control-panel__heading-label apcf-control-panel__heading-label--large">Name</div>
+					<div class="apcf-control-panel__heading-label apcf-control-panel__heading-label--large">Type</div>
+					<div class="apcf-control-panel__heading-label">Controls</div>
+				</div>
+
+				<ul class="sortable">
+					
+				</ul>
+
+				<div class="apcf-control-panel__bottom">
+					<button type="button" class="add-field button button-secondary button-large">+ Add Field</button>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="apcf-admin-form__sidebar">
+{# 			<div class="apcf-admin-form__right-pane">
+				<button type="button" class="add-field button button-secondary button-large">+ Add Field</button>
+			</div> #}
+
+			<div class="apcf-admin-form__right-pane">
+				<p>Enter where to send your emails below.</p>
+				<label for="emailTo">Email To: <input required type="text" name="emailTo"></label>
+				<label for="emailCC">Email CC: <input type="text" name="emailCC"></label>
+				<label for="emailBCC">Email BCC: <input type="text" name="emailBCC"></label>
+				<label for="customerCopy">Customer Copy<input value="1" type="checkbox" name="customerCopy"></label>
+			</div>
+
+			<div class="apcf-admin-form__right-pane">
+				<p>Enter your Mailchimp details below.</p>
+				<p><a target="newtab" href="http://resources.ad.trak.agency/setting-up-mailchimp/">How to setup Mailchimp</a></p>
+				<label for="mcID">Mailchimp ID: <input type="text" name="mcID"></label>
+				<label for="mcKey">Mailchimp API: <input type="text" name="mcKey"></label>
+				<label for="mcLabel">Mailchimp Label: <input type="text" name="mcLabel"></label>
+			</div>
+
+			<div class="apcf-admin-form__right-pane">
+				<p>Enter the text for your submit button here.</p>
+				<label for="submit_name">Submit Button Label: <input required type="text" name="submit_name"></label>
+			</div>
+
+			<div class="apcf-admin-form__right-pane">
+				<p>Enter your success message here.</p>
+				<label for="success_message">Success Message: <input required type="text" name="success_message"></label>
+			</div>
+
+			<div class="apcf-admin-form__right-pane">
+				<input type="submit" class="button button-primary button-large" name="submit" value="Save">
+			</div>
+		</div>
+
+	</form>
+
+	<script>
+		jQuery(function ($) {
+			$(document).ready(function() {
+			    $(".sortable").sortable({
+			      revert: true
+			    });
+				$(".add-field").click(function(e) {
+	                $.get('{{ site.directory }}/resources/views/admin/partials/safe-field.twig', function (data) {
+	                    $(data).appendTo(".sortable");
+	                });
+					e.preventDefault();
+				});
+			});
+
+			$(document).on("click", ".add-list-item", function(e) {
+				var place = $(this).parent().parent().find(".sortable-list");
+				var id = $(this).parent().parent().parent().parent().parent().find(".hid-id").val();
+		        $.get('{{ site.directory }}/resources/views/admin/partials/safe-list-item.twig', function (data) {
+		            $(data).appendTo( place );
+		        });
+
+		        var i = 0;
+
+		        setTimeout(function() {
+			        $(place).find(".apcf-control-panel__field").each(function() {
+			        	console.log("test");
+						$(this).find(".list-item-name").attr("name", "fields[field"+id+"][list]["+ i +"][name]");
+						$(this).find(".list-item-value").attr("name", "fields[field"+id+"][list]["+ i +"][value]");
+						i++;
+			        });
+		        }, 500);
+				e.preventDefault();
+			});
+
+		});
+	</script>
+
+{% include 'admin/partials/footer.twig' %}

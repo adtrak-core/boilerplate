@@ -1,0 +1,175 @@
+<li class="apcf-control-panel__field">
+	
+	<div class="apcf-control-panel__panel">
+
+		<div class="apcf-control-panel__panel-item apcf-control-panel__panel-item--width">
+			<i class="fa fa-sort fa-2x" aria-hidden="true"></i>
+		</div>
+
+		<div class="apcf-control-panel__panel-item apcf-control-panel__panel-item--large">
+			<span class="name">Name</span>
+		</div>
+
+		<div class="apcf-control-panel__panel-item apcf-control-panel__panel-item--large"><span class="type">Type</span></div>
+
+		<div class="apcf-control-panel__panel-item">
+			<div class="apcf-control-panel__controls">
+				<a href="#" class="delete button button-secondary button-large">Delete</a>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="apcf-control-panel__edit-fields grid grid12_12">
+		
+		{% if(field_data) %}
+			<input type="hidden" class="hid-id" name="fields[field{{ field.id }}][id]" value="{{ field.id }}">
+		{% endif %}
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Field Name <span class="required">*</span></div>
+				<div class="apcf-control-panel__row-desc">Enter your field name here</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+				<input name="fields[field{% if(field_data) %}{{ field.id }}{% endif %}][name]" value="{% if(field_data) %}{{ field.name }}{% endif %}" class="apcf-control-panel__field-name" required type="text">
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Field Type <span class="required">*</span></div>
+				<div class="apcf-control-panel__row-desc">Select your field type</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+				<select class="apcf-control-panel__field-type" name="fields[field{{ field.id }}][type]">
+					<option {% if not field_data %}selected{% endif %} disabled>Please Select...</option>
+					<option {% if(field_data and field.type == "Text") %}selected{% endif %}>Text</option>
+					<option {% if(field_data and field.type == "Email") %}selected{% endif %}>Email</option>
+					<option value="tel" {% if(field_data and field.type == "tel") %}selected{% endif %}>Telephone</option>
+					<option {% if(field_data and field.type == "Textarea") %}selected{% endif %}>Textarea</option>
+					<option {% if(field_data and field.type == "File") %}selected{% endif %}>File</option>
+					<option {% if(field_data and field.type == "List - Dropdown") %}selected{% endif %}>List - Dropdown</option>
+					<option {% if(field_data and field.type == "List - Checkbox") %}selected{% endif %}>List - Checkbox</option>
+					<option {% if(field_data and field.type == "List - Radio") %}selected{% endif %}>List - Radio</option>
+					<option {% if(field_data and field.type == "Date") %}selected{% endif %}>Date</option>
+					<option {% if(field_data and field.type == "Hidden") %}selected{% endif %}>Hidden</option>
+					<option {% if(field_data and field.type == "Fieldset") %}selected{% endif %}>Fieldset</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row apcf-control-panel__list-values" style="{% if (field.type != "List - Dropdown" and field.type != "List - Checkbox" and field.type != "List - Radio") %}display: none{% endif %}">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">List Values <span class="required">*</span></div>
+				<div class="apcf-control-panel__row-desc">Enter your list values here</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+
+				<ul class="sortable-list">
+
+					{% set i = 0 %}
+
+					{% for list in field.list %}
+
+						{% include "admin/partials/list-item.twig" %}
+
+						{% set i = i + 1 %}
+
+					{% endfor %}
+
+				</ul>
+
+				<div class="apcf-control-panel__bottom">
+					<button type="button" class="add-list-item button button-primary button-large">+ Add Item</button>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row apcf-control-panel__file-limits" style="{% if field.type != "File" %}display: none{% endif %}">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">File Limits <span class="required">*</span></div>
+				<div class="apcf-control-panel__row-desc">Enter your file upload limitations here</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+
+				<div>
+					<p>Enter your MIME Media types here, comma seperated (<strong>Not Extensions</strong>) <a href="https://www.sitepoint.com/web-foundations/mime-types-complete-list/" target="newtab">Full List</a></p>
+					<label>MIME Types: <input type="text" value="{{ field.file_exts }}" name="fields[field{{ field.id }}][file-exts]"></label>
+				</div>
+
+				<div>
+					<label>Max Size (MB): <input type="text" value="{{ field.max_size }}" name="fields[field{{ field.id }}][max-size]"></label>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Character Limit</div>
+				<div class="apcf-control-panel__row-desc">How many characters can a user type in this field?</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" value="{% if(field_data) %}{{ field.character_limit }}{% endif %}" name="fields[field{% if(field_data) %}{{ field.id }}{% endif %}][character-limit]"></div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Label</div>
+				<div class="apcf-control-panel__row-desc">Enter the field's label</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" value="{% if(field_data) %}{{ field.label }}{% endif %}" name="fields[field{% if(field_data) %}{{ field.id }}{% endif %}][label]"></div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Placeholder</div>
+				<div class="apcf-control-panel__row-desc">Enter the field's placeholder</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" value="{% if(field_data) %}{{ field.placeholder }}{% endif %}" name="fields[field{% if(field_data) %}{{ field.id }}{% endif %}][placeholder]"></div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Additional Classes</div>
+				<div class="apcf-control-panel__row-desc">Do you have any classes?</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" name="fields[field{% if(field_data) %}{{ field.id }}{% endif %}][classes]" value="{% if(field_data) %}{{ field.classes }}{% endif %}"></div>
+		</div>
+		
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Validation Rules</div>
+				<div class="apcf-control-panel__row-desc">Enter your validation rules here</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+				<select class="validation-options" name="fields[field{% if(field_data) %}{{ field.id }}{% endif %}][validation]">
+					<option>None</option>
+					<option {% if(field.validation == '^[\\d\\+\\-\\.\\(\\)\\/\\s]*$') %}selected{% endif %} value="^[\d\+\-\.\(\)\/\s]*$">Numbers Only</option>
+					<option {% if(field.validation == '^[a-z- A-Z]+$') %}selected{% endif %} value="^[a-z- A-Z]+$">Text Only</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Required</div>
+				<div class="apcf-control-panel__row-desc">Is this field required?</div>
+			</div>
+			<div class="apcf-control-panel__field-input">
+				<label for="validation-required">Required:<input {% if(field.required) %}checked{% endif %} value="1" class="validation-required" type="checkbox" name="fields[field{% if(field_data) %}{{ field.id }}{% endif %}][required]"></label>
+			</div>
+		</div>
+
+		<div class="apcf-control-panel__field-row">
+			<div class="apcf-control-panel__desc">
+				<div class="apcf-control-panel__row-name">Mailchimp</div>
+				<div class="apcf-control-panel__row-desc">Enter your Mailchimp field name here.</div>
+			</div>
+			<div class="apcf-control-panel__field-input"><input type="text" name="fields[field{% if(field_data) %}{{ field.id }}{% endif %}][mailchimp]" value="{% if(field_data) %}{{ field.mailchimp }}{% endif %}"></div>
+		</div>
+
+	</div>
+
+</li>

@@ -1,0 +1,2 @@
+<div class="wrap" id="adtrak-forms">
+	<div class="{% if notice is empty %}af-notice{% endif %} {% if(notice.type == 'error') %}notice-error{% else %}notice-success{% endif %} notice is-dismissable">{{ notice.message }}</div>

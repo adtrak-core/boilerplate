@@ -1,0 +1,3 @@
+{% if (mailchimp.mailchimp_id and mailchimp.mailchimp_key) %}
+	<label><input name="chimp-accept" type="checkbox" value="1"> {{ mailchimp.mailchimp_label }}</label>
+{% endif %}

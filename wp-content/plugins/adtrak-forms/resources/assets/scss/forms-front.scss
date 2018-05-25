@@ -1,0 +1,73 @@
+$acpf-green: #7FB285;
+$acpf-red: #FB3640;
+
+@import "jquery-ui";
+
+.adtrakform {
+
+	ul.parsley-errors-list {
+		list-style: none;
+		margin: 0;
+		color: $acpf-red;
+	}
+
+	input.parsley-error, select.parsley-error, textarea.parsley-error {
+		color: $acpf-red;
+		border: 1px solid $acpf-red;
+	}
+
+	input.parsley-success, select.parsley-success, textarea.parsley-success {
+		color: $acpf-green;
+		border: 1px solid $acpf-green;
+	}
+
+	input, select, textarea {
+		padding: .5em;
+		font-weight: normal;
+	}
+
+	label {
+		font-weight: bold;
+		label {
+			font-weight: normal;
+		}
+	}
+
+	input[type=submit] {
+		background: black;
+		color: white;
+		border: none;
+		padding: .5em 1em;
+	}
+
+	input[type=submit]:disabled {
+		opacity: .5;
+	}
+	
+}
+
+#acpf-success {
+	width: 100%;
+	position: fixed;
+	z-index: 999;
+	bottom: 0;
+	left: 0;
+	color: white;
+	background: $acpf-green;
+	padding: .5em;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+#acpf-failure {
+	width: 100%;
+	position: fixed;
+	z-index: 999;
+	bottom: 0;
+	left: 0;
+	color: white;
+	background: $acpf-red;
+	padding: .5em;
+	font-size: 1.5em;
+	text-align: center;
+}

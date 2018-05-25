@@ -1,0 +1,28 @@
+.atk-grid {
+    position: relative;
+    display: flex;
+    flex-flow: row;
+
+    * {
+    	box-sizing: border-box;
+    }
+}
+
+.atk-box {
+	background: #fff;
+	padding: 20px;
+	margin-bottom: 20px;
+	border: 2px solid #E2E2E2;
+
+	.section-header {
+		margin: -20px -20px 20px -20px;
+		padding: 14px 20px;
+		font-weight: $table-header-font-weight;
+		color: #757575;
+		border-bottom: 1px solid #E2E2E2;
+		
+		* {
+			margin: 0;
+		}
+	}     
+}

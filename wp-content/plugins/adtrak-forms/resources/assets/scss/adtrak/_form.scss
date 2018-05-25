@@ -1,0 +1,62 @@
+.atk-form {
+    width: 100%;
+
+    label {
+        display: block;
+        width: 100%;
+        font-weight: 600;
+        margin-top: 7px;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+        width: 100%;
+        patkding: 10px;
+        font-size: 14px;
+        margin: 0;
+        height: 36px;
+    }
+
+    textarea {
+        height: 140px;
+    }
+
+    .atk-text--small {
+        max-width: 300px;
+        display: inline-block;
+    }
+
+    .atk-form-row {
+        margin-bottom: 20px;
+    }
+
+    .atk-label--inline {
+      font-weight: 400;
+    }
+
+    .atk-form-row--inline {
+        display: flex;
+
+        > label {
+          margin-right: 1em;
+          max-width: 180px;
+        }
+
+        div {
+          width: calc(100% - 160px);
+
+          p {
+            font-size: 0.9em;
+            font-style: italic;
+            color: #757575;
+          }
+        }
+    }
+}

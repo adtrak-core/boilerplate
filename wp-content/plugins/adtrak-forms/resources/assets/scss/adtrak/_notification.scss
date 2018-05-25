@@ -1,0 +1,39 @@
+.atk-notification {
+    padding: 10px 20px;
+    background: #212121;
+    color: #fff;
+    margin-top: 20px;
+    margin-bottom: -10px;
+
+    p {
+        font-size: 0.95em;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+
+    &.success {
+        border: 1px solid #D3E9C7;
+        background: #DCF0D9;
+        color: #2C7640;
+    }
+
+    &.notify {
+        border: 1px solid #B5E8F1;
+        background: #D6EDF7;
+        color: #37708E;
+    }
+
+    &.error {
+        border: 1px solid #EFCCD1;
+        background: #F5DEDE;
+        color: #B24450;
+    }
+
+    &.warning {
+        border: 1px solid #FCEBCD;
+        background: #FCF8E4;
+        color: #8D6D3D;
+    }
+}

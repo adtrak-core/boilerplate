@@ -1,0 +1,56 @@
+{% include 'admin/partials/header.twig' %}
+
+	<h1>Form List</h1>
+
+	<div class="apcf-control-panel">
+		
+		<div class="apcf-control-panel__top">
+
+			<div class="apcf-control-panel__heading-label">Form Name</div>
+			<div class="apcf-control-panel__heading-label">Shortcode</div>
+			<div class="apcf-control-panel__heading-label">Controls</div>
+			
+		</div>
+
+		{% for form in forms %}
+
+			<div class="apcf-control-panel__field-row">
+
+				<div class="apcf-control-panel__controls">
+					<a href="admin.php?page=adtrak-forms-editform&id={{ form.form_id }}">{{ form.name }}</a>
+				</div>
+
+				<div class="apcf-control-panel__controls">
+					<span>[adtrak_forms id='{{ form.form_id }}']</span>
+					<button href="#" data-clipboard-text="[adtrak_forms id='{{ form.form_id }}']" class="copy-button button button-secondary button-large">Copy</button>
+				</div>
+
+				<div class="apcf-control-panel__controls">
+					<a href="admin.php?page=adtrak-forms-editform&id={{ form.form_id }}" class="button button-primary button-large">Edit</a>
+					<a href="admin.php?page=adtrak-forms-duplicateform&id={{ form.form_id }}" class="button button-primary button-large">Duplicate</a>
+					<a href="admin.php?page=adtrak-forms-deleteform&id={{ form.form_id }}" class="button button-primary button-large button-dmodal">Delete</a>
+				</div>
+
+			</div>
+
+		{% endfor %}
+		
+		<div class="apcf-control-panel__bottom">
+
+			<a href="admin.php?page=adtrak-forms-newform" class="button button-primary button-large">+ New Form</a>
+			
+		</div>
+
+	</div>
+
+{% include 'admin/partials/footer.twig' %}
+
+<script>
+jQuery(".button-dmodal").click(function(e) {
+	e.preventDefault();
+	var confirm = window.confirm('Are you sure?');
+	if(confirm) {
+		window.location.href = jQuery(this).attr('href');
+	}
+});
+</script>
