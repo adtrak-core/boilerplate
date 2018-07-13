@@ -80,7 +80,8 @@ class Core
 		# cookie assets		
 		$this->loader->add_action('wp_enqueue_scripts', $cookie, 'enqueue_public_scripts');
 		$this->loader->add_action('wp_enqueue_scripts', $cookie, 'enqueue_public_styles');
-
+		$this->loader->add_action('wp_footer', $cookie, 'force_policy');
+		
 		# clean up head/body
 		$this->loader->add_action('init', $cleanup, 'headers');
 		$this->loader->add_filter('body_class', $cleanup, 'cleanup_body');		

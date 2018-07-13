@@ -38,6 +38,15 @@ class CookieNotification
 	}
 
 	/**
+	 * Force policy notification.
+	 */
+	public function force_policy()
+	{
+		do_shortcode('[cookie_notification]');
+	}
+
+
+	/**
 	 * add the content for the page.
 	 * @since    1.0.0
 	 */
@@ -67,7 +76,7 @@ class CookieNotification
 	 */
 	public function enqueue_public_styles()
 	{
-		if(! isset($_COOKIE['PrivacyPolicy']) || $_COOKIE['PrivacyPolicy'] == 'closed')
+		//if(! isset($_COOKIE['PrivacyPolicy']) || $_COOKIE['PrivacyPolicy'] == 'closed')
 			wp_enqueue_style('adtrak-cookie', AC_PLUGIN_URL . 'assets/css/cookie-public.css', [], $this->version, 'all');
 	}
 
@@ -77,7 +86,7 @@ class CookieNotification
 	 */
 	public function enqueue_public_scripts()
 	{
-		if(! isset($_COOKIE['PrivacyPolicy']) || $_COOKIE['PrivacyPolicy'] == 'closed')
+		//if(! isset($_COOKIE['PrivacyPolicy']) || $_COOKIE['PrivacyPolicy'] == 'closed')
 			wp_enqueue_script('adtrak-cookie', AC_PLUGIN_URL . 'assets/js/min/cookie-public-min.js', [ 'jquery' ], $this->version, false);
 	}
 }

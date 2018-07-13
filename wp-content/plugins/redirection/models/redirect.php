@@ -119,7 +119,7 @@ class Red_Item {
 			return 0;
 		}
 
-		return ($first['position'] < $second['position']) ? -1 : 1;
+		return ( $first['position'] < $second['position'] ) ? -1 : 1;
 	}
 
 	static function reduce_sorted_items( $item ) {
@@ -130,15 +130,17 @@ class Red_Item {
 		global $wpdb;
 
 		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}redirection_items WHERE id=%d", $id ) );
-		if ( $row )
+		if ( $row ) {
 			return new Red_Item( $row );
+		}
+
 		return false;
 	}
 
 	public static function disable_where_matches( $url ) {
 		global $wpdb;
 
-		$wpdb->update( $wpdb->prefix.'redirection_items', array( 'status' => 'disabled' ), array( 'url' => $url ) );
+		$wpdb->update( $wpdb->prefix . 'redirection_items', array( 'status' => 'disabled' ), array( 'url' => $url ) );
 	}
 
 	public function delete() {
@@ -171,7 +173,7 @@ class Red_Item {
 		$data = apply_filters( 'redirection_create_redirect', $data );
 
 		// Create
-		if ( $wpdb->insert( $wpdb->prefix.'redirection_items', $data ) !== false ) {
+		if ( $wpdb->insert( $wpdb->prefix . 'redirection_items', $data ) !== false ) {
 			Red_Module::flush( $data['group_id'] );
 
 			$redirect = self::get_by_id( $wpdb->insert_id );
@@ -201,8 +203,8 @@ class Red_Item {
 		// Save this
 		$data = apply_filters( 'redirection_update_redirect', $data );
 
-		$wpdb->update( $wpdb->prefix.'redirection_items', $data, array( 'id' => $this->id ) );
-		do_action( 'redirection_redirect_updated', $this, self::get_by_id( $this->id) );
+		$wpdb->update( $wpdb->prefix . 'redirection_items', $data, array( 'id' => $this->id ) );
+		do_action( 'redirection_redirect_updated', $this, self::get_by_id( $this->id ) );
 
 		$this->load_from_data( (object) $data );
 
@@ -234,8 +236,6 @@ class Red_Item {
 				do_action( 'redirection_visit', $this, $url, $target );
 				return $this->action->process_after( $this->action_code, $target );
 			}
-
-			return true;
 		}
 
 		return false;
@@ -423,8 +423,21 @@ class Red_Item_Sanitize {
 		$details = $this->clean_array( $details );
 
 		$data['regex'] = isset( $details['regex'] ) && intval( $details['regex'], 10 ) === 1 ? 1 : 0;
+
+		$url = empty( $details['url'] ) ? $this->auto_generate() : $details['url'];
+		if ( strpos( $url, 'http' ) !== false ) {
+			$domain = parse_url( $url, PHP_URL_HOST );
+
+			// Auto-convert an absolute URL to relative + server match
+			if ( $domain !== Redirection_Request::get_server_name() ) {
+				$details['match_type'] = 'server';
+				$details['action_data'] = array( 'server' => $domain );
+				$url = parse_url( $url, PHP_URL_PATH );
+			}
+		}
+
+		$data['url'] = $this->get_url( $url, $data['regex'] );
 		$data['title'] = isset( $details['title'] ) ? $details['title'] : null;
-		$data['url'] = $this->get_url( empty( $details['url'] ) ? $this->auto_generate() : $details['url'], $data['regex'] );
 		$data['group_id'] = $this->get_group( isset( $details['group_id'] ) ? $details['group_id'] : 0 );
 		$data['position'] = $this->get_position( $details );
 
@@ -540,7 +553,7 @@ class Red_Item_Sanitize {
 
 		// Ensure a slash at start
 		if ( substr( $url, 0, 1 ) !== '/' && $regex === false ) {
-			$url = '/'.$url;
+			$url = '/' . $url;
 		}
 
 		return $url;

@@ -542,8 +542,8 @@ class acf_form_front {
 			
 			foreach( $args['fields'] as $selector ) {
 				
-				// append field ($strict = false to allow for better compatibility with field names)
-				$fields[] = acf_maybe_get_field( $selector, $post_id, false );
+				// append field
+				$fields[] = acf_maybe_get_field( $selector, $post_id );
 				
 			}
 			
