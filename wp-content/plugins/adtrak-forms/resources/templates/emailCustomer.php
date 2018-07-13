@@ -12,7 +12,7 @@
 
 				<tr style="border-bottom: 1px solid #ccc;">
 
-					<td valign="center" style="width: 20%; background-color: #fff; font-family:Arial, sans-serif; padding:8px 10px; margin:0; font-size:12px; font-weight: bold;"><?php echo ucfirst($name); ?></td>
+					<td valign="center" style="width: 20%; background-color: #fff; font-family:Arial, sans-serif; padding:8px 10px; margin:0; font-size:12px; font-weight: bold;"><?php echo ucwords(str_replace('-', ' ', $name)); ?></td>
 					<td valign="center" style="width: 65%; background-color: #fff; font-family:Arial, sans-serif; font-size: 12px; padding:8px 10px;margin:0;"><?php echo $row; ?></td>
 
 				</tr>

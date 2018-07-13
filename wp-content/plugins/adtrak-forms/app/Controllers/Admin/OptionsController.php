@@ -85,8 +85,6 @@ class OptionsController
             $allOptions['license_valid'] = $validity;
         }
 
-        // dd($allOptions);
-
         $analytics = filter_var(get_option('apcf_old_analytics'), FILTER_VALIDATE_BOOLEAN);
         View::render('admin/options.twig', [
             'options' => $allOptions,

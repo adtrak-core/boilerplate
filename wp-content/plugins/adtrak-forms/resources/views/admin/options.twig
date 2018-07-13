@@ -26,11 +26,18 @@
 			</tr>
 			<tr>
 				<td>SMTP Password <span class="required">*</span><span class="under">Enter your SMTP password here</span></td>
-				<td><input required type="text" name="smtp-password" placeholder="SMTP Password" value="{{ options.smtp_password  }}"></td>
+				<td><input required type="password" name="smtp-password" placeholder="SMTP Password" value="{{ options.smtp_password  }}"></td>
 			</tr>
 			<tr>
 				<td>Security Type <span class="required">*</span><span class="under">Enter your security type here</span></td>
 				<td><input required type="text" name="smtp-security" placeholder="SMTP Security" value="{{ options.smtp_security  }}"></td>
+			</tr>
+			<tr>
+				<td>Use Username as From Address <span class="required">*</span><span class="under"></span></td>
+				<td>
+					<label><input required type="radio" name="smtp-noreply" value="true" {% if options.smtp_noreply == 'true' %}checked{% endif %}>True </label>
+					<label><input required type="radio" name="smtp-noreply" value="false" {% if options.smtp_noreply == 'false' %}checked{% endif %}> False</label>
+				</td>
 			</tr>
 		</tbody>
 
@@ -65,10 +72,10 @@
 
 		<tbody>
 			<tr>
-				<td>Use old analytics<span class="under">Use ga analytics instead of gtag</span></td>
+				<td>Which analytics style should be used?<span class="under">If you are unsure ask the assigned IM'er</span></td>
 				<td>
-					<label><input required type="radio" name="analytics" value="true" {% if analytics %}checked{% endif %}> True</label>
-					<label><input required type="radio" name="analytics" value="false" {% if not analytics %}checked{% endif %}> False</label>
+					<label><input required type="radio" name="analytics" value="true" {% if analytics %}checked{% endif %}> ga (old)</label>
+					<label><input required type="radio" name="analytics" value="false" {% if not analytics %}checked{% endif %}> gtag (new)</label>
 				</td>
 			</tr>
 		</tbody>

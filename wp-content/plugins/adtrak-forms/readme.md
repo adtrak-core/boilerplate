@@ -2,6 +2,16 @@
 
 ## Changelog
 
+### v1.6.0
+- [Feature] Mailchimp interests added
+- [Improvement] Mailchimp double opt in added
+- [Improvement] Strict Opt In mode added
+
+### v1.5.13
+- [Bug] Fixes ReplyTo from adding the sender
+- [Bug] Fixes FromName being Root
+- [Bug] Adds SMTP Username to the From
+
 ### v1.5.12
 - [Bug] Fixes From fields being set
 

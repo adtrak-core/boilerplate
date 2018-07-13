@@ -1,3 +1,26 @@
-{% if (mailchimp.mailchimp_id and mailchimp.mailchimp_key) %}
-	<label><input name="chimp-accept" type="checkbox" value="1"> {{ mailchimp.mailchimp_label }}</label>
+{% if (chimp) %}
+
+	{% if(chimp['error'])  %}
+
+		<div style="float:left; margin-bottom: 1em; padding: 1em 1em 0 1em; background: #eee; border: 1px solid #ccc;">
+			<h4>MailChimp is not supported on this server/your interests are incorrectly configured!</h4>
+		</div>
+
+	{% else %}
+
+		<div>
+			<h4>{{ chimp.title }}<h4>
+			{% for item in chimp.items %}
+				<label><input name="sub-type[]" type="checkbox" value="{{ item.id }}"> {{ item.name }}</label>
+			{% endfor %}
+		</div>
+
+	{% endif  %}
+
+{% endif %}
+
+{% if (soi['label']) %}
+	<div>
+		<label><input name="soi" required type="checkbox"> {{ soi.label }}</label>
+	</div>
 {% endif %}

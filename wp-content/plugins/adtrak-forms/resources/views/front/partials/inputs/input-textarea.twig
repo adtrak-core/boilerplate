@@ -4,6 +4,7 @@
 	data-parsley-trigger="change"
 	{% if (fields.required) %}required{% endif %}
 	placeholder="{{ fields.placeholder }}"
+	class="{{ fields.classes }}"
 	{% if (fields.character_limit) %}data-parsley-maxlength="{{ fields.character_limit }}"{% endif %}
 	{% if (validation_rule and validation_rule != "None") %}data-parsley-pattern="{{ validation_rule }}"{% endif %}
 ></textarea> 

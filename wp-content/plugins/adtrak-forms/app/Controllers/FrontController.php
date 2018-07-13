@@ -6,6 +6,7 @@ use Adtrak\Forms\View;
 use Adtrak\Forms\Models\Form;
 use Adtrak\Forms\Models\Submission;
 use Billy\Framework\Models\Option;
+use DrewM\MailChimp\MailChimp;
 
 use Adtrak\Forms\Controllers\MailController;
 
@@ -79,10 +80,39 @@ class FrontController
             $processedData[] = $d;
         }
 
+        $mc = unserialize($form->mailchimp);
+        $chimp = [];
+
+        if($mc['mailchimp_key']) {
+            $mailchimp = new MailChimp($mc['mailchimp_key']);
+                
+            # Post email address to Mailchimp and subscribe the user to the list
+            $result = $mailchimp->get("lists/". $mc['mailchimp_id'] ."/interest-categories");
+            
+            if(!empty($result)) {
+                foreach($result['categories'] as $interest) {
+                    $fetch = $mailchimp->get("lists/". $mc['mailchimp_id'] ."/interest-categories//" . $interest['id'].'/interests');
+                    $chimp = ['id' => $interest['id'] ,'title' => $interest['title'], 'items' => []];
+                    foreach($fetch['interests'] as $int) {
+                        $chimp['items'][] = ['id' => $int['id'], 'name' => $int['name']];
+                    }
+                    // $chimp[] = $build;
+                }
+            } else {
+                $chimp['error'] = 'failed';
+            }
+        }
+
+        $soi = [];
+
+        if(isset($mc['soi_check']))
+            $soi['label'] = $mc['soi_label'];
+
         return View::render('front/show-form.twig', [
             'form_data' => $form,
             'field_data' => $processedData,
-            'mailchimp' => unserialize($form->mailchimp)
+            'chimp' => $chimp,
+            'soi' => $soi
         ], false);
     }
 
@@ -115,16 +145,20 @@ class FrontController
         unset($_POST['action']);
         unset($_POST['id']);
         
-        $chimp = $_POST['chimp-accept'];
-        unset($_POST['chimp-accept']);
+        $chimp = $_POST['sub-type'];
+        // unset($_POST['sub-type']);
 
         # Find the form on the given form name
         $form = Form::where('name', '=', $name)->first();
         $fields = $form->fields()->orderBy('sort', 'ASC')->getResults();
-
+        
         $data = [];
         foreach ($_POST as $key => $field) {
-            $data[$key] = stripslashes($field);
+            if($key == 'sub-type') {
+                $data[$key] = $field;
+            } else {
+                $data[$key] = stripslashes($field);
+            }
         }
         $customerCopy = unserialize($form->emails);
         $customerCopy = $customerCopy['customer_copy'];

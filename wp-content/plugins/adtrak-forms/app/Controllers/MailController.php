@@ -43,6 +43,8 @@ class MailController
 
         $smtp = $workedData;
 
+        $this->noreply = (isset($smtp['smtp_noreply'])) ? filter_var($smtp['smtp_noreply'], FILTER_VALIDATE_BOOLEAN) : false;
+
         $this->mail = new PHPMailer;
         $this->mail->isSMTP();
         $this->mail->Host = $smtp['smtp_host'];
@@ -72,6 +74,10 @@ class MailController
     {
         # Clear recipients as Mail is potentially used twice
         $this->mail->ClearAllRecipients();
+        $this->mail->ClearReplyTos();
+
+        unset($data['sub-type']);
+        unset($data['soi']);
 
         $emailSubject = get_option("blogname"). ' Website - ' . ucfirst($this->form->name) . ' Enquiry';
         $this->mail->Subject = $emailSubject;
@@ -102,17 +108,20 @@ class MailController
 
         foreach ($data as $fields) {
             if (filter_var($fields, FILTER_VALIDATE_EMAIL)) {
-                // $this->mail->FromName = $fields;
-                // $this->mail->From = $fields;
+                $this->mail->FromName = $fields;
                 $this->mail->AddReplyTo($fields, $fields);
                 $fromOver = true;
                 break;
             }
         }
 
-        // $this->mail->FromName = 'noreply@adtrakforms.co.uk';
-        // $this->mail->From = 'noreply@adtrakforms.co.uk';
+        if($this->noreply) {
+            $this->mail->From = $this->mail->Username;
+        } else {
+            $this->mail->From = 'noreply@adtrakforms.co.uk';
+        }
 
+        $this->mail->FromName = get_option("blogname");
 
         $build = [];
 
@@ -171,6 +180,10 @@ class MailController
     {
         # Clear recipients as Mail is used twice
         $this->mail->ClearAllRecipients();
+        $this->mail->ClearReplyTos();
+
+        unset($data['sub-type']);
+        unset($data['soi']);
 
         $emailSubject = get_option("blogname") . ' | Thanks for getting in touch!';
         $this->mail->Subject = $emailSubject;
@@ -180,12 +193,17 @@ class MailController
                 break;
             }
         }
-        // $this->mail->FromName = get_option("blogname");
+        $this->mail->FromName = get_option("blogname");
 
         $emails = unserialize($this->form->emails);
         $emailTo = explode(",", $emails['emailTo']);
         $this->mail->AddReplyTo($emailTo[0], $emailTo[0]);
-        // $this->mail->From = $emailTo[0];
+
+        if($this->noreply) {
+            $this->mail->From = $this->mail->Username;
+        } else {
+            $this->mail->From = 'noreply@adtrakforms.co.uk';
+        }
 
         # Create the email
 
@@ -246,7 +264,7 @@ class MailController
         # Post email address to Mailchimp and subscribe the user to the list
         $result = $mailchimp->post("lists/". $mc['mailchimp_id'] ."/members", [
             'email_address' => $data['acpf-email'],
-            'status'        => 'subscribed',
+            'status'        => 'pending'
         ]);
 
         # Get mailchimps hash for that user
@@ -271,6 +289,15 @@ class MailController
         # Post merge fields for user to Mailchimp
         $result = $mailchimp->patch("lists/". $mc['mailchimp_id'] ."/members/$sub_hash", [
             'merge_fields' => $mcp
+        ]);
+
+        $interests = [];
+        foreach($data['sub-type'] as $type) {
+            $interests[$type] = true;
+        }
+
+        $result = $mailchimp->patch("lists/". $mc['mailchimp_id'] ."/members/$sub_hash", [
+            'interests' => $interests
         ]);
     }
 

@@ -39,6 +39,14 @@ class SubmissionController
             'adtrak-forms-viewsubmissions',
             [$this, 'showSubmissions']
         );
+        add_submenu_page(
+            'adtrak-forms',
+            'Delete Submission',
+            'Delete Submission',
+            'publish_posts',
+            'adtrak-forms-deletesubmissions',
+            [$this, 'deleteSubmission']
+        );
     }
 
     /**
@@ -89,7 +97,25 @@ class SubmissionController
 
         View::render('admin/viewsubmissions.twig', [
             'submission_data' => $s,
+            'form_id' => $form->form_id,
             'form_name' => $form->name
         ]);
+    }
+
+    public function deleteSubmission()
+    {
+        if(isset($_GET['id'])) {
+            $submission = Submission::find($_GET['id']);
+            $formid = $_GET['formid'];
+            $submission->delete();
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=admin.php?page=adtrak-forms-viewsubmissions&id='.$formid.'">';
+            echo '<script>window.location.href=admin.php?page=adtrak-forms-viewsubmissions&id='.$formid.';</script>';
+            die();
+        } else {
+            echo '<META HTTP-EQUIV="refresh" content="0;URL=admin.php?page=adtrak-forms-submissions">';
+            echo '<script>window.location.href=admin.php?page=adtrak-forms-submissions;</script>';
+            die();
+        }
+            
     }
 }

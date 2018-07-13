@@ -5,6 +5,7 @@ use Adtrak\Forms\Controllers\Admin\FormController;
 use Adtrak\Forms\Controllers\Admin\OptionsController;
 use Adtrak\Forms\Controllers\Admin\SubmissionController;
 use Adtrak\Forms\Models\Form;
+use Adtrak\Forms\Models\Submission;
 
 class AdminController
 {
@@ -17,6 +18,8 @@ class AdminController
      */
     public function __construct()
     {
+        $this->setupSubmissionCron();
+
         $this->form = new FormController();
         $this->options = new OptionsController();
         $this->submission = new SubmissionController();
@@ -98,5 +101,37 @@ class AdminController
         }
 
         return $notice;
+    }
+
+    private function setupSubmissionCron()
+    {
+        if(!has_action('apcf_remove_submissions')) {
+            add_action('apcf_remove_submissions', [$this, 'remove_submissions']);
+
+            if (! wp_next_scheduled ( 'apcf_remove_submissions' )) {
+                wp_schedule_event(time(), 'daily', 'apcf_remove_submissions');
+            }
+        }
+    }
+    
+    public function remove_submissions() {
+        global $wpdb;
+        $table = $wpdb->prefix . 'apcf_submissions';
+
+        $rows = $wpdb->get_results("SELECT * FROM `{$table}`") or die(fwrite($myfile, "FAIL \n"));
+        
+        foreach($rows as $sub) {
+            $id = $sub->submission_id;
+            $created = $sub->created_at;
+            $then = date_create_from_format('Y-m-d H:i:s', $created);
+            $deletedate = date('Y-m-d', strtotime($created . '+28 days'));
+            
+            $now = new \DateTime();
+            $now = $now->format('Y-m-d');
+
+            if($deletedate <= $now) {
+                $wpdb->delete( $table, array( 'submission_id' => $id ) );
+            }
+        }
     }
 }

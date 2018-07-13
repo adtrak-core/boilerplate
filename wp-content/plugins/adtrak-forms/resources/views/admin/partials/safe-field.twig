@@ -123,7 +123,7 @@
 				<div class="apcf-control-panel__row-name">Additional Classes</div>
 				<div class="apcf-control-panel__row-desc">Do you have any classes?</div>
 			</div>
-			<div class="apcf-control-panel__field-input"><input type="text" class="additional-classes"></div>
+			<div class="apcf-control-panel__field-input"><input type="text" class="classes"></div>
 		</div>
 		
 		<div class="apcf-control-panel__field-row">
@@ -132,7 +132,7 @@
 				<div class="apcf-control-panel__row-desc">Enter your validation rules here</div>
 			</div>
 			<div class="apcf-control-panel__field-input">
-				<select class="validation-options">
+				<select class="validation">
 					<option>None</option>
 					<option value="^[\d\+\-\.\(\)\/\s]*$">Numbers Only</option>
 					<option value="^[a-z- A-Z]+$">Text Only</option>
@@ -174,8 +174,8 @@
 	jQuery(".apcf-control-panel__field").last().find(".character-limit").attr("name", "fields[field"+rand+"][character-limit]");
 	jQuery(".apcf-control-panel__field").last().find(".label").attr("name", "fields[field"+rand+"][label]");
 	jQuery(".apcf-control-panel__field").last().find(".placeholder").attr("name", "fields[field"+rand+"][placeholder]");
-	jQuery(".apcf-control-panel__field").last().find(".additional-classes").attr("name", "fields[field"+rand+"][additional-classes]");
-	jQuery(".apcf-control-panel__field").last().find(".validation-options").attr("name", "fields[field"+rand+"][validation-options]");
+	jQuery(".apcf-control-panel__field").last().find(".classes").attr("name", "fields[field"+rand+"][classes]");
+	jQuery(".apcf-control-panel__field").last().find(".validation").attr("name", "fields[field"+rand+"][validation]");
 	jQuery(".apcf-control-panel__field").last().find(".validation-required").attr("name", "fields[field"+rand+"][required]");
 	jQuery(".apcf-control-panel__field").last().find(".mailchimp").attr("name", "fields[field"+rand+"][mailchimp]");
 	jQuery(".apcf-control-panel__field").last().find(".file-exts").attr("name", "fields[field"+rand+"][file-exts]");

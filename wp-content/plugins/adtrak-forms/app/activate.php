@@ -96,4 +96,5 @@ if ($version < "1.5.9") {
     add_option('apcf_old_analytics', true);
 }
 
+
 update_option('apcf_version', Helper::get('version'));

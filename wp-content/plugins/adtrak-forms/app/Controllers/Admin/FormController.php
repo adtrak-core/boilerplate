@@ -369,7 +369,9 @@ class FormController
         $mc = array(
                 'mailchimp_id' => stripslashes($data['mcID']),
                 'mailchimp_key' => stripslashes($data['mcKey']),
-                'mailchimp_label' => stripslashes($data['mcLabel'])
+                'mailchimp_label' => stripslashes($data['mcLabel']),
+                'soi_check' => $data['soiCheck'],
+                'soi_label' => stripslashes($data['soiLabel'])
             );
         return serialize($mc);
     }

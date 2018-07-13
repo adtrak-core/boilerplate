@@ -59,7 +59,9 @@
 				<p><a target="newtab" href="http://resources.ad.trak.agency/setting-up-mailchimp/">How to setup Mailchimp</a></p>
 				<label for="mcID">Mailchimp ID: <input value="{{ mailchimp.mailchimp_id }}" type="text" name="mcID"></label>
 				<label for="mcKey">Mailchimp API: <input value="{{ mailchimp.mailchimp_key }}" type="text" name="mcKey"></label>
-				<label for="mcLabel">Mailchimp Label: <input value="{{ mailchimp.mailchimp_label }}" type="text" name="mcLabel"></label>
+				{# <label for="mcLabel">Mailchimp Label: <input value="{{ mailchimp.mailchimp_label }}" type="text" name="mcLabel"></label> #}
+				<label for="soiCheck">Strict Opt In: <input {% if(mailchimp.soi_check == "1") %} checked {% endif %} type="checkbox" value="1" name="soiCheck"></label>
+				<label for="soiLabel">Strict Opt In Label: <input value="{{ mailchimp.soi_label }}" type="text" name="soiLabel"></label>
 			</div>
 
 			<div class="apcf-admin-form__right-pane">

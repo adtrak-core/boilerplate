@@ -4,7 +4,7 @@
  * Plugin Name: 	Adtrak Forms
  * Plugin URI: 		https://getbilly.github.io/boilerplate
  * Description: 	Plugin for easy form building. Built initially for Adtrak on the Billy framework.
- * Version: 		1.5.12
+ * Version: 		1.6.0
  * Author: 			Adtrak
  * Author URI: 		https://adtrak.co.uk
  * License: 		GPL-2.0+
@@ -27,7 +27,7 @@ $license_key = trim(get_option('apcf_license'));
 
 // setup the updater
 $edd_updater = new EDD_SL_Plugin_Updater(ADTK_HOME_URL, __FILE__, array(
-    'version'      => '1.5.12',        // current version number
+    'version'      => '1.6.0',        // current version number
     'license'      => $license_key,    // license key (used get_option above to retrieve from DB)
     'item_name'  => 'Contact Form',    // name of this plugin
     'author'      => 'Adtrak'        // author of this plugin
