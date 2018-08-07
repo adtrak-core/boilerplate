@@ -444,12 +444,10 @@ class acf_admin_field_group {
 		acf_disable_filters();
 		
         // save fields
-        $fields = acf_maybe_get_POST('acf_fields');
-        
-		if( $fields ) {
+        if( !empty($_POST['acf_fields']) ) {
 			
 			// loop
-			foreach( $fields as $field ) {
+			foreach( $_POST['acf_fields'] as $field ) {
 				
 				// vars
 				$specific = false;
@@ -463,14 +461,6 @@ class acf_admin_field_group {
 						'post_parent',
 					);
 				}
-				
-/*
-				// json
-				if( is_string($field) ) {
-					$field = wp_unslash($field);
-					$field = json_decode($field, true);
-				}
-*/
 				
 				// set parent
 				if( !$field['parent'] ) {

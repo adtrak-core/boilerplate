@@ -1,6 +1,42 @@
 <?php
 /* THIS IS A GENERATED FILE. DO NOT EDIT DIRECTLY. */
 $generated_i18n_strings = array(
+	// Reference: yoast-components/composites/KeywordSuggestions/KeywordSuggestions.js:94
+	__( 'Prominent words', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/KeywordSuggestions/KeywordSuggestions.js:56
+	__( 'The following words and word combinations occur the most in the content. These give an indication of what your content focuses on. If the words differ a lot from your topic, you might want to rewrite your content accordingly. ', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/KeywordSuggestions/KeywordSuggestions.js:47
+	__( 'Once you add a bit more copy, we\'ll give you a list of words and word combination that occur the most in the content. These give an indication of what your content focuses on.', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/KeywordSuggestions/KeywordSuggestions.js:18
+	__( 'Read our %1$sultimate guide to keyword research%2$s to learn more about keyword research and keyword strategy.', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/LinkSuggestions/composites/LinkSuggestion.js:18
+	__( 'Copy link to suggested article: %s', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/LinkSuggestions/composites/LinkSuggestion.js:17
+	__( 'Copy link', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/LinkSuggestions/LinkSuggestions.js:159
+	__( 'Consider linking to these articles', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/LinkSuggestions/LinkSuggestions.js:135
+	__( 'Consider linking to these {{a}}cornerstone articles{{/a}}', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/LinkSuggestions/LinkSuggestions.js:84
+	__( 'Once you add a bit more copy, we\'ll give you a list of related content here to which you could link in your post.', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/LinkSuggestions/LinkSuggestions.js:73
+	__( 'Read {{a}}our article about site structure{{/a}} to learn more about how internal linking can help improve your SEO.', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/LinkSuggestions/LinkSuggestions.js:56
+	__( 'Not supported!', 'wordpress-seo' ),
+
+	// Reference: yoast-components/composites/LinkSuggestions/LinkSuggestions.js:37
+	__( 'Copied!', 'wordpress-seo' ),
+
 	// Reference: yoast-components/composites/OnboardingWizard/OnboardingWizard.js:296
 	__( '%s installation wizard', 'wordpress-seo' ),
 
@@ -58,22 +94,22 @@ $generated_i18n_strings = array(
 	// Reference: js/src/components/ConnectGoogleSearchConsole.js:112
 	__( 'There is an error with the request.', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MailchimpSignup.js:239
+	// Reference: js/src/components/MailchimpSignup.js:224
 	__( 'Email', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MailchimpSignup.js:221
+	// Reference: js/src/components/MailchimpSignup.js:206
 	__( 'Sign Up!', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MailchimpSignup.js:114
+	// Reference: js/src/components/MailchimpSignup.js:110
 	__( 'MailChimp signup failed:', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MediaUpload.js:107
+	// Reference: js/src/components/MediaUpload.js:132
 	__( 'Choose image', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MediaUpload.js:97
-	__( 'company logo image preview', 'wordpress-seo' ),
+	// Reference: js/src/components/MediaUpload.js:114
+	__( 'image preview', 'wordpress-seo' ),
 
-	// Reference: js/src/components/MediaUpload.js:90
+	// Reference: js/src/components/MediaUpload.js:93
 	__( 'Remove the image', 'wordpress-seo' ),
 
 	// Reference: js/src/components/MediaUpload.js:20 js/src/components/MediaUpload.js:19
@@ -103,37 +139,37 @@ $generated_i18n_strings = array(
 	// Reference: node_modules/yoast-components/composites/AlgoliaSearch/SearchResults.js:168
 	__( 'Search results', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:110
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:111
 	__( 'Marks are disabled in current view', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:112
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:113
 	__( 'Remove highlight from the text', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:114
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:115
 	__( 'Highlight this result in the text', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:150
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:151
 	__( 'Your site language is set to %s.', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:159
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:160
 	__( 'Change language', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:171
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:172
 	__( 'Your site language is set to %s. If this is not correct, contact your site administrator.', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:208
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:213
 	__( 'Errors', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:215
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:220
 	__( 'Problems', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:222
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:227
 	__( 'Improvements', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:229
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:234
 	__( 'Considerations', 'wordpress-seo' ),
 
-	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:236
+	// Reference: node_modules/yoast-components/composites/Plugin/ContentAnalysis/components/ContentAnalysis.js:241
 	__( 'Good results', 'wordpress-seo' ),
 
 	// Reference: node_modules/yoast-components/composites/Plugin/HelpCenter/HelpCenter.js:80

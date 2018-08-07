@@ -347,7 +347,9 @@ class WPSEO_Metabox extends WPSEO_Meta {
 	 * @return WPSEO_Metabox_Section[]
 	 */
 	private function get_content_sections() {
-		$content_sections = array( $this->get_content_meta_section() );
+		$content_sections = array();
+
+		$content_sections[] = $this->get_content_meta_section();
 
 		// Check if social_admin is an instance of WPSEO_Social_Admin.
 		if ( $this->social_admin instanceof WPSEO_Social_Admin ) {
@@ -526,7 +528,7 @@ class WPSEO_Metabox extends WPSEO_Meta {
 	}
 
 	/**
-	 * Gets the contents for the metabox tab.
+	 * Retrieves the contents for the metabox tab.
 	 *
 	 * @param string $tab_name Tab for which to retrieve the field definitions.
 	 *
@@ -537,9 +539,28 @@ class WPSEO_Metabox extends WPSEO_Meta {
 		foreach ( $this->get_meta_field_defs( $tab_name ) as $key => $meta_field ) {
 			$content .= $this->do_meta_box( $meta_field, $key );
 		}
-		unset( $key, $meta_field );
 
 		return $content;
+	}
+
+	/**
+	 * Retrieves the hidden fields for the metabox tab.
+	 *
+	 * @param string $tab_name Tab for which to retrieve the field definitions.
+	 *
+	 * @return string
+	 */
+	private function get_hidden_tab_fields( $tab_name ) {
+		$hidden_fields = '';
+		foreach ( $this->get_meta_field_defs( $tab_name ) as $key => $meta_field ) {
+			if ( $meta_field['type'] !== 'hidden' ) {
+				continue;
+			}
+
+			$hidden_fields .= $this->do_meta_box( $meta_field, $key );
+		}
+
+		return $hidden_fields;
 	}
 
 	/**
@@ -904,7 +925,7 @@ class WPSEO_Metabox extends WPSEO_Meta {
 
 		wp_localize_script( WPSEO_Admin_Asset_Manager::PREFIX . 'admin-media', 'wpseoMediaL10n', $this->localize_media_script() );
 		wp_localize_script( WPSEO_Admin_Asset_Manager::PREFIX . 'post-scraper', 'wpseoPostScraperL10n', $this->localize_post_scraper_script() );
-		$yoast_components_l10n = new WPSEO_Admin_Asset_Yoast_Components_l10n();
+		$yoast_components_l10n = new WPSEO_Admin_Asset_Yoast_Components_L10n();
 		$yoast_components_l10n->localize_script( WPSEO_Admin_Asset_Manager::PREFIX . 'post-scraper' );
 		/**
 		 * Remove the emoji script as it is incompatible with both React and any
@@ -1010,7 +1031,7 @@ class WPSEO_Metabox extends WPSEO_Meta {
 	 * @return array Recommended replacement variables.
 	 */
 	private function get_recommended_replace_vars() {
-	    $recommended_replace_vars = new WPSEO_Admin_Recommended_Replace_Vars();
+		$recommended_replace_vars = new WPSEO_Admin_Recommended_Replace_Vars();
 		$post                     = $this->get_metabox_post();
 
 		// What is recommended depends on the current context.
