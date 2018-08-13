@@ -17,6 +17,10 @@ body {
 	min-height: 100vh;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
+
+    &.fixed {
+    	overflow: hidden;
+    }
 }
 
 .container {

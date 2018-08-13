@@ -18,7 +18,7 @@
 	<?php /* Path dependent critical CSS */ ?>
   	<style type="text/css">
   		<?php include ('css/critical.css'); ?>
-        #mm-navigation { display: none; }
+        .mob-nav, .mob-nav-underlay { display: none; }
   	</style>
 
   	<?php /* Load CSS async */ ?>
@@ -59,51 +59,57 @@
 
 <body <?php body_class(); ?>>
 
-<div class="wrapper">
+	<nav class="mob-nav">
+		<div class="scroll-container"><?php /* Primary and Secondary menus will be cloned into here to form the mobile nav */ ?></div>
+	</nav>
 
-	<?php include locate_template('parts/mobile-top-bar.php'); ?>
+	<div class="wrapper">
 
-	<header>
+		<?php include locate_template('parts/mobile-top-bar.php'); ?>
 
-		<div class="top-bar">
+		<header>
+
+			<div class="top-bar">
+
+				<div class="container">
+
+					<?php
+					// Secondary Menu
+						wp_nav_menu([
+							'menu' => 'Secondary Menu',
+							'menu_class' => "menu-secondary",
+							'container' => ''
+						]);
+					?>
+
+				</div>
+
+			</div>
 
 			<div class="container">
 
-				<?php /* run.js will move the secondary nav in here on desktop */ ?>
+				<a href="<?php echo home_url(); ?>">
+					<?php $image = get_field('site_logo','option'); if( !empty($image) ): ?>
+						<?php /* Logo is deferred - see run.js */ ?>
+						<img class="logo" src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
+					<?php endif; ?>
+				</a>
 
-			</div>
+		        <?php include locate_template('parts/phone-top-right.php'); ?>
 
-		</div>
+		    </div>
 
-		<div class="container">
+			<nav id="navigation" class="desktop-nav">
+				<div>
+					<?php
+					// Primary menu for desktop
+						wp_nav_menu([
+							'menu' => 'Primary Menu',
+							'menu_class' => "menu-primary",
+							'container' => ''
+						]);
+					?>
+				</div>
+			</nav>
 
-			<a href="<?php echo home_url(); ?>">
-				<?php $image = get_field('site_logo','option'); if( !empty($image) ): ?>
-					<?php /* Logo is deferred - see run.js */ ?>
-					<img class="logo" src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
-				<?php endif; ?>
-			</a>
-
-	        <?php include locate_template('parts/phone-top-right.php'); ?>
-
-	    </div>
-
-		<nav id="navigation">
-			<div>
-				<?php
-				// Both primary and secondary menus for Mmenu
-					wp_nav_menu([
-						'menu' => 'Primary Menu',
-						'menu_class' => "menu-primary",
-						'container' => ''
-					]);
-					wp_nav_menu([
-						'menu' => 'Secondary Menu',
-						'menu_class' => "menu-secondary",
-						'container' => ''
-					]);
-				?>
-			</div>
-		</nav>
-
-	</header>
+		</header>

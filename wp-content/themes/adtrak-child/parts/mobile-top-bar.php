@@ -21,6 +21,6 @@
 
 	?>
     
-	<a class="menu-btn" href="#navigation"><i class="fa fa-bars"></i> Menu</a>
+	<div class="menu-btn"><i class="fa fa-bars"></i> Menu</div>
 
 </div>

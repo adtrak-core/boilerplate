@@ -28,6 +28,8 @@ add_action('wp_head', 'remove_unwanted_plugins', 1);
 
 */
 
+
+
 /* ========================================================================================================================
 	
 Custom
@@ -51,6 +53,8 @@ add_action('after_setup_theme', function () {
 
 });
 
+
+
 /* ========================================================================================================================
 	
 Allow excerpts on pages
@@ -61,6 +65,8 @@ add_action( 'init', 'my_add_excerpts_to_pages' );
 function my_add_excerpts_to_pages() {
      add_post_type_support( 'page', 'excerpt' );
 }
+
+
 
 /* ========================================================================================================================
 	
@@ -81,6 +87,8 @@ function address_stacked() {
 
 add_shortcode( 'address_stacked', 'address_stacked' );
 
+
+
 /* ========================================================================================================================
 	
 Address - Inline
@@ -98,3 +106,7 @@ function address_inline() {
 }
 
 add_shortcode('address_inline', 'address_inline');
+
+
+
+

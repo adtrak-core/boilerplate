@@ -1,0 +1,187 @@
+// --------------------------------------------------------------------------------------------------
+// Mobile Navigation
+// --------------------------------------------------------------------------------------------------
+
+/* Important to set */
+$menuTitleHeight :    52px;
+
+/* Colours */
+$menuTitleColor :     rgba(#000,.35);
+
+$panelBg :            #eee;
+
+$linkBg :             transparent;
+$linkText :           rgba(#000,.65);
+$linkBorder :         rgba(#000,.15);
+$linkBgActive :       transparent;
+$linkTextActive :     red;
+
+$dropdownArrowBg :    transparent;
+$dropdownArrowText :  inherit;
+
+$closeIconBg :        red;
+$closeIconText :      #fff;
+
+.mob-nav {
+    display: block !important; /* override critical css */
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 80%;
+    height: 100%;
+    background-color: $panelBg;
+    z-index: 99999999;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    transition: .4s;
+    max-width: 360px;
+
+    &.active {
+          -webkit-transform: translateX(0);
+          transform: translateX(0);
+          box-shadow: -10px 0 30px rgba(#000,.2);
+    }
+
+    &:before {
+        content: "Menu";
+        display: block;
+        width: 100%;
+        padding: 15px;
+        color: $menuTitleColor;
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    li {
+        list-style: none;
+        position: relative;
+        float: left;
+        width: 100%;
+    }
+
+    a {
+        padding: 15px 60px 15px 20px;
+        text-decoration: none;
+        color: $linkText;
+        float: left;
+        width: 100%;
+        border-bottom: 1px solid $linkBorder;
+        font-size: 1.3rem;
+        position: relative;
+
+        @media screen and (min-width: 375px) {
+            font-size: 1.4rem;
+        }
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    /* Current page states */
+    .current-menu-item > a,
+    .current-menu-parent > a,
+    .current-menu-ancestor > a {
+        color: $linkTextActive;
+    }
+
+    .sub-arrow {
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-left: 1px solid lighten($linkBorder, 5%);
+        width: 45px;
+        text-align: center;
+        padding: 13px 0;
+        z-index: 10;
+        cursor: pointer;
+        color: $linkText;
+        background-color: $linkBg;
+
+        @media screen and (min-width: 375px) {
+            padding: 13px 0;
+        }
+    }
+
+    /* active class is applied to parent link when submenu is activated */
+    a.active {
+        background-color: rgba(#000,.03);
+
+        + .sub-arrow {
+            border-color: lighten($linkBorder, 2%);
+        }
+    }
+
+    .sub-menu {
+        display: none;
+        float: left;
+        width: 100%;
+
+        li {
+            padding-left: 20px;
+        }
+    }
+
+    .menu-primary > li:first-child a {
+        border-top: 1px solid $linkBorder;
+    }
+}
+
+.mob-nav .scroll-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: $menuTitleHeight;
+    height: calc(100vh - #{$menuTitleHeight});
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.mob-nav-close {
+    position: fixed;
+    left: 0;
+    bottom: 40%;
+    width: 60px;
+    height: 50px;
+    background-color: $closeIconBg;
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    display: none;
+
+    i {
+        margin: auto;
+        font-size: 2em;
+        color: $closeIconText;
+    }
+
+    .mob-nav.active & {
+        display: block;
+        @include flexbox;
+    }
+}
+
+.mob-nav-underlay {
+    display: block !important; /* override critical css */
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(#000,.4);
+    z-index: 999999;
+    transition: .3s;
+    opacity: 0;
+    visibility: hidden;
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+

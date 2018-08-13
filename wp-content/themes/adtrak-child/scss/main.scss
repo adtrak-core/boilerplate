@@ -11,6 +11,7 @@ sites style will go.
 // Import the non-critical CSS
 
 @import
+	'components/_mobile-nav',
 	'components/_buckets',
 	'components/_buttons',
 	'components/_prev-next';
@@ -19,5 +20,4 @@ sites style will go.
 	'layout/_copy',
 	'layout/_footer',
 	'layout/_forms',
-	'layout/_mmenu',
 	'layout/_sidebar';

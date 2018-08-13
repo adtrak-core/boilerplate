@@ -4,7 +4,7 @@
 
 // Primary 
 
-#menu-primary-menu {
+.desktop-nav {
     background: $blanc;
     display: none;
 
@@ -118,8 +118,12 @@
 
 // Secondary
 
-#menu-secondary-menu {
+.top-bar #menu-secondary-menu {
     display: none;
+}
+
+.top-bar #menu-secondary-menu {
+
     @include bp800 {
         clear: both;
         display: block;
