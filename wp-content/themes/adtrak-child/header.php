@@ -90,7 +90,6 @@
 
 				<a href="<?php echo home_url(); ?>">
 					<?php $image = get_field('site_logo','option'); if( !empty($image) ): ?>
-						<?php /* Logo is deferred - see run.js */ ?>
 						<img class="logo" src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
 					<?php endif; ?>
 				</a>
