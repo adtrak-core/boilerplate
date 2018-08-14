@@ -75,11 +75,13 @@
 
 					<?php
 					// Secondary Menu
-						wp_nav_menu([
-							'menu' => 'Secondary Menu',
-							'menu_class' => "menu-secondary",
-							'container' => ''
-						]);
+						if(has_nav_menu('secondary')) {
+							wp_nav_menu([
+								'menu' => 'Secondary Menu',
+								'menu_class' => "menu-secondary",
+								'container' => ''
+							]);
+						}
 					?>
 
 				</div>

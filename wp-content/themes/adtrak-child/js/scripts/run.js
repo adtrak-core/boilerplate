@@ -54,11 +54,14 @@
 		// --------------------------------------------------------------------------------------------------
 		// Copy primary and secondary menus to .mob-nav element
 		var mobNav = document.querySelector('.mob-nav .scroll-container');
+		
 		var copyPrimaryMenu = document.querySelector('#navigation .menu-primary').cloneNode(true);
-		var copySecondaryMenu = document.querySelector('#menu-secondary-menu').cloneNode(true);
-
 		mobNav.appendChild(copyPrimaryMenu);
-		mobNav.appendChild(copySecondaryMenu);
+
+		if($('#menu-secondary-menu').length) {
+			var copySecondaryMenu = document.querySelector('#menu-secondary-menu').cloneNode(true);
+			mobNav.appendChild(copySecondaryMenu);
+		}
 
 		// Add Close Icon element
 		$( "<div class='mob-nav-close'><i class='fa fa-times'></i></div>" ).insertAfter( ".mob-nav .scroll-container" );
