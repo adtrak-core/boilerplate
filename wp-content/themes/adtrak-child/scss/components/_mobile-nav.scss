@@ -83,6 +83,7 @@ $closeIconText :      #fff;
     .current-menu-item > a,
     .current-menu-parent > a,
     .current-menu-ancestor > a {
+        background-color: $linkBgActive;
         color: $linkTextActive;
     }
 
