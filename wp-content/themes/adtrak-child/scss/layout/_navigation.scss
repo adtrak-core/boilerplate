@@ -14,7 +14,7 @@
         text-align: center;
 
         li {
-            display: inline;
+            display: inline-block;
             position: relative;
 
             &.menu-item-has-children > a:after {
@@ -54,7 +54,7 @@
         .sub-menu {
             position: absolute;
             background: $blanc;
-            top: 40px;
+            top: 100%;
             left: 0;
             z-index: 100;
             opacity: 0;
