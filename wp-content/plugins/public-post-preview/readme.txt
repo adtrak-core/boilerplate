@@ -2,8 +2,8 @@
 Contributors: ocean90
 Tags: public, post, preview, posts, custom post types, draft
 Requires at least: 3.5
-Tested up to: 4.8
-Stable tag: 2.6.0
+Tested up to: 4.9
+Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,10 @@ function my_nonce_life() {
 Or use the [Public Post Preview Configurator](https://wordpress.org/plugins/public-post-preview-configurator/).
 
 == Change Log ==
+= 2.7.0 (2018-09-14): =
+* Initial support for Gutenberg.
+* Block robots for public post previews. Props [@westonruter](https://github.com/westonruter).
+
 = 2.6.0 (2017-04-27): =
 * Make `DS_Public_Post_Preview::get_preview_link()` public. Props [@rcstr](https://github.com/rcstr).
 * Send no-cache headers for public post previews.

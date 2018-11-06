@@ -22,10 +22,10 @@ class WPSEO_Metabox_Keyword_Synonyms_Config {
 				'open'           => '+ ' . __( 'Add synonyms', 'wordpress-seo' ),
 				'modalAriaLabel' =>
 					/* translators: %s expands to 'Yoast SEO Premium'. */
-					sprintf( __( 'Get %s now!', 'wordpress-seo' ), 'Yoast SEO Premium' ),
+					sprintf( __( 'Get %s', 'wordpress-seo' ), 'Yoast SEO Premium' ),
 				'heading'        =>
 					/* translators: %s expands to 'Yoast SEO Premium'. */
-					sprintf( __( 'Get %s now!', 'wordpress-seo' ), 'Yoast SEO Premium' ),
+					sprintf( __( 'Get %s', 'wordpress-seo' ), 'Yoast SEO Premium' ),
 			),
 			'classes'        => array(
 				'openButton' => 'wpseo-keyword-synonyms button-link',
@@ -35,9 +35,6 @@ class WPSEO_Metabox_Keyword_Synonyms_Config {
 
 		$translations = new WPSEO_Keyword_Synonyms_Modal();
 		$translations->enqueue_translations();
-
-		$benefits = new WPSEO_Premium_Benefits_For_Synonyms_List();
-		$benefits->enqueue_translations();
 
 		Yoast_Modal::add( $keyword_synonyms_modal_config );
 	}

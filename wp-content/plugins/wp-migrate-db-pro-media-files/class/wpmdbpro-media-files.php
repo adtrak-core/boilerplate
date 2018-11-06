@@ -34,14 +34,14 @@ class WPMDBPro_Media_Files extends WPMDBPro_Addon {
 		$this->plugin_slug    = 'wp-migrate-db-pro-media-files';
 		$this->plugin_version = $GLOBALS['wpmdb_meta']['wp-migrate-db-pro-media-files']['version'];
 
-		if ( ! $this->meets_version_requirements( '1.8.1' ) ) {
+		if ( ! $this->meets_version_requirements( '1.8.3' ) ) {
 			return;
 		}
 
 		add_action( 'wpmdb_after_advanced_options', array( $this, 'migration_form_controls' ) );
 		add_action( 'wpmdb_load_assets', array( $this, 'load_assets' ) );
-		add_action( 'wpmdb_diagnostic_info', array( $this, 'diagnostic_info' ) );
 		add_action( 'wpmdbmf_after_migration_options', array( $this, 'after_migration_options_template' ) );
+		add_filter( 'wpmdb_diagnostic_info', array( $this, 'diagnostic_info' ) );
 		add_filter( 'wpmdb_establish_remote_connection_data', array( $this, 'establish_remote_connection_data' ) );
 		add_filter( 'wpmdb_nonces', array( $this, 'add_nonces' ) );
 		add_filter( 'wpmdb_data', array( $this, 'js_variables' ) );
@@ -112,12 +112,11 @@ class WPMDBPro_Media_Files extends WPMDBPro_Addon {
 		$plugins_url = trailingslashit( plugins_url( $this->plugin_folder_name ) );
 		$version     = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? time() : $this->plugin_version;
 		$ver_string  = '-' . str_replace( '.', '', $this->plugin_version );
-		$min         = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		$src = $plugins_url . 'asset/dist/css/styles.css';
+		$src = $plugins_url . 'asset/build/css/styles.css';
 		wp_enqueue_style( 'wp-migrate-db-pro-media-files-styles', $src, array( 'wp-migrate-db-pro-styles' ), $version );
 
-		$src = $plugins_url . "asset/dist/js/script{$ver_string}{$min}.js";
+		$src = $plugins_url . "asset/build/js/bundle{$ver_string}.js";
 		wp_enqueue_script( 'wp-migrate-db-pro-media-files-script', $src, array(
 			'jquery',
 			'wp-migrate-db-pro-script',
@@ -161,23 +160,18 @@ class WPMDBPro_Media_Files extends WPMDBPro_Addon {
 	/**
 	 * Adds extra information to the core plugin's diagnostic info
 	 */
-	function diagnostic_info() {
+	function diagnostic_info( $diagnostic_info ) {
 		// store the count of local attachments in a transient
 		// so not to impact performance with sites with large media libraries
 		if ( false === ( $attachment_count = get_transient( 'wpmdb_local_attachment_count' ) ) ) {
 			$attachment_count = $this->media_files_local->get_local_attachments_count();
 			set_transient( 'wpmdb_local_attachment_count', $attachment_count, 2 * HOUR_IN_SECONDS );
 		}
-
-		echo 'Media Files: ';
-		echo number_format( $attachment_count );
-		echo "\r\n";
-
-		echo 'Number of Image Sizes: ';
-		$sizes = count( get_intermediate_image_sizes() );
-		echo number_format( $sizes );
-		echo "\r\n";
-		echo "\r\n";
+		$diagnostic_info['media-files'] = array(
+			'Media Files' => number_format( $attachment_count ),
+			'Number of Image Sizes' => number_format( count( get_intermediate_image_sizes() ) ),
+		);
+		return $diagnostic_info;
 	}
 
 	/**

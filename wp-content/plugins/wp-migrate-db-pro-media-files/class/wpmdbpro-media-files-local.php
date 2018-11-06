@@ -532,45 +532,6 @@ class WPMDBPro_Media_Files_Local extends WPMDBPro_Media_Files_Base {
 
 		return $response;
 	}
-
-	/**
-	 * Verify a remote response is valid
-	 *
-	 * @param mixed $response Response
-	 *
-	 * @return mixed Response if valid, error otherwise
-	 */
-	function verify_remote_post_response( $response ) {
-		if ( false === $response ) {
-			$return    = array( 'wpmdb_error' => 1, 'body' => $this->error );
-			$error_msg = 'Failed attempting to verify remote post response (#114mf)';
-			$this->log_error( $error_msg, $this->error );
-			$result = $this->end_ajax( json_encode( $return ) );
-
-			return $result;
-		}
-
-		if ( ! is_serialized( trim( $response ) ) ) {
-			$return    = array( 'wpmdb_error' => 1, 'body' => $response );
-			$error_msg = 'Failed as the response is not serialized string (#115mf)';
-			$this->log_error( $error_msg, $response );
-			$result = $this->end_ajax( json_encode( $return ) );
-
-			return $result;
-		}
-
-		$response = unserialize( trim( $response ) );
-
-		if ( isset( $response['wpmdb_error'] ) ) {
-			$this->log_error( $response['wpmdb_error'], $response );
-			$result = $this->end_ajax( json_encode( $response ) );
-
-			return $result;
-		}
-
-		return $response;
-	}
-
 	/**
 	 * Download a remote media file
 	 *

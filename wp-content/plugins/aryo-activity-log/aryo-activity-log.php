@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Activity Log
-Plugin URI: http://wordpress.org/plugins/aryo-activity-log/
+Plugin URI: https://activitylog.io/?utm_source=wp-plugins&utm_campaign=plugin-uri&utm_medium=wp-dash
 Description: Get aware of any activities that are taking place on your dashboard! Imagine it like a black-box for your WordPress site. e.g. post was deleted, plugin was activated, user logged in or logged out - it's all these for you to see.
-Author: Yakir Sitbon, Maor Chasen, Ariel Klikstein
-Author URI: http://pojo.me/
-Version: 2.4.1
+Author: Activity Log Team
+Author URI: https://activitylog.io/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
+Version: 2.5.1
 Text Domain: aryo-activity-log
 License: GPLv2 or later
 
@@ -39,6 +39,7 @@ include( 'classes/class-aal-hooks.php' );
 include( 'classes/class-aal-notifications.php' );
 include( 'classes/class-aal-help.php' );
 include( 'classes/class-aal-export.php' );
+include( 'classes/class-aal-privacy.php' );
 include( 'classes/abstract-class-aal-exporter.php' );
 
 // Integrations
@@ -78,6 +79,12 @@ final class AAL_Main {
 	public $api;
 
 	/**
+	 * @var AAL_Privacy
+	 * @since 2.1.0
+	 */
+	private $privacy;
+
+	/**
 	 * Load text domain
 	 */
 	public function load_textdomain() {
@@ -97,6 +104,7 @@ final class AAL_Main {
 		$this->notifications = new AAL_Notifications();
 		$this->help          = new AAL_Help();
 		$this->export        = new AAL_Export();
+		$this->privacy       = new AAL_Privacy();
 
 		// set up our DB name
 		$wpdb->activity_log = $wpdb->prefix . 'aryo_activity_log';

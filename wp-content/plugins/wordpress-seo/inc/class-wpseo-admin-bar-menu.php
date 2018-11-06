@@ -114,7 +114,7 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 	 */
 	public function meets_requirements() {
 		if ( is_network_admin() ) {
-			return true;
+			return WPSEO_Utils::is_plugin_network_active();
 		}
 
 		if ( WPSEO_Options::get( 'enable_admin_bar_menu' ) !== true ) {
@@ -134,10 +134,10 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 	protected function add_root_menu( WP_Admin_Bar $wp_admin_bar ) {
 		$title = $this->get_title();
 
-		$score         = '';
-		$settings_url  = '';
-		$counter       = '';
-		$alert_popup   = '';
+		$score        = '';
+		$settings_url = '';
+		$counter      = '';
+		$alert_popup  = '';
 
 		$post = $this->get_singular_post();
 		if ( $post ) {
@@ -172,8 +172,8 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 				'parent' => self::MENU_IDENTIFIER,
 				'id'     => 'wpseo-notifications',
 				'title'  => __( 'Notifications', 'wordpress-seo' ) . $counter,
-				'href'  => $settings_url,
-				'meta'  => array( 'tabindex' => ! empty( $settings_url ) ? false : '0' ),
+				'href'   => $settings_url,
+				'meta'   => array( 'tabindex' => ! empty( $settings_url ) ? false : '0' ),
 			) );
 		}
 
@@ -195,9 +195,8 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 	 * @return void
 	 */
 	protected function add_keyword_research_submenu( WP_Admin_Bar $wp_admin_bar ) {
-		$adwords_url = 'https://adwords.google.com/keywordplanner';
-		$trends_url  = 'https://www.google.com/trends/explore';
-		$seobook_url = 'http://tools.seobook.com/keyword-tools/seobook/';
+		$adwords_url = 'https://yoa.st/keywordplanner';
+		$trends_url  = 'https://yoa.st/google-trends';
 
 		$post = $this->get_singular_post();
 		if ( $post ) {
@@ -205,7 +204,6 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 
 			if ( ! empty( $focus_keyword ) ) {
 				$trends_url  .= '#q=' . urlencode( $focus_keyword );
-				$seobook_url .= '?keyword=' . urlencode( $focus_keyword );
 			}
 		}
 
@@ -217,8 +215,15 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 		) );
 		$wp_admin_bar->add_menu( array(
 			'parent' => self::KEYWORD_RESEARCH_SUBMENU_IDENTIFIER,
+			'id'     => 'wpseo-kwresearchtraining',
+			'title'  => __( 'Keyword research training', 'wordpress-seo' ),
+			'href'   => WPSEO_Shortlinker::get( 'https://yoa.st/wp-admin-bar' ),
+			'meta'   => array( 'target' => '_blank' ),
+		) );
+		$wp_admin_bar->add_menu( array(
+			'parent' => self::KEYWORD_RESEARCH_SUBMENU_IDENTIFIER,
 			'id'     => 'wpseo-adwordsexternal',
-			'title'  => __( 'AdWords External', 'wordpress-seo' ),
+			'title'  => __( 'Google Ads', 'wordpress-seo' ),
 			'href'   => $adwords_url,
 			'meta'   => array( 'target' => '_blank' ),
 		) );
@@ -227,13 +232,6 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 			'id'     => 'wpseo-googleinsights',
 			'title'  => __( 'Google Trends', 'wordpress-seo' ),
 			'href'   => $trends_url,
-			'meta'   => array( 'target' => '_blank' ),
-		) );
-		$wp_admin_bar->add_menu( array(
-			'parent' => self::KEYWORD_RESEARCH_SUBMENU_IDENTIFIER,
-			'id'     => 'wpseo-wordtracker',
-			'title'  => __( 'SEO Book', 'wordpress-seo' ),
-			'href'   => $seobook_url,
 			'meta'   => array( 'target' => '_blank' ),
 		) );
 	}
@@ -266,15 +264,15 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 		) );
 		$wp_admin_bar->add_menu( array(
 			'parent' => self::ANALYSIS_SUBMENU_IDENTIFIER,
-			'id'     => 'wpseo-inlinks-ose',
-			'title'  => __( 'Check Inlinks (OSE)', 'wordpress-seo' ),
-			'href'   => '//moz.com/researchtools/ose/links?site=' . urlencode( $url ),
+			'id'     => 'wpseo-inlinks',
+			'title'  => __( 'Check links to this URL', 'wordpress-seo' ),
+			'href'   => 'https://search.google.com/search-console/links/drilldown?resource_id=' . urlencode( get_option( 'siteurl' ) ) . '&type=EXTERNAL&target=' . urlencode( $url ) . '&domain=',
 			'meta'   => array( 'target' => '_blank' ),
 		) );
 		$wp_admin_bar->add_menu( array(
 			'parent' => self::ANALYSIS_SUBMENU_IDENTIFIER,
 			'id'     => 'wpseo-kwdensity',
-			'title'  => __( 'Check Keyword Density', 'wordpress-seo' ),
+			'title'  => __( 'Check Keyphrase Density', 'wordpress-seo' ),
 			// HTTPS not available.
 			'href'   => 'http://www.zippy.co.uk/keyworddensity/index.php?url=' . urlencode( $url ) . '&keyword=' . urlencode( $focus_keyword ),
 			'meta'   => array( 'target' => '_blank' ),
@@ -460,11 +458,20 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 	/**
 	 * Gets the focus keyword for a given post.
 	 *
-	 * @param WP_Post $post Post object to get its focus keyword.
+	 * @param WP_POST $post Post object to get its focus keyword.
 	 *
 	 * @return string Focus keyword, or empty string if none available.
 	 */
-	protected function get_post_focus_keyword( WP_Post $post ) {
+	protected function get_post_focus_keyword( $post ) {
+		if ( ! is_object( $post ) || ! property_exists( $post, 'ID' ) ) {
+			return '';
+		}
+
+		/**
+		 * Filter: 'wpseo_use_page_analysis' Determines if the analysis should be enabled.
+		 *
+		 * @api bool Determines if the analysis should be enabled.
+		 */
 		if ( apply_filters( 'wpseo_use_page_analysis', true ) !== true ) {
 			return '';
 		}
@@ -479,7 +486,11 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 	 *
 	 * @return string Score markup, or empty string if none available.
 	 */
-	protected function get_post_score( WP_Post $post ) {
+	protected function get_post_score( $post ) {
+		if ( ! is_object( $post ) || ! property_exists( $post, 'ID' ) ) {
+			return '';
+		}
+
 		if ( apply_filters( 'wpseo_use_page_analysis', true ) !== true ) {
 			return '';
 		}
@@ -528,7 +539,11 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 	 *
 	 * @return string Score markup, or empty string if none available.
 	 */
-	protected function get_term_score( WP_Term $term ) {
+	protected function get_term_score( $term ) {
+		if ( ! is_object( $term ) || ! property_exists( $term, 'term_id' ) || ! property_exists( $term, 'taxonomy' ) ) {
+			return '';
+		}
+
 		$analysis_seo         = new WPSEO_Metabox_Analysis_SEO();
 		$analysis_readability = new WPSEO_Metabox_Analysis_Readability();
 
@@ -601,16 +616,14 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 		}
 
 		$notification = sprintf(
-			/* translators: %d resolves to the number of alerts being added. */
-			_n( 'You have %d new issue concerning your SEO!', 'You have %d new issues concerning your SEO!', $new_notifications_count, 'wordpress-seo' ),
+			_n(
+				'There is a new notification.',
+				'There are new notifications.',
+				$new_notifications_count,
+				'wordpress-seo'
+			),
 			$new_notifications_count
 		);
-		if ( $new_notifications_count === 1 ) {
-			$notification = sprintf(
-				__( 'You have a new issue concerning your SEO!', 'wordpress-seo' ),
-				$new_notifications_count
-			);
-		}
 
 		return '<div class="yoast-issue-added">' . $notification . '</div>';
 	}

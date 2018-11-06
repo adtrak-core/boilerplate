@@ -37,7 +37,7 @@ class Red_Fixer {
 			array(
 				'name' => __( 'Post monitor group', 'redirection' ),
 				'id' => 'monitor',
-				'message' => $valid_monitor === false ? __( 'Post monitor group is invalid', 'redirection' ) : __( 'Post monitor group is valid' ),
+				'message' => $valid_monitor === false ? __( 'Post monitor group is invalid', 'redirection' ) : __( 'Post monitor group is valid', 'redirection' ),
 				'status' => $valid_monitor === false ? 'problem' : 'good',
 			),
 			$this->get_http_settings(),
@@ -47,8 +47,8 @@ class Red_Fixer {
 	}
 
 	private function get_http_settings() {
-		$site = parse_url( get_site_url(), PHP_URL_SCHEME );
-		$home = parse_url( get_home_url(), PHP_URL_SCHEME );
+		$site = wp_parse_url( get_site_url(), PHP_URL_SCHEME );
+		$home = wp_parse_url( get_home_url(), PHP_URL_SCHEME );
 
 		$message = __( 'Site and home are consistent', 'redirection' );
 		if ( $site !== $home ) {
@@ -180,7 +180,7 @@ class Red_Fixer {
 
 	private function normalize_url( $url ) {
 		if ( substr( $url, 0, 4 ) !== 'http' ) {
-			$parts = parse_url( get_site_url() );
+			$parts = wp_parse_url( get_site_url() );
 			$url = ( isset( $parts['scheme'] ) ? $parts['scheme'] : 'http' ) . '://' . $parts['host'] . $url;
 		}
 
@@ -213,6 +213,10 @@ class Red_Fixer {
 
 	private function check_api( $url ) {
 		$response = $this->request_from_api( $url );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
 		$http_code = wp_remote_retrieve_response_code( $response );
 
 		$specific = 'REST API returns an error code';
@@ -228,10 +232,12 @@ class Red_Fixer {
 		} elseif ( $http_code === 301 || $http_code === 302 ) {
 			$specific = 'REST API is being redirected. This indicates it has been disabled or you have a trailing slash redirect.';
 		} elseif ( $http_code === 404 ) {
-			$specific = 'REST API is returning 404 error. This indicates it has been disabled.';
+			$specific = 'REST API is returning a 404 error. This indicates it has been disabled.';
+		} elseif ( $http_code ) {
+			$specific = 'REST API returned a ' . $http_code . ' code.';
 		}
 
-		return new WP_Error( 'redirection', $specific . ' (' . ( $http_code ? $http_code : '40x' ) . ' - ' . $url . ')' );
+		return new WP_Error( 'redirection', $specific . ' (' . ( $http_code ? $http_code : 'unknown' ) . ' - ' . $url . ')' );
 	}
 
 	private function get_json( $body ) {
