@@ -3,13 +3,13 @@
 </tr>
 <tr class="licence-form option-section licence-wrap" method="post" action="#settings">
 	<td colspan="2">
-		<?php if ( $this->is_licence_constant() ) : ?>
+		<?php if ( $this->license->is_licence_constant() ) : ?>
 			<p>
 				<?php _e( 'The license key is currently defined in wp-config.php.', 'wp-migrate-db' ); ?>
 			</p>
 		<?php else : ?>
 			<?php if ( ! empty( $licence ) ) :
-				echo $this->get_formatted_masked_licence();
+				echo $this->license->get_formatted_masked_licence();
 				?>
 				<p class="licence-status"></p>
 			<?php else : ?>

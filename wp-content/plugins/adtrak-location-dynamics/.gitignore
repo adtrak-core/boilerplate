@@ -6,3 +6,4 @@ composer.lock
 /resources/.DS_Store
 /readme.html
 /prepros-6.config
+.DS_Store

@@ -1,31 +1,30 @@
 <?php
 
 spl_autoload_register( function ( $class ) {
-	$filename = str_replace( '\\', '/', $class ) . '.php';
-	$filename = __DIR__ . '/' . $filename;
 
-	$namespaces = array(
-		'WPMDB'    => array(
-			'search'  => 'WPMDB',
-			'replace' => '',
-		)
-	);
+	// project-specific namespace prefix
+	$prefix = 'DeliciousBrains\\WPMDB\\';
 
-	foreach ( $namespaces as $namespace => $search_replace ) {
+	// base directory for the namespace prefix
+	$base_dir = __DIR__ . '/';
 
-		//Only loads files in the WPMDB namespace Ex. `WPMDB\Transfers`;
-		if ( stristr( $class, $namespace ) ) {
-
-			// Remove WPMDB from the path because `spl_autoload_register()` assumes a folder per namespace root
-			$filename = str_replace( $search_replace['search'] . '/', $search_replace['replace'], $filename );
-
-			if ( ! file_exists( $filename ) ) {
-				return false; // End autoloader function and skip to the next if available.
-			}
-
-			include_once $filename;
-		}
+	// does the class use the namespace prefix?
+	$len = strlen( $prefix );
+	if ( strncmp( $prefix, $class, $len ) !== 0 ) {
+		// no, move to the next registered autoloader
+		return;
 	}
 
-	return true;
+	// get the relative class name
+	$relative_class = substr( $class, $len );
+
+	// replace the namespace prefix with the base directory, replace namespace
+	// separators with directory separators in the relative class name, append
+	// with .php
+	$file = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
+
+	// if the file exists, require it
+	if ( file_exists( $file ) ) {
+		require $file;
+	}
 } );

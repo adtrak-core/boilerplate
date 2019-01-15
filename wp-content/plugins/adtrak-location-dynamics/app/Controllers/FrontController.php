@@ -71,6 +71,9 @@ class FrontController
         } elseif (isset($_COOKIE['area']) && $_COOKIE['area']) {
             # Check if a cookie is used and not a GET
             $loc = $_COOKIE['area'];
+            if($loc == 'gen') {
+                $loc = 'uk';
+            }
             $type = 'ppc';
             echo $this->buildNumber($order, $loc, $type, false, $linked);
         } elseif (count($order) == 1) {
@@ -325,21 +328,15 @@ class FrontController
             $order[$dynamic['location']] = $dynamic;
         }  
 
-        # If area is set to gen show the default uk number
+        # Check if a GET request is used or cookie
         if ((isset($_GET['a']) && $_GET['a'] == 'gen') || (isset($_COOKIE['area']) && $_COOKIE['area'] && $_COOKIE['area'] == 'gen')) {
             $loc = 'uk';
             $type = 'ppc';
             echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
-            return;
-        }
-
-        # Check if a GET request is used or cookie
-        
-        if (isset($_GET['a']) && !isset($order[$_GET['a']]['ppc'])) {
+        } else if (isset($_GET['a']) && !isset($order[$_GET['a']]['ppc'])) {
             $loc = 'uk';
             $type = 'seo';
             echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
-            return;
         } else if (isset($_GET['a'])) {
             # If location doesnt exist
             # Check if a GET request is used

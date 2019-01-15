@@ -4,7 +4,7 @@ Plugin Name: WP Migrate DB Pro Media Files
 Plugin URI: https://deliciousbrains.com/wp-migrate-db-pro/
 Description: An extension to WP Migrate DB Pro, allows the migration of media files.
 Author: Delicious Brains
-Version: 1.4.10
+Version: 1.4.12
 Author URI: https://deliciousbrains.com
 Network: True
 */
@@ -23,48 +23,32 @@ Network: True
 require_once 'version.php';
 $GLOBALS['wpmdb_meta']['wp-migrate-db-pro-media-files']['folder'] = basename( plugin_dir_path( __FILE__ ) );
 
+if ( version_compare( PHP_VERSION, '5.4', '>=' ) ) {
+	require_once __DIR__ . '/class/autoload.php';
+	require_once __DIR__ . '/setup.php';
+}
+
 /**
  * Populate the $wpmdbpro_media_files global with an instance of the WPMDBPro_Media_Files class and return it.
  *
  * @param bool $cli Running in WP-CLI environment.
  *
- * @return WPMDBPro_Media_Files The one true global instance of the WPMDBPro_Media_Files class.
+ * @return \DeliciousBrains\WPMDBMF\MediaFilesAddon The one true global instance of the WPMDBPro_Media_Files class.
  */
 function wp_migrate_db_pro_media_files( $cli = false ) {
-	global $wpmdbpro_media_files;
-
-	if ( ! class_exists( 'WPMDBPro_Addon' ) ) {
-		return false;
+	if ( ! class_exists( '\DeliciousBrains\WPMDB\Pro\WPMigrateDBPro' ) ) {
+		return;
 	}
 
-	// Allows hooks to bypass the regular admin / ajax checks to force load the Media Files addon (required for the CLI addon)
-	$force_load = apply_filters( 'wp_migrate_db_pro_media_files_force_load', false );
-
-	if ( false === $force_load && ! is_null( $wpmdbpro_media_files ) ) {
-		return $wpmdbpro_media_files;
-	}
-
-	if ( false === $force_load && ( ! function_exists( 'wp_migrate_db_pro_loaded' ) || ! wp_migrate_db_pro_loaded() ) ) {
-		return false;
-	}
-
-	load_plugin_textdomain( 'wp-migrate-db-pro-media-files', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-
-	require_once dirname( __FILE__ ) . '/class/wpmdbpro-media-files.php';
-	require_once dirname( __FILE__ ) . '/class/wpmdbpro-media-files-base.php';
-	require_once dirname( __FILE__ ) . '/class/wpmdbpro-media-files-local.php';
-	require_once dirname( __FILE__ ) . '/class/wpmdbpro-media-files-remote.php';
-
-	if ( $cli ) {
-		require_once dirname( __FILE__ ) . '/class/cli/wpmdbpro-media-files-cli.php';
-		require_once dirname( __FILE__ ) . '/class/cli/wpmdbpro-media-files-cli-bar.php';
-
-		$wpmdbpro_media_files = new WPMDBPro_Media_Files_CLI( __FILE__ );
+	if ( function_exists( 'wp_migrate_db_pro' ) ) {
+		wp_migrate_db_pro();
 	} else {
-		$wpmdbpro_media_files = new WPMDBPro_Media_Files( __FILE__ );
+		return false;
 	}
 
-	return $wpmdbpro_media_files;
+	if ( function_exists( 'wpmdb_setup_media_files_addon' ) ) {
+		return wpmdb_setup_media_files_addon( $cli );
+	}
 }
 
 /**

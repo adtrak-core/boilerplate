@@ -50,6 +50,7 @@ class AdminController
             foreach ($_POST['dynamics'] as $key => $num) {
                 $num['label'] = stripslashes($num['label']);
                 $num['calltag'] = stripslashes($num['calltag']);
+                $num['location'] = str_replace(["'", '/', '\\'], "", $num['location']);
                 $nums['dynamics'][$key] = $num;
             }
             $nums['insights-code'] = $_POST['insights-code'];

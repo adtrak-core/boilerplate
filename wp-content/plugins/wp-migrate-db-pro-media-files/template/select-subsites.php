@@ -20,7 +20,7 @@
 				if ( 'pull' !== $loaded_profile['action'] ) {
 					global $wpdb;
 					$table_prefix = $wpdb->base_prefix;
-					foreach ( $this->subsites_list() as $blog_id => $subsite_path ) {
+					foreach ( $this->util->subsites_list() as $blog_id => $subsite_path ) {
 						$selected = '';
 						if ( empty( $loaded_profile['mf_selected_subsites'] ) ||
 						     ( ! empty( $loaded_profile['mf_selected_subsites'] ) && in_array( $blog_id, $loaded_profile['mf_selected_subsites'] ) )

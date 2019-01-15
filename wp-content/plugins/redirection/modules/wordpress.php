@@ -63,9 +63,7 @@ class WordPress_Module extends Red_Module {
 			return false;
 		}
 
-		$page_type = array_values( array_filter( $this->redirects, function( $redirect ) {
-			return $redirect->match->get_type() === 'page';
-		} ) );
+		$page_type = array_values( array_filter( $this->redirects, array( $this, 'only_404' ) ) );
 
 		if ( count( $page_type ) > 0 ) {
 			$url = apply_filters( 'redirection_url_source', Redirection_Request::get_request_url() );
@@ -75,6 +73,10 @@ class WordPress_Module extends Red_Module {
 		}
 
 		return false;
+	}
+
+	private function only_404( $redirect ) {
+		return $redirect->match->get_type() === 'page';
 	}
 
 	// Return true to stop further processing of the 'do nothing'
@@ -104,7 +106,7 @@ class WordPress_Module extends Red_Module {
 		if ( $url && ! $this->protected_url( $url ) && $this->matched === false ) {
 			do_action( 'redirection_first', $url, $this );
 
-			$redirects = Red_Item::get_for_url( $url, 'wp' );
+			$redirects = Red_Item::get_for_url( $url );
 
 			foreach ( (array) $redirects as $item ) {
 				if ( $item->matches( $url ) ) {

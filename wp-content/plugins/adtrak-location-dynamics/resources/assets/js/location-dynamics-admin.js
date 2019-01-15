@@ -10,6 +10,7 @@ jQuery(function ($) {
 		val = val.toLowerCase();
 		val = val.replace(" ", "-");
 		val = val.replace("_", "-");
+		val = val.replace("'", "");
 		$(this).val(val);
 		this.setSelectionRange(start, end);
 	});

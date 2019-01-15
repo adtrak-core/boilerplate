@@ -21,7 +21,7 @@
 				</p>
 			</div>
 			<select multiple="multiple" name="select_post_types[]" id="select-post-types" class="multiselect" autocomplete="off">
-				<?php foreach ( $this->get_post_types() as $post_type ) :
+				<?php foreach ( $this->table->get_post_types() as $post_type ) :
 					if ( ! empty( $loaded_profile['select_post_types'] ) && in_array( $post_type, $loaded_profile['select_post_types'] ) ) {
 						printf( '<option value="%1$s" selected="selected">%1$s</option>', $post_type );
 					} else {

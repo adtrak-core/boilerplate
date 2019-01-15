@@ -1,9 +1,9 @@
 === Public Post Preview ===
 Contributors: ocean90
 Tags: public, post, preview, posts, custom post types, draft
-Requires at least: 3.5
-Tested up to: 4.9
-Stable tag: 2.7.0
+Requires at least: 4.6
+Tested up to: 5.0
+Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,7 +40,8 @@ To upload the plugin through WordPress, instead of FTP:
 
 == Screenshots ==
 
-1. Edit Posts Page
+1. Setting in block editor
+2. Setting in classic editor
 
 == Usage ==
 * To enable a public post preview check the box below the edit post box.
@@ -71,6 +72,10 @@ function my_nonce_life() {
 Or use the [Public Post Preview Configurator](https://wordpress.org/plugins/public-post-preview-configurator/).
 
 == Change Log ==
+
+= 2.8.0 (2018-11-27): =
+* Add support for WordPress 5.0 and the new block editor.
+
 = 2.7.0 (2018-09-14): =
 * Initial support for Gutenberg.
 * Block robots for public post previews. Props [@westonruter](https://github.com/westonruter).

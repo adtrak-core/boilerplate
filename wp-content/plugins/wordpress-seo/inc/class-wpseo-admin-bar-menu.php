@@ -203,7 +203,7 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 			$focus_keyword = $this->get_post_focus_keyword( $post );
 
 			if ( ! empty( $focus_keyword ) ) {
-				$trends_url  .= '#q=' . urlencode( $focus_keyword );
+				$trends_url .= '#q=' . urlencode( $focus_keyword );
 			}
 		}
 
@@ -448,7 +448,7 @@ class WPSEO_Admin_Bar_Menu implements WPSEO_WordPress_Integration {
 			return null;
 		}
 
-		if ( ! isset( $post ) || ! is_object( $post ) ) {
+		if ( ! isset( $post ) || ! is_object( $post ) || ! $post instanceof WP_Post ) {
 			return null;
 		}
 

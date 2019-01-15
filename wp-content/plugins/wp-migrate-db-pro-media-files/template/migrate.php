@@ -90,7 +90,7 @@
 	</p>
 
 	<p class="media-files-different-plugin-version-notice inline-message warning" style="display: none; margin: 10px 0 0 0;">
-		<strong><?php _e( 'Version Mismatch', 'wp-migrate-db-pro-media-files' ); ?></strong> &mdash; <?php printf( __( 'We have detected you have version <span class="media-file-remote-version"></span> of WP Migrate DB Pro Media Files at <span class="media-files-remote-location"></span> but are using %1$s here. Please go to the <a href="%2$s">Plugins page</a> on both installs and check for updates.', 'wp-migrate-db-pro-media-files' ), $GLOBALS['wpmdb_meta'][$this->plugin_slug]['version'], network_admin_url( 'plugins.php' ) ); ?>
+		<strong><?php _e( 'Version Mismatch', 'wp-migrate-db-pro-media-files' ); ?></strong> &mdash; <?php printf( __( 'We have detected you have version <span class="media-file-remote-version"></span> of WP Migrate DB Pro Media Files at <span class="media-files-remote-location"></span> but are using %1$s here. Please go to the <a href="%2$s">Plugins page</a> on both installs and check for updates.', 'wp-migrate-db-pro-media-files' ), $GLOBALS['wpmdb_meta']['wp-migrate-db-pro-media-files']['version'], network_admin_url( 'plugins.php' ) ); ?>
 	</p>
 
 </div>

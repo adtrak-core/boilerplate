@@ -1,3 +1,4 @@
+<?php global $wpdb ?>
 <div class="option-section table-options">
 	<div class="header-expand-collapse clearfix">
 		<div class="expand-collapse-arrow collapsed">&#x25BC;</div>
@@ -37,10 +38,10 @@
 		<div class="select-tables-wrap select-wrap">
 			<select multiple="multiple" name="select_tables[]" id="select-tables" class="multiselect" autocomplete="off">
 				<?php
-				$table_sizes        = $this->get_table_sizes();
-				$temp_prefix_length = strlen( $this->temp_prefix );
-				foreach ( $this->get_tables() as $table ) :
-					if( ! isset( $table_sizes[ $table ] ) || $this->temp_prefix === substr( $table, 0, $temp_prefix_length ) ) {
+				$table_sizes        = $this->table->get_table_sizes();
+				$temp_prefix_length = strlen( $this->props->temp_prefix );
+				foreach ( $this->table->get_tables() as $table ) :
+					if( ! isset( $table_sizes[ $table ] ) || $this->props->temp_prefix === substr( $table, 0, $temp_prefix_length ) ) {
 						continue;
 					}
 					$size = (int) $table_sizes[ $table ] * 1024;

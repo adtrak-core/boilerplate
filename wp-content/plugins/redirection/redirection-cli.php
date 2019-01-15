@@ -118,11 +118,77 @@ class Redirection_Cli extends WP_CLI_Command {
 			WP_CLI::error( 'Invalid output file' );
 		}
 	}
+
+	/**
+	 * Perform Redirection database actions
+	 *
+	 * ## OPTIONS
+	 *
+	 * <action>
+	 * : The database action to perform: install, remove, upgrade
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp redirection database install
+	 */
+	public function database( $args, $extra ) {
+		$action = false;
+
+		if ( count( $args ) === 0 || ! in_array( $args[0], array( 'install', 'remove', 'upgrade' ), true ) ) {
+			WP_CLI::error( 'Invalid database action - please use install, remove, or upgrade' );
+			return;
+		}
+
+		if ( $args[0] === 'install' ) {
+			Red_Database::apply_to_sites( function() {
+				$latest = Red_Database::get_latest_database();
+				$latest->install();
+			} );
+
+			WP_CLI::success( 'Database installed' );
+		} elseif ( $args[0] === 'upgrade' ) {
+			$database = new Red_Database();
+			$status = new Red_Database_Status();
+
+			if ( ! $status->needs_updating() ) {
+				WP_CLI::success( 'Database is already the latest version' );
+				return;
+			}
+
+			$loop = 0;
+
+			while ( $loop < 50 ) {
+				$result = $database->apply_upgrade( $status );
+				$info = $status->get_json();
+
+				if ( ! $info['inProgress'] ) {
+					break;
+				}
+
+				if ( $info['status'] === 'error' ) {
+					WP_CLI::error( 'Database failed to upgrade: ' . $info['reason'] );
+					return;
+				}
+
+				$loop++;
+			}
+
+			WP_CLI::success( 'Database upgraded' );
+		} elseif ( $args[0] === 'remove' ) {
+			Red_Database::apply_to_sites( function() {
+				$latest = Red_Database::get_latest_database();
+				$latest->remove();
+			} );
+
+			WP_CLI::success( 'Database removed' );
+		}
+	}
 }
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	WP_CLI::add_command( 'redirection import', array( 'Redirection_Cli', 'import' ) );
 	WP_CLI::add_command( 'redirection export', array( 'Redirection_Cli', 'export' ) );
+	WP_CLI::add_command( 'redirection database', array( 'Redirection_Cli', 'database' ) );
 
 	add_action( Red_Flusher::DELETE_HOOK, function() {
 		$flusher = new Red_Flusher();

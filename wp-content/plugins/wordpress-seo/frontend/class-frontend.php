@@ -126,6 +126,7 @@ class WPSEO_Frontend {
 			new WPSEO_Frontend_Primary_Category(),
 			new WPSEO_JSON_LD(),
 			new WPSEO_Remove_Reply_To_Com(),
+			new WPSEO_OpenGraph_OEmbed(),
 			$this->woocommerce_shop_page,
 		);
 
@@ -429,8 +430,7 @@ class WPSEO_Frontend {
 			$title = $this->get_title_from_options( 'title-home-wpseo' );
 		}
 		elseif ( $this->woocommerce_shop_page->is_shop_page() ) {
-			$post  = get_post( $this->woocommerce_shop_page->get_shop_page_id() );
-			$title = $this->get_seo_title( $post );
+			$title = $this->get_woocommerce_title();
 
 			if ( ! is_string( $title ) || $title === '' ) {
 				$title = $this->get_post_type_archive_title( $separator, $separator_location );
@@ -679,7 +679,7 @@ class WPSEO_Frontend {
 		$robots['follow'] = 'follow';
 		$robots['other']  = array();
 
-		if ( ( is_object( $post ) && is_singular() ) || $this->woocommerce_shop_page->is_shop_page() ) {
+		if ( is_object( $post ) && $this->frontend_page_type->is_simple_page() ) {
 			$private = 'private' === $post->post_status;
 			$noindex = ! WPSEO_Post_Type::is_post_type_indexable( $post->post_type );
 
@@ -687,7 +687,7 @@ class WPSEO_Frontend {
 				$robots['index'] = 'noindex';
 			}
 
-			$robots = $this->robots_for_single_post( $robots );
+			$robots = $this->robots_for_single_post( $robots, $this->frontend_page_type->get_simple_page_id() );
 		}
 		else {
 			if ( is_search() || is_404() ) {
@@ -1000,16 +1000,6 @@ class WPSEO_Frontend {
 	 * @since 1.0.3
 	 */
 	public function adjacent_rel_links() {
-		// Don't do this for Genesis, as the way Genesis handles homepage functionality is different and causes issues sometimes.
-		/**
-		 * Filter 'wpseo_genesis_force_adjacent_rel_home' - Allows devs to allow echoing rel="next" / rel="prev" by Yoast SEO on Genesis installs.
-		 *
-		 * @api bool $unsigned Whether or not to rel=next / rel=prev .
-		 */
-		if ( is_home() && function_exists( 'genesis' ) && apply_filters( 'wpseo_genesis_force_adjacent_rel_home', false ) === false ) {
-			return;
-		}
-
 		/**
 		 * Filter: 'wpseo_disable_adjacent_rel_links' - Allows disabling of Yoast adjacent links if this is being handled by other code.
 		 *
@@ -1111,6 +1101,15 @@ class WPSEO_Frontend {
 				$url = user_trailingslashit( trailingslashit( $url ) . $this->get_pagination_base() . $page );
 			}
 		}
+
+		/**
+		 * Filter: 'wpseo_adjacent_rel_url' - Allow changing the URL for rel output by Yoast SEO.
+		 *
+		 * @api string $url The URL that's going to be output for $rel.
+		 *
+		 * @param string $rel Link relationship, prev or next.
+		 */
+		$url = apply_filters( 'wpseo_adjacent_rel_url', $url, $rel );
 
 		/**
 		 * Filter: 'wpseo_' . $rel . '_rel_link' - Allow changing link rel output by Yoast SEO.
@@ -1725,6 +1724,39 @@ class WPSEO_Frontend {
 		}
 
 		return $title;
+	}
+
+	/**
+	 * Retrieves the WooCommerce title.
+	 *
+	 * @return string The WooCommerce title.
+	 */
+	protected function get_woocommerce_title() {
+		$shop_page_id = $this->woocommerce_shop_page->get_shop_page_id();
+		$post         = get_post( $shop_page_id );
+		$title        = $this->get_seo_title( $post );
+
+		if ( is_string( $title ) && $title !== '' ) {
+			return $title;
+		}
+
+		if ( $shop_page_id !== -1 && is_archive() ) {
+			$title = $this->get_template( 'title-' . $post->post_type );
+			$title = $this->replace_vars( $title, $post );
+		}
+
+		return $title;
+	}
+
+	/**
+	 * Retrieves a template from the options.
+	 *
+	 * @param string $template The template to retrieve.
+	 *
+	 * @return string The set template.
+	 */
+	protected function get_template( $template ) {
+		return WPSEO_Options::get( $template );
 	}
 
 	/**

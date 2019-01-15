@@ -1,6 +1,7 @@
 <?php
-foreach ( $this->addons as $addon_basename => $addon ) :
-	if ( false == $this->is_addon_outdated( $addon_basename ) || false == is_plugin_active( $addon_basename ) ) {
+
+foreach ( $this->addon->getAddons() as $addon_basename => $addon ) :
+	if ( false == $this->addon->is_addon_outdated( $addon_basename ) || false == is_plugin_active( $addon_basename ) ) {
 		continue;
 	}
 	$update_url = wp_nonce_url( network_admin_url( 'update.php?action=upgrade-plugin&plugin=' . urlencode( $addon_basename ) ), 'upgrade-plugin_' . $addon_basename );

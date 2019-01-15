@@ -1,6 +1,9 @@
 # Adtrak Location Dynamics
 ## Changelog
 
+### v3.3.9
+- [Bug] Added measures to prevent apostrophe's being added to slugs
+
 ### v3.3.8
 - [Bug] Added isset
 

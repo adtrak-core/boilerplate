@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Public Post Preview
- * Version: 2.7.0
+ * Version: 2.8.0
  * Description: Enables you to give a link to anonymous users for public preview of any post type before it is published.
  * Author: Dominik Schilling
  * Author URI: https://wphelper.de/
@@ -87,12 +87,23 @@ class DS_Public_Post_Preview {
 			return;
 		}
 
-		if ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) {
+		if (
+			( method_exists( get_current_screen(), 'is_block_editor' ) && get_current_screen()->is_block_editor() ) ||
+			( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() )
+		) {
 			wp_enqueue_script(
 				'public-post-preview-gutenberg',
 				plugins_url( 'js/gutenberg-integration.js', __FILE__ ),
-				array( 'wp-edit-post' ),
-				'20180914',
+				array(
+					'lodash',
+					'wp-compose',
+					'wp-components',
+					'wp-data',
+					'wp-edit-post',
+					'wp-element',
+					'wp-i18n',
+				),
+				'20181127',
 				true
 			);
 
@@ -225,7 +236,7 @@ class DS_Public_Post_Preview {
 		<div id="public-post-preview-link" style="margin-top:6px"<?php echo $enabled ? '' : ' class="hidden"'; ?>>
 			<label>
 				<input type="text" name="public_post_preview_link" class="regular-text" value="<?php echo esc_attr( self::get_preview_link( $post ) ); ?>" style="width:99%" readonly />
-				<span class="description"><?php _e( '(Copy and share this link.)', 'public-post-preview' ); ?></span>
+				<span class="description"><?php _e( 'Copy and share this preview URL.', 'public-post-preview' ); ?></span>
 			</label>
 		</div>
 		<?php
@@ -491,7 +502,7 @@ class DS_Public_Post_Preview {
 		}
 
 		if ( ! in_array( $post_id, self::get_preview_post_ids() ) ) {
-			wp_die( __( 'No Public Preview available!', 'public-post-preview' ) );
+			wp_die( __( 'No public preview available!', 'public-post-preview' ) );
 		}
 
 		return true;
