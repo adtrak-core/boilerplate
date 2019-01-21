@@ -26,10 +26,10 @@ if ($_SERVER['HTTP_HOST'] == "dev-server") {
     $debug = true;
 }
 // Localhost
-else if ($_SERVER['HTTP_HOST'] == "shared-boilerplate.vm" ) {
-    $dbName = 'shared-boilerplate.vm';
+else if ($_SERVER['HTTP_HOST'] == "localhost.shared-bp" ) {
+    $dbName = 'localhost.shared-bp';
     $dbUser = 'root';
-    $dbPass = '';
+    $dbPass = 'mysql';
     $debug = true;
 }
 else if ($_SERVER['HTTP_HOST'] == "boilerplate.vm" ) {
