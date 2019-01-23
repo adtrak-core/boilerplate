@@ -93,7 +93,6 @@ Thumbs.db
 
 # track these mu-plugins, plugins, and themes
 # add your own entries here
-!wp-config.php
 !wp-content/plugins/adtrak-location-dynamics/
 !wp-content/plugins/adtrak-core/
 !wp-content/plugins/adtrak-forms/
