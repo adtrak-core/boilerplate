@@ -28,7 +28,13 @@ body {
 	margin: 0 auto;
 }
 
-/* Hides all images with data-src - good for deferring images */
-[data-src] {
-    opacity: 0;
+/* For lazy loaded elements */
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+
+.lazyloaded {
+    opacity: 1;
+    transition: opacity 300ms;
 }

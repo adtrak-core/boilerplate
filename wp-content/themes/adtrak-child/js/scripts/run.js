@@ -35,21 +35,6 @@
 
 
 		// --------------------------------------------------------------------------------------------------
-		// Defer loading of iframes and images
-		// --------------------------------------------------------------------------------------------------
-		function init() {
-		    var imgDefer = document.querySelectorAll('iframe, img');
-		    for (var i=0; i<imgDefer.length; i++) {
-		        if(imgDefer[i].getAttribute('data-src')) {
-		            imgDefer[i].setAttribute('src',imgDefer[i].getAttribute('data-src'));
-		            imgDefer[i].setAttribute('style','opacity:1;');
-		        }
-		    }
-		}
-		window.onload = init;
-
-
-		// --------------------------------------------------------------------------------------------------
 		// Mobile Menu
 		// --------------------------------------------------------------------------------------------------
 		// Copy primary and secondary menus to .mob-nav element

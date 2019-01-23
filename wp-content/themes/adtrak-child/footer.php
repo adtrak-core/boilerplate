@@ -12,7 +12,7 @@
 			<div class="grid grid3_12">
 				<a href="<?php echo home_url(); ?>">
 					<?php $image = get_field('site_logo','option'); if( !empty($image) ): ?>
-						<img src="" data-src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
+						<img class="lazyload" data-src="<?php echo $image['url']; ?>" alt="<?php bloginfo('title'); ?> Logo" />
 					<?php endif; ?>
 				</a>
 			</div>
@@ -58,6 +58,9 @@
 	</div>
 
 </div><!-- wrapper -->
+
+
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/js/scripts/lazysizes.min.js" async=""></script>
 
 <?php wp_footer(); ?>
 	
