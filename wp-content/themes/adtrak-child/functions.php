@@ -21,7 +21,7 @@ Add defer attribute to scripts - ADD TO THIS AS REQUIRED
 
 function add_defer_attribute($tag, $handle) {
 	// add script handles to the array below
-	$scripts_to_defer = array('jquery-core','production','forms-front-js','parsleyjs','adtrak-cookie');
+	$scripts_to_defer = array('jquery-core','production','forms-front-js','parsleyjs','adtrak-cookie','location-dynamics-front');
 	 
 	foreach($scripts_to_defer as $defer_script) {
 	   if ($defer_script === $handle) {
@@ -86,6 +86,23 @@ Disable Gutenberg
 ======================================================================================================================== */
 
 add_filter('use_block_editor_for_post', '__return_false');
+
+
+
+/* ========================================================================================================================
+	
+Remove jQuery Migrate form front-end
+	
+======================================================================================================================== */
+
+add_filter( 'wp_default_scripts', 'dequeue_jquery_migrate' );
+
+function dequeue_jquery_migrate( &$scripts){
+	if(!is_admin()){
+		$scripts->remove( 'jquery');
+		$scripts->add( 'jquery', false, array( 'jquery-core' ), '1.10.2' );
+	}
+}
 
 
 
