@@ -13,25 +13,17 @@
     include locate_template('parts/hero.php');
 ?>
 
-	<main class="site-content container">
-
-		<article class="grid grid8_12">
-
-			<div class="pad-10-10 copy">
-
+	<main class="site-content">
+		<div class="container">
+			<article class="copy">				
 				<?php the_title('<h1>', '</h1>'); ?>
 				<?php the_content(); ?>
+			</article>
 
-			</div>
-
-		</article>
-
-		<aside class="grid grid4_12 news-aside">
-
-			<?php get_sidebar(); ?>
-		
-		</aside>
-
+			<aside class="sidebar">
+				<?php get_sidebar(); ?>			
+			</aside>
+		</div>
 	</main>
 
 <?php get_footer(); ?>

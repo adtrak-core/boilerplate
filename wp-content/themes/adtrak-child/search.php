@@ -13,58 +13,48 @@
     include locate_template('parts/hero.php');
 ?>
 
-	<main class="site-content container">
+	<main class="site-content">
+		<div class="container">
+			<?php if (have_posts()): ?>
 
-		<?php if (have_posts()): ?>
+			<div class="copy">
 
-		<div class="grid grid8_12 pad-10-10">
+				<h1>Results for <?php the_search_query(); ?> </h1>
 
-			<h1>Results for <?php the_search_query(); ?> </h1>
+				<?php while (have_posts()): the_post(); ?>
 
-			<?php while (have_posts()): the_post(); ?>
+					<?php /* Check if it is a post, not a page - remove this if you want to have site-wide search */ if ( 'post' == get_post_type() ) : ?>
 
-				<?php /* Check if it is a post, not a page - remove this if you want to have site-wide search */ if ( 'post' == get_post_type() ) : ?>
-
-					<article>
-
-						<div class="copy">
-
+						<article class="post post--overview">						
 							<?php the_post_thumbnail('medium'); ?>
 
 							<?php the_title( sprintf( '<h2><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 							<?php the_excerpt(); ?>
 
-							<a href="<?php the_permalink(); ?>" class="btn btn-noir">Continue reading</a>
+							<a href="<?php the_permalink(); ?>" class="btn btn--noir">Continue reading</a>
+						</article>
 
-						</div>
+					<?php endif; ?>
+			
+				<?php endwhile; ?>
 
-					</article>
+					<div class="prev-next">				
+						<div class="prev"><?php previous_posts_link(); ?></div>
+						<div class="next"><?php next_posts_link(); ?></div>		
+			        </div>
+
+			    <?php else : ?>
+
+					<h1>Sorry, no results found.</h1>
 
 				<?php endif; ?>
-		
-			<?php endwhile; ?>
 
-				<div class="prev-next">
+			</div>
 
-		            <div class="next-posts"><?php next_posts_link(); ?></div>
-		            <div class="prev-posts"><?php previous_posts_link(); ?></div>
-		            
-		        </div>
-
-		    <?php else : ?>
-
-				<h1>Sorry, no results found.</h1>
-
-			<?php endif; ?>
-
+			<aside class="sidebar sidebar--news">
+				<?php get_sidebar(); ?>		
+			</aside>
 		</div>
-
-		<aside class="grid grid4_12 news-aside">
-
-			<?php get_sidebar(); ?>
-		
-		</aside>
-
 	</main>
 
 <?php get_footer(); ?>

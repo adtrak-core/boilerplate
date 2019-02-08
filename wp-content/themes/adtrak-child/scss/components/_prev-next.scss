@@ -3,19 +3,39 @@
 --------------------------------------------------------------- */
 
 .prev-next {
-    a {
-        display: block;
-        background: $noir;
-        text-decoration: none;
-        color: $blanc;
-        padding: 10px;
-        &:hover {
+    @include flexbox;
+    @include flex-wrap(wrap);
+    @include justify-content(center);
+    margin-top: 20px;
+
+    @include bp800 {
+        @include justify-content(flex-end);
+    }
+
+    > div {
+        width: 100%;
+        margin: 2px 0;
+
+        @include bp480 {
+            width: auto;
+            margin: 0;
+
+            &:last-of-type {
+                margin-left: 10px;
+            }
         }
     }
-    .next-posts a {
-        background: lighten($noir,10);
-        text-align: right;
+
+    a {
+        display: block;        
+        padding: 20px 25px;        
+        text-decoration: none;
+        color: $blanc;
+        background: $noir;
+        border-radius: 10px;
+
         &:hover {
+            background: lighten($noir,3);
         }
     }
 }

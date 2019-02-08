@@ -13,37 +13,30 @@
     include locate_template('parts/hero.php');
 ?>
 
-	<main class="site-content container">
+	<main class="site-content">
+		<div class="container">
+			<div class="copy">
+				<?php if (have_posts()): while (have_posts()): the_post(); ?>
 
-		<div class="grid grid8_12">
-
-			<?php if (have_posts()): while (have_posts()): the_post(); ?>
-
-				<article>
-
-					<div class="pad-10-10 copy">
-
-						<?php the_post_thumbnail('medium'); ?>
-
-						<?php the_title('<h1>', '</h1>'); ?>
-						<?php the_excerpt(); ?>
-
-						<a href="<?php the_permalink(); ?>" class="btn btn-noir">Continue reading</a>
-
-					</div>
-
+				<article class="post post--overview">
+					<?php the_post_thumbnail('medium'); ?>
+					<?php the_title('<h1>', '</h1>'); ?>
+					<?php the_excerpt(); ?>
+					<a href="<?php the_permalink(); ?>" class="btn btn--noir">Continue reading</a>
 				</article>
-		
-			<?php endwhile; endif; ?>
+			
+				<?php endwhile; endif; ?>
 
+				<div class="prev-next">				
+					<div class="prev"><?php previous_posts_link(); ?></div>
+					<div class="next"><?php next_posts_link(); ?></div>		
+		        </div>
+			</div>			
+
+			<aside class="sidebar sidebar--news">
+				<?php get_sidebar(); ?>		
+			</aside>
 		</div>
-
-		<aside class="grid grid4_12 news-aside">
-
-			<?php get_sidebar(); ?>
-		
-		</aside>
-
 	</main>
 
 <?php get_footer(); ?>
