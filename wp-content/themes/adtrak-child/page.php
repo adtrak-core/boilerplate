@@ -13,29 +13,21 @@
     include locate_template('parts/buckets.php');
 ?>
 
-	<main class="site-content container">
+	<main class="site-content">
+		<div class="container">
+			<?php if (have_posts()): while (have_posts()): the_post(); ?>
 
-		<?php if (have_posts()): while (have_posts()): the_post(); ?>
-
-			<article class="grid grid8_12">
-
-				<div class="pad-10-10 copy">
-
+				<article class="copy">
 					<h1><?php the_field('h1'); ?></h1>
 					<?php the_content(); ?>
+				</article>
 
-				</div>
-
-			</article>
-
-			<aside class="grid grid4_12">
-
-				<?php get_sidebar(); ?>
-			
-			</aside>
-	
-		<?php endwhile; endif; ?>
-
+				<aside class="sidebar">
+					<?php get_sidebar(); ?>			
+				</aside>
+		
+			<?php endwhile; endif; ?>
+		</div>
 	</main>
 
 <?php get_footer(); ?>
