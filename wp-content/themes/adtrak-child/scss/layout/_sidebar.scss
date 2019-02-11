@@ -37,7 +37,7 @@ $linkBg : lighten(#ccc,5);
 		text-align: left;
 	}
 
-	h3 {
+	&__title {
 		margin-bottom: 5px;
 		font-size: 2.2rem;
 		font-weight: 300;
@@ -68,7 +68,7 @@ $linkBg : lighten(#ccc,5);
 .search-form {
     .screen-reader-text {
     	display: block;
-    	@extend h3;
+    	@extend .news-block__title;
     }
 
     input {

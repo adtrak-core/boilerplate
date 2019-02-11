@@ -45,9 +45,9 @@ Home page
 
 	<?php endif; ?>
 
-		<div class="container">
+		<div class="hero__container container">
 
-			<div class="hero-content">
+			<div class="hero__content">
 
 			<?php
 

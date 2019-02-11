@@ -1,6 +1,6 @@
 <div class="mobile-top-bar Fixed">
 
-	<span class="single-number"><?php do_action('ld_default', false); ?></span>
+	<span class="mobile-top-btn mobile-top-btn--single-number"><?php do_action('ld_default', false); ?></span>
 
 	<?php
 
@@ -20,6 +20,6 @@
 
 	?>
     
-	<div class="menu-btn"><i class="fa fa-bars"></i> Menu</div>
+	<div class="menu-btn mobile-top-btn mobile-top-btn--menu"><i class="fa fa-bars"></i> Menu</div>
 
 </div>

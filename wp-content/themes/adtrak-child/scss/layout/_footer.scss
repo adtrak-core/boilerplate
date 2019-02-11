@@ -23,11 +23,10 @@ footer {
     @include bp800 {
         text-align: left;
     }
+}
 
-    .adtrak img {
-        max-width: 100px;
-    }
-
+.adtrak img {
+    max-width: 100px;
 }
 
 /* Back to top

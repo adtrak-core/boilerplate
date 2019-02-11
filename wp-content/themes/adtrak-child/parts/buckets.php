@@ -25,7 +25,7 @@
 ?>
 
 
-	<ul class="buckets num-<?php echo $bucketCount ." ". $bucketsLayout ?>">
+	<ul class="buckets buckets--num-<?php echo $bucketCount ." buckets--". $bucketsLayout ?>">
 
 		<?php
 		
@@ -48,15 +48,15 @@
 			// ------------------------------------------------------------------------------------
 			if($imageType == 'imagebg'): ?>
 			<style>
-				.buckets .<?php echo $displayTextCondensed; ?> {
+				.buckets .buckets__item--<?php echo $displayTextCondensed; ?> {
 					background-image: url("<?php echo $thumb; ?>");
 				}
 			</style>
 
-	 		<li class="<?php echo $displayTextCondensed; ?>">
-	 			<a href="<?php the_sub_field('bucket_link') ?>">
+	 		<li class="buckets__item buckets__item--<?php echo $displayTextCondensed; ?>">
+	 			<a class="buckets__link" href="<?php the_sub_field('bucket_link') ?>">
 
-	 				<span class="title"><?php the_sub_field('bucket_display_text') ?></span>
+	 				<span class="buckets__title"><?php the_sub_field('bucket_display_text') ?></span>
 
 	 			</a>
 	 		</li>
@@ -69,12 +69,12 @@
 			// ------------------------------------------------------------------------------------
 			elseif($imageType == 'imagehtml'): ?>
 
-	 		<li class="<?php echo $displayTextCondensed; ?>">
-	 			<a href="<?php the_sub_field('bucket_link') ?>">
+	 		<li class="buckets__item buckets__item-<?php echo $displayTextCondensed; ?>">
+	 			<a class="buckets__link" href="<?php the_sub_field('bucket_link') ?>">
 
-	 				<img src="<?php echo $thumb; ?>" alt="<?php the_sub_field('bucket_display_text') ?>">
+	 				<img class="buckets__image" src="<?php echo $thumb; ?>" alt="<?php the_sub_field('bucket_display_text') ?>">
 	 				
-					<span class="title"><?php the_sub_field('bucket_display_text') ?></span>
+					<span class="buckets__title"><?php the_sub_field('bucket_display_text') ?></span>
 
 	 			</a>
 	 		</li>
@@ -109,7 +109,7 @@
 
 ?>
 
-	<ul class="buckets num-<?php echo $bucketCount ." ". $bucketsLayout ?>">
+	<ul class="buckets buckets--num-<?php echo $bucketCount ." buckets--". $bucketsLayout ?>">
 
 		<?php foreach( $bucketposts as $p ):
 
@@ -127,15 +127,15 @@
 			// ------------------------------------------------------------------------------------
 			if($imageType == 'imagebg'): ?>
 				<style>
-					.bucket-<?php echo $i; ?> {
+					.buckets__item--<?php echo $i; ?> {
 				      background-image: url(<?php echo $bucket_url; ?>);
 				    }
 				</style>
 
-				<li class="bucket-<?php echo $i; ?>">
-					<a href="<?php echo get_permalink( $p->ID ); ?>">
+				<li class="buckets__item buckets__item--<?php echo $i; ?>">
+					<a class="buckets__link" href="<?php echo get_permalink( $p->ID ); ?>">
 
-					<span class="title"><?php echo get_the_title( $p->ID ); ?></span>
+					<span class="buckets__title"><?php echo get_the_title( $p->ID ); ?></span>
 
 					</a>
 				</li>
@@ -151,12 +151,12 @@
 			// ------------------------------------------------------------------------------------
 			elseif($imageType == 'imagehtml'): ?>
 
-			<li class="bucket-<?php echo $i; ?>">
-				<a href="<?php echo get_permalink( $p->ID ); ?>">
+			<li class="buckets__item buckets__item--<?php echo $i; ?>">
+				<a class="buckets__link" href="<?php echo get_permalink( $p->ID ); ?>">
 
-	 				<img src="<?php echo $bucket_url; ?>" alt="<?php the_sub_field('bucket_display_text') ?>">
+	 				<img class="buckets__image" src="<?php echo $bucket_url; ?>" alt="<?php the_sub_field('bucket_display_text') ?>">
 
-				<span class="title"><?php echo get_the_title( $p->ID ); ?></span>
+					<span class="buckets__title"><?php echo get_the_title( $p->ID ); ?></span>
 
 				</a>
 			</li>

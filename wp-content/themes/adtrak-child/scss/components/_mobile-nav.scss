@@ -37,12 +37,6 @@ $closeIconText :      #fff;
     transition: .4s;
     max-width: 360px;
 
-    &.active {
-          -webkit-transform: translateX(0);
-          transform: translateX(0);
-          box-shadow: -10px 0 30px rgba(#000,.2);
-    }
-
     &:before {
         content: "Menu";
         display: block;
@@ -52,6 +46,12 @@ $closeIconText :      #fff;
         text-align: center;
         font-size: 1.5rem;
     }
+
+    &--active {
+          -webkit-transform: translateX(0);
+          transform: translateX(0);
+          box-shadow: -10px 0 30px rgba(#000,.2);
+    }    
 
     li {
         list-style: none;
@@ -162,7 +162,7 @@ $closeIconText :      #fff;
         color: $closeIconText;
     }
 
-    .mob-nav.active & {
+    .mob-nav--active & {
         display: block;
         @include flexbox;
     }
@@ -182,7 +182,7 @@ $closeIconText :      #fff;
     opacity: 0;
     visibility: hidden;
 
-    &.active {
+    &.mob-nav--active {
         opacity: 1;
         visibility: visible;
     }

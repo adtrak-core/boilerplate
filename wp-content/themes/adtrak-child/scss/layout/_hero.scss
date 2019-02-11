@@ -8,19 +8,19 @@
     background-size: cover;
     background-position: center;
 
-    .container {
+    &__container {
         position: relative;   
         min-height: 400px;     
     }
+
+    &__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        padding: 20px;
+        background: rgba(0,0,0,.6);
+        color: $blanc;
+    }
     
-}
-    
-.hero-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    padding: 20px;
-    background: rgba(0,0,0,.6);
-    color: $blanc;
 }

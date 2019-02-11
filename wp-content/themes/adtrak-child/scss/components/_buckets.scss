@@ -21,48 +21,45 @@
 $bucketMargins : 2%;
 
 .buckets {
-
     max-width: $full-width;
     margin: 0 auto;
     list-style: none;
     @include flexbox();
     @include flex-direction(column);
 
-    li {
+    &__item {
         width: 100%;
         background-size: cover;
         background-position: center;
     }
 
     @include bp480 {
-
         @include flex-direction(row);
         @include flex-wrap(wrap);
 
-        li {
+        &__item {
             width: 50%;
         }
     }
 
     @include bp800 {
-
         @for $i from 1 through 8 {
             $width: percentage((100 / $i) / 100);
-            &.num-#{$i} li {
+            &--num-#{$i} .buckets__item {
                 width: $width;
                 float: left;
             }
         }
     }
 
-    img {
+    &__image {
         width: auto;
         max-width: 300px;
         height: auto;
         display: block;
     }
 
-    a {
+    &__link {
         display: block;
         background: rgba($noir,.6);
         color: $blanc;
@@ -76,46 +73,45 @@ $bucketMargins : 2%;
 $marg : ($bucketMargins / 2);
 $bucketMargins : strip-unit($bucketMargins);
 
-.buckets.in-between {
+.buckets--in-between {
 
-    li {
+    .buckets__item {
         margin-bottom: 2%;
     }
 
     @include bp480 {
 
-        li {
+        .buckets__item {
             width: 49%;
             margin: 0 1% 2%;
         }
 
-        li:nth-of-type(odd) {
+        .buckets__item:nth-of-type(odd) {
             margin-left: 0;
         }
 
-        li:nth-of-type(even) {
+        .buckets__item:nth-of-type(even) {
             margin-right: 0;
         }
     }
 
     @include bp800 {
-
         @for $i from 1 through 8 {
             $marginsTotal : (($bucketMargins * $i) - $bucketMargins); // Multiply margins by no. of buckets and minus margins for first/last buckets = This equals the total % of all bucket margins
             $spaceRemaining : (100 - $marginsTotal); // 100% minus the total % taken up by the bucket margins
             $width: (percentage(($spaceRemaining / $i) / 100));
-            &.num-#{$i} li {
+            &.buckets--num-#{$i} .buckets__item {
                 width: $width;
                 margin: 0 $marg;
             }
         }
     }
 
-    li:first-of-type {
+    .buckets__item:first-of-type {
         margin-left: 0;
     }
 
-    li:last-of-type {
+    .buckets__item:last-of-type {
         margin-right: 0;
     }
 }

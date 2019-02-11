@@ -30,7 +30,7 @@
 		// Toggle Location Numbers
 		// --------------------------------------------------------------------------------------------------
 		$('.js-toggle-location-numbers').click(function(){
-			$('.location-numbers').toggleClass('location-numbers-visible');
+			$('.location-numbers').toggleClass('location-numbers--visible');
 		});
 
 
@@ -67,13 +67,13 @@
 
 	    // Show underlay and fix the body scroll when menu button is clicked
 	    $('.menu-btn').click(function() {
-	    	$('.mob-nav,.mob-nav-underlay').addClass('active');
+	    	$('.mob-nav,.mob-nav-underlay').addClass('mob-nav--active');
 	    	$('body').addClass('fixed');
 	    });
 
 	    // Hide menu when close icon or underlay is clicked
 	    $('.mob-nav-underlay,.mob-nav-close').click(function() {
-	    	$('.mob-nav,.mob-nav-underlay').removeClass('active');
+	    	$('.mob-nav,.mob-nav-underlay').removeClass('mob-nav--active');
 	    	$('body').removeClass('fixed');
 	    });
 

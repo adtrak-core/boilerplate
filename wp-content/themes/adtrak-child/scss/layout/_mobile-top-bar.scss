@@ -10,15 +10,40 @@
     height: $mobile-top-bar-height;
     background: #eee;
     @include flexbox();
-    
-    &:after {
-        clear: both;
-        content: '';
-        display: block;
-    }
-    
+    @include clearfix;
+
     @include bp800 {
         display: none;
+    } 
+}
+
+.mobile-top-btn {
+    display: inline-block;
+    float: left;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+
+    &--menu {
+        width: 35%;
+        color: $blanc;
+        background: $noir;
+    }
+    
+    // Used when only one number is in the mobile top bar
+    &--single-number {
+        width: 65%;
+
+        &:before {
+            display: inline-block;
+            margin-right: 10px;
+            content: '\f095';
+            font-family: "FontAwesome";
+        }
+
+        a {
+            color: $noir;        
+        }
     }
 }
 
@@ -28,39 +53,7 @@
     padding: 5px;
     width: 65%;
     float: left;
-}
-
-// Used when only one number is in the mobile top bar
-.single-number {
-    display: block;
-    width: 65%;
-    a {
-        display: block;
-        padding: 8px 5px 8px 28px;
-        text-decoration: none;
-        color: $noir;
-        &:before {
-            content: '\f095';
-            font-family: "FontAwesome";
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: block;
-        }
-    }
-}
-
-.menu-btn {
-    display: inline-block;
-    text-decoration: none;
     text-align: center;
-    padding: 8px;
-    width: 35%;
-    float: right;
-    background: $noir;
-    color: $blanc;
-    cursor: pointer;
 }
 
 .location-numbers {
@@ -73,18 +66,21 @@
     background: darken($blanc,20);
     overflow-y: scroll;
     max-height: 80vh;
+
+    &--visible {
+        display: block;
+    }
+
     a {
         white-space: nowrap;
     }
+
     .ld-phonenumber {
         font-size: 2rem;
         display: block;
     }
+    
     .ld-location {
         padding: 5px 0;
     }
-}
-
-.location-numbers-visible {
-    display: block;
 }
