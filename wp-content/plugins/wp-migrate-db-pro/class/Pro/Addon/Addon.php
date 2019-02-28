@@ -77,19 +77,19 @@ class Addon {
 		$this->addons = array(
 			'wp-migrate-db-pro-media-files/wp-migrate-db-pro-media-files.php'               => array(
 				'name'             => 'Media Files',
-				'required_version' => '1.4.11',
+				'required_version' => '1.4.13',
 			),
 			'wp-migrate-db-pro-cli/wp-migrate-db-pro-cli.php'                               => array(
 				'name'             => 'CLI',
-				'required_version' => '1.3.4',
+				'required_version' => '1.3.5',
 			),
 			'wp-migrate-db-pro-multisite-tools/wp-migrate-db-pro-multisite-tools.php'       => array(
 				'name'             => 'Multisite Tools',
-				'required_version' => '1.2.2',
+				'required_version' => '1.2.5',
 			),
 			'wp-migrate-db-pro-theme-plugin-files/wp-migrate-db-pro-theme-plugin-files.php' => array(
 				'name'             => 'Theme & Plugin Files',
-				'required_version' => '1.0.4',
+				'required_version' => '1.0.5',
 			),
 		);
 	}

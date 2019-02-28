@@ -12,13 +12,17 @@ use DeliciousBrains\WPMDB\WPMigrateDB;
  * @package DeliciousBrains\WPMDB\Pro
  */
 class WPMigrateDBPro extends WPMigrateDB {
+
+	public function __construct( $pro = false ) {
+		parent::__construct( $pro );
+	}
+
 	/**
 	 * Register WordPress hooks here
 	 */
 	public function register() {
 		parent::register();
 		$register_pro = new RegisterPro();
-		$register_pro->loadContainer();
 		$register_pro->register();
 	}
 }

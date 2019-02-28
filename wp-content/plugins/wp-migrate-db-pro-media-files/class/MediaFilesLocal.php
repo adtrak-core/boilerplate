@@ -190,7 +190,7 @@ class MediaFilesLocal extends MediaFilesBase {
 				$return = $this->queue_all_attachments( $response['blogs'], $response['remote_attachments'], $state_data['determine_progress'] );
 			} else {
 				// compare batch against local attachments
-				$return = $this->compare_remote_attachments( $response['blogs'], $response['remote_attachments'], $state_data['determine_progress'] );
+				$return = $this->compare_remote_attachments( $response['blogs'], $response['remote_attachments'], $state_data['determine_progress'], 'pull' );
 			}
 		} else {
 			// get the local batch
@@ -207,7 +207,8 @@ class MediaFilesLocal extends MediaFilesBase {
 				$data['intent']             = $state_data['intent'];
 				$data['blogs']              = serialize( $batch['blogs'] );
 				$data['determine_progress'] = $state_data['determine_progress'];
-				$data['remote_attachments'] = serialize( $batch['attachments'] );
+
+				$data['remote_attachments'] = base64_encode( gzencode( serialize( $batch['attachments'] ) ) );
 				$data['sig']                = $this->http_helper->create_signature( $data, $state_data['key'] );
 				$data['remote_attachments'] = addslashes( $data['remote_attachments'] ); // will be unslashed before sig is checked
 				$ajax_url                   = trailingslashit( $state_data['url'] ) . 'wp-admin/admin-ajax.php';
@@ -267,7 +268,8 @@ class MediaFilesLocal extends MediaFilesBase {
 	 * @return bool|null
 	 */
 	function process_pull_request() {
-		$state_data         = $this->state_data_container->getData();
+		$state_data = $this->migration_state_manager->set_post_data();
+
 		$files_to_download  = $state_data['file_chunk'];
 		$remote_uploads_url = trailingslashit( $state_data['remote_uploads_url'] );
 		$parsed             = Util::parse_url( $state_data['url'] );
@@ -340,20 +342,23 @@ class MediaFilesLocal extends MediaFilesBase {
 	 * @return bool|null
 	 */
 	function process_push_request() {
-		$state_data       = $this->state_data_container->getData();
+		$state_data       = $this->migration_state_manager->set_post_data();
 		$files_to_migrate = $state_data['file_chunk'];
 
 		$upload_dir = $this->uploads_dir();
 
 		$body = '';
+
+		$file_contents = [];
 		foreach ( $files_to_migrate as $file_to_migrate ) {
-			$body .= $this->http->file_to_multipart( $upload_dir . $file_to_migrate );
+			$file_contents[] = base64_encode( gzencode( $this->http->file_to_serialized( $upload_dir . $file_to_migrate ) ) );
 		}
 
 		$post_args = array(
 			'action'          => 'wpmdbmf_push_request',
 			'remote_state_id' => $state_data['remote_state_id'],
-			'files'           => serialize( $files_to_migrate ),
+			'files'           => base64_encode( gzencode( serialize( $files_to_migrate ) ) ),
+			'file_contents'   => serialize( $file_contents ),
 		);
 
 		$post_args['sig'] = $this->http_helper->create_signature( $post_args, $state_data['key'] );
@@ -474,7 +479,7 @@ class MediaFilesLocal extends MediaFilesBase {
 	 * @return array
 	 */
 	function remove_local_files_recursive( $remote_url, $remote_key, $compare_with_remote, $offset = null ) {
-		$state_data = $this->state_data_container->getData();
+		$state_data = $this->migration_state_manager->set_post_data();
 
 		if ( 1 === ( int ) $compare_with_remote ) {
 			$local_media_files = $this->get_local_media_attachment_files_batch( $offset );

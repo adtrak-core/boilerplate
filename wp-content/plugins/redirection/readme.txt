@@ -4,7 +4,7 @@ Donate link: https://redirection.me/donation/
 Tags: redirect, htaccess, 301, 404, seo, permalink, apache, nginx, post, admin
 Requires at least: 4.5
 Tested up to: 5.0.3
-Stable tag: 3.7.2
+Stable tag: 3.7.3
 Requires PHP: 5.4
 License: GPLv3
 
@@ -149,6 +149,17 @@ The plugin works in a similar manner to how WordPress handles permalinks and sho
 * Requires minimum PHP 5.4. Do not upgrade if you are still using PHP < 5.4
 
 == Changelog ==
+
+= 3.7.3 - 2nd Feb 2019 =
+* Add PHP < 5.4 message on plugins page
+* Prevent upgrade message being hidden by other plugins
+* Fix warning with regex and no leading slash
+* Fix missing display of disabled redirects with a title
+* Improve upgrade for sites with a missing IP column
+* Improve API detection with plugins that use sessions
+* Improve compatibility with ModSecurity
+* Improve compatibility with custom API prefix
+* Detect site where Redirection was once installed and has settings but no database tables
 
 = 3.7.2 - 16th Jan 2019 =
 * Add further partial upgrade detection

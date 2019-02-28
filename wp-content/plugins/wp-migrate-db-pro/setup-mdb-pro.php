@@ -14,7 +14,7 @@ function wp_migrate_db_pro() {
 		return $wpmdbpro;
 	}
 
-	$wpmdbpro = new DeliciousBrains\WPMDB\Pro\WPMigrateDBPro();
+	$wpmdbpro = new DeliciousBrains\WPMDB\Pro\WPMigrateDBPro( true );
 	$wpmdbpro->register();
 
 	return $wpmdbpro;

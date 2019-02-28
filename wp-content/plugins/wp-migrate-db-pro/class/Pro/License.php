@@ -62,7 +62,6 @@ class License {
 		MigrationStateManager $migration_state_manager,
 		Download $download,
 		Http $http,
-		DynamicProperties $dynamic_properties,
 		ErrorLog $error_log,
 		Helper $http_helper,
 		Scramble $scrambler,
@@ -73,7 +72,7 @@ class License {
 		$this->api                     = $api;
 		$this->settings                = $settings->get_settings();
 		$this->util                    = $util;
-		$this->dynamic_props           = $dynamic_properties;
+		$this->dynamic_props           = DynamicProperties::getInstance();
 		$this->migration_state_manager = $migration_state_manager;
 		$this->download                = $download;
 		$this->http                    = $http;

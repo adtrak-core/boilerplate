@@ -5,6 +5,9 @@ namespace DeliciousBrains\WPMDB\Pro;
 use DeliciousBrains\WPMDB\Common\Error\ErrorLog;
 use DeliciousBrains\WPMDB\Common\Filesystem\Filesystem;
 use DeliciousBrains\WPMDB\Common\FormData\FormData;
+use DeliciousBrains\WPMDB\Common\Http\Helper;
+use DeliciousBrains\WPMDB\Common\Http\Http;
+use DeliciousBrains\WPMDB\Common\MigrationState\MigrationStateManager;
 use DeliciousBrains\WPMDB\Common\MigrationState\StateDataContainer;
 use DeliciousBrains\WPMDB\Common\Properties\DynamicProperties;
 use DeliciousBrains\WPMDB\Common\Properties\Properties;
@@ -12,6 +15,7 @@ use DeliciousBrains\WPMDB\Common\Settings\Settings;
 use DeliciousBrains\WPMDB\Pro\UI\Template;
 
 class UsageTracking {
+
 	/**
 	 * @var StateDataContainer
 	 */
@@ -46,6 +50,20 @@ class UsageTracking {
 	 * @var FormData
 	 */
 	private $form_data;
+	/**
+	 * @var MigrationStateManager
+	 */
+	private $migration_state_manager;
+	/**
+	 * @var Http
+	 */
+	private $http;
+
+	private $api_url;
+	/**
+	 * @var Helper
+	 */
+	private $http_helper;
 
 	public function __construct(
 		Settings $settings,
@@ -54,20 +72,27 @@ class UsageTracking {
 		ErrorLog $error_log,
 		Template $template,
 		FormData $form_data,
-		DynamicProperties $dynamic_properties,
 		StateDataContainer $state_data_container,
-		Properties $properties
+		Properties $properties,
+		MigrationStateManager $migration_state_manager,
+		Http $http,
+		Helper $http_helper
 	) {
 
-		$this->state_container = $state_data_container;
-		$this->settings        = $settings->get_settings();
-		$this->license         = $license;
-		$this->props           = $properties;
-		$this->filesystem      = $filesystem;
-		$this->error_log       = $error_log;
-		$this->template        = $template;
-		$this->dynamic_props   = $dynamic_properties;
-		$this->form_data       = $form_data;
+		$this->state_container         = $state_data_container;
+		$this->settings                = $settings->get_settings();
+		$this->license                 = $license;
+		$this->props                   = $properties;
+		$this->filesystem              = $filesystem;
+		$this->error_log               = $error_log;
+		$this->template                = $template;
+		$this->dynamic_props           = DynamicProperties::getInstance();
+		$this->form_data               = $form_data;
+		$this->migration_state_manager = $migration_state_manager;
+		$this->http                    = $http;
+		$this->http_helper             = $http_helper;
+
+		$this->api_url = apply_filters( 'wpmdb_logging_endpoint_url', 'https://api2.deliciousbrains.com' );
 	}
 
 	/**
@@ -93,21 +118,90 @@ class UsageTracking {
 
 	public function register() {
 		add_action( 'wpmdb_additional_settings_advanced', array( $this, 'template_toggle_usage_tracking' ) );
+
+		add_action( 'wp_ajax_wpmdb_maybe_collect_data', [ $this, 'log_migration_event' ] );
+		add_action( 'wp_ajax_wpmdb_track_migration_complete', [ $this, 'send_migration_complete' ] );
+		add_action( 'wp_ajax_nopriv_wpmdb_track_migration_complete', [ $this, 'send_migration_complete' ] );
+
 		if ( false !== $this->settings['allow_tracking'] ) {
-			add_action( 'wpmdb_initiate_migration', array( $this, 'log_migration_event' ), 100 );
 			add_action( 'wpmdb_notices', array( $this, 'template_notice_enable_usage_tracking' ) );
 		}
 	}
 
-	public function log_migration_event() {
-		$state_data = $this->state_container->getData();
-		$settings   = $this->settings;
+	public function send_migration_complete() {
+		if ( is_user_logged_in() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			$this->http->check_ajax_referer( 'send-migration-complete' );
+		}
+
+		$key_rules = array(
+			'action'             => 'key',
+			'migration_state_id' => 'key',
+		);
+
+		$state_data = $this->migration_state_manager->set_post_data( $key_rules );
+
+		//if not logged in
+		$filtered_post = $this->http_helper->filter_post_elements(
+			$state_data,
+			array(
+				'action',
+				'migration_state_id',
+			) );
+
+
+		$settings = $this->settings;
 
 		if ( true !== $settings['allow_tracking'] ) {
 			return false;
 		}
 
-		$api_url = apply_filters( 'wpmdb_logging_endpoint_url', 'https://api2.deliciousbrains.com/event' );
+		$migration_guid = md5( $filtered_post['migration_state_id'] . $settings['licence'] );
+
+		$log_data = [
+			'migration_complete_time' => time(),
+			'migration_guid'          => $migration_guid,
+		];
+
+		$remote_post_args = array(
+			'timeout' => 60,
+			'method'  => 'POST',
+			'headers' => array( 'Content-Type' => 'application/json' ),
+			'body'    => json_encode( $log_data ),
+		);
+
+		$api_url = $this->api_url . '/complete';
+
+		$result = wp_safe_remote_post( $api_url, $remote_post_args );
+
+		if ( is_wp_error( $result ) || $result['response']['code'] >= 400 ) {
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( 'Error logging migration event' );
+				error_log( print_r( $result, true ) );
+			}
+			$this->error_log->log_error( 'Error logging Migration event', $result );
+			$this->http->end_ajax( json_encode( $result ) );
+		}
+
+		$this->http->end_ajax( $result['body'] );
+	}
+
+	public function log_migration_event() {
+		$this->http->check_ajax_referer( 'track-usage' );
+
+		$key_rules = array(
+			'action'             => 'key',
+			'migration_state_id' => 'key',
+		);
+
+		$state_data = $this->migration_state_manager->set_post_data( $key_rules );
+
+		$settings = $this->settings;
+
+		if ( true !== $settings['allow_tracking'] ) {
+			return false;
+		}
+
+		$api_url = $this->api_url . '/event';
 
 		$log_data = array(
 			'local_timestamp'                        => time(),
@@ -188,24 +282,26 @@ class UsageTracking {
 			}
 		}
 
+		$log_data['migration_guid'] = md5( $state_data['migration_state_id'] . $settings['licence'] );
+
 		$remote_post_args = array(
-			'blocking' => apply_filters( 'wpmdb_logging_blocking_requests', false ),
-			'timeout'  => 60,
-			'method'   => 'POST',
-			'headers'  => array( 'Content-Type' => 'application/json' ),
-			'body'     => json_encode( $log_data ),
+			'timeout' => 60,
+			'method'  => 'POST',
+			'headers' => array( 'Content-Type' => 'application/json' ),
+			'body'    => json_encode( $log_data ),
 		);
 
-		$result = wp_remote_post( $api_url, $remote_post_args );
+		$result = wp_safe_remote_post( $api_url, $remote_post_args );
 		if ( is_wp_error( $result ) || $result['response']['code'] >= 400 ) {
 			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 				error_log( 'Error logging migration event' );
-				error_log( print_r( $result, 1 ) );
+				error_log( print_r( $result, true ) );
 			}
 			$this->error_log->log_error( 'Error logging Migration event', $result );
+			$this->http->end_ajax( json_encode( $result ) );
 		}
 
-		return true;
+		$this->http->end_ajax( $result['body'] );
 	}
 
 	public function template_notice_enable_usage_tracking() {

@@ -72,13 +72,13 @@ class MediaFilesRemote extends MediaFilesBase {
 			$form_data
 		);
 
-		$this->http                 = $http;
-		$this->settings             = $settings->get_settings();
-		$this->util                 = $util;
-		$this->http_helper          = $http_helper;
-		$this->error_log            = $error_log;
-		$this->properties           = $properties;
-		$this->scramble             = $scramble;
+		$this->http        = $http;
+		$this->settings    = $settings->get_settings();
+		$this->util        = $util;
+		$this->http_helper = $http_helper;
+		$this->error_log   = $error_log;
+		$this->properties  = $properties;
+		$this->scramble    = $scramble;
 	}
 
 	public function register() {
@@ -126,7 +126,7 @@ class MediaFilesRemote extends MediaFilesBase {
 			return $result;
 		}
 
-		if ( defined( 'UPLOADBLOGSDIR' ) ) {
+		if ( defined( 'UPLOADBLOGSDIR' ) && get_site_option( 'ms_files_rewriting' )  ) {
 			$upload_url = home_url( UPLOADBLOGSDIR );
 		} else {
 			$upload_dir = wp_upload_dir();
@@ -214,7 +214,7 @@ class MediaFilesRemote extends MediaFilesBase {
 			'intent'             => 'key',
 			'blogs'              => 'serialized',
 			'determine_progress' => 'positive_int',
-			'remote_attachments' => 'serialized',
+			'remote_attachments' => 'string',
 			'sig'                => 'string',
 		);
 
@@ -247,7 +247,7 @@ class MediaFilesRemote extends MediaFilesBase {
 		$filtered_post['blogs']              = addslashes( $filtered_post['blogs'] );
 		$filtered_post['remote_attachments'] = addslashes( $filtered_post['remote_attachments'] );
 
-		$return = $this->compare_remote_attachments( $filtered_post['blogs'], $filtered_post['remote_attachments'], $filtered_post['determine_progress'] );
+		$return = $this->compare_remote_attachments( $filtered_post['blogs'], $filtered_post['remote_attachments'], $filtered_post['determine_progress'], 'push' );
 		$result = $this->http->end_ajax( serialize( $return ) );
 
 		return $result;
@@ -264,7 +264,8 @@ class MediaFilesRemote extends MediaFilesBase {
 		$key_rules = array(
 			'action'          => 'key',
 			'remote_state_id' => 'key',
-			'files'           => 'serialized',
+			'files'           => 'string',
+			'file_contents'   => 'serialized',
 			'sig'             => 'string',
 		);
 
@@ -274,6 +275,7 @@ class MediaFilesRemote extends MediaFilesBase {
 			'action',
 			'remote_state_id',
 			'files',
+			'file_contents',
 		) );
 
 		$filtered_post['files'] = stripslashes( $filtered_post['files'] );
@@ -289,10 +291,10 @@ class MediaFilesRemote extends MediaFilesBase {
 			return $result;
 		}
 
-		if ( ! isset( $_FILES['media'] ) ) {
+		if ( empty( $filtered_post['file_contents'] ) ) {
 			$return = array(
 				'wpmdb_error' => 1,
-				'body'        => __( '$_FILES is empty, the upload appears to have failed', 'wp-migrate-db-pro-media-files' ) . ' (#106mf)',
+				'body'        => __( 'No media files transferred, the upload appears to have failed', 'wp-migrate-db-pro-media-files' ) . ' (#106mf)',
 			);
 			$this->error_log->log_error( $return['body'] );
 			$result = $this->http->end_ajax( serialize( $return ) );
@@ -300,14 +302,19 @@ class MediaFilesRemote extends MediaFilesBase {
 			return $result;
 		}
 
-		$upload_dir = $this->uploads_dir();
+		$file_contents = unserialize( $filtered_post['file_contents'] );
+		$upload_dir    = $this->uploads_dir();
 
-		$files      = $this->util->diverse_array( $_FILES['media'] );
-		$file_paths = unserialize( $filtered_post['files'] );
-		$i          = 0;
-		$errors     = array();
-		$transfers  = array();
-		foreach ( $files as &$file ) {
+		$file_paths = unserialize( gzdecode( base64_decode( $filtered_post['files'] ) ) );
+
+		$i         = 0;
+		$errors    = array();
+		$transfers = array();
+
+		foreach ( $file_contents as &$file ) {
+
+			$file = unserialize( gzdecode( base64_decode( $file ) ) );
+
 			$destination      = $upload_dir . apply_filters( 'wpmdbmf_destination_file_path', $file_paths[ $i ], 'push', $this );
 			$folder           = dirname( $destination );
 			$current_transfer = array( 'file' => $file_paths[ $i ], 'error' => false );
@@ -321,11 +328,12 @@ class MediaFilesRemote extends MediaFilesBase {
 				continue;
 			}
 
-			if ( false === $this->filesystem->move_uploaded_file( $file['tmp_name'], $destination ) ) {
-				$error_string              = sprintf( __( 'A problem occurred when attempting to move the temp file "%1$s" to "%2$s"', 'wp-migrate-db-pro-media-files' ), $file['tmp_name'], $destination ) . ' (#107mf)';
+			if ( false === file_put_contents( $destination, $file['contents'] ) ) {
+				$error_string              = sprintf( __( 'A problem occurred when attempting to move the temp file contents into place.', 'wp-migrate-db-pro-media-files' ), $destination ) . ' (#107mf)';
 				$errors[]                  = $error_string;
 				$current_transfer['error'] = $error_string;
 			}
+
 			$transfers[] = $current_transfer;
 			++ $i;
 		}

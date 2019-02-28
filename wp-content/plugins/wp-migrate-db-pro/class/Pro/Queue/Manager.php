@@ -71,7 +71,7 @@ class Manager {
 	}
 
 	function ensure_tables_exist() {
-		$state_data = $this->state_data_container->getData();
+		$state_data = $this->migration_state_manager->set_post_data();
 
 		$form_data = $this->form_data->parse_migration_form_data( $state_data['form_data'] );
 

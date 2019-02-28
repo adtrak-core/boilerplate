@@ -55,7 +55,6 @@ class Template extends \DeliciousBrains\WPMDB\Common\UI\TemplateBase {
 		Notice $notice,
 		FormData $form_data,
 		Addon $addon,
-		DynamicProperties $dynamic_properties,
 		License $license,
 		Properties $properties,
 		ProPluginManager $plugin_manager
@@ -65,7 +64,7 @@ class Template extends \DeliciousBrains\WPMDB\Common\UI\TemplateBase {
 		$this->form_data = $form_data;
 		$this->license   = $license;
 
-		$this->dynamic_props  = $dynamic_properties;
+		$this->dynamic_props  = DynamicProperties::getInstance();
 		$this->addon          = $addon;
 		$this->plugin_manager = $plugin_manager;
 

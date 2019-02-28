@@ -5,9 +5,9 @@ namespace DeliciousBrains\WPMDBMF\CliCommand;
 use DeliciousBrains\WPMDB\Common\Cli\Cli;
 use DeliciousBrains\WPMDB\Common\Cli\CliManager;
 use DeliciousBrains\WPMDB\Common\MigrationState\StateDataContainer;
-use DeliciousBrains\WPMDB\Common\Properties\DynamicProperties;
 use DeliciousBrains\WPMDB\Common\Properties\Properties;
 use DeliciousBrains\WPMDB\Common\Util\Util;
+use DeliciousBrains\WPMDB\Container;
 use DeliciousBrains\WPMDB\Pro\Addon\Addon;
 use DeliciousBrains\WPMDB\Pro\UI\Template;
 
@@ -33,7 +33,6 @@ class MediaFilesCli extends \DeliciousBrains\WPMDBMF\MediaFilesAddon {
 	public function __construct(
 		Addon $addon,
 		Properties $properties,
-		DynamicProperties $dynamic_properties,
 		Template $template,
 		Cli $cli,
 		CliManager $cli_manager,
@@ -43,7 +42,6 @@ class MediaFilesCli extends \DeliciousBrains\WPMDBMF\MediaFilesAddon {
 		parent::__construct(
 			$addon,
 			$properties,
-			$dynamic_properties,
 			$template
 		);
 		$this->cli                  = $cli;
@@ -54,6 +52,7 @@ class MediaFilesCli extends \DeliciousBrains\WPMDBMF\MediaFilesAddon {
 
 	public function register() {
 		add_filter( 'wpmdb_pro_cli_finalize_migration', array( $this, 'cli_migration' ), 10, 5 );
+		$this->media_files_local = Container::getInstance()->get('media_files_addon_local');
 	}
 
 	/**
@@ -253,9 +252,9 @@ class MediaFilesCli extends \DeliciousBrains\WPMDBMF\MediaFilesAddon {
 	 */
 	function make_progress_bar( $message, $count ) {
 		if ( method_exists( 'cli\Shell', 'isPiped' ) && \cli\Shell::isPiped() ) {
-			return new MediaFilesCliBar();
+			return new MediaFilesCliBarNoOp();
 		}
 
-		return new  MediaFilesCliBarNoOp( $message, $count );
+		return new  MediaFilesCliBar( $message, $count );
 	}
 }

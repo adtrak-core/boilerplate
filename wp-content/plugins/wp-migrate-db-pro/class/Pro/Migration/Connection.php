@@ -106,7 +106,6 @@ class Connection {
 		FormData $form_data,
 		Settings $settings,
 		Filesystem $filesystem,
-		DynamicProperties $dynamic_properties,
 		MigrationState $migration_state,
 		Multisite $multisite,
 		TableHelper $table_helper
@@ -124,7 +123,7 @@ class Connection {
 		$this->util                    = $util;
 		$this->table                   = $table;
 		$this->filesystem              = $filesystem;
-		$this->dynamic_props           = $dynamic_properties;
+		$this->dynamic_props           = DynamicProperties::getInstance();
 		$this->migration_state         = $migration_state;
 		$this->multisite               = $multisite;
 		$this->table_helper            = $table_helper;

@@ -32,12 +32,6 @@ class MediaFilesAddon extends AddonAbstract {
 	public $media_files_local;
 
 	/**
-	 * An instance of MediaFilesRemote
-	 *
-	 * @var MediaFilesRemote
-	 */
-	public $media_files_remote;
-	/**
 	 * @var Template
 	 */
 	private $template;
@@ -45,28 +39,22 @@ class MediaFilesAddon extends AddonAbstract {
 	private $plugin_folder_name;
 	private $plugins_url;
 
-	const MDB_VERSION_REQUIRED = '1.9b1';
+	const MDB_VERSION_REQUIRED = '1.9.3b1';
 
 	public function __construct(
 		Addon $addon,
 		Properties $properties,
-		DynamicProperties $dynamic_properties,
 		Template $template
 	) {
-		parent::__construct( $addon, $properties, $dynamic_properties );
+		parent::__construct( $addon, $properties );
 
 		$this->plugin_slug    = 'wp-migrate-db-pro-media-files';
 		$this->plugin_version = $GLOBALS['wpmdb_meta']['wp-migrate-db-pro-media-files']['version'];
 
-		$container = Container::getInstance();
-
-		$this->media_files_remote = $container->get( 'media_files_addon_remote' );
-		$this->media_files_local  = $container->get( 'media_files_addon_local' );
 		$this->template           = $template;
 		$plugin_file_path         = dirname( __DIR__ ) . '/wp-migrate-db-pro-media-files.php';
 		$this->plugin_dir_path    = plugin_dir_path( $plugin_file_path );
 		$this->plugin_folder_name = basename( $this->plugin_dir_path );
-		$this->addon_name         = $this->addon->get_plugin_name( 'wp-migrate-db-pro-media-files/wp-migrate-db-pro-media-files.php');
 
 		// @TODO see if this works
 		$this->plugins_url   = trailingslashit( plugins_url( $this->plugin_folder_name ) );
@@ -77,6 +65,8 @@ class MediaFilesAddon extends AddonAbstract {
 		if ( ! $this->meets_version_requirements( self::MDB_VERSION_REQUIRED ) ) {
 			return;
 		}
+
+		add_action( 'admin_init', [ $this, 'plugin_name' ] );
 		add_action( 'wpmdb_after_advanced_options', array( $this, 'migration_form_controls' ) );
 		add_action( 'wpmdb_load_assets', array( $this, 'load_assets' ) );
 		add_action( 'wpmdbmf_after_migration_options', array( $this, 'after_migration_options_template' ) );
@@ -84,6 +74,10 @@ class MediaFilesAddon extends AddonAbstract {
 		add_filter( 'wpmdb_establish_remote_connection_data', array( $this, 'establish_remote_connection_data' ) );
 		add_filter( 'wpmdb_nonces', array( $this, 'add_nonces' ) );
 		add_filter( 'wpmdb_data', array( $this, 'js_variables' ) );
+	}
+
+	public function plugin_name() {
+		$this->addon_name = $this->addon->get_plugin_name( 'wp-migrate-db-pro-media-files/wp-migrate-db-pro-media-files.php' );
 	}
 
 	/**
@@ -201,7 +195,8 @@ class MediaFilesAddon extends AddonAbstract {
 		// store the count of local attachments in a transient
 		// so not to impact performance with sites with large media libraries
 		if ( false === ( $attachment_count = get_transient( 'wpmdb_local_attachment_count' ) ) ) {
-			$attachment_count = $this->media_files_local->get_local_attachments_count();
+			$media_files_local = Container::getInstance()->get( 'media_files_addon_base' );
+			$attachment_count  = $media_files_local->get_local_attachments_count();
 			set_transient( 'wpmdb_local_attachment_count', $attachment_count, 2 * HOUR_IN_SECONDS );
 		}
 		$diagnostic_info['media-files'] = array(

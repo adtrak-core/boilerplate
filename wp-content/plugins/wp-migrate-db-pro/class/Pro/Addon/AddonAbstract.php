@@ -38,13 +38,12 @@ abstract class AddonAbstract {
 
 	function __construct(
 		Addon $addon,
-		Properties $properties,
-		DynamicProperties $dynamic_properties
+		Properties $properties
 	) {
-		$this->addon                               = $addon;
-		$this->properties                          = $properties;
-		$this->dynamic_properties                  = $dynamic_properties;
-		DynamicProperties::getInstance()->is_addon = true;
+		$this->addon                        = $addon;
+		$this->properties                   = $properties;
+		$this->dynamic_properties           = DynamicProperties::getInstance();
+		$this->dynamic_properties->is_addon = true;
 	}
 
 	function meets_version_requirements( $version_required ) {

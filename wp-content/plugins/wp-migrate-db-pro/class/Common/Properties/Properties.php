@@ -58,6 +58,7 @@ class Properties {
 			'wp_migrate_db_pro_cli_addon_loaded',
 			'wp_migrate_db_pro_media_files',
 			'wp_migrate_db_pro_multisite_tools',
+			'wp_migrate_db_pro_theme_plugin_files',
 		];
 
 		if ( ! Util::has_method_been_called( 'wp_migrate_db' ) ) {

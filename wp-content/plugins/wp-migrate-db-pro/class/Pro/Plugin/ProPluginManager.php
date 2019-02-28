@@ -95,8 +95,6 @@ class ProPluginManager extends PluginManagerBase {
 
 		// Clear update transients when the user clicks the "Check Again" button from the update screen
 		add_action( 'current_screen', array( $this, 'check_again_clear_transients' ) );
-
-		Container::getInstance()->get( 'cli_export' )->register();
 	}
 
 	/**

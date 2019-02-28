@@ -1,7 +1,11 @@
 <?php
 
 namespace DeliciousBrains\WPMDBMF\CliCommand;
-
+/**
+ * Class WPMDBPro_Media_Files_CLI_Bar_NoOp
+ * Provides a mostly non-operative interface for
+ * \cli\progress\bar when bar output is not desirable
+ */
 class MediaFilesCliBarNoOp {
 
 	private $_message = '';

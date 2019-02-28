@@ -7,6 +7,7 @@ use DeliciousBrains\WPMDB\Common\Filesystem\Filesystem;
 use DeliciousBrains\WPMDB\Common\Properties\Properties;
 use DeliciousBrains\WPMDB\Common\Settings\Settings;
 use DeliciousBrains\WPMDB\Container;
+use DeliciousBrains\WPMDB\Pro\Transfers\Files\Payload;
 
 /**
  * Class Util
@@ -34,7 +35,6 @@ class Util {
 	) {
 		$this->props      = $properties;
 		$this->filesystem = $filesystem;
-		$this->container  = Container::getInstance();
 	}
 
 	/**
@@ -587,7 +587,8 @@ class Util {
 			switch_to_blog( $blog_id );
 		}
 
-		$uploads = wp_upload_dir();
+		$uploads    = wp_upload_dir();
+		$upload_dir = $uploads['basedir'];
 
 		if ( ! empty( $blog_id ) && is_multisite() ) {
 			restore_current_blog();
@@ -595,7 +596,19 @@ class Util {
 			if ( empty( $primary_uploads ) ) {
 				$primary_uploads = $this->uploads_info();
 			}
-			$uploads['short_basedir'] = str_replace( trailingslashit( $primary_uploads['basedir'] ), '', trailingslashit( $uploads['basedir'] ) );
+
+			$main_uploads             = $primary_uploads['basedir'];
+			$uploads['short_basedir'] = str_replace( trailingslashit( $main_uploads ), '', trailingslashit( $upload_dir ) );
+
+			if ( defined( 'UPLOADBLOGSDIR' ) && get_site_option( 'ms_files_rewriting' ) ) {
+
+				// Get local upload path info from DB
+				switch_to_blog( $blog_id );
+				$upload_path = get_option( 'upload_path' );
+				if ( ! empty( $upload_path ) ) {
+					$uploads['short_basedir'] = str_replace( trailingslashit( UPLOADBLOGSDIR ), '', trailingslashit( $upload_path ) );
+				}
+			}
 		}
 
 		return $uploads;
@@ -606,11 +619,13 @@ class Util {
 	 *
 	 * @param string $key
 	 *
+	 * @param array  $form_data
+	 *
 	 * @return mixed
 	 */
 	function profile_value( $key, $form_data = [] ) {
 		if ( empty( $form_data ) ) {
-			$form_data = $this->container->get( 'form_data' )->getFormData();
+			$form_data = Container::getInstance()->get( 'form_data' )->getFormData();
 		}
 
 		if ( ! empty( $key ) && ! empty( $form_data ) && isset( $form_data[ $key ] ) ) {
@@ -942,5 +957,8 @@ class Util {
 		return false;
 	}
 
+	public static function get_state_data() {
+		return Container::getInstance()->get( 'state_data_container' )->state_data;
+	}
 }
 

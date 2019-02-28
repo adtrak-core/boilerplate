@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-migrate-db-pro\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2018-12-18 08:29-0500\n"
+"POT-Creation-Date: 2019-02-07 09:43-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -217,6 +217,7 @@ msgstr ""
 #: class/wpmdb-base.php:260
 #: src/wp-migrate-db-pro/class/Common/Properties/Properties.php:73
 #: src/wp-migrate-db-pro/class/Common/Properties/Properties.php:72
+#: src/wp-migrate-db-pro/class/Common/Properties/Properties.php:71
 msgid ""
 "Invalid content verification signature, please verify the connection "
 "information on the remote site and try again."
@@ -225,6 +226,7 @@ msgstr ""
 #: class/wpmdb-base.php:260
 #: src/wp-migrate-db-pro/class/Common/Properties/Properties.php:73
 #: src/wp-migrate-db-pro/class/Common/Properties/Properties.php:72
+#: src/wp-migrate-db-pro/class/Common/Properties/Properties.php:71
 #, php-format
 msgctxt "Ex. Remote URL: http://wp.dev"
 msgid " Remote URL: %s "
@@ -357,6 +359,7 @@ msgstr ""
 #: src/wp-migrate-db-pro/class/Common/Sql/TableHelper.php:134
 #: src/wp-migrate-db-pro/class/Common/Http/RemotePost.php:239
 #: src/wp-migrate-db-pro/class/Common/Sql/TableHelper.php:132
+#: src/wp-migrate-db-pro/class/Common/Sql/TableHelper.php:129
 msgid "our documentation"
 msgstr ""
 
@@ -486,6 +489,7 @@ msgstr ""
 #: class/wpmdb-base.php:1546
 #: src/wp-migrate-db-pro/class/Common/Http/Http.php:73
 #: src/wp-migrate-db-pro/class/Common/Http/Http.php:70
+#: src/wp-migrate-db-pro/class/Common/Http/Http.php:74
 #, php-format
 msgid "Invalid nonce for: %s"
 msgstr ""
@@ -493,6 +497,7 @@ msgstr ""
 #: class/wpmdb-base.php:1554
 #: src/wp-migrate-db-pro/class/Common/Http/Http.php:81
 #: src/wp-migrate-db-pro/class/Common/Http/Http.php:78
+#: src/wp-migrate-db-pro/class/Common/Http/Http.php:82
 #, php-format
 msgid "Access denied for: %s"
 msgstr ""
@@ -792,6 +797,7 @@ msgstr ""
 #: class/wpmdb-utils.php:82
 #: src/wp-migrate-db-pro/class/Common/Util/Util.php:196
 #: src/wp-migrate-db-pro/class/Common/Util/Util.php:199
+#: src/wp-migrate-db-pro/class/Common/Util/Util.php:200
 #, php-format
 msgid "Scope: %s()."
 msgstr ""
@@ -799,6 +805,7 @@ msgstr ""
 #: class/wpmdb-utils.php:83
 #: src/wp-migrate-db-pro/class/Common/Util/Util.php:197
 #: src/wp-migrate-db-pro/class/Common/Util/Util.php:200
+#: src/wp-migrate-db-pro/class/Common/Util/Util.php:201
 #, php-format
 msgid "WPMDB Error: Data cannot be unserialized. %s"
 msgstr ""
@@ -894,25 +901,30 @@ msgid "Data contents of table %s"
 msgstr ""
 
 #: class/wpmdb.php:2492 src/wp-migrate-db-pro/class/Common/Sql/Table.php:1721
+#: src/wp-migrate-db-pro/class/Common/Sql/Table.php:1723
 #, php-format
 msgid "End of data contents of table %s"
 msgstr ""
 
 #: class/wpmdb.php:3008 src/wp-migrate-db-pro/class/Common/Sql/Table.php:1839
+#: src/wp-migrate-db-pro/class/Common/Sql/Table.php:1841
 msgid "WordPress MySQL database migration"
 msgstr ""
 
 #: class/wpmdb.php:3010 src/wp-migrate-db-pro/class/Common/Sql/Table.php:1841
+#: src/wp-migrate-db-pro/class/Common/Sql/Table.php:1843
 #, php-format
 msgid "Generated: %s"
 msgstr ""
 
 #: class/wpmdb.php:3011 src/wp-migrate-db-pro/class/Common/Sql/Table.php:1842
+#: src/wp-migrate-db-pro/class/Common/Sql/Table.php:1844
 #, php-format
 msgid "Hostname: %s"
 msgstr ""
 
 #: class/wpmdb.php:3012 src/wp-migrate-db-pro/class/Common/Sql/Table.php:1843
+#: src/wp-migrate-db-pro/class/Common/Sql/Table.php:1845
 #, php-format
 msgid "Database: %s"
 msgstr ""
@@ -933,6 +945,8 @@ msgstr ""
 #: src/wp-migrate-db-pro/class/Common/Plugin/Menu.php:60
 #: src/wp-migrate-db-pro/class/Common/Plugin/Menu.php:90
 #: src/wp-migrate-db-pro/class/Pro/Plugin/ProPluginManager.php:414
+#: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:326
+#: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:327
 msgid "Migrate DB Pro"
 msgstr ""
 
@@ -943,6 +957,8 @@ msgstr ""
 #: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:324
 #: src/wp-migrate-db-pro/class/Common/Plugin/Menu.php:60
 #: src/wp-migrate-db-pro/class/Common/Plugin/Menu.php:90
+#: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:326
+#: src/wp-migrate-db-pro/class/Common/Plugin/PluginManagerBase.php:327
 msgid "Migrate DB"
 msgstr ""
 
@@ -1732,6 +1748,7 @@ msgstr ""
 #: class/wpmdb.php:4026
 #: src/wp-migrate-db-pro/class/Common/Sql/TableHelper.php:134
 #: src/wp-migrate-db-pro/class/Common/Sql/TableHelper.php:132
+#: src/wp-migrate-db-pro/class/Common/Sql/TableHelper.php:129
 #, php-format
 msgid ""
 "The source site supports utf8mb4 data but the target does not, aborting "
@@ -2113,6 +2130,7 @@ msgid ""
 msgstr ""
 
 #: template/addons.php:23 src/wp-migrate-db-pro/template/addons.php:27
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:4
 msgid "Media Files"
 msgstr ""
 
@@ -2694,6 +2712,7 @@ msgstr ""
 
 #: template/pro/import-radio-button.php:4
 #: src/wp-migrate-db-pro/template/pro/import-radio-button.php:4
+#: src/wp-migrate-db-pro/template/wpmdb/import-radio-button.php:4
 msgctxt "Import data from a SQL file"
 msgid "Import"
 msgstr ""
@@ -2816,6 +2835,7 @@ msgstr ""
 
 #: template/pro/pull-push-radio-buttons.php:4
 #: src/wp-migrate-db-pro/template/pro/pull-push-radio-buttons.php:4
+#: src/wp-migrate-db-pro/template/wpmdb/pull-push-radio-buttons.php:4
 msgctxt "Import data from remote database"
 msgid "Pull"
 msgstr ""
@@ -2827,6 +2847,7 @@ msgstr ""
 
 #: template/pro/pull-push-radio-buttons.php:13
 #: src/wp-migrate-db-pro/template/pro/pull-push-radio-buttons.php:13
+#: src/wp-migrate-db-pro/template/wpmdb/pull-push-radio-buttons.php:13
 msgctxt "Export data to remote database"
 msgid "Push"
 msgstr ""
@@ -3150,6 +3171,12 @@ msgid ""
 msgstr ""
 
 #: src/wp-migrate-db-pro/template/wpmdb/sidebar.php:4
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:4
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:10
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:17
+#: src/wp-migrate-db-pro/template/wpmdb/import-radio-button.php:4
+#: src/wp-migrate-db-pro/template/wpmdb/pull-push-radio-buttons.php:4
+#: src/wp-migrate-db-pro/template/wpmdb/pull-push-radio-buttons.php:13
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -3394,4 +3421,60 @@ msgstr ""
 msgid ""
 "Unable to create the transfer manifest file. Verify the web server can write "
 "to this folder: %s"
+msgstr ""
+
+#: src/wp-migrate-db-pro/php-checker.php:26
+#, php-format
+msgid ""
+"%s requires PHP version %s or higher and cannot be activated. You are "
+"currently running version %s. <a href=\"%s\">Learn&nbsp;More&nbsp;»</a>"
+msgstr ""
+
+#: src/wp-migrate-db-pro/php-checker.php:33
+#: src/wp-migrate-db-pro/php-checker.php:67
+msgid "WP Migrate DB"
+msgstr ""
+
+#: src/wp-migrate-db-pro/php-checker.php:37
+#: src/wp-migrate-db-pro/php-checker.php:67
+msgid "WP Migrate DB Pro"
+msgstr ""
+
+#: src/wp-migrate-db-pro/php-checker.php:68
+#, php-format
+msgid ""
+"requires PHP version %s or higher to run and has been deactivated. You are "
+"currently running version %s. <a href=\"%s\">Learn More »</a>"
+msgstr ""
+
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:4
+msgid "to push and pull media files"
+msgstr ""
+
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:10
+msgid "Theme Files"
+msgstr ""
+
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:10
+msgid "to push and pull theme files"
+msgstr ""
+
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:17
+msgid "Plugin Files"
+msgstr ""
+
+#: src/wp-migrate-db-pro/template/wpmdb/addon-upgrades.php:17
+msgid "to push and pull plugin files"
+msgstr ""
+
+#: src/wp-migrate-db-pro/template/wpmdb/import-radio-button.php:4
+msgid "to import SQL files"
+msgstr ""
+
+#: src/wp-migrate-db-pro/template/wpmdb/pull-push-radio-buttons.php:4
+msgid "to pull remote data into this site"
+msgstr ""
+
+#: src/wp-migrate-db-pro/template/wpmdb/pull-push-radio-buttons.php:13
+msgid "to push data from this site to a remote site"
 msgstr ""

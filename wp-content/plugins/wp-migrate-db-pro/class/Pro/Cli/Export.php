@@ -27,8 +27,7 @@ class Export extends Cli {
 		FinalizeMigration $finalize_migration,
 		Helper $http_helper,
 		MigrationManager $migration_manager,
-		MigrationStateManager $migration_state_manager,
-		DynamicProperties $dynamic_properties
+		MigrationStateManager $migration_state_manager
 	) {
 		parent::__construct(
 			$form_data,
@@ -40,10 +39,12 @@ class Export extends Cli {
 			$finalize_migration,
 			$http_helper,
 			$migration_manager,
-			$migration_state_manager,
-			$dynamic_properties
+			$migration_state_manager
 		);
+	}
 
+	public function register() {
+		parent::register();
 		// add support for extra args
 		add_filter( 'wpmdb_cli_filter_get_extra_args', array( $this, 'filter_extra_args_cli_export' ), 10, 1 );
 		add_filter( 'wpmdb_cli_filter_get_profile_data_from_args', array( $this, 'add_extra_args_for_pro_export' ), 10, 3 );
