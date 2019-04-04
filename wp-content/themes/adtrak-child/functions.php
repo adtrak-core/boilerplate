@@ -48,13 +48,7 @@ function remove_unwanted_plugins() {
         remove_action('wp_footer', 'bf_footer', 30);
 	}
 	*/
-
-    // Only include form scripts on pages that have forms - REMOVE if your forms are on all pages!
-    if (!is_page('contact-us')) {
-        wp_dequeue_script('parsleyjs');
-        wp_dequeue_script('forms-front-js');
-	}
-
+    
 	// Remove datepicker script - ENABLE if your form has a datepicker field!
 	wp_dequeue_script('jquery-ui-datepicker');
 }
