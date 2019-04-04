@@ -45,6 +45,11 @@
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+        opacity: .8;
+    }
 }
 
 @media (min-width: 800px) {
@@ -55,4 +60,3 @@
         margin-top: 0;
     }
 }
-

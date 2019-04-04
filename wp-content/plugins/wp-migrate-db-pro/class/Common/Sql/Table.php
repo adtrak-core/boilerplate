@@ -340,8 +340,6 @@ class Table {
 
 		$preserved_sitemeta_options = $preserved_options;
 
-		$this->form_data = $this->form_data->parse_migration_form_data( $state_data['form_data'] );
-
 		if ( false === empty( $form_data['keep_active_plugins'] ) ) {
 			$preserved_options[]          = 'active_plugins';
 			$preserved_sitemeta_options[] = 'active_sitewide_plugins';

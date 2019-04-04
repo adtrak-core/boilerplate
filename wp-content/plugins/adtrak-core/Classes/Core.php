@@ -31,7 +31,7 @@ class Core
 
 	public function __construct()
 	{
-		$this->version = '0.9.15';
+		$this->version = '0.9.25';
 
 		$this->loader = new Loader;
 
@@ -59,6 +59,7 @@ class Core
 
 		$cookie = new Cookies($this->version);
 		$this->loader->add_action('init', $cookie, 'register_shortcodes');
+		$this->loader->add_action('wp_loaded', $cookie, 'create_page');
 	}
 
 	public function define_login_hooks()

@@ -92,7 +92,7 @@ class WordPress_Module extends Red_Module {
 		$options = red_get_options();
 
 		if ( $options['https'] && ! is_ssl() ) {
-			$target = rtrim( Redirection_Request::get_server_name(), '/' ) . esc_url_raw( Redirection_Request::get_request_url() );
+			$target = rtrim( parse_url( home_url(), PHP_URL_HOST ), '/' ) . esc_url_raw( Redirection_Request::get_request_url() );
 			wp_safe_redirect( 'https://' . $target, 301 );
 			die();
 		}
@@ -148,7 +148,7 @@ class WordPress_Module extends Red_Module {
 	}
 
 	public function send_headers( $obj ) {
-		if ( ! empty( $this->matched ) && $this->matched->match->action_code === '410' ) {
+		if ( ! empty( $this->matched ) && $this->matched->action->get_code() === 410 ) {
 			add_filter( 'status_header', array( $this, 'set_header_410' ) );
 		}
 	}

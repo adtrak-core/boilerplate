@@ -22,20 +22,21 @@ class Redirection_Admin {
 	}
 
 	function __construct() {
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_notices', array( $this, 'update_nag' ) );
-		add_action( 'plugin_action_links_' . basename( dirname( REDIRECTION_FILE ) ) . '/' . basename( REDIRECTION_FILE ), array( $this, 'plugin_settings' ), 10, 4 );
-		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
-		add_filter( 'redirection_save_options', array( $this, 'flush_schedule' ) );
-		add_filter( 'set-screen-option', array( $this, 'set_per_page' ), 10, 3 );
-		add_action( 'redirection_redirect_updated', array( $this, 'set_default_group' ), 10, 2 );
+		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+		add_action( 'admin_notices', [ $this, 'update_nag' ] );
+		// add_action( 'network_admin_notices', [ $this, 'update_nag' ] );
+		add_action( 'plugin_action_links_' . basename( dirname( REDIRECTION_FILE ) ) . '/' . basename( REDIRECTION_FILE ), [ $this, 'plugin_settings' ], 10, 4 );
+		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 4 );
+		add_filter( 'redirection_save_options', [ $this, 'flush_schedule' ] );
+		add_filter( 'set-screen-option', [ $this, 'set_per_page' ], 10, 3 );
+		add_action( 'redirection_redirect_updated', [ $this, 'set_default_group' ], 10, 2 );
 
 		if ( defined( 'REDIRECTION_FLYING_SOLO' ) && REDIRECTION_FLYING_SOLO ) {
-			add_filter( 'script_loader_src', array( $this, 'flying_solo' ), 10, 2 );
+			add_filter( 'script_loader_src', [ $this, 'flying_solo' ], 10, 2 );
 		}
 
-		register_deactivation_hook( REDIRECTION_FILE, array( 'Redirection_Admin', 'plugin_deactivated' ) );
-		register_uninstall_hook( REDIRECTION_FILE, array( 'Redirection_Admin', 'plugin_uninstall' ) );
+		register_deactivation_hook( REDIRECTION_FILE, [ 'Redirection_Admin', 'plugin_deactivated' ] );
+		register_uninstall_hook( REDIRECTION_FILE, [ 'Redirection_Admin', 'plugin_uninstall' ] );
 
 		$this->monitor = new Red_Monitor( red_get_options() );
 		$this->run_hacks();
@@ -204,12 +205,10 @@ class Redirection_Admin {
 			'per_page' => $this->get_per_page(),
 			'locale' => $this->get_i18n_data(),
 			'localeSlug' => get_locale(),
-			'token' => $options['token'],
-			'autoGenerate' => $options['auto_target'],
+			'settings' => $options,
 			'preload' => $preload,
 			'versions' => implode( "\n", $versions ),
 			'version' => REDIRECTION_VERSION,
-			'api_setting' => $options['rest_api'],
 			'database' => $status->get_json(),
 		) );
 
@@ -264,7 +263,7 @@ class Redirection_Admin {
 	}
 
 	private function run_fixit() {
-		if ( current_user_can( apply_filters( 'redirection_role', 'manage_options' ) ) ) {
+		if ( $this->user_has_access() ) {
 			include_once dirname( REDIRECTION_FILE ) . '/models/fixer.php';
 
 			$fixer = new Red_Fixer();
@@ -284,10 +283,12 @@ class Redirection_Admin {
 
 	private function get_preload_data() {
 		if ( $this->get_menu_page() === 'support' ) {
-			$api = new Redirection_Api_Plugin( REDIRECTION_API_NAMESPACE );
+			include_once dirname( REDIRECTION_FILE ) . '/models/fixer.php';
+
+			$fixer = new Red_Fixer();
 
 			return array(
-				'pluginStatus' => $api->route_status( new WP_REST_Request() ),
+				'pluginStatus' => $fixer->get_status(),
 			);
 		}
 
@@ -335,9 +336,13 @@ class Redirection_Admin {
 		return array();
 	}
 
-	function admin_menu() {
-		$hook = add_management_page( 'Redirection', 'Redirection', apply_filters( 'redirection_role', 'manage_options' ), basename( REDIRECTION_FILE ), array( &$this, 'admin_screen' ) );
-		add_action( 'load-' . $hook, array( $this, 'redirection_head' ) );
+	public function admin_menu() {
+		$hook = add_management_page( 'Redirection', 'Redirection', $this->get_access_role(), basename( REDIRECTION_FILE ), [ $this, 'admin_screen' ] );
+		add_action( 'load-' . $hook, [ $this, 'redirection_head' ] );
+	}
+
+	public function get_access_role() {
+		return apply_filters( 'redirection_role', 'manage_options' );
 	}
 
 	private function check_minimum_wp() {
@@ -355,6 +360,10 @@ class Redirection_Admin {
 	}
 
 	public function admin_screen() {
+		if ( ! $this->user_has_access() ) {
+			die( 'You do not have sufficient permissions to access this page.' );
+		}
+
 		if ( $this->check_minimum_wp() === false ) {
 			return $this->show_minimum_wordpress();
 		}
@@ -470,7 +479,7 @@ class Redirection_Admin {
 	}
 
 	private function user_has_access() {
-		return current_user_can( apply_filters( 'redirection_role', 'manage_options' ) );
+		return current_user_can( $this->get_access_role() );
 	}
 
 	private function inject() {
