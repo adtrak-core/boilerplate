@@ -48,7 +48,7 @@ function remove_unwanted_plugins() {
         remove_action('wp_footer', 'bf_footer', 30);
 	}
 	*/
-    
+
 	// Remove datepicker script - ENABLE if your form has a datepicker field!
 	wp_dequeue_script('jquery-ui-datepicker');
 }
@@ -65,7 +65,6 @@ Deregister Certain Stylesheets
 ======================================================================================================================== */
 
 function my_deregister_styles() {
-	wp_deregister_style('forms-front'); // Disable forms stylesheet included by plugin - just use your forms.scss
 	wp_deregister_style('adtrak-cookie'); // Disable separate stylesheet for cookie notice (styles can be found in footer.scss)
 	wp_deregister_style('wp-block-library'); // Gutenberg related stylesheet
 }
