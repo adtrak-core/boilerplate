@@ -2,48 +2,40 @@
 	Forms
 --------------------------------------------------------------- */
 
-form {
+.nf-form-content {
+    overflow: hidden;
+}
 
-    > * + * {
-        margin: 1em 0;
-    }
+nf-fields-wrap {
+    overflow: hidden;
+}
 
-	label {
- 		display: block;
-        position: relative;
-	}
+.nf-form-fields-required {
+    color: red;
+}
 
-	input[type="text"],
-	input[type="email"],
-	input[type="url"],
-	input[type="tel"],
-	input[type="date"],
-	input[type="number"] {
- 		width: 100%;
-	}
+// nf-field {
+//
+// }
+//
+// .nf-field-label {
+//
+// }
 
-	textarea {
- 		width: 100%;
-	}
+.ninja-forms-field {
+    padding: .5rem;
 
-	select {
- 		width: 100%;
-	}
+    // &::placeholder {
+    //
+    // }
+}
 
-	input[type="checkbox"],
-	input[type="radio"] {
-		font-size: 1.4rem;
-	}
 
-	input[type="file"] {
-		font-size: 1.4rem;
-	}
+/* Error handling */
+.nf-error-wrap {
 
-	fieldset {
+}
 
-	}
+.nf-error-msg {
 
-	legend {
-		
-	}
 }
