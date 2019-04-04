@@ -1,9 +1,0 @@
-<select {% if (fields.required) %}required{% endif %} class="{{ fields.classes }}" name="acpf-{{ fields.name }}" id="acpf-{{ fields.name }}">
-
-	{% for list in fields.list %}
-
-		<option value="{{ list.value }}">{{ list.name }}</option>
-
-	{% endfor %}
-
-</select>

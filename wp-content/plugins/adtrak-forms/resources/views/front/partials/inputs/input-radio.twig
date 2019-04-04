@@ -1,5 +1,0 @@
-{% for list in fields.list %}
-
-	<label class="{{ fields.classes }}"><input {% if (fields.required) %}required{% endif %} type="radio" name="acpf-{{ fields.name }}" value="{{ list.value }}"> {{ list.name }}</label>
-
-{% endfor %}

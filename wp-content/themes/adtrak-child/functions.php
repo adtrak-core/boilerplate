@@ -14,15 +14,15 @@ add_action('wp_enqueue_scripts', function () {
 
 
 /* ========================================================================================================================
-	
+
 Add defer attribute to scripts - ADD TO THIS AS REQUIRED
-	
+
 ======================================================================================================================== */
 
 function add_defer_attribute($tag, $handle) {
 	// add script handles to the array below
-	$scripts_to_defer = array('jquery-core','production','forms-front-js','parsleyjs','adtrak-cookie','location-dynamics-front');
-	 
+	$scripts_to_defer = array('production','adtrak-cookie','location-dynamics-front');
+
 	foreach($scripts_to_defer as $defer_script) {
 	   if ($defer_script === $handle) {
 		  return str_replace(' src', ' defer src', $tag);
@@ -65,9 +65,9 @@ add_action('wp_head', 'remove_unwanted_plugins', 1);
 
 
 /* ========================================================================================================================
-	
+
 Deregister Certain Stylesheets
-	
+
 ======================================================================================================================== */
 
 function my_deregister_styles() {
@@ -90,9 +90,9 @@ add_filter('use_block_editor_for_post', '__return_false');
 
 
 /* ========================================================================================================================
-	
+
 Remove jQuery Migrate form front-end
-	
+
 ======================================================================================================================== */
 
 add_filter( 'wp_default_scripts', 'dequeue_jquery_migrate' );
@@ -182,7 +182,3 @@ function address_inline() {
 }
 
 add_shortcode('address_inline', 'address_inline');
-
-
-
-

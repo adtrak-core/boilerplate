@@ -22,10 +22,12 @@
 					<?php the_content(); ?>
 				</article>
 
+                <?php echo do_shortcode("[ninja_form id=1]"); ?>
+
 				<aside class="sidebar">
-					<?php get_sidebar(); ?>			
+					<?php get_sidebar(); ?>
 				</aside>
-		
+
 			<?php endwhile; endif; ?>
 		</div>
 	</main>
