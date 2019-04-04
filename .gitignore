@@ -95,7 +95,6 @@ Thumbs.db
 # add your own entries here
 !wp-content/plugins/adtrak-location-dynamics/
 !wp-content/plugins/adtrak-core/
-!wp-content/plugins/adtrak-forms/
 !wp-content/plugins/advanced-custom-fields-pro/
 !wp-content/plugins/aryo-activity-log/
 !wp-content/plugins/public-post-preview/
@@ -104,6 +103,8 @@ Thumbs.db
 !wp-content/plugins/wordpress-seo/
 !wp-content/plugins/wp-migrate-db-pro/
 !wp-content/plugins/wp-migrate-db-pro-media-files/
+!wp-content/plugins/ninja-forms/
+!wp-content/plugins/wp-mail-smtp/
 
 !wp-content/themes/adtrak-child/
 !wp-content/themes/adtrak-parent/
