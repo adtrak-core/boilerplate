@@ -39,7 +39,7 @@
 		// --------------------------------------------------------------------------------------------------
 		// Copy primary and secondary menus to .mob-nav element
 		var mobNav = document.querySelector('.mob-nav .scroll-container');
-		
+
 		var copyPrimaryMenu = document.querySelector('#navigation .menu-primary').cloneNode(true);
 		mobNav.appendChild(copyPrimaryMenu);
 
@@ -76,6 +76,16 @@
 	    	$('.mob-nav,.mob-nav-underlay').removeClass('mob-nav--active');
 	    	$('body').removeClass('fixed');
 	    });
+
+        // --------------------------------------------------------------------------------------------------
+		// Ninja Forms event tracking | https://www.chrisains.com/seo/tracking-ninja-form-submissions-with-google-analytics-jquery/
+		// --------------------------------------------------------------------------------------------------
+        jQuery( document ).on( 'nfFormReady', function() {
+        	nfRadio.channel('forms').on('submit:response', function(form) {
+                gtag('event', 'conversion', {'event_category': form.data.settings.title,'event_action': 'Send Form','event_label': 'Successful '+form.data.settings.title+' Enquiry'});
+        		console.log(form.data.settings.title + ' successfully submitted');
+        	});
+        });
 
 	});
 
