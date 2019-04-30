@@ -39,7 +39,7 @@ class MediaFilesAddon extends AddonAbstract {
 	private $plugin_folder_name;
 	private $plugins_url;
 
-	const MDB_VERSION_REQUIRED = '1.9.3b1';
+	const MDB_VERSION_REQUIRED = '1.9.6';
 
 	public function __construct(
 		Addon $addon,

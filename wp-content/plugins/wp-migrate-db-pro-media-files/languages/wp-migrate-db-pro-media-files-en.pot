@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-migrate-db-pro-media-files\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2019-02-07 09:09-0500\n"
+"POT-Creation-Date: 2019-04-24 12:18-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,6 +58,7 @@ msgstr ""
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:303
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:305
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:323
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:507
 #, php-format
 msgid "Error attempting to create required directory: %s"
 msgstr ""
@@ -114,12 +115,14 @@ msgstr ""
 #: class/wpmdbpro-media-files-remote.php:268
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:340
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:348
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:317
 msgid "Failed attempting to respond to push request"
 msgstr ""
 
 #: class/wpmdbpro-media-files-remote.php:428
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:500
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:508
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:477
 msgid "There were errors when removing local media files from the remote site"
 msgstr ""
 
@@ -424,6 +427,7 @@ msgid "No media files transferred, the upload appears to have failed"
 msgstr ""
 
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:332
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesRemote.php:516
 msgid ""
 "A problem occurred when attempting to move the temp file contents into place."
 msgstr ""

@@ -357,11 +357,11 @@ class MediaFilesLocal extends MediaFilesBase {
 		$post_args = array(
 			'action'          => 'wpmdbmf_push_request',
 			'remote_state_id' => $state_data['remote_state_id'],
-			'files'           => base64_encode( gzencode( serialize( $files_to_migrate ) ) ),
-			'file_contents'   => serialize( $file_contents ),
+			'files'           => base64_encode( gzencode( serialize( $files_to_migrate ) ) )
 		);
 
-		$post_args['sig'] = $this->http_helper->create_signature( $post_args, $state_data['key'] );
+		$post_args['sig']           = $this->http_helper->create_signature( $post_args, $state_data['key'] );
+		$post_args['file_contents'] = base64_encode( serialize( $file_contents ) );
 
 		$body .= $this->http->array_to_multipart( $post_args );
 

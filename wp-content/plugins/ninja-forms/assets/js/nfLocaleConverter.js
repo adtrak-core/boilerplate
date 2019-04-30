@@ -34,7 +34,7 @@ var nfLocaleConverter = function(newLocale, thousands_sep, decimal_sep) {
         // Account for a space as the thousands separator.
         // This pattern accounts for all whitespace characters (including thin space).
         num = num.replace( /\s/g, '' );
-
+        num = num.replace( /&nbsp;/g, '' );
 
         // Determine what our existing separators are.
         var myArr = num.split('');
@@ -59,9 +59,11 @@ var nfLocaleConverter = function(newLocale, thousands_sep, decimal_sep) {
                     } else {
                         replacer = '.';
                     }
+                } else {
+                    separator = final_separators.pop();
                 }
 
-                formatted = num.replace(separator, replacer);
+                formatted = num.split(separator).join(replacer);
                 break;
             case 2:
                 var find_one = final_separators[0];

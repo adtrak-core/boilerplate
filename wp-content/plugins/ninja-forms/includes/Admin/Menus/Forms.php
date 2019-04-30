@@ -103,6 +103,45 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
 
             Ninja_Forms::template( 'admin-menu-new-form.html.php' );
 
+            Ninja_Forms::template( 'fields-label--builder.html' ); // Fork for the builder.
+
+            Ninja_Forms::template( 'fields-address.html' );
+            Ninja_Forms::template( 'fields-address2.html' );
+            Ninja_Forms::template( 'fields-button.html' );
+            Ninja_Forms::template( 'fields-checkbox.html' );
+            Ninja_Forms::template( 'fields-city.html' );
+            Ninja_Forms::template( 'fields-color.html' );
+            Ninja_Forms::template( 'fields-date.html' );
+            Ninja_Forms::template( 'fields-email.html' );
+            Ninja_Forms::template( 'fields-file.html' );
+            Ninja_Forms::template( 'fields-firstname.html' );
+            Ninja_Forms::template( 'fields-hidden.html' );
+            Ninja_Forms::template( 'fields-hr.html' );
+            Ninja_Forms::template( 'fields-html.html' );
+            Ninja_Forms::template( 'fields-input.html' );
+            Ninja_Forms::template( 'fields-lastname.html' );
+            Ninja_Forms::template( 'fields-listcheckbox.html' );
+            Ninja_Forms::template( 'fields-listradio.html' );
+            Ninja_Forms::template( 'fields-listselect--builder.html' ); // Fork that removes the `for` attribute, which hijacks click events.
+            Ninja_Forms::template( 'fields-number.html' );
+            Ninja_Forms::template( 'fields-password.html' );
+            Ninja_Forms::template( 'fields-recaptcha.html' );
+            Ninja_Forms::template( 'fields-starrating.html' );
+            Ninja_Forms::template( 'fields-submit.html' );
+            Ninja_Forms::template( 'fields-tel.html' );
+            Ninja_Forms::template( 'fields-terms.html' );
+            Ninja_Forms::template( 'fields-textarea.html' );
+            Ninja_Forms::template( 'fields-textbox.html' );
+            Ninja_Forms::template( 'fields-zip.html' );
+            
+            // Deprecated Fields
+            Ninja_Forms::template( 'fields-total.html' );
+            Ninja_Forms::template( 'fields-tax.html' );
+            Ninja_Forms::template( 'fields-product.html' );
+            Ninja_Forms::template( 'fields-shipping.html' );
+
+            
+
             $this->_enqueue_the_things( $form_id );
 
             delete_user_option( get_current_user_id(), 'nf_form_preview_' . $form_id );

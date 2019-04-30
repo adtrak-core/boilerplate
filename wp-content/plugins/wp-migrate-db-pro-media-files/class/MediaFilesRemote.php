@@ -126,7 +126,7 @@ class MediaFilesRemote extends MediaFilesBase {
 			return $result;
 		}
 
-		if ( defined( 'UPLOADBLOGSDIR' ) && get_site_option( 'ms_files_rewriting' )  ) {
+		if ( defined( 'UPLOADBLOGSDIR' ) && get_site_option( 'ms_files_rewriting' ) ) {
 			$upload_url = home_url( UPLOADBLOGSDIR );
 		} else {
 			$upload_dir = wp_upload_dir();
@@ -265,7 +265,6 @@ class MediaFilesRemote extends MediaFilesBase {
 			'action'          => 'key',
 			'remote_state_id' => 'key',
 			'files'           => 'string',
-			'file_contents'   => 'serialized',
 			'sig'             => 'string',
 		);
 
@@ -275,7 +274,6 @@ class MediaFilesRemote extends MediaFilesBase {
 			'action',
 			'remote_state_id',
 			'files',
-			'file_contents',
 		) );
 
 		$filtered_post['files'] = stripslashes( $filtered_post['files'] );
@@ -291,7 +289,9 @@ class MediaFilesRemote extends MediaFilesBase {
 			return $result;
 		}
 
-		if ( empty( $filtered_post['file_contents'] ) ) {
+		$file_contents = filter_input( INPUT_POST, 'file_contents', FILTER_SANITIZE_STRING );
+
+		if ( empty( $file_contents ) ) {
 			$return = array(
 				'wpmdb_error' => 1,
 				'body'        => __( 'No media files transferred, the upload appears to have failed', 'wp-migrate-db-pro-media-files' ) . ' (#106mf)',
@@ -302,43 +302,12 @@ class MediaFilesRemote extends MediaFilesBase {
 			return $result;
 		}
 
-		$file_contents = unserialize( $filtered_post['file_contents'] );
+		$file_contents = unserialize( base64_decode( $file_contents ) );
 		$upload_dir    = $this->uploads_dir();
 
 		$file_paths = unserialize( gzdecode( base64_decode( $filtered_post['files'] ) ) );
 
-		$i         = 0;
-		$errors    = array();
-		$transfers = array();
-
-		foreach ( $file_contents as &$file ) {
-
-			$file = unserialize( gzdecode( base64_decode( $file ) ) );
-
-			$destination      = $upload_dir . apply_filters( 'wpmdbmf_destination_file_path', $file_paths[ $i ], 'push', $this );
-			$folder           = dirname( $destination );
-			$current_transfer = array( 'file' => $file_paths[ $i ], 'error' => false );
-
-			if ( false === $this->filesystem->file_exists( $folder ) && false === $this->filesystem->mkdir( $folder ) ) {
-				$error_string              = sprintf( __( 'Error attempting to create required directory: %s', 'wp-migrate-db-pro-media-files' ), $folder ) . ' (#108mf)';
-				$errors[]                  = $error_string;
-				$current_transfer['error'] = $error_string;
-				++ $i;
-				$transfers[] = $current_transfer;
-				continue;
-			}
-
-			if ( false === file_put_contents( $destination, $file['contents'] ) ) {
-				$error_string              = sprintf( __( 'A problem occurred when attempting to move the temp file contents into place.', 'wp-migrate-db-pro-media-files' ), $destination ) . ' (#107mf)';
-				$errors[]                  = $error_string;
-				$current_transfer['error'] = $error_string;
-			}
-
-			$transfers[] = $current_transfer;
-			++ $i;
-		}
-
-		$return = array( 'success' => 1, 'transfers' => $transfers );
+		list( $errors, $return ) = $this->unpack_files( $file_contents, $upload_dir, $file_paths );
 
 		if ( ! empty( $errors ) ) {
 			$return['wpmdb_non_fatal_error'] = 1;
@@ -512,6 +481,50 @@ class MediaFilesRemote extends MediaFilesBase {
 		$result = $this->http->end_ajax( serialize( $return ) );
 
 		return $result;
+	}
+
+	/**
+	 * @param        $file_contents
+	 * @param string $upload_dir
+	 * @param        $file_paths
+	 *
+	 * @return array
+	 */
+	protected function unpack_files( $file_contents, $upload_dir, $file_paths ) {
+		$i         = 0;
+		$errors    = array();
+		$transfers = array();
+
+		foreach ( $file_contents as $file ) {
+
+			$file = unserialize( gzdecode( base64_decode( $file ) ) );
+
+			$destination      = $upload_dir . apply_filters( 'wpmdbmf_destination_file_path', $file_paths[ $i ], 'push', $this );
+			$folder           = \dirname( $destination );
+			$current_transfer = array( 'file' => $file_paths[ $i ], 'error' => false );
+
+			if ( false === $this->filesystem->file_exists( $folder ) && false === $this->filesystem->mkdir( $folder ) ) {
+				$error_string              = sprintf( __( 'Error attempting to create required directory: %s', 'wp-migrate-db-pro-media-files' ), $folder ) . ' (#108mf)';
+				$errors[]                  = $error_string;
+				$current_transfer['error'] = $error_string;
+				++ $i;
+				$transfers[] = $current_transfer;
+				continue;
+			}
+
+			if ( false === file_put_contents( $destination, $file['contents'] ) ) {
+				$error_string              = sprintf( __( 'A problem occurred when attempting to move the temp file contents into place.', 'wp-migrate-db-pro-media-files' ), $destination ) . ' (#107mf)';
+				$errors[]                  = $error_string;
+				$current_transfer['error'] = $error_string;
+			}
+
+			$transfers[] = $current_transfer;
+			++ $i;
+		}
+
+		$return = array( 'success' => 1, 'transfers' => $transfers );
+
+		return array( $errors, $return );
 	}
 
 }

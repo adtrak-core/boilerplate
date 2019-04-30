@@ -68,6 +68,9 @@ class RegisterPro {
 			)
 		);
 
+		$filesystem = $container->get( 'filesystem' );
+		$filesystem->register();
+
 		$this->pro_migration_manager = $container->get( 'pro_migration_manager' );
 		$this->migration_manager     = $container->get( 'migration_manager' );
 		$this->template              = $container->get( 'template' );

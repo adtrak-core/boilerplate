@@ -83,7 +83,7 @@ final class NF_Database_Models_Submission
         return intval( $this->_seq_num );
     }
 
-    public function get_sub_date( $format )
+    public function get_sub_date( $format = 'm/d/Y' )
     {
         return date( $format, strtotime( $this->_sub_date ) );
     }
