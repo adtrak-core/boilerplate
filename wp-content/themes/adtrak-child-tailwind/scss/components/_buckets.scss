@@ -1,0 +1,117 @@
+
+/*---------------------------------------------------------------
+    Bucket Grid
+--------------------------------------------------------------- */
+
+/* Strip Unit from SASS Variable (requried for Buckets Grid)
+--------------------------------------------------------------- */
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
+}
+
+
+/* Bucket Grid
+--------------------------------------------------------------- */
+
+$bucketMargins : 2%;
+
+.buckets {
+    max-width: $full-width;
+    margin: 0 auto;
+    list-style: none;
+    @include flexbox();
+    @include flex-direction(column);
+
+    &__item {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    @include bp480 {
+        @include flex-direction(row);
+        @include flex-wrap(wrap);
+
+        &__item {
+            width: 50%;
+        }
+    }
+
+    @include bp800 {
+        @for $i from 1 through 8 {
+            $width: percentage((100 / $i) / 100);
+            &--num-#{$i} .buckets__item {
+                width: $width;
+                float: left;
+            }
+        }
+    }
+
+    &__image {
+        width: auto;
+        max-width: 300px;
+        height: auto;
+        display: block;
+    }
+
+    &__link {
+        display: block;
+        background: rgba($noir,.6);
+        color: $blanc;
+        padding: 10px;
+        height: 100%;
+        min-height: 180px;
+    }
+}
+
+
+$marg : ($bucketMargins / 2);
+$bucketMargins : strip-unit($bucketMargins);
+
+.buckets--in-between {
+
+    .buckets__item {
+        margin-bottom: 2%;
+    }
+
+    @include bp480 {
+
+        .buckets__item {
+            width: 49%;
+            margin: 0 1% 2%;
+        }
+
+        .buckets__item:nth-of-type(odd) {
+            margin-left: 0;
+        }
+
+        .buckets__item:nth-of-type(even) {
+            margin-right: 0;
+        }
+    }
+
+    @include bp800 {
+        @for $i from 1 through 8 {
+            $marginsTotal : (($bucketMargins * $i) - $bucketMargins); // Multiply margins by no. of buckets and minus margins for first/last buckets = This equals the total % of all bucket margins
+            $spaceRemaining : (100 - $marginsTotal); // 100% minus the total % taken up by the bucket margins
+            $width: (percentage(($spaceRemaining / $i) / 100));
+            &.buckets--num-#{$i} .buckets__item {
+                width: $width;
+                margin: 0 $marg;
+            }
+        }
+    }
+
+    .buckets__item:first-of-type {
+        margin-left: 0;
+    }
+
+    .buckets__item:last-of-type {
+        margin-right: 0;
+    }
+}

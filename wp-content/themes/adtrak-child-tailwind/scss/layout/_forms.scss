@@ -1,0 +1,41 @@
+/*---------------------------------------------------------------
+	Forms
+--------------------------------------------------------------- */
+
+.nf-form-content {
+    overflow: hidden;
+}
+
+nf-fields-wrap {
+    overflow: hidden;
+}
+
+.nf-form-fields-required {
+    color: red;
+}
+
+// nf-field {
+//
+// }
+//
+// .nf-field-label {
+//
+// }
+
+.ninja-forms-field {
+    padding: .5rem;
+
+    // &::placeholder {
+    //
+    // }
+}
+
+
+/* Error handling */
+.nf-error-wrap {
+
+}
+
+.nf-error-msg {
+
+}

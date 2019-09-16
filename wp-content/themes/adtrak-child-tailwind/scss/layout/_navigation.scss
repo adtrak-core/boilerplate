@@ -1,0 +1,170 @@
+/*---------------------------------------------------------------
+    Navigation (Desktop)
+--------------------------------------------------------------- */
+
+// Primary 
+
+.desktop-nav {
+    background: $blanc;
+    display: none;
+
+    @include bp800 {
+        clear: both;
+        display: block;
+        text-align: center;
+
+        li {
+            display: inline-block;
+            position: relative;
+
+            &.menu-item-has-children > a:after {
+                content: "\f107";
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                margin-left: -8px;
+                font: 1em/1 FontAwesome;
+            }
+        }
+
+        .current-menu-item a,
+        .current-menu-parent a {
+            color: $blanc;
+            background: lighten($noir,20);
+
+            &:hover {
+                color: $blanc;
+            }
+
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: $noir;
+            padding: 20px 9px;
+            font-size: 1.5rem;
+
+            &:hover {
+                color: $noir;
+            }
+
+        }
+
+        .sub-menu {
+            position: absolute;
+            background: $blanc;
+            top: 100%;
+            left: 0;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            width: 160px;
+            -webkit-transition: .3s;
+            transition: .3s;
+
+            li {
+                width: 100%;
+                float: left;
+            }
+
+            .current-menu-item > a {
+                color: $blanc;
+                background: $noir;
+            }
+
+            a {
+                color: $noir;
+                display: block;
+                border-bottom: 1px solid rgba(255,255,255,.1);
+
+                &:hover {
+                    color: $noir;
+                }
+
+            }
+
+            &:hover {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+            }
+
+        }
+
+        a:hover + .sub-menu {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+    }
+
+    @include bp1200 {
+
+        li {
+            margin-right: -4px;
+        }
+
+        a {
+            font-size: 1.6rem;
+            padding: 20px 25px;
+        }
+
+    }
+
+}
+
+
+// Secondary
+
+.top-bar #menu-secondary-menu {
+    display: none;
+}
+
+.top-bar #menu-secondary-menu {
+
+    @include bp800 {
+        clear: both;
+        display: block;
+        text-align: right;
+
+        li {
+            display: inline;
+            position: relative;
+
+            &.menu-item-has-children > a:after {
+                content: "\f107";
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                margin-left: -8px;
+                font: 1em/1 FontAwesome;
+            }
+        }
+
+        .current-menu-item a,
+        .current-menu-parent a {
+            color: $blanc;
+            background: lighten($noir,20);
+
+            &:hover {
+                color: $blanc;
+            }
+
+        }
+
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: $noir;
+            padding: 14px 6px;
+            font-size: 1.4rem;
+
+            &:hover {
+                color: $noir;
+            }
+
+        }
+    }
+}

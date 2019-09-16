@@ -1,0 +1,132 @@
+/*---------------------------------------------------------------
+    Footer
+--------------------------------------------------------------- */
+
+footer {    
+    clear: both;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+
+    ul {
+        list-style: none;
+    }
+
+    li {
+        display: block;
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    @include bp800 {
+        text-align: left;
+    }
+}
+
+.adtrak img {
+    max-width: 100px;
+}
+
+/* Back to top
+--------------------------------------------------------------- */
+
+#back-top {
+    border-radius: 10px;
+    position: fixed;
+    cursor: pointer;
+    right: 10px;
+    bottom: 10px;
+    z-index: 300;
+    opacity: .4;
+    text-align: center;
+    background: #fff;
+    padding: 3px;
+
+    &:hover {
+        opacity: 1;
+        transition: .3s;
+    }
+
+    a {
+        color: #333;
+        text-shadow: 1px 1px 1px #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+        
+        i {
+            display: block;
+            font-size: 4rem;
+        }
+    }
+}
+
+
+/* Cookie Notice
+--------------------------------------------------------------- */
+
+#wp-notification {
+    position: fixed;
+    bottom: 0;
+    z-index: 9999;
+    width: 100%;
+    display: none;
+    color: #2d3436;
+    background: #ffeaa7
+}
+
+#wp-notification.open {
+    display: block
+}
+
+.wp-notification-container {
+    margin: 0 auto;
+    color: #2d3436;
+    max-width: 1280px;
+    text-align: center;
+    padding: 10px
+}
+
+.wp-notification-container p {
+    margin: 0
+}
+
+.wp-notification-container a {
+    display: block;
+    text-decoration: underline;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #2d3436
+}
+
+.wp-notification-container a:hover {
+    text-decoration: none
+}
+
+#wp-notification-toggle {
+    display: block;
+    margin-top: 10px;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer
+}
+
+#wp-notification-toggle:hover {
+    opacity: .8
+}
+
+@media (min-width:800px) {
+    #wp-notification-toggle,
+    .wp-notification-container a {
+        display: inline-block;
+        margin-left: 10px;
+        margin-top: 0
+    }
+}

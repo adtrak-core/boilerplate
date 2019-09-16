@@ -1,0 +1,33 @@
+/*---------------------------------------------------------------
+    Buttons
+--------------------------------------------------------------- */
+
+button, .btn {
+    display: inline-block;
+    padding: 15px 20px;
+    color: $noir;
+    text-decoration: none; 
+    border: 2px solid $noir;     
+    border-radius: 10px;
+    transition: .3s;
+    
+    &:hover {
+        background: $noir;
+        color: $blanc;
+        border-color: $blanc;
+        text-decoration: none;
+    }
+
+    // Define the 1) button name, 2) text/border color & 3) background color
+    $btnColors :        noir $noir $blanc,
+                        blanc $blanc $noir;
+
+    // Loop through colours above and create classes
+    @each $colorOption in $btnColors {
+        &--#{nth($colorOption, 1)} {
+            color: nth($colorOption,2);
+            border-color: nth($colorOption,2);
+            background-color: nth($colorOption,3);
+        }
+    }
+}
