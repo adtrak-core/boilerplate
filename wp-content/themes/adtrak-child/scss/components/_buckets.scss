@@ -21,26 +21,6 @@
 $bucketMargins : 2%;
 
 .buckets {
-    max-width: $full-width;
-    margin: 0 auto;
-    list-style: none;
-    @include flexbox();
-    @include flex-direction(column);
-
-    &__item {
-        width: 100%;
-        background-size: cover;
-        background-position: center;
-    }
-
-    @include bp480 {
-        @include flex-direction(row);
-        @include flex-wrap(wrap);
-
-        &__item {
-            width: 50%;
-        }
-    }
 
     @include bp800 {
         @for $i from 1 through 8 {
@@ -50,22 +30,6 @@ $bucketMargins : 2%;
                 float: left;
             }
         }
-    }
-
-    &__image {
-        width: auto;
-        max-width: 300px;
-        height: auto;
-        display: block;
-    }
-
-    &__link {
-        display: block;
-        background: rgba($noir,.6);
-        color: $blanc;
-        padding: 10px;
-        height: 100%;
-        min-height: 180px;
     }
 }
 

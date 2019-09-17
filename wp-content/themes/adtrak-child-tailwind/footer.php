@@ -7,7 +7,7 @@
  */
 ?>
 
-	<footer class="p-4 bg-gray-100 text-center md:p-8 lg:px-0">
+	<footer class="p-4 bg-gray-100 text-center md:p-8 lg:px-0 lg:text-left">
 
 		<div class="container lg:flex flex-wrap">
 

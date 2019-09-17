@@ -2,13 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/****** Base Styles *******/
+/***********************************************************
+Layouts ***************************************************/
 
 body {
   @apply
     font-sans
-    antialiased;
+    antialiased
+    leading-relaxed;
 }
+
+.container {
+  @apply
+    w-full
+    mx-auto
+    px-4;
+}
+
+/***********************************************************
+Headings **************************************************/
 
 h1,.h1,
 h2,.h2,
@@ -23,59 +35,87 @@ h6, .h6 {
 }
 
 h1 {
-  @apply text-3xl
+  @apply text-3xl;
 }
 
 h2 {
-  @apply text-2xl
+  @apply text-2xl;
 }
 
 h3 {
-  @apply text-xl
+  @apply text-xl;
 }
 
-p {
-  @apply
-    leading-relaxed
-    mb-6;
+/***********************************************************
+Copy ******************************************************/
+
+article {
+  p {
+    @apply
+      leading-relaxed
+      mb-6;
+  }
+
+  ol,
+  ul {
+    @apply
+      pl-4
+      mb-8;
+
+    li {
+      @apply
+        leading-relaxed
+        mb-2;
+    }
+  }
+
+  ul {
+    li {
+      @apply list-disc;
+    }
+  }
+
+  ol {
+    li {
+      @apply list-decimal;
+    }
+  }
 }
 
 a {
-  @apply
-    text-blue-500;
+  @apply text-blue-500;
+
+    &:hover,
+    &:focus {
+      @apply text-blue-600;
+    }
 }
 
-a:hover, a:focus {
-  @apply
-    text-blue-600;
-}
+/***********************************************************
+Buttons ***************************************************/
 
 button,
 .btn {
-
-}
-
-
-/****** Layouts *******/
-.container {
   @apply
-    w-full
-    mx-auto
-    px-4
+    rounded
+    bg-orange-500
+    text-black
+    p-4;
 }
 
+/***********************************************************
+Menus *****************************************************/
 
-/****** Wordpress injected elements *******/
 .menu-primary,
 .menu-secondary {
 
   li {
-    @apply relatve;
+    @apply relative;
 
     &.menu-item-has-children > a:after {
       content: '\f107';
       position: absolute;
-      bottom: -15px;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       font: 1em/1 FontAwesome;
@@ -87,6 +127,19 @@ button,
       relative
       block
       p-4;
+
+      &:hover {
+        @apply
+          bg-gray-600
+          text-white;
+
+        & + .sub-menu {
+          @apply
+            block
+            opacity-100
+            visible;
+        }
+      }
   }
 
   .current-menu-item a,
@@ -102,22 +155,37 @@ button,
 
   .sub-menu {
     @apply
+      w-full
       absolute
       top-0
       left-0
       z-50
       opacity-0
-      w-full
+      hidden
+      bg-white;
+
+      &:hover {
+        @apply
+          block
+          opacity-100
+          visible;
+      }
   }
 }
 
+/***********************************************************
+Buckets ***************************************************/
 
 
-/****** Forms *******/
+
+/***********************************************************
+Forms *****************************************************/
 
 
 
-/****** For lazyloaded elements *******/
+/***********************************************************
+Lazyload **************************************************/
+
 .lazyload,
 .lazyloading {
 	opacity: 0;
