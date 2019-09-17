@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-if ( is_front_page() ) { 
+if ( is_front_page() ) {
 
 /* -----------------------------------------------------------------
 Home page
@@ -8,20 +8,17 @@ Home page
 
 ?>
 
-	<div class="hero">
+	<div>
 
 	<?php
 
 	/* This uses the featured image as a background. Takes the featured image, and applies the different sizes to varying breakpoints. */
 
 	$thumb_id = get_post_thumbnail_id();
-
 	$thumb_url_array_small = wp_get_attachment_image_src($thumb_id, 'img-600-600', true);
 	$thumb_url_small = $thumb_url_array_small[0];
-
 	$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'img-1200-500', true);
 	$thumb_url = $thumb_url_array[0];
-
 	$thumb_url_array_large = wp_get_attachment_image_src($thumb_id, 'img-2000-650', true);
 	$thumb_url_large = $thumb_url_array_large[0];
 
@@ -45,9 +42,9 @@ Home page
 
 	<?php endif; ?>
 
-		<div class="hero__container container">
+		<div class="hero min-h-64 bg-cover bg-center lg:min-h-75">
 
-			<div class="hero__content">
+			<div class="container text-white">
 
 			<?php
 
@@ -75,11 +72,11 @@ Home page
 
 				<?php /* Else display the title */ else : ?>
 
-				<p class="primary"><?php the_title(); ?></p>
+				<p><?php the_title(); ?></p>
 
 			<?php endif; ?>
 
-			</div>	
+			</div>
 
 		</div>
 
@@ -105,7 +102,7 @@ Internal page
 
 
 
-<?php } elseif (is_singular('post')) { 
+<?php } elseif (is_singular()) {
 
 /* -----------------------------------------------------------------
 Single post
@@ -133,6 +130,6 @@ Everything else
 
 ?>
 
-	
+
 
 <?php } ?>

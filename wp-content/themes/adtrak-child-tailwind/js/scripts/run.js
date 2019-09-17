@@ -30,7 +30,7 @@
 		// Toggle Location Numbers
 		// --------------------------------------------------------------------------------------------------
 		$('.js-toggle-location-numbers').click(function(){
-			$('.location-numbers').toggleClass('location-numbers--visible');
+			$('.location-numbers').toggleClass('hidden');
 		});
 
 

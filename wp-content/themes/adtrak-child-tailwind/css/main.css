@@ -1,3 +1,91 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/****** Base Styles *******/
+
+body {
+  @apply
+    font-sans
+    antialiased;
+}
+
+h1,.h1,
+h2,.h2,
+h3,.h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  @apply
+    font-bold
+    leading-snug
+    mb-4;
+}
+
+h1 {
+  @apply text-3xl
+}
+
+h2 {
+  @apply text-2xl
+}
+
+h3 {
+  @apply text-xl
+}
+
+p {
+  @apply
+    leading-relaxed
+    mb-6;
+}
+
+a {
+  @apply
+    text-blue-500;
+}
+
+a:hover, a:focus {
+  @apply
+    text-blue-600;
+}
+
+button,
+.btn {
+
+}
+
+
+/****** Layouts *******/
+.container {
+  @apply
+    w-full
+    mx-auto
+    px-4
+}
+
+
+/****** Wordpress injected elements *******/
+.menu-primary,
+.menu-secondary {
+  a {
+    @apply
+      block
+      p-4;
+  }
+}
+
+
+
+
+
+/****** For lazyloaded elements *******/
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+
+.lazyloaded {
+    opacity: 1;
+    transition: opacity 300ms;
+}

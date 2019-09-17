@@ -40,28 +40,19 @@ gulp.task('serve', () => {
 /*
  * Task - Sass
  */
-
-// gulp.task('sass', () => {
-//  return gulp.src(`_css/**/*.scss`) // Gets all files ending with .scss in app/scss and children dirs
-//    .pipe(sass())
-//    .pipe(cssnano())
-//    .pipe(gulp.dest(`_css/`))
-//    .pipe(browserSync.reload({
-//     stream: true
-//   }))
-// })
-
 gulp.task('styles', function () {
   return gulp.src('css/main.css')
   .pipe(postcss([
     require('tailwindcss'),
     require('autoprefixer'),
   ]))
-  .pipe(purgecss({
-      content: ['*.php']
-  }))
+  .pipe(sass())
+  // .pipe(purgecss({
+  //     content: ['*.php']
+  // }))
   .pipe(cssnano())
-  .pipe(gulp.dest('css/main.min.css'))
+  .pipe(rename('main.min.css'))
+  .pipe(gulp.dest('css/'))
   .pipe(browserSync.reload({
     stream: true
   }))
@@ -73,7 +64,7 @@ gulp.task('styles', function () {
 gulp.task('scripts', function() {
   return gulp.src('js/scripts/*.js')
     .pipe(gulpIf('*.js', uglify()))
-    .pipe(concat('production.min.js'))
+    .pipe(concat('production-dist.js'))
     .pipe(gulp.dest('js/'))
     .pipe(browserSync.reload({
      stream: true
