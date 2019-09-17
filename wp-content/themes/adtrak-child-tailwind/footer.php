@@ -66,9 +66,6 @@
 
 </div><!-- wrapper -->
 
-
-<script src="<?php echo get_stylesheet_directory_uri(); ?>/js/scripts/lazysizes.min.js" async=""></script>
-
 <?php wp_footer(); ?>
 
 </body>

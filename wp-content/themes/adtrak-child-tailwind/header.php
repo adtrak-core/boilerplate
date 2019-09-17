@@ -64,7 +64,7 @@
 							'menu' => 'Secondary Menu',
 							'menu_class' => "menu-secondary",
 							'container' => '',
-              'items_wrap'      => '<ul id="%1$s" class="%2$s w-full flex flex-wrap justify-around">%3$s</ul>',
+              'items_wrap'      => '<ul id="%1$s" class="%2$s w-full flex flex-wrap justify-between">%3$s</ul>',
 						]);
 					?>
 
@@ -93,7 +93,7 @@
 							'menu' => 'Primary Menu',
 							'menu_class' => "menu-primary",
 							'container' => '',
-              'items_wrap'      => '<ul id="%1$s" class="%2$s w-full flex flex-wrap justify-around">%3$s</ul>',
+              'items_wrap'      => '<ul id="%1$s" class="%2$s w-full flex flex-wrap justify-between">%3$s</ul>',
 						]);
 					?>
 			</nav>

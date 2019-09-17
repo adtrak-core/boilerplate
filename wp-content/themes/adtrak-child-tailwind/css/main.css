@@ -68,14 +68,52 @@ button,
 /****** Wordpress injected elements *******/
 .menu-primary,
 .menu-secondary {
+
+  li {
+    @apply relatve;
+
+    &.menu-item-has-children > a:after {
+      content: '\f107';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font: 1em/1 FontAwesome;
+    }
+  }
+
   a {
     @apply
+      relative
       block
       p-4;
+  }
+
+  .current-menu-item a,
+  .current-menu-parent a {
+    @apply
+      text-white
+      bg-gray-800;
+
+      &:hover {
+        @apply text-white;
+      }
+  }
+
+  .sub-menu {
+    @apply
+      absolute
+      top-0
+      left-0
+      z-50
+      opacity-0
+      w-full
   }
 }
 
 
+
+/****** Forms *******/
 
 
 
