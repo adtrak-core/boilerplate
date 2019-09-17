@@ -14,24 +14,7 @@
   	<meta charset="<?php bloginfo('charset'); ?>">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<?php /* Path dependent critical CSS */ ?>
-  	<style type="text/css">
-  		<?php include ('css/critical.css'); ?>
-        .mob-nav, .mob-nav-underlay { display: none; }
-  	</style>
-
-  	<?php /* Load CSS async */ ?>
-  	<script>
-		function loadCSS(e,t,n){"use strict";function o(){var t;for(var i=0;i<s.length;i++){if(s[i].href&&s[i].href.indexOf(e)>-1){t=true}}if(t){r.media=n||"all"}else{setTimeout(o)}}var r=window.document.createElement("link");var i=t||window.document.getElementsByTagName("script")[0];var s=window.document.styleSheets;r.rel="stylesheet";r.href=e;r.media="only x";i.parentNode.insertBefore(r,i);o();return r}
-
-		loadCSS( "<?php echo get_theme_file_uri('/css/main.css'); ?>" );
-	</script>
-
-  	<?php /* No JS support */ ?>
-	<noscript>
-		<link rel="stylesheet" href="<?php echo get_theme_file_uri('/css/main.css'); ?>">
-	</noscript>
+    <link rel="stylesheet" href="<?php echo get_theme_file_uri('/css/main.css'); ?>">
 
   	<?php wp_head(); ?>
 
