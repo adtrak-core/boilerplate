@@ -21,8 +21,28 @@
 $bucketMargins : 2%;
 
 .buckets {
+    max-width: 1600px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
 
-    @media (min-width: 800px) {
+    &__item {
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    @media (min-width: 480px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        &__item {
+            width: 50%;
+        }
+    }
+
+    @media (min-width: 768px) {
         @for $i from 1 through 8 {
             $width: percentage((100 / $i) / 100);
             &--num-#{$i} .buckets__item {
@@ -30,6 +50,22 @@ $bucketMargins : 2%;
                 float: left;
             }
         }
+    }
+
+    &__image {
+        width: auto;
+        max-width: 300px;
+        height: auto;
+        display: block;
+    }
+
+    &__link {
+        display: block;
+        background: rgba(black,.6);
+        color: white;
+        padding: 10px;
+        height: 100%;
+        min-height: 180px;
     }
 }
 
@@ -59,7 +95,7 @@ $bucketMargins : strip-unit($bucketMargins);
         }
     }
 
-    @media (min-width: 800px) {
+    @media (min-width: 768px) {
         @for $i from 1 through 8 {
             $marginsTotal : (($bucketMargins * $i) - $bucketMargins); // Multiply margins by no. of buckets and minus margins for first/last buckets = This equals the total % of all bucket margins
             $spaceRemaining : (100 - $marginsTotal); // 100% minus the total % taken up by the bucket margins
