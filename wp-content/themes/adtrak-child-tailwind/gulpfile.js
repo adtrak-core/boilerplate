@@ -41,7 +41,7 @@ gulp.task('serve', () => {
  * Task - Sass
  */
 gulp.task('styles', function () {
-  return gulp.src('styles/**/*.scss')
+  return gulp.src('styles/main.css')
   .pipe(postcss([
     require('tailwindcss'),
     require('autoprefixer'),
@@ -75,7 +75,7 @@ gulp.task('scripts', function() {
  * Task - Watch
  */
 gulp.task('watch', () => {
-    gulp.watch(`scss/**/*.scss`, gulp.series('styles'));
+    gulp.watch(`styles/main.css`, gulp.series('styles'));
     gulp.watch(`js/scripts/run.js`, gulp.series('scripts'));
 });
 

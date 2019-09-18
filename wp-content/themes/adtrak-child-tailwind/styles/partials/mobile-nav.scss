@@ -1,6 +1,8 @@
-/***********************************************************
-Mobile Nav ************************************************/
+// --------------------------------------------------------------------------------------------------
+// Mobile Navigation
+// --------------------------------------------------------------------------------------------------
 
+/* Important to set */
 $menuTitleHeight :    52px;
 
 /* Colours */
@@ -65,13 +67,13 @@ $closeIconText :      #fff;
         float: left;
         width: 100%;
         border-bottom: 1px solid $linkBorder;
-        font-size: 1rem;
+        font-size: 1.3rem;
         position: relative;
         background-color: $linkBg;
 
-        /* @media screen and (min-width: 375px) {
+        @media screen and (min-width: 375px) {
             font-size: 1.4rem;
-        } */
+        }
 
         &:hover {
             text-decoration: none;
@@ -162,7 +164,7 @@ $closeIconText :      #fff;
 
     .mob-nav--active & {
         display: block;
-        @apply flex;
+        display: flex;
     }
 }
 

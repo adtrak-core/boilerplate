@@ -28,7 +28,7 @@
 	<ul class="buckets buckets--num-<?php echo $bucketCount ." buckets--". $bucketsLayout ?>">
 
 		<?php
-
+		
 		while( has_sub_field('custom_buckets') ): ?>
 
 			<?php
@@ -42,7 +42,7 @@
 				// Get image
 				$thumb = $image['sizes'][ $imageSize ];
 
-
+			
 
 			// Buckets with background images
 			// ------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@
 	 			<a class="buckets__link" href="<?php the_sub_field('bucket_link') ?>">
 
 	 				<img class="buckets__image" src="<?php echo $thumb; ?>" alt="<?php the_sub_field('bucket_display_text') ?>">
-
+	 				
 					<span class="buckets__title"><?php the_sub_field('bucket_display_text') ?></span>
 
 	 			</a>
