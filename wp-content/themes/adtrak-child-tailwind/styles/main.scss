@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "partials/buckets.scss";
-@import "partials/mobile-nav.scss";
-
 /***********************************************************
 Layouts ***************************************************/
 
@@ -123,95 +120,106 @@ a {
   }
 }
 
-/***********************************************************
-Buttons ***************************************************/
-
-button,
-.btn {
-  @apply
-    rounded
-    bg-orange-500
-    text-black
-    p-4;
-}
-
-/***********************************************************
-Menus *****************************************************/
 
 /***********************************************************
 Desktop Navs **********************************************/
 
-.menu-primary,
-.menu-secondary {
+@screen lg {
 
-  li {
-    @apply relative;
+  .menu-primary,
+  .menu-secondary {
 
-    &.menu-item-has-children > a:after {
-      content: '\f107';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      font: 1em/1 FontAwesome;
+    li {
+      @apply relative;
+
+      &.menu-item-has-children > a:after {
+        content: '\f107';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font: 1em/1 FontAwesome;
+      }
     }
-  }
 
-  a {
-    @apply
-      relative
-      block
-      p-4;
+    a {
+      @apply
+        relative
+        block
+        p-4;
 
-      &:hover {
-        @apply
-          bg-gray-600
-          text-white;
+        &:hover {
+          @apply
+            bg-gray-600
+            text-white;
 
-        & + .sub-menu {
+          & + .sub-menu {
+            @apply
+              block
+              opacity-100
+              visible;
+          }
+        }
+    }
+
+    .current-menu-item a,
+    .current-menu-parent a {
+      @apply
+        text-white
+        bg-gray-800;
+
+        &:hover {
+          @apply text-white;
+        }
+    }
+
+    .sub-menu {
+      @apply
+        w-full
+        absolute
+        top-full
+        left-0
+        z-50
+        opacity-0
+        hidden
+        bg-white;
+
+        &:hover {
           @apply
             block
             opacity-100
             visible;
         }
-      }
-  }
-
-  .current-menu-item a,
-  .current-menu-parent a {
-    @apply
-      text-white
-      bg-gray-800;
-
-      &:hover {
-        @apply text-white;
-      }
-  }
-
-  .sub-menu {
-    @apply
-      w-full
-      absolute
-      top-0
-      left-0
-      z-50
-      opacity-0
-      hidden
-      bg-white;
-
-      &:hover {
-        @apply
-          block
-          opacity-100
-          visible;
-      }
+    }
   }
 }
 
 /***********************************************************
 Forms *****************************************************/
 
+input,
+select,
+textarea {
+  @apply
+    rounded
+    border
+    border-gray-500
+    p-2;
+}
 
+/***********************************************************
+Buttons ***************************************************/
+
+input[type="button"],
+button,
+.btn {
+  @apply
+    rounded
+    bg-orange-500
+    text-black
+    py-2
+    px-4;
+}
 
 /***********************************************************
 Lazyload **************************************************/
@@ -225,6 +233,9 @@ Lazyload **************************************************/
     opacity: 1;
     transition: opacity 300ms;
 }
+
+@import "partials/buckets.scss";
+@import "partials/mobile-nav.scss";
 
 /***********************************************************
 Cookie Notice *********************************************/

@@ -64,7 +64,7 @@
 							'menu' => 'Secondary Menu',
 							'menu_class' => "menu-secondary",
 							'container' => '',
-              'items_wrap'      => '<ul id="%1$s" class="%2$s w-full flex flex-wrap justify-between">%3$s</ul>',
+              'items_wrap'      => '<ul id="%1$s" class="%2$s w-full flex flex-wrap justify-center">%3$s</ul>',
 						]);
 					?>
 
@@ -72,7 +72,7 @@
 
 			</div>
 
-			<div class="container lg:flex flex-wrap justify-between items-center">
+			<div class="container lg:py-4 lg:flex flex-wrap justify-between items-center">
 
 				<a class="block p-4 lg:inline-block" href="<?php echo home_url(); ?>">
 					<?php
@@ -86,14 +86,14 @@
 
 		   </div>
 
-			<nav id="navigation" class="hidden container lg:block">
+			<nav id="navigation" class="hidden bg-blue-100 container lg:block">
 					<?php
 					// Primary menu for desktop
 						wp_nav_menu([
 							'menu' => 'Primary Menu',
 							'menu_class' => "menu-primary",
 							'container' => '',
-              'items_wrap'      => '<ul id="%1$s" class="%2$s w-full flex flex-wrap justify-between">%3$s</ul>',
+              'items_wrap'      => '<ul id="%1$s" class="%2$s w-full flex flex-wrap justify-center">%3$s</ul>',
 						]);
 					?>
 			</nav>

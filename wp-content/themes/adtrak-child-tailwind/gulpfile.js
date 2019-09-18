@@ -21,8 +21,16 @@ let gulp            = require('gulp'),
     imagemin        = require('gulp-imagemin'),
     autoprefixer    = require('gulp-autoprefixer'),
     postcss         = require('gulp-postcss'),
-    purgecss         = require('gulp-purgecss'),
+    purgecss        = require('gulp-purgecss'),
     concat          = require('gulp-concat');
+
+
+class TailwindExtractor {
+  static extract(content) {
+    return content.match(/[A-z0-9-:\/]+/g);
+  }
+}
+
 
 /*
  * Task - Serve
@@ -38,24 +46,53 @@ gulp.task('serve', () => {
 
 
 /*
- * Task - Sass
+ * Task - Styles
  */
 gulp.task('styles', function () {
   return gulp.src('styles/main.scss')
+  .pipe(sass())
   .pipe(postcss([
     require('tailwindcss'),
     require('autoprefixer'),
   ]))
-  .pipe(sass())
   // .pipe(purgecss({
-  //     content: ['*.php']
-  // }))
+  //     content: ['**/*.php'],
+  //     whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'sub-arrow', 'mob-nav-close'],
+  //     extractors: [
+  //       {
+  //         extractor: TailwindExtractor,
+  //         extensions: ["php", ".js"]
+  //       }
+  //     ]
+  //   })
+  // )
   .pipe(cssnano())
   .pipe(rename('main.min.css'))
   .pipe(gulp.dest('css/'))
   .pipe(browserSync.reload({
     stream: true
   }))
+})
+
+
+/*
+ * Task - Purge
+ */
+gulp.task('purge', function() {
+  return gulp.src('main.min.css')
+    .pipe(purgecss({
+        content: ['**/*.php'],
+        whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'sub-arrow', 'mob-nav-close'],
+        extractors: [
+          {
+            extractor: TailwindExtractor,
+            extensions: ["php", ".js"]
+          }
+        ]
+      })
+    )
+    .pipe(rename('main.min.css'))
+    .pipe(gulp.dest('css/'))
 })
 
 /*

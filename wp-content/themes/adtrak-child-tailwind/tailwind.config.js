@@ -282,6 +282,7 @@ module.exports = {
     }),
     inset: (theme, { negative }) => ({
       '0': '0',
+      'full': '100%',
       ...theme('spacing'),
       ...negative(theme('spacing')),
       auto: 'auto',
