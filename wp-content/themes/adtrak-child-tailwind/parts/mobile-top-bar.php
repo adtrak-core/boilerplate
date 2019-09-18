@@ -22,6 +22,6 @@
 
 		<?php ?>
 
-	<div class="w-1/2 p-2 text-center bg-gray-400"><i class="fa fa-bars"></i> Menu</div>
+	<div class="menu-btn w-1/2 p-2 text-center bg-gray-400"><i class="fa fa-bars"></i> Menu</div>
 
 </div>

@@ -43,7 +43,7 @@
 
 <body <?php body_class(); ?>>
 
-	<nav class="mob-nav hidden">
+	<nav class="mob-nav">
 		<div class="scroll-container">
       <?php /* Primary and Secondary menus will be cloned into here to form the mobile nav */ ?>
     </div>

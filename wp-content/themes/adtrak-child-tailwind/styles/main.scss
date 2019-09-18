@@ -47,7 +47,7 @@ h3 {
 }
 
 /***********************************************************
-Copy ******************************************************/
+Article ***************************************************/
 
 article {
   p {
@@ -85,11 +85,36 @@ article {
 a {
   @apply text-blue-500;
 
-    &:hover,
-    &:focus {
-      @apply text-blue-600;
-    }
+  &:hover,
+  &:focus {
+    @apply text-blue-600;
+  }
 }
+
+@screen md {
+  article {
+    img {
+        width: auto;
+    }
+
+    .alignleft {
+        float: left;
+        margin: 10px 10px 10px 0;
+    }
+
+    .aligncenter {
+        clear: both;
+        margin: 0 auto;
+    }
+
+    .alignright {
+        float: right;
+        margin: 10px 0 10px 10px;
+    }
+  }
+}
+
+
 
 /***********************************************************
 Buttons ***************************************************/
@@ -105,6 +130,9 @@ button,
 
 /***********************************************************
 Menus *****************************************************/
+
+/***********************************************************
+Desktop Navs **********************************************/
 
 .menu-primary,
 .menu-secondary {
@@ -174,11 +202,6 @@ Menus *****************************************************/
 }
 
 /***********************************************************
-Buckets ***************************************************/
-
-
-
-/***********************************************************
 Forms *****************************************************/
 
 
@@ -194,4 +217,81 @@ Lazyload **************************************************/
 .lazyloaded {
     opacity: 1;
     transition: opacity 300ms;
+}
+
+
+
+
+
+/***********************************************************
+Cookie Notice *********************************************/
+
+#wp-notification {
+  @apply
+    fixed
+    bottom-0
+    z-50
+    w-full
+    hidden
+    text-gray-900
+    bg-orange-500
+}
+
+#wp-notification.open {
+    @apply block
+}
+
+.wp-notification-container {
+    @apply
+      mx-auto
+      text-gray-900
+      max-w-6xl
+      text-center
+      p-4
+}
+
+.wp-notification-container p {
+    @apply m-0
+}
+
+.wp-notification-container a {
+    @apply
+      block
+      no-underline
+      mt-4
+      px-4
+      py-2
+      rounded
+      font-bold
+      text-gray-900;
+}
+
+.wp-notification-container a:hover {
+    @apply no-underline;
+}
+
+#wp-notification-toggle {
+    @apply
+      block
+      mt-4
+      bg-white
+      px-4
+      py-2
+      rounded
+      font-bold
+      cursor-pointer
+}
+
+#wp-notification-toggle:hover {
+    @apply opacity-75;
+}
+
+@screen md {
+  #wp-notification-toggle,
+  .wp-notification-container a {
+      @apply
+        inline-block
+        ml-4
+        mt-0
+  }
 }
