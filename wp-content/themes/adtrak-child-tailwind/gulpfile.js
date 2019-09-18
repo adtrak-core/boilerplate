@@ -79,7 +79,12 @@ gulp.task('styles', function () {
  * Task - Purge
  */
 gulp.task('purge', function() {
-  return gulp.src('main.min.css')
+  return gulp.src('styles/main.scss')
+    .pipe(sass())
+    .pipe(postcss([
+      require('tailwindcss'),
+      require('autoprefixer'),
+    ]))
     .pipe(purgecss({
         content: ['**/*.php'],
         whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'sub-arrow', 'mob-nav-close'],
@@ -91,6 +96,7 @@ gulp.task('purge', function() {
         ]
       })
     )
+    .pipe(cssnano())
     .pipe(rename('main.min.css'))
     .pipe(gulp.dest('css/'))
 })
@@ -122,4 +128,5 @@ gulp.task('watch', () => {
  */
 
 gulp.task('default', gulp.parallel('styles', 'scripts', 'watch', 'serve'));
-gulp.task('build', gulp.parallel('styles', 'scripts'));
+// gulp.task('build', gulp.parallel('styles', 'scripts'));
+gulp.task('build', gulp.parallel('styles', 'scripts', 'purge'));
