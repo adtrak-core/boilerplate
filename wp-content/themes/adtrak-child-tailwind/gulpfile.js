@@ -55,50 +55,23 @@ gulp.task('styles', function () {
     require('tailwindcss'),
     require('autoprefixer'),
   ]))
-  // .pipe(purgecss({
-  //     content: ['**/*.php'],
-  //     whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'sub-arrow', 'mob-nav-close'],
-  //     extractors: [
-  //       {
-  //         extractor: TailwindExtractor,
-  //         extensions: ["php", ".js"]
-  //       }
-  //     ]
-  //   })
-  // )
+  .pipe(purgecss({
+      content: ['**/*.php'],
+      whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'sub-arrow', 'mob-nav-close', 'ninja-forms-field'],
+      extractors: [
+        {
+          extractor: TailwindExtractor,
+          extensions: ["php", ".js"]
+        }
+      ]
+    })
+  )
   .pipe(cssnano())
   .pipe(rename('main.min.css'))
   .pipe(gulp.dest('css/'))
   .pipe(browserSync.reload({
     stream: true
   }))
-})
-
-
-/*
- * Task - Purge
- */
-gulp.task('purge', function() {
-  return gulp.src('styles/main.scss')
-    .pipe(sass())
-    .pipe(postcss([
-      require('tailwindcss'),
-      require('autoprefixer'),
-    ]))
-    .pipe(purgecss({
-        content: ['**/*.php'],
-        whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'sub-arrow', 'mob-nav-close'],
-        extractors: [
-          {
-            extractor: TailwindExtractor,
-            extensions: ["php", ".js"]
-          }
-        ]
-      })
-    )
-    .pipe(cssnano())
-    .pipe(rename('main.min.css'))
-    .pipe(gulp.dest('css/'))
 })
 
 /*
@@ -129,4 +102,4 @@ gulp.task('watch', () => {
 
 gulp.task('default', gulp.parallel('styles', 'scripts', 'watch', 'serve'));
 // gulp.task('build', gulp.parallel('styles', 'scripts'));
-gulp.task('build', gulp.parallel('styles', 'scripts', 'purge'));
+gulp.task('build', gulp.parallel('styles', 'scripts'));

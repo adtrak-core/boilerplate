@@ -22,23 +22,28 @@ $bucketMargins : 2%;
 
 .buckets {
     max-width: 1600px;
-    margin: 0 auto;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
+    @apply
+      my-0
+      mx-auto
+      list-none
+      flex
+      flex-col;
+
 
     &__item {
-        width: 100%;
-        background-size: cover;
-        background-position: center;
+        @apply
+          bg-cover
+          bg-center
+          w-full;
     }
 
     @media (min-width: 480px) {
-        flex-direction: row;
-        flex-wrap: wrap;
+        @apply
+          flex-row
+          flex-wrap;
 
         &__item {
-            width: 50%;
+            @apply w-1/2;
         }
     }
 
@@ -53,19 +58,22 @@ $bucketMargins : 2%;
     }
 
     &__image {
-        width: auto;
+        @apply
+          block
+          w-auto
+          h-auto;
         max-width: 300px;
-        height: auto;
-        display: block;
+
     }
 
     &__link {
-        display: block;
-        background: rgba(black,.6);
-        color: white;
-        padding: 10px;
-        height: 100%;
+      @apply
+        block
+        text-white
+        p-4
+        h-full;
         min-height: 180px;
+        background: rgba(black,.6);
     }
 }
 
@@ -87,11 +95,11 @@ $bucketMargins : strip-unit($bucketMargins);
         }
 
         .buckets__item:nth-of-type(odd) {
-            margin-left: 0;
+            @apply ml-0;
         }
 
         .buckets__item:nth-of-type(even) {
-            margin-right: 0;
+            @apply mr-0;
         }
     }
 
@@ -108,10 +116,10 @@ $bucketMargins : strip-unit($bucketMargins);
     }
 
     .buckets__item:first-of-type {
-        margin-left: 0;
+        @apply ml-0;
     }
 
     .buckets__item:last-of-type {
-        margin-right: 0;
+        @apply mr-0;
     }
 }

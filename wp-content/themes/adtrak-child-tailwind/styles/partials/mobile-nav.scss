@@ -45,6 +45,7 @@ $closeIconText :      #fff;
         color: $menuTitleColor;
         text-align: center;
         font-size: 1rem;
+        border-bottom: 1px solid $linkBorder;
     }
 
     &--active {
@@ -123,10 +124,6 @@ $closeIconText :      #fff;
         li {
             padding-left: 20px;
         }
-    }
-
-    .menu-primary > li:first-child a {
-        border-top: 1px solid $linkBorder;
     }
 }
 
