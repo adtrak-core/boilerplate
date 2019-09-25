@@ -5,6 +5,7 @@ body {
   @apply
     font-sans
     antialiased
+    text-primary
     leading-relaxed;
 }
 
@@ -32,4 +33,13 @@ Lazyload **************************************************/
 .lazyloaded {
     opacity: 1;
     transition: opacity 300ms;
+}
+
+a {
+  @apply text-blue-500;
+
+  &:hover,
+  &:focus {
+    @apply text-blue-600;
+  }
 }

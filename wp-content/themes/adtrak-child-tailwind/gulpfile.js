@@ -1,27 +1,18 @@
-/*global process require*/
-
-/*
- * ----------------------
- * Gulpfile
- * ----------------------
- */
-
-
-/*
- * Dependencies
- */
+/**************************
+ * Gulpfile Dependencies
+**************************/
 
 let gulp            = require('gulp'),
-    sass            = require('gulp-sass'), // Requires the gulp-sass plugin
     browserSync     = require('browser-sync').create(), // Requires the browser-sync plugin
-    uglify          = require('gulp-uglify'),
-    gulpIf          = require('gulp-if'),
-    cssnano         = require('gulp-cssnano'),
-    rename          = require("gulp-rename"),
-    imagemin        = require('gulp-imagemin'),
-    autoprefixer    = require('gulp-autoprefixer'),
+    autoprefixer    = require('autoprefixer'),
+    cssnano         = require('cssnano'),
+    argv            = require('yargs').argv,
+    sass            = require('gulp-sass'), // Requires the gulp-sass plugin
+    uglify          = require('gulp-uglify'),    
+    gulpIf          = require('gulp-if'),    
+    rename          = require("gulp-rename"),    
     postcss         = require('gulp-postcss'),
-    purgecss        = require('gulp-purgecss'),
+    purgecss        = require('gulp-purgecss'),    
     concat          = require('gulp-concat');
 
 
@@ -31,42 +22,35 @@ class TailwindExtractor {
   }
 }
 
-
-/*
- * Task - Serve
- */
-
-gulp.task('serve', () => {
-     browserSync.init({
-     proxy: `boilerplate.vm`,
-     files: `**/*`,
-     ghostMode : false
-  })
-})
-
-
-/*
- * Task - Styles
- */
+/**************************
+ * Task Styles
+**************************/
 gulp.task('styles', function () {
-  return gulp.src('styles/main.scss')
+  return gulp.src('*/**.scss')
   .pipe(sass())
-  .pipe(postcss([
-    require('tailwindcss'),
-    require('autoprefixer'),
-  ]))
-  // .pipe(purgecss({
-  //     content: ['**/*.php'],
-  //     whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'sub-arrow', 'mob-nav-close', 'ninja-forms-field'],
-  //     extractors: [
-  //       {
-  //         extractor: TailwindExtractor,
-  //         extensions: ["php", ".js"]
-  //       }
-  //     ]
-  //   })
-  //)
-  .pipe(cssnano())
+  .pipe(gulpIf(argv.production, 
+    postcss([
+      require('tailwindcss'),
+      autoprefixer(),
+      cssnano()
+    ]),
+    postcss([
+        require('tailwindcss')
+    ])
+  ))
+  .pipe(gulpIf(
+    argv.production,
+    purgecss({
+      content: ['**/*.php'],
+      whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'sub-arrow', 'mob-nav-close', 'ninja-forms-field'],
+      extractors: [
+        {
+          extractor: TailwindExtractor,
+          extensions: ["php", ".js"]
+        }
+      ]
+    })
+  ))
   .pipe(rename('main.min.css'))
   .pipe(gulp.dest('css/'))
   .pipe(browserSync.reload({
@@ -74,31 +58,43 @@ gulp.task('styles', function () {
   }))
 })
 
-/*
-* Task - Scripts
-*/
+/**************************
+ * Task Scripts
+**************************/
 gulp.task('scripts', function() {
   return gulp.src('js/scripts/*.js')
-    .pipe(gulpIf('*.js', uglify()))
     .pipe(concat('production-dist.js'))
+    .pipe(gulpIf(argv.production, uglify()))
     .pipe(gulp.dest('js/'))
     .pipe(browserSync.reload({
      stream: true
   }))
 });
 
-/*
- * Task - Watch
- */
+
+/**************************
+ * Task Watch
+**************************/
 gulp.task('watch', () => {
-    gulp.watch(`styles/main.scss`, gulp.series('styles'));
-    gulp.watch(`js/scripts/run.js`, gulp.series('scripts'));
+  gulp.watch(`styles/**/*.scss`, gulp.series('styles'));
+  gulp.watch(`js/scripts/*.js`, gulp.series('scripts'));
 });
 
 
-/*
- * Gulp automation tasks
- */
+/**************************
+ * Task Serve
+**************************/
+gulp.task('serve', () => {
+    browserSync.init({
+    proxy: `boilerplate.vm`,
+    files: `**/*`,
+    ghostMode : false
+  })
+})
 
+
+/**************************
+ * Gulp Automation
+**************************/
 gulp.task('default', gulp.parallel('styles', 'scripts', 'watch', 'serve'));
 gulp.task('build', gulp.parallel('styles', 'scripts'));

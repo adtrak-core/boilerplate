@@ -92,7 +92,7 @@ $closeIconText :      #fff;
     .sub-arrow {
         position: absolute;
         right: 0;
-        top: 0;
+        top: 4px;
         border-left: 1px solid lighten($linkBorder, 5%);
         width: 45px;
         text-align: center;

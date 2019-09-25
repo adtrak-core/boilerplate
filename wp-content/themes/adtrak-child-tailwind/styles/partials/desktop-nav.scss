@@ -27,7 +27,7 @@ Desktop Navs **********************************************/
         &:hover {
           @apply
             bg-gray-600
-            text-white;
+            text-primary;
 
           & + .sub-menu {
             @apply
