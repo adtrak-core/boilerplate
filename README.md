@@ -17,7 +17,7 @@ To get the Tailwind theme set up:
 1. Activate the theme through the WordPress admin console
 2. Go to ```gulpfile.js``` and make sure the ```serve``` task is serving the correct local URL by changing the ```proxy``` variable.
 3. Open Terminal / Hyper / CMD
-4. Navigate to the adtrak-child-tailwind theme
+4. Navigate to the ```adtrak-child-tailwind``` theme
 5. Run ```npm install``` 
 6. Once ```npm install``` has finished installing your dependencies, run ```gulp```
 7. ```gulp``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
@@ -38,7 +38,7 @@ You can access the primary, secondary & tertiary colours by using classes as fol
 
 **Feel free to add your own extensions**
 
-### Tailwing Defaults
+### Tailwind Defaults
 
 The default Tailwind config can be found in ```tailwind.config-default.js```. This is included by default, and is purely here for reference.
 
