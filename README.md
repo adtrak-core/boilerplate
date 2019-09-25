@@ -29,9 +29,11 @@ We have created a Tailwind Config file that is easily editable in ```tailwind.co
 You can access the primary, secondary & tertiary colours by using classes as follows:
 
 ```
-primary | primary-lighter | primary-darker
-secondary | secondary-lighter | secondary-darker
-tertiary | tertiary-lighter | tertiary-darker
+| Default   | Lighter           | Darker           |
+|-----------|-------------------|------------------|
+| primary   | primary-lighter   | primary-darker   |
+| secondary | secondary-lighter | secondary-darker |
+| tertiary  | tertiary-lighter  | tertiary-darker  |
 ```
 
 **Feel free to add your own extensions**
