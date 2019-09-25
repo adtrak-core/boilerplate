@@ -33,3 +33,12 @@ Lazyload **************************************************/
     opacity: 1;
     transition: opacity 300ms;
 }
+
+a {
+  @apply text-blue-500;
+
+  &:hover,
+  &:focus {
+    @apply text-blue-600;
+  }
+}

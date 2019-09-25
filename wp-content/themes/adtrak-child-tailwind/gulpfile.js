@@ -31,25 +31,11 @@ class TailwindExtractor {
   }
 }
 
-
-/*
- * Task - Serve
- */
-
-gulp.task('serve', () => {
-     browserSync.init({
-     proxy: `boilerplate.vm`,
-     files: `**/*`,
-     ghostMode : false
-  })
-})
-
-
 /*
  * Task - Styles
  */
 gulp.task('styles', function () {
-  return gulp.src('styles/main.scss')
+  return gulp.src('*/**.scss')
   .pipe(sass())
   .pipe(postcss([
     require('tailwindcss'),
@@ -65,7 +51,7 @@ gulp.task('styles', function () {
   //       }
   //     ]
   //   })
-  //)
+  // )
   .pipe(cssnano())
   .pipe(rename('main.min.css'))
   .pipe(gulp.dest('css/'))
@@ -73,6 +59,7 @@ gulp.task('styles', function () {
     stream: true
   }))
 })
+
 
 /*
 * Task - Scripts
@@ -87,18 +74,30 @@ gulp.task('scripts', function() {
   }))
 });
 
+
 /*
  * Task - Watch
  */
 gulp.task('watch', () => {
-    gulp.watch(`styles/main.scss`, gulp.series('styles'));
-    gulp.watch(`js/scripts/run.js`, gulp.series('scripts'));
+    gulp.watch(`styles/**/*.scss`, gulp.series('styles'));
+    gulp.watch(`js/scripts/*.js`, gulp.series('scripts'));
 });
+
+/*
+ * Task - Serve
+ */
+
+gulp.task('serve', () => {
+  browserSync.init({
+  proxy: `boilerplate.vm`,
+  files: `**/*`,
+  ghostMode : false
+})
+})
 
 
 /*
  * Gulp automation tasks
  */
-
 gulp.task('default', gulp.parallel('styles', 'scripts', 'watch', 'serve'));
 gulp.task('build', gulp.parallel('styles', 'scripts'));
