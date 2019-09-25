@@ -1,0 +1,71 @@
+/***********************************************************
+Desktop Navs **********************************************/
+
+@screen lg {
+  .menu-primary,
+  .menu-secondary {
+
+    li {
+      @apply relative;
+
+      &.menu-item-has-children > a:after {
+        content: '\f107';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font: 1em/1 FontAwesome;
+      }
+    }
+
+    a {
+      @apply
+        relative
+        block
+        p-4;
+
+        &:hover {
+          @apply
+            bg-gray-600
+            text-white;
+
+          & + .sub-menu {
+            @apply
+              block
+              opacity-100
+              visible;
+          }
+        }
+    }
+
+    .current-menu-item a,
+    .current-menu-parent a {
+      @apply
+        text-white
+        bg-gray-800;
+
+        &:hover {
+          @apply text-white;
+        }
+    }
+
+    .sub-menu {
+      @apply
+        w-full
+        absolute
+        top-full
+        left-0
+        z-50
+        opacity-0
+        hidden
+        bg-white;
+
+        &:hover {
+          @apply
+            block
+            opacity-100
+            visible;
+        }
+    }
+  }
+}

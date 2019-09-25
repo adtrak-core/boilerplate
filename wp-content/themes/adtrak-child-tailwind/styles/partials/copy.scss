@@ -1,0 +1,74 @@
+/***********************************************************
+Article ***************************************************/
+
+article {
+  > p {
+    @apply
+      leading-relaxed
+      mb-6;
+  }
+
+  ol,
+  ul {
+    @apply
+      pl-4
+      mb-8;
+
+    li {
+      @apply
+        leading-relaxed
+        mb-2;
+    }
+  }
+
+  ul {
+    li {
+      @apply list-disc;
+    }
+  }
+
+  ol {
+    li {
+      @apply list-decimal;
+    }
+  }
+
+  blockquote {
+    @apply 
+      p-4
+      mb-8
+      bg-gray-100;
+  }
+}
+
+a {
+  @apply text-blue-500;
+
+  &:hover,
+  &:focus {
+    @apply text-blue-600;
+  }
+}
+
+@screen md {
+  article {
+    img {
+        width: auto;
+    }
+
+    .alignleft {
+        float: left;
+        margin: 10px 10px 10px 0;
+    }
+
+    .aligncenter {
+        clear: both;
+        margin: 0 auto;
+    }
+
+    .alignright {
+        float: right;
+        margin: 10px 0 10px 10px;
+    }
+  }
+}

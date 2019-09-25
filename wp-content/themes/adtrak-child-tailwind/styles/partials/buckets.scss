@@ -52,7 +52,7 @@ $bucketMargins : 2%;
             $width: percentage((100 / $i) / 100);
             &--num-#{$i} .buckets__item {
                 width: $width;
-                float: left;
+                @apply float-left;
             }
         }
     }
@@ -63,7 +63,6 @@ $bucketMargins : 2%;
           w-auto
           h-auto;
         max-width: 300px;
-
     }
 
     &__link {
@@ -71,9 +70,9 @@ $bucketMargins : 2%;
         block
         text-white
         p-4
-        h-full;
+        h-full
+        bg-gray-900;
         min-height: 180px;
-        background: rgba(black,.6);
     }
 }
 

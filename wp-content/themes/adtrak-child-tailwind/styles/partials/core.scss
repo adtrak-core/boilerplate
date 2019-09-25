@@ -1,0 +1,35 @@
+/***********************************************************
+Layouts ***************************************************/
+
+body {
+  @apply
+    font-sans
+    antialiased
+    leading-relaxed;
+}
+
+.container {
+  @apply
+    w-full
+    mx-auto
+    px-4;
+}
+
+@screen xl {
+  .container {
+    @apply px-0;
+  }
+}
+
+/***********************************************************
+Lazyload **************************************************/
+
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+
+.lazyloaded {
+    opacity: 1;
+    transition: opacity 300ms;
+}
