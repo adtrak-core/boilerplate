@@ -111,8 +111,6 @@ Thumbs.db
 !wp-content/themes/adtrak-parent/
 !wp-content/themes/twd-darth-vader/
 
-wp-content/themes/adtrak-child-tailwind/css/
-
 *.codekit
 *.DS_store
 
