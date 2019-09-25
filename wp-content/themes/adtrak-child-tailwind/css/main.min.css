@@ -1030,7 +1030,7 @@ button,
 .mob-nav .sub-arrow {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 4px;
   border-left: 1px solid rgba(13, 13, 13, 0.15);
   width: 45px;
   text-align: center;

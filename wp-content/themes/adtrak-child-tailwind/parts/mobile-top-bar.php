@@ -1,4 +1,4 @@
-<div class="fixed w-full flex flex-wrap bg-gray-100 lg:hidden">
+<div class="fixed z-50 z w-full flex flex-wrap bg-gray-100 lg:hidden">
 
 	<?php /*<div class="w-1/2 p-2 text-center bg-gray-500">
 		<?php do_action('ld_default', false); ?>
