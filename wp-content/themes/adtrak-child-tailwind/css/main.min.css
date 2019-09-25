@@ -5841,16 +5841,16 @@ article blockquote {
   min-height: 75vh;
 }
 
-.min-h-px {
-  min-height: 1px;
-}
-
 .min-h-full {
   min-height: 100%;
 }
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.min-h-px {
+  min-height: 1px;
 }
 
 .min-w-0 {
@@ -7509,6 +7509,13 @@ article blockquote {
   left: 16rem;
 }
 
+.inset-auto {
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+}
+
 .inset-full {
   top: 100%;
   right: 100%;
@@ -7647,13 +7654,6 @@ article blockquote {
   right: -1px;
   bottom: -1px;
   left: -1px;
-}
-
-.inset-auto {
-  top: auto;
-  right: auto;
-  bottom: auto;
-  left: auto;
 }
 
 .inset-y-0 {
@@ -7834,6 +7834,16 @@ article blockquote {
 .inset-x-64 {
   right: 16rem;
   left: 16rem;
+}
+
+.inset-y-auto {
+  top: auto;
+  bottom: auto;
+}
+
+.inset-x-auto {
+  right: auto;
+  left: auto;
 }
 
 .inset-y-full {
@@ -8034,16 +8044,6 @@ article blockquote {
 .-inset-x-px {
   right: -1px;
   left: -1px;
-}
-
-.inset-y-auto {
-  top: auto;
-  bottom: auto;
-}
-
-.inset-x-auto {
-  right: auto;
-  left: auto;
 }
 
 .top-0 {
@@ -8332,6 +8332,22 @@ article blockquote {
 
 .left-64 {
   left: 16rem;
+}
+
+.top-auto {
+  top: auto;
+}
+
+.right-auto {
+  right: auto;
+}
+
+.bottom-auto {
+  bottom: auto;
+}
+
+.left-auto {
+  left: auto;
 }
 
 .top-full {
@@ -8652,22 +8668,6 @@ article blockquote {
 
 .-left-px {
   left: -1px;
-}
-
-.top-auto {
-  top: auto;
-}
-
-.right-auto {
-  right: auto;
-}
-
-.bottom-auto {
-  bottom: auto;
-}
-
-.left-auto {
-  left: auto;
 }
 
 .resize-none {
@@ -14952,16 +14952,16 @@ article blockquote {
     min-height: 75vh;
   }
 
-  .sm\:min-h-px {
-    min-height: 1px;
-  }
-
   .sm\:min-h-full {
     min-height: 100%;
   }
 
   .sm\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .sm\:min-h-px {
+    min-height: 1px;
   }
 
   .sm\:min-w-0 {
@@ -16620,6 +16620,13 @@ article blockquote {
     left: 16rem;
   }
 
+  .sm\:inset-auto {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+  }
+
   .sm\:inset-full {
     top: 100%;
     right: 100%;
@@ -16758,13 +16765,6 @@ article blockquote {
     right: -1px;
     bottom: -1px;
     left: -1px;
-  }
-
-  .sm\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
   }
 
   .sm\:inset-y-0 {
@@ -16945,6 +16945,16 @@ article blockquote {
   .sm\:inset-x-64 {
     right: 16rem;
     left: 16rem;
+  }
+
+  .sm\:inset-y-auto {
+    top: auto;
+    bottom: auto;
+  }
+
+  .sm\:inset-x-auto {
+    right: auto;
+    left: auto;
   }
 
   .sm\:inset-y-full {
@@ -17145,16 +17155,6 @@ article blockquote {
   .sm\:-inset-x-px {
     right: -1px;
     left: -1px;
-  }
-
-  .sm\:inset-y-auto {
-    top: auto;
-    bottom: auto;
-  }
-
-  .sm\:inset-x-auto {
-    right: auto;
-    left: auto;
   }
 
   .sm\:top-0 {
@@ -17443,6 +17443,22 @@ article blockquote {
 
   .sm\:left-64 {
     left: 16rem;
+  }
+
+  .sm\:top-auto {
+    top: auto;
+  }
+
+  .sm\:right-auto {
+    right: auto;
+  }
+
+  .sm\:bottom-auto {
+    bottom: auto;
+  }
+
+  .sm\:left-auto {
+    left: auto;
   }
 
   .sm\:top-full {
@@ -17763,22 +17779,6 @@ article blockquote {
 
   .sm\:-left-px {
     left: -1px;
-  }
-
-  .sm\:top-auto {
-    top: auto;
-  }
-
-  .sm\:right-auto {
-    right: auto;
-  }
-
-  .sm\:bottom-auto {
-    bottom: auto;
-  }
-
-  .sm\:left-auto {
-    left: auto;
   }
 
   .sm\:resize-none {
@@ -24064,16 +24064,16 @@ article blockquote {
     min-height: 75vh;
   }
 
-  .md\:min-h-px {
-    min-height: 1px;
-  }
-
   .md\:min-h-full {
     min-height: 100%;
   }
 
   .md\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .md\:min-h-px {
+    min-height: 1px;
   }
 
   .md\:min-w-0 {
@@ -25732,6 +25732,13 @@ article blockquote {
     left: 16rem;
   }
 
+  .md\:inset-auto {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+  }
+
   .md\:inset-full {
     top: 100%;
     right: 100%;
@@ -25870,13 +25877,6 @@ article blockquote {
     right: -1px;
     bottom: -1px;
     left: -1px;
-  }
-
-  .md\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
   }
 
   .md\:inset-y-0 {
@@ -26057,6 +26057,16 @@ article blockquote {
   .md\:inset-x-64 {
     right: 16rem;
     left: 16rem;
+  }
+
+  .md\:inset-y-auto {
+    top: auto;
+    bottom: auto;
+  }
+
+  .md\:inset-x-auto {
+    right: auto;
+    left: auto;
   }
 
   .md\:inset-y-full {
@@ -26257,16 +26267,6 @@ article blockquote {
   .md\:-inset-x-px {
     right: -1px;
     left: -1px;
-  }
-
-  .md\:inset-y-auto {
-    top: auto;
-    bottom: auto;
-  }
-
-  .md\:inset-x-auto {
-    right: auto;
-    left: auto;
   }
 
   .md\:top-0 {
@@ -26555,6 +26555,22 @@ article blockquote {
 
   .md\:left-64 {
     left: 16rem;
+  }
+
+  .md\:top-auto {
+    top: auto;
+  }
+
+  .md\:right-auto {
+    right: auto;
+  }
+
+  .md\:bottom-auto {
+    bottom: auto;
+  }
+
+  .md\:left-auto {
+    left: auto;
   }
 
   .md\:top-full {
@@ -26875,22 +26891,6 @@ article blockquote {
 
   .md\:-left-px {
     left: -1px;
-  }
-
-  .md\:top-auto {
-    top: auto;
-  }
-
-  .md\:right-auto {
-    right: auto;
-  }
-
-  .md\:bottom-auto {
-    bottom: auto;
-  }
-
-  .md\:left-auto {
-    left: auto;
   }
 
   .md\:resize-none {
@@ -33176,16 +33176,16 @@ article blockquote {
     min-height: 75vh;
   }
 
-  .lg\:min-h-px {
-    min-height: 1px;
-  }
-
   .lg\:min-h-full {
     min-height: 100%;
   }
 
   .lg\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .lg\:min-h-px {
+    min-height: 1px;
   }
 
   .lg\:min-w-0 {
@@ -34844,6 +34844,13 @@ article blockquote {
     left: 16rem;
   }
 
+  .lg\:inset-auto {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+  }
+
   .lg\:inset-full {
     top: 100%;
     right: 100%;
@@ -34982,13 +34989,6 @@ article blockquote {
     right: -1px;
     bottom: -1px;
     left: -1px;
-  }
-
-  .lg\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
   }
 
   .lg\:inset-y-0 {
@@ -35169,6 +35169,16 @@ article blockquote {
   .lg\:inset-x-64 {
     right: 16rem;
     left: 16rem;
+  }
+
+  .lg\:inset-y-auto {
+    top: auto;
+    bottom: auto;
+  }
+
+  .lg\:inset-x-auto {
+    right: auto;
+    left: auto;
   }
 
   .lg\:inset-y-full {
@@ -35369,16 +35379,6 @@ article blockquote {
   .lg\:-inset-x-px {
     right: -1px;
     left: -1px;
-  }
-
-  .lg\:inset-y-auto {
-    top: auto;
-    bottom: auto;
-  }
-
-  .lg\:inset-x-auto {
-    right: auto;
-    left: auto;
   }
 
   .lg\:top-0 {
@@ -35667,6 +35667,22 @@ article blockquote {
 
   .lg\:left-64 {
     left: 16rem;
+  }
+
+  .lg\:top-auto {
+    top: auto;
+  }
+
+  .lg\:right-auto {
+    right: auto;
+  }
+
+  .lg\:bottom-auto {
+    bottom: auto;
+  }
+
+  .lg\:left-auto {
+    left: auto;
   }
 
   .lg\:top-full {
@@ -35987,22 +36003,6 @@ article blockquote {
 
   .lg\:-left-px {
     left: -1px;
-  }
-
-  .lg\:top-auto {
-    top: auto;
-  }
-
-  .lg\:right-auto {
-    right: auto;
-  }
-
-  .lg\:bottom-auto {
-    bottom: auto;
-  }
-
-  .lg\:left-auto {
-    left: auto;
   }
 
   .lg\:resize-none {
@@ -42288,16 +42288,16 @@ article blockquote {
     min-height: 75vh;
   }
 
-  .xl\:min-h-px {
-    min-height: 1px;
-  }
-
   .xl\:min-h-full {
     min-height: 100%;
   }
 
   .xl\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .xl\:min-h-px {
+    min-height: 1px;
   }
 
   .xl\:min-w-0 {
@@ -43956,6 +43956,13 @@ article blockquote {
     left: 16rem;
   }
 
+  .xl\:inset-auto {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+  }
+
   .xl\:inset-full {
     top: 100%;
     right: 100%;
@@ -44094,13 +44101,6 @@ article blockquote {
     right: -1px;
     bottom: -1px;
     left: -1px;
-  }
-
-  .xl\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
   }
 
   .xl\:inset-y-0 {
@@ -44281,6 +44281,16 @@ article blockquote {
   .xl\:inset-x-64 {
     right: 16rem;
     left: 16rem;
+  }
+
+  .xl\:inset-y-auto {
+    top: auto;
+    bottom: auto;
+  }
+
+  .xl\:inset-x-auto {
+    right: auto;
+    left: auto;
   }
 
   .xl\:inset-y-full {
@@ -44481,16 +44491,6 @@ article blockquote {
   .xl\:-inset-x-px {
     right: -1px;
     left: -1px;
-  }
-
-  .xl\:inset-y-auto {
-    top: auto;
-    bottom: auto;
-  }
-
-  .xl\:inset-x-auto {
-    right: auto;
-    left: auto;
   }
 
   .xl\:top-0 {
@@ -44779,6 +44779,22 @@ article blockquote {
 
   .xl\:left-64 {
     left: 16rem;
+  }
+
+  .xl\:top-auto {
+    top: auto;
+  }
+
+  .xl\:right-auto {
+    right: auto;
+  }
+
+  .xl\:bottom-auto {
+    bottom: auto;
+  }
+
+  .xl\:left-auto {
+    left: auto;
   }
 
   .xl\:top-full {
@@ -45099,22 +45115,6 @@ article blockquote {
 
   .xl\:-left-px {
     left: -1px;
-  }
-
-  .xl\:top-auto {
-    top: auto;
-  }
-
-  .xl\:right-auto {
-    right: auto;
-  }
-
-  .xl\:bottom-auto {
-    bottom: auto;
-  }
-
-  .xl\:left-auto {
-    left: auto;
   }
 
   .xl\:resize-none {
@@ -51400,16 +51400,16 @@ article blockquote {
     min-height: 75vh;
   }
 
-  .xxl\:min-h-px {
-    min-height: 1px;
-  }
-
   .xxl\:min-h-full {
     min-height: 100%;
   }
 
   .xxl\:min-h-screen {
     min-height: 100vh;
+  }
+
+  .xxl\:min-h-px {
+    min-height: 1px;
   }
 
   .xxl\:min-w-0 {
@@ -53068,6 +53068,13 @@ article blockquote {
     left: 16rem;
   }
 
+  .xxl\:inset-auto {
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+  }
+
   .xxl\:inset-full {
     top: 100%;
     right: 100%;
@@ -53206,13 +53213,6 @@ article blockquote {
     right: -1px;
     bottom: -1px;
     left: -1px;
-  }
-
-  .xxl\:inset-auto {
-    top: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
   }
 
   .xxl\:inset-y-0 {
@@ -53393,6 +53393,16 @@ article blockquote {
   .xxl\:inset-x-64 {
     right: 16rem;
     left: 16rem;
+  }
+
+  .xxl\:inset-y-auto {
+    top: auto;
+    bottom: auto;
+  }
+
+  .xxl\:inset-x-auto {
+    right: auto;
+    left: auto;
   }
 
   .xxl\:inset-y-full {
@@ -53593,16 +53603,6 @@ article blockquote {
   .xxl\:-inset-x-px {
     right: -1px;
     left: -1px;
-  }
-
-  .xxl\:inset-y-auto {
-    top: auto;
-    bottom: auto;
-  }
-
-  .xxl\:inset-x-auto {
-    right: auto;
-    left: auto;
   }
 
   .xxl\:top-0 {
@@ -53891,6 +53891,22 @@ article blockquote {
 
   .xxl\:left-64 {
     left: 16rem;
+  }
+
+  .xxl\:top-auto {
+    top: auto;
+  }
+
+  .xxl\:right-auto {
+    right: auto;
+  }
+
+  .xxl\:bottom-auto {
+    bottom: auto;
+  }
+
+  .xxl\:left-auto {
+    left: auto;
   }
 
   .xxl\:top-full {
@@ -54211,22 +54227,6 @@ article blockquote {
 
   .xxl\:-left-px {
     left: -1px;
-  }
-
-  .xxl\:top-auto {
-    top: auto;
-  }
-
-  .xxl\:right-auto {
-    right: auto;
-  }
-
-  .xxl\:bottom-auto {
-    bottom: auto;
-  }
-
-  .xxl\:left-auto {
-    left: auto;
   }
 
   .xxl\:resize-none {
