@@ -2,7 +2,7 @@
 
 	/* This uses the featured image as a background. Takes the featured image, and applies the different sizes to varying breakpoints. */
 
-	if(is_home() || is_search() ) {
+	if(is_home() || is_search() || is_month() || is_category()) {
 		$thumb_id = get_post_thumbnail_id(41); //enter the ID of your news page here
 	}
 	else {
