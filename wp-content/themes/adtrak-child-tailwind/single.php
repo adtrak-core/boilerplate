@@ -13,18 +13,28 @@
     include locate_template('parts/hero.php');
 ?>
 
-	<main class="site-content">
-		<div class="container">
-			<article class="copy">				
-				<?php the_title('<h1>', '</h1>'); ?>
-				<?php the_content(); ?>
-			</article>
+<div class="container p-4 md:p-8 lg:px-0 lg:flex flex-wrap flex-grow">
 
-			<aside class="sidebar">
-				<?php get_sidebar(); ?>			
+		<?php if (have_posts()): while (have_posts()): the_post(); ?>
+
+			<main class="lg:w-2/3 lg:pr-16">
+
+				<article>
+					<h1><?php the_field('h1'); ?></h1>
+					<?php the_content(); ?>
+				</article>
+
+			</main>
+
+      <?php echo do_shortcode("[ninja_form id=1]"); ?>
+
+			<aside class="bg-gray-100 lg:w-1/3">
+				<?php get_sidebar(); ?>
 			</aside>
-		</div>
-	</main>
+
+		<?php endwhile; endif; ?>
+
+</div>
 
 <?php get_footer(); ?>
 
