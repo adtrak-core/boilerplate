@@ -15,24 +15,21 @@
 
 <div class="container p-4 md:p-8 lg:px-0 lg:flex flex-wrap flex-grow">
 
-		<?php if (have_posts()): while (have_posts()): the_post(); ?>
+	<main class="lg:w-2/3 lg:pr-16">
 
-			<main class="lg:w-2/3 lg:pr-16">
+		<article>
 
-				<article>
-					<h1><?php the_field('h1'); ?></h1>
-					<?php the_content(); ?>
-				</article>
+			<h1><?php the_title(); ?></h1>
 
-			</main>
+			<?php the_content(); ?>
 
-      <?php echo do_shortcode("[ninja_form id=1]"); ?>
+		<article>
 
-			<aside class="bg-gray-100 lg:w-1/3">
-				<?php get_sidebar(); ?>
-			</aside>
+	</main>
 
-		<?php endwhile; endif; ?>
+	<aside class="bg-gray-100 lg:w-1/3">
+		<?php get_sidebar(); ?>
+	</aside>		
 
 </div>
 

@@ -36,7 +36,7 @@
 
 <?php endif; ?>
 
-<div class="hero min-h-64 bg-cover bg-center lg:min-h-75">
+<div class="hero bg-gray-100 min-h-64 bg-cover bg-center lg:min-h-75">
 
 	<div class="container text-white">
 
