@@ -23,7 +23,7 @@
 				<?php the_post_thumbnail('medium'); ?>
 				<?php the_title('<h1>', '</h1>'); ?>
 				<?php the_excerpt(); ?>
-				<a href="<?php the_permalink(); ?>" class="btn btn--noir">Continue reading</a>
+				<a href="<?php the_permalink(); ?>" class="btn">Continue reading</a>
 			</article>
 
 		<?php endwhile; endif; ?>
