@@ -57,15 +57,18 @@
 	</footer>
 
 	<!-- Back to top arrow -->
-  <p id="back-top" class="border-rounded fixed bottom-4 right-4 z-100 opacity-50 text-center bg-white-100 p-4">
-      <a class="text-black no-underline text-sm">
-				<i class="fa fa-arrow-up fa-2x text-md"></i> <span class="block text-lg uppercase">Top</span>
-			</a>
-  </p>
+    <p id="back-top" class="rounded-xl fixed bottom-4 right-4 z-50 opacity-50 text-center bg-gray-500 hover:bg-gray-600 transition-300 p-2">
+        <a class="text-black no-underline text-sm">
+            <?php icon('angle-up', 'w-8 h-8'); ?> <span class="block text-lg uppercase">Top</span>
+        </a>
+    </p>
 
 
 </div><!-- wrapper -->
 
+<script>
+	var themeURL = "<?php echo get_stylesheet_directory_uri(); ?>";
+</script>
 <?php wp_footer(); ?>
 
 </body>

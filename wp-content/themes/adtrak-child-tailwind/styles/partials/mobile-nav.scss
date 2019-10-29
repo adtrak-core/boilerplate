@@ -6,32 +6,28 @@
 $menuTitleHeight :    59px;
 
 /* Colours */
-$menuTitleColor :     rgba(#000,.35);
 
 $panelBg :            #eee;
 
 $linkBg :             transparent;
-$linkText :           rgba(#000,.65);
-$linkBorder :         rgba(#000,.15);
+$linkText :           #fff;
+$linkBorder :         rgba(#fff,.15);
 $linkBgActive :       transparent;
 $linkTextActive :     red;
 
 $dropdownArrowBg :    transparent;
 $dropdownArrowText :  inherit;
 
-$closeIconBg :        red;
-$closeIconText :      #fff;
-
 .mob-nav {
     @apply
-        fixed
-        top-0
-        right-0
-        bottom-0
-        h-full;
+    fixed
+    top-0
+    right-0
+    bottom-0
+    h-full
+    bg-primary;
     display: block !important;
     width: 80%;
-    background-color: $panelBg;
     z-index: 99999999;
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
@@ -42,12 +38,12 @@ $closeIconText :      #fff;
     &:before {
         content: "Menu";
         @apply
-            block
-            w-full
-            p-4
-            text-center;
-        background-color: $panelBg;
-        color: $menuTitleColor;
+        block
+        w-full
+        p-4
+        text-center
+        bg-primary-lighten10;
+        color: rgba(#fff,.35);
         border-bottom: 1px solid $linkBorder;
     }
 
@@ -59,32 +55,37 @@ $closeIconText :      #fff;
 
     li {
         @apply 
-            list-none
-            relative
-            float-left
-            w-full;
+        list-none
+        relative
+        float-left
+        w-full;
     }
 
     a {
         @apply
-            p-4
-            pr-4
-            pl-8
-            float-left
-            w-full
-            relative
-            no-underline;
+        p-4
+        pl-6
+        pr-16
+        float-left
+        w-full
+        relative
+        no-underline
+        text-sm;
         color: $linkText;
         border-bottom: 1px solid $linkBorder;
         background-color: $linkBg;
 
-        @media screen and (min-width: 375px) {
-            @apply text-lg
-        }
-
         &:hover {
             @apply no-underline;
         }
+
+        > .icon {
+            display: none;
+        }
+    }
+
+    br {
+        display: none;
     }
 
     /* Current page states */
@@ -97,22 +98,26 @@ $closeIconText :      #fff;
 
     .sub-arrow {
         @apply
-            absolute
-            top-0
-            right-0
-            z-10
-            py-4
-            px-0
-            text-center
-            cursor-pointer;
+        absolute
+        top-0
+        right-0
+        z-10
+        px-0
+        text-center
+        cursor-pointer;
+        padding-top: 14px;
+        padding-bottom: 14px;
         border-left: 1px solid lighten($linkBorder, 5%);
         width: 45px;
         color: $linkText;
         background-color: $linkBg;
 
+        .icon {
+            display: none;
+        }
 
-        @media screen and (min-width: 375px) {
-            padding: 18px 0;
+        .icon.active {
+            display: inline-block;
         }
     }
 
@@ -127,9 +132,9 @@ $closeIconText :      #fff;
 
     .sub-menu {
         @apply
-            hidden
-            float-left
-            w-full;
+        hidden
+        float-left
+        w-full;
 
         li {
             @apply pl-6
@@ -139,10 +144,10 @@ $closeIconText :      #fff;
 
 .mob-nav .scroll-container {
     @apply
-        absolute
-        w-full
-        left-0
-        overflow-y-scroll;
+    absolute
+    w-full
+    left-0
+    overflow-y-scroll;
     top: $menuTitleHeight;
     height: calc(100vh - #{$menuTitleHeight});
     -webkit-overflow-scrolling: touch;
@@ -155,21 +160,21 @@ $closeIconText :      #fff;
 
 .mob-nav-close {
     @apply
-        hidden
-        fixed
-        left-0;
+    hidden
+    fixed
+    left-0
+    bg-secondary;
     bottom: 40%;
     width: 60px;
     height: 50px;
-    background-color: $closeIconBg;
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
 
-    i {
+    .icon {
         @apply
-            m-auto
-            text-4xl;
-        color: $closeIconText;
+        m-auto
+        text-4xl;
+        color: #fff;
     }
 
     .mob-nav--active & {
@@ -179,15 +184,15 @@ $closeIconText :      #fff;
 
 .mob-nav-underlay {
     @apply
-        fixed
-        top-0
-        left-0
-        bottom-0
-        right-0
-        w-full
-        h-full
-        opacity-0
-        invisible;
+    fixed
+    top-0
+    left-0
+    bottom-0
+    right-0
+    w-full
+    h-full
+    opacity-0
+    invisible;
     display: block !important; /* override critical css */
     background-color: rgba(#000,.4);
     z-index: 999999;
@@ -195,7 +200,7 @@ $closeIconText :      #fff;
 
     &.mob-nav--active {
         @apply
-            opacity-100
-            visible;
+        opacity-100
+        visible;
     }
 }

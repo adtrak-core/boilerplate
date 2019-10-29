@@ -8,7 +8,7 @@ Enqueue and register scripts the right way.
 
 add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('production', get_theme_file_uri() . '/js/production-dist.js', ['jquery'], '', true);
-    wp_enqueue_script('fontawesome', 'https://use.fontawesome.com/731f5cd381.js', [], '', true );
+    wp_enqueue_script('svgxuse', get_theme_file_uri() . '/js/svgxuse.js', [], '', true );
 });
 
 
@@ -21,7 +21,7 @@ Add defer attribute to scripts - ADD TO THIS AS REQUIRED
 
 function add_defer_attribute($tag, $handle) {
 	// add script handles to the array below
-	$scripts_to_defer = array('production','adtrak-cookie','location-dynamics-front');
+	$scripts_to_defer = array('production','adtrak-cookie','location-dynamics-front', 'svgxuse');
 
 	foreach($scripts_to_defer as $defer_script) {
 	   if ($defer_script === $handle) {
@@ -175,3 +175,12 @@ function address_inline() {
 }
 
 add_shortcode('address_inline', 'address_inline');
+
+
+/* ========================================================================================================================
+	Icon Function (show icon from your icons SVG sprite)
+======================================================================================================================== */
+
+function icon($iconName, $classes = null) {
+	echo '<svg class="icon icon-'.$iconName.' '.$classes.'"><use xlink:href="'.get_stylesheet_directory_uri().'/images/icons-sprite.svg#icon-'.$iconName.'"></use></svg>';
+}

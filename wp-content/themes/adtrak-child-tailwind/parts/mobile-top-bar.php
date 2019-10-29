@@ -12,7 +12,7 @@
 		---------------------------------------------------------------------------------------*/ ?>
 
 		  <div class="w-1/2 p-2 text-center bg-gray-500">
-				<?php do_action("ld_mobile_top", "Call us today <i class='fa fa-caret-down' aria-hidden='true'></i>"); ?>
+				<?php do_action("ld_mobile_top", "Call us today"); ?>
 			</div>
 
 			<div class="location-numbers hidden absolute top-10 left-0 z-10 w-full p-4 bg-gray-500 ">
@@ -22,6 +22,6 @@
 
 		<?php ?>
 
-	<div class="menu-btn w-1/2 p-2 text-center bg-gray-400"><i class="fa fa-bars"></i> Menu</div>
+	<div class="menu-btn w-1/2 p-2 text-center bg-gray-40 flex items-center justify-center0"><?php icon('bars'); ?> <span class="ml-2">Menu</span></div>
 
 </div>

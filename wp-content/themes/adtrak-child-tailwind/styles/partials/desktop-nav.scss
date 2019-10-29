@@ -7,15 +7,6 @@ Desktop Navs **********************************************/
 
     li {
       @apply relative;
-
-      &.menu-item-has-children > a:after {
-        content: '\f107';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        font: 1em/1 FontAwesome;
-      }
     }
 
     a {
@@ -35,6 +26,21 @@ Desktop Navs **********************************************/
               opacity-100
               visible;
           }
+        }
+    }
+
+    .icon-angle-down {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        width: .9em;
+        height: .9em;
+        opacity: .5;
+
+        @include bp1200 {
+            bottom: 30px;
         }
     }
 

@@ -6,6 +6,9 @@
 	$(function() {
 
 
+        var iconAngleUp = "<svg class='icon icon-angle-up'><use xlink:href='"+themeURL+"/images/icons-sprite.svg#icon-angle-up'></use></svg>";
+        var iconAngleDown = "<svg class='icon icon-angle-down'><use xlink:href='"+themeURL+"/images/icons-sprite.svg#icon-angle-down'></use></svg>";
+
 		// --------------------------------------------------------------------------------------------------
 		// Back to top
 		// --------------------------------------------------------------------------------------------------
@@ -49,17 +52,17 @@
 		}
 
 		// Add Close Icon element
-		$( "<div class='mob-nav-close'><i class='fa fa-times'></i></div>" ).insertAfter( ".mob-nav .scroll-container" );
+		$( "<div class='mob-nav-close'><svg class='icon icon-times'><use xlink:href='"+themeURL+"/images/icons-sprite.svg#icon-times'></use></svg></div>" ).insertAfter( ".mob-nav .scroll-container" );
 
 		// Add dropdown arrow to links with sub-menus
-	    $( "<span class='sub-arrow'><i class='fa fa-angle-down'></i></span>" ).insertAfter( ".mob-nav .menu-item-has-children > a" );
+	    $( "<span class='sub-arrow'>"+iconAngleDown+iconAngleUp+"</span>" ).insertAfter( ".mob-nav .menu-item-has-children > a" );
 
 	    // Show sub-menu when dropdown arrow is clicked
 	    $('.sub-arrow').click(function() {
 	    	$(this).toggleClass('active');
 	    	$(this).prev('a').toggleClass('active');
 	    	$(this).next('.sub-menu').slideToggle();
-	    	$(this).children().toggleClass('fa-angle-down').toggleClass('fa-angle-up');
+	    	$(this).children().toggleClass('active');
 	    });
 
 	    // Add underlay element after mobile nav
@@ -75,7 +78,23 @@
 	    $('.mob-nav-underlay,.mob-nav-close').click(function() {
 	    	$('.mob-nav,.mob-nav-underlay').removeClass('mob-nav--active');
 	    	$('body').removeClass('fixed');
-	    });
+        });
+        
+
+        // --------------------------------------------------------------------------------------------------
+		// Add Ellipsis icon to menu items with children
+		// --------------------------------------------------------------------------------------------------
+		if(window.innerWidth >= 1000) {
+			// Primary Menu
+			$(".desktop-nav > ul > .menu-item-has-children > a").append(iconAngleDown);
+		}
+		function addDropdownIcon() {
+			if(window.innerWidth < 1000) {
+				$('.menu-primary > li > a > .icon').remove();
+			}
+		}
+        window.addEventListener('resize', addDropdownIcon);
+
 
         // --------------------------------------------------------------------------------------------------
 		// Ninja Forms event tracking | https://www.chrisains.com/seo/tracking-ninja-form-submissions-with-google-analytics-jquery/
