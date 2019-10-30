@@ -182,5 +182,5 @@ add_shortcode('address_inline', 'address_inline');
 ======================================================================================================================== */
 
 function icon($iconName, $classes = null) {
-	echo '<svg class="icon icon-'.$iconName.' '.$classes.'"><use xlink:href="'.get_stylesheet_directory_uri().'/images/icons-sprite.svg#icon-'.$iconName.'"></use></svg>';
+	echo '<svg class="icon icon-'.$iconName.' '.$classes.'"><use href="'.get_stylesheet_directory_uri().'/images/icons-sprite.svg#icon-'.$iconName.'"></use></svg>';
 }
