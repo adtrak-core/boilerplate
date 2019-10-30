@@ -22,6 +22,6 @@
 
 		<?php ?>
 
-	<div class="menu-btn w-1/2 p-2 text-center bg-gray-40 flex items-center justify-center0"><?php icon('bars'); ?> <span class="ml-2">Menu</span></div>
+	<div class="menu-btn w-1/2 p-2 text-center bg-gray-40 flex items-center justify-center"><?php icon('bars'); ?> <span class="ml-2">Menu</span></div>
 
 </div>

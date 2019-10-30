@@ -38,10 +38,6 @@ Desktop Navs **********************************************/
         width: .9em;
         height: .9em;
         opacity: .5;
-
-        @include bp1200 {
-            bottom: 30px;
-        }
     }
 
     .current-menu-item a,

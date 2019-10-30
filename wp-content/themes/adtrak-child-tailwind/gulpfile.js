@@ -42,7 +42,7 @@ gulp.task('styles', function () {
     argv.production,
     purgecss({
       content: ['**/*.php'],
-      whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'mob-nav-underlay', 'sub-arrow', 'mob-nav-close', 'ninja-forms-field'],
+      whitelist: ['buckets--num-4', 'sub-menu', 'mob-nav--active', 'mob-nav-underlay', 'sub-arrow', 'mob-nav-close', 'ninja-forms-field', 'active'],
       extractors: [
         {
           extractor: TailwindExtractor,

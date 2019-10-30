@@ -55,7 +55,8 @@
 		$( "<div class='mob-nav-close'><svg class='icon icon-times'><use xlink:href='"+themeURL+"/images/icons-sprite.svg#icon-times'></use></svg></div>" ).insertAfter( ".mob-nav .scroll-container" );
 
 		// Add dropdown arrow to links with sub-menus
-	    $( "<span class='sub-arrow'>"+iconAngleDown+iconAngleUp+"</span>" ).insertAfter( ".mob-nav .menu-item-has-children > a" );
+        $( "<span class='sub-arrow'>"+iconAngleDown+iconAngleUp+"</span>" ).insertAfter( ".mob-nav .menu-item-has-children > a" );
+        $(".sub-arrow .icon-angle-down").addClass('active');
 
 	    // Show sub-menu when dropdown arrow is clicked
 	    $('.sub-arrow').click(function() {
@@ -82,7 +83,7 @@
         
 
         // --------------------------------------------------------------------------------------------------
-		// Add Ellipsis icon to menu items with children
+		// Add icon to menu items with children
 		// --------------------------------------------------------------------------------------------------
 		if(window.innerWidth >= 1000) {
 			// Primary Menu
