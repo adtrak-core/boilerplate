@@ -1,0 +1,70 @@
+{
+    "name": "typisttech/imposter-plugin",
+    "type": "composer-plugin",
+    "description": "Composer plugin that wraps all composer vendor packages inside your own namespace. Intended for WordPress plugins",
+    "keywords": [
+        "composer",
+        "composer-plugin",
+        "dependency",
+        "monkey-patching",
+        "namespace",
+        "wordpress"
+    ],
+    "homepage": "https://www.typist.tech/projects/imposter-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Typist Tech",
+            "email": "imposter-plugin@typist.tech",
+            "homepage": "https://www.typist.tech"
+        },
+        {
+            "name": "Tang Rufus",
+            "email": "tangrufus@gmail.com",
+            "homepage": "https://www.typist.tech",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "composer-plugin-api": "^1.1",
+        "typisttech/imposter": "^0.4.1"
+    },
+    "require-dev": {
+        "codeception/base": "^3.1",
+        "composer/composer": "^1.9",
+        "squizlabs/php_codesniffer": "^3.5",
+        "typisttech/codeception-composer-project-module": "^0.1.1"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.4.x-dev"
+        },
+        "class": "TypistTech\\Imposter\\Plugin\\ImposterPlugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "TypistTech\\Imposter\\Plugin\\": "src"
+        }
+    },
+    "scripts": {
+        "pretag": [
+            "composer update",
+            "@test",
+            "@style:check",
+            "composer normalize",
+            "npx doctoc README.md",
+            "github_changelog_generator --no-verbose"
+        ],
+        "style:check": "phpcs --colors -p",
+        "test": "codecept run --debug"
+    },
+    "support": {
+        "email": "imposter-plugin@typist.tech",
+        "issues": "https://github.com/TypistTech/imposter-plugin/issues",
+        "source": "https://github.com/TypistTech/imposter-plugin"
+    }
+}

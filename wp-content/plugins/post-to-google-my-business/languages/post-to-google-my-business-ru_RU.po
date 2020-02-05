@@ -1,0 +1,1291 @@
+# This file is distributed under the same license as the Post to Google My Business package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Post to Google My Business 2.2.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/post-to-google-my-"
+"business\n"
+"POT-Creation-Date: 2020-01-21 16:10:50+00:00\n"
+"PO-Revision-Date: 2020-01-22 09:14+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Eazy Po 0.9.5.3\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_"
+"nx_noop:1,2,3c;esc_attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,"
+"2c;esc_html_x:1,2c;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: inc/class-mbp-admin-page-settings.php:61
+#: inc/class-mbp-admin-page-settings.php:252
+msgid "Refresh locations"
+msgstr "Обновить местоположения"
+
+#: inc/class-mbp-admin-page-settings.php:62
+msgid "Please wait..."
+msgstr "Пожалуйста, подождите..."
+
+#: inc/class-mbp-admin-page-settings.php:93
+msgid "Google settings"
+msgstr "Настройки Google"
+
+#: inc/class-mbp-admin-page-settings.php:98
+msgid "Auto-post settings"
+msgstr "Настройки авто-публикации"
+
+#: inc/class-mbp-admin-page-settings.php:102
+msgid "Post type settings"
+msgstr "Настройки типа записи"
+
+#: inc/class-mbp-admin-page-settings.php:106
+msgid "Debug"
+msgstr "Отладка"
+
+#: inc/class-mbp-admin-page-settings.php:116
+msgid "Default location"
+msgstr "Местоположение по умолчанию"
+
+#: inc/class-mbp-admin-page-settings.php:117
+#: inc/class-mbp-admin-page-settings.php:186
+msgid "Select the post-types where the GMB metabox should be displayed"
+msgstr "Выберите типы записей, в которых должен отображаться метабокс GMB"
+
+#: inc/class-mbp-admin-page-settings.php:124
+msgid "Quick post template"
+msgstr "Шаблон быстрой записи"
+
+#: inc/class-mbp-admin-page-settings.php:125
+msgid ""
+"The template for new Google posts when using quick post. Supports <a "
+"target=\"_blank\" href=\"%s\">variables</a> and <a target=\"_blank\" "
+"href=\"%s\">spintax</a> (premium only)"
+msgstr "Шаблон для новых записей Google при использовании быстрого поста. Поддерживает <a target=\"_blank\" href=\"%s\">переменные</a> и <a target=\"_blank\" href=\"%s\">спинтакс</a> (только премиум)"
+
+#: inc/class-mbp-admin-page-settings.php:128 inc/class-mbp-metabox.php:555
+#: inc/class-mbp-metabox.php:558
+msgid "New post: %post_title% - %post_content%"
+msgstr "Новая запись: %post_title% - %post_content%"
+
+#: inc/class-mbp-admin-page-settings.php:132
+msgid "Default call to action"
+msgstr "Призыв к действию по умолчанию"
+
+#: inc/class-mbp-admin-page-settings.php:133
+msgid "The default button text"
+msgstr "Текст кнопки по умолчанию"
+
+#: inc/class-mbp-admin-page-settings.php:137
+msgid "No button"
+msgstr "Нет кнопки"
+
+#: inc/class-mbp-admin-page-settings.php:138 templates/metabox.php:167
+msgid "Book"
+msgstr "Книга"
+
+#: inc/class-mbp-admin-page-settings.php:139 templates/metabox.php:168
+msgid "Order"
+msgstr "Порядок"
+
+#: inc/class-mbp-admin-page-settings.php:140 templates/metabox.php:169
+msgid "Shop"
+msgstr "Магазин"
+
+#: inc/class-mbp-admin-page-settings.php:141 templates/metabox.php:170
+msgid "Learn more"
+msgstr "Узнать больше"
+
+#: inc/class-mbp-admin-page-settings.php:142 templates/metabox.php:171
+msgid "Sign up"
+msgstr "Регистрация"
+
+#: inc/class-mbp-admin-page-settings.php:143 templates/metabox.php:172
+msgid "Get offer"
+msgstr "Получить предложение"
+
+#: inc/class-mbp-admin-page-settings.php:144
+msgid "Call Now"
+msgstr "Позвонить сейчас"
+
+#: inc/class-mbp-admin-page-settings.php:149
+msgid "Post to GMB by default"
+msgstr "Публиковать в GMB по умолчанию"
+
+#: inc/class-mbp-admin-page-settings.php:150
+msgid ""
+"The Auto-post checkbox will be checked by default, and your WordPress posts "
+"will be automatically published to GMB, unless you uncheck it."
+msgstr "Флажок автоматической публикации будет установлен по умолчанию, а ваши сообщения WordPress будут автоматически опубликованы в GMB, если вы не снимите флажок."
+
+#: inc/class-mbp-admin-page-settings.php:156
+msgid "Fetch post image from content"
+msgstr "Получить изображение из содержимого"
+
+#: inc/class-mbp-admin-page-settings.php:157
+msgid ""
+"Try to get an image from the post content (when no custom image is set). "
+"This has priority over the featured image."
+msgstr "Попробуйте получить изображение из содержимого публикации (если не настроено пользовательское изображение). Это имеет приоритет над изображением записи."
+
+#: inc/class-mbp-admin-page-settings.php:163
+msgid "Use featured image"
+msgstr "Используйте изображение записи"
+
+#: inc/class-mbp-admin-page-settings.php:164 templates/metabox.php:199
+msgid "Use the Featured Image as GMB Post image (when no custom image is set)"
+msgstr "Используйте Избранное изображение в качестве изображения записи GMB (если пользовательское изображение не установлено)"
+
+#: inc/class-mbp-admin-page-settings.php:175
+msgid "Button URL"
+msgstr "URL кнопки"
+
+#: inc/class-mbp-admin-page-settings.php:176
+msgid "The URL where people should be redirected after clicking the button"
+msgstr "URL, куда люди должны быть перенаправлены после нажатия кнопки"
+
+#: inc/class-mbp-admin-page-settings.php:185
+msgid "Enabled for post types"
+msgstr "Включено для типов записей"
+
+#: inc/class-mbp-admin-page-settings.php:209
+msgid "Select a user or location group"
+msgstr "Выберите пользователя или группу местоположений"
+
+#: inc/class-mbp-admin-page-settings.php:220
+msgid "No user accounts found"
+msgstr "Учетная запись пользователя не найдена"
+
+#: inc/class-mbp-admin-page-settings.php:223
+msgid "Connect your Google account first."
+msgstr "Подключите учётную запись Google"
+
+#: inc/class-mbp-admin-page-settings.php:235
+msgid "Location grayed out?"
+msgstr "Местоположение неактивно?"
+
+#: inc/class-mbp-admin-page-settings.php:236
+msgid ""
+"It means the location is blocked from using the LocalPostAPI, and can't be "
+"posted to using the plugin."
+msgstr "Это означает, что местоположение заблокировано от использования LocalPostAPI и не может быть опубликовано с помощью плагина."
+
+#: inc/class-mbp-admin-page-settings.php:237
+msgid "Learn more..."
+msgstr "Подробнее..."
+
+#: inc/class-mbp-admin-page-settings.php:265
+#: inc/class-mbp-admin-page-settings.php:275 templates/settings.php:3
+msgid "Post to Google My Business settings"
+msgstr "Настройки Post to Google My Business"
+
+#: inc/class-mbp-admin-page-settings.php:266
+msgid "Post to GMB"
+msgstr "Опубликовать в GMB"
+
+#: inc/class-mbp-admin-page-settings.php:276
+msgid "Settings"
+msgstr "Настройки"
+
+#: inc/class-mbp-admin-page-settings.php:286
+msgid "Connected"
+msgstr "Подключено"
+
+#: inc/class-mbp-admin-page-settings.php:288
+msgid "Not connected"
+msgstr "Соединение отсутствует"
+
+#: inc/class-mbp-admin-page-settings.php:293
+msgid "You do not have sufficient permissions to access this page."
+msgstr "У вас недостаточно полномочий для доступа к этой странице."
+
+#: inc/class-mbp-admin-page-settings.php:306
+msgid "Support for other post types is a <a href=\"%s\">Pro feature</a>."
+msgstr "Поддержка других типов записей <a href=\"%s\">особенность Pro</a>."
+
+#: inc/class-mbp-admin-page-settings.php:317
+msgid ""
+"Your WordPress version does not yet support the WP_Debug_Data class, please "
+"update."
+msgstr "Ваша версия WordPress еще не поддерживает класс WP_Debug_Data, пожалуйста, обновите."
+
+#: inc/class-mbp-admin-page-settings.php:323
+msgid "Please supply the debug data below with your support requests"
+msgstr "Пожалуйста, предоставьте данные отладки ниже с вашими запросами поддержки"
+
+#: inc/class-mbp-admin-page-settings.php:336
+msgid "Copy site info to clipboard"
+msgstr "Скопировать информацию сайта в буфер"
+
+#: inc/class-mbp-admin-page-settings.php:338
+msgid "Copied!"
+msgstr "Скопировано!"
+
+#: inc/class-mbp-admin-page-settings.php:427
+msgid "Reconnect to Google My Business"
+msgstr "Переподключитесь к Google My Business"
+
+#: inc/class-mbp-admin-page-settings.php:427
+msgid "Connect to Google My Business"
+msgstr "Подключитесь к Google My Business"
+
+#: inc/class-mbp-admin-page-settings.php:433
+msgid "Disconnect this website from Google My Business"
+msgstr "Отключить сайт от Google My Business"
+
+#: inc/class-mbp-admin-page-settings.php:438
+msgid "Revoke Google account authorization"
+msgstr "Отменить авторизацию аккаунта Google"
+
+#: inc/class-mbp-connector.php:32 inc/class-mbp-connector.php:58
+msgid "No permission to edit options"
+msgstr "Отсутствуют права на редактирование настроек"
+
+#: inc/class-mbp-connector.php:46
+msgid "Something went wrong: %s"
+msgstr "Что-то пошло не так: %s"
+
+#: inc/class-mbp-connector.php:60
+msgid "Invalid nonce"
+msgstr "Неправильный нонс"
+
+#: inc/class-mbp-currency-codes.php:6
+msgid "Afghan Afghani"
+msgstr "Афгани"
+
+#: inc/class-mbp-currency-codes.php:7
+msgid "Aruban Florin"
+msgstr "Арубанский флорин"
+
+#: inc/class-mbp-currency-codes.php:8
+msgid "Australian Dollars"
+msgstr "Австралийский доллар"
+
+#: inc/class-mbp-currency-codes.php:9
+msgid "Argentine Pes"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:10
+msgid "Azerbaijanian Manat"
+msgstr "Азербайджанский манат"
+
+#: inc/class-mbp-currency-codes.php:11
+msgid "Bahamian Dollar"
+msgstr "Багамский доллар"
+
+#: inc/class-mbp-currency-codes.php:12
+msgid "Bangladeshi Taka"
+msgstr "Бангладешская така"
+
+#: inc/class-mbp-currency-codes.php:13
+msgid "Barbados Dollar"
+msgstr "Барбадосский доллар"
+
+#: inc/class-mbp-currency-codes.php:14
+msgid "Belarussian Rouble"
+msgstr "Белорусский рубль"
+
+#: inc/class-mbp-currency-codes.php:15
+msgid "Bolivian Boliviano"
+msgstr "Боливийский боливиано"
+
+#: inc/class-mbp-currency-codes.php:16
+msgid "Brazilian Real"
+msgstr "Бразильский реал"
+
+#: inc/class-mbp-currency-codes.php:17
+msgid "British Pounds Sterling"
+msgstr "Британский фунт стерлинг"
+
+#: inc/class-mbp-currency-codes.php:18
+msgid "Bulgarian Lev"
+msgstr "Болгарский лев"
+
+#: inc/class-mbp-currency-codes.php:19
+msgid "Cambodia Riel"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:20
+msgid "Canadian Dollars"
+msgstr "Канадский доллар"
+
+#: inc/class-mbp-currency-codes.php:21
+msgid "Cayman Islands Dollar"
+msgstr "Доллар Островов Кайман"
+
+#: inc/class-mbp-currency-codes.php:22
+msgid "Chilean Peso"
+msgstr "Чилийский песо"
+
+#: inc/class-mbp-currency-codes.php:23
+msgid "Chinese Renminbi Yuan"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:24
+msgid "Colombian Peso"
+msgstr "Колумбийский песо"
+
+#: inc/class-mbp-currency-codes.php:25
+msgid "Costa Rican Colon"
+msgstr "Костариканский колон"
+
+#: inc/class-mbp-currency-codes.php:26
+msgid "Croatia Kuna"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:27
+msgid "Cypriot Pounds"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:28
+msgid "Czech Koruna"
+msgstr "Czech Koruna"
+
+#: inc/class-mbp-currency-codes.php:29
+msgid "Danish Krone"
+msgstr "Danish Krone"
+
+#: inc/class-mbp-currency-codes.php:30
+msgid "Dominican Republic Peso"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:31
+msgid "East Caribbean Dollar"
+msgstr "Восточнокарибский доллар"
+
+#: inc/class-mbp-currency-codes.php:32
+msgid "Egyptian Pound"
+msgstr "Египетский фунт"
+
+#: inc/class-mbp-currency-codes.php:33
+msgid "Eritrean Nakfa"
+msgstr "Эритрейская накфа"
+
+#: inc/class-mbp-currency-codes.php:34
+msgid "Estonia Kroon"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:35
+msgid "Euro"
+msgstr "Евро"
+
+#: inc/class-mbp-currency-codes.php:36
+msgid "Georgian Lari"
+msgstr "Грузинский лари"
+
+#: inc/class-mbp-currency-codes.php:37
+msgid "Ghana Cedi"
+msgstr "Ганский седи"
+
+#: inc/class-mbp-currency-codes.php:38
+msgid "Gibraltar Pound"
+msgstr "Гибралтарский фунт"
+
+#: inc/class-mbp-currency-codes.php:39
+msgid "Guatemala Quetzal"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:40
+msgid "Honduras Lempira"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:41
+msgid "Hong Kong Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:42
+msgid "Hungary Forint"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:43
+msgid "Icelandic Krona"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:44
+msgid "Indian Rupee"
+msgstr "Индийская рупия"
+
+#: inc/class-mbp-currency-codes.php:45
+msgid "Indonesia Rupiah"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:46
+msgid "Israel Shekel"
+msgstr "Израильский шекель"
+
+#: inc/class-mbp-currency-codes.php:47
+msgid "Jamaican Dollar"
+msgstr "Ямайский доллар"
+
+#: inc/class-mbp-currency-codes.php:48
+msgid "Japanese yen"
+msgstr "Japanese Yen"
+
+#: inc/class-mbp-currency-codes.php:49
+msgid "Kazakhstan Tenge"
+msgstr "Казахстанский тенге"
+
+#: inc/class-mbp-currency-codes.php:50
+msgid "Kenyan Shilling"
+msgstr "Кенийский шиллинг"
+
+#: inc/class-mbp-currency-codes.php:51
+msgid "Kuwaiti Dinar"
+msgstr "Кувейтский динар"
+
+#: inc/class-mbp-currency-codes.php:52
+msgid "Latvia Lat"
+msgstr "Латвийский лат"
+
+#: inc/class-mbp-currency-codes.php:53
+msgid "Lebanese Pound"
+msgstr "Ливанский фунт"
+
+#: inc/class-mbp-currency-codes.php:54
+msgid "Lithuania Litas"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:55
+msgid "Macau Pataca"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:56
+msgid "Macedonian Denar"
+msgstr "Македонский денар"
+
+#: inc/class-mbp-currency-codes.php:57
+msgid "Malagascy Ariary"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:58
+msgid "Malaysian Ringgit"
+msgstr "Malaysian Ringgit"
+
+#: inc/class-mbp-currency-codes.php:59
+msgid "Maltese Lira"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:60
+msgid "Marka"
+msgstr "Марка"
+
+#: inc/class-mbp-currency-codes.php:61
+msgid "Mauritius Rupee"
+msgstr "Маврикийская рупия"
+
+#: inc/class-mbp-currency-codes.php:62
+msgid "Mexican Pesos"
+msgstr "Мексиканское пьесо"
+
+#: inc/class-mbp-currency-codes.php:63
+msgid "Mozambique Metical"
+msgstr "Мозамбикский метикал"
+
+#: inc/class-mbp-currency-codes.php:64
+msgid "Nepalese Rupee"
+msgstr "Непальская рупия"
+
+#: inc/class-mbp-currency-codes.php:65
+msgid "Netherlands Antilles Guilder"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:66
+msgid "New Taiwanese Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:67
+msgid "New Zealand Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:68
+msgid "Nicaragua Cordoba"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:69
+msgid "Nigeria Naira"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:70
+msgid "North Korean Won"
+msgstr "Северокорейская вона"
+
+#: inc/class-mbp-currency-codes.php:71
+msgid "Norwegian Krone"
+msgstr "Norwegian Krone"
+
+#: inc/class-mbp-currency-codes.php:72
+msgid "Omani Riyal"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:73
+msgid "Pakistani Rupee"
+msgstr "Пакистанская рупия"
+
+#: inc/class-mbp-currency-codes.php:74
+msgid "Paraguay Guarani"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:75
+msgid "Peru New Sol"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:76
+msgid "Philippine Pesos"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:77
+msgid "Qatari Riyal"
+msgstr "Катарский риал"
+
+#: inc/class-mbp-currency-codes.php:78
+msgid "Romanian New Leu"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:79
+msgid "Russian Federation Ruble"
+msgstr "Российский рубль"
+
+#: inc/class-mbp-currency-codes.php:80
+msgid "Saudi Riyal"
+msgstr "Саудовский риял"
+
+#: inc/class-mbp-currency-codes.php:81
+msgid "Serbian Dinar"
+msgstr "Сербский динар"
+
+#: inc/class-mbp-currency-codes.php:82
+msgid "Seychelles Rupee"
+msgstr "Сейшельская рупия"
+
+#: inc/class-mbp-currency-codes.php:83
+msgid "Singapore Dollars"
+msgstr "Сингапурский доллар"
+
+#: inc/class-mbp-currency-codes.php:84
+msgid "Slovak Koruna"
+msgstr "Словацкая крона"
+
+#: inc/class-mbp-currency-codes.php:85
+msgid "Slovenia Tolar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:86
+msgid "South African Rand"
+msgstr "ранд Южно-Африканской Республики"
+
+#: inc/class-mbp-currency-codes.php:87
+msgid "South Korean Won"
+msgstr "Южнокорейская вона"
+
+#: inc/class-mbp-currency-codes.php:88
+msgid "Sri Lankan Rupee"
+msgstr "Шри-ланкийская рупия"
+
+#: inc/class-mbp-currency-codes.php:89
+msgid "Surinam Dollar"
+msgstr "Суринамский доллар"
+
+#: inc/class-mbp-currency-codes.php:90
+msgid "Swedish Krona"
+msgstr "Swedish Krona"
+
+#: inc/class-mbp-currency-codes.php:91
+msgid "Swiss Francs"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:92
+msgid "Tanzanian Shilling"
+msgstr "Танзанийский шиллинг"
+
+#: inc/class-mbp-currency-codes.php:93
+msgid "Thai Baht"
+msgstr "Thai Baht"
+
+#: inc/class-mbp-currency-codes.php:94
+msgid "Trinidad and Tobago Dollar"
+msgstr "Доллар Тринидада и Тобаго"
+
+#: inc/class-mbp-currency-codes.php:95
+msgid "Turkish New Lira"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:96
+msgid "UAE Dirham"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:97
+msgid "US Dollars"
+msgstr "Американский доллар"
+
+#: inc/class-mbp-currency-codes.php:98
+msgid "Ugandian Shilling"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:99
+msgid "Ukraine Hryvna"
+msgstr "Украинская гривня"
+
+#: inc/class-mbp-currency-codes.php:100
+msgid "Uruguayan Peso"
+msgstr "Уругвайское песо"
+
+#: inc/class-mbp-currency-codes.php:101
+msgid "Uzbekistani Som"
+msgstr "Узбекский сум"
+
+#: inc/class-mbp-currency-codes.php:102
+msgid "Venezuela Bolivar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:103
+msgid "Vietnam Dong"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:104
+msgid "Zambian Kwacha"
+msgstr "Замбийская квача"
+
+#: inc/class-mbp-currency-codes.php:105
+msgid "Zimbabwe Dollar"
+msgstr ""
+
+#: inc/class-mbp-metabox.php:105
+msgid ""
+"You're working on a Google My Business post, but it has not yet been "
+"published/scheduled. Press OK to publish/schedule it now, or Cancel to save "
+"it as a draft."
+msgstr "Вы работаете над публикацией Google My Business, но она еще не была опубликована/запланирована. Нажмите OK, чтобы опубликовать/запланировать это сейчас, или Отмена, чтобы сохранить ее как черновик."
+
+#: inc/class-mbp-metabox.php:106
+msgid "Please Wait..."
+msgstr "Пожалуйста, подождите..."
+
+#: inc/class-mbp-metabox.php:107
+msgid "Publish"
+msgstr "Опубликовать"
+
+#: inc/class-mbp-metabox.php:108
+msgid "Update"
+msgstr "Обновить"
+
+#: inc/class-mbp-metabox.php:109 templates/metabox.php:272
+msgid "Save draft"
+msgstr "Сохранить черновик"
+
+#: inc/class-mbp-metabox.php:110 templates/metabox.php:216
+msgid "Schedule post"
+msgstr "Запланировать запись"
+
+#: inc/class-mbp-metabox.php:111
+msgid "Save template"
+msgstr "Сохранить шаблон"
+
+#: inc/class-mbp-metabox.php:116
+msgid "Min"
+msgstr "Мин."
+
+#: inc/class-mbp-metabox.php:117
+msgid "Price"
+msgstr "Цена"
+
+#.   Plugin Name of the plugin/theme
+msgid "Post to Google My Business"
+msgstr "Опубликовать в Google My Business"
+
+#: inc/class-mbp-metabox.php:146
+msgid "Please configure Post to Google My Business first"
+msgstr "Пожалуйста, настройте сначала Post to Google My Business"
+
+#: inc/class-mbp-metabox.php:148
+msgid "(Connect, pick a default location and Save Changes)"
+msgstr "(Подключиться, выбрать местоположение по умолчанию и сохранить изменения)"
+
+#: inc/class-mbp-metabox.php:178
+msgid "Auto-post this to GMB"
+msgstr "Автоматически публиковать это в GMB"
+
+#: inc/class-mbp-metabox.php:299 templates/metabox.php:15
+msgid "What's New"
+msgstr "Что нового"
+
+#: inc/class-mbp-metabox.php:303 templates/metabox.php:16
+msgid "Event"
+msgstr "Событие"
+
+#: inc/class-mbp-metabox.php:307 templates/metabox.php:17
+msgid "Offer"
+msgstr "Предложение"
+
+#: inc/class-mbp-metabox.php:311 templates/metabox.php:18
+msgid "Product"
+msgstr "Товар"
+
+#: inc/class-mbp-metabox.php:389
+msgid "No GMB posts found."
+msgstr "Записей GMB не найдено."
+
+#: inc/class-mbp-metabox.php:405
+msgid "Repost enabled"
+msgstr "Репост включен"
+
+#: inc/class-mbp-metabox.php:412
+msgid "List created posts"
+msgstr "Список созданных записей"
+
+#: inc/class-mbp-metabox.php:414 inc/class-mbp-post-type-google-posts.php:28
+msgid "Edit"
+msgstr "Изменить"
+
+#: inc/class-mbp-metabox.php:415
+msgid "Duplicate"
+msgstr "Дублировать"
+
+#: inc/class-mbp-metabox.php:416
+msgid "Delete"
+msgstr "Удалить"
+
+#: inc/class-mbp-metabox.php:420
+msgid "Immediately"
+msgstr "Немедленно"
+
+#: inc/class-mbp-metabox.php:421
+msgid "Draft"
+msgstr "Черновик"
+
+#: inc/class-mbp-metabox.php:444
+msgid "You do not have permission to publish posts"
+msgstr "У вас нет прав на публикацию записей"
+
+#: inc/class-mbp-metabox.php:477
+msgid "Error creating post: %s"
+msgstr "Ошибка создания записи: %s"
+
+#: inc/class-mbp-metabox.php:500
+msgid "Auto-post template successfully updated"
+msgstr "Шаблон авто-публикации успешно обновлен"
+
+#: inc/class-mbp-metabox.php:513
+msgid "You do not have permission to edit posts"
+msgstr "У вас нет прав на редактирование записей"
+
+#: inc/class-mbp-metabox.php:531
+msgid "Post could not be loaded"
+msgstr "Не удалось загрузить запись"
+
+#: inc/class-mbp-metabox.php:539
+msgid "You do not have permission to delete posts"
+msgstr "У вас нет прав на удаление записей"
+
+#: inc/class-mbp-metabox.php:578
+msgid ""
+"No posts found. The posting process may still be in progress, or no "
+"location was selected."
+msgstr "Записей не найдено. Процесс публикации может еще продолжаться, или местоположение не было выбрано."
+
+#: inc/class-mbp-metabox.php:592
+msgid "Unknown"
+msgstr "неизвестно"
+
+#: inc/class-mbp-metabox.php:617
+msgid ", Timezone: "
+msgstr ", Временная зона: "
+
+#: inc/class-mbp-plugin.php:136
+msgid "Manage multiple businesses or locations?"
+msgstr "Управлять несколькими бизнесами или местами?"
+
+#: inc/class-mbp-plugin.php:138 inc/class-mbp-plugin.php:144
+#: inc/class-mbp-plugin.php:150 inc/class-mbp-plugin.php:156
+#: inc/class-mbp-plugin.php:162 inc/class-mbp-plugin.php:173
+msgid "Upgrade to Premium"
+msgstr "Обновитесь до Премиум"
+
+#: inc/class-mbp-plugin.php:139
+msgid "to pick a location per post, or post to multiple locations at once."
+msgstr "выбрать место записи или опубликовать в нескольких местах одновременно."
+
+#: inc/class-mbp-plugin.php:142
+msgid "Not the right time?"
+msgstr "Не подходящее время?"
+
+#: inc/class-mbp-plugin.php:145
+msgid "and schedule your posts to be automagically published at a later time."
+msgstr "и запланируйте свои записи, которые будут автоматически опубликованы позже."
+
+#: inc/class-mbp-plugin.php:148
+msgid "Wonder how well your Google My Business post is doing?"
+msgstr "Хотите знать, насколько хорошо работает ваша запись в \"Google мой бизнес\"?"
+
+#: inc/class-mbp-plugin.php:151
+msgid "to view post statistics and easily include Google Analytics UTM parameters."
+msgstr "просматривать статистику записей и легко включать параметры Google Analytics UTM."
+
+#: inc/class-mbp-plugin.php:154
+msgid ""
+"Use Post to Google My Business for your pages, projects, WooCommerce "
+"products and more."
+msgstr "Используйте Post to Google My Business для своих страниц, проектов, товаров WooCommerce и многого другого."
+
+#: inc/class-mbp-plugin.php:157
+msgid "to enable Post to Google my Business for any post type."
+msgstr "разрешить Post to Google my Business для любого типа записей."
+
+#: inc/class-mbp-plugin.php:160
+msgid "Automatically repost your GMB posts a specific or unlimited amount of times."
+msgstr "Автоматически размещайте записи GMB определенное или неограниченное количество раз."
+
+#: inc/class-mbp-plugin.php:163
+msgid "to set custom intervals and specify the amount of reposts."
+msgstr "установить пользовательские интервалы и указать количество перепостов."
+
+#: inc/class-mbp-plugin.php:166
+msgid ""
+"I hope you enjoy using my Post to Google My Business plugin! Help spread "
+"the word with a"
+msgstr "Надеюсь, вам понравился мой плагин Post to Google My Business! Помогите распространить его с"
+
+#: inc/class-mbp-plugin.php:167
+msgid "5-star rating on WordPress.org"
+msgstr "5-и звездный рейтинг на WordPress.org"
+
+#: inc/class-mbp-plugin.php:168
+msgid ". Many thanks! - Koen Reus, plugin developer"
+msgstr ". Премного благодарностей! - Koen Reus, разработчик плагина"
+
+#: inc/class-mbp-plugin.php:171
+msgid "Create unique posts every time."
+msgstr "Создавайте уникальные записи каждый раз."
+
+#: inc/class-mbp-plugin.php:174
+msgid "to use spintax and %variables% in your post text."
+msgstr "использовать спинтакс и %variables% в тексте вашей записи."
+
+#: inc/class-mbp-post-type-google-posts.php:24
+msgid "Post campaigns"
+msgstr "Компании записи"
+
+#: inc/class-mbp-post-type-google-posts.php:25
+msgid "Post campaign"
+msgstr "Компания записи"
+
+#: inc/class-mbp-post-type-google-posts.php:26
+msgid "New"
+msgstr "Новое"
+
+#: inc/class-mbp-post-type-google-posts.php:27
+msgid "Add new GMB campaign"
+msgstr "Добавить новую GMB компанию"
+
+#: inc/class-mbp-post-type-google-posts.php:29
+msgid "Edit GMB post campaign"
+msgstr "Редактировать компанию записи GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:30
+msgid "New GMB post campaign"
+msgstr "Новая компания записи GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:31
+msgid "View"
+msgstr "Просмотр"
+
+#: inc/class-mbp-post-type-google-posts.php:32
+msgid "View GMB post campaign"
+msgstr "Посмотреть компанию записи GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:33
+msgid "Find GMB post campaign"
+msgstr "Посмотреть компанию записи GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:34
+msgid "No GMB post campaigns found"
+msgstr "Компании записи GMB не найдены"
+
+#: inc/class-mbp-post-type-google-posts.php:35
+msgid "No GMB post campaigns found in the trash"
+msgstr "Компании записи GMB в корзине не найдены"
+
+#: src/Components/BusinessSelector.php:46
+msgid "No user account or location groups found"
+msgstr "Учетная запись пользователя или группы местоположений не найдены"
+
+#: src/Components/BusinessSelector.php:60
+msgid "No businesses found. Did you log in to the correct Google account?"
+msgstr "Не найдено бизнесов. Вы вошли в правильную учетную запись Google?"
+
+#: src/Components/BusinessSelector.php:116
+msgid "Search/Filter locations..."
+msgstr "Искать/Фильтровать локации..."
+
+#: src/Components/BusinessSelector.php:119
+msgid "Select all"
+msgstr "Выбрать все"
+
+#: src/Components/BusinessSelector.php:120
+msgid "Select none"
+msgstr "Отменить выбор"
+
+#: src/Google/AbstractGoogleJsonObject.php:27
+msgid "Unknown property"
+msgstr "Неизвестная собственность"
+
+#: src/Google/CallToAction.php:29
+msgid "Invalid call to action"
+msgstr "Неправильный призыв к действию"
+
+#: src/Google/CallToAction.php:41
+msgid "Invalid URL supplied for call to action"
+msgstr "Указан неверный URL для призыва к действию"
+
+#: src/Google/Date.php:42
+msgid "Year must be from 1 to 9999, or 0 if specifying a date without a year."
+msgstr "Год должен быть от 1 до 9999 или 0, если указана дата без года."
+
+#: src/Google/Date.php:52
+msgid ""
+"Month must be from 1 to 12, or 0 if specifying a year without a month and "
+"day. "
+msgstr "Месяц должен быть от 1 до 12 или 0, если указан год без месяца и дня."
+
+#: src/Google/Date.php:62
+msgid ""
+"Day must be from 1 to 31 and valid for the year and month, or 0 if "
+"specifying a year by itself or a year and month where the day is not "
+"significant. "
+msgstr "День должен быть от 1 до 31 и действителен для года и месяца, или 0, если указывается сам год или год и месяц, где день не имеет значения."
+
+#: src/Google/LocalPost.php:60
+msgid "Invalid Topic type"
+msgstr "Неверный тип темы"
+
+#: src/Google/LocalPost.php:87
+msgid "Post text should be between 1 and 1500 characters"
+msgstr "Текст сообщения должен быть от 1 до 1500 символов"
+
+#: src/Google/LocalPostEvent.php:18
+msgid "Event title is required"
+msgstr "Необходим заголовок события"
+
+#: src/Google/LocalPostOffer.php:21
+msgid "Offer redeem online URL is invalid"
+msgstr "Предложение выкупить онлайн URL недействителен"
+
+#: src/Google/MediaItem.php:23
+msgid "Invalid media format"
+msgstr "Неверный формат изображения"
+
+#: src/Google/MediaItem.php:30
+msgid "Invalid media URL"
+msgstr "Неверный URL изображения"
+
+#: src/Google/TimeInterval.php:39
+msgid "End date is before start date"
+msgstr "Дата завершения раньше даты начала"
+
+#: src/Google/TimeOfDay.php:20
+msgid "Hour should be from 0 to 23"
+msgstr "Часы должны быть между 0 и 23"
+
+#: src/Google/TimeOfDay.php:27
+msgid "Minutes should be between 0 and 59"
+msgstr "Минуты должны быть между 0 и 59"
+
+#: src/Google/TimeOfDay.php:34
+msgid "Seconds should be between 0 and 59"
+msgstr "Секунды должны быть между 0 и 59"
+
+#: src/Google/TimeOfDay.php:41
+msgid "Nanos should be between 0 and 999,999,999"
+msgstr "Нанос должен быть между 0 и 999 999 999"
+
+#: src/WeDevsSettingsAPI.php:372
+msgid "Choose File"
+msgstr "Выберите файл"
+
+#: templates/metabox.php:8
+msgid "Edit auto-post template"
+msgstr "Редактировать шаблон авто-публикации"
+
+#: templates/metabox.php:9
+msgid "New GMB Post"
+msgstr "Новая запись GMB"
+
+#: templates/metabox.php:32
+msgid "Post image/video"
+msgstr "Изображение/видео записи"
+
+#: templates/metabox.php:36
+msgid "Select Image"
+msgstr "Выбрать изображение"
+
+#: templates/metabox.php:36
+msgid "-or-"
+msgstr "-или-"
+
+#: templates/metabox.php:37
+msgid "Select Video"
+msgstr "Выберите видео"
+
+#: templates/metabox.php:38
+msgid "JPG or PNG, 720x540px minimum size"
+msgstr "JPG или PNG, 720x540px минимальный размер"
+
+#: templates/metabox.php:42
+msgid "Post text"
+msgstr "Текст записи"
+
+#: templates/metabox.php:45
+msgid "Characters:"
+msgstr "Символы:"
+
+#: templates/metabox.php:45
+msgid "Word count:"
+msgstr "Количество слов:"
+
+#: templates/metabox.php:46
+msgid ""
+"The text that should appear on your post. Recommended 150-300 characters. "
+"80 characters show in the Google Search results. 1500 characters maximum."
+msgstr "Текст, который должен появиться в вашем посте. Рекомендуется 150-300 символов. 80 символов отображаются в результатах поиска Google. Не более 1500 символов."
+
+#: templates/metabox.php:53
+msgid "Event title"
+msgstr "Название мероприятия"
+
+#: templates/metabox.php:59
+msgid "Start date"
+msgstr "Дата начала"
+
+#: templates/metabox.php:66
+msgid "End date"
+msgstr "Дата окончания"
+
+#: templates/metabox.php:76
+msgid "Offer title"
+msgstr "Заголовок предложения"
+
+#: templates/metabox.php:79
+msgid "Example: 20% off in store or online"
+msgstr "Пример: скидка 20% в магазине или онлайн"
+
+#: templates/metabox.php:83
+msgid "Coupon code (optional)"
+msgstr "Код купона (необязательно)"
+
+#: templates/metabox.php:89
+msgid "Link to redeem offer (optional)"
+msgstr "Ссылка для выкупа предложения (необязательно)"
+
+#: templates/metabox.php:95
+msgid "Terms and conditions (optional)"
+msgstr "Условия использования (необязательно)"
+
+#: templates/metabox.php:105
+msgid ""
+"The ability to create Product posts has been (temporarily?) removed from "
+"the Google My Business API. Please check back later."
+msgstr ""
+"Возможность создавать сообщения о товарах была (временно?) удалена из Google "
+"My Business API. Пожалуйста, зайдите позже."
+
+#: templates/metabox.php:141
+msgid "Details"
+msgstr "Детали"
+
+#: templates/metabox.php:144
+msgid ""
+"The text that should appear on your post. Recommended 150-300 characters. "
+"80 characters show in the SERPS. 1500 characters maximum."
+msgstr ""
+"Текст, который должен появиться в вашей записи. Рекомендуется 150-300 "
+"символов. 80 символов показывают в поисковой выдаче. Максимум 1500 символов"
+
+#: templates/metabox.php:151
+msgid "Have more people engage with your events, products or offers."
+msgstr "Привлекайте больше людей к вашим мероприятиям, товарам или предложениям."
+
+#: templates/metabox.php:151 templates/metabox.php:301
+msgid "Upgrade to premium"
+msgstr "Обновитесь до Премиум"
+
+#: templates/metabox.php:151
+msgid ""
+"and start creating your Event, Offer and Product posts right from the "
+"WordPress dashboard!"
+msgstr "и начните создавать сообщения о событиях, предложениях и товарах прямо с панели управления WordPress!"
+
+#: templates/metabox.php:152 templates/metabox.php:207
+#: templates/metabox.php:302
+msgid "Upgrade now!"
+msgstr "Обновить сейчас!"
+
+#: templates/metabox.php:159
+msgid "Button"
+msgstr "Кнопка"
+
+#: templates/metabox.php:161
+msgid "Add a button"
+msgstr "Добавить кнопку"
+
+#: templates/metabox.php:165
+msgid "Button type"
+msgstr "Тип кнопки"
+
+#: templates/metabox.php:173
+msgid "Call now (uses primary phone number of business)"
+msgstr "Позвонить сейчас (использует основной номер телефона бизнеса)"
+
+#: templates/metabox.php:174
+msgid "The text that should appear on your button"
+msgstr "Текст, который должен появиться на вашей кнопке"
+
+#: templates/metabox.php:178
+msgid "Alternative button URL"
+msgstr "Альтернативный URL кнопки"
+
+#: templates/metabox.php:181
+msgid ""
+"Optional. Where the user should go when clicking the button. Leave at "
+"default to send them to your newly created WordPress post."
+msgstr "Необязательный. Куда пользователь должен перейти при нажатии на кнопку. Оставьте по умолчанию, чтобы отправить их на вашу недавно созданную запись WordPress."
+
+#: templates/metabox.php:188
+msgid "Advanced post settings"
+msgstr "Дополнительные настройки записи"
+
+#: templates/metabox.php:193
+msgid "Image settings"
+msgstr "Настройки изображения"
+
+#: templates/metabox.php:196
+msgid "Fetch image from post content"
+msgstr "Получить изображение из содержимого записи"
+
+#: templates/metabox.php:197
+msgid ""
+"Try to get an image from the post content (when no custom image is set). "
+"This takes priority over the featured image."
+msgstr "Попробуйте получить изображение из содержимого публикации (если не настроено пользовательское изображение). Это имеет приоритет над изображением записи."
+
+#: templates/metabox.php:198
+msgid "Use Featured Image as GMB post image"
+msgstr "Использовать изображение записи как изображение записи GMB"
+
+#: templates/metabox.php:205
+msgid ""
+"Schedule your Google My Business posts, automatically repost them at "
+"specified interval, and pick one or more locations to post to. And many "
+"more features!"
+msgstr "Запланируйте свои публикации в Google My Business, автоматически разместите их с указанным интервалом и выберите одно или несколько мест для публикации. И многое другое!"
+
+#: templates/metabox.php:221
+msgid "When the post should be first published"
+msgstr "Когда запись должна быть впервые опубликована"
+
+#: templates/metabox.php:229
+msgid "Automatic repost"
+msgstr "Автоматический репост"
+
+#: templates/metabox.php:235
+msgid "Stop after"
+msgstr "Остановить после"
+
+#: templates/metabox.php:237
+msgid "Never"
+msgstr "Никогда"
+
+#: templates/metabox.php:238
+msgid "Date"
+msgstr "Дата"
+
+#: templates/metabox.php:239
+msgid "Executions"
+msgstr "Выполнения"
+
+#: templates/metabox.php:246
+msgid "executions"
+msgstr "выполнения"
+
+#: templates/metabox.php:252
+msgid "Post to location(s)"
+msgstr "Запись в локацию(и)"
+
+#: templates/metabox.php:271
+msgid "Cancel"
+msgstr "Отмена"
+
+#: templates/metabox.php:274
+msgid "Publish Now"
+msgstr "Опубликовать сейчас"
+
+#: templates/metabox.php:285
+msgid "Post type"
+msgstr "Тип записи"
+
+#: templates/metabox.php:286
+msgid "Publish date"
+msgstr "Дата публикации"
+
+#: templates/metabox.php:287
+msgid "Created"
+msgstr "Создано"
+
+#: templates/metabox.php:300
+msgid "Video posts are a Post to Google My Business premium feature"
+msgstr "Видеопубликации - это премиальная функция « Post to Google My Business»"
+
+#: templates/metabox.php:301
+msgid "Videos in your Google My Business post greatly improve user engagement."
+msgstr "Видео в вашей записи Google My Business значительно улучшают взаимодействие с пользователем."
+
+#: templates/metabox.php:301
+msgid "to start creating your first awesome video post!"
+msgstr "начать создавать свою первую потрясающую видео запись!"
+
+#: templates/metabox.php:311
+msgid "Location"
+msgstr "Местоположение"
+
+#: templates/metabox.php:313
+msgid "Status"
+msgstr "Статус"
+
+#: templates/settings.php:4
+msgid ""
+"Thanks for choosing Post to Google My Business! The easiest and most "
+"versatile Google My Business plugin for WordPress."
+msgstr "Спасибо, что выбрали Post to Google My Business! Самый простой и универсальный плагин Google My Business для WordPress."
+
+#: templates/settings.php:5
+msgid ""
+"Need help getting started? Check out the <a target=\"_blank\" "
+"href=\"https://tycoonmedia.net/gmb-tutorial-video/\">tutorial video</a>"
+msgstr "Нужна помощь, чтобы начать? Посмотрите <a target=\"_blank\" href=\"https://tycoonmedia.net/gmb-tutorial-video/\">видео обучение</a>"
+
+#.   Plugin URI of the plugin/theme
+msgid "https://tycoonmedia.net/wordpress-google-my-business-post/"
+msgstr "https://tycoonmedia.net/wordpress-google-my-business-post/"
+
+#.   Description of the plugin/theme
+msgid ""
+"Automatically create a post on Google My Business when creating a new "
+"WordPress post"
+msgstr "Автоматически создавайте записи в Google My Business при создании новой записи в WordPress"
+
+#.   Author of the plugin/theme
+msgid "tyCoon Media"
+msgstr "tyCoon Media"
+
+#.   Author URI of the plugin/theme
+msgid "https://tycoonmedia.net"
+msgstr "https://tycoonmedia.net"
+
+#: inc/class-mbp-metabox.php:421
+msgctxt "%s = human-readable time difference"
+msgid "%s ago"
+msgstr "%s назад"

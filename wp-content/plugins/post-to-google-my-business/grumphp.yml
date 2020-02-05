@@ -1,0 +1,32 @@
+parameters:
+    process_timeout: 120
+    tasks:
+        composer: ~
+#        gherkin: ~
+        git_commit_message: ~
+        phpcpd:
+            exclude:
+                - lib
+                - tests
+                - vendor
+        phpcs:
+            whitelist_patterns:
+                - /^src
+        #phplint: ~
+        phpmd:
+            ruleset: ['codesize', 'design', 'naming', 'unusedcode']
+            exclude:
+                - lib
+                - tests
+                - vendor
+        phpunit:
+            always_execute: true
+    testsuites:
+        code_quality:
+            tasks:
+                - composer
+                - gherkin
+                - phpcpd
+                - phpcs
+                - phplint
+                - phpmd

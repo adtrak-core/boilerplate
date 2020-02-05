@@ -1,0 +1,308 @@
+[
+    {
+        "name": "a5hleyrich/wp-background-processing",
+        "version": "1.0.1",
+        "version_normalized": "1.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/A5hleyRich/wp-background-processing.git",
+            "reference": "1f070aab5058dbaf45d5435a343033ddd8a641b1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/A5hleyRich/wp-background-processing/zipball/1f070aab5058dbaf45d5435a343033ddd8a641b1",
+            "reference": "1f070aab5058dbaf45d5435a343033ddd8a641b1",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2"
+        },
+        "time": "2018-02-12T09:24:05+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "classes/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0-only"
+        ],
+        "authors": [
+            {
+                "name": "Ashley Rich",
+                "email": "hello@ashleyrich.com"
+            }
+        ],
+        "description": "WP Background Processing can be used to fire off non-blocking asynchronous requests or as a background processing tool, allowing you to queue tasks."
+    },
+    {
+        "name": "dragonmantank/cron-expression",
+        "version": "v1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dragonmantank/cron-expression.git",
+            "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/9504fa9ea681b586028adaaa0877db4aecf32bad",
+            "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0|~5.0"
+        },
+        "time": "2017-01-23T04:29:33+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Cron\\": "src/Cron/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
+            }
+        ],
+        "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+        "keywords": [
+            "cron",
+            "schedule"
+        ]
+    },
+    {
+        "name": "html2text/html2text",
+        "version": "4.2.1",
+        "version_normalized": "4.2.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mtibben/html2text.git",
+            "reference": "f7555eaf271beea4e1098274d3ff37fbb7b21ea7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mtibben/html2text/zipball/f7555eaf271beea4e1098274d3ff37fbb7b21ea7",
+            "reference": "f7555eaf271beea4e1098274d3ff37fbb7b21ea7",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4"
+        },
+        "suggest": {
+            "ext-mbstring": "For best performance",
+            "symfony/polyfill-mbstring": "If you can't install ext-mbstring"
+        },
+        "time": "2018-08-13T12:05:08+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Html2Text\\": [
+                    "src/",
+                    "test/"
+                ]
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "description": "Converts HTML to formatted plain text"
+    },
+    {
+        "name": "rarst/wpdatetime",
+        "version": "0.3.1",
+        "version_normalized": "0.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Rarst/wpdatetime.git",
+            "reference": "7a04d056dc9a1f5761480d9f020c60ac92c72811"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Rarst/wpdatetime/zipball/7a04d056dc9a1f5761480d9f020c60ac92c72811",
+            "reference": "7a04d056dc9a1f5761480d9f020c60ac92c72811",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.10"
+        },
+        "require-dev": {
+            "brain/monkey": "^2.1",
+            "pds/skeleton": "^1.0"
+        },
+        "time": "2019-05-27T11:32:59+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Rarst\\WordPress\\DateTime\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Andrey Savchenko",
+                "homepage": "https://www.Rarst.net/"
+            }
+        ],
+        "description": "Extension of PHP’s DateTime and DateTimeZone classes for WordPress context.",
+        "keywords": [
+            "date",
+            "time",
+            "timezone",
+            "wordpress"
+        ]
+    },
+    {
+        "name": "typisttech/imposter",
+        "version": "0.4.1",
+        "version_normalized": "0.4.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/TypistTech/imposter.git",
+            "reference": "76406c9a957d71c986fb752fa048b63d5d9596a5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/TypistTech/imposter/zipball/76406c9a957d71c986fb752fa048b63d5d9596a5",
+            "reference": "76406c9a957d71c986fb752fa048b63d5d9596a5",
+            "shasum": ""
+        },
+        "require": {
+            "ext-json": "*",
+            "php": "^7.2"
+        },
+        "require-dev": {
+            "codeception/base": "^3.1",
+            "mockery/mockery": "^1.3",
+            "squizlabs/php_codesniffer": "^3.5"
+        },
+        "suggest": {
+            "typisttech/imposter-plugin": "Composer plugin to integrate composer and imposter"
+        },
+        "time": "2020-01-11T19:53:10+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.4.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "TypistTech\\Imposter\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Typist Tech",
+                "email": "imposter@typist.tech",
+                "homepage": "https://typist.tech"
+            },
+            {
+                "name": "Tang Rufus",
+                "email": "tangrufus@gmail.com",
+                "homepage": "https://typist.tech",
+                "role": "Developer"
+            }
+        ],
+        "description": "Wrapping all composer vendor packages inside your own namespace. Intended for WordPress plugins",
+        "homepage": "https://typist.tech/projects/imposter",
+        "keywords": [
+            "composer",
+            "dependency",
+            "monkey-patching",
+            "namespace",
+            "wordpress"
+        ]
+    },
+    {
+        "name": "typisttech/imposter-plugin",
+        "version": "0.4.0",
+        "version_normalized": "0.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/TypistTech/imposter-plugin.git",
+            "reference": "fba9e2264433678d197ae8c91e8777e8afd4a711"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/TypistTech/imposter-plugin/zipball/fba9e2264433678d197ae8c91e8777e8afd4a711",
+            "reference": "fba9e2264433678d197ae8c91e8777e8afd4a711",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1.1",
+            "php": "^7.2",
+            "typisttech/imposter": "^0.4.1"
+        },
+        "require-dev": {
+            "codeception/base": "^3.1",
+            "composer/composer": "^1.9",
+            "squizlabs/php_codesniffer": "^3.5",
+            "typisttech/codeception-composer-project-module": "^0.1.1"
+        },
+        "time": "2020-01-11T20:02:37+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "0.4.x-dev"
+            },
+            "class": "TypistTech\\Imposter\\Plugin\\ImposterPlugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "TypistTech\\Imposter\\Plugin\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Typist Tech",
+                "email": "imposter-plugin@typist.tech",
+                "homepage": "https://www.typist.tech"
+            },
+            {
+                "name": "Tang Rufus",
+                "email": "tangrufus@gmail.com",
+                "homepage": "https://www.typist.tech",
+                "role": "Developer"
+            }
+        ],
+        "description": "Composer plugin that wraps all composer vendor packages inside your own namespace. Intended for WordPress plugins",
+        "homepage": "https://www.typist.tech/projects/imposter-plugin",
+        "keywords": [
+            "composer",
+            "composer-plugin",
+            "dependency",
+            "monkey-patching",
+            "namespace",
+            "wordpress"
+        ]
+    }
+]

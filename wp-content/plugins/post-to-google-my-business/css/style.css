@@ -1,0 +1,85 @@
+/* -------- Business selector -------- */
+.mbp-business-selector {
+	border: 1px solid #ddd;
+	box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	background-color: #fff;
+	color: #32373c;
+	outline: 0;
+	transition: 50ms border-color ease-in-out;
+	height:200px;
+	overflow-y:scroll;
+	padding:10px;
+}
+
+.mbp-business-item.mbp-business-disabled {
+	color:#C3C3C3;
+}
+
+.mbp-business-selector td{
+	padding:5px;
+	vertical-align:middle;
+}
+
+.mbp-address {
+	font-size:12px;
+	color:#878787;
+}
+
+.mbp-info{
+	background: #fff;
+	border-left: 4px solid #fff;
+	border-left-color: #00a0d2;
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	margin: 10px 0px; 
+	padding: 5px 12px;
+}
+
+.mbp-location-blocked-info {
+	display:none;
+}
+
+.mbp-autopost-checkbox-container {
+	float:left;
+	padding:0;
+	line-height:23px;
+}
+/* -------- Metabox -------- */
+.mbp-post-form-container {
+	border: #c7d7e2 solid 1px;
+	margin-bottom:-1px;
+	background-color:#FDFDFD;
+}
+
+.mbp-table-head {
+	text-align:right;
+	padding: 8px;
+	background: #EAF2FA;
+	border: #c7d7e2 solid 1px;
+	margin-bottom:-1px;
+}
+
+.mbp-tabs-container {
+	background-color:#F1F1F1; 
+	padding:8px;
+}
+
+.mbp-has-error {
+	background-color:#FDCDCD !important;
+}
+
+.mbp-error-notice{
+	background-color:#FFF;
+	padding:10px;
+	border-left:4px solid #AC302A;
+	display:none;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+.mbp-text-details, .mbp-business-options {
+	border: 1px solid #e5e5e5;
+	background-color: #f7f7f7;
+	padding:5px;
+	margin-top:-2px;
+	font-size:12px;
+}

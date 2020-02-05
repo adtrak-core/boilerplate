@@ -1,0 +1,34 @@
+{
+	"name"        : "rarst/wpdatetime",
+	"description" : "Extension of PHP’s DateTime and DateTimeZone classes for WordPress context.",
+	"keywords"    : [
+		"date",
+		"time",
+		"timezone",
+		"wordpress"
+	],
+	"license"     : "MIT",
+	"authors"     : [
+		{
+			"name"    : "Andrey Savchenko",
+			"homepage": "https://www.Rarst.net/"
+		}
+	],
+	"require": {
+		"php": ">=5.5.10"
+	},
+	"require-dev" : {
+		"brain/monkey": "^2.1",
+		"pds/skeleton": "^1.0"
+	},
+	"autoload"    : {
+		"psr-4": {
+			"Rarst\\WordPress\\DateTime\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Rarst\\WordPress\\DateTime\\": "tests/"
+		}
+	}
+}
