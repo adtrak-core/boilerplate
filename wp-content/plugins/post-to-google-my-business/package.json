@@ -46,7 +46,7 @@
     "@fullcalendar/timegrid": "^4.3.0",
     "@wordpress/data": "^4.12.0",
     "@wordpress/editor": "^9.10.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-ui": "^1.12.1",
     "jquery-ui-bundle": "^1.12.1-migrate",
     "jquery-ui-timepicker-addon": "^1.6.3",
