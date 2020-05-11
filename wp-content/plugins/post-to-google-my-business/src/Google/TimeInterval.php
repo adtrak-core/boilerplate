@@ -32,6 +32,14 @@ class TimeInterval extends AbstractGoogleJsonObject {
 		$this->jsonOutput['endTime'] = $this->endTime = $endTime;
 	}
 
+	public function setAllDay($eventAllDay){
+		if($eventAllDay){
+			$this->jsonOutput['startTime'] = new \stdClass();
+			$endTime = new TimeOfDay(23,59,59);
+			$this->jsonOutput['endTime'] = $endTime;
+		}
+	}
+
 	public function isStartBeforeEnd(){
 		$start = strtotime($this->startDate . " " . $this->startTime);
 		$end = strtotime($this->endDate . " " .$this->endTime);

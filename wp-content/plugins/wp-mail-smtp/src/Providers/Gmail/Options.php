@@ -12,7 +12,14 @@ use WPMailSMTP\Providers\OptionsAbstract;
 class Options extends OptionsAbstract {
 
 	/**
-	 * Mailgun constructor.
+	 * Mailer slug.
+	 *
+	 * @since 1.5.0
+	 */
+	const SLUG = 'gmail';
+
+	/**
+	 * Gmail Options constructor.
 	 *
 	 * @since 1.0.0
 	 */
@@ -20,13 +27,12 @@ class Options extends OptionsAbstract {
 
 		parent::__construct(
 			array(
-				'logo_url'    => wp_mail_smtp()->plugin_url . '/assets/images/gmail.png',
-				'slug'        => 'gmail',
+				'logo_url'    => wp_mail_smtp()->assets_url . '/images/providers/google.svg',
+				'slug'        => self::SLUG,
 				'title'       => esc_html__( 'Gmail', 'wp-mail-smtp' ),
 				'description' => sprintf(
-					wp_kses(
-						/* translators: %1$s - opening link tag; %2$s - closing link tag. */
-						__( 'Send emails using your Gmail or G Suite (formerly Google Apps) account, all while keeping your login credentials safe. Other Google SMTP methods require enabling less secure apps in your account and entering your password. However, this integration uses the Google API to improve email delivery issues while keeping your site secure.<br><br>Read our %1$sGmail documentation%2$s to learn how to configure Gmail or G Suite.', 'wp-mail-smtp' ),
+					wp_kses( /* translators: %s - URL to our Gmail doc. */
+						__( 'Send emails using your Gmail or G Suite (formerly Google Apps) account, all while keeping your login credentials safe. Other Google SMTP methods require enabling less secure apps in your account and entering your password. However, this integration uses the Google API to improve email delivery issues while keeping your site secure.<br><br>Read our <a href="%s" target="_blank" rel="noopener noreferrer">Gmail documentation</a> to learn how to configure Gmail or G Suite.', 'wp-mail-smtp' ),
 						array(
 							'br' => array(),
 							'a'  => array(
@@ -36,8 +42,10 @@ class Options extends OptionsAbstract {
 							),
 						)
 					),
-					'<a href="https://wpforms.com/how-to-securely-send-wordpress-emails-using-gmail-smtp/" target="_blank" rel="noopener noreferrer">',
-					'</a>'
+					'https://wpmailsmtp.com/docs/how-to-set-up-the-gmail-mailer-in-wp-mail-smtp/'
+				),
+				'notices'     => array(
+					'educational' => esc_html__( 'The Gmail mailer works well for sites that send low numbers of emails. However, Gmail\'s API has rate limitations and a number of additional restrictions that can lead to challenges during setup. If you expect to send a high volume of emails, or if you find that your web host is not compatible with the Gmail API restrictions, then we recommend considering a different mailer option.', 'wp-mail-smtp' ),
 				),
 				'php'         => '5.5',
 			)
@@ -79,11 +87,18 @@ class Options extends OptionsAbstract {
 				<label for="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-client_secret"><?php esc_html_e( 'Client Secret', 'wp-mail-smtp' ); ?></label>
 			</div>
 			<div class="wp-mail-smtp-setting-field">
-				<input name="wp-mail-smtp[<?php echo esc_attr( $this->get_slug() ); ?>][client_secret]" type="text"
-					value="<?php echo esc_attr( $this->options->get( $this->get_slug(), 'client_secret' ) ); ?>"
-					<?php echo $this->options->is_const_defined( $this->get_slug(), 'client_secret' ) ? 'disabled' : ''; ?>
-					id="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-client_secret" spellcheck="false"
-				/>
+				<?php if ( $this->options->is_const_defined( $this->get_slug(), 'client_secret' ) ) : ?>
+					<input type="text" disabled value="****************************************"
+						id="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-client_secret"
+					/>
+					<?php $this->display_const_set_message( 'WPMS_GMAIL_CLIENT_SECRET' ); ?>
+				<?php else : ?>
+					<input type="password" spellcheck="false"
+						name="wp-mail-smtp[<?php echo esc_attr( $this->get_slug() ); ?>][client_secret]"
+						value="<?php echo esc_attr( $this->options->get( $this->get_slug(), 'client_secret' ) ); ?>"
+						id="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-client_secret"
+					/>
+				<?php endif; ?>
 			</div>
 		</div>
 
@@ -104,9 +119,7 @@ class Options extends OptionsAbstract {
 					<span class="dashicons dashicons-admin-page"></span>
 				</button>
 				<p class="desc">
-					<?php esc_html_e( 'This is the path on your site that you will be redirected to after you have authenticated with Google.', 'wp-mail-smtp' ); ?>
-					<br>
-					<?php esc_html_e( 'You need to copy this URL into "Authorized redirect URIs" field for you web application on Google APIs site for your project there.', 'wp-mail-smtp' ); ?>
+					<?php esc_html_e( 'Please copy this URL into the "Authorized redirect URIs" field of your Google web application.', 'wp-mail-smtp' ); ?>
 				</p>
 			</div>
 		</div>
@@ -133,21 +146,16 @@ class Options extends OptionsAbstract {
 	protected function display_auth_setting_action() {
 
 		// Do the processing on the fly, as having ajax here is too complicated.
-		$this->process_gmail_remove();
+		$this->process_provider_remove();
 
 		$auth = new Auth();
 		?>
-
-		<script>
-			var wp_mail_smtp = window.wp_mail_smtp || {};
-			wp_mail_smtp.text_gmail_remove = "<?php esc_html_e( 'Are you sure you want to reset the current Gmail connection? You will need to immediately create a new one to be able to send emails.', 'wp-mail-smtp' ); ?>";
-		</script>
 
 		<?php if ( $auth->is_clients_saved() ) : ?>
 
 			<?php if ( $auth->is_auth_required() ) : ?>
 
-				<a href="<?php echo esc_url( $auth->get_google_auth_url() ); ?>" class="wp-mail-smtp-btn wp-mail-smtp-btn-md wp-mail-smtp-btn-orange">
+				<a href="<?php echo esc_url( $auth->get_auth_url() ); ?>" class="wp-mail-smtp-btn wp-mail-smtp-btn-md wp-mail-smtp-btn-orange">
 					<?php esc_html_e( 'Allow plugin to send emails using your Google account', 'wp-mail-smtp' ); ?>
 				</a>
 				<p class="desc">
@@ -156,9 +164,22 @@ class Options extends OptionsAbstract {
 
 			<?php else : ?>
 
-				<a href="<?php echo esc_url( wp_nonce_url( wp_mail_smtp()->get_admin()->get_admin_page_url(), 'gmail_remove', 'gmail_remove_nonce' ) ); ?>#wp-mail-smtp-setting-row-gmail-authorize" class="wp-mail-smtp-btn wp-mail-smtp-btn-md wp-mail-smtp-btn-red" id="wp-mail-smtp-gmail-remove">
+				<a href="<?php echo esc_url( wp_nonce_url( wp_mail_smtp()->get_admin()->get_admin_page_url(), 'gmail_remove', 'gmail_remove_nonce' ) ); ?>#wp-mail-smtp-setting-row-<?php echo esc_attr( $this->get_slug() ); ?>-authorize" class="wp-mail-smtp-btn wp-mail-smtp-btn-md wp-mail-smtp-btn-red js-wp-mail-smtp-provider-remove">
 					<?php esc_html_e( 'Remove Connection', 'wp-mail-smtp' ); ?>
 				</a>
+				<span class="connected-as">
+					<?php
+					$user = $auth->get_user_info();
+
+					if ( ! empty( $user['email'] ) ) {
+						printf(
+							/* translators: %s - email address, as received from Google API. */
+							esc_html__( 'Connected as %s', 'wp-mail-smtp' ),
+							'<code>' . esc_html( $user['email'] ) . '</code>'
+						);
+					}
+					?>
+				</span>
 				<p class="desc">
 					<?php esc_html_e( 'Removing the connection will give you an ability to redo the connection or link to another Google account.', 'wp-mail-smtp' ); ?>
 				</p>
@@ -167,8 +188,8 @@ class Options extends OptionsAbstract {
 
 		<?php else : ?>
 
-			<p>
-				<?php esc_html_e( 'To setup Gmail integration properly you should save Client ID and Client Secret.', 'wp-mail-smtp' ); ?>
+			<p class="inline-notice inline-error">
+				<?php esc_html_e( 'You need to save settings with Client ID and Client Secret before you can proceed.', 'wp-mail-smtp' ); ?>
 			</p>
 
 		<?php
@@ -176,11 +197,11 @@ class Options extends OptionsAbstract {
 	}
 
 	/**
-	 * Remove Gmail connection.
+	 * Remove Provider connection.
 	 *
 	 * @since 1.3.0
 	 */
-	public function process_gmail_remove() {
+	public function process_provider_remove() {
 
 		if ( ! is_super_admin() ) {
 			return;
@@ -188,19 +209,23 @@ class Options extends OptionsAbstract {
 
 		if (
 			! isset( $_GET['gmail_remove_nonce'] ) ||
-			! wp_verify_nonce( $_GET['gmail_remove_nonce'], 'gmail_remove' )
+			! wp_verify_nonce( $_GET['gmail_remove_nonce'], 'gmail_remove' ) // phpcs:ignore
 		) {
 			return;
 		}
 
 		$options = new \WPMailSMTP\Options();
+
+		if ( $options->get( 'mail', 'mailer' ) !== $this->get_slug() ) {
+			return;
+		}
+
 		$old_opt = $options->get_all();
 
-		if ( $options->get( 'mail', 'mailer' ) === 'gmail' ) {
-			foreach ( $old_opt['gmail'] as $key => $value ) {
-				if ( ! in_array( $key, array( 'client_id', 'client_secret' ), true ) ) {
-					unset( $old_opt['gmail'][ $key ] );
-				}
+		foreach ( $old_opt[ $this->get_slug() ] as $key => $value ) {
+			// Unset everything except Client ID and Secret.
+			if ( ! in_array( $key, array( 'client_id', 'client_secret' ), true ) ) {
+				unset( $old_opt[ $this->get_slug() ][ $key ] );
 			}
 		}
 

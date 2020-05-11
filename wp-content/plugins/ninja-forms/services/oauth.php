@@ -43,6 +43,7 @@ class OAuth
       ] ) );
     });
 
+    // These Ajax calls handled in 'connect' and 'disconnect', respectively
     add_action( 'wp_ajax_nf_oauth_connect', [ $this, 'connect' ] );
     add_action( 'wp_ajax_nf_oauth_disconnect', [ $this, 'disconnect' ] );
   }
@@ -74,6 +75,10 @@ class OAuth
   }
 
   public function connect() {
+    // Does the current user have admin privileges
+    if (!current_user_can('manage_options')) {
+      return;
+    }
 
     // wp_verify_nonce( $_REQUEST['nonce'], 'nf-oauth-connect' );
 
@@ -94,6 +99,11 @@ class OAuth
   }
 
   public function disconnect() {
+
+    // Does the current user have admin privileges
+    if (!current_user_can('manage_options')) {
+      return;
+    }
 
     do_action( 'ninja_forms_oauth_disconnect' );
 

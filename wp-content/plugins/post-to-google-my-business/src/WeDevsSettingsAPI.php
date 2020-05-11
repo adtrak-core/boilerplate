@@ -504,7 +504,7 @@ namespace PGMB;
 		 * Shows all the settings section labels as tab
 		 */
 		function show_navigation() {
-			$html = '<h2 class="nav-tab-wrapper">';
+			$html = '<h2 class="nav-tab-wrapper wedevs-tab-wrapper">';
 
 			$count = count( $this->settings_sections );
 
@@ -579,6 +579,7 @@ namespace PGMB;
                         }
                     }
 
+
                     if (activetab != '' && $(activetab).length ) {
                         $(activetab).fadeIn();
                     } else {
@@ -599,10 +600,10 @@ namespace PGMB;
                         $(activetab + '-tab').addClass('nav-tab-active');
                     }
                     else {
-                        $('.nav-tab-wrapper a:first').addClass('nav-tab-active');
+                        $('.wedevs-tab-wrapper a:first').addClass('nav-tab-active');
                     }
-                    $('.nav-tab-wrapper a').click(function(evt) {
-                        $('.nav-tab-wrapper a').removeClass('nav-tab-active');
+                    $('.wedevs-tab-wrapper a').click(function(evt) {
+                        $('.wedevs-tab-wrapper a').removeClass('nav-tab-active');
                         $(this).addClass('nav-tab-active').blur();
                         var clicked_group = $(this).attr('href');
                         if (typeof(localStorage) != 'undefined' ) {

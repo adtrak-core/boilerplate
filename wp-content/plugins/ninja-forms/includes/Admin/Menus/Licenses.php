@@ -43,7 +43,7 @@ final class NF_Admin_Menus_Licenses
     {
         add_meta_box(
             'nf_settings_licenses',
-            __( 'Add-On Licenses', 'ninja-forms' ),
+            esc_html__( 'Add-On Licenses', 'ninja-forms' ),
             array( $this, 'display' ),
             'nf_settings_licenses'
         );

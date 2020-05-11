@@ -60,14 +60,14 @@ function nf_is_func_disabled( $function ){
 add_action( 'init', '_nf_get_actions', 999 );
 function _nf_get_actions() {
     if ( isset( $_POST['nf_action'] ) ) {
-        do_action( 'nf_' . $_POST['nf_action'], $_POST );
+        do_action( 'nf_' . WPN_Helper::sanitize_text_field($_POST['nf_action']), $_POST );
     }
 }
 
 add_action( 'init', '_nf_post_actions', 999 );
 function _nf_post_actions() {
     if ( isset( $_GET['nf_action'] ) ) {
-        do_action( 'nf_' . $_GET['nf_action'], $_GET );
+        do_action( 'nf_' . WPN_Helper::sanitize_text_field($_GET['nf_action']), $_GET );
     }
 }
 

@@ -13,19 +13,35 @@ abstract class NF_Abstracts_MergeTags
 
     protected $_default_group = TRUE;
 
+    protected $use_safe = FALSE;
+
     public function __construct()
     {
         add_filter( 'kbj_test', array( $this, 'replace' ) );
 
         add_filter( 'ninja_forms_render_default_value', array( $this, 'replace' ) );
 
-        add_filter( 'ninja_forms_run_action_settings',  array( $this, 'replace' ) );
-        add_filter( 'ninja_forms_run_action_settings_preview',  array( $this, 'replace' ) );
+        add_filter( 'ninja_forms_run_action_settings',  array( $this, 'action_replace' ) );
+        add_filter( 'ninja_forms_run_action_settings_preview',  array( $this, 'action_replace' ) );
 
         add_filter( 'ninja_forms_calc_setting',  array( $this, 'replace' ) );
 
         /* Manually trigger Merge Tag replacement */
         add_filter( 'ninja_forms_merge_tags', array( $this, 'replace' ) );
+    }
+
+    public function action_replace( $subject ) {
+        if( is_array($subject) && isset($subject['objectType']) && 'Action' == $subject['objectType'] ) {
+            if( 'email' == $subject['type'] ) {
+                $this->use_safe = true;
+            } else {
+                $this->use_safe = false;
+            }
+        }
+        $subject = $this->replace( $subject );
+        // Make sure we reset use_safe after we finish replacing.
+        $this->use_safe = false;
+        return $subject;
     }
 
     public function replace( $subject )

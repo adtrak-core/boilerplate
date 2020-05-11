@@ -8,7 +8,7 @@
  */
 function nf_register_step_processing_page() {
     // Register our admin page
-    $admin_page = add_submenu_page( NULL, __( 'Ninja Forms Processing', 'ninja-forms' ), __( 'Processing', 'ninja-forms' ), apply_filters( 'ninja_forms_admin_menu_capabilities', 'manage_options' ), 'nf-processing', 'nf_output_step_processing_page' );
+    $admin_page = add_submenu_page( NULL, esc_html__( 'Ninja Forms Processing', 'ninja-forms' ), esc_html__( 'Processing', 'ninja-forms' ), apply_filters( 'ninja_forms_admin_menu_capabilities', 'manage_options' ), 'nf-processing', 'nf_output_step_processing_page' );
 
     add_action( 'admin_print_styles-' . $admin_page, 'nf_step_processing_css' );
     add_action( 'admin_print_styles-' . $admin_page, 'nf_step_processing_js' );
@@ -69,7 +69,7 @@ function nf_step_processing_js() {
  * @return void
  */
 function nf_output_step_processing_page() {
-    $page_title = isset ( $_REQUEST['title'] ) ? urldecode( esc_html ( $_REQUEST['title'] ) ) : __( 'Ninja Forms - Processing', 'ninja-forms' );
+    $page_title = isset ( $_REQUEST['title'] ) ? urldecode( esc_html ( $_REQUEST['title'] ) ) : esc_html__( 'Ninja Forms - Processing', 'ninja-forms' );
     ?>
     <style>
         .ui-progressbar {
@@ -102,12 +102,12 @@ function nf_output_step_processing_page() {
 
         <?php
         if ( isset ( $_REQUEST['action'] ) && ! empty ( $_REQUEST['action'] ) ) {
-        $action = __( 'Loading...', 'ninja-forms' );
+        $action = esc_html__( 'Loading...', 'ninja-forms' );
         ?>
         var nfProcessingAction = 'nf_<?php echo esc_html( $_REQUEST['action'] ); ?>';
         <?php
         } else {
-        $action = __( 'No Action Specified...', 'ninja-forms' );
+        $action = esc_html__( 'No Action Specified...', 'ninja-forms' );
         ?>
         var nfProcessingAction = 'none';
         <?php
@@ -132,7 +132,7 @@ function nf_output_step_processing_page() {
     <div class="wrap">
         <h2><?php echo $page_title ?></h2>
         <div id="nf-upgrade-status">
-            <p><?php _e( 'The process has started, please be patient. This could take several minutes. You will be automatically redirected when the process is finished.', 'ninja-forms' ); ?></p>
+            <p><?php esc_html_e( 'The process has started, please be patient. This could take several minutes. You will be automatically redirected when the process is finished.', 'ninja-forms' ); ?></p>
             <div id="progressbar">
                 <div class="progress-label">
                     <?php echo $action; ?>

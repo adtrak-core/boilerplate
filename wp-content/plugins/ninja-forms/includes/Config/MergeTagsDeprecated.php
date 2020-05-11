@@ -11,7 +11,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'id' => array(
         'id' => 'id',
         'tag' => '{post:id}',
-        'label' => __( 'Post ID', 'ninja_forms' ),
+        'label' => esc_html__( 'Post ID', 'ninja_forms' ),
         'callback' => 'post_id'
     ),
 
@@ -24,7 +24,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'title' => array(
         'id' => 'title',
         'tag' => '{post:title}',
-        'label' => __( 'Post Title', 'ninja_forms' ),
+        'label' => esc_html__( 'Post Title', 'ninja_forms' ),
         'callback' => 'post_title'
     ),
 
@@ -37,7 +37,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'url' => array(
         'id' => 'url',
         'tag' => '{post:url}',
-        'label' => __( 'Post URL', 'ninja_forms' ),
+        'label' => esc_html__( 'Post URL', 'ninja_forms' ),
         'callback' => 'post_url'
     ),
 
@@ -50,7 +50,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'author' => array(
         'id' => 'author',
         'tag' => '{post:author}',
-        'label' => __( 'Post Author', 'ninja_forms' ),
+        'label' => esc_html__( 'Post Author', 'ninja_forms' ),
         'callback' => 'post_author'
     ),
 
@@ -63,7 +63,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'author_email' => array(
         'id' => 'author_email',
         'tag' => '{post:author_email}',
-        'label' => __( 'Post Author Email', 'ninja_forms' ),
+        'label' => esc_html__( 'Post Author Email', 'ninja_forms' ),
         'callback' => 'post_author_email'
     ),
 
@@ -76,7 +76,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'user_id' => array(
         'id' => 'user_id',
         'tag' => '{user:id}',
-        'label' => __( 'User ID', 'ninja_forms' ),
+        'label' => esc_html__( 'User ID', 'ninja_forms' ),
         'callback' => 'user_id'
     ),
 
@@ -89,7 +89,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'first_name' => array(
         'id' => 'first_name',
         'tag' => '{user:first_name}',
-        'label' => __( 'User First Name', 'ninja_forms' ),
+        'label' => esc_html__( 'User First Name', 'ninja_forms' ),
         'callback' => 'user_first_name'
     ),
 
@@ -102,7 +102,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'last_name' => array(
         'id' => 'last_name',
         'tag' => '{user:last_name}',
-        'label' => __( 'User Last Name', 'ninja_forms' ),
+        'label' => esc_html__( 'User Last Name', 'ninja_forms' ),
         'callback' => 'user_last_name'
     ),
 
@@ -115,7 +115,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'display_name' => array(
         'id' => 'display_name',
         'tag' => '{user:display_name}',
-        'label' => __( 'User Display Name', 'ninja_forms' ),
+        'label' => esc_html__( 'User Display Name', 'ninja_forms' ),
         'callback' => 'user_display_name'
     ),
 
@@ -128,7 +128,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'user_email' => array(
         'id' => 'user_email',
         'tag' => '{user:email}',
-        'label' => __( 'User Email', 'ninja_forms' ),
+        'label' => esc_html__( 'User Email', 'ninja_forms' ),
         'callback' => 'user_email'
     ),
 
@@ -141,7 +141,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'site_title' => array(
         'id' => 'site_title',
         'tag' => '{site:title}',
-        'label' => __( 'Site Title', 'ninja_forms' ),
+        'label' => esc_html__( 'Site Title', 'ninja_forms' ),
         'callback' => 'site_title'
     ),
 
@@ -154,7 +154,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'site_url' => array(
         'id' => 'site_url',
         'tag' => '{site:url}',
-        'label' => __( 'Site URL', 'ninja_forms' ),
+        'label' => esc_html__( 'Site URL', 'ninja_forms' ),
         'callback' => 'site_url'
     ),
 
@@ -167,7 +167,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'admin_email' => array(
         'id' => 'admin_email',
         'tag' => '{system:admin_email}',
-        'label' => __( 'Admin Email', 'ninja_forms' ),
+        'label' => esc_html__( 'Admin Email', 'ninja_forms' ),
         'callback' => 'admin_email'
     ),
 
@@ -180,7 +180,7 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'date' => array(
         'id' => 'date',
         'tag' => '{system:date}',
-        'label' => __( 'Date', 'ninja_forms' ),
+        'label' => esc_html__( 'Date', 'ninja_forms' ),
         'callback' => 'system_date'
     ),
 
@@ -193,13 +193,13 @@ return apply_filters( 'ninja_forms_merge_tags_deprecated', array(
     'ip' => array(
         'id' => 'ip',
         'tag' => '{system:ip}',
-        'label' => __( 'IP Address', 'ninja_forms' ),
+        'label' => esc_html__( 'IP Address', 'ninja_forms' ),
         'callback' => 'system_ip'
     ),
 
     'query_string' => array(
         'tag' => '{query_string_key}',
-        'label' => __( 'Query String', 'ninja_forms' ),
+        'label' => esc_html__( 'Query String', 'ninja_forms' ),
         'callback' => null,
     ),
 

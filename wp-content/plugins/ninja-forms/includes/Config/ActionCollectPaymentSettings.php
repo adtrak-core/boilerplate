@@ -11,7 +11,7 @@ return apply_filters( 'ninja_forms_action_collect_payment_settings', array(
     'payment_gateways' => array(
         'name' => 'payment_gateways',
         'type' => 'select',
-        'label' => __( 'Payment Gateways', 'ninja-forms' ),
+        'label' => esc_html__( 'Payment Gateways', 'ninja-forms' ),
         'options' => array(
             array(
                 'label' => '--',
@@ -33,14 +33,14 @@ return apply_filters( 'ninja_forms_action_collect_payment_settings', array(
     'payment_total_type' =>  array(
         'name' => 'payment_total_type',
         'type' => 'select',
-        'label' => __( 'Get Total From', 'ninja-forms' ),
+        'label' => esc_html__( 'Get Total From', 'ninja-forms' ),
         'width' => 'one-half',
         'group' => 'primary',
         'options' => array(
-            array( 'label' => __( '- Select One', 'ninja-forms' ), 'value' => '' ),
-            array( 'label' => __( 'Calculation', 'ninja-forms' ), 'value' => 'calc' ),
-            array( 'label' => __( 'Field', 'ninja-forms' ), 'value' => 'field' ),
-            array( 'label' => __( 'Fixed Amount', 'ninja-forms' ), 'value' => 'fixed' ),
+            array( 'label' => esc_html__( '- Select One', 'ninja-forms' ), 'value' => '' ),
+            array( 'label' => esc_html__( 'Calculation', 'ninja-forms' ), 'value' => 'calc' ),
+            array( 'label' => esc_html__( 'Field', 'ninja-forms' ), 'value' => 'field' ),
+            array( 'label' => esc_html__( 'Fixed Amount', 'ninja-forms' ), 'value' => 'fixed' ),
         ),
     ),
 
@@ -49,14 +49,14 @@ return apply_filters( 'ninja_forms_action_collect_payment_settings', array(
         'name' => 'payment_total',
         'total_type'  => 'calc',
         'type' => 'select',
-        'label' => __( 'Select Calculation', 'ninja-forms' ),
+        'label' => esc_html__( 'Select Calculation', 'ninja-forms' ),
         'width' => 'one-half',
         'group' => 'primary',
         'deps' => array(
             'payment_total_type' => 'calc',
         ),
         'default_options' => array(
-            'label' => __( '- Select One', 'ninja-forms' ),
+            'label' => esc_html__( '- Select One', 'ninja-forms' ),
             'value' => '0',
         ),
         'use_merge_tags' => TRUE,
@@ -67,14 +67,14 @@ return apply_filters( 'ninja_forms_action_collect_payment_settings', array(
         'name' => 'payment_total',
         'total_type' => 'field',
         'type' => 'select',
-        'label' => __( 'Select Field', 'ninja-forms' ),
+        'label' => esc_html__( 'Select Field', 'ninja-forms' ),
         'width' => 'one-half',
         'group' => 'primary',
         'deps' => array(
             'payment_total_type' => 'field',
         ),
         'default_options' => array(
-            'label' => __( '- Select One', 'ninja-forms' ),
+            'label' => esc_html__( '- Select One', 'ninja-forms' ),
             'value' => '0',
         ),
         'use_merge_tags' => TRUE,
@@ -85,7 +85,7 @@ return apply_filters( 'ninja_forms_action_collect_payment_settings', array(
         'name' => 'payment_total',
         'total_type' => 'fixed',
         'type' => 'textbox',
-        'label' => __( 'Enter Amount', 'ninja-forms' ),
+        'label' => esc_html__( 'Enter Amount', 'ninja-forms' ),
         'width' => 'one-half',
         'group' => 'primary',
         'value' => '0',

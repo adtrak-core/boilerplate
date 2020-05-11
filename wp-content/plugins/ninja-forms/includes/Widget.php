@@ -11,7 +11,7 @@ class NF_Widget extends WP_Widget {
         parent::__construct(
             'ninja_forms_widget', // Base ID
             'Ninja Forms Widget', // Name
-            array( 'description' => __( 'Ninja Forms Widget', 'ninja-forms' ), ) // Args
+            array( 'description' => esc_html__( 'Ninja Forms Widget', 'ninja-forms' ), ) // Args
         );
     }
 
@@ -79,14 +79,14 @@ class NF_Widget extends WP_Widget {
         ?>
         <p>
             <label>
-                <?php _e( 'Display Title', 'ninja-forms' ); ?>
+                <?php esc_html_e( 'Display Title', 'ninja-forms' ); ?>
                 <input type="hidden" value="0" name="<?php echo esc_attr( $this->get_field_name( 'display_title' ) ); ?>">
                 <input type="checkbox" value="1" id="<?php echo esc_attr( $this->get_field_id( 'display_title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'display_title' ) ); ?>" <?php checked( $display_title, 1 );?>>
             </label>
         </p>
         <p>
             <select id="<?php echo esc_attr( $this->get_field_id( 'form_id' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'form_id' ) ); ?>">
-                <option value="0">-- <?php _e('None', 'ninja-forms');?></option>
+                <option value="0">-- <?php esc_html_e('None', 'ninja-forms');?></option>
                 <?php
                 $all_forms = Ninja_Forms()->form()->get_forms();
 

@@ -6,6 +6,7 @@ class NF_AJAX_Controllers_Preview extends NF_Abstracts_Controller
 
     public function __construct()
     {
+        // Ajax call handled in 'update' in this file
         add_action( 'wp_ajax_nf_preview_update', array( $this, 'update' ) );
 
         add_filter( 'ninja_forms_run_action_settings', array( $this, 'filter_action_settings' ), 10, 4 );
@@ -13,6 +14,12 @@ class NF_AJAX_Controllers_Preview extends NF_Abstracts_Controller
 
     public function update()
     {
+        // Does the current user have admin privileges
+        if (!current_user_can(apply_filters('ninja_forms_admin_all_forms_capabilities', 'manage_options'))) {
+            $this->_data['errors'] = esc_html__('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+            $this->_respond();
+        }
+
         check_ajax_referer( 'ninja_forms_builder_nonce', 'security' );
 
         $form = json_decode( stripslashes( $_POST['form'] ), ARRAY_A );

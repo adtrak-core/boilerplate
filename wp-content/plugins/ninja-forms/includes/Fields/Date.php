@@ -27,7 +27,7 @@ class NF_Fields_Date extends NF_Fields_Textbox
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Date', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Date', 'ninja-forms' );
     }
 
     public function process( $field, $data )
@@ -38,16 +38,16 @@ class NF_Fields_Date extends NF_Fields_Textbox
     private function get_format( $format )
     {
         $lookup = array(
-            'MM/DD/YYYY' => __( 'm/d/Y', 'ninja-forms' ),
-            'MM-DD-YYYY' => __( 'm-d-Y', 'ninja-forms' ),
-            'MM.DD.YYYY' => __( 'm.d.Y', 'ninja-forms' ),
-            'DD/MM/YYYY' => __( 'm/d/Y', 'ninja-forms' ),
-            'DD-MM-YYYY' => __( 'd-m-Y', 'ninja-forms' ),
-            'DD.MM.YYYY' => __( 'd.m.Y', 'ninja-forms' ),
-            'YYYY-MM-DD' => __( 'Y-m-d', 'ninja-forms' ),
-            'YYYY/MM/DD' => __( 'Y/m/d', 'ninja-forms' ),
-            'YYYY.MM.DD' => __( 'Y.m.d', 'ninja-forms' ),
-            'dddd, MMMM D YYYY' => __( 'l, F d Y', 'ninja-forms' ),
+            'MM/DD/YYYY' => esc_html__( 'm/d/Y', 'ninja-forms' ),
+            'MM-DD-YYYY' => esc_html__( 'm-d-Y', 'ninja-forms' ),
+            'MM.DD.YYYY' => esc_html__( 'm.d.Y', 'ninja-forms' ),
+            'DD/MM/YYYY' => esc_html__( 'm/d/Y', 'ninja-forms' ),
+            'DD-MM-YYYY' => esc_html__( 'd-m-Y', 'ninja-forms' ),
+            'DD.MM.YYYY' => esc_html__( 'd.m.Y', 'ninja-forms' ),
+            'YYYY-MM-DD' => esc_html__( 'Y-m-d', 'ninja-forms' ),
+            'YYYY/MM/DD' => esc_html__( 'Y/m/d', 'ninja-forms' ),
+            'YYYY.MM.DD' => esc_html__( 'Y.m.d', 'ninja-forms' ),
+            'dddd, MMMM D YYYY' => esc_html__( 'l, F d Y', 'ninja-forms' ),
         );
 
         return ( isset( $lookup[ $format ] ) ) ? $lookup[ $format ] : $format;

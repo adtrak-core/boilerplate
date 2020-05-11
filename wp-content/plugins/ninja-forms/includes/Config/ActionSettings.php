@@ -10,7 +10,7 @@ return apply_filters( 'ninja_forms_action_settings', array(
         'name' => 'label',
         'type' => 'textbox',
         'group' => 'primary',
-        'label' => __( 'Action Name', 'ninja-forms' ),
+        'label' => esc_html__( 'Action Name', 'ninja-forms' ),
         'placeholder' => '',
         'width' => 'full',
         'value' => '',
@@ -24,7 +24,7 @@ return apply_filters( 'ninja_forms_action_settings', array(
     'active' => array(
         'name' => 'active',
         'type' => 'toggle',
-        'label' => __( 'Active', 'ninja-forms' ),
+        'label' => esc_html__( 'Active', 'ninja-forms' ),
         'value' => 1
     ),
 

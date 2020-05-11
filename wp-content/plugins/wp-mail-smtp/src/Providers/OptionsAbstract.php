@@ -28,6 +28,24 @@ abstract class OptionsAbstract implements OptionsInterface {
 	 */
 	private $description = '';
 	/**
+	 * @since 1.6.0
+	 *
+	 * @var array
+	 */
+	private $notices = array();
+	/**
+	 * @since 1.6.0
+	 *
+	 * @var bool
+	 */
+	private $recommended = false;
+	/**
+	 * @since 1.7.0
+	 *
+	 * @var bool
+	 */
+	private $disabled = false;
+	/**
 	 * @var string
 	 */
 	private $php = WPMS_PHP_VER;
@@ -56,16 +74,42 @@ abstract class OptionsAbstract implements OptionsInterface {
 		$this->title = sanitize_text_field( $params['title'] );
 
 		if ( ! empty( $params['description'] ) ) {
-			$this->description = wp_kses( $params['description'],
-				array(
-					'br' => array(),
-					'a'  => array(
-						'href'   => array(),
-						'rel'    => array(),
-						'target' => array(),
-					),
-				)
-			);
+			$this->description = wp_kses_post( $params['description'] );
+		}
+
+		if ( ! empty( $params['notices'] ) ) {
+			foreach ( (array) $params['notices'] as $key => $notice ) {
+				$key = sanitize_key( $key );
+				if ( empty( $key ) ) {
+					continue;
+				}
+
+				$notice = wp_kses(
+					$notice,
+					array(
+						'br'     => true,
+						'strong' => true,
+						'em'     => true,
+						'a'      => array(
+							'href'   => true,
+							'rel'    => true,
+							'target' => true,
+						),
+					)
+				);
+				if ( empty( $notice ) ) {
+					continue;
+				}
+
+				$this->notices[ $key ] = $notice;
+			}
+		}
+
+		if ( isset( $params['recommended'] ) ) {
+			$this->recommended = (bool) $params['recommended'];
+		}
+		if ( isset( $params['disabled'] ) ) {
+			$this->disabled = (bool) $params['disabled'];
 		}
 
 		if ( ! empty( $params['php'] ) ) {
@@ -105,6 +149,22 @@ abstract class OptionsAbstract implements OptionsInterface {
 	 */
 	public function get_description() {
 		return apply_filters( 'wp_mail_smtp_providers_provider_get_description', $this->description, $this );
+	}
+
+	/**
+	 * Some mailers may display a notice above its options.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param string $type
+	 *
+	 * @return string
+	 */
+	public function get_notice( $type ) {
+
+		$type = sanitize_key( $type );
+
+		return apply_filters( 'wp_mail_smtp_providers_provider_get_notice', isset( $this->notices[ $type ] ) ? $this->notices[ $type ] : '', $this );
 	}
 
 	/**
@@ -251,16 +311,45 @@ abstract class OptionsAbstract implements OptionsInterface {
 			<div class="wp-mail-smtp-setting-field">
 				<?php if ( $this->options->is_const_defined( $this->get_slug(), 'pass' ) ) : ?>
 					<input type="text" value="*************" disabled id="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-pass"/>
+
+					<?php $this->display_const_set_message( 'WPMS_SMTP_PASS' ); ?>
+
+					<p class="desc">
+						<?php
+						printf(
+							/* translators: %s - constant name: WPMS_SMTP_PASS. */
+							esc_html__( 'To change the password you need to change the value of the constant there: %s', 'wp-mail-smtp' ),
+							'<code>define( \'WPMS_SMTP_PASS\', \'your_old_password\' );</code>'
+						);
+						?>
+						<br>
+						<?php
+						printf(
+							/* translators: %1$s - wp-config.php file, %2$s - WPMS_ON constant name. */
+							esc_html__( 'If you want to disable the use of constants, find in %1$s file the constant %2$s and turn if off:', 'wp-mail-smtp' ),
+							'<code>wp-config.php</code>',
+							'<code>WPMS_ON</code>'
+						);
+						?>
+					</p>
+					<pre>
+						define( 'WPMS_ON', false );
+					</pre>
+					<p class="desc">
+						<?php esc_html_e( 'All the defined constants will stop working and you will be able to change all the values on this page.', 'wp-mail-smtp' ); ?>
+					</p>
 				<?php else : ?>
 					<input name="wp-mail-smtp[<?php echo esc_attr( $this->get_slug() ); ?>][pass]" type="password"
 						value="<?php echo esc_attr( $this->options->get( $this->get_slug(), 'pass' ) ); ?>"
 						id="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-pass" spellcheck="false" autocomplete="new-password"
 					/>
 					<p class="desc">
+						<?php esc_html_e( 'The password is stored in plain text. We highly recommend you set up your password in your WordPress configuration file for improved security.', 'wp-mail-smtp' ); ?>
+						<br>
 						<?php
 						printf(
 							/* translators: %s - wp-config.php. */
-							esc_html__( 'The password is stored in plain text. We highly recommend you setup your password in your WordPress configuration file for improved security; to do this add the lines below to your %s file.', 'wp-mail-smtp' ),
+							esc_html__( 'To do this add the lines below to your %s file:', 'wp-mail-smtp' ),
 							'<code>wp-config.php</code>'
 						);
 						?>
@@ -277,8 +366,35 @@ abstract class OptionsAbstract implements OptionsInterface {
 	}
 
 	/**
+	 * Whether this mailer is recommended or not.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return bool
+	 */
+	public function is_recommended() {
+
+		return (bool) apply_filters( 'wp_mail_smtp_providers_provider_is_recommended', $this->recommended, $this );
+	}
+
+	/**
+	 * Whether this mailer is disabled or not.
+	 * Used for displaying Pro mailers inside Lite plugin.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return bool
+	 */
+	public function is_disabled() {
+
+		return (bool) apply_filters( 'wp_mail_smtp_providers_provider_is_disabled', $this->disabled, $this );
+	}
+
+	/**
 	 * Check whether we can use this provider based on the PHP version.
 	 * Valid for those, that use SDK.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
@@ -289,6 +405,8 @@ abstract class OptionsAbstract implements OptionsInterface {
 	/**
 	 * Display a helpful message to those users, that are using an outdated version of PHP,
 	 * which is not supported by the currently selected Provider.
+	 *
+	 * @since 1.0.0
 	 */
 	protected function display_php_warning() {
 		?>
@@ -298,14 +416,61 @@ abstract class OptionsAbstract implements OptionsInterface {
 			printf(
 				/* translators: %1$s - Provider name; %2$s - PHP version required by Provider; %3$s - current PHP version. */
 				esc_html__( '%1$s requires PHP %2$s to work and does not support your current PHP version %3$s. Please contact your host and request a PHP upgrade to the latest one.', 'wp-mail-smtp' ),
-				$this->title,
-				$this->php,
-				phpversion()
-			)
+				esc_html( $this->get_title() ),
+				esc_html( $this->php ),
+				esc_html( phpversion() )
+			);
 			?>
 			<br>
-			<?php esc_html_e( 'Meanwhile you can switch to the "Other SMTP" Mailer option.', 'wp-mail-smtp' ); ?>
+			<?php esc_html_e( 'Meanwhile you can switch to some other mailers.', 'wp-mail-smtp' ); ?>
 		</blockquote>
+
+		<?php
+	}
+
+	/**
+	 * Display a helpful message to those users, that are using an outdated version of PHP,
+	 * which is not supported by the currently selected Provider.
+	 *
+	 * @since 1.5.0
+	 */
+	protected function display_ssl_warning() {
+		?>
+
+		<blockquote>
+			<?php
+			printf(
+				/* translators: %s - Provider name. */
+				esc_html__( '%s requires a SSL certificate on a site to work and does not support your current installation. Please contact your host and request a SSL certificate or install a free one, like Let\'s Encrypt.', 'wp-mail-smtp' ),
+				esc_html( $this->get_title() )
+			);
+			?>
+			<br>
+			<?php esc_html_e( 'Meanwhile you can switch to some other mailers.', 'wp-mail-smtp' ); ?>
+		</blockquote>
+
+		<?php
+	}
+
+	/**
+	 * Display a message of a constant that was set inside wp-config.php file.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param string $constant Constant name.
+	 */
+	protected function display_const_set_message( $constant ) {
+		?>
+
+		<p class="desc">
+			<?php
+			printf( /* translators: %1$s - constant that was used; %2$s - file where it was used. */
+				esc_html__( 'The value of this field was set using a constant %1$s most likely inside %2$s of your WordPress installation.', 'wp-mail-smtp' ),
+				'<code>' . esc_attr( $constant ) . '</code>',
+				'<code>wp-config.php</code>'
+			);
+			?>
+		</p>
 
 		<?php
 	}

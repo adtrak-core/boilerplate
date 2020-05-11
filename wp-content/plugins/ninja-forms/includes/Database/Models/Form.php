@@ -67,6 +67,8 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
 	    $this->delete_submissions();
 
         WPN_Helper::delete_nf_cache( $this->_id );
+
+        do_action( 'ninja_forms_after_form_delete', $this->_id );
     }
 
     private function delete_submissions( ) {
@@ -179,6 +181,14 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
                 unset( $settings[ 'id' ] );
                 $settings[ 'created_at' ] = current_time( 'mysql' );
                 $field = Ninja_Forms()->form($form_id)->field()->get();
+                /**
+                 * If this is the default contact form,
+                 * ensure that we properly save the fields
+                 * to avoid the loss of settings when the cache is disabled.
+                 */
+                if ( 1 == $form_id ) {
+                    $field->update_settings( $settings );
+                }
                 $field->save();
             }
 
@@ -270,9 +280,19 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
                 SELECT CONCAT( `title`, ' - ', %s )
                 FROM {$wpdb->prefix}nf3_forms 
                 WHERE  id = %d;
-            ", __( 'copy', 'ninja-forms' ), $form_id
+            ", esc_html__( 'copy', 'ninja-forms' ), $form_id
         ) );
         $new_form_id = $wpdb->insert_id;
+
+        $blacklist = array(
+            '_seq_num',
+            'embed_form',
+            'public_link',
+            'public_link_key',
+            'allow_public_link',
+        );
+        $blacklist = apply_filters( 'ninja_forms_excluded_duplicate_form_settings', $blacklist );
+        $blacklist = "'" . implode( "','", $blacklist ) . "'";
 
         // Duplicate the Form Meta.
         $wpdb->query( $wpdb->prepare(
@@ -281,7 +301,7 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
                 SELECT %d, `key`, `value`
                 FROM   {$wpdb->prefix}nf3_form_meta
                 WHERE  parent_id = %d
-                AND `key` != '_seq_num';
+                AND `key` NOT IN({$blacklist});
            ", $new_form_id, $form_id
         ));
 
@@ -384,7 +404,7 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
      * @param  string  $table_name Name of the table we want to update.
      * @return array   Associative array like: ['insert' => "`column1`, "`column2`", etc", 'select' => "`column1`, etc."]
      */
-    private function get_sql_queries( $table_name, $db_stage_one_complete = true )
+    private static function get_sql_queries( $table_name, $db_stage_one_complete = true )
     {
         /**
          * These arrays contain the columns in our database.
@@ -644,7 +664,7 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
         if( ! $has_save_action ) {
             $import[ 'actions' ][] = array(
                 'type' => 'save',
-                'label' => __( 'Save Form', 'ninja-forms' ),
+                'label' => esc_html__( 'Save Form', 'ninja-forms' ),
                 'active' => TRUE
             );
         }
@@ -913,7 +933,7 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
             $passwordconfirm = array_merge( $field, array(
                 'id' => '',
                 'type' => 'passwordconfirm',
-                'label' => $field[ 'label' ] . ' ' . __( 'Confirm', 'ninja-forms' ),
+                'label' => $field[ 'label' ] . ' ' . esc_html__( 'Confirm', 'ninja-forms' ),
                 'confirm_field' => 'password_' . $field[ 'id' ]
             ));
             $field[ 'new_fields' ][] = $passwordconfirm;
@@ -937,7 +957,7 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
                 'creditcardcvc'        => $field[ 'cc_cvc_label' ],
                 'creditcardfullname'   => $field[ 'cc_name_label' ],
                 'creditcardexpiration' => $field[ 'cc_exp_month_label' ] . ' ' . $field[ 'cc_exp_year_label' ],
-                'creditcardzip'        => __( 'Credit Card Zip', 'ninja-forms' ),
+                'creditcardzip'        => esc_html__( 'Credit Card Zip', 'ninja-forms' ),
             );
 
 

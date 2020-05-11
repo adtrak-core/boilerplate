@@ -25,7 +25,7 @@ class NF_Fields_Total extends NF_Abstracts_Input
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Total', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Total', 'ninja-forms' );
     }
 
     public function process( $total, $data )

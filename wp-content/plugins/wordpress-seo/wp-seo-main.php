@@ -15,7 +15,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * {@internal Nobody should be able to overrule the real version number as this can cause
  *            serious issues with the options, so no if ( ! defined() ).}}
  */
-define( 'WPSEO_VERSION', '11.1' );
+define( 'WPSEO_VERSION', '14.0.4' );
 
 
 if ( ! defined( 'WPSEO_PATH' ) ) {
@@ -35,12 +35,7 @@ define( 'YOAST_VENDOR_DEFINE_PREFIX', 'YOASTSEO_VENDOR__' );
 define( 'YOAST_VENDOR_PREFIX_DIRECTORY', 'vendor_prefixed' );
 
 if ( ! defined( 'WPSEO_NAMESPACES' ) ) {
-	if ( version_compare( phpversion(), '5.3', '>=' ) ) {
-		define( 'WPSEO_NAMESPACES', true );
-	}
-	else {
-		define( 'WPSEO_NAMESPACES', false );
-	}
+	define( 'WPSEO_NAMESPACES', true );
 }
 
 
@@ -57,10 +52,10 @@ function wpseo_auto_load( $class ) {
 	static $classes = null;
 
 	if ( $classes === null ) {
-		$classes = array(
+		$classes = [
 			'wp_list_table'   => ABSPATH . 'wp-admin/includes/class-wp-list-table.php',
 			'walker_category' => ABSPATH . 'wp-includes/category-template.php',
-		);
+		];
 	}
 
 	$cn = strtolower( $class );
@@ -70,10 +65,7 @@ function wpseo_auto_load( $class ) {
 	}
 }
 
-$yoast_autoload_file = WPSEO_PATH . 'vendor/autoload_52.php';
-if ( version_compare( phpversion(), '5.6', '>=' ) ) {
-	$yoast_autoload_file = WPSEO_PATH . 'vendor/autoload.php';
-}
+$yoast_autoload_file = WPSEO_PATH . 'vendor/autoload.php';
 
 if ( is_readable( $yoast_autoload_file ) ) {
 	require $yoast_autoload_file;
@@ -101,7 +93,7 @@ if ( ! defined( 'YOAST_ENVIRONMENT' ) ) {
  * Only use minified assets when we are in a production environment.
  */
 if ( ! defined( 'WPSEO_CSSJS_SUFFIX' ) ) {
-	define( 'WPSEO_CSSJS_SUFFIX', ( 'development' !== YOAST_ENVIRONMENT ) ? '.min' : '' );
+	define( 'WPSEO_CSSJS_SUFFIX', ( YOAST_ENVIRONMENT !== 'development' ) ? '.min' : '' );
 }
 
 /* ***************************** PLUGIN (DE-)ACTIVATION *************************** */
@@ -146,7 +138,7 @@ function wpseo_network_activate_deactivate( $activate = true ) {
 
 	$network_blogs = $wpdb->get_col( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs WHERE site_id = %d", $wpdb->siteid ) );
 
-	if ( is_array( $network_blogs ) && $network_blogs !== array() ) {
+	if ( is_array( $network_blogs ) && $network_blogs !== [] ) {
 		foreach ( $network_blogs as $blog_id ) {
 			switch_to_blog( $blog_id );
 
@@ -208,8 +200,8 @@ function _wpseo_activate() {
 	$notifier->manage_notification();
 
 	// Schedule cronjob when it doesn't exists on activation.
-	$wpseo_onpage = new WPSEO_OnPage();
-	$wpseo_onpage->activate_hooks();
+	$wpseo_ryte = new WPSEO_Ryte();
+	$wpseo_ryte->activate_hooks();
 
 	do_action( 'wpseo_activate' );
 }
@@ -276,7 +268,7 @@ function wpseo_load_textdomain() {
 	$wpseo_path = str_replace( '\\', '/', WPSEO_PATH );
 	$mu_path    = str_replace( '\\', '/', WPMU_PLUGIN_DIR );
 
-	if ( false !== stripos( $wpseo_path, $mu_path ) ) {
+	if ( stripos( $wpseo_path, $mu_path ) !== false ) {
 		load_muplugin_textdomain( 'wordpress-seo', dirname( WPSEO_BASENAME ) . '/languages/' );
 	}
 	else {
@@ -315,7 +307,7 @@ function wpseo_init() {
 		$GLOBALS['wpseo_sitemaps'] = new WPSEO_Sitemaps();
 	}
 
-	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+	if ( ! wp_doing_ajax() ) {
 		require_once WPSEO_PATH . 'inc/wpseo-non-ajax-functions.php';
 	}
 
@@ -329,22 +321,25 @@ function wpseo_init() {
 	$link_watcher = new WPSEO_Link_Watcher_Loader();
 	$link_watcher->load();
 
-	$integrations   = array();
+	$integrations   = [];
 	$integrations[] = new WPSEO_Slug_Change_Watcher();
 	$integrations[] = new WPSEO_Structured_Data_Blocks();
-	$integrations[] = new WPSEO_Courses_Overview();
 
 	foreach ( $integrations as $integration ) {
 		$integration->register_hooks();
 	}
 
 	// Loading Ryte integration.
-	$wpseo_onpage = new WPSEO_OnPage();
-	$wpseo_onpage->register_hooks();
+	$wpseo_ryte = new WPSEO_Ryte();
+	$wpseo_ryte->register_hooks();
 
 	// When namespaces are not available, stop further execution.
 	if ( version_compare( PHP_VERSION, '5.6.0', '>=' ) ) {
-		require_once WPSEO_PATH . 'src/loaders/indexable.php';
+		require_once WPSEO_PATH . 'src/functions.php';
+
+		// Initializes the Yoast indexables for the first time.
+		YoastSEO();
+
 		// require_once WPSEO_PATH . 'src/loaders/oauth.php'; Temporarily disabled.
 	}
 }
@@ -362,53 +357,17 @@ function wpseo_init_rest_api() {
 	$configuration_service = new WPSEO_Configuration_Service();
 	$configuration_service->initialize();
 
-	$ryte_endpoint_service = new WPSEO_Ryte_Service( new WPSEO_OnPage_Option() );
 	$statistics_service    = new WPSEO_Statistics_Service( new WPSEO_Statistics() );
 
-	$endpoints   = array();
+	$endpoints   = [];
 	$endpoints[] = new WPSEO_Link_Reindex_Post_Endpoint( new WPSEO_Link_Reindex_Post_Service() );
-	$endpoints[] = new WPSEO_Endpoint_Ryte( $ryte_endpoint_service );
 	$endpoints[] = new WPSEO_Endpoint_Indexable( new WPSEO_Indexable_Service() );
 	$endpoints[] = new WPSEO_Endpoint_File_Size( new WPSEO_File_Size_Service() );
 	$endpoints[] = new WPSEO_Endpoint_Statistics( $statistics_service );
 	$endpoints[] = new WPSEO_Endpoint_MyYoast_Connect();
 
-	/** @var WPSEO_Endpoint[] $endpoints */
 	foreach ( $endpoints as $endpoint ) {
 		$endpoint->register();
-	}
-}
-
-/**
- * Used to load the required files on the plugins_loaded hook, instead of immediately.
- */
-function wpseo_frontend_init() {
-	add_action( 'init', 'initialize_wpseo_front' );
-
-	if ( WPSEO_Options::get( 'breadcrumbs-enable' ) === true ) {
-		/**
-		 * If breadcrumbs are active (which they supposedly are if the users has enabled this settings,
-		 * there's no reason to have bbPress breadcrumbs as well.
-		 *
-		 * {@internal The class itself is only loaded when the template tag is encountered
-		 *            via the template tag function in the wpseo-functions.php file.}}
-		 */
-		add_filter( 'bbp_get_breadcrumb', '__return_false' );
-	}
-
-	add_action( 'template_redirect', 'wpseo_frontend_head_init', 999 );
-}
-
-/**
- * Instantiate the different social classes on the frontend.
- */
-function wpseo_frontend_head_init() {
-	if ( WPSEO_Options::get( 'twitter' ) === true ) {
-		add_action( 'wpseo_head', array( 'WPSEO_Twitter', 'get_instance' ), 40 );
-	}
-
-	if ( WPSEO_Options::get( 'opengraph' ) === true ) {
-		$GLOBALS['wpseo_og'] = new WPSEO_OpenGraph();
 	}
 }
 
@@ -431,37 +390,37 @@ function wpseo_cli_init() {
 		WP_CLI::add_command(
 			'yoast redirect list',
 			'WPSEO_CLI_Redirect_List_Command',
-			array( 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' )
+			[ 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' ]
 		);
 
 		WP_CLI::add_command(
 			'yoast redirect create',
 			'WPSEO_CLI_Redirect_Create_Command',
-			array( 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' )
+			[ 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' ]
 		);
 
 		WP_CLI::add_command(
 			'yoast redirect update',
 			'WPSEO_CLI_Redirect_Update_Command',
-			array( 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' )
+			[ 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' ]
 		);
 
 		WP_CLI::add_command(
 			'yoast redirect delete',
 			'WPSEO_CLI_Redirect_Delete_Command',
-			array( 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' )
+			[ 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' ]
 		);
 
 		WP_CLI::add_command(
 			'yoast redirect has',
 			'WPSEO_CLI_Redirect_Has_Command',
-			array( 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' )
+			[ 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' ]
 		);
 
 		WP_CLI::add_command(
 			'yoast redirect follow',
 			'WPSEO_CLI_Redirect_Follow_Command',
-			array( 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' )
+			[ 'before_invoke' => 'WPSEO_CLI_Premium_Requirement::enforce' ]
 		);
 	}
 
@@ -502,7 +461,7 @@ if ( ! wp_installing() && ( $spl_autoload_exists && $filter_exists ) ) {
 		$yoast_addon_manager = new WPSEO_Addon_Manager();
 		$yoast_addon_manager->register_hooks();
 
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+		if ( wp_doing_ajax() ) {
 			require_once WPSEO_PATH . 'admin/ajax.php';
 
 			// Plugin conflict ajax hooks.
@@ -516,9 +475,6 @@ if ( ! wp_installing() && ( $spl_autoload_exists && $filter_exists ) ) {
 			add_action( 'plugins_loaded', 'wpseo_admin_init', 15 );
 		}
 	}
-	else {
-		add_action( 'plugins_loaded', 'wpseo_frontend_init', 15 );
-	}
 
 	add_action( 'plugins_loaded', 'load_yoast_notifications' );
 
@@ -527,6 +483,8 @@ if ( ! wp_installing() && ( $spl_autoload_exists && $filter_exists ) ) {
 	}
 
 	add_filter( 'phpcompat_whitelist', 'yoast_free_phpcompat_whitelist' );
+
+	add_action( 'init', [ 'WPSEO_Replace_Vars', 'setup_statics_once' ] );
 }
 
 // Activation and deactivation hook.
@@ -636,7 +594,7 @@ function yoast_wpseo_missing_filter_notice() {
  * @param string $message Message string.
  */
 function yoast_wpseo_activation_failed_notice( $message ) {
-	echo '<div class="error"><p>' . esc_html__( 'Activation failed:', 'wordpress-seo' ) . ' ' . $message . '</p></div>';
+	echo '<div class="error"><p>' . esc_html__( 'Activation failed:', 'wordpress-seo' ) . ' ' . strip_tags( $message, '<a>' ) . '</p></div>';
 }
 
 /**
@@ -679,3 +637,32 @@ function yoast_free_phpcompat_whitelist( $ignored ) {
 
 	return $ignored;
 }
+
+/* ********************* DEPRECATED METHODS ********************* */
+
+/**
+ * Instantiate the different social classes on the frontend.
+ *
+ * @deprecated 14.0
+ * @codeCoverageIgnore
+ */
+function wpseo_frontend_head_init() {
+	_deprecated_function( __METHOD__, 'WPSEO 14.0' );
+}
+
+/**
+ * Used to load the required files on the plugins_loaded hook, instead of immediately.
+ *
+ * @deprecated 14.0
+ * @codeCoverageIgnore
+ */
+function wpseo_frontend_init() {
+	_deprecated_function( __METHOD__, 'WPSEO 14.0' );
+}
+
+/**
+ * Aliasses added in order to keep compatibility with Yoast SEO: Local.
+ */
+class_alias( '\Yoast\WP\SEO\Initializers\Initializer_Interface', '\Yoast\WP\SEO\WordPress\Initializer' );
+class_alias( '\Yoast\WP\SEO\Loadable_Interface', '\Yoast\WP\SEO\WordPress\Loadable' );
+class_alias( '\Yoast\WP\SEO\Integrations\Integration_Interface', '\Yoast\WP\SEO\WordPress\Integration' );

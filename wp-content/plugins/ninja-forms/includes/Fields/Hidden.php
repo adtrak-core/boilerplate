@@ -35,6 +35,6 @@ class NF_Fields_Hidden extends NF_Abstracts_Input
         $this->_settings[ 'default' ][ 'group' ] = 'primary';
         $this->_settings[ 'default' ][ 'user_merge_tags' ] = $use_merge_tags;
 
-        $this->_nicename = __( 'Hidden', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Hidden', 'ninja-forms' );
     }
 }

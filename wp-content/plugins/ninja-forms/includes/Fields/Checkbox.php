@@ -31,7 +31,7 @@ class NF_Fields_Checkbox extends NF_Abstracts_Input
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Single Checkbox', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Single Checkbox', 'ninja-forms' );
 
         $this->_settings[ 'label_pos' ][ 'value' ] = 'right';
 
@@ -82,9 +82,9 @@ class NF_Fields_Checkbox extends NF_Abstracts_Input
         if( 'checkbox' == $field->get_setting( 'type' ) ) {
             // Backwards compatibility check for the new checked value setting.
             if( null == $field->get_setting( 'checked_value' ) && 1 == $value || 'on' == $value ) {
-                return __( 'Checked', 'ninja-forms' );
+                return esc_html__( 'Checked', 'ninja-forms' );
             } elseif( null == $field->get_setting( 'unchecked_value' ) && 0 == $value ) {
-                return __( 'Unchecked', 'ninja-forms');
+                return esc_html__( 'Unchecked', 'ninja-forms');
             }
 
             // If the field value is set to 1....
@@ -148,6 +148,7 @@ class NF_Fields_Checkbox extends NF_Abstracts_Input
      */
     public function export_value( $value, $field )
     {
+        // @TODO: Why were these values translated in the first place?
         // If value is equal to checked or unchecked return the value
         if ( __( 'checked', 'ninja-forms' ) == $value ||
             __( 'unchecked', 'ninja-forms' ) == $value ) return $value;
@@ -173,9 +174,9 @@ class NF_Fields_Checkbox extends NF_Abstracts_Input
          * These checks are for checkbox fields that were created before version 3.2.7.
          */
         } elseif ( 1 == $value || 'on' == $value ) {
-            return __( 'checked', 'ninja-forms' );
+            return esc_html__( 'checked', 'ninja-forms' );
         } elseif ( 0 == $value ) {
-            return __( 'unchecked', 'ninja-forms' );
+            return esc_html__( 'unchecked', 'ninja-forms' );
         }
     }
 }

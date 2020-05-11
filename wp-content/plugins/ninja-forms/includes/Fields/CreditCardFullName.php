@@ -22,7 +22,7 @@ class NF_Fields_CreditCardFullName extends NF_Abstracts_Input
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Credit Card Full Name', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Credit Card Full Name', 'ninja-forms' );
 
         add_filter( 'nf_sub_hidden_field_types', array( $this, 'hide_field_type' ) );
     }

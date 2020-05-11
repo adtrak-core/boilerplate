@@ -31,7 +31,7 @@ class NF_Fields_Textbox extends NF_Abstracts_Input
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Single Line Text', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Single Line Text', 'ninja-forms' );
 
         add_filter( 'ninja_forms_subs_export_field_value_' . $this->_name, array( $this, 'filter_csv_value' ), 10, 2 );
     }

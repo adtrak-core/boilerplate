@@ -18,11 +18,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'label' => array(
         'name' => 'label',
         'type' => 'textbox',
-        'label' => __( 'Label', 'ninja-forms'),
+        'label' => esc_html__( 'Label', 'ninja-forms'),
         'width' => 'one-half',
         'group' => 'primary',
         'value' => '',
-        'help' => __( 'Enter the label of the form field. This is how users will identify individual fields.', 'ninja-forms' ),
+        'help' => esc_html__( 'Enter the label of the form field. This is how users will identify individual fields.', 'ninja-forms' ),
     ),
 
     /*
@@ -32,37 +32,37 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'label_pos' => array(
         'name' => 'label_pos',
         'type' => 'select',
-        'label' => __( 'Label Position', 'ninja-forms' ),
+        'label' => esc_html__( 'Label Position', 'ninja-forms' ),
         'options' => array(
             array(
-                'label' => __( 'Form Default', 'ninja-forms' ),
+                'label' => esc_html__( 'Form Default', 'ninja-forms' ),
                 'value' => 'default'
             ),
             array(
-                'label' => __( 'Above Element', 'ninja-forms' ),
+                'label' => esc_html__( 'Above Element', 'ninja-forms' ),
                 'value' => 'above'
             ),
             array(
-                'label' => __( 'Below Element', 'ninja-forms' ),
+                'label' => esc_html__( 'Below Element', 'ninja-forms' ),
                 'value' => 'below'
             ),
             array(
-                'label' => __( 'Left of Element', 'ninja-forms' ),
+                'label' => esc_html__( 'Left of Element', 'ninja-forms' ),
                 'value' => 'left'
             ),
             array(
-                'label' => __( 'Right of Element', 'ninja-forms' ),
+                'label' => esc_html__( 'Right of Element', 'ninja-forms' ),
                 'value' => 'right'
             ),
             array(
-                'label' => __( 'Hidden', 'ninja-forms' ),
+                'label' => esc_html__( 'Hidden', 'ninja-forms' ),
                 'value' => 'hidden'
             ),
         ),
         'width' => 'one-half',
-        'group' => 'primary',
+        'group' => 'advanced',
         'value' => 'default',
-        'help' => __( 'Select the position of your label relative to the field element itself.', 'ninja-forms' ),
+        'help' => esc_html__( 'Select the position of your label relative to the field element itself.', 'ninja-forms' ),
 
     ),
 
@@ -73,11 +73,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'required' => array(
         'name' => 'required',
         'type' => 'toggle',
-        'label' => __( 'Required Field', 'ninja-forms' ),
+        'label' => esc_html__( 'Required Field', 'ninja-forms' ),
         'width' => 'one-half',
         'group' => 'primary',
         'value' => FALSE,
-        'help' => __( 'Ensure that this field is completed before allowing the form to be submitted.', 'ninja-forms' ),
+        'help' => esc_html__( 'Ensure that this field is completed before allowing the form to be submitted.', 'ninja-forms' ),
     ),
 
     /*
@@ -87,7 +87,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'number' => array(
         'name' => 'number',
         'type' => 'fieldset',
-        'label' => __( 'Number Options', 'ninja-forms' ),
+        'label' => esc_html__( 'Number Options', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'primary',
         'settings' => array(
@@ -95,14 +95,14 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'name' => 'num_min',
                 'type' => 'number',
                 'placeholder' => '',
-                'label' => __( 'Min', 'ninja-forms' ),
+                'label' => esc_html__( 'Min', 'ninja-forms' ),
                 'width' => 'one-third',
                 'value' => ''
             ),
             array(
                 'name' => 'num_max',
                 'type' => 'number',
-                'label' => __( 'Max', 'ninja-forms' ),
+                'label' => esc_html__( 'Max', 'ninja-forms' ),
                 'placeholder' => '',
                 'width' => 'one-third',
                 'value' => ''
@@ -110,7 +110,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
             array(
                 'name' => 'num_step',
                 'type' => 'textbox',
-                'label' => __( 'Step', 'ninja-forms' ),
+                'label' => esc_html__( 'Step', 'ninja-forms' ),
                 'placeholder' => '',
                 'width' => 'one-third',
                 'value' => 1
@@ -126,14 +126,14 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'checkbox_default_value' => array(
         'name' => 'default_value',
         'type' => 'select',
-        'label' => __( 'Default Value', 'ninja-forms' ),
+        'label' => esc_html__( 'Default Value', 'ninja-forms' ),
         'options' => array(
             array(
-                'label' => __( 'Unchecked', 'ninja-forms' ),
+                'label' => esc_html__( 'Unchecked', 'ninja-forms' ),
                 'value' => 'unchecked'
             ),
             array(
-                'label' => __( 'Checked', 'ninja-forms'),
+                'label' => esc_html__( 'Checked', 'ninja-forms'),
                 'value' => 'checked',
             ),
         ),
@@ -149,25 +149,80 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'checkbox_values' => array(
         'name' => 'checkbox_values',
         'type' => 'fieldset',
-        'label' => __( 'Checkbox Values', 'ninja-forms' ),
+        'label' => esc_html__( 'Checkbox Values', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'primary',
         'settings' => array(
             array(
                 'name'  => 'checked_value',
                 'type'  => 'textbox',
-                'label' => __( 'Checked Value', 'ninja-forms' ),
-                'value' => __( 'Checked', 'ninja-forms' ),
+                'label' => esc_html__( 'Checked Value', 'ninja-forms' ),
+                'value' => esc_textarea( __( 'Checked', 'ninja-forms' ) ),
                 'width' => 'one-half',
             ),
             array(
                 'name'  => 'unchecked_value',
                 'type'  => 'textbox',
-                'label' => __( 'Unchecked Value', 'ninja-forms' ),
-                'value' => __( 'Unchecked', 'ninja-forms' ),
+                'label' => esc_html__( 'Unchecked Value', 'ninja-forms' ),
+                'value' => esc_textarea( __( 'Unchecked', 'ninja-forms' ) ),
                 'width' => 'one-half',
             ),
         ),
+    ),
+
+    /*
+     * List Display Style
+     */
+    'list_orientation' => array(
+        'name' => 'list_orientation',
+        'type' => 'button-toggle',
+        'width' => 'full',
+        'group' => 'primary',
+        'options' => array(
+            array( 'label' => esc_html__( 'Horizontal', 'ninja-forms' ), 'value' => 'horizontal' ),
+            array( 'label' => esc_html__( 'Vertical', 'ninja-forms' ), 'value' => 'vertical' )
+        ),
+        'label' => esc_html__( 'List Orientation', 'ninja-forms' ),
+        'value' => 'horizontal',
+    ),
+
+    /*
+     * Max Columns
+     */
+    'num_columns'       => array(
+        'name'          => 'num_columns',
+        'type'          => 'number',
+        'label'         => esc_html__( 'Number of Columns', 'ninja-forms'),
+        'width'         => 'one-half',
+        'group'         => 'primary',
+        'value'         => 3,
+        'deps'          => array(
+            'list_orientation' => 'horizontal'
+        ),
+    ),
+
+    /*
+     * Allow multi-select
+     */
+    'allow_multi_select' => array(
+        'name' => 'allow_multi_select',
+        'type' => 'toggle',
+        'label' => esc_html__( 'Allow Multiple Selections', 'ninja-forms' ),
+        'width' => 'one-half',
+        'group' => 'primary',
+        'value' => FALSE,
+    ),
+
+    /*
+     * Show option labels
+     */
+    'show_option_labels' => array(
+        'name' => 'show_option_labels',
+        'type' => 'toggle',
+        'label' => esc_html__( 'Show Labels', 'ninja-forms' ),
+        'width' => 'one-half',
+        'group' => 'primary',
+        'value' => TRUE,
     ),
 
     /*
@@ -177,27 +232,64 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'options' => array(
         'name' => 'options',
         'type' => 'option-repeater',
-        'label' => __( 'Options', 'ninja-forms' ) . ' <a href="#" class="nf-add-new">' . __( 'Add New', 'ninja-forms' ) . '</a> <a href="#" class="extra nf-open-import-tooltip"><i class="fa fa-sign-in" aria-hidden="true"></i> ' . __( 'Import', 'ninja-forms' ) . '</a>',
+        'label' => esc_html__( 'Options', 'ninja-forms' ) . ' <a href="#" class="nf-add-new">' . esc_html__( 'Add New', 'ninja-forms' ) . '</a> <a href="#" class="extra nf-open-import-tooltip"><i class="fa fa-sign-in" aria-hidden="true"></i> ' . esc_html__( 'Import', 'ninja-forms' ) . '</a>',
         'width' => 'full',
         'group' => 'primary',
         // 'value' => 'option-repeater',
         'value' => array(
-            array( 'label'  => __( 'One', 'ninja-forms' ), 'value' => __( 'one', 'ninja-forms' ), 'calc' => '', 'selected' => 0, 'order' => 0 ),
-            array( 'label'  => __( 'Two', 'ninja-forms' ), 'value' => __( 'two', 'ninja-forms' ), 'calc' => '', 'selected' => 0, 'order' => 1 ),
-            array( 'label'  => __( 'Three', 'ninja-forms' ), 'value' => __( 'three', 'ninja-forms' ), 'calc' => '', 'selected' => 0, 'order' => 2 ),
+            array( 'label'  => esc_html__( 'One', 'ninja-forms' ), 'value' => esc_textarea( __( 'one', 'ninja-forms' ) ), 'calc' => '', 'selected' => 0, 'order' => 0 ),
+            array( 'label'  => esc_html__( 'Two', 'ninja-forms' ), 'value' => esc_textarea( __( 'two', 'ninja-forms' ) ), 'calc' => '', 'selected' => 0, 'order' => 1 ),
+            array( 'label'  => esc_html__( 'Three', 'ninja-forms' ), 'value' => esc_textarea( __( 'three', 'ninja-forms' ) ), 'calc' => '', 'selected' => 0, 'order' => 2 ),
         ),
         'columns'           => array(
             'label'          => array(
-                'header'    => __( 'Label', 'ninja-forms' ),
+                'header'    => esc_html__( 'Label', 'ninja-forms' ),
                 'default'   => '',
             ),
 
             'value'         => array(
-                'header'    => __( 'Value', 'ninja-forms' ),
+                'header'    => esc_html__( 'Value', 'ninja-forms' ),
                 'default'   => '',
             ),
             'calc'          => array(
-                'header'    =>__( 'Calc Value', 'ninja-forms' ),
+                'header'    => esc_html__( 'Calc Value', 'ninja-forms' ),
+                'default'   => '',
+            ),
+            'selected'      => array(
+                'header'    => '<span class="dashicons dashicons-yes"></span>',
+                'default'   => 0,
+            ),
+        ),
+
+    ),
+
+    /*
+     * IMAGE OPTIONS
+     */
+
+    'image_options' => array(
+        'name' => 'image_options',
+        'type' => 'image-option-repeater',
+        'label' => esc_html__( 'Image Options', 'ninja-forms' ) . ' <a href="#" class="nf-add-new">' . esc_html__( 'Add New', 'ninja-forms' ) . '</a>',
+        'width' => 'full',
+        'group' => 'primary',
+        // 'value' => 'option-repeater',
+        'value' => array(
+            array( 'label' => '', 'image' => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 0 ),
+            array( 'label' => '', 'image' => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 1 ),
+            array( 'label' => '', 'image' => '', 'value' => '', 'image_id' => '', 'calc' => '', 'selected' => 0, 'order' => 2 ),
+        ),
+        'columns'           => array(
+            'label'          => array(
+                'header'    => esc_html__( 'Label', 'ninja-forms' ),
+                'default'   => '',
+            ),
+            'value'         => array(
+                'header'    => esc_html__( 'Value', 'ninja-forms' ),
+                'default'   => '',
+            ),
+            'calc'          => array(
+                'header'    => esc_html__( 'Calc Value', 'ninja-forms' ),
                 'default'   => '',
             ),
             'selected'      => array(
@@ -224,29 +316,29 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'mask' => array(
         'name' => 'mask',
         'type' => 'select',
-        'label' => __( 'Input Mask', 'ninja-forms'),
+        'label' => esc_html__( 'Input Mask', 'ninja-forms'),
         'width' => 'one-half',
         'group' => 'restrictions',
-        'help'  => __( 'Restricts the kind of input your users can put into this field.', 'ninja-forms' ),
+        'help'  => esc_html__( 'Restricts the kind of input your users can put into this field.', 'ninja-forms' ),
         'options' => array(
             array(
-                'label' => __( 'none', 'ninja-forms' ),
+                'label' => esc_html__( 'none', 'ninja-forms' ),
                 'value' => ''
             ),
             array(
-                'label' => __( 'US Phone', 'ninja-forms' ),
+                'label' => esc_html__( 'US Phone', 'ninja-forms' ),
                 'value' => '(999) 999-9999',
             ),
             array(
-                'label' => __( 'Date', 'ninja-forms' ),
+                'label' => esc_html__( 'Date', 'ninja-forms' ),
                 'value' => '99/99/9999',
             ),
             array(
-                'label' => __( 'Currency', 'ninja-forms' ),
+                'label' => esc_html__( 'Currency', 'ninja-forms' ),
                 'value' => 'currency',
             ),
             array(
-                'label' => __( 'Custom', 'ninja-forms' ),
+                'label' => esc_html__( 'Custom', 'ninja-forms' ),
                 'value' => 'custom',
             ),
         ),
@@ -259,7 +351,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'custom_mask'       => array(
         'name'          => 'custom_mask',
         'type'          => 'textbox',
-        'label'         => __( 'Custom Mask', 'ninja-forms'),
+        'label'         => esc_html__( 'Custom Mask', 'ninja-forms'),
         'width'         => 'one-half',
         'group'         => 'restrictions',
         'value'         => '',
@@ -268,12 +360,10 @@ return apply_filters( 'ninja_forms_field_settings', array(
             'mask'      => 'custom'
         ),
         'placeholder'   => '',
-        'help'  => __( '<ul>
-                            <li>a - Represents an alpha character (A-Z,a-z) - Only allows letters to be entered. </li>
-                            <li>9 - Represents a numeric character (0-9) - Only allows numbers to be entered.</li>
-                            <li>* - Represents an alphanumeric character (A-Z,a-z,0-9) - This allows both numbers and
-                            letters to be entered.</li>
-                        </ul>', 'ninja-forms' ),
+        'help'  => sprintf( '%s' . esc_html__( 'a - Represents an alpha character (A-Z,a-z) - Only allows letters to be entered.', 'ninja-forms' ) .
+                            '%s' . esc_html__( '9 - Represents a numeric character (0-9) - Only allows numbers to be entered.', 'ninja-forms' ) .
+                            '%s' . esc_html__( '* - Represents an alphanumeric character (A-Z,a-z,0-9) - This allows both numbers and letters to be entered.', 'ninja-forms' ) .
+                            '%s', '<ul><li>', '</li><li>', '</li><li>', '</li></ul>' ),
     ),
 
     /*
@@ -283,7 +373,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'input_limit_set' => array(
         'name' => 'input_limit_set',
         'type' => 'fieldset',
-        'label' => __( 'Limit Input to this Number', 'ninja-forms' ),
+        'label' => esc_html__( 'Limit Input to this Number', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'restrictions',
         'settings' => array(
@@ -299,11 +389,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'type' => 'select',
                 'options' => array(
                     array(
-                        'label' => __( 'Character(s)', 'ninja-forms' ),
+                        'label' => esc_html__( 'Character(s)', 'ninja-forms' ),
                         'value' => 'characters'
                     ),
                     array(
-                        'label' => __( 'Word(s)', 'ninja-forms' ),
+                        'label' => esc_html__( 'Word(s)', 'ninja-forms' ),
                         'value' => 'word'
                     ),
                 ),
@@ -313,10 +403,10 @@ return apply_filters( 'ninja_forms_field_settings', array(
             array(
                 'name' => 'input_limit_msg',
                 'type' => 'textbox',
-                'label' => __( 'Text to Appear After Counter', 'ninja-forms' ),
-                'placeholder' => __( 'Character(s) left', 'ninja-forms' ),
+                'label' => esc_html__( 'Text to Appear After Counter', 'ninja-forms' ),
+                'placeholder' => esc_attr__( 'Character(s) left', 'ninja-forms' ),
                 'width' => 'full',
-                'value' => __( 'Character(s) left', 'ninja-forms' )
+                'value' => esc_textarea( __( 'Character(s) left', 'ninja-forms' ) )
             )
         ),
 
@@ -339,11 +429,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'custom_name_attribute' => array(
         'name' => 'custom_name_attribute',
         'type' => 'textbox',
-        'label' => __( 'Custom Name Attribute', 'ninja-forms' ),
+        'label' => esc_html__( 'Custom Name Attribute', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'advanced',
         'value' => '',
-        'help' => __( 'This value will be used as the HTML input "name" attribute.', 'ninja-forms' ),
+        'help' => esc_html__( 'This value will be used as the HTML input "name" attribute.', 'ninja-forms' ),
         'use_merge_tags' => FALSE,
     ),
 
@@ -354,11 +444,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'placeholder' => array(
         'name' => 'placeholder',
         'type' => 'textbox',
-        'label' => __( 'Placeholder', 'ninja-forms' ),
+        'label' => esc_html__( 'Placeholder', 'ninja-forms' ),
         'width' => 'full',
-        'group' => 'advanced',
+        'group' => 'display',
         'value' => '',
-        'help' => __( 'Enter text you would like displayed in the field before a user enters any data.', 'ninja-forms' ),
+        'help' => esc_html__( 'Enter text you would like displayed in the field before a user enters any data.', 'ninja-forms' ),
         'use_merge_tags' => FALSE,
     ),
 
@@ -369,11 +459,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
 
     'default' => array(
         'name' => 'default',
-        'label' => __( 'Default Value', 'ninja-forms' ),
+        'label' => esc_html__( 'Default Value', 'ninja-forms' ),
         'type' => 'textbox',
         'width' => 'full',
         'value' => '',
-        'group' => 'advanced',
+        'group' => 'display',
         'use_merge_tags' => array(
             'exclude' => array(
                 'fields'
@@ -387,7 +477,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'classes' => array(
         'name' => 'classes',
         'type' => 'fieldset',
-        'label' => __( 'Custom Class Names', 'ninja-forms' ),
+        'label' => esc_html__( 'Custom Class Names', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'display',
         'settings' => array(
@@ -395,21 +485,21 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'name' => 'container_class',
                 'type' => 'textbox',
                 'placeholder' => '',
-                'label' => __( 'Container', 'ninja-forms' ),
+                'label' => esc_html__( 'Container', 'ninja-forms' ),
                 'width' => 'one-half',
                 'value' => '',
                 'use_merge_tags' => FALSE,
-                'help' => __( 'Adds an extra class to your field wrapper.', 'ninja-forms' ),
+                'help' => esc_html__( 'Adds an extra class to your field wrapper.', 'ninja-forms' ),
             ),
             array(
                 'name' => 'element_class',
                 'type' => 'textbox',
-                'label' => __( 'Element', 'ninja-forms' ),
+                'label' => esc_html__( 'Element', 'ninja-forms' ),
                 'placeholder' => '',
                 'width' => 'one-half',
                 'value' => '',
                 'use_merge_tags' => FALSE,
-                'help' => __( 'Adds an extra class to your field element.', 'ninja-forms' ),
+                'help' => esc_html__( 'Adds an extra class to your field element.', 'ninja-forms' ),
             ),
         ),
     ),
@@ -421,52 +511,52 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'date_format'        => array(
         'name'          => 'date_format',
         'type'          => 'select',
-        'label'         => __( 'Format', 'ninja-forms' ),
+        'label'         => esc_html__( 'Format', 'ninja-forms' ),
         'width'         => 'full',
         'group'         => 'primary',
         'options'       => array(
             array(
-                'label' => __( 'Default', 'ninja-forms' ),
+                'label' => esc_html__( 'Default', 'ninja-forms' ),
                 'value' => 'default',
             ),
             array(
-                'label' => __( 'DD/MM/YYYY', 'ninja-forms' ),
+                'label' => esc_html__( 'DD/MM/YYYY', 'ninja-forms' ),
                 'value' => 'DD/MM/YYYY',
             ),
             array(
-                'label' => __( 'DD-MM-YYYY', 'ninja-forms' ),
+                'label' => esc_html__( 'DD-MM-YYYY', 'ninja-forms' ),
                 'value' => 'DD-MM-YYYY',
             ),
             array(
-                'label' => __( 'DD.MM.YYYY', 'ninja-forms' ),
+                'label' => esc_html__( 'DD.MM.YYYY', 'ninja-forms' ),
                 'value' => 'DD.MM.YYYY',
             ),
             array(
-                'label' => __( 'MM/DD/YYYY', 'ninja-forms' ),
+                'label' => esc_html__( 'MM/DD/YYYY', 'ninja-forms' ),
                 'value' => 'MM/DD/YYYY',
             ),
             array(
-                'label' => __( 'MM-DD-YYYY', 'ninja-forms' ),
+                'label' => esc_html__( 'MM-DD-YYYY', 'ninja-forms' ),
                 'value' => 'MM-DD-YYYY',
             ),
             array(
-                'label' => __( 'MM.DD.YYYY', 'ninja-forms' ),
+                'label' => esc_html__( 'MM.DD.YYYY', 'ninja-forms' ),
                 'value' => 'MM.DD.YYYY',
             ),
             array(
-                'label' => __( 'YYYY-MM-DD', 'ninja-forms' ),
+                'label' => esc_html__( 'YYYY-MM-DD', 'ninja-forms' ),
                 'value' => 'YYYY-MM-DD',
             ),
             array(
-                'label' => __( 'YYYY/MM/DD', 'ninja-forms' ),
+                'label' => esc_html__( 'YYYY/MM/DD', 'ninja-forms' ),
                 'value' => 'YYYY/MM/DD',
             ),
             array(
-                'label' => __( 'YYYY.MM.DD', 'ninja-forms' ),
+                'label' => esc_html__( 'YYYY.MM.DD', 'ninja-forms' ),
                 'value' => 'YYYY.MM.DD',
             ),
             array(
-                'label' => __( 'Friday, November 18, 2019', 'ninja-forms' ),
+                'label' => esc_html__( 'Friday, November 18, 2019', 'ninja-forms' ),
                 'value' => 'dddd, MMMM D YYYY',
             ),
         ),
@@ -480,7 +570,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'date_default'       => array(
         'name'          => 'date_default',
         'type'          => 'toggle',
-        'label'         => __( 'Default To Current Date', 'ninja-forms' ),
+        'label'         => esc_html__( 'Default To Current Date', 'ninja-forms' ),
         'width'         => 'one-half',
         'group'         => 'primary'
     ),
@@ -492,20 +582,20 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'year_range' => array(
         'name' => 'year_range',
         'type' => 'fieldset',
-        'label' => __( 'Year Range', 'ninja-forms' ),
+        'label' => esc_html__( 'Year Range', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'advanced',
         'settings' => array(
             array(
                 'name' => 'year_range_start',
                 'type' => 'number',
-                'label' => __( 'Start Year', 'ninja_forms' ),
+                'label' => esc_html__( 'Start Year', 'ninja_forms' ),
                 'value' => ''
             ),
             array(
                 'name' => 'year_range_end',
                 'type' => 'number',
-                'label' => __( 'End Year', 'ninja_forms' ),
+                'label' => esc_html__( 'End Year', 'ninja_forms' ),
                 'value' => ''
             ),
         )
@@ -518,7 +608,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'time_submit' => array(
         'name' => 'time_submit',
         'type' => 'textbox',
-        'label' => __( 'Number of seconds for timed submit.', 'ninja-forms' ),
+        'label' => esc_html__( 'Number of seconds for timed submit.', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'advanced',
         'value' => FALSE,
@@ -532,11 +622,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'key' => array(
         'name' => 'key',
         'type' => 'textbox',
-        'label' => __( 'Field Key', 'ninja-forms'),
+        'label' => esc_html__( 'Field Key', 'ninja-forms'),
         'width' => 'full',
         'group' => 'administration',
         'value' => '',
-        'help' => __( 'Creates a unique key to identify and target your field for custom development.', 'ninja-forms' ),
+        'help' => esc_html__( 'Creates a unique key to identify and target your field for custom development.', 'ninja-forms' ),
     ),
 
     /*
@@ -546,11 +636,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'admin_label'           => array(
         'name'              => 'admin_label',
         'type'              => 'textbox',
-        'label'             => __( 'Admin Label', 'ninja-forms' ),
+        'label'             => esc_html__( 'Admin Label', 'ninja-forms' ),
         'width'             => 'full',
         'group'             => 'administration',
         'value'             => '',
-        'help'              => __( 'Label used when viewing and exporting submissions.', 'ninja-forms' ),
+        'help'              => esc_html__( 'Label used when viewing and exporting submissions.', 'ninja-forms' ),
     ),
 
     /*
@@ -560,9 +650,9 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'help'           => array(
         'name'              => 'help',
         'type'              => 'fieldset',
-        'label'             => __( 'Help Text', 'ninja-forms' ),
+        'label'             => esc_html__( 'Help Text', 'ninja-forms' ),
         'group'             => 'display',
-        'help'              => __( 'Shown to users as a hover.', 'ninja-forms' ),
+        'help'              => esc_html__( 'Shown to users as a hover.', 'ninja-forms' ),
         'settings'          => array(
             /*
              * HELP TEXT
@@ -587,7 +677,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'description'           => array(
         'name'              => 'description',
         'type'              => 'fieldset',
-        'label'             => __( 'Description', 'ninja-forms' ),
+        'label'             => esc_html__( 'Description', 'ninja-forms' ),
         'group'             => 'display',
         'settings'          => array(
             /*
@@ -601,41 +691,6 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'width'             => 'full',
                 'use_merge_tags'    => true,
             ),
-
-            /*
-             * DESCRIPTION POSITION
-             */
-
-            // 'desc_pos'              => array(
-            //     'name'              => 'desc_pos',
-            //     'type'              => 'select',
-            //     'options'           => array(
-            //         array(
-            //             'label'     => __( 'None', 'ninja-forms' ),
-            //             'value'     => 'none',
-            //         ),
-            //         array(
-            //             'label'     => __( 'Before Everything', 'ninja-forms' ),
-            //             'value'     => 'before_everything',
-            //         ),
-            //         array(
-            //             'label'     => __( 'Before Label', 'ninja-forms' ),
-            //             'value'     => 'before_label',
-            //         ),
-            //         array(
-            //             'label'     => __( 'After Label', 'ninja-forms' ),
-            //             'value'     => 'after_label',
-            //         ),
-            //         array(
-            //             'label'     => __( 'After Everything', 'ninja-forms' ),
-            //             'value'     => 'after_everything',
-            //         ),
-            //     ),
-            //     'label'             => __( 'Display Position', 'ninja-forms' ),
-            //     'width'             => 'full',
-            //     'help'      => __( 'Determines the position of the label relative to the field element.', 'ninja-forms' ),
-            // ),
-
         ),
     ),
 
@@ -646,21 +701,21 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'num_sort' => array(
         'name' => 'num_sort',
         'type' => 'toggle',
-        'label' => __( 'Sort as Numeric', 'ninja-forms'),
+        'label' => esc_html__( 'Sort as Numeric', 'ninja-forms'),
         'width' => 'full',
         'group' => 'administration',
         'value' => '',
-        'help' => __( 'This column in the submissions table will sort by number.', 'ninja-forms' ),
+        'help' => esc_html__( 'This column in the submissions table will sort by number.', 'ninja-forms' ),
     ),
 
     'personally_identifiable'   => array(
 	    'name'           => 'personally_identifiable',
 	    'type'           => 'toggle',
 	    'group'          => 'advanced',
-	    'label'          => __( 'This Field Is Personally Identifiable Data', 'ninja-forms' ),
+	    'label'          => esc_html__( 'This Field Is Personally Identifiable Data', 'ninja-forms' ),
 	    'width'          => 'full',
 	    'value'          => '',
-	    'help' => __( 'This option helps with privacy regulation compliance', 'ninja-forms' ),
+	    'help'           => esc_html__( 'This option helps with privacy regulation compliance', 'ninja-forms' ),
     ),
 
     /*
@@ -673,9 +728,9 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'multi_size' => array(
         'name' => 'multi_size',
         'type' => 'number',
-        'label' => __( 'Multi-Select Box Size', 'ninja-forms'),
+        'label' => esc_html__( 'Multi-Select Box Size', 'ninja-forms'),
         'width' => 'one-half',
-        'group' => 'primary',
+        'group' => 'advanced',
         'value' => 5,
     ),
 
@@ -694,42 +749,10 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'value' => FALSE,
     ),
 
-    /*
-     * Timed Submit Label
-     */
-
-    // 'timed_submit' => array(
-    //      'name' => 'timed_submit',
-    //      'type' => 'fieldset',
-    //      'label' => __( 'Timed Submit', 'ninja-forms' ),
-    //      'width' => 'full',
-    //      'group' => 'advanced',
-    //      'settings' => array(
-    //          array(
-    //              'name' => 'timed_submit_countdown',
-    //              'type' => 'number',
-    //              'label' => __( 'Countdown', 'ninja-forms' ),
-    //              'value' => 10,
-    //              'placeholder' => '',
-    //              'width' => 'one-half',
-    //
-    //          ),
-    //          array(
-    //              'name' => 'timed_submit_label',
-    //              'type' => 'textbox',
-    //              'placeholder' => '',
-    //              'label' => __( 'Timer Label', 'ninja-forms' ),
-    //              'value' => __( 'Please wait %n seconds', 'ninja-forms' ),
-    //              'width' => 'one-half'
-    //
-    //          ),
-    //      ),
-    //  ),
-
     'timed_submit_label' => array(
         'name' => 'timed_submit_label',
         'type' => 'textbox',
-        'label' => __( 'Label', 'ninja-forms' ),
+        'label' => esc_html__( 'Label', 'ninja-forms' ),
         //The following text appears below the element
         //'Submit button text after timer expires'
         'width' => '',
@@ -745,9 +768,9 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'timed_submit_timer' => array(
         'name' => 'timed_submit_timer',
         'type' => 'textbox',
-        'label' => __( 'Label' , 'ninja-forms' ),
+        'label' => esc_html__( 'Label' , 'ninja-forms' ),
         // This text was located below the element '%n will be used to signfify the number of seconds'
-        'value' => __( 'Please wait %n seconds', 'ninja-forms' ),
+        'value' => sprintf( esc_textarea( __( 'Please wait %s seconds', 'ninja-forms' ) ), '%n'),
         'width' => '',
         'group' => '',
 
@@ -760,7 +783,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'timed_submit_countdown' => array (
         'name' => 'timed_submit_countdown',
         'type' => 'number',
-        'label' => __( 'Number of seconds for the countdown', 'ninja-forms' ),
+        'label' => esc_html__( 'Number of seconds for the countdown', 'ninja-forms' ),
         //The following text appears to the right of the element
         //"This is how long the user must waitin to submit the form"
         'value' => 10,
@@ -777,7 +800,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'name' => 'password_registration_checkbox',
         'type' => 'checkbox',
         'value' => 'unchecked',
-        'label' => __( 'Use this as a reistration password field. If this box is check, both
+        'label' => esc_html__( 'Use this as a registration password field. If this box is check, both
                         password and re-password textboxes will be output', 'ninja-forms' ),
         'width' => '',
         'group' => '',
@@ -793,7 +816,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'name' => 'number_of_stars',
         'type' => 'textbox',
         'value' => 5,
-        'label' => __( 'Number of stars', 'ninja-forms' ),
+        'label' => esc_html__( 'Number of stars', 'ninja-forms' ),
         'width' => 'full',
         'group' => '',
 
@@ -806,7 +829,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'disable_browser_autocomplete' => array(
         'name' => 'disable_browser_autocomplete',
         'type' => 'toggle',
-        'label' => __( 'Disable Browser Autocomplete', 'ninja-forms' ),
+        'label' => esc_html__( 'Disable Browser Autocomplete', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'restrictions',
     ),
@@ -818,7 +841,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'disable_input' => array(
         'name'      => 'disable_input',
         'type'      => 'toggle',
-        'label'     => __( 'Disable Input', 'ninja-forms' ),
+        'label'     => esc_html__( 'Disable Input', 'ninja-forms' ),
         'width'     => 'full',
         'group'     => 'restrictions',
     ),
@@ -832,7 +855,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'name' => 'use_custom_first_option',
         'type' => 'checkbox',
         'value' => 'unchecked',
-        'label' => __( 'Use a custom first option', 'ninja-forms' ),
+        'label' => esc_html__( 'Use a custom first option', 'ninja-forms' ),
         'width' => '',
         'group' => '',
 
@@ -845,7 +868,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'custom_first_option' => array(
         'name' => 'custom_first_option',
         'type' => 'textbox',
-        'label' => __( 'Custom first option', 'ninja-forms' ),
+        'label' => esc_html__( 'Custom first option', 'ninja-forms' ),
         'width' => '',
         'group' => '',
         'value' => FALSE,
@@ -856,7 +879,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'name'              => 'type',
         'type'              => 'select',
         'options'           => array(),
-        'label'             => __( 'Type', 'ninja-forms' ),
+        'label'             => esc_html__( 'Type', 'ninja-forms' ),
         'width'             => 'full',
         'group'             => 'primary',
         'value'             => 'single',
@@ -865,7 +888,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'fieldset' => array(
         'name' => 'fieldset',
         'type' => 'fieldset',
-        'label' => __( 'Settings', 'ninja-forms' ),
+        'label' => esc_html__( 'Settings', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'primary',
         'settings' => array(),
@@ -874,7 +897,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'confirm_field' => array(
         'name' => 'confirm_field',
         'type' => 'field-select',
-        'label' => __( 'Confirm', 'ninja-forms' ),
+        'label' => esc_html__( 'Confirm', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'primary'
     ),
@@ -888,17 +911,17 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'textarea_rte'          => array(
         'name'              => 'textarea_rte',
         'type'              => 'toggle',
-        'label'             => __( 'Show Rich Text Editor', 'ninja-forms' ),
+        'label'             => esc_html__( 'Show Rich Text Editor', 'ninja-forms' ),
         'width'             => 'one-third',
         'group'             => 'display',
         'value'             => '',
-        'help'              => __( 'Allows rich text input.', 'ninja-forms' ),
+        'help'              => esc_html__( 'Allows rich text input.', 'ninja-forms' ),
     ),
 
     'textarea_media'          => array(
         'name'              => 'textarea_media',
         'type'              => 'toggle',
-        'label'             => __( 'Show Media Upload Button', 'ninja-forms' ),
+        'label'             => esc_html__( 'Show Media Upload Button', 'ninja-forms' ),
         'width'             => 'one-third',
         'group'             => 'display',
         'value'             => '',
@@ -910,7 +933,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'disable_rte_mobile'    => array(
         'name'              => 'disable_rte_mobile',
         'type'              => 'toggle',
-        'label'             => __( 'Disable Rich Text Editor on Mobile', 'ninja-forms' ),
+        'label'             => esc_html__( 'Disable Rich Text Editor on Mobile', 'ninja-forms' ),
         'width'             => 'one-third',
         'group'             => 'display',
         'value'             => '',
@@ -928,10 +951,10 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'processing_label' => array(
         'name' => 'processing_label',
         'type' => 'textbox',
-        'label' => __( 'Processing Label', 'ninja-forms' ),
+        'label' => esc_html__( 'Processing Label', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'primary',
-        'value' => __( 'Processing', 'ninja-forms' )
+        'value' => esc_textarea( __( 'Processing', 'ninja-forms' ) )
     ),
 
     /*
@@ -943,19 +966,19 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'checked_calc_value'    => array(
         'name'      => 'checked_calc_value',
         'type'      => 'textbox',
-        'label'     => __( 'Checked Calculation Value', 'ninja-forms' ),
+        'label'     => esc_html__( 'Checked Calculation Value', 'ninja-forms' ),
         'width'     => 'one-half',
         'group'     => 'advanced',
-        'help'      => __( 'This number will be used in calculations if the box is checked.', 'ninja-forms' ),
+        'help'      => esc_html__( 'This number will be used in calculations if the box is checked.', 'ninja-forms' ),
     ),
 
     'unchecked_calc_value'    => array(
         'name'      => 'unchecked_calc_value',
         'type'      => 'textbox',
-        'label'     => __( 'Unchecked Calculation Value', 'ninja-forms' ),
+        'label'     => esc_html__( 'Unchecked Calculation Value', 'ninja-forms' ),
         'width'     => 'one-half',
         'group'     => 'advanced',
-        'help'      => __( 'This number will be used in calculations if the box is unchecked.', 'ninja-forms' ),
+        'help'      => esc_html__( 'This number will be used in calculations if the box is unchecked.', 'ninja-forms' ),
     ),
 
     /*
@@ -966,13 +989,13 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'calc_var'              => array(
         'name'              => 'calc_var',
         'type'              => 'select',
-        'label'             => __( 'Display This Calculation Variable', 'ninja-forms' ),
+        'label'             => esc_html__( 'Display This Calculation Variable', 'ninja-forms' ),
         'width'             => 'full',
         'group'             => 'primary',
         'options'           => array(),
         'select_product'    => array(
             'value'         => '',
-            'label'         => __( '- Select a Variable', 'ninja-forms' ),
+            'label'         => esc_html__( '- Select a Variable', 'ninja-forms' ),
         ),
     ),
 
@@ -985,7 +1008,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'product_price' => array(
         'name' => 'product_price',
         'type' => 'textbox',
-        'label' => __( 'Price', 'ninja-forms' ),
+        'label' => esc_html__( 'Price', 'ninja-forms' ),
         'width' => 'one-half',
         'group' => 'primary',
         'value' => '1.00',
@@ -998,43 +1021,43 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'product_use_quantity' => array(
         'name' => 'product_use_quantity',
         'type' => 'toggle',
-        'label' => __( 'Use Inline Quantity', 'ninja-forms' ),
+        'label' => esc_html__( 'Use Inline Quantity', 'ninja-forms' ),
         'width' => 'one-half',
         'group' => 'primary',
         'value' => TRUE,
-        'help'  => __( 'Allows users to choose more than one of this product.', 'ninja-forms' ),
+        'help'  => esc_html__( 'Allows users to choose more than one of this product.', 'ninja-forms' ),
 
     ),
 
     'product_type' => array(
         'name' => 'product_type',
         'type' => 'select',
-        'label' => __( 'Product Type', 'ninja-forms' ),
+        'label' => esc_html__( 'Product Type', 'ninja-forms' ),
         'width' => 'full',
         'group' => '',
         'options' => array(
             array(
-                'label' => __( 'Single Product (default)', 'ninja-forms' ),
+                'label' => esc_html__( 'Single Product (default)', 'ninja-forms' ),
                 'value' => 'single'
             ),
             array(
-                'label' => __( 'Multi Product - Dropdown', 'ninja-forms' ),
+                'label' => esc_html__( 'Multi Product - Dropdown', 'ninja-forms' ),
                 'value' => 'dropdown'
             ),
             array(
-                'label' => __( 'Multi Product - Choose Many', 'ninja-forms' ),
+                'label' => esc_html__( 'Multi Product - Choose Many', 'ninja-forms' ),
                 'value' => 'checkboxes'
             ),
             array(
-                'label' => __( 'Multi Product - Choose One', 'ninja-forms' ),
+                'label' => esc_html__( 'Multi Product - Choose One', 'ninja-forms' ),
                 'value' => 'radiolist'
             ),
             array(
-                'label' => __( 'User Entry', 'ninja-forms' ),
+                'label' => esc_html__( 'User Entry', 'ninja-forms' ),
                 'value' => 'user'
             ),
             array(
-                'label' => __( 'Hidden', 'ninja-forms' ),
+                'label' => esc_html__( 'Hidden', 'ninja-forms' ),
                 'value' => 'hidden'
             ),
         ),
@@ -1045,7 +1068,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'shipping_cost'         => array(
         'name'              => 'shipping_cost',
         'type'              => 'textbox',
-        'label'             => __( 'Cost', 'ninja-forms' ),
+        'label'             => esc_html__( 'Cost', 'ninja-forms' ),
         'width'             => 'full',
         'group'             => 'primary',
         'value'             => '0.00',
@@ -1061,22 +1084,22 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'shipping_options'      => array(
         'name'              => 'shipping_options',
         'type'              => 'option-repeater',
-        'label'             => __( 'Cost Options', 'ninja-forms' ) . ' <a href="#" class="nf-add-new">' . __( 'Add New', 'ninja-forms' ) . '</a>',
+        'label'             => esc_html__( 'Cost Options', 'ninja-forms' ) . ' <a href="#" class="nf-add-new">' . esc_html__( 'Add New', 'ninja-forms' ) . '</a>',
         'width'             => 'full',
         'group'             => 'primary',
         'value'             => array(
-            array( 'label'  => __( 'One', 'ninja-forms' ), 'value' => '1.00', 'order' => 0 ),
-            array( 'label'  => __( 'Two', 'ninja-forms' ), 'value' => '2.00', 'order' => 1 ),
-            array( 'label'  => __( 'Three', 'ninja-forms' ), 'value' => '3.00', 'order' => 2 ),
+            array( 'label'  => esc_textarea( __( 'One', 'ninja-forms' ) ), 'value' => '1.00', 'order' => 0 ),
+            array( 'label'  => esc_textarea( __( 'Two', 'ninja-forms' ) ), 'value' => '2.00', 'order' => 1 ),
+            array( 'label'  => esc_textarea( __( 'Three', 'ninja-forms' ) ), 'value' => '3.00', 'order' => 2 ),
         ),
         'columns'          => array(
             'label'         => array(
-                'header'    => __( 'Label', 'ninja-forms' ),
+                'header'    => esc_html__( 'Label', 'ninja-forms' ),
                 'default'   => '',
             ),
 
             'value'         => array(
-                'header'    => __( 'Value', 'ninja-forms' ),
+                'header'    => esc_html__( 'Value', 'ninja-forms' ),
                 'default'   => '',
             ),
         ),
@@ -1090,15 +1113,15 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'type'              => 'select',
         'options'           => array(
             array(
-                'label'     => __( 'Single Cost', 'ninja-forms' ),
+                'label'     => esc_html__( 'Single Cost', 'ninja-forms' ),
                 'value'     => 'single',
             ),
             array(
-                'label'     => __( 'Cost Dropdown', 'ninja-forms' ),
+                'label'     => esc_html__( 'Cost Dropdown', 'ninja-forms' ),
                 'value'     => 'select',
             ),
         ),
-        'label'             => __( 'Cost Type', 'ninja-forms' ),
+        'label'             => esc_html__( 'Cost Type', 'ninja-forms' ),
         'width'             => 'full',
         'group'             => '', //'primary',
         'value'             => 'single',
@@ -1107,13 +1130,13 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'product_assignment'      => array(
         'name'              => 'product_assignment',
         'type'              => 'select',
-        'label'             => __( 'Product', 'ninja-forms' ),
+        'label'             => esc_html__( 'Product', 'ninja-forms' ),
         'width'             => 'full',
         'group'             => 'primary',
         'options'           => array(),
         'select_product'    => array(
             'value'         => '',
-            'label'         => __( '- Select a Product', 'ninja-forms' ),
+            'label'         => esc_html__( '- Select a Product', 'ninja-forms' ),
         ),
     ),
 
@@ -1130,11 +1153,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'spam_answer' => array(
         'name' => 'spam_answer',
         'type' => 'textbox',
-        'label' => __( 'Answer', 'ninja-forms'),
+        'label' => esc_html__( 'Answer', 'ninja-forms'),
         'width' => 'full',
         'group' => 'primary',
         'value' => '',
-        'help'  => __( 'A case sensitive answer to help prevent spam submissions of your form.', 'ninja-forms' ),
+        'help'  => esc_html__( 'A case sensitive answer to help prevent spam submissions of your form.', 'ninja-forms' ),
     ),
 
     /*
@@ -1150,7 +1173,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'taxonomy' => array(
         'name' => 'taxonomy',
         'type' => 'select',
-        'label' => __( 'Taxonomy', 'ninja-forms'),
+        'label' => esc_html__( 'Taxonomy', 'ninja-forms'),
         'width' => 'full',
         'group' => 'primary',
         'options' => array(
@@ -1168,7 +1191,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'add_new_terms' => array(
         'name' => 'add_new_terms',
         'type' => 'toggle',
-        'label' => __( 'Add New Terms', 'ninja-forms'),
+        'label' => esc_html__( 'Add New Terms', 'ninja-forms'),
         'width' => 'full',
         'group' => 'advanced',
     ),
@@ -1182,11 +1205,11 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'user_state' => array(
         'name' => 'user_state',
         'type' => 'toggle',
-        'label' => __( 'This is a user\'s state.', 'ninja-forms' ),
+        'label' => esc_html__( 'This is a user\'s state.', 'ninja-forms' ),
         'width' => 'full',
         'group' => 'administration',
         'value' => FALSE,
-        'help' => __( 'Used for marking a field for processing.', 'ninja-forms' ),
+        'help' => esc_html__( 'Used for marking a field for processing.', 'ninja-forms' ),
     ),
 
 ));

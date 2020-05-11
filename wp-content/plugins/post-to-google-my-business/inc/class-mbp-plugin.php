@@ -3,13 +3,19 @@
 use  PGMB\WeDevsSettingsAPI ;
 class MBP_Plugin
 {
-    const  PLUGIN_VERSION = '2.2.10' ;
+    const  PLUGIN_VERSION = '2.2.17' ;
     protected  $settings_page ;
+    private  $taxonomy_fields = array() ;
+    private  $enabled_post_types = array() ;
+    private  $enabled_taxonomies = array() ;
+    private  $notification_manager ;
+    private  $metabox ;
     public function init()
     {
         $connector = new MBP_connector( $this );
         $connector->init();
-        $this->settings_page = new MBP_Admin_Page_Settings( $this, new WeDevsSettingsAPI() );
+        $this->notification_manager = new \PGMB\Notifications\NotificationManager( "mbp" );
+        $this->settings_page = new MBP_Admin_Page_Settings( self::PLUGIN_VERSION, $this->is_configured(), $this->notification_manager );
         $this->settings_page->init();
         $defaultLocation = $this->settings_page->get_current_setting( 'google_location', 'mbp_google_settings' );
         
@@ -19,8 +25,12 @@ class MBP_Plugin
         }
         
         $post_type_google_subposts = new MBP_Post_Type_Google_Subposts();
-        $metabox = new MBP_Metabox( self::PLUGIN_VERSION, $this->settings_page );
+        $this->register_enabled_post_types();
+        $this->metabox = new MBP_Metabox( self::PLUGIN_VERSION, $this->settings_page, $this->enabled_post_types );
+        $this->metabox->init();
         add_action( 'admin_init', array( &$this, 'admin_init' ) );
+        $this->show_welcome_message();
+        add_action( 'admin_init', [ $this, 'show_review_notifications' ] );
         $this->do_upgrades();
     }
     
@@ -33,6 +43,18 @@ class MBP_Plugin
             throw new InvalidArgumentException( 'Post type definition must implement the PostTypeDefinition interface' );
         }
         //register_post_type($post_type::POST_TYPE, $post_type->post_type_data());
+    }
+    
+    /**
+     * Get an array of registered taxonomy fields so they can be referenced/removed outside of the plugin
+     *
+     * @return array Registered taxonomy fields
+     *
+     * @since 2.2.11
+     */
+    public function get_registered_taxonomy_fields()
+    {
+        return $this->taxonomy_fields;
     }
     
     public function admin_init()
@@ -56,25 +78,253 @@ class MBP_Plugin
         );
     }
     
-    public static function activate()
+    /**
+     * Shows a welcome notification to the user
+     *
+     * @since 2.2.12
+     */
+    public function show_welcome_message()
+    {
+        $has_shown_welcome_message = get_option( 'mbp_welcome_message' );
+        
+        if ( !$this->is_configured() && !$has_shown_welcome_message ) {
+            $current_user = wp_get_current_user();
+            $welcome_message = PGMB\Notifications\BasicNotification::create(
+                \MBP_Admin_Page_Settings::NOTIFICATION_SECTION,
+                'welcome_message',
+                esc_html__( 'Getting started with Post to Google My Business', 'post-to-google-my-business' ),
+                nl2br( sprintf(
+                esc_html__( "Hi %1\$s,\n\nThanks for installing Post to Google My Business! To get started, connect the plugin to your Google account on the Google settings tab.\n\nNeed help? Check out the %2\$s\n\n%3\$s" ),
+                esc_html( $current_user->display_name ),
+                sprintf( '<a target="_blank" href="%s">%s</a>', 'https://tycoonmedia.net/gmb-tutorial-video/', esc_html__( 'tutorial video', 'post-to-google-my-business' ) ),
+                sprintf( '<strong>%s</strong><br /><i>%s</i>', 'Koen', esc_html__( 'Plugin Developer', 'post-to-google-my-business' ) )
+            ) ),
+                'img/koen.png',
+                esc_html__( 'Developer profile photo', 'post-to-google-my-business' )
+            );
+            $this->notification_manager->add_notification( $welcome_message );
+        }
+        
+        update_option( 'mbp_welcome_message', true );
+    }
+    
+    /**
+     * Shows review notifications in the plugin dashboard
+     *
+     * @since 2.2.12
+     */
+    public function show_review_notifications()
+    {
+        $posts_count = wp_count_posts( \PGMB\PostTypes\SubPost::POST_TYPE )->publish;
+        if ( !$posts_count == 7 || !$posts_count == 28 || !$posts_count == 100 ) {
+            return;
+        }
+        $current_user = wp_get_current_user();
+        $shown_review_notifications = get_option( 'mbp_review_notifications' );
+        if ( !is_array( $shown_review_notifications ) ) {
+            $shown_review_notifications = [
+                '7_posts'   => false,
+                '28_posts'  => false,
+                '100_posts' => false,
+            ];
+        }
+        $wordpress_repository_link = sprintf( '<a target="_blank" href="%s">%s</a>', 'https://wordpress.org/plugins/post-to-google-my-business/#reviews', esc_html__( 'WordPress Repository', 'post-to-google-my-business' ) );
+        $plugin_developer = sprintf( '<strong>%s</strong><br /><i>%s</i>', 'Koen', esc_html__( 'Plugin Developer', 'post-to-google-my-business' ) );
+        $you_deserve_it = sprintf( '<a target="_blank" href="%s"><strong>%s</strong></a>', 'https://wordpress.org/plugins/post-to-google-my-business/#reviews', esc_html__( 'Ok, you deserve it', 'post-to-google-my-business' ) );
+        $maybe_later = sprintf( '<a class="mbp-notice-dismiss" href="#">%s</a>', esc_html__( 'Maybe later', 'post-to-google-my-business' ) );
+        $already_did = sprintf( '<a class="mbp-notice-dismiss" href="#" data-ignore="true">%s</a>', esc_html__( 'I already did', 'post-to-google-my-business' ) );
+        $user_display_name = esc_html( $current_user->display_name );
+        $avatar = 'img/koen.png';
+        $alt = esc_html__( 'Developer profile photo', 'post-to-google-my-business' );
+        $identifier = 'review_notification';
+        
+        if ( $posts_count == 7 && !$shown_review_notifications['7_posts'] ) {
+            $review_notification = PGMB\Notifications\BasicNotification::create(
+                \MBP_Admin_Page_Settings::NOTIFICATION_SECTION,
+                $identifier,
+                esc_html__( '7 posts!', 'post-to-google-my-business' ),
+                nl2br( sprintf(
+                esc_html__( "Hey %1\$s,\n\nI noticed you've just created your 7th GMB post through my plugin, awesome!\n\nIf you like the plugin and have a moment to leave a 5-star rating on the %2\$s, that really helps spread the word and move the development forwards!\n\n%3\$s\n\n%4\$s\n%5\$s\n%6\$s" ),
+                $user_display_name,
+                $wordpress_repository_link,
+                $plugin_developer,
+                $you_deserve_it,
+                $maybe_later,
+                $already_did
+            ) ),
+                $avatar,
+                $alt
+            );
+            $this->notification_manager->add_notification( $review_notification );
+            $shown_review_notifications['7_posts'] = true;
+        } elseif ( $posts_count == 28 && !$shown_review_notifications['28_posts'] ) {
+            $review_notification = PGMB\Notifications\BasicNotification::create(
+                \MBP_Admin_Page_Settings::NOTIFICATION_SECTION,
+                $identifier,
+                esc_html__( '28 posts! Awesome', 'post-to-google-my-business' ),
+                nl2br( sprintf(
+                esc_html__( "Hi %1\$s,\n\nI hope you find my GMB plugin useful! I noticed you've already created 28 GMB posts with it.\n\nIf you like the plugin and have a moment to leave a 5-star rating on the %2\$s, that really helps boost my motivation!\n\nThanks!\n\n%3\$s\n\n%4\$s\n%5\$s\n%6\$s" ),
+                $user_display_name,
+                $wordpress_repository_link,
+                $plugin_developer,
+                $you_deserve_it,
+                $maybe_later,
+                $already_did
+            ) ),
+                $avatar,
+                $alt
+            );
+            $this->notification_manager->add_notification( $review_notification );
+            $shown_review_notifications['28_posts'] = true;
+        } elseif ( $posts_count == 100 && !$shown_review_notifications['100_posts'] ) {
+            $review_notification = PGMB\Notifications\BasicNotification::create(
+                \MBP_Admin_Page_Settings::NOTIFICATION_SECTION,
+                $identifier,
+                esc_html__( 'Wow! 100 posts!', 'post-to-google-my-business' ),
+                nl2br( sprintf(
+                esc_html__( "Hi %1\$s,\n\nYou've just published your 100th GMB post through the Post to Google My Business plugin, awesome!\n\nIf you find the plugin useful and have a moment to leave a 5-star rating on the %2\$s, you'd do me a BIG favour and it really motivates me to continue adding awesome features!\n\nDon't worry, this will be the last time I bother you about it.\n\nThanks!\n\n%3\$s\n\n%4\$s\n%5\$s\n%6\$s" ),
+                $user_display_name,
+                $wordpress_repository_link,
+                $plugin_developer,
+                $you_deserve_it,
+                $maybe_later,
+                $already_did
+            ) ),
+                $avatar,
+                $alt
+            );
+            $this->notification_manager->add_notification( $review_notification );
+            $shown_review_notifications['100_posts'] = true;
+        }
+        
+        update_option( 'mbp_review_notifications', $shown_review_notifications );
+    }
+    
+    /**
+     * Perform tasks upon plugin activation
+     *
+     * @param bool $network_wide Plugin is network activated
+     */
+    public static function activate( $network_wide )
+    {
+        
+        if ( $network_wide ) {
+            $site_ids = get_sites( [
+                'fields'     => 'ids',
+                'network_id' => get_current_network_id(),
+            ] );
+            foreach ( $site_ids as $site_id ) {
+                switch_to_blog( $site_id );
+                self::activate_single_site();
+                restore_current_blog();
+            }
+            return;
+        }
+        
+        self::activate_single_site();
+    }
+    
+    /**
+     * Perform required activation actions on a site
+     *
+     * @since 2.2.11
+     */
+    public static function activate_single_site()
     {
         if ( !wp_next_scheduled( 'mbp_refresh_token' ) ) {
             wp_schedule_event( time() + DAY_IN_SECONDS, 'daily', 'mbp_refresh_token' );
         }
-        //Todo: add support for multisite here ^
     }
     
-    public static function deactivate()
+    /**
+     * Perform tasks upon plugin deactivation
+     *
+     * @param bool $network_wide Plugin is network activated
+     */
+    public static function deactivate( $network_wide )
+    {
+        
+        if ( $network_wide ) {
+            $site_ids = get_sites( [
+                'fields'     => 'ids',
+                'network_id' => get_current_network_id(),
+            ] );
+            foreach ( $site_ids as $site_id ) {
+                switch_to_blog( $site_id );
+                self::deactivate_single_site();
+                restore_current_blog();
+            }
+            return;
+        }
+        
+        self::deactivate_single_site();
+    }
+    
+    /**
+     * Perform deactivation actions on a single site
+     *
+     * @since 2.2.11
+     */
+    public static function deactivate_single_site()
     {
         wp_clear_scheduled_hook( 'mbp_refresh_token' );
-        //Todo: Add support for multisite here
+        //Delete the queues for all scheduled posts
+        wp_unschedule_hook( "mbp_scheduled_google_post" );
     }
     
+    /**
+     * Triggered when the plugin is uninstalled
+     */
     public static function uninstall()
+    {
+        
+        if ( is_multisite() ) {
+            $site_ids = get_sites( [
+                'fields' => 'ids',
+            ] );
+            foreach ( $site_ids as $site_id ) {
+                switch_to_blog( $site_id );
+                self::uninstall_single_site();
+                restore_current_blog();
+            }
+            return;
+        }
+        
+        self::uninstall_single_site();
+    }
+    
+    /**
+     * Perform required uninstall actions on a single site
+     *
+     * @since 2.2.11
+     */
+    public static function uninstall_single_site()
     {
         global  $wpdb ;
         $wpdb->query( 'DELETE FROM wp_options WHERE option_name LIKE "mbp_%"' );
-        mbp_fs()->add_action( 'after_uninstall', 'mbp_fs_uninstall_cleanup' );
+    }
+    
+    /**
+     * Triggered when a new site is added to the network
+     *
+     * @param int|WP_Site $blog_id_or_site
+     *
+     * @since 2.2.11
+     */
+    public static function insert_site( $blog_id_or_site )
+    {
+        
+        if ( $blog_id_or_site instanceof WP_Site ) {
+            $site_id = $blog_id_or_site->id;
+        } elseif ( is_int( $blog_id_or_site ) ) {
+            $site_id = $blog_id_or_site;
+        } else {
+            return;
+        }
+        
+        switch_to_blog( $site_id );
+        self::activate_single_site();
+        restore_current_blog();
     }
     
     /**
@@ -115,74 +365,9 @@ class MBP_Plugin
         return $this::PLUGIN_VERSION;
     }
     
-    public function message_of_the_day()
+    private function register_enabled_post_types()
     {
-        
-        if ( !mbp_fs()->can_use_premium_code() ) {
-            $messages = apply_filters( 'mbp_motd', array(
-                /*
-                sprintf('%s <a target="_blank" href="%s">%s</a> %s',
-                	esc_html__('Get more visitors to your website with a call-to-action button in your post.', 'post-to-google-my-business'),
-                	esc_url(admin_url('options-general.php?page=my_business_post-pricing')),
-                	esc_html__('Upgrade to Premium', 'post-to-google-my-business'),
-                	esc_html__('for call-to-action buttons, post statistics and more.', 'post-to-google-my-business')
-                )
-                */
-                sprintf(
-                    '%s <a target="_blank" href="%s">%s</a> %s',
-                    esc_html__( 'Manage multiple businesses or locations?', 'post-to-google-my-business' ),
-                    mbp_fs()->get_upgrade_url(),
-                    esc_html__( 'Upgrade to Premium', 'post-to-google-my-business' ),
-                    esc_html__( 'to pick a location per post, or post to multiple locations at once.', 'post-to-google-my-business' )
-                ),
-                sprintf(
-                    '%s <a target="_blank" href="%s">%s</a> %s',
-                    esc_html__( 'Not the right time?', 'post-to-google-my-business' ),
-                    mbp_fs()->get_upgrade_url(),
-                    esc_html__( 'Upgrade to Premium', 'post-to-google-my-business' ),
-                    esc_html__( 'and schedule your posts to be automagically published at a later time.', 'post-to-google-my-business' )
-                ),
-                sprintf(
-                    '%s <a target="_blank" href="%s">%s</a> %s',
-                    esc_html__( 'Wonder how well your Google My Business post is doing?', 'post-to-google-my-business' ),
-                    mbp_fs()->get_upgrade_url(),
-                    esc_html__( 'Upgrade to Premium', 'post-to-google-my-business' ),
-                    esc_html__( 'to view post statistics and easily include Google Analytics UTM parameters.', 'post-to-google-my-business' )
-                ),
-                sprintf(
-                    '%s <a target="_blank" href="%s">%s</a> %s',
-                    esc_html__( 'Use Post to Google My Business for your pages, projects, WooCommerce products and more.', 'post-to-google-my-business' ),
-                    mbp_fs()->get_upgrade_url(),
-                    esc_html__( 'Upgrade to Premium', 'post-to-google-my-business' ),
-                    esc_html__( 'to enable Post to Google my Business for any post type.', 'post-to-google-my-business' )
-                ),
-                sprintf(
-                    '%s <a target="_blank" href="%s">%s</a> %s',
-                    esc_html__( 'Automatically repost your GMB posts a specific or unlimited amount of times.', 'post-to-google-my-business' ),
-                    mbp_fs()->get_upgrade_url(),
-                    esc_html__( 'Upgrade to Premium', 'post-to-google-my-business' ),
-                    esc_html__( 'to set custom intervals and specify the amount of reposts.', 'post-to-google-my-business' )
-                ),
-                sprintf(
-                    '%s <a target="_blank" href="https://wordpress.org/plugins/post-to-google-my-business/">%s</a> %s',
-                    esc_html__( 'I hope you enjoy using my Post to Google My Business plugin! Help spread the word with a', 'post-to-google-my-business' ),
-                    esc_html__( '5-star rating on WordPress.org', 'post-to-google-my-business' ),
-                    esc_html__( '. Many thanks! - Koen Reus, plugin developer', 'post-to-google-my-business' )
-                ),
-                sprintf(
-                    '%s <a target="_blank" href="%s">%s</a> %s',
-                    esc_html__( 'Create unique posts every time.', 'post-to-google-my-business' ),
-                    mbp_fs()->get_upgrade_url(),
-                    esc_html__( 'Upgrade to Premium', 'post-to-google-my-business' ),
-                    esc_html__( 'to use spintax and %variables% in your post text.', 'post-to-google-my-business' )
-                ),
-            ) );
-            //mt_srand(date('dmY'));
-            $motd = mt_rand( 0, count( $messages ) - 1 );
-            return '<span class="description">' . $messages[$motd] . '</span><br />';
-        }
-        
-        return false;
+        $this->enabled_post_types = apply_filters( 'mbp_post_types', array( 'post' ) );
     }
 
 }

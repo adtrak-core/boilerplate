@@ -22,7 +22,7 @@ class NF_Fields_Zip extends NF_Fields_Textbox
     {
         parent::__construct();
 
-        $this->_nicename = __('Zip', 'ninja-forms');
+        $this->_nicename = esc_html__('Zip', 'ninja-forms');
 
 	    $this->_settings[ 'custom_name_attribute' ][ 'value' ] = 'zip';
     }

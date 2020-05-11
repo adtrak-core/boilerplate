@@ -34,14 +34,14 @@ final class NF_Display_Shortcodes
      */
     private function display_no_id()
     {
-        $output = __( 'Notice: Ninja Forms shortcode used without specifying a form.', 'ninja-forms' );
+        $output = esc_html__( 'Notice: Ninja Forms shortcode used without specifying a form.', 'ninja-forms' );
 
         // TODO: Maybe support filterable permissions.
         if( ! current_user_can( 'manage_options' ) ) return "<!-- $output -->";
 
         // TODO: Log error for support reference.
         // TODO: Maybe display notice if not logged in.
-        trigger_error( __( 'Ninja Forms shortcode used without specifying a form.', 'ninja-forms' ) );
+        trigger_error( esc_html__( 'Ninja Forms shortcode used without specifying a form.', 'ninja-forms' ) );
 
         return "<div style='border: 3px solid red; padding: 1em; margin: 1em auto;'>$output</div>";
     }

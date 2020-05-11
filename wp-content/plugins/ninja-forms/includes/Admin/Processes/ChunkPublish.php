@@ -176,24 +176,24 @@ class NF_Admin_Processes_ChunkPublish extends NF_Abstracts_BatchProcess
 
                 $this->_data[ 'actions' ][ $action->get_id() ] = $action->get_settings();
             }
-        }
 
-        /*
-         * Loop Actions and fire Publish() hooks.
-         */
-        foreach ($form_data['actions'] as &$action_data) {
-
-            $action = Ninja_Forms()->form( $form_data[ 'id' ] )->get_action( $action_data['id'] );
-
-            $action_type = $action->get_setting( 'type' );
-
-            if( isset( Ninja_Forms()->actions[ $action_type ] ) ) {
-                $action_class = Ninja_Forms()->actions[ $action_type ];
-
-                if( $action->get_setting( 'active' ) && method_exists( $action_class, 'publish' ) ) {
-                    $data = $action_class->publish( $this->_data );
-                    if ($data) {
-                        $this->_data = $data;
+            /*
+             * Loop Actions and fire Publish() hooks.
+             */
+            foreach ($form_data['actions'] as &$action_data) {
+    
+                $action = Ninja_Forms()->form( $form_data[ 'id' ] )->get_action( $action_data['id'] );
+    
+                $action_type = $action->get_setting( 'type' );
+    
+                if( isset( Ninja_Forms()->actions[ $action_type ] ) ) {
+                    $action_class = Ninja_Forms()->actions[ $action_type ];
+    
+                    if( $action->get_setting( 'active' ) && method_exists( $action_class, 'publish' ) ) {
+                        $data = $action_class->publish( $this->_data );
+                        if ($data) {
+                            $this->_data = $data;
+                        }
                     }
                 }
             }

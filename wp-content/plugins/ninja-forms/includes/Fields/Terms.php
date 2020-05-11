@@ -28,7 +28,7 @@ class NF_Fields_Terms extends NF_Fields_ListCheckbox
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Terms List', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Terms List', 'ninja-forms' );
 
         // If we are on the ninja-forms page...
         // OR we're looking at nf_sub post types...
@@ -92,7 +92,7 @@ class NF_Fields_Terms extends NF_Fields_ListCheckbox
                     'name' => $name . '_no_terms',
                     'type' => 'html',
                     'width' => 'full',
-                    'value' => sprintf( __( 'No available terms for this taxonomy. %sAdd a term%s', 'ninja-forms' ), '<a href="' . admin_url( "edit-tags.php?taxonomy=$name" ) . '">', '</a>' ),
+                    'value' => sprintf( esc_html__( 'No available terms for this taxonomy. %sAdd a term%s', 'ninja-forms' ), '<a href="' . admin_url( "edit-tags.php?taxonomy=$name" ) . '">', '</a>' ),
                     'deps' => array(
                         'taxonomy' => $name
                     )
@@ -107,7 +107,7 @@ class NF_Fields_Terms extends NF_Fields_ListCheckbox
             'name' => '_no_taxonomy',
             'type' => 'html',
             'width' => 'full',
-            'value' => __( 'No taxonomy selected.', 'ninja-forms' ),
+            'value' => esc_html__( 'No taxonomy selected.', 'ninja-forms' ),
             'deps' => array(
                 'taxonomy' => ''
             )
@@ -116,7 +116,7 @@ class NF_Fields_Terms extends NF_Fields_ListCheckbox
         $this->_settings[ 'taxonomy_terms' ] = array(
             'name' => 'taxonomy_terms',
             'type' => 'fieldset',
-            'label' => __( 'Available Terms', 'ninja-forms' ),
+            'label' => esc_html__( 'Available Terms', 'ninja-forms' ),
             'width' => 'full',
             'group' => 'primary',
             'settings' => $term_settings

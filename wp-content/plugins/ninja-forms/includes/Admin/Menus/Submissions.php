@@ -94,7 +94,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
         // If the Form ID is not empty and IS a number...
         if( ! empty( $_GET[ 'form_id' ] ) && ctype_digit( $_GET[ 'form_id' ] ) ) {
             // ...populate the rest of the query string.
-            $form_id = '&form_id=' . $_GET[ 'form_id' ] . '&nf_form_filter&paged=1';
+            $form_id = '&form_id=' . absint($_GET[ 'form_id' ]) . '&nf_form_filter&paged=1';
         } else {
             // ...otherwise send in an empty string.
             $form_id = '';
@@ -102,18 +102,18 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
         // Build our new views.
         $views[ 'all' ] = '<a href="' . admin_url( 'edit.php?post_status=all&post_type=nf_sub'  ) . $form_id . '">'
-                        . __( 'Completed', 'ninja-forms' ) . '</a>';
+                        . esc_html__( 'Completed', 'ninja-forms' ) . '</a>';
 
         $views[ 'trash' ] = '<a href="' . admin_url( 'edit.php?post_status=trash&post_type=nf_sub' ) . $form_id . '">'
-                            . __( 'Trashed', 'ninja-forms' ) . '</a>';
+                            . esc_html__( 'Trashed', 'ninja-forms' ) . '</a>';
 
         // Checks to make sure we have a post status.
         if( ! empty( $_GET[ 'post_status' ] ) ) {
             // Depending on the domain set the value to plain text.
             if ( 'all' == $_GET[ 'post_status' ] ) {
-                $views[ 'all' ] = __( 'Completed', 'ninja-forms' );
+                $views[ 'all' ] = esc_html__( 'Completed', 'ninja-forms' );
             } else if ( 'trash' == $_GET[ 'post_status' ] ) {
-                $views[ 'trash' ] = __( 'Trashed', 'ninja-forms' );
+                $views[ 'trash' ] = esc_html__( 'Trashed', 'ninja-forms' );
             }
         }
 
@@ -122,7 +122,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
     public function get_page_title()
     {
-        return __( 'Submissions', 'ninja-forms' );
+        return esc_html__( 'Submissions', 'ninja-forms' );
     }
 
     /**
@@ -158,7 +158,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
     public function change_columns()
     {
         // if the form_id isset and ID a number
-        $form_id = ( isset( $_GET['form_id'] ) && ctype_digit( $_GET[ 'form_id' ] ) ) ? $_GET['form_id'] : FALSE;
+        $form_id = ( isset( $_GET['form_id'] ) && ctype_digit( $_GET[ 'form_id' ] ) ) ? absint($_GET['form_id']) : FALSE;
 
         if( ! $form_id ) return array();
 
@@ -168,7 +168,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
         $cols = array(
             'cb'    => '<input type="checkbox" />',
-            'seq_num' => __( '#', 'ninja-forms' ),
+            'seq_num' => esc_html__( '#', 'ninja-forms' ),
         );
 
         $fields = Ninja_Forms()->form( $form_id )->get_fields();
@@ -189,7 +189,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
         }
 
-        $cols[ 'sub_date' ] = __( 'Date', 'ninja-forms' );
+        $cols[ 'sub_date' ] = esc_html__( 'Date', 'ninja-forms' );
 
         return $cols;
     }
@@ -258,19 +258,19 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
         // make sure form_id isset and is a number
         if( isset( $_GET[ 'form_id' ] ) && ctype_digit( $_GET[ 'form_id' ] ) ) {
-            $form_selected = $_GET[ 'form_id' ];
+            $form_selected = intval($_GET[ 'form_id' ]);
         } else {
             $form_selected = 0;
         }
 
         if( isset( $_GET[ 'begin_date' ] ) ) {
             // check for bad characters(possible xss vulnerability)
-            $beg_date_sep = preg_replace('/[0-9]+/', '', $_GET[ 'begin_date' ]);
+            $beg_date_sep = preg_replace('/[0-9]+/', '', WPN_Helper::sanitize_text_field($_GET[ 'begin_date' ]));
 
             if ( 1 !== count( array_unique( str_split( $beg_date_sep ) ) ) ) {// We got bad data.
                 $begin_date = '';
             } else {
-                $begin_date = $_GET[ 'begin_date' ];
+                $begin_date = WPN_Helper::sanitize_text_field($_GET['begin_date']);
             }
         } else {
             $begin_date = '';
@@ -278,12 +278,12 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
 
         if( isset( $_GET[ 'end_date' ] ) ) {
             // check for bad characters(possible xss vulnerability)
-            $end_date_sep = preg_replace('/[0-9]+/', '', $_GET[ 'end_date' ]);
+            $end_date_sep = preg_replace('/[0-9]+/', '', WPN_Helper::sanitize_text_field($_GET[ 'end_date' ]));
 
             if ( 1 !== count( array_unique( str_split( $end_date_sep ) ) ) ) {// We got bad data.
                 $end_date = '';
             } else {
-                $end_date = $_GET[ 'end_date' ];
+                $end_date = WPN_Helper::sanitize_text_field($_GET['end_date']);
             }
         } else {
             $end_date = '';
@@ -304,7 +304,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
         $vars = &$query->query_vars;
 
         // make sure form_id is not empty and is a number
-        $form_id = ( ! empty( $_GET['form_id'] ) && ctype_digit( $_GET[ 'form_id' ] ) ) ? $_GET['form_id'] : 0;
+        $form_id = ( ! empty( $_GET['form_id'] ) && ctype_digit( $_GET[ 'form_id' ] ) ) ? intval($_GET['form_id']) : 0;
 
         $vars = $this->table_filter_by_form( $vars, $form_id );
 
@@ -361,8 +361,8 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
             ?>
             <script type="text/javascript">
                 jQuery(document).ready(function() {
-                    jQuery('<option>').val('export').text('<?php _e('Export', 'ninja-forms')?>').appendTo("select[name='action']");
-                    jQuery('<option>').val('export').text('<?php _e('Export', 'ninja-forms')?>').appendTo("select[name='action2']");
+                    jQuery('<option>').val('export').text('<?php esc_html_e('Export', 'ninja-forms')?>').appendTo("select[name='action']");
+                    jQuery('<option>').val('export').text('<?php esc_html_e('Export', 'ninja-forms')?>').appendTo("select[name='action2']");
                     <?php
                     if ( ( isset ( $_POST['action'] ) && $_POST['action'] == 'export' ) || ( isset ( $_POST['action2'] ) && $_POST['action2'] == 'export' ) ) {
                         ?>
@@ -379,7 +379,7 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
                     $url = admin_url( 'admin.php?page=nf-processing&action=download_all_subs&form_id=' . absint( $_REQUEST['form_id'] ) . '&redirect=' . $redirect );
                     $url = esc_url( $url );
                     ?>
-                    var button = '<a href="<?php echo $url; ?>" class=<?php __( "button-secondary nf-download-all", 'ninja-forms' ) ;?> . '>' . <?php echo __( 'Download All Submissions', 'ninja-forms' ); ?></a>';
+                    var button = '<a href="<?php echo $url; ?>" class="button-secondary nf-download-all"><?php echo esc_html__( 'Download All Submissions', 'ninja-forms' ); ?></a>';
 //                    jQuery( '#doaction2' ).after( button );
                     <?php
                 }
@@ -536,8 +536,8 @@ final class NF_Admin_Menus_Submissions extends NF_Abstracts_Submenu
     {
         if( empty( $_GET[ 'begin_date' ] ) || empty( $_GET[ 'end_date' ] ) ) return $vars;
 
-        $begin_date = $_GET[ 'begin_date' ];
-        $end_date = $_GET[ 'end_date' ];
+        $begin_date = WPN_Helper::sanitize_text_field($_GET[ 'begin_date' ]);
+        $end_date = WPN_Helper::sanitize_text_field($_GET[ 'end_date' ]);
 
         // Include submissions on the end_date.
         $end_date = date( 'm/d/Y', strtotime( '+1 day', strtotime( $end_date ) ) );

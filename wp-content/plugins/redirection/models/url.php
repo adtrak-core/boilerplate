@@ -1,9 +1,10 @@
 <?php
 
-include_once dirname( __FILE__ ) . '/url-query.php';
-include_once dirname( __FILE__ ) . '/url-path.php';
-include_once dirname( __FILE__ ) . '/url-match.php';
-include_once dirname( __FILE__ ) . '/url-flags.php';
+require_once __DIR__ . '/url-query.php';
+require_once __DIR__ . '/url-path.php';
+require_once __DIR__ . '/url-match.php';
+require_once __DIR__ . '/url-flags.php';
+require_once __DIR__ . '/url-request.php';
 
 class Red_Url {
 	private $url;
@@ -37,7 +38,7 @@ class Red_Url {
 		}
 
 		$path = new Red_Url_Path( $this->url );
-		$query = new Red_Url_Query( $this->url );
+		$query = new Red_Url_Query( $this->url, $flags );
 
 		return $path->is_match( $requested_url, $flags ) && $query->is_match( $requested_url, $flags );
 	}

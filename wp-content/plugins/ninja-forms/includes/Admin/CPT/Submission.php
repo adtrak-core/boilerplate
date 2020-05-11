@@ -39,7 +39,7 @@ class NF_Admin_CPT_Submission
         // Filter our hidden columns by form ID.
         add_action( 'wp', array( $this, 'filter_hidden_columns' ) );
 
-        // Save our hidden columns by form id.
+        // Save our hidden columns by form id. Ajax call handed in 'hide_columns' in this file
         add_action( 'wp_ajax_nf_hide_columns', array( $this, 'hide_columns' ) );
         
         add_action( 'trashed_post', array( $this, 'nf_trash_sub' ) );
@@ -51,25 +51,25 @@ class NF_Admin_CPT_Submission
     function custom_post_type() {
 
         $labels = array(
-            'name'                => _x( 'Submissions', 'Post Type General Name', 'ninja-forms' ),
-            'singular_name'       => _x( 'Submission', 'Post Type Singular Name', 'ninja-forms' ),
-            'menu_name'           => __( 'Submissions', 'ninja-forms' ),
-            'name_admin_bar'      => __( 'Submissions', 'ninja-forms' ),
-            'parent_item_colon'   => __( 'Parent Item:', 'ninja-forms' ),
-            'all_items'           => __( 'All Items', 'ninja-forms' ),
-            'add_new_item'        => __( 'Add New Item', 'ninja-forms' ),
-            'add_new'             => __( 'Add New', 'ninja-forms' ),
-            'new_item'            => __( 'New Item', 'ninja-forms' ),
-            'edit_item'           => __( 'Edit Item', 'ninja-forms' ),
-            'update_item'         => __( 'Update Item', 'ninja-forms' ),
-            'view_item'           => __( 'View Item', 'ninja-forms' ),
-            'search_items'        => __( 'Search Item', 'ninja-forms' ),
+            'name'                => esc_html_x( 'Submissions', 'Post Type General Name', 'ninja-forms' ),
+            'singular_name'       => esc_html_x( 'Submission', 'Post Type Singular Name', 'ninja-forms' ),
+            'menu_name'           => esc_html__( 'Submissions', 'ninja-forms' ),
+            'name_admin_bar'      => esc_html__( 'Submissions', 'ninja-forms' ),
+            'parent_item_colon'   => esc_html__( 'Parent Item:', 'ninja-forms' ),
+            'all_items'           => esc_html__( 'All Items', 'ninja-forms' ),
+            'add_new_item'        => esc_html__( 'Add New Item', 'ninja-forms' ),
+            'add_new'             => esc_html__( 'Add New', 'ninja-forms' ),
+            'new_item'            => esc_html__( 'New Item', 'ninja-forms' ),
+            'edit_item'           => esc_html__( 'Edit Item', 'ninja-forms' ),
+            'update_item'         => esc_html__( 'Update Item', 'ninja-forms' ),
+            'view_item'           => esc_html__( 'View Item', 'ninja-forms' ),
+            'search_items'        => esc_html__( 'Search Item', 'ninja-forms' ),
             'not_found'           => $this->not_found_message(),
-            'not_found_in_trash'  => __( 'Not found in Trash', 'ninja-forms' ),
+            'not_found_in_trash'  => esc_html__( 'Not found in Trash', 'ninja-forms' ),
         );
         $args = array(
-            'label'               => __( 'Submission', 'ninja-forms' ),
-            'description'         => __( 'Form Submissions', 'ninja-forms' ),
+            'label'               => esc_html__( 'Submission', 'ninja-forms' ),
+            'description'         => esc_html__( 'Form Submissions', 'ninja-forms' ),
             'labels'              => $labels,
             'supports'            => false,
             'hierarchical'        => false,
@@ -139,7 +139,7 @@ class NF_Admin_CPT_Submission
             unset( $actions[ 'view' ] );
             unset( $actions[ 'inline hide-if-no-js' ] );
             $export_url = add_query_arg( array( 'action' => 'export', 'post[]' => $sub->ID ) );
-            $actions[ 'export' ] = sprintf( '<a href="%s">%s</a>', $export_url, __( 'Export', 'ninja-forms' ) );
+            $actions[ 'export' ] = sprintf( '<a href="%s">%s</a>', $export_url, esc_html__( 'Export', 'ninja-forms' ) );
         }
 
         return $actions;
@@ -157,10 +157,8 @@ class NF_Admin_CPT_Submission
 
         $columns = array(
             'cb'    => '<input type="checkbox" />',
-            'id' => __( '#', 'ninja-forms' ),
+            'id' => esc_html__( '#', 'ninja-forms' ),
         );
-
-        $form_cache = WPN_Helper::get_nf_cache( $form_id );
 
         $form_fields = Ninja_Forms()->form( $form_id )->get_fields();
 
@@ -177,11 +175,11 @@ class NF_Admin_CPT_Submission
             if( in_array( $field[ 'settings' ][ 'type' ], array_values( $hidden_field_types ) ) ) continue;
 
             $id = $field[ 'id' ];
-            $label = $field[ 'settings' ][ 'label' ];
+            $label = isset( $field[ 'settings' ][ 'label' ] ) ? $field[ 'settings'][ 'label' ] : '';
             $columns[ $id ] = ( isset( $field[ 'settings' ][ 'admin_label' ] ) && $field[ 'settings' ][ 'admin_label' ] ) ? $field[ 'settings' ][ 'admin_label' ] : $label;
         }
 
-        $columns['sub_date'] = __( 'Date', 'ninja-forms' );
+        $columns['sub_date'] = esc_html__( 'Date', 'ninja-forms' );
 
         return $columns;
     }
@@ -240,9 +238,12 @@ class NF_Admin_CPT_Submission
 
         $sub = Ninja_Forms()->form()->sub( $nf_sub_id )->get();
 
-        foreach ( $_POST['fields'] as $field_id => $user_value ) {
-            $user_value = apply_filters( 'nf_edit_sub_user_value', $user_value, $field_id, $nf_sub_id );
-            $sub->update_field_value( $field_id, $user_value );
+        if (isset($_POST['fields'])) {
+            $post_fields = WPN_Helper::esc_html($_POST['fields']);
+            foreach ( $post_fields as $field_id => $user_value ) {
+                $user_value = apply_filters( 'nf_edit_sub_user_value', $user_value, $field_id, $nf_sub_id );
+                $sub->update_field_value( $field_id, $user_value );
+            }
         }
 
         $sub->save();
@@ -255,7 +256,7 @@ class NF_Admin_CPT_Submission
     {
         add_meta_box(
             'nf_sub_fields',
-            __( 'User Submitted Values', 'ninja-forms' ),
+            esc_html__( 'User Submitted Values', 'ninja-forms' ),
             array( $this, 'fields_meta_box' ),
             'nf_sub',
             'normal',
@@ -264,7 +265,7 @@ class NF_Admin_CPT_Submission
 
         add_meta_box(
             'nf_sub_info',
-            __( 'Submission Info', 'ninja-forms' ),
+            esc_html__( 'Submission Info', 'ninja-forms' ),
             array( $this, 'info_meta_box' ),
             'nf_sub',
             'side',
@@ -314,7 +315,7 @@ class NF_Admin_CPT_Submission
         if ($sub->get_user()) {
             $user = apply_filters('nf_edit_sub_username', $sub->get_user()->data->user_nicename, $post->post_author);
         } else {
-            $user = __( 'Anonymous', 'ninja-forms' );
+            $user = esc_html__( 'Anonymous', 'ninja-forms' );
         }
 
         $form_title = $sub->get_form_title();
@@ -427,9 +428,9 @@ class NF_Admin_CPT_Submission
     private function not_found_message()
     {
         if ( ! isset ( $_REQUEST['form_id'] ) || empty( $_REQUEST['form_id'] ) ) {
-            return __( 'Please select a form to view submissions', 'ninja-forms' );
+            return esc_html__( 'Please select a form to view submissions', 'ninja-forms' );
         } else {
-            return __( 'No Submissions Found', 'ninja-forms' );
+            return esc_html__( 'No Submissions Found', 'ninja-forms' );
         }
     }
 

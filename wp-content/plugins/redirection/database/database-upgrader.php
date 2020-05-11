@@ -47,7 +47,7 @@ abstract class Red_Database_Upgrader {
 
 		$this->queries = [];
 		$this->live = false;
-		$this->$stage( $wpdb );
+		$this->$stage( $wpdb, false );
 		$this->live = true;
 
 		return $this->queries;
@@ -63,7 +63,18 @@ abstract class Red_Database_Upgrader {
 
 		$charset_collate = '';
 		if ( ! empty( $wpdb->charset ) ) {
-			$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+			// Fix some common invalid charset values
+			$fixes = [
+				'utf-8',
+				'utf',
+			];
+
+			$charset = $wpdb->charset;
+			if ( in_array( strtolower( $charset ), $fixes, true ) ) {
+				$charset = 'utf8';
+			}
+
+			$charset_collate = "DEFAULT CHARACTER SET $charset";
 		}
 
 		if ( ! empty( $wpdb->collate ) ) {
@@ -90,7 +101,7 @@ abstract class Red_Database_Upgrader {
 
 		if ( $result === false ) {
 			/* translators: 1: SQL string */
-			throw new Exception( sprintf( __( 'Failed to perform query "%s"' ), $sql ) );
+			throw new Exception( sprintf( 'Failed to perform query "%s"', $sql ) );
 		}
 
 		return true;

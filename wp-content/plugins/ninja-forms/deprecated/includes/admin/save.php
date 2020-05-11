@@ -21,7 +21,7 @@ function ninja_forms_admin_save(){
 
 			foreach ( $_POST as $key => $val ) {
 				if ( substr($key, 0, 1) != '_') {
-					$data_array[$key] = $val;
+					$data_array[$key] = esc_html($val);
 				}
 			}
 

@@ -5,9 +5,9 @@
  * @package Yoast\YoastSEO\Models
  */
 
-namespace Yoast\WP\Free\Models;
+namespace Yoast\WP\SEO\Models;
 
-use Yoast\WP\Free\Yoast_Model;
+use Yoast\WP\Lib\Model;
 
 /**
  * Table definition for the SEO Meta table.
@@ -16,7 +16,7 @@ use Yoast\WP\Free\Yoast_Model;
  * @property int $internal_link_count
  * @property int $incoming_link_count
  */
-class SEO_Meta extends Yoast_Model {
+class SEO_Meta extends Model {
 
 	/**
 	 * Overwrites the default ID column name.
@@ -26,15 +26,13 @@ class SEO_Meta extends Yoast_Model {
 	public static $id_column = 'object_id';
 
 	/**
-	 * Finds the SEO meta for given post.
+	 * Which columns contain int values.
 	 *
-	 * @param int $post_id The post ID.
-	 *
-	 * @return SEO_Meta The SEO meta.
+	 * @var array
 	 */
-	public static function find_by_post_id( $post_id ) {
-		return Yoast_Model::of_type( 'SEO_Meta' )
-			->where( 'object_id', $post_id )
-			->find_one();
-	}
+	protected $int_columns = [
+		'object_id',
+		'internal_link_count',
+		'incoming_link_count',
+	];
 }

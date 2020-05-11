@@ -29,7 +29,7 @@ class Google_Service_Gmail_Resource_UsersSettings extends Google_Service_Resourc
    * Gets the auto-forwarding setting for the specified account.
    * (settings.getAutoForwarding)
    *
-   * @param string $userId User's email address. The special value "me" can be
+   * @param string $userId User's email address.  The special value "me" can be
    * used to indicate the authenticated user.
    * @param array $optParams Optional parameters.
    * @return Google_Service_Gmail_AutoForwarding
@@ -43,7 +43,7 @@ class Google_Service_Gmail_Resource_UsersSettings extends Google_Service_Resourc
   /**
    * Gets IMAP settings. (settings.getImap)
    *
-   * @param string $userId User's email address. The special value "me" can be
+   * @param string $userId User's email address.  The special value "me" can be
    * used to indicate the authenticated user.
    * @param array $optParams Optional parameters.
    * @return Google_Service_Gmail_ImapSettings
@@ -55,9 +55,23 @@ class Google_Service_Gmail_Resource_UsersSettings extends Google_Service_Resourc
     return $this->call('getImap', array($params), "Google_Service_Gmail_ImapSettings");
   }
   /**
+   * Gets language settings. (settings.getLanguage)
+   *
+   * @param string $userId User's email address.  The special value "me" can be
+   * used to indicate the authenticated user.
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Gmail_LanguageSettings
+   */
+  public function getLanguage($userId, $optParams = array())
+  {
+    $params = array('userId' => $userId);
+    $params = array_merge($params, $optParams);
+    return $this->call('getLanguage', array($params), "Google_Service_Gmail_LanguageSettings");
+  }
+  /**
    * Gets POP settings. (settings.getPop)
    *
-   * @param string $userId User's email address. The special value "me" can be
+   * @param string $userId User's email address.  The special value "me" can be
    * used to indicate the authenticated user.
    * @param array $optParams Optional parameters.
    * @return Google_Service_Gmail_PopSettings
@@ -71,7 +85,7 @@ class Google_Service_Gmail_Resource_UsersSettings extends Google_Service_Resourc
   /**
    * Gets vacation responder settings. (settings.getVacation)
    *
-   * @param string $userId User's email address. The special value "me" can be
+   * @param string $userId User's email address.  The special value "me" can be
    * used to indicate the authenticated user.
    * @param array $optParams Optional parameters.
    * @return Google_Service_Gmail_VacationSettings
@@ -83,13 +97,13 @@ class Google_Service_Gmail_Resource_UsersSettings extends Google_Service_Resourc
     return $this->call('getVacation', array($params), "Google_Service_Gmail_VacationSettings");
   }
   /**
-   * Updates the auto-forwarding setting for the specified account. A verified
+   * Updates the auto-forwarding setting for the specified account.  A verified
    * forwarding address must be specified when auto-forwarding is enabled.
    *
    * This method is only available to service account clients that have been
    * delegated domain-wide authority. (settings.updateAutoForwarding)
    *
-   * @param string $userId User's email address. The special value "me" can be
+   * @param string $userId User's email address.  The special value "me" can be
    * used to indicate the authenticated user.
    * @param Google_Service_Gmail_AutoForwarding $postBody
    * @param array $optParams Optional parameters.
@@ -104,7 +118,7 @@ class Google_Service_Gmail_Resource_UsersSettings extends Google_Service_Resourc
   /**
    * Updates IMAP settings. (settings.updateImap)
    *
-   * @param string $userId User's email address. The special value "me" can be
+   * @param string $userId User's email address.  The special value "me" can be
    * used to indicate the authenticated user.
    * @param Google_Service_Gmail_ImapSettings $postBody
    * @param array $optParams Optional parameters.
@@ -117,9 +131,30 @@ class Google_Service_Gmail_Resource_UsersSettings extends Google_Service_Resourc
     return $this->call('updateImap', array($params), "Google_Service_Gmail_ImapSettings");
   }
   /**
+   * Updates language settings.
+   *
+   * If successful, the return object contains the displayLanguage that was saved
+   * for the user, which may differ from the value passed into the request. This
+   * is because the requested displayLanguage may not be directly supported by
+   * Gmail but have a close variant that is, and so the variant may be chosen and
+   * saved instead. (settings.updateLanguage)
+   *
+   * @param string $userId User's email address.  The special value "me" can be
+   * used to indicate the authenticated user.
+   * @param Google_Service_Gmail_LanguageSettings $postBody
+   * @param array $optParams Optional parameters.
+   * @return Google_Service_Gmail_LanguageSettings
+   */
+  public function updateLanguage($userId, Google_Service_Gmail_LanguageSettings $postBody, $optParams = array())
+  {
+    $params = array('userId' => $userId, 'postBody' => $postBody);
+    $params = array_merge($params, $optParams);
+    return $this->call('updateLanguage', array($params), "Google_Service_Gmail_LanguageSettings");
+  }
+  /**
    * Updates POP settings. (settings.updatePop)
    *
-   * @param string $userId User's email address. The special value "me" can be
+   * @param string $userId User's email address.  The special value "me" can be
    * used to indicate the authenticated user.
    * @param Google_Service_Gmail_PopSettings $postBody
    * @param array $optParams Optional parameters.
@@ -134,7 +169,7 @@ class Google_Service_Gmail_Resource_UsersSettings extends Google_Service_Resourc
   /**
    * Updates vacation responder settings. (settings.updateVacation)
    *
-   * @param string $userId User's email address. The special value "me" can be
+   * @param string $userId User's email address.  The special value "me" can be
    * used to indicate the authenticated user.
    * @param Google_Service_Gmail_VacationSettings $postBody
    * @param array $optParams Optional parameters.

@@ -40,12 +40,12 @@ class WPSEO_Recalculate_Posts extends WPSEO_Recalculate {
 	protected function get_items( $paged ) {
 		$items_per_page = max( 1, $this->items_per_page );
 		$post_query     = new WP_Query(
-			array(
+			[
 				'post_type'      => 'any',
 				'meta_key'       => '_yoast_wpseo_focuskw',
 				'posts_per_page' => $items_per_page,
 				'paged'          => $paged,
-			)
+			]
 		);
 
 		return $post_query->get_posts();
@@ -77,17 +77,17 @@ class WPSEO_Recalculate_Posts extends WPSEO_Recalculate {
 		// Apply shortcodes.
 		$content = do_shortcode( $content );
 
-		return array(
+		return [
 			'post_id'       => $item->ID,
 			'text'          => $content,
 			'keyword'       => $focus_keyword,
 			'url'           => urldecode( $item->post_name ),
 			'pageTitle'     => apply_filters( 'wpseo_title', wpseo_replace_vars( $this->get_title( $item->ID, $item->post_type ), $item ) ),
 			'meta'          => apply_filters( 'wpseo_metadesc', wpseo_replace_vars( $this->get_meta_description( $item->ID, $item->post_type ), $item ) ),
-			'keyword_usage' => array(
+			'keyword_usage' => [
 				$focus_keyword => WPSEO_Meta::keyword_usage( $focus_keyword, $item->ID ),
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -100,12 +100,12 @@ class WPSEO_Recalculate_Posts extends WPSEO_Recalculate {
 	 */
 	private function get_title( $post_id, $post_type ) {
 		$title = WPSEO_Meta::get_value( 'title', $post_id );
-		if ( '' !== $title ) {
+		if ( $title !== '' ) {
 			return $title;
 		}
 
 		$default_from_options = $this->default_from_options( 'title-tax', $post_type );
-		if ( false !== $default_from_options ) {
+		if ( $default_from_options !== false ) {
 			return str_replace( ' %%page%% ', ' ', $default_from_options );
 		}
 
@@ -122,12 +122,12 @@ class WPSEO_Recalculate_Posts extends WPSEO_Recalculate {
 	 */
 	private function get_meta_description( $post_id, $post_type ) {
 		$meta_description = WPSEO_Meta::get_value( 'metadesc', $post_id );
-		if ( '' !== $meta_description ) {
+		if ( $meta_description !== '' ) {
 			return $meta_description;
 		}
 
 		$default_from_options = $this->default_from_options( 'metadesc', $post_type );
-		if ( false !== $default_from_options ) {
+		if ( $default_from_options !== false ) {
 			return $default_from_options;
 		}
 

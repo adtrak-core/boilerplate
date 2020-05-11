@@ -85,17 +85,17 @@
     },
     {
         "name": "html2text/html2text",
-        "version": "4.2.1",
-        "version_normalized": "4.2.1.0",
+        "version": "4.3.1",
+        "version_normalized": "4.3.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/mtibben/html2text.git",
-            "reference": "f7555eaf271beea4e1098274d3ff37fbb7b21ea7"
+            "reference": "61ad68e934066a6f8df29a3d23a6460536d0855c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mtibben/html2text/zipball/f7555eaf271beea4e1098274d3ff37fbb7b21ea7",
-            "reference": "f7555eaf271beea4e1098274d3ff37fbb7b21ea7",
+            "url": "https://api.github.com/repos/mtibben/html2text/zipball/61ad68e934066a6f8df29a3d23a6460536d0855c",
+            "reference": "61ad68e934066a6f8df29a3d23a6460536d0855c",
             "shasum": ""
         },
         "require-dev": {
@@ -105,7 +105,7 @@
             "ext-mbstring": "For best performance",
             "symfony/polyfill-mbstring": "If you can't install ext-mbstring"
         },
-        "time": "2018-08-13T12:05:08+00:00",
+        "time": "2020-04-16T23:44:31+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -172,17 +172,17 @@
     },
     {
         "name": "typisttech/imposter",
-        "version": "0.4.1",
-        "version_normalized": "0.4.1.0",
+        "version": "0.5.0",
+        "version_normalized": "0.5.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/TypistTech/imposter.git",
-            "reference": "76406c9a957d71c986fb752fa048b63d5d9596a5"
+            "reference": "d124d428c967551be815fb4602c73025da2b2893"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/TypistTech/imposter/zipball/76406c9a957d71c986fb752fa048b63d5d9596a5",
-            "reference": "76406c9a957d71c986fb752fa048b63d5d9596a5",
+            "url": "https://api.github.com/repos/TypistTech/imposter/zipball/d124d428c967551be815fb4602c73025da2b2893",
+            "reference": "d124d428c967551be815fb4602c73025da2b2893",
             "shasum": ""
         },
         "require": {
@@ -190,14 +190,16 @@
             "php": "^7.2"
         },
         "require-dev": {
-            "codeception/base": "^3.1",
-            "mockery/mockery": "^1.3",
+            "codeception/codeception": "^4.1",
+            "codeception/mockery-module": "^0.4.0",
+            "codeception/module-asserts": "^1.1",
+            "codeception/module-filesystem": "^1.0",
             "squizlabs/php_codesniffer": "^3.5"
         },
         "suggest": {
             "typisttech/imposter-plugin": "Composer plugin to integrate composer and imposter"
         },
-        "time": "2020-01-11T19:53:10+00:00",
+        "time": "2020-04-15T19:55:54+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -239,35 +241,38 @@
     },
     {
         "name": "typisttech/imposter-plugin",
-        "version": "0.4.0",
-        "version_normalized": "0.4.0.0",
+        "version": "0.6.0",
+        "version_normalized": "0.6.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/TypistTech/imposter-plugin.git",
-            "reference": "fba9e2264433678d197ae8c91e8777e8afd4a711"
+            "reference": "8dc39d4d22f0a8a09ecc4d198402f07591d57ae3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/TypistTech/imposter-plugin/zipball/fba9e2264433678d197ae8c91e8777e8afd4a711",
-            "reference": "fba9e2264433678d197ae8c91e8777e8afd4a711",
+            "url": "https://api.github.com/repos/TypistTech/imposter-plugin/zipball/8dc39d4d22f0a8a09ecc4d198402f07591d57ae3",
+            "reference": "8dc39d4d22f0a8a09ecc4d198402f07591d57ae3",
             "shasum": ""
         },
         "require": {
             "composer-plugin-api": "^1.1",
             "php": "^7.2",
-            "typisttech/imposter": "^0.4.1"
+            "typisttech/imposter": "^0.5.0"
         },
         "require-dev": {
-            "codeception/base": "^3.1",
+            "codeception/codeception": "^4.1",
+            "codeception/module-asserts": "^1.1",
+            "codeception/module-cli": "^1.0",
+            "codeception/module-filesystem": "^1.0",
             "composer/composer": "^1.9",
             "squizlabs/php_codesniffer": "^3.5",
             "typisttech/codeception-composer-project-module": "^0.1.1"
         },
-        "time": "2020-01-11T20:02:37+00:00",
+        "time": "2020-04-15T20:23:11+00:00",
         "type": "composer-plugin",
         "extra": {
             "branch-alias": {
-                "dev-master": "0.4.x-dev"
+                "dev-master": "0.5.x-dev"
             },
             "class": "TypistTech\\Imposter\\Plugin\\ImposterPlugin"
         },

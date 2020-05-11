@@ -18,13 +18,19 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
      */
     public function post( $request_data )
     {
-        $data = array();
+		$data = array();
+		
+		// Does the current user have admin privileges
+		if (!current_user_can('manage_options')) {
+			$data['error'] = esc_html__('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+			return $data;
+		}
 
         // If we don't have a nonce...
         // OR if the nonce is invalid...
         if ( ! isset( $request_data[ 'security' ] ) || ! wp_verify_nonce( $request_data[ 'security' ], 'ninja_forms_required_update_nonce' ) ) {
             // Kick the request out now.
-            $data[ 'error' ] = __( 'Request forbidden.', 'ninja-forms' );
+            $data[ 'error' ] = esc_html__( 'Request forbidden.', 'ninja-forms' );
 			return $data;
         }
 		$doing_updates = get_option( 'ninja_forms_doing_required_updates' );
@@ -71,16 +77,16 @@ class NF_AJAX_REST_RequiredUpdate extends NF_AJAX_REST_Controller
 	{
 		$request_data = array();
 
-		if( isset( $_REQUEST[ 'data' ] ) && $_REQUEST[ 'data' ] ){
-			$request_data[ 'data' ] = $_REQUEST[ 'data' ];
+		if (isset($_REQUEST['data']) && $_REQUEST['data']) {
+			$request_data['data'] = WPN_Helper::sanitize_text_field($_REQUEST['data']);
 		}
 
 		if( isset( $_REQUEST[ 'security' ] ) && $_REQUEST[ 'security' ] ){
-			$request_data[ 'security' ] = $_REQUEST[ 'security' ];
+			$request_data[ 'security' ] = WPN_Helper::sanitize_text_field($_REQUEST[ 'security' ]);
 		}
 
 		if( isset( $_REQUEST[ 'action' ] ) && $_REQUEST[ 'action' ] ){
-			$request_data[ 'action' ] = $_REQUEST[ 'action' ];
+			$request_data[ 'action' ] = WPN_Helper::sanitize_text_field($_REQUEST[ 'action' ]);
 		}
 
 		return $request_data;

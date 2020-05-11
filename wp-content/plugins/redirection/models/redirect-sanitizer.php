@@ -62,7 +62,7 @@ class Red_Item_Sanitize {
 
 			// Remove defaults
 			$data['match_data']['source'] = $flags->get_json_without_defaults( $defaults );
-			$data['regex'] = $flags->is_regex();
+			$data['regex'] = $flags->is_regex() ? 1 : 0;
 		}
 
 		// If match_data is empty then don't save anything
@@ -73,7 +73,7 @@ class Red_Item_Sanitize {
 		$data['match_data'] = array_filter( $data['match_data'] );
 
 		if ( empty( $data['match_data'] ) ) {
-			unset( $data['match_data'] );
+			$data['match_data'] = null;
 		}
 
 		// Parse URL
@@ -105,13 +105,13 @@ class Red_Item_Sanitize {
 
 		$matcher = Red_Match::create( isset( $details['match_type'] ) ? $details['match_type'] : false );
 		if ( ! $matcher ) {
-			return new WP_Error( 'redirect', __( 'Invalid redirect matcher', 'redirection' ) );
+			return new WP_Error( 'redirect', 'Invalid redirect matcher' );
 		}
 
 		$action_code = isset( $details['action_code'] ) ? intval( $details['action_code'], 10 ) : 0;
 		$action = Red_Action::create( isset( $details['action_type'] ) ? $details['action_type'] : false, $action_code );
 		if ( ! $action ) {
-			return new WP_Error( 'redirect', __( 'Invalid redirect action', 'redirection' ) );
+			return new WP_Error( 'redirect', 'Invalid redirect action' );
 		}
 
 		$data['action_type'] = $details['action_type'];
@@ -148,9 +148,17 @@ class Red_Item_Sanitize {
 		return false;
 	}
 
+	public function is_valid_redirect_code( $code ) {
+		return in_array( $code, array( 301, 302, 303, 304, 307, 308 ), true );
+	}
+
+	public function is_valid_error_code( $code ) {
+		return in_array( $code, array( 400, 401, 403, 404, 410, 418, 451, 500, 501, 502, 503, 504 ), true );
+	}
+
 	protected function get_code( $action_type, $code ) {
 		if ( $action_type === 'url' || $action_type === 'random' ) {
-			if ( in_array( $code, array( 301, 302, 303, 304, 307, 308 ), true ) ) {
+			if ( $this->is_valid_redirect_code( $code ) ) {
 				return $code;
 			}
 
@@ -158,7 +166,7 @@ class Red_Item_Sanitize {
 		}
 
 		if ( $action_type === 'error' ) {
-			if ( in_array( $code, array( 400, 401, 403, 404, 410, 418 ), true ) ) {
+			if ( $this->is_valid_error_code( $code ) ) {
 				return $code;
 			}
 
@@ -172,7 +180,7 @@ class Red_Item_Sanitize {
 		$group_id = intval( $group_id, 10 );
 
 		if ( ! Red_Group::get( $group_id ) ) {
-			return new WP_Error( 'redirect', __( 'Invalid group when creating redirect', 'redirection' ) );
+			return new WP_Error( 'redirect', 'Invalid group when creating redirect' );
 		}
 
 		return $group_id;
@@ -182,7 +190,7 @@ class Red_Item_Sanitize {
 		$url = self::sanitize_url( $url, $regex );
 
 		if ( $url === '' ) {
-			return new WP_Error( 'redirect', __( 'Invalid source URL', 'redirection' ) );
+			return new WP_Error( 'redirect', 'Invalid source URL' );
 		}
 
 		return $url;
@@ -215,6 +223,17 @@ class Red_Item_Sanitize {
 		// Ensure a slash at start
 		if ( substr( $url, 0, 1 ) !== '/' && (bool) $regex === false ) {
 			$url = '/' . $url;
+		}
+
+		// Ensure we URL decode any i10n characters
+		$url = rawurldecode( $url );
+
+		// Try and remove bad decoding
+		if ( function_exists( 'iconv' ) ) {
+			$converted = @iconv( 'UTF-8', 'UTF-8//IGNORE', $url );
+			if ( $converted !== false ) {
+				$url = $converted;
+			}
 		}
 
 		return $url;

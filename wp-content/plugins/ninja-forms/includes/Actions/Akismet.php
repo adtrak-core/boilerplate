@@ -35,7 +35,7 @@ final class NF_Actions_Akismet extends NF_Abstracts_Action {
 	public function __construct() {
 		parent::__construct();
 
-		$this->_nicename = __( 'Akismet Anti-Spam', 'ninja-forms' );
+		$this->_nicename = esc_html__( 'Akismet Anti-Spam', 'ninja-forms' );
 		$settings        = Ninja_Forms::config( 'ActionAkismetSettings' );
 		$this->_settings = array_merge( $this->_settings, $settings );
 
@@ -92,7 +92,7 @@ final class NF_Actions_Akismet extends NF_Abstracts_Action {
 		}
 
 		if ( $this->is_submission_spam( $action_settings['name'], $action_settings['email'], $action_settings['url'], $action_settings['message'] ) ) {
-			$data['errors']['form']['spam'] = __( 'There was an error trying to send your message. Please try again later', 'ninja-forms' );
+			$data['errors']['form']['spam'] = esc_html__( 'There was an error trying to send your message. Please try again later', 'ninja-forms' );
 		}
 
 		return $data;

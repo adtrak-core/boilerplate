@@ -32,7 +32,7 @@ final class NF_Actions_Custom extends NF_Abstracts_Action
     {
         parent::__construct();
 
-        $this->_nicename = __( 'WP Hook', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'WP Hook', 'ninja-forms' );
 
         $settings = Ninja_Forms::config( 'ActionCustomSettings' );
 

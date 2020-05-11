@@ -43,6 +43,10 @@ abstract class NF_Abstracts_ActionNewsletter extends NF_Abstracts_Action
             $this->_transient = $this->get_name() . '_newsletter_lists';
         }
 
+        /**
+         * Ajax call handled in '_get_lists', but bulk of work could be done in
+         * the NewsLetter class that extends this class
+         */
         add_action( 'wp_ajax_nf_' . $this->_name . '_get_lists', array( $this, '_get_lists' ) );
 
         $this->get_list_settings();
@@ -143,7 +147,7 @@ abstract class NF_Abstracts_ActionNewsletter extends NF_Abstracts_Action
 
         $this->_settings[ $prefix . 'newsletter_list_fields' ] = array(
             'name' => 'newsletter_list_fields',
-            'label' => __( 'List Field Mapping', 'ninja-forms' ),
+            'label' => esc_html__( 'List Field Mapping', 'ninja-forms' ),
             'type' => 'fieldset',
             'group' => 'primary',
             'settings' => array()
@@ -151,7 +155,7 @@ abstract class NF_Abstracts_ActionNewsletter extends NF_Abstracts_Action
 
         $this->_settings[ $prefix . 'newsletter_list_groups' ] = array(
             'name' => 'newsletter_list_groups',
-            'label' => __( 'Interest Groups', 'ninja-forms' ),
+            'label' => esc_html__( 'Interest Groups', 'ninja-forms' ),
             'type' => 'fieldset',
             'group' => 'primary',
             'settings' => array()

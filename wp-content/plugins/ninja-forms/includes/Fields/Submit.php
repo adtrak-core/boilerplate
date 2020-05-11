@@ -23,7 +23,7 @@ class NF_Fields_Submit extends NF_Fields_Button
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Submit', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Submit', 'ninja-forms' );
 
         $this->_settings[ 'label' ][ 'width' ] = 'full';
 

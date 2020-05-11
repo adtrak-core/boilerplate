@@ -5,7 +5,7 @@ var nfLocaleConverter = function(newLocale, thousands_sep, decimal_sep) {
 
     // constructor(newLocale = 'en-US', thousands_sep, decimal_sep) {
         if ('undefined' !== typeof newLocale && 0 < newLocale.length) {
-            this.locale = newLocale.replace('_','-');
+            this.locale = newLocale.split('_').join('-');
         } else {
             this.locale = 'en-US';
         }

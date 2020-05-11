@@ -20,13 +20,13 @@ class Options extends OptionsAbstract {
 
 		parent::__construct(
 			array(
-				'logo_url'    => wp_mail_smtp()->plugin_url . '/assets/images/mailgun.png',
+				'logo_url'    => wp_mail_smtp()->assets_url . '/images/providers/mailgun.svg',
 				'slug'        => 'mailgun',
 				'title'       => esc_html__( 'Mailgun', 'wp-mail-smtp' ),
 				'description' => sprintf(
 					wp_kses(
 						/* translators: %1$s - opening link tag; %2$s - closing link tag; %3$s - opening link tag; %4$s - closing link tag. */
-						__( '%1$sMailgun%2$s is one of the leading transactional email services trusted by over 10,000 website and application developers. They provide users 10,000 free emails per month.<br><br>Read our %3$sMailgun documentation%4$s to learn how to configure Mailgun and improve your email deliverability.', 'wp-mail-smtp' ),
+						__( '%1$sMailgun%2$s is one of the leading transactional email services trusted by over 150,000+ businesses. They provide 5,000 free emails per month for 3 months.<br><br>Read our %3$sMailgun documentation%4$s to learn how to configure Mailgun and improve your email deliverability.', 'wp-mail-smtp' ),
 						array(
 							'br' => array(),
 							'a'  => array(
@@ -38,7 +38,7 @@ class Options extends OptionsAbstract {
 					),
 					'<a href="https://www.mailgun.com" target="_blank" rel="noopener noreferrer">',
 					'</a>',
-					'<a href="https://wpforms.com/how-to-send-wordpress-emails-with-mailgun/" target="_blank" rel="noopener noreferrer">',
+					'<a href="https://wpmailsmtp.com/docs/how-to-set-up-the-mailgun-mailer-in-wp-mail-smtp/" target="_blank" rel="noopener noreferrer">',
 					'</a>'
 				),
 			)
@@ -57,17 +57,24 @@ class Options extends OptionsAbstract {
 				<label for="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-api_key"><?php esc_html_e( 'Private API Key', 'wp-mail-smtp' ); ?></label>
 			</div>
 			<div class="wp-mail-smtp-setting-field">
-				<input name="wp-mail-smtp[<?php echo esc_attr( $this->get_slug() ); ?>][api_key]" type="text"
-					value="<?php echo esc_attr( $this->options->get( $this->get_slug(), 'api_key' ) ); ?>"
-					<?php echo $this->options->is_const_defined( $this->get_slug(), 'api_key' ) ? 'disabled' : ''; ?>
-					id="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-api_key" spellcheck="false"
-				/>
+				<?php if ( $this->options->is_const_defined( $this->get_slug(), 'api_key' ) ) : ?>
+					<input type="text" disabled value="****************************************"
+						id="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-api_key"
+					/>
+					<?php $this->display_const_set_message( 'WPMS_MAILGUN_API_KEY' ); ?>
+				<?php else : ?>
+					<input type="password" spellcheck="false"
+						name="wp-mail-smtp[<?php echo esc_attr( $this->get_slug() ); ?>][api_key]"
+						value="<?php echo esc_attr( $this->options->get( $this->get_slug(), 'api_key' ) ); ?>"
+						id="wp-mail-smtp-setting-<?php echo esc_attr( $this->get_slug() ); ?>-api_key"
+					/>
+				<?php endif; ?>
 				<p class="desc">
 					<?php
 					printf(
 						/* translators: %s - API key link. */
 						esc_html__( 'Follow this link to get an API Key from Mailgun: %s.', 'wp-mail-smtp' ),
-						'<a href="https://app.mailgun.com/app/account/security" target="_blank" rel="noopener noreferrer">' .
+						'<a href="https://app.mailgun.com/app/account/security/api_keys" target="_blank" rel="noopener noreferrer">' .
 						esc_html__( 'Get a Private API Key', 'wp-mail-smtp' ) .
 						'</a>'
 					);

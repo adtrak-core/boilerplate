@@ -41,7 +41,7 @@ abstract class NF_Abstracts_List extends NF_Abstracts_Field
 
         $settings = $field->get_settings();
         $settings[ 'options' ] = apply_filters( 'ninja_forms_render_options', $settings[ 'options' ], $settings );
-        $settings[ 'options' ] = apply_filters( 'ninja_forms_render_options_' . $field->get_type(), $settings[ 'options' ], $settings );
+        $settings[ 'options' ] = apply_filters( 'ninja_forms_render_options_' . $field->get_setting( 'type' ), $settings[ 'options' ], $settings );
 
         $options = '<option>--</option>';
         if ( is_array( $settings[ 'options' ] ) ) {
@@ -64,8 +64,12 @@ abstract class NF_Abstracts_List extends NF_Abstracts_Field
         //Consider &amp; to be the same as the & values in database in a selectbox saved value:
         if( ! is_array( $value ) ) $value = array( htmlspecialchars_decode($value) );
 
-        $output = '';
+        $settings = $field->get_settings();
         $options = $field->get_setting( 'options' );
+        $options = apply_filters( 'ninja_forms_render_options', $options, $settings );
+        $options = apply_filters( 'ninja_forms_render_options_' . $field->get_setting( 'type' ), $options, $settings );
+
+        $output = '';
         if( ! empty( $options ) ) {
             foreach ($options as $option) {
 

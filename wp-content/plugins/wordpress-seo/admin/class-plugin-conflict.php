@@ -18,9 +18,9 @@ class WPSEO_Plugin_Conflict extends Yoast_Plugin_Conflict {
 	 *
 	 * @var array
 	 */
-	protected $plugins = array(
+	protected $plugins = [
 		// The plugin which are writing OG metadata.
-		'open_graph'   => array(
+		'open_graph'   => [
 			'2-click-socialmedia-buttons/2-click-socialmedia-buttons.php',
 			// 2 Click Social Media Buttons.
 			'add-link-to-facebook/add-link-to-facebook.php',         // Add Link to Facebook.
@@ -60,8 +60,8 @@ class WPSEO_Plugin_Conflict extends Yoast_Plugin_Conflict {
 			'wp-facebook-open-graph-protocol/wp-facebook-ogp.php',   // WP Facebook Open Graph protocol.
 			'wp-ogp/wp-ogp.php',                                     // WP-OGP.
 			'zoltonorg-social-plugin/zosp.php',                      // Zolton.org Social Plugin.
-		),
-		'xml_sitemaps' => array(
+		],
+		'xml_sitemaps' => [
 			'google-sitemap-plugin/google-sitemap-plugin.php',
 			// Google Sitemap (BestWebSoft).
 			'xml-sitemaps/xml-sitemaps.php',
@@ -92,18 +92,18 @@ class WPSEO_Plugin_Conflict extends Yoast_Plugin_Conflict {
 			// Sewn In XML Sitemap (jcow).
 			'rps-sitemap-generator/rps-sitemap-generator.php',
 			// RPS Sitemap Generator (redpixelstudios).
-		),
-		'cloaking' => array(
+		],
+		'cloaking' => [
 			'rs-head-cleaner/rs-head-cleaner.php',
 			// RS Head Cleaner Plus https://wordpress.org/plugins/rs-head-cleaner/.
 			'rs-head-cleaner-lite/rs-head-cleaner-lite.php',
 			// RS Head Cleaner Lite https://wordpress.org/plugins/rs-head-cleaner-lite/.
-		),
-		'seo' => array(
+		],
+		'seo' => [
 			'all-in-one-seo-pack/all_in_one_seo_pack.php',           // All in One SEO Pack.
 			'seo-ultimate/seo-ultimate.php',                         // SEO Ultimate.
-		),
-	);
+		],
+	];
 
 	/**
 	 * Overrides instance to set with this class as class.
@@ -134,16 +134,16 @@ class WPSEO_Plugin_Conflict extends Yoast_Plugin_Conflict {
 			$instance->add_active_plugin( $instance->find_plugin_category( $plugin ), $plugin );
 		}
 
-		$plugin_sections = array();
+		$plugin_sections = [];
 
 		// Only check for open graph problems when they are enabled.
 		if ( WPSEO_Options::get( 'opengraph' ) ) {
 			/* translators: %1$s expands to Yoast SEO, %2$s: 'Facebook' plugin name of possibly conflicting plugin with regard to creating OpenGraph output. */
-			$plugin_sections['open_graph'] = __( 'Both %1$s and %2$s create OpenGraph output, which might make Facebook, Twitter, LinkedIn and other social networks use the wrong texts and images when your pages are being shared.', 'wordpress-seo' )
+			$plugin_sections['open_graph'] = __( 'Both %1$s and %2$s create Open Graph output, which might make Facebook, Twitter, LinkedIn and other social networks use the wrong texts and images when your pages are being shared.', 'wordpress-seo' )
 				. '<br/><br/>'
 				. '<a class="button" href="' . admin_url( 'admin.php?page=wpseo_social#top#facebook' ) . '">'
 				/* translators: %1$s expands to Yoast SEO. */
-				. sprintf( __( 'Configure %1$s\'s OpenGraph settings', 'wordpress-seo' ), 'Yoast SEO' )
+				. sprintf( __( 'Configure %1$s\'s Open Graph settings', 'wordpress-seo' ), 'Yoast SEO' )
 				. '</a>';
 		}
 

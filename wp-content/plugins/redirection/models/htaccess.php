@@ -35,7 +35,7 @@ class Red_Htaccess {
 			'%23' => '#',
 		];
 
-		$url = urlencode( $url );
+		$url = rawurlencode( $url );
 		return $this->replace_encoding( $url, $allowed );
 	}
 
@@ -55,7 +55,7 @@ class Red_Htaccess {
 			'.' => '\\.',
 		];
 
-		return $this->replace_encoding( urlencode( $url ), $allowed );
+		return $this->replace_encoding( rawurlencode( $url ), $allowed );
 	}
 
 	private function encode_regex( $url ) {
@@ -122,14 +122,14 @@ class Red_Htaccess {
 
 	private function add_server( $item, $match ) {
 		$match->url = $match->url_from;
-		$this->items[] = sprintf( 'RewriteCond %%{HTTP_HOST} ^%s$ [NC]', preg_quote( $match->server ) );
+		$this->items[] = sprintf( 'RewriteCond %%{HTTP_HOST} ^%s$ [NC]', preg_quote( wp_parse_url( $match->server, PHP_URL_HOST ), '/' ) );
 		$this->add_url( $item, $match );
 	}
 
 	private function add_url( $item, $match ) {
 		$url = $item->get_url();
 
-		if ( $item->is_regex() === false && strpos( $url, '?' ) !== false || strpos( $url, '&' ) !== false ) {
+		if ( $item->is_regex() === false && strpos( $url, '?' ) !== false ) {
 			$url_parts = wp_parse_url( $url );
 			$url = $url_parts['path'];
 			$query = isset( $url_parts['query'] ) ? $url_parts['query'] : '';
@@ -152,11 +152,19 @@ class Red_Htaccess {
 		return $current . ' [' . implode( ',', $flags ) . ']';
 	}
 
-	private function get_source_flags( array $existing, array $source ) {
+	private function get_source_flags( array $existing, array $source, $url ) {
 		$flags = [];
 
 		if ( isset( $source['flag_case'] ) && $source['flag_case'] ) {
 			$flags[] = 'NC';
+		}
+
+		if ( isset( $source['flag_query'] ) && $source['flag_query'] === 'pass' ) {
+			$flags[] = 'QSA';
+		}
+
+		if ( strpos( $url, '#' ) !== false ) {
+			$flags[] = 'NE';
 		}
 
 		return array_merge( $existing, $flags );
@@ -171,22 +179,22 @@ class Red_Htaccess {
 
 		$flags = [ sprintf( 'R=%d', $code ) ];
 		$flags[] = 'L';
-		$flags = $this->get_source_flags( $flags, $match_data['source'] );
+		$flags = $this->get_source_flags( $flags, $match_data['source'], $data );
 
 		return $this->add_flags( $this->encode( $url['path'] ), $flags );
 	}
 
 	private function action_pass( $data, $code, $match_data ) {
-		$flags = $this->get_source_flags( [ 'L' ], $match_data['source'] );
+		$flags = $this->get_source_flags( [ 'L' ], $match_data['source'], $data );
 
 		return $this->add_flags( $this->encode2nd( $data ), $flags );
 	}
 
 	private function action_error( $data, $code, $match_data ) {
-		$flags = $this->get_source_flags( [ 'F' ], $match_data['source'] );
+		$flags = $this->get_source_flags( [ 'F' ], $match_data['source'], $data );
 
 		if ( $code === 410 ) {
-			$flags = $this->get_source_flags( [ 'G' ], $match_data['source'] );
+			$flags = $this->get_source_flags( [ 'G' ], $match_data['source'], $data );
 		}
 
 		return $this->add_flags( '/', $flags );
@@ -195,7 +203,7 @@ class Red_Htaccess {
 	private function action_url( $data, $code, $match_data ) {
 		$flags = [ sprintf( 'R=%d', $code ) ];
 		$flags[] = 'L';
-		$flags = $this->get_source_flags( $flags, $match_data['source'] );
+		$flags = $this->get_source_flags( $flags, $match_data['source'], $data );
 
 		return $this->add_flags( $this->encode2nd( $data ), $flags );
 	}
@@ -217,13 +225,13 @@ class Red_Htaccess {
 			return '';
 		}
 
-		$text[] = '# Created by Redirection';
-		$text[] = '# ' . date( 'r' );
-		$text[] = '# Redirection ' . trim( $version['Version'] ) . ' - https://redirection.me';
-		$text[] = '';
-
-		// mod_rewrite section
-		$text[] = '<IfModule mod_rewrite.c>';
+		$text = [
+			'# Created by Redirection',
+			'# ' . date( 'r' ),
+			'# Redirection ' . trim( $version['Version'] ) . ' - https://redirection.me',
+			'',
+			'<IfModule mod_rewrite.c>',
+		];
 
 		// Add http => https option
 		$options = red_get_options();

@@ -32,7 +32,7 @@ final class NF_Actions_Email extends NF_Abstracts_Action
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Email', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Email', 'ninja-forms' );
 
         $settings = Ninja_Forms::config( 'ActionEmailSettings' );
 
@@ -84,7 +84,7 @@ final class NF_Actions_Email extends NF_Abstracts_Action
              * @return bool True if already sent. False to fallback to default behavior. Throw a new Exception if there is an error.
              */
             if( ! $sent = apply_filters( 'ninja_forms_action_email_send', false, $action_settings, $message, $headers, $attachments ) ){
-              $sent = wp_mail($action_settings['to'], $action_settings['email_subject'], $message, $headers, $attachments);
+              $sent = wp_mail($action_settings['to'], strip_tags( $action_settings['email_subject'] ), $message, $headers, $attachments);
             }
         } catch ( Exception $e ){
             $sent = false;
@@ -176,11 +176,11 @@ final class NF_Actions_Email extends NF_Abstracts_Action
             foreach( (array) $email_addresses as $email ){
                 $email = trim( $email );
                 if ( false !== strpos( $email, '<' ) && false !== strpos( $email, '>' ) ) {
-                    preg_match('/(?:<)[^>]*(?:>)/', $email, $email);
+                    preg_match('/(?:<)([^>]*)(?:>)/', $email, $email);
                     $email = $email[ 1 ];
                 }
                 if( ! is_email( $email ) ) {
-                    $errors[ 'invalid_email' ] = sprintf( __( 'Your email action "%s" has an invalid value for the "%s" setting. Please check this setting and try again.', 'ninja-forms'), $action_settings[ 'label' ], $setting );
+                    $errors[ 'invalid_email' ] = sprintf( esc_html__( 'Your email action "%s" has an invalid value for the "%s" setting. Please check this setting and try again.', 'ninja-forms'), $action_settings[ 'label' ], $setting );
                 }
             }
         }
@@ -212,6 +212,19 @@ final class NF_Actions_Email extends NF_Abstracts_Action
         }
 
         if( ! isset( $settings[ 'id' ] ) ) $settings[ 'id' ] = '';
+
+        // Allow admins to attach files from media library
+        if (isset($settings['file_attachment']) && 0 < strlen($settings['file_attachment'])) {
+            $file_path = '';
+            $media_id = attachment_url_to_postid($settings['file_attachment']);
+
+            if($media_id !== 0) {
+                $file_path = get_attached_file($media_id);
+                if (0 < strlen($file_path)) {
+                    $attachments[] = $file_path;
+                }
+            }
+        }
 
         $attachments = apply_filters( 'ninja_forms_action_email_attachments', $attachments, $data, $settings );
 

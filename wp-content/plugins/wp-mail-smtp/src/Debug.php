@@ -26,15 +26,19 @@ class Debug {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param string $message
+	 * @param mixed $message
 	 */
 	public static function set( $message ) {
 
-		if ( ! is_string( $message ) ) {
-			$message = \json_encode( $message );
+		if ( empty( $message ) ) {
+			return;
 		}
 
-		$message = wp_strip_all_tags( $message, false );
+		if ( ! is_string( $message ) ) {
+			$message = wp_json_encode( $message );
+		} else {
+			$message = wp_strip_all_tags( $message, false );
+		}
 
 		$all = self::get();
 
@@ -82,7 +86,7 @@ class Debug {
 		$all = self::get();
 
 		if ( ! empty( $all ) && is_array( $all ) ) {
-			return (string) $all[ count( $all ) - 1 ];
+			return (string) end( $all );
 		}
 
 		return '';

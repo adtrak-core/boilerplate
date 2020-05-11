@@ -2,6 +2,7 @@
 
 /**
  * Measure email throughput to determine the potential scale of email related issues.
+ * @TODO: Remove this entire file at a later date.
  */
 class NF_EmailTelemetry
 {
@@ -29,10 +30,13 @@ class NF_EmailTelemetry
             /**
              * @link https://codex.wordpress.org/Plugin_API/Action_Reference/phpmailer_init
              */
-            add_action( 'phpmailer_init', array( $this, 'update_metrics' ) );
+            // Stop collecting data.
+            // add_action( 'phpmailer_init', array( $this, 'update_metrics' ) );
 
-            add_action( 'wp', array( $this, 'maybe_schedule_push' ) );
+            // Stop scheduling new events.
+            // add_action( 'wp', array( $this, 'maybe_schedule_push' ) );
 
+            // Leave this function registered for now to avoid throwing a cron error.
             add_action( 'nf_email_telemetry_push', array( $this, 'push_telemetry' ) );
         }
 
@@ -97,6 +101,8 @@ class NF_EmailTelemetry
 
     public function push_telemetry()
     {
+        // (Deprecated) Exit without doing anything.
+        return false;
         $metrics = array(
             'nf_email_send_count',
             'nf_email_with_attachment_count',

@@ -32,7 +32,7 @@ final class NF_Actions_SuccessMessage extends NF_Abstracts_Action
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Success Message', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Success Message', 'ninja-forms' );
 
         $settings = Ninja_Forms::config( 'ActionSuccessMessageSettings' );
 
@@ -63,7 +63,7 @@ final class NF_Actions_SuccessMessage extends NF_Abstracts_Action
             $ob = ob_get_clean();
 
             if( $ob ) {
-                $data[ 'debug' ][ 'console' ][] = sprintf( __( 'Shortcodes should return and not echo, see: %s', 'ninja-forms' ), 'https://codex.wordpress.org/Shortcode_API#Output' );
+                $data[ 'debug' ][ 'console' ][] = sprintf( esc_html__( 'Shortcodes should return and not echo, see: %s', 'ninja-forms' ), 'https://codex.wordpress.org/Shortcode_API#Output' );
                 $data['actions']['success_message'] .= $action_settings['success_msg'];
             } else {
                 $message = do_shortcode( $action_settings['success_msg'] );

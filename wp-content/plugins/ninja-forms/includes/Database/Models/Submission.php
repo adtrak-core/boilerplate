@@ -296,7 +296,7 @@ final class NF_Database_Models_Submission
 
         $field_labels = array(
             '_seq_num' => '#',
-            '_date_submitted' => __( 'Date Submitted', 'ninja-forms' )
+            '_date_submitted' => esc_html__( 'Date Submitted', 'ninja-forms' )
         );
 
         // Legacy Filter from 2.9.*

@@ -32,7 +32,7 @@ final class NF_Actions_ExportDataRequest extends NF_Abstracts_Action
 	{
 		parent::__construct();
 
-		$this->_nicename = __( 'Export Data Request', 'ninja-forms' );
+		$this->_nicename = esc_html__( 'Export Data Request', 'ninja-forms' );
 
 		$settings = Ninja_Forms::config( 'ActionExportDataRequestSettings' );
 		$this->_settings = array_merge( $this->_settings, $settings );

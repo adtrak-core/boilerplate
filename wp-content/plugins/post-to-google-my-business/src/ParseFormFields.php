@@ -2,19 +2,29 @@
 
 namespace PGMB;
 
-use  PGMB\Google\Date ;
+use  Exception ;
+use  InvalidArgumentException ;
+use  PGMB\API\APIInterface ;
 use  PGMB\Google\LocalPost ;
+use  PGMB\Google\MediaItem ;
+use  PGMB\Placeholders\PostPermalink ;
+use  PGMB\Placeholders\PostVariables ;
+use  PGMB\Placeholders\SiteVariables ;
+use  PGMB\Placeholders\UserVariables ;
+use  PGMB\Placeholders\LocationVariables ;
+use  PGMB\Placeholders\VariableInterface ;
 use  PGMB\Vendor\Cron\CronExpression ;
-use  PGMB\Vendor\Html2Text\Html2Text ;
+use  PGMB\Vendor\Rarst\WordPress\DateTime\WpDateTimeImmutable ;
+use  PGMB\Vendor\Rarst\WordPress\DateTime\WpDateTimeInterface ;
 use  PGMB\Vendor\Rarst\WordPress\DateTime\WpDateTimeZone ;
-use  DateTime ;
+use  PGMB\Vendor\Rarst\WordPress\DateTime\WpDateTime ;
 class ParseFormFields
 {
     private  $form_fields ;
     public function __construct( $form_fields )
     {
         if ( !is_array( $form_fields ) ) {
-            throw new \InvalidArgumentException( 'ParseFormFields expects Form Fields array' );
+            throw new InvalidArgumentException( 'ParseFormFields expects Form Fields array' );
         }
         $this->form_fields = $form_fields;
     }
@@ -22,8 +32,8 @@ class ParseFormFields
     /**
      * Get DateTime object representing the when a post will be first published
      *
-     * @return bool|DateTime|false DateTime when the post is first published, or false when the post isn't scheduled
-     * @throws \Exception Invalid DateTime
+     * @return bool|WpDateTime|false DateTime when the post is first published, or false when the post isn't scheduled
+     * @throws Exception Invalid DateTime
      */
     public function getPublishDateTime()
     {
@@ -33,38 +43,48 @@ class ParseFormFields
     /**
      * Parse the form fields and return a LocalPost object
      *
+     * @param APIInterface $api
      * @param $parent_post_id
      *
+     * @param $location_name
+     *
      * @return LocalPost
-     * @throws \Exception
+     * @throws Exception
      */
-    public function getLocalPost( $parent_post_id )
+    public function getLocalPost( APIInterface $api, $parent_post_id, $location_name )
     {
         if ( !is_numeric( $parent_post_id ) ) {
-            throw new \InvalidArgumentException( 'Parent Post ID required for placeholder parsing' );
+            throw new InvalidArgumentException( 'Parent Post ID required for placeholder parsing' );
         }
+        $location = $api->get_location( $location_name, false );
+        $placeholder_variables = $this->generate_placeholder_variables( $parent_post_id, $location );
         $summary = stripslashes( $this->form_fields['mbp_post_text'] );
         if ( mbp_fs()->is_plan_or_trial( 'business' ) ) {
             $summary = \MBP_Spintax::Parse( $summary );
         }
-        $summary = $this->parse_placeholder_variables( $summary, $parent_post_id );
+        $summary = $this->parse_placeholder_variables( $placeholder_variables, $summary );
         $summary = mb_strimwidth(
             $summary,
             0,
             1500,
             "..."
         );
-        $localPost = new LocalPost( get_bloginfo( 'language' ), $summary, $this->form_fields['mbp_topic_type'] );
+        $topicType = $this->form_fields['mbp_topic_type'];
+        $localPost = new LocalPost( $location->languageCode, $summary, $topicType );
+        //Set alert type
+        if ( $topicType === 'ALERT' ) {
+            $localPost->setAlertType( $this->form_fields['mbp_alert_type'] );
+        }
         //Add image/video
         $mediaItem = $this->get_media_item( $parent_post_id );
-        if ( $mediaItem ) {
+        if ( !empty($mediaItem) && $topicType !== 'ALERT' ) {
             $localPost->addMediaItem( $mediaItem );
         }
         // mbp_content_image mbp_featured_image
         //Add button
         
         if ( isset( $this->form_fields['mbp_button'] ) && $this->form_fields['mbp_button'] ) {
-            $buttonURL = $this->parse_placeholder_variables( $this->form_fields['mbp_button_url'], $parent_post_id );
+            $buttonURL = $this->parse_placeholder_variables( $placeholder_variables, $this->form_fields['mbp_button_url'] );
             $callToAction = new \PGMB\Google\CallToAction( $this->form_fields['mbp_button_type'], $buttonURL );
             $localPost->addCallToAction( $callToAction );
         }
@@ -72,14 +92,34 @@ class ParseFormFields
         return $localPost;
     }
     
+    public function get_media_items( $parent_post_id )
+    {
+        $mediaItems = [];
+        if ( empty($this->form_fields['mbp_post_attachment']) || !is_array( $this->form_fields['mbp_post_attachment'] ) ) {
+            return false;
+        }
+        foreach ( $this->form_fields['mbp_post_attachment'] as $type => $items ) {
+            foreach ( $items as $item ) {
+                $mediaItems[] = new MediaItem( $type, $item );
+            }
+        }
+        return $mediaItems;
+    }
+    
     public function get_media_item( $parent_post_id )
     {
         
         if ( !empty($this->form_fields['mbp_post_attachment']) ) {
+            $image_id = attachment_url_to_postid( $this->form_fields['mbp_post_attachment'] );
+            if ( $image_id && wp_attachment_is_image( $image_id ) ) {
+                $this->validate_image_size( $image_id );
+            }
             return new \PGMB\Google\MediaItem( $this->form_fields['mbp_attachment_type'], $this->form_fields['mbp_post_attachment'] );
         } elseif ( isset( $this->form_fields['mbp_content_image'] ) && $this->form_fields['mbp_content_image'] && ($image_url = $this->get_content_image( $parent_post_id )) ) {
             return new \PGMB\Google\MediaItem( 'PHOTO', $image_url );
         } elseif ( isset( $this->form_fields['mbp_featured_image'] ) && $this->form_fields['mbp_featured_image'] && ($image_url = get_the_post_thumbnail_url( $parent_post_id, 'large' )) ) {
+            $image_id = get_post_thumbnail_id( $parent_post_id );
+            $this->validate_image_size( $image_id );
             return new \PGMB\Google\MediaItem( 'PHOTO', $image_url );
         }
         
@@ -93,8 +133,25 @@ class ParseFormFields
             return false;
         }
         $image_details = wp_get_attachment_image_src( $image->ID, 'large' );
+        $this->validate_image_size( $image->ID );
         return reset( $image_details );
         //Return the first item in the array (which is the url)
+    }
+    
+    public function validate_image_size( $image_id )
+    {
+        $image_details = wp_get_attachment_image_src( $image_id, 'large' );
+        if ( $image_details[1] < 250 || $image_details[2] < 250 ) {
+            throw new InvalidArgumentException( sprintf( __( 'Post image must be at least 250x250px. Current image is: %dx%dpx', 'post-to-google-my-business' ), $image_details[1], $image_details[2] ) );
+        }
+        $image_file_size = filesize( get_attached_file( $image_id ) );
+        
+        if ( $image_file_size < 10240 ) {
+            throw new InvalidArgumentException( __( 'Post image too small, must be at least 10KB', 'post-to-google-my-business' ) );
+        } elseif ( $image_file_size > 5242880 ) {
+            throw new InvalidArgumentException( __( 'Post image too big, must be 5MB at most', 'post-to-google-my-business' ) );
+        }
+    
     }
     
     /**
@@ -106,7 +163,7 @@ class ParseFormFields
      */
     public function getLocations( $default_location )
     {
-        if ( !isset( $this->form_fields['mbp_selected_location'] ) ) {
+        if ( !isset( $this->form_fields['mbp_selected_location'] ) || empty($this->form_fields['mbp_selected_location']) ) {
             return [ $default_location ];
         }
         
@@ -116,66 +173,37 @@ class ParseFormFields
             return $this->form_fields['mbp_selected_location'];
         }
         
-        throw new \UnexpectedValueException( "Could not parse post locations" );
+        throw new \UnexpectedValueException( __( "Could not parse post locations", 'post-to-google-my-business' ) );
     }
     
-    public function parse_placeholder_variables( $text, $post_id )
+    public function generate_placeholder_variables( $parent_post_id, $location )
     {
-        $post = get_post( $post_id );
-        $variables = array();
-        foreach ( $post as $key => $value ) {
-            $variables['%' . $key . '%'] = $value;
-        }
-        $variables['%post_content%'] = $this->parse_post_content( $variables['%post_content%'] );
-        $variables['%post_permalink%'] = get_permalink( $post_id );
-        //User info
-        $user_variables = array(
-            'aim',
-            'description',
-            'display_name',
-            'first_name',
-            'jabber',
-            'last_name',
-            'nickname',
-            'user_email',
-            'user_nicename',
-            'user_url',
-            'yim'
+        $decorators = [
+            'post_permalink'     => new PostPermalink( $parent_post_id ),
+            'post_variables'     => new PostVariables( $parent_post_id ),
+            'user_variables'     => new UserVariables( $parent_post_id ),
+            'site_variables'     => new SiteVariables(),
+            'location_variables' => new LocationVariables( $location ),
+        ];
+        $decorators = apply_filters(
+            'mbp_placeholder_decorators',
+            $decorators,
+            $parent_post_id,
+            $location
         );
-        foreach ( $user_variables as $variable ) {
-            $variables['%author_' . $variable . '%'] = get_the_author_meta( $variable, $post->post_author );
+        $variables = [];
+        foreach ( $decorators as $decorator ) {
+            if ( $decorator instanceof VariableInterface ) {
+                $variables = array_merge( $variables, $decorator->variables() );
+            }
         }
-        $site_variables = array(
-            'name',
-            'description',
-            'url',
-            'pingback_url',
-            'atom_url',
-            'rdf_url',
-            'rss_url',
-            'rss2_url',
-            'comments_atom_url',
-            'comments_rss2_url'
-        );
-        foreach ( $site_variables as $variable ) {
-            $variables['%site_' . $variable . '%'] = get_bloginfo( $variable );
-        }
-        $variables = apply_filters( 'mbp_placeholder_variables', $variables );
+        $variables = apply_filters( 'mbp_placeholder_variables', $variables, $parent_post_id );
+        return $variables;
+    }
+    
+    public function parse_placeholder_variables( $variables, $text )
+    {
         return str_replace( array_keys( $variables ), $variables, $text );
-    }
-    
-    public function parse_post_content( $text )
-    {
-        $text = wpautop( $text );
-        //Add paragraph tags
-        $text = preg_replace( "~(?:\\[/?)[^\\]]+/?\\]~s", '', $text );
-        //Strip shortcodes
-        $parse_html = new Html2Text( $text, array(
-            'width' => 0,
-        ) );
-        $text = $parse_html->getText();
-        $text = trim( $text );
-        return $text;
     }
 
 }

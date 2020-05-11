@@ -6,7 +6,7 @@
             <tbody>
             <tr id="row_nf_import_fields">
                 <th scope="row">
-                    <label for="nf_import_fields"><?php echo __( 'Select a file', 'ninja-forms' ); ?></label>
+                    <label for="nf_import_fields"><?php esc_html_e( 'Select a file', 'ninja-forms' ); ?></label>
                 </th>
                 <td>
                     <input type="file" name="nf_import_fields" id="nf_import_fields" class="widefat">
@@ -14,10 +14,10 @@
             </tr>
             <tr id="row_nf_import_fields_submit">
                 <th scope="row">
-                    <label for="nf_import_fields_submit"><?php _e( 'Import Fields', 'ninja-forms' ); ?></label>
+                    <label for="nf_import_fields_submit"><?php esc_html_e( 'Import Fields', 'ninja-forms' ); ?></label>
                 </th>
                 <td>
-                    <input type="submit" id="nf_import_fields_submit" class="button-secondary" value="<?php echo __( 'Import Fields', 'ninja-forms' ) ;?>">
+                    <input type="submit" id="nf_import_fields_submit" class="button-secondary" value="<?php esc_html_e( 'Import Fields', 'ninja-forms' ) ;?>">
                 </td>
             </tr>
             </tbody>

@@ -10,10 +10,14 @@ define( ['models/formTemplateModel'], function( TemplateModel ) {
 		model: TemplateModel,
 		tmpNum: 1,
         url: function() {
-            return ajaxurl + "?action=nf_new_form_templates";
+            return ajaxurl + "?action=nf_new_form_templates&security="+ nfAdmin.ajaxNonce;
         },
 
         parse: function( response, options ){
+            if(response.data.hasOwnProperty('error')) {
+                alert(response.data.error);
+                return null;
+            }
             return response.data;
         },
 

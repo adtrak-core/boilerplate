@@ -63,6 +63,7 @@ class NF_Step_Processing
 //            //set_time_limit( 0 );
 //        }
 
+        // Ajax call handled in 'processing' in this file
         add_action( 'wp_ajax_nf_' . $this->action, array( $this, 'processing' ) );
     }
 
@@ -77,7 +78,7 @@ class NF_Step_Processing
 
         // Get our passed arguments. These come from the querysting of the processing page.
         if ( isset ( $_REQUEST['args'] ) ) {
-            $this->args = $_REQUEST['args'];
+            $this->args = WPN_Helper::sanitize_text_field($_REQUEST['args']);
             if ( isset ( $this->args['redirect'] ) ) {
                 if( wp_validate_redirect( $this->args['redirect'] ) ){
                     $this->redirect = wp_sanitize_redirect( $this->args['redirect'] );

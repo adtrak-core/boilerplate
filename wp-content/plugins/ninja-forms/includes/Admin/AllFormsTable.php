@@ -17,14 +17,14 @@ class NF_Admin_AllFormsTable extends WP_List_Table
     public function __construct() {
 
         parent::__construct( array(
-            'singular' => __( 'Form', 'ninja-forms' ), //singular name of the listed records
-            'plural'   => __( 'Forms', 'ninja-forms' ), //plural name of the listed records
+            'singular' => esc_html__( 'Form', 'ninja-forms' ), //singular name of the listed records
+            'plural'   => esc_html__( 'Forms', 'ninja-forms' ), //plural name of the listed records
             'ajax'     => false //should this table support ajax?
         ) );
     }
 
     public function no_items() {
-        _e( 'No forms found.', 'ninja-forms' );
+        esc_html_e( 'No forms found.', 'ninja-forms' );
     }
 
     /**
@@ -37,7 +37,7 @@ class NF_Admin_AllFormsTable extends WP_List_Table
 
         wp_enqueue_script( 'nf-all-forms', Ninja_Forms::$url . 'assets/js/all-forms.js' );
         wp_localize_script( 'nf-all-forms', 'nfi18n', array(
-            'confirm_delete' => __( 'Really Delete This Form? This will remove all fields and submission data. Recovery is not possible.', 'ninja-forms' ),
+            'confirm_delete' => esc_html__( 'Really Delete This Form? This will remove all fields and submission data. Recovery is not possible.', 'ninja-forms' ),
         ) );
 
         $columns = $this->get_columns();
@@ -71,9 +71,9 @@ class NF_Admin_AllFormsTable extends WP_List_Table
     {
         $columns = array(
             'cb'        => '<input type="checkbox" />',
-            'title'     => __( 'Form Title', 'ninja-forms' ),
-            'shortcode' => __( 'Shortcode', 'ninja-forms' ),
-            'date'      => __( 'Created', 'ninja-forms' )
+            'title'     => esc_html__( 'Form Title', 'ninja-forms' ),
+            'shortcode' => esc_html__( 'Shortcode', 'ninja-forms' ),
+            'date'      => esc_html__( 'Created', 'ninja-forms' )
         );
 
         return $columns;
@@ -97,8 +97,8 @@ class NF_Admin_AllFormsTable extends WP_List_Table
     public function get_sortable_columns()
     {
         return array(
-            'title' => array( __( 'title', 'ninja-forms' ),   TRUE ),
-            'date'  => array( __( 'date', 'ninja-forms' ), TRUE ),
+            'title' => array( esc_attr__( 'title', 'ninja-forms' ),   TRUE ),
+            'date'  => array( esc_attr__( 'date', 'ninja-forms' ), TRUE ),
         );
     }
 
@@ -161,13 +161,13 @@ class NF_Admin_AllFormsTable extends WP_List_Table
         // If orderby is set, use this as the sort column
         if(!empty($_GET['orderby']))
         {
-            $orderby = $_GET['orderby'];
+            $orderby = WPN_Helper::sanitize_text_field($_GET['orderby']);
         }
 
         // If order is set use this as the order
         if(!empty($_GET['order']))
         {
-            $order = $_GET['order'];
+            $order = WPN_Helper::sanitize_text_field($_GET['order']);
         }
 
 
@@ -219,7 +219,7 @@ class NF_Admin_AllFormsTable extends WP_List_Table
     public function get_bulk_actions()
     {
         $actions = array(
-            'bulk-delete' => __( 'Delete', 'ninja-forms' )
+            'bulk-delete' => esc_html__( 'Delete', 'ninja-forms' )
         );
 
         return $actions;
@@ -235,7 +235,7 @@ class NF_Admin_AllFormsTable extends WP_List_Table
             $nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
             if ( ! wp_verify_nonce( $nonce, 'nf_duplicate_form' ) ) {
-                die( __( 'Go get a life, script kiddies', 'ninja-forms' ) );
+                die( esc_html__( 'Go get a life, script kiddies', 'ninja-forms' ) );
             }
             else {
                 NF_Database_Models_Form::duplicate( absint( $_GET['id'] ) );
@@ -251,7 +251,7 @@ class NF_Admin_AllFormsTable extends WP_List_Table
             $nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
             if ( ! wp_verify_nonce( $nonce, 'nf_delete_form' ) ) {
-                die( __( 'Go get a life, script kiddies', 'ninja-forms' ) );
+                die( esc_html__( 'Go get a life, script kiddies', 'ninja-forms' ) );
             }
             else {
                 self::delete_item( absint( $_GET['id'] ) );
@@ -270,7 +270,7 @@ class NF_Admin_AllFormsTable extends WP_List_Table
             $nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
             if ( ! wp_verify_nonce( $nonce, 'bulk-forms' ) ) {
-                die( __( 'Go get a life, script kiddies', 'ninja-forms' ) );
+                die( esc_html__( 'Go get a life, script kiddies', 'ninja-forms' ) );
             }
 
             if( isset( $_POST[ 'bulk-delete' ] ) ) {

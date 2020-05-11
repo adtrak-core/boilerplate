@@ -21,11 +21,11 @@ class NF_Fields_Spam extends NF_Abstracts_Input
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Anti-Spam', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Anti-Spam', 'ninja-forms' );
 
         // Rename Label setting to Question
-        $this->_settings[ 'label' ][ 'label' ] = __( 'Question', 'ninja-forms' );
-        $this->_settings[ 'label_pos' ][ 'label' ] = __( 'Question Position', 'ninja-forms' );
+        $this->_settings[ 'label' ][ 'label' ] = esc_html__( 'Question', 'ninja-forms' );
+        $this->_settings[ 'label_pos' ][ 'label' ] = esc_html__( 'Question Position', 'ninja-forms' );
 
         // Manually set Field Key and stop tracking.
         $this->_settings[ 'key' ][ 'value' ] = 'spam';
@@ -54,7 +54,7 @@ class NF_Fields_Spam extends NF_Abstracts_Input
             ( isset( $field[ 'spam_answer' ] ) && isset( $field[ 'value' ] ) )
             && ( $field[ 'spam_answer' ] != $field[ 'value' ] )
         ){
-            $errors = __( 'Incorrect Answer', 'ninja-forms' );
+            $errors = esc_html__( 'Incorrect Answer', 'ninja-forms' );
         }
 
         return $errors;

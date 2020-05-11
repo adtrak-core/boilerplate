@@ -5,6 +5,7 @@ namespace PGMB\Google;
 
 use LengthException;
 use OutOfBoundsException;
+use OverflowException;
 
 /**
  * Class LocalPost
@@ -30,6 +31,17 @@ class LocalPost extends AbstractGoogleJsonObject {
 		'EVENT',
 		'OFFER',
 		'PRODUCT',
+		'ALERT'
+	];
+
+	/**
+	 * Array containing valid alert types for the ALERT topic type
+	 *
+	 * @var array
+	 * @since 2.2.11
+	 */
+	private $alertTypes = [
+		'COVID_19'
 	];
 
 	/**
@@ -62,6 +74,21 @@ class LocalPost extends AbstractGoogleJsonObject {
 		$this->jsonOutput['topicType'] = $topicType;
 	}
 
+	/**
+	 * Sets the alert type
+	 *
+	 * @param $alertType
+	 *
+	 * @return void
+	 *
+	 * @since 2.2.11
+	 */
+	public function setAlertType($alertType){
+		if(!in_array($alertType, $this->alertTypes)){
+			throw new OutOfBoundsException(__('Invalid Alert type', 'post-to-google-my-business'));
+		}
+		$this->jsonOutput['alertType'] = $alertType;
+	}
 
 	/**
 	 * Set post language code
@@ -119,7 +146,10 @@ class LocalPost extends AbstractGoogleJsonObject {
 	 * @return void
 	 */
 	public function addMediaItem(MediaItem $mediaItem){
-		$this->jsonOutput['media'] = $mediaItem->getArray();
+		$this->jsonOutput['media'][] = $mediaItem->getArray();
+		if(count($this->jsonOutput['media']) > 1){
+			throw new OverflowException(__('Posts can only have 1 image', 'post-to-google-my-business'));
+		}
 	}
 
 	/**
@@ -153,8 +183,10 @@ class LocalPost extends AbstractGoogleJsonObject {
 			$localPost->addLocalPostOffer(LocalPostOffer::fromArray($localPostData['offer']));
 		}
 
-		if(isset($localPostData->media)){
-			$localPost->addMediaItem(MediaItem::fromArray($localPostData['media']));
+		if(isset($localPostData->media) && is_array($localPostData->media)){
+			foreach($localPostData->media as $media){
+				$localPost->addMediaItem(MediaItem::fromArray($media));
+			}
 		}
 
 		if(isset($localPostData->event)){

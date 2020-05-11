@@ -10,7 +10,7 @@ return array(
         'name' => 'tag',
         'type' => 'textbox',
         'group' => 'primary',
-        'label' => __( 'Hook Tag', 'ninja-forms' ),
+        'label' => esc_html__( 'Hook Tag', 'ninja-forms' ),
         'placeholder' => '',
         'value' => '',
         'width' => 'full',

@@ -23,6 +23,6 @@ class NF_Fields_Button extends NF_Abstracts_Field
 
         $this->_settings[ 'label' ][ 'width' ] = 'full';
 
-        $this->_nicename = __( 'Button', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Button', 'ninja-forms' );
     }
 }

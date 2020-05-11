@@ -610,12 +610,32 @@ class NF_Updates_CacheCollateFields extends NF_Abstracts_RequiredUpdate
                 . "', `type` = '" . $this->prepare( $settings[ 'type' ] ) 
                 . "', field_label = '" . $this->prepare( $settings[ 'label' ] ) 
                 . "', field_key = '" . $this->prepare( $settings[ 'key' ] ) 
-                . "', `order` = " . intval( $settings[ 'order' ] ) 
-                . ", required = " . intval( $settings[ 'required' ] )
-                . ", default_value = '" . $this->prepare( $settings[ 'default_value' ] )
-                . "', label_pos = '" . $this->prepare( $settings[ 'label_pos' ] )
-                . "', personally_identifiable = " . intval( $settings[ 'personally_identifiable' ] )
-                . " WHERE id = " . intval( $updating );
+                . "', `order` = " . intval( $settings[ 'order' ] );
+
+                if( isset( $settings[ 'required' ] ) ) {
+                    $sql .= ", required = " . intval( $settings[ 'required' ] );
+                } else {
+                    $sql .= ", required = 0";
+                }
+
+                if ( isset( $settings[ 'default_value' ] ) ) {
+                    $sql .= ", default_value = '" . $this->prepare( $settings[ 'default_value' ] ) . "'";
+                } else {
+                    $sql .= ", default_value = ''";
+                }
+
+                if ( isset( $settings[ 'label_pos' ] ) ) {
+                    $sql .= ", label_pos = '" . $this->prepare( $settings[ 'label_pos' ] ) . "'";
+                } else {
+                    $sql .= ", label_pos = ''";
+                }
+
+                if ( isset( $settings[ 'personally_identifiable' ] ) ) {
+                    $sql .= ", personally_identifiable = " . intval( $settings[ 'personally_identifiable' ] );
+                } else {
+                    $sql .= ", personally_identifiable = 0";;
+                }
+                $sql .= " WHERE id = " . intval( $updating );
             $this->query( $sql );
             // For each meta of the field...
             foreach ( $settings as $meta => $value ) {

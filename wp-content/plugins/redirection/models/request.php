@@ -22,7 +22,7 @@ class Redirection_Request {
 			$url = $_SERVER['REQUEST_URI'];
 		}
 
-		return apply_filters( 'redirection_request_url', $url );
+		return apply_filters( 'redirection_request_url', stripslashes( $url ) );
 	}
 
 	public static function get_user_agent() {
@@ -83,5 +83,15 @@ class Redirection_Request {
 		}
 
 		return false;
+	}
+
+	public static function get_accept_language() {
+		if ( isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ) {
+			$languages = preg_replace( '/;.*$/', '', $_SERVER['HTTP_ACCEPT_LANGUAGE'] );
+			$languages = str_replace( ' ', '', $languages );
+			return apply_filters( 'redirection_request_accept_language', explode( ',', $languages ) );
+		}
+
+		return [];
 	}
 }

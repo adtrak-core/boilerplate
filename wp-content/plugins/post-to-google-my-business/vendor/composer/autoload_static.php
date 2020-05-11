@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec
+class ComposerStaticInit4eb86d5c7b4ded1a45988ae4f3b2025b
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -69,8 +69,11 @@ class ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec
         'PGMB\\BackgroundProcessing\\BackgroundProcess' => __DIR__ . '/../..' . '/src/BackgroundProcessing/BackgroundProcess.php',
         'PGMB\\BackgroundProcessing\\GooglePostManager' => __DIR__ . '/../..' . '/src/BackgroundProcessing/GooglePostManager.php',
         'PGMB\\BackgroundProcessing\\PostPublishProcess' => __DIR__ . '/../..' . '/src/BackgroundProcessing/PostPublishProcess.php',
+        'PGMB\\Calendar\\Feed' => __DIR__ . '/../..' . '/src/Calendar/Feed.php',
         'PGMB\\Components\\BusinessSelector' => __DIR__ . '/../..' . '/src/Components/BusinessSelector.php',
+        'PGMB\\Components\\PostEditor' => __DIR__ . '/../..' . '/src/Components/PostEditor.php',
         'PGMB\\Epitrove' => __DIR__ . '/../..' . '/src/Epitrove.php',
+        'PGMB\\FormFields' => __DIR__ . '/../..' . '/src/FormFields.php',
         'PGMB\\Google\\AbstractGoogleJsonObject' => __DIR__ . '/../..' . '/src/Google/AbstractGoogleJsonObject.php',
         'PGMB\\Google\\CallToAction' => __DIR__ . '/../..' . '/src/Google/CallToAction.php',
         'PGMB\\Google\\Date' => __DIR__ . '/../..' . '/src/Google/Date.php',
@@ -82,15 +85,27 @@ class ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec
         'PGMB\\Google\\LocalPostProduct' => __DIR__ . '/../..' . '/src/Google/LocalPostProduct.php',
         'PGMB\\Google\\MediaItem' => __DIR__ . '/../..' . '/src/Google/MediaItem.php',
         'PGMB\\Google\\Money' => __DIR__ . '/../..' . '/src/Google/Money.php',
-        'PGMB\\Google\\PostReference' => __DIR__ . '/../..' . '/src/Google/PostReference.php',
         'PGMB\\Google\\PublishedLocalPost' => __DIR__ . '/../..' . '/src/Google/PublishedLocalPost.php',
         'PGMB\\Google\\TimeInterval' => __DIR__ . '/../..' . '/src/Google/TimeInterval.php',
         'PGMB\\Google\\TimeOfDay' => __DIR__ . '/../..' . '/src/Google/TimeOfDay.php',
+        'PGMB\\Notifications\\BasicNotification' => __DIR__ . '/../..' . '/src/Notifications/BasicNotification.php',
+        'PGMB\\Notifications\\FeatureNotification' => __DIR__ . '/../..' . '/src/Notifications/FeatureNotification.php',
+        'PGMB\\Notifications\\Notification' => __DIR__ . '/../..' . '/src/Notifications/Notification.php',
+        'PGMB\\Notifications\\NotificationManager' => __DIR__ . '/../..' . '/src/Notifications/NotificationManager.php',
         'PGMB\\ParseFormFields' => __DIR__ . '/../..' . '/src/ParseFormFields.php',
+        'PGMB\\Placeholders\\LocationVariables' => __DIR__ . '/../..' . '/src/Placeholders/LocationVariables.php',
+        'PGMB\\Placeholders\\PostPermalink' => __DIR__ . '/../..' . '/src/Placeholders/PostPermalink.php',
+        'PGMB\\Placeholders\\PostVariables' => __DIR__ . '/../..' . '/src/Placeholders/PostVariables.php',
+        'PGMB\\Placeholders\\SiteVariables' => __DIR__ . '/../..' . '/src/Placeholders/SiteVariables.php',
+        'PGMB\\Placeholders\\UserVariables' => __DIR__ . '/../..' . '/src/Placeholders/UserVariables.php',
+        'PGMB\\Placeholders\\VariableInterface' => __DIR__ . '/../..' . '/src/Placeholders/VariableInterface.php',
         'PGMB\\PostTypes\\AbstractPostType' => __DIR__ . '/../..' . '/src/PostTypes/AbstractPostType.php',
         'PGMB\\PostTypes\\PostTypeDefinition' => __DIR__ . '/../..' . '/src/PostTypes/PostTypeDefinition.php',
         'PGMB\\PostTypes\\PostTypeItem' => __DIR__ . '/../..' . '/src/PostTypes/PostTypeItem.php',
         'PGMB\\PostTypes\\SubPost' => __DIR__ . '/../..' . '/src/PostTypes/SubPost.php',
+        'PGMB\\Taxonomy\\ListedTaxonomyField' => __DIR__ . '/../..' . '/src/Taxonomy/ListedTaxonomyField.php',
+        'PGMB\\Taxonomy\\TaxonomyField' => __DIR__ . '/../..' . '/src/Taxonomy/TaxonomyField.php',
+        'PGMB\\Taxonomy\\TaxonomyMeta' => __DIR__ . '/../..' . '/src/Taxonomy/TaxonomyMeta.php',
         'PGMB\\Tests\\Google\\CallToActionTest' => __DIR__ . '/../..' . '/tests/PGMB/Google/CallToActionTest.php',
         'PGMB\\Tests\\Google\\DateTest' => __DIR__ . '/../..' . '/tests/PGMB/Google/DateTest.php',
         'PGMB\\Tests\\Google\\LocalPostEditMaskTest' => __DIR__ . '/../..' . '/tests/PGMB/Google/LocalPostEditMaskTest.php',
@@ -99,6 +114,7 @@ class ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec
         'PGMB\\Tests\\Google\\TimeIntervalTest' => __DIR__ . '/../..' . '/tests/PGMB/Google/TimeIntervalTest.php',
         'PGMB\\Upgrader\\DistributedUpgrade' => __DIR__ . '/../..' . '/src/Upgrader/DistributedUpgrade.php',
         'PGMB\\Upgrader\\Upgrade' => __DIR__ . '/../..' . '/src/Upgrader/Upgrade.php',
+        'PGMB\\Upgrader\\Upgrade_2_2_11' => __DIR__ . '/../..' . '/src/Upgrader/Upgrade_2_2_11.php',
         'PGMB\\Upgrader\\Upgrade_2_2_3' => __DIR__ . '/../..' . '/src/Upgrader/Upgrade_2_2_3.php',
         'PGMB\\Upgrader\\Upgrader' => __DIR__ . '/../..' . '/src/Upgrader/Upgrader.php',
         'PGMB\\Vendor\\Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
@@ -115,16 +131,18 @@ class ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec
         'PGMB\\Vendor\\Html2Text\\BlockquoteTest' => __DIR__ . '/..' . '/html2text/html2text/test/BlockquoteTest.php',
         'PGMB\\Vendor\\Html2Text\\ConstructorTest' => __DIR__ . '/..' . '/html2text/html2text/test/ConstructorTest.php',
         'PGMB\\Vendor\\Html2Text\\DefinitionListTest' => __DIR__ . '/..' . '/html2text/html2text/test/DefinitionListTest.php',
+        'PGMB\\Vendor\\Html2Text\\DelTest' => __DIR__ . '/..' . '/html2text/html2text/test/DelTest.php',
         'PGMB\\Vendor\\Html2Text\\Html2Text' => __DIR__ . '/..' . '/html2text/html2text/src/Html2Text.php',
         'PGMB\\Vendor\\Html2Text\\HtmlCharsTest' => __DIR__ . '/..' . '/html2text/html2text/test/HtmlCharsTest.php',
         'PGMB\\Vendor\\Html2Text\\ImageTest' => __DIR__ . '/..' . '/html2text/html2text/test/ImageTest.php',
+        'PGMB\\Vendor\\Html2Text\\InsTest' => __DIR__ . '/..' . '/html2text/html2text/test/InsTest.php',
         'PGMB\\Vendor\\Html2Text\\LinkTest' => __DIR__ . '/..' . '/html2text/html2text/test/LinkTest.php',
         'PGMB\\Vendor\\Html2Text\\ListTest' => __DIR__ . '/..' . '/html2text/html2text/test/ListTest.php',
         'PGMB\\Vendor\\Html2Text\\PreTest' => __DIR__ . '/..' . '/html2text/html2text/test/PreTest.php',
         'PGMB\\Vendor\\Html2Text\\PrintTest' => __DIR__ . '/..' . '/html2text/html2text/test/PrintTest.php',
         'PGMB\\Vendor\\Html2Text\\SearchReplaceTest' => __DIR__ . '/..' . '/html2text/html2text/test/SearchReplaceTest.php',
         'PGMB\\Vendor\\Html2Text\\SpanTest' => __DIR__ . '/..' . '/html2text/html2text/test/SpanTest.php',
-        'PGMB\\Vendor\\Html2Text\\StrToUpperTest' => __DIR__ . '/..' . '/html2text/html2text/test/HeaderTest.php',
+        'PGMB\\Vendor\\Html2Text\\StrToUpperTest' => __DIR__ . '/..' . '/html2text/html2text/test/StrToUpperTest.php',
         'PGMB\\Vendor\\Html2Text\\TableTest' => __DIR__ . '/..' . '/html2text/html2text/test/TableTest.php',
         'PGMB\\Vendor\\Rarst\\WordPress\\DateTime\\WpDateTime' => __DIR__ . '/..' . '/rarst/wpdatetime/src/WpDateTime.php',
         'PGMB\\Vendor\\Rarst\\WordPress\\DateTime\\WpDateTimeImmutable' => __DIR__ . '/..' . '/rarst/wpdatetime/src/WpDateTimeImmutable.php',
@@ -144,9 +162,9 @@ class ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec
         'TypistTech\\Imposter\\Imposter' => __DIR__ . '/..' . '/typisttech/imposter/src/Imposter.php',
         'TypistTech\\Imposter\\ImposterFactory' => __DIR__ . '/..' . '/typisttech/imposter/src/ImposterFactory.php',
         'TypistTech\\Imposter\\ImposterInterface' => __DIR__ . '/..' . '/typisttech/imposter/src/ImposterInterface.php',
-        'TypistTech\\Imposter\\Plugin\\Capability\\CommandProvider' => __DIR__ . '/..' . '/typisttech/imposter-plugin/src/Capability/CommandProvider.php',
-        'TypistTech\\Imposter\\Plugin\\Command\\RunCommand' => __DIR__ . '/..' . '/typisttech/imposter-plugin/src/Command/RunCommand.php',
+        'TypistTech\\Imposter\\Plugin\\AutoloadMerger' => __DIR__ . '/..' . '/typisttech/imposter-plugin/src/AutoloadMerger.php',
         'TypistTech\\Imposter\\Plugin\\ImposterPlugin' => __DIR__ . '/..' . '/typisttech/imposter-plugin/src/ImposterPlugin.php',
+        'TypistTech\\Imposter\\Plugin\\Transformer' => __DIR__ . '/..' . '/typisttech/imposter-plugin/src/Transformer.php',
         'TypistTech\\Imposter\\ProjectConfig' => __DIR__ . '/..' . '/typisttech/imposter/src/ProjectConfig.php',
         'TypistTech\\Imposter\\ProjectConfigInterface' => __DIR__ . '/..' . '/typisttech/imposter/src/ProjectConfigInterface.php',
         'TypistTech\\Imposter\\StringUtil' => __DIR__ . '/..' . '/typisttech/imposter/src/StringUtil.php',
@@ -159,9 +177,9 @@ class ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitdd9d9ecd7fc7481770585387f1f9e2ec::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4eb86d5c7b4ded1a45988ae4f3b2025b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4eb86d5c7b4ded1a45988ae4f3b2025b::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4eb86d5c7b4ded1a45988ae4f3b2025b::$classMap;
 
         }, null, ClassLoader::class);
     }

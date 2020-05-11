@@ -58,6 +58,10 @@ if ( ! class_exists( 'WP_Async_Request' ) ) {
 		public function __construct() {
 			$this->identifier = $this->prefix . '_' . $this->action;
 
+			/**
+			 * Ajax calls handled by 'maybe_handle', which will most likely
+			 * call the 'handle' function of the class that extended this class
+			 */
 			add_action( 'wp_ajax_' . $this->identifier, array( $this, 'maybe_handle' ) );
 			add_action( 'wp_ajax_nopriv_' . $this->identifier, array( $this, 'maybe_handle' ) );
 		}

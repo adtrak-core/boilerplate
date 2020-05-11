@@ -18,7 +18,7 @@ class WPSEO_Post_Type {
 	 * @return array Array with all the accessible post_types.
 	 */
 	public static function get_accessible_post_types() {
-		$post_types = get_post_types( array( 'public' => true ) );
+		$post_types = get_post_types( [ 'public' => true ] );
 		$post_types = array_filter( $post_types, 'is_post_type_viewable' );
 
 		/**
@@ -30,7 +30,7 @@ class WPSEO_Post_Type {
 
 		// When the array gets messed up somewhere.
 		if ( ! is_array( $post_types ) ) {
-			return array();
+			return [];
 		}
 
 		return $post_types;
@@ -59,7 +59,7 @@ class WPSEO_Post_Type {
 			return false;
 		}
 
-		return ( false === WPSEO_Options::get( 'noindex-' . $post_type_name, false ) );
+		return ( WPSEO_Options::get( 'noindex-' . $post_type_name, false ) === false );
 	}
 
 	/**
@@ -85,7 +85,7 @@ class WPSEO_Post_Type {
 	public static function is_rest_enabled( $post_type ) {
 		$post_type_object = get_post_type_object( $post_type );
 
-		if ( null === $post_type_object ) {
+		if ( $post_type_object === null ) {
 			return false;
 		}
 

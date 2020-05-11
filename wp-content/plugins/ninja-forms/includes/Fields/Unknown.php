@@ -25,7 +25,7 @@ class NF_Fields_Unknown extends NF_Fields_Hidden
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Unknown', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Unknown', 'ninja-forms' );
 
         $this->_settings[ 'message' ] = array(
             'name' => 'message',
@@ -63,7 +63,7 @@ class NF_Fields_Unknown extends NF_Fields_Hidden
                 'order'   => $field->get_setting( 'order' ),
                 'key'     => $field->get_setting( 'key' ),
                 'type'    => 'unknown',
-                'message' => sprintf( __( 'Field type "%s" not found.', 'ninja-forms' ), $field->get_setting( 'type' ) )
+                'message' => sprintf( esc_html__( 'Field type "%s" not found.', 'ninja-forms' ), $field->get_setting( 'type' ) )
             ));
         } elseif( isset( $field[ 'settings' ] ) ){
             $unknown->update_settings(array(
@@ -72,7 +72,7 @@ class NF_Fields_Unknown extends NF_Fields_Hidden
                 'order'   => $field[ 'settings' ][ 'order' ],
                 'key'     => $field[ 'settings' ][ 'key' ],
                 'type'    => 'unknown',
-                'message' => sprintf( __( 'Field type "%s" not found.', 'ninja-forms' ), $field[ 'settings' ][ 'type' ] )
+                'message' => sprintf( esc_html__( 'Field type "%s" not found.', 'ninja-forms' ), $field[ 'settings' ][ 'type' ] )
             ));
         } else {
             $unknown->update_settings(array(
@@ -81,7 +81,7 @@ class NF_Fields_Unknown extends NF_Fields_Hidden
                 'order'   => $field[ 'order' ],
                 'key'     => $field[ 'key' ],
                 'type'    => 'unknown',
-                'message' => sprintf( __( 'Field type "%s" not found.', 'ninja-forms' ), $field[ 'type' ] )
+                'message' => sprintf( esc_html__( 'Field type "%s" not found.', 'ninja-forms' ), $field[ 'type' ] )
             ));
         }
         return $unknown;

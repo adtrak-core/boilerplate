@@ -10,7 +10,7 @@ return array(
         'name' => 'redirect_url',
         'type' => 'textbox',
         'group' => 'primary',
-        'label' => __( 'URL', 'ninja-forms' ),
+        'label' => esc_html__( 'URL', 'ninja-forms' ),
         'placeholder' => '',
         'width' => 'full',
         'value' => '',

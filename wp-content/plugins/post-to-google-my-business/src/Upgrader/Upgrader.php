@@ -15,7 +15,8 @@ class Upgrader extends \WP_Background_Process implements BackgroundProcess {
 
 
 	protected $available_upgrades = [
-		'2.2.3'
+		'2.2.3',
+		'2.2.11'
 	];
 
 	/**

@@ -25,7 +25,7 @@ class NF_Fields_Number extends NF_Abstracts_Input
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Number', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Number', 'ninja-forms' );
     }
 
     public function get_parent_type()

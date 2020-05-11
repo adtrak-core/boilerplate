@@ -39,8 +39,8 @@ final class NF_AddonChecker
 
         ?>
         <div class="notice notice-error is-dismissible">
-            <p><?php echo sprintf( __( 'Oops! That addon is not yet compatible with Ninja Forms THREE. %sLearn More%s.', 'ninja-forms' ), '<a target="_blank" href="https://ninjaforms.com/ninja-forms-three-extension-development-master-list/">', '</a>' ); ?></p>
-            <p><?php echo sprintf( __( '%s was deactivated.', 'ninja-forms' ), '<code>' . $plugin . '</code>'); ?></p>
+            <p><?php echo sprintf( esc_html__( 'Oops! That addon is not yet compatible with Ninja Forms THREE. %sLearn More%s.', 'ninja-forms' ), '<a target="_blank" href="https://ninjaforms.com/ninja-forms-three-extension-development-master-list/">', '</a>' ); ?></p>
+            <p><?php echo sprintf( esc_html__( '%s was deactivated.', 'ninja-forms' ), '<code>' . $plugin . '</code>'); ?></p>
         </div>
         <?php
     }

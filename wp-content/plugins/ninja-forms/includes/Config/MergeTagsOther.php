@@ -9,7 +9,7 @@ return apply_filters( 'ninja_forms_merge_tags_other', array(
     */
     'query_string' => array(
         'tag' => '{querystring:YOUR_KEY}',
-        'label' => __( 'Query String', 'ninja_forms' ),
+        'label' => esc_html__( 'Query String', 'ninja_forms' ),
         'callback' => null,
     ),
 
@@ -22,7 +22,7 @@ return apply_filters( 'ninja_forms_merge_tags_other', array(
     'date' => array(
         'id' => 'date',
         'tag' => '{other:date}',
-        'label' => __( 'Date', 'ninja_forms' ),
+        'label' => esc_html__( 'Date', 'ninja_forms' ),
         'callback' => 'system_date'
     ),
 
@@ -35,7 +35,7 @@ return apply_filters( 'ninja_forms_merge_tags_other', array(
     'time' => array(
         'id' => 'time',
         'tag' => '{other:time}',
-        'label' => __( 'Time', 'ninja_forms' ),
+        'label' => esc_html__( 'Time', 'ninja_forms' ),
         'callback' => 'system_time'
     ),
 
@@ -48,7 +48,7 @@ return apply_filters( 'ninja_forms_merge_tags_other', array(
     'ip' => array(
         'id' => 'ip',
         'tag' => '{other:user_ip}',
-        'label' => __( 'User IP Address', 'ninja_forms' ),
+        'label' => esc_html__( 'User IP Address', 'ninja_forms' ),
         'callback' => 'user_ip'
     ),
 

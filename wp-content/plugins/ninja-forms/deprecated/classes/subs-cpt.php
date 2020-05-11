@@ -379,7 +379,7 @@ class NF_Subs_CPT {
 	 */
 	public function custom_columns( $column, $sub_id ) {
 		if ( isset ( $_GET['form_id'] ) ) {
-			$form_id = $_GET['form_id'];
+			$form_id = absint($_GET['form_id']);
 			if ( $column == 'id' ) {
 				echo apply_filters( 'nf_sub_table_seq_num', Ninja_Forms()->sub( $sub_id )->get_seq_num(), $sub_id, $column );
 				echo '<div class="locked-info"><span class="locked-avatar"></span> <span class="locked-text"></span></div>';
@@ -480,10 +480,10 @@ class NF_Subs_CPT {
 		// Get our list of forms
 		$forms = Ninja_Forms()->forms()->get_all();
 
-		$form_id = isset( $_GET['form_id'] ) ? $_GET['form_id'] : '';
+		$form_id = isset( $_GET['form_id'] ) ? absint($_GET['form_id']) : '';
 
-		$begin_date = isset ( $_GET['begin_date'] ) ? $_GET['begin_date'] : '';
-		$end_date = isset ( $_GET['end_date'] ) ? $_GET['end_date'] : '';
+		$begin_date = isset ( $_GET['begin_date'] ) ? sanitize_text_field($_GET['begin_date']) : '';
+		$end_date = isset ( $_GET['end_date'] ) ? sanitize_text_field($_GET['end_date']) : '';
 
 		// Add begin date and end date filter fields.
 		$html = '<div style="float:left;">';
@@ -521,7 +521,7 @@ class NF_Subs_CPT {
 			$qv = &$query->query_vars;
 
 			if( !empty( $_GET['form_id'] ) ) {
-				$form_id = $_GET['form_id'];
+				$form_id = absint($_GET['form_id']);
 			} else {
 				$form_id = 0;
 			}
@@ -530,13 +530,13 @@ class NF_Subs_CPT {
 			$date_format = $plugin_settings['date_format'];
 
 			if ( !empty ( $_GET['begin_date'] ) ) {
-				$begin_date = nf_get_begin_date( $_GET['begin_date'] )->format("Y-m-d G:i:s");
+				$begin_date = nf_get_begin_date( sanitize_text_field($_GET['begin_date']) )->format("Y-m-d G:i:s");
 			} else {
 				$begin_date = '';
 			}
 
 			if ( !empty ( $_GET['end_date'] ) ) {
-				$end_date = nf_get_end_date( $_GET['end_date'] )->format("Y-m-d G:i:s");
+				$end_date = nf_get_end_date( sanitize_text_field($_GET['end_date']) )->format("Y-m-d G:i:s");
 			} else {
 				$end_date = '';
 			}
@@ -756,7 +756,7 @@ class NF_Subs_CPT {
 			$trash_url = esc_url_raw( add_query_arg( array( 'post_status' => 'trash' ) ) );
 			$trash_url = remove_query_arg( 's', $trash_url );
 			if ( isset ( $_GET['form_id'] ) ) {
-				$trashed_sub_count = nf_get_sub_count( $_GET['form_id'], 'trash' );
+				$trashed_sub_count = nf_get_sub_count( absint($_GET['form_id']), 'trash' );
 			} else {
 				$trashed_sub_count = 0;
 			}
@@ -841,8 +841,8 @@ class NF_Subs_CPT {
 			return $count;
 
 		if ( isset ( $_GET['form_id'] ) ) {
-			$sub_count = nf_get_sub_count( $_GET['form_id'] );
-			$trashed_sub_count = nf_get_sub_count( $_GET['form_id'], 'trash' );
+			$sub_count = nf_get_sub_count( absint($_GET['form_id']) );
+			$trashed_sub_count = nf_get_sub_count( absint($_GET['form_id']), 'trash' );
 			$count->publish = $sub_count;
 			$count->trash = $trashed_sub_count;
 		} else {

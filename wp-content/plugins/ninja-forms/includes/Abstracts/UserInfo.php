@@ -34,7 +34,7 @@ abstract class NF_Abstracts_UserInfo extends NF_Fields_Textbox
         );
 
         $this->_settings[ 'default' ][ 'settings' ][ 'default_type' ][ 'options' ][] = array(
-            'label'  => __( 'User Meta (if logged in)', 'ninja-forms' ),
+            'label'  => esc_html__( 'User Meta (if logged in)', 'ninja-forms' ),
             'value' => 'user-meta'
         );
 

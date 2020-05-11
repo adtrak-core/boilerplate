@@ -1,23 +1,54 @@
 <?php
 
+use  PGMB\Notifications\NotificationManager ;
+use  PGMB\Vendor\Rarst\WordPress\DateTime\WpDateTimeZone ;
 use  PGMB\WeDevsSettingsAPI ;
 if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
     class MBP_Admin_Page_Settings
     {
-        const  SETTINGS_PAGE = 'post_to_google_my_business_settings' ;
+        const  AJAX_CALLBACK_PREFIX = "mbp_settings" ;
+        const  SETTINGS_PAGE = 'post_to_google_my_business' ;
+        const  FIELD_PREFIX = 'mbp_quick_post_settings[autopost_template]' ;
+        const  NOTIFICATION_SECTION = "dashboard-notifications" ;
+        const  NEW_FEATURES_SECTION = "feature-notifications" ;
         private  $settings_api ;
-        protected  $plugin ;
-        public function __construct( MBP_Plugin $plugin, WeDevsSettingsAPI $settings_api )
+        protected  $business_selector ;
+        /**
+         * @var NotificationManager
+         */
+        public  $notification_manager ;
+        private  $plugin_version ;
+        private  $api_connected ;
+        public function __construct( $plugin_version, $api_connected, NotificationManager $notification_manager )
         {
-            $this->settings_api = $settings_api;
-            $this->plugin = $plugin;
+            $this->notification_manager = $notification_manager;
+            $this->settings_api = new WeDevsSettingsAPI();
+            $this->plugin_version = $plugin_version;
+            $this->api_connected = $api_connected;
+            $this->business_selector = new \PGMB\Components\BusinessSelector( MBP_api::getInstance() );
         }
         
         public function init()
         {
             add_action( 'admin_init', array( &$this, 'admin_init' ) );
-            add_action( 'admin_menu', array( &$this, 'add_menu' ) );
-            add_action( 'wp_ajax_mbp_get_businesses', array( &$this, 'get_businesses_ajax' ) );
+            add_action( 'admin_menu', array( $this, 'add_menu' ) );
+            add_action( 'wp_ajax_mbp_delete_notification', [ $this, 'ajax_delete_notification' ] );
+            //add_action('w$this->business_selectorp_ajax_mbp_get_businesses', array(&$this, 'get_businesses_ajax'));
+            $post_editor = new \PGMB\Components\PostEditor();
+            $post_editor->register_ajax_callbacks( self::AJAX_CALLBACK_PREFIX );
+            $this->business_selector->register_ajax_callbacks( self::AJAX_CALLBACK_PREFIX );
+            $this->business_selector->set_field_name( 'mbp_google_settings[google_location]' );
+            $calendar_feed = new \PGMB\Calendar\Feed();
+            $calendar_feed->init( 'mbp_get_timegrid_feed' );
+            //				$notification = \PGMB\Notifications\BasicNotification::create(
+            //                    self::NOTIFICATION_SECTION,
+            //					"new-notificatio54224n",
+            //					"Cool stuff updated vcoodsfg dffdg ffdg",
+            //					"Notification tdfgdfgdfgfdext dfgdfgdfg fdgdfgdf gdfgdfgdfg ",
+            //					"img/koen.png",
+            //					"Profile photo"
+            //				);
+            //				$this->notification_manager->add_notification($notification);
         }
         
         public function admin_init()
@@ -26,42 +57,35 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             $this->settings_api->set_fields( $this->get_settings_fields() );
             $this->settings_api->admin_init();
             add_action( 'wsa_form_top_mbp_google_settings', array( &$this, 'google_form_top' ) );
-            add_action( 'wsa_form_top_mbp_quick_post_settings', array( &$this, 'quick_post_top' ) );
+            add_action( 'wsa_form_top_mbp_quick_post_settings', array( $this, 'quick_post_top' ) );
             add_action( 'wsa_form_bottom_mbp_debug_info', array( &$this, 'debug_info' ) );
-            add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
+            add_action( 'wsa_form_bottom_mbp_dashboard', [ $this, 'dashboard' ] );
             if ( !mbp_fs()->is_plan_or_trial( 'pro' ) ) {
                 add_action( 'wsa_form_bottom_mbp_post_type_settings', array( &$this, 'post_type_bottom' ) );
             }
             //add_action('wsa_form_bottom_mbp_google_settings', array(&$this, 'google_form_bottom'));
         }
         
+        public function load_js()
+        {
+            add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ] );
+        }
+        
         public function enqueue_scripts( $hook )
         {
-            /* selective loading of JS has issues when the plugin is translated
-            				if(!in_array($hook, array(
-            							'toplevel_page_post_to_google_my_business',
-            							'post-to-gmb_page_post_to_google_my_business_settings'
-            						)
-            					)
-            				){
-            					return;
-            				}
-            
-            				$screen = get_current_screen();
-            				if(!is_object($screen)){
-            					return;
-            				}
-            				*/
             wp_enqueue_script(
                 'mbp-settings-page',
-                plugins_url( '../js/admin.js', __FILE__ ),
+                plugins_url( '../js/settings.js', __FILE__ ),
                 array( 'jquery' ),
-                $this->plugin->version(),
+                $this->plugin_version,
                 true
             );
             $localize_vars = [
-                'refresh_locations' => __( 'Refresh locations', 'post-to-google-my-business' ),
-                'please_wait'       => __( 'Please wait...', 'post-to-google-my-business' ),
+                'refresh_locations'    => __( 'Refresh locations', 'post-to-google-my-business' ),
+                'please_wait'          => __( 'Please wait...', 'post-to-google-my-business' ),
+                'AJAX_CALLBACK_PREFIX' => self::AJAX_CALLBACK_PREFIX,
+                'FIELD_PREFIX'         => self::FIELD_PREFIX,
+                'CALENDAR_TIMEZONE'    => WpDateTimeZone::getWpTimezone()->getName(),
             ];
             wp_localize_script( 'mbp-settings-page', 'mbp_localize_script', $localize_vars );
         }
@@ -92,6 +116,10 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             */
             return array(
                 array(
+                'id'    => 'mbp_dashboard',
+                'title' => __( 'Dashboard', 'post-to-google-my-business' ),
+            ),
+                array(
                 'id'    => 'mbp_google_settings',
                 'title' => __( 'Google settings', 'post-to-google-my-business' ),
             ),
@@ -119,97 +147,21 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
                 'desc'     => __( 'Select the post-types where the GMB metabox should be displayed', 'post-to-google-my-business' ),
                 'callback' => array( &$this, 'settings_field_google_business' ),
             ) ),
-                'mbp_quick_post_settings' => array(
-                array(
-                'name'              => 'template',
-                'label'             => __( 'Quick post template', 'post-to-google-my-business' ),
-                'desc'              => sprintf( __( 'The template for new Google posts when using quick post. Supports <a target="_blank" href="%s">variables</a> and <a target="_blank" href="%s">spintax</a> (premium only)', 'post-to-google-my-business' ), 'https://tycoonmedia.net/blog/using-the-quick-publish-feature/', 'https://tycoonmedia.net/blog/using-spintax/' ),
-                'type'              => 'textarea',
-                'sanitize_callback' => array( &$this, 'validate_quick_post_template' ),
-                'default'           => __( 'New post: %post_title% - %post_content%', 'post-to-google-my-business' ),
-            ),
-                array(
-                'name'    => 'cta',
-                'label'   => __( 'Default call to action', 'post-to-google-my-business' ),
-                'desc'    => __( 'The default button text', 'post-to-google-my-business' ),
-                'type'    => 'select',
-                'default' => 'LEARN_MORE',
-                'options' => array(
-                'NONE'       => __( 'No button', 'post-to-google-my-business' ),
-                'BOOK'       => __( 'Book', 'post-to-google-my-business' ),
-                'ORDER'      => __( 'Order', 'post-to-google-my-business' ),
-                'SHOP'       => __( 'Shop', 'post-to-google-my-business' ),
-                'LEARN_MORE' => __( 'Learn more', 'post-to-google-my-business' ),
-                'SIGN_UP'    => __( 'Sign up', 'post-to-google-my-business' ),
-                'GET_OFFER'  => __( 'Get offer', 'post-to-google-my-business' ),
-                'CALL'       => __( 'Call Now', 'post-to-google-my-business' ),
-            ),
-            ),
-                array(
+                'mbp_quick_post_settings' => array( array(
                 'name'  => 'invert',
                 'label' => __( 'Post to GMB by default', 'post-to-google-my-business' ),
                 'desc'  => __( 'The Auto-post checkbox will be checked by default, and your WordPress posts will be automatically published to GMB, unless you uncheck it.', 'post-to-google-my-business' ),
                 'type'  => 'checkbox',
-            ),
-                array(
-                'name'  => 'fetch_content_image',
-                'label' => __( 'Fetch post image from content', 'post-to-google-my-business' ),
-                'desc'  => __( 'Try to get an image from the post content (when no custom image is set). This has priority over the featured image.', 'post-to-google-my-business' ),
-                'type'  => 'checkbox',
-            ),
-                array(
-                'name'    => 'use_featured_image',
-                'label'   => __( 'Use featured image', 'post-to-google-my-business' ),
-                'desc'    => __( 'Use the Featured Image as GMB Post image (when no custom image is set)', 'post-to-google-my-business' ),
-                'type'    => 'checkbox',
-                'default' => 'on',
-            )
-            ),
+            ), array(
+                'name'              => 'autopost_template',
+                'label'             => __( 'Default template', 'post-to-google-my-business' ),
+                'desc'              => sprintf( __( 'The template for new Google posts when using quick post. Supports <a target="_blank" href="%s">variables</a> and <a target="_blank" href="%s">spintax</a> (premium only)', 'post-to-google-my-business' ), 'https://tycoonmedia.net/blog/using-the-quick-publish-feature/', 'https://tycoonmedia.net/blog/using-spintax/' ),
+                'callback'          => [ $this, 'settings_field_autopost_template' ],
+                'sanitize_callback' => [ $this, 'validate_autopost_template' ],
+                'default'           => \PGMB\FormFields::default_autopost_fields(),
+            ) ),
             );
             return $fields;
-        }
-        
-        public function settings_field_google_user( $args )
-        {
-            $value = esc_attr( $this->settings_api->get_option( $args['id'], $args['section'], $args['std'] ) );
-            $size = ( isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular' );
-            echo  sprintf(
-                '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">',
-                $size,
-                $args['section'],
-                $args['id']
-            ) ;
-            
-            if ( $this->plugin->is_configured() ) {
-                $api = MBP_api::getInstance();
-                $accounts = $api->get_accounts();
-                
-                if ( $accounts && count( $accounts->accounts ) >= 1 ) {
-                    echo  sprintf( '<option disabled selected value>%s</option>', esc_html__( 'Select a user or location group', 'post-to-google-my-business' ) ) ;
-                    foreach ( $accounts->accounts as $account ) {
-                        
-                        if ( $account->name == $value ) {
-                            $selected = true;
-                        } else {
-                            $selected = false;
-                        }
-                        
-                        echo  sprintf(
-                            '<option value="%s"%s>%s</option>',
-                            $account->name,
-                            ( $selected ? ' selected="selected"' : '' ),
-                            $account->accountName
-                        ) ;
-                    }
-                } else {
-                    echo  sprintf( '<option disabled selected value>%s</option>', esc_html__( 'No user accounts found', 'post-to-google-my-business' ) ) ;
-                }
-            
-            } else {
-                echo  sprintf( '<option disabled selected value>%s</option>', esc_html__( 'Connect your Google account first.', 'post-to-google-my-business' ) ) ;
-            }
-            
-            echo  '</select>' ;
         }
         
         public function settings_field_google_business( $args )
@@ -218,58 +170,65 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             $name = sprintf( '%1$s[%2$s]', $args['section'], $args['id'] );
             //$user = $this->get_current_setting('google_user', 'mbp_google_settings');
             ?>
-				<div class="mbp-info mbp-location-blocked-info">
-					<strong><?php 
-            _e( 'Location grayed out?', 'post-to-google-my-business' );
-            ?></strong>
-					<?php 
-            _e( 'It means the location is blocked from using the LocalPostAPI, and can\'t be posted to using the plugin.', 'post-to-google-my-business' );
+                <div class="mbp-google-settings-business-selector">
+                    <?php 
+            $this->business_selector->set_field_name( $name );
+            $this->business_selector->set_selected_locations( $value );
+            echo  $this->business_selector->location_blocked_info() ;
+            echo  $this->business_selector->generate() ;
+            echo  $this->business_selector->business_selector_controls() ;
             ?>
-					<a href="https://wordpress.org/plugins/post-to-google-my-business/#why%20is%2Fare%20my%20location(s)%20grayed%20out%3F" target="_blank"><?php 
-            _e( 'Learn more...', 'post-to-google-my-business' );
-            ?></a>
-				</div>
-
+                </div>
+                <br /><br />
 				<?php 
-            \PGMB\Components\BusinessSelector::draw(
-                MBP_api::getInstance(),
-                $name,
-                $value,
-                false,
-                false
-            );
-            if ( $this->plugin->is_configured() ) {
-                echo  '<br /><a class="button" href="#" id="refresh-api-cache">' . esc_html__( 'Refresh locations', 'post-to-google-my-business' ) . '</a>' ;
-            }
-            ?>
-					<br /><br />
-				<?php 
-            echo  $this->plugin->message_of_the_day() ;
+            echo  $this->message_of_the_day() ;
         }
         
+        protected function get_notification_count_html()
+        {
+            if ( mbp_fs()->is_in_trial_promotion() ) {
+                return '';
+            }
+            $count = $this->notification_manager->notification_count( self::NOTIFICATION_SECTION );
+            if ( $count >= 1 ) {
+                return '<span class="update-plugins"><span class="update-count">' . $count . '</span></span>';
+            }
+            return '';
+        }
+        
+        // <span class="update-plugins"><span class="update-count">1</span></span>
         public function add_menu()
         {
             add_menu_page(
                 __( 'Post to Google My Business settings', 'post-to-google-my-business' ),
-                __( 'Post to GMB', 'post-to-google-my-business' ),
-                'publish_posts',
+                sprintf( __( 'Post to GMB %s', 'post-to-google-my-business' ), $this->get_notification_count_html() ),
+                'manage_options',
                 'post_to_google_my_business',
-                array( &$this, 'admin_page' ),
+                [ $this, 'admin_page' ],
                 MBP_Plugin::dashicon()
             );
-            add_submenu_page(
+            $page = add_submenu_page(
                 'post_to_google_my_business',
                 __( 'Post to Google My Business settings', 'post-to-google-my-business' ),
-                __( 'Settings', 'post-to-google-my-business' ),
+                sprintf( __( 'Settings %s', 'post-to-google-my-business' ), $this->get_notification_count_html() ),
                 'manage_options',
-                $this::SETTINGS_PAGE,
-                array( &$this, 'admin_page' )
+                'post_to_google_my_business',
+                [ $this, 'admin_page' ]
             );
+            //				$dashboard = add_submenu_page(
+            //					'post_to_google_my_business',
+            //					__('Post to Google My Business dashboard', 'post-to-google-my-business'),
+            //					__('Dashboard', 'post-to-google-my-business'),
+            //					'manage_options',
+            //					$this::SETTINGS_PAGE.'#dashboard',
+            //					array(&$this, 'admin_page')
+            //                );
+            add_action( "load-{$page}", [ $this, 'load_js' ] );
         }
         
         public function is_configured()
         {
-            if ( $this->plugin->is_configured() ) {
+            if ( $this->api_connected ) {
                 return sprintf( '<br /><span class="dashicons dashicons-yes"></span> %s<br /><br />', __( 'Connected', 'post-to-google-my-business' ) );
             }
             return sprintf( '<br /><span class="dashicons dashicons-no"></span> %s<br /><br />', __( 'Not connected', 'post-to-google-my-business' ) );
@@ -297,7 +256,21 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
         
         public function quick_post_top()
         {
-            //echo __('Quick post allows you to create posts on Google My Business based on the template below.', 'post-to-google-my-business');
+        }
+        
+        public function settings_field_autopost_template( $args )
+        {
+            $value = $this->settings_api->get_option( $args['id'], $args['section'], $args['std'] );
+            $name = sprintf( '%1$s[%2$s]', $args['section'], $args['id'] );
+            //$user = $this->get_current_setting('google_user', 'mbp_google_settings');
+            \PGMB\Components\PostEditor::draw( false, $value, $name );
+        }
+        
+        public function validate_autopost_template( $value )
+        {
+            //print_r($value);
+            //error_log($value);
+            return $value;
         }
         
         public function debug_info()
@@ -426,7 +399,7 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
         
         public function auth_urls()
         {
-            $configured = $this->plugin->is_configured();
+            $configured = $this->api_connected;
             echo  sprintf(
                 '<a href="%s" class="button%s">%s</a>',
                 esc_url( admin_url( 'admin-post.php?action=mbp_generate_url' ) ),
@@ -442,39 +415,147 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
         
         }
         
-        public function get_businesses_ajax()
+        public function dashboard()
         {
-            //$user = sanitize_text_field($_POST['user_id']);
-            $refresh = ( $_POST['refresh'] == "true" ? true : false );
-            //$selected = sanitize_text_field($_POST['selected']);
-            //echo $this->plugin->business_selector('mbp_google_settings[google_location]', null, null, true);
-            $default_location = $this->get_current_setting( 'google_location', 'mbp_google_settings' );
-            $business_selector = new \PGMB\Components\BusinessSelector(
-                MBP_api::getInstance(),
-                'mbp_google_settings[google_location]',
-                false,
-                $default_location,
-                false
-            );
-            $business_selector->flush_cache();
-            echo  $business_selector->generate() ;
-            wp_die();
+            include dirname( __FILE__ ) . '/../templates/dashboard.php';
         }
         
-        public function validate_quick_post_template( $value )
+        public function get_notifications()
+        {
+            foreach ( $this->notification_manager->get_notifications( self::NOTIFICATION_SECTION ) as $identifier => $data ) {
+                $notification = new \PGMB\Notifications\BasicNotification( self::NOTIFICATION_SECTION, $identifier, $data );
+                ?>
+					<div class="pgmb-message pgmb-notification" data-section="<?php 
+                echo  self::NOTIFICATION_SECTION ;
+                ?>" data-identifier="<?php 
+                echo  $identifier ;
+                ?>">
+						<button type="button" class="notice-dismiss mbp-notice-dismiss"><span class="screen-reader-text"><?php 
+                _e( "Dismiss this notice.", "post-to-google-my-business" );
+                ?></span></button>
+						<img src="<?php 
+                echo  plugins_url( "/../" . $notification->get_image(), __FILE__ ) ;
+                ?>" alt="<?php 
+                echo  $notification->get_alt() ;
+                ?>" />
+						<h3><?php 
+                echo  $notification->get_title() ;
+                ?></h3>
+						<?php 
+                echo  $notification->get_text() ;
+                ?>
+						<div class="clear"></div>
+					</div>
+					<?php 
+            }
+        }
+        
+        public function get_new_features()
+        {
+            foreach ( $this->notification_manager->get_notifications( self::NEW_FEATURES_SECTION ) as $identifier => $data ) {
+                $new_feature = new \PGMB\Notifications\FeatureNotification( self::NEW_FEATURES_SECTION, $identifier, $data );
+                ?>
+				    <div class="pgmb-message pgmb-new-feature" data-section="<?php 
+                echo  self::NEW_FEATURES_SECTION ;
+                ?>" data-identifier="<?php 
+                echo  $identifier ;
+                ?>">
+					    <button type="button" class="notice-dismiss mbp-notice-dismiss"><span class="screen-reader-text"><?php 
+                _e( "Dismiss this notice.", "post-to-google-my-business" );
+                ?></span></button>
+                        <h3><?php 
+                echo  $new_feature->get_title() ;
+                ?></h3>
+                        <img src="<?php 
+                echo  plugins_url( "/../" . $new_feature->get_image(), __FILE__ ) ;
+                ?>" alt="<?php 
+                echo  $new_feature->get_alt() ;
+                ?>" />
+					    <?php 
+                echo  $new_feature->get_text() ;
+                ?>
+                    </div>
+					<?php 
+            }
+        }
+        
+        public function ajax_delete_notification()
+        {
+            $identifier = sanitize_key( $_REQUEST['identifier'] );
+            $section = sanitize_key( $_REQUEST['section'] );
+            $ignore = ( isset( $_REQUEST['ignore'] ) ? json_decode( $_REQUEST['ignore'] ) : false );
+            $this->notification_manager->delete_notification( $section, $identifier, $ignore );
+            wp_send_json_success();
+        }
+        
+        public function message_of_the_day()
         {
             
-            if ( empty($value) ) {
-                add_settings_error(
-                    'template',
-                    'mbp_quick_post_error',
-                    'The quick post template can not be empty',
-                    'error'
-                );
-                return 'New post: %post_title% - %post_content%';
+            if ( !mbp_fs()->can_use_premium_code() ) {
+                $messages = apply_filters( 'mbp_motd', array(
+                    /*
+                    sprintf('%s <a target="_blank" href="%s">%s</a> %s',
+                    	__('Get more visitors to your website with a call-to-action button in your post.', 'post-to-google-my-business'),
+                    	esc_url(admin_url('options-general.php?page=my_business_post-pricing')),
+                    	__('Upgrade to Premium', 'post-to-google-my-business'),
+                    	__('for call-to-action buttons, post statistics and more.', 'post-to-google-my-business')
+                    )
+                    */
+                    sprintf(
+                        '%s <a target="_blank" href="%s">%s</a> %s',
+                        __( 'Manage multiple businesses or locations?', 'post-to-google-my-business' ),
+                        mbp_fs()->get_upgrade_url(),
+                        __( 'Upgrade to Premium', 'post-to-google-my-business' ),
+                        __( 'to pick a location per post, or post to multiple locations at once.', 'post-to-google-my-business' )
+                    ),
+                    sprintf(
+                        '%s <a target="_blank" href="%s">%s</a> %s',
+                        __( 'Not the right time?', 'post-to-google-my-business' ),
+                        mbp_fs()->get_upgrade_url(),
+                        __( 'Upgrade to Premium', 'post-to-google-my-business' ),
+                        __( 'and schedule your posts to be automagically published at a later time.', 'post-to-google-my-business' )
+                    ),
+                    sprintf(
+                        '%s <a target="_blank" href="%s">%s</a> %s',
+                        __( 'Wonder how well your Google My Business post is doing?', 'post-to-google-my-business' ),
+                        mbp_fs()->get_upgrade_url(),
+                        __( 'Upgrade to Premium', 'post-to-google-my-business' ),
+                        __( 'to view post statistics and easily include Google Analytics UTM parameters.', 'post-to-google-my-business' )
+                    ),
+                    sprintf(
+                        '%s <a target="_blank" href="%s">%s</a> %s',
+                        __( 'Use Post to Google My Business for your pages, projects, WooCommerce products and more.', 'post-to-google-my-business' ),
+                        mbp_fs()->get_upgrade_url(),
+                        __( 'Upgrade to Premium', 'post-to-google-my-business' ),
+                        __( 'to enable Post to Google my Business for any post type.', 'post-to-google-my-business' )
+                    ),
+                    sprintf(
+                        '%s <a target="_blank" href="%s">%s</a> %s',
+                        __( 'Automatically repost your GMB posts a specific or unlimited amount of times.', 'post-to-google-my-business' ),
+                        mbp_fs()->get_upgrade_url(),
+                        __( 'Upgrade to Premium', 'post-to-google-my-business' ),
+                        __( 'to set custom intervals and specify the amount of reposts.', 'post-to-google-my-business' )
+                    ),
+                    sprintf(
+                        '%s <a target="_blank" href="https://wordpress.org/plugins/post-to-google-my-business/">%s</a> %s',
+                        __( 'I hope you enjoy using my Post to Google My Business plugin! Help spread the word with a', 'post-to-google-my-business' ),
+                        __( '5-star rating on WordPress.org', 'post-to-google-my-business' ),
+                        __( '. Many thanks! - Koen Reus, plugin developer', 'post-to-google-my-business' )
+                    ),
+                    sprintf(
+                        '%s <a target="_blank" href="%s">%s</a> %s',
+                        __( 'Create unique posts every time.', 'post-to-google-my-business' ),
+                        mbp_fs()->get_upgrade_url(),
+                        __( 'Upgrade to Premium', 'post-to-google-my-business' ),
+                        __( 'to use spintax and %variables% in your post text.', 'post-to-google-my-business' )
+                    ),
+                ) );
+                //mt_srand(date('dmY'));
+                $motd = mt_rand( 0, count( $messages ) - 1 );
+                return '<span class="description">' . $messages[$motd] . '</span><br />';
             }
             
-            return $value;
+            return false;
         }
     
     }

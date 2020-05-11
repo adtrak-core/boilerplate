@@ -15,7 +15,7 @@ abstract class AbstractGoogleJsonObject implements JsonSerializable, LocalPostJs
 	public static function fromJson($json){
 		$localPostData = json_decode($json, true);
 
-		return self::fromArray($localPostData);
+		return static::fromArray($localPostData);
 	}
 
 	public function getArray(){

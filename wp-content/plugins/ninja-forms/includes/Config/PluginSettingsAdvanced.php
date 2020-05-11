@@ -12,9 +12,9 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
         'id'    => 'delete_on_uninstall',
         'type'  => 'html',
         'html'  => '<button type="button" id="delete_on_uninstall" href="" class="button">' .
-                   __(	'Delete All Data', 'ninja-forms' ) . '</button>',
-        'label' => __( 'Remove ALL Ninja Forms data upon uninstall?', 'ninja-forms' ),
-        'desc'  => sprintf( __( 'If this button is checked, ALL Ninja Forms data will be removed from the database and the Ninja Forms plug-in will be deactivated. %sAll form and submission data will be unrecoverable.%s', 'ninja-forms' ), '<span class="nf-nuke-warning">', '</span>' ),
+                   esc_html__(	'Delete All Data', 'ninja-forms' ) . '</button>',
+        'label' => esc_html__( 'Remove ALL Ninja Forms data upon uninstall?', 'ninja-forms' ),
+        'desc'  => sprintf( esc_html__( 'ALL Ninja Forms data will be removed from the database and the Ninja Forms plug-in will be deactivated. %sAll form and submission data will be unrecoverable.%s', 'ninja-forms' ), '<span class="nf-nuke-warning">', '</span>' ),
     ),
 
     /*
@@ -26,7 +26,7 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
     'delete_prompt' => array(
         'id'    => 'delete_prompt',
         'type'  => 'prompt',
-        'desc'  => __( 'This setting will COMPLETELY remove anything Ninja Forms related upon plugin deletion. This includes SUBMISSIONS and FORMS. It cannot be undone.', 'ninja-forms' ),
+        'desc'  => esc_html__( 'This setting will COMPLETELY remove anything Ninja Forms related upon plugin deletion. This includes SUBMISSIONS and FORMS. It cannot be undone.', 'ninja-forms' ),
     ),
 
     /*
@@ -38,8 +38,20 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
     'disable_admin_notices' => array(
         'id'    => 'disable_admin_notices',
         'type'  => 'checkbox',
-        'label' => __( 'Disable Admin Notices', 'ninja-forms' ),
-        'desc'  => __( 'Never see an admin notice on the dashboard from Ninja Forms. Uncheck to see them again.', 'ninja-forms' ),
+        'label' => esc_html__( 'Disable Admin Notices', 'ninja-forms' ),
+        'desc'  => esc_html__( 'Never see an admin notice on the dashboard from Ninja Forms. Uncheck to see them again.', 'ninja-forms' ),
+    ),
+
+    /*
+    |--------------------------------------------------------------------------
+    | "Dev Mode"
+    |--------------------------------------------------------------------------
+    */
+
+    'builder_dev_mode' => array(
+        'id'    => 'builder_dev_mode',
+        'type'  => 'checkbox',
+        'label' => esc_html__( 'Form Builder "Dev Mode"', 'ninja-forms' ),
     ),
 
     /*
@@ -51,17 +63,10 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
     'allow_tracking' => array(
         'id'    => 'allow_tracking',
         'type'  => 'html',
-        'html'  => '<span id="nfTelOptin" class="button hidden">' . __( 'Opt-in', 'ninja-forms' ) . '</span><span id="nfTelOptout" class="button hidden">' . __( 'Opt-out', 'ninja-forms' ) . '</span><span id="nfTelSpinner" class="nf-loading-spinner" style="display:none;"></span>',
-        'label' => __( 'Allow Telemetry', 'ninja-forms' ),
-        'desc'  => __( 'Opt-in to allow Ninja Forms to collect anonymous usage statistics from your site, such as PHP version, installed plugins, and other non-personally idetifiable informations.', 'ninja-forms' ),
+        'html'  => '<span id="nfTelOptin" class="button hidden">' . esc_html__( 'Opt-in', 'ninja-forms' ) . '</span><span id="nfTelOptout" class="button hidden">' . esc_html__( 'Opt-out', 'ninja-forms' ) . '</span><span id="nfTelSpinner" class="nf-loading-spinner" style="display:none;"></span>',
+        'label' => esc_html__( 'Allow Telemetry', 'ninja-forms' ),
+        'desc'  => esc_html__( 'Opt-in to allow Ninja Forms to collect anonymous usage statistics from your site, such as PHP version, installed plugins, and other non-personally idetifiable informations.', 'ninja-forms' ),
     ),
-
-//    'allow_tracking' => array(
-//        'id'    => 'allow_tracking',
-//        'type'  => 'checkbox',
-//        'label' => __( 'Allow Tracking', 'ninja-forms' ),
-//        'desc'  => __( 'If you opt-in, some data about your installation of Ninja Forms will be sent to NinjaForms.com (this does NOT include your submissions).', 'ninja-forms' )
-//    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -72,22 +77,22 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
     'opinionated_styles' => array(
         'id'    => 'opinionated_styles',
         'type'  => 'select',
-        'label' => __( 'Opinionated Styles', 'ninja-forms' ),
+        'label' => esc_html__( 'Opinionated Styles', 'ninja-forms' ),
         'options' => array(
             array(
-                'label' => __( 'None', 'ninja-forms' ),
+                'label' => esc_html__( 'None', 'ninja-forms' ),
                 'value' => '',
             ),
             array(
-                'label' => __( 'Light', 'ninja-forms' ),
+                'label' => esc_html__( 'Light', 'ninja-forms' ),
                 'value' => 'light',
             ),
             array(
-                'label' => __( 'Dark', 'ninja-forms' ),
+                'label' => esc_html__( 'Dark', 'ninja-forms' ),
                 'value' => 'dark',
             ),
         ),
-        'desc'  => __( 'Use default Ninja Forms styling conventions.', 'ninja-forms' ),
+        'desc'  => esc_html__( 'Use default Ninja Forms styling conventions.', 'ninja-forms' ),
         'value' => ''
     ),
 
@@ -100,26 +105,26 @@ return apply_filters( 'ninja_forms_plugin_settings_advanced', array(
     'downgrade' => array(
         'id'    => 'downgrade',
         'type'  => 'html',
-        'html'  => '<div id="nfDowngrade" class="button">' . __( 'Downgrade', 'ninja-forms' ) . '</div>',
-        'label' => __( 'Downgrade to v2.9.x', 'ninja-forms' ),
-        'desc'  => __( 'Downgrade to the most recent 2.9.x release.', 'ninja-forms' ) . '<br /><div style="color: red">' . __( 'IMPORTANT: All 3.0 data will be removed.', 'ninja-forms' ) . '<br />' . __( 'Please export any forms or submissions you do not want to be lost during this process.', 'ninja-forms' ) . '</div>',
+        'html'  => '<div id="nfDowngrade" class="button">' . esc_html__( 'Downgrade', 'ninja-forms' ) . '</div>',
+        'label' => esc_html__( 'Downgrade to v2.9.x', 'ninja-forms' ),
+        'desc'  => esc_html__( 'Downgrade to the most recent 2.9.x release.', 'ninja-forms' ) . '<br /><div style="color: red">' . esc_html__( 'IMPORTANT: All 3.0 data will be removed.', 'ninja-forms' ) . '<br />' . esc_html__( 'Please export any forms or submissions you do not want to be lost during this process.', 'ninja-forms' ) . '</div>',
     ),
 
     'trash_expired_submissions' => array(
         'id' => 'trash_expired_submissions',
         'type' => 'html',
-        'html' => '<div id="nfTrashExpiredSubmissions" class="button">' . __( 'Move To Trash', 'ninja-forms' ) . '</div>',
-        'label' => __( 'Trash Expired Submissions', 'ninja-forms' ),
-        'desc' => __( 'This setting maybe helpful if your WordPress installation is not moving expired submissions to the trash properly.', 'ninja-forms' ),
+        'html' => '<div id="nfTrashExpiredSubmissions" class="button">' . esc_html__( 'Move To Trash', 'ninja-forms' ) . '</div>',
+        'label' => esc_html__( 'Trash Expired Submissions', 'ninja-forms' ),
+        'desc' => esc_html__( 'This setting maybe helpful if your WordPress installation is not moving expired submissions to the trash properly.', 'ninja-forms' ),
     ),
 
     // Add a button for removing all forms from maintenance
     'remove_maintenance_mode' => array(
         'id' => 'remove_maintenance_mode',
         'type' => 'html',
-        'html' => '<div id="nfRemoveMaintenanceMode" class="button">' . __( 'Remove Maintenance Mode', 'ninja-forms' ) . '</div><span id="nf_maintenanceModeProgress" style="display:none;margin-left:15px;"></span>',
-        'label' => __( 'Remove Maintenance Mode', 'ninja-forms' ),
-        'desc' => __( 'Click this button if any of your forms are still in \'Maintenance Mode\' after performing any required updates.' , 'ninja-forms' ),
+        'html' => '<div id="nfRemoveMaintenanceMode" class="button">' . esc_html__( 'Remove Maintenance Mode', 'ninja-forms' ) . '</div><span id="nf_maintenanceModeProgress" style="display:none;margin-left:15px;"></span>',
+        'label' => esc_html__( 'Remove Maintenance Mode', 'ninja-forms' ),
+        'desc' => esc_html__( 'Click this button if any of your forms are still in \'Maintenance Mode\' after performing any required updates.' , 'ninja-forms' ),
     ),
 
 ));

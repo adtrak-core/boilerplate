@@ -9,12 +9,14 @@ final class NF_MergeTags_Form extends NF_Abstracts_MergeTags
 
     protected $form_id;
 
+    protected $form_title;
+
     protected $sub_seq;
 
     public function __construct()
     {
         parent::__construct();
-        $this->title = __( 'Form', 'ninja-forms' );
+        $this->title = esc_html__( 'Form', 'ninja-forms' );
 
         $this->merge_tags = Ninja_Forms()->config( 'MergeTagsForm' );
 
@@ -41,6 +43,26 @@ final class NF_MergeTags_Form extends NF_Abstracts_MergeTags
         $this->sub_seq = $submission->get_seq_num();
     }
 
+	/**
+	 * Getter method for the form_id.
+	 *
+	 * @return void
+	 */
+	public function get_form_id()
+	{
+		return $this->form_id;
+	}
+
+	/**
+	 * Getter method for the form title.
+	 *
+	 * @return void
+	 */
+	public function get_form_title()
+	{
+		return $this->form_title;
+	}
+
     /**
      * Setter method for the form_id and callback for the nf_get_form_id action.
      * @since 3.2.2
@@ -52,6 +74,17 @@ final class NF_MergeTags_Form extends NF_Abstracts_MergeTags
     {
         $this->form_id = $form_id;
     }
+
+	/**
+	 * Setter method for the form_title
+	 *
+	 * @param string $form_title The title of the current form.
+	 * @return void
+	 */
+	public function set_form_title( $form_title )
+	{
+		$this->form_title = $form_title;
+	}
 
     /**
      * Gets a count of the form submissions and callback for the sub_count merge tag setting.

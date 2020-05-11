@@ -1,6 +1,6 @@
 <div class="wrap">
 
-    <h1><?php _e( 'Import / Export', 'ninja-forms' ); ?></h1>
+    <h1><?php esc_html_e( 'Import / Export', 'ninja-forms' ); ?></h1>
 
     <h2 class="nav-tab-wrapper">
         <?php foreach( $tabs as $tab => $name ): ?>

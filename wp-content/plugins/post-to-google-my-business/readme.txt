@@ -3,8 +3,8 @@ Contributors: koen12344, tycoon12344, freemius
 Donate link: https://tycoonmedia.net/?utm_source=repository&utm_medium=link&utm_campaign=donate
 Tags: google my business, google, business, posts, post, local search, google my business posts, google places, google plus, google+
 Requires at least: 4.9.0
-Tested up to: 5.3.2
-Stable tag: 2.2.10
+Tested up to: 5.4.1
+Stable tag: 2.2.17
 Requires PHP: 5.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,12 +21,14 @@ Use the Auto-post feature to instantly publish your latest WordPress post to Goo
 
 The Post to Google My Business plugin utilizes the official Google My Business API with secure oAuth authentication to ensure your Google account is safe.
 
+= New: "COVID-19 update" post type support =
+The plugin now supports the new **"COVID-19 Update"** post type, which allows you to share announcements about how your business is dealing with the coronavirus pandemic.
 
 = Features =
-* Create, edit or delete posts without having to visit your Google My Business page
-* Quickly publish your latest WordPress posts to GMB using the Auto-post feature
+* Create, edit or delete posts without having to visit your Google My Business dashboard
+* Automatically publish your latest WordPress posts to GMB using the Auto-post feature
 * Network- and site-level Multisite support
-* Support publishing to GMB from external apps (such as Windows Live Writer, Zapier, Integromat, ManageWP, InfiniteWP, MainWP etc)
+* Supports publishing to GMB from external apps (such as Windows Live Writer, Zapier, Integromat, ManageWP, InfiniteWP, MainWP etc)
 * Uses official Google My Business API
 * Developer friendly. Uses the latest built-in WordPress functions and has various actions/filters to hook into.
 * Translatable. Uses built-in WordPress functions for easy translation.
@@ -35,11 +37,11 @@ The Post to Google My Business plugin utilizes the official Google My Business A
 > **Time-saving features available in the Premium version:**
 >
 > * Schedule Google My Business posts for automatic publishing in the future
-> * Create video posts
 > * Create event and offer posts
 > * Create new Google My Business posts from any WordPress post type (e.g. WooCommerce products)
 > * Pick location per post, or post to multiple locations at once
-> * Automatic re-posting - Automatically repost your GMB posts at preset intervals and x amount of times
+> * Automatic re-posting (post recycling) - Automatically recycle your GMB posts at preset intervals and x amount of times
+> * Auto publish posts with specific tags or categories
 > * Make unique posts using Spintax and %variables%
 > * Post Campaigns - Create posts on GMB that aren't tied to any specific WordPress post or page.
 > * Post Analytics - See how many views and clicks your post has gotten straight from the WordPress Dash
@@ -76,6 +78,11 @@ The quick post feature will not work at all in that case, because it uses the UR
 
 Not every Google My Business listing is allowed to use the "LocalPostAPI". Especially chains of locations (businesses with 10+ locations) are blocked from using it. This means the plugin can't post to them.
 
+= Why are my scheduled posts being published too late/not at all? =
+
+Post to Google My Business relies on the WP Cron system to send out scheduled posts. By default, it is only triggered when someone visits your website. If your site doesn't get a lot of visitors, your posts may be sent out too late. To make the WP Cron system more dependable, you can [hook it into the system task scheduler](https://developer.wordpress.org/plugins/cron/hooking-wp-cron-into-the-system-task-scheduler/)
+
+
 == Screenshots ==
 
 1. Customizing and posting GMB post
@@ -86,6 +93,32 @@ Not every Google My Business listing is allowed to use the "LocalPostAPI". Espec
 6. Auto-post template settings
 
 == Changelog ==
+
+= 2.2.17 =
+* Added COVID-19 post
+* Added full autopost template editor in settings to edit the default autopost template
+* Added welcome message
+* Added location-specific variables (%location_primaryPhone%, %location_websiteUrl% ...)
+* Added new mbp_placeholder_decorators ($decorators, $parent_post_id) filter, and VariableInterface
+* Add checks for image size, disable video (no longer allowed by Google)
+* Simplified & improved auto-post logic
+* Improved image uploader (ready for 10 images, but Google API doesn't support it yet)
+* Improved error notices in metabox
+* Improvements to multisite handling and activation/deactivation/delete routines
+* Fixed error notice when fetching empty location groups
+* Fixed Free version not deactivating when activating premium
+* Fixes empty location group causing PHP notice
+* Fixed Gutenberg double post bug and improve compatibility
+* Fix Draft post showing incorrect publish date
+* Fix notice when Google error doesn't include details
+* Update Freemius SDK to fix multisite issue
+
+> **Premium**
+>
+> * Add "Event all day" checkbox for events without a start and end time
+> * Added feature to enable autopost per category or tag
+> * Fixed Auto-post template editor button being shown on campaigns page
+> * Fixed errors when when all post types are unchecked in the settings page
 
 = 2.2.10 =
 * Fix issue with paragraphs getting removed in auto-post

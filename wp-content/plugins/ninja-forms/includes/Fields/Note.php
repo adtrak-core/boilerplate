@@ -30,7 +30,7 @@ class NF_Fields_Note extends NF_Fields_Hidden
         $this->_settings[ 'value_mirror' ] = array(
             'name' => 'value_mirror',
             'type' => 'html',
-            'label' => __( 'HTML', 'ninja-forms'),
+            'label' => esc_html__( 'HTML', 'ninja-forms'),
             'width' => 'full',
             'group' => 'primary',
             'mirror' => 'default',
@@ -42,9 +42,9 @@ class NF_Fields_Note extends NF_Fields_Hidden
         $this->_settings[ 'default' ][ 'type' ] = 'rte';
         $this->_settings[ 'default' ][ 'group' ] = 'advanced';
 
-        $this->_settings[ 'value_mirror' ][ 'value' ] = $this->_settings[ 'default' ][ 'value' ] = __( 'Note text can be edited in the note field\'s advanced settings below.' );
+        $this->_settings[ 'value_mirror' ][ 'value' ] = $this->_settings[ 'default' ][ 'value' ] = esc_html__( 'Note text can be edited in the note field\'s advanced settings below.' );
 
-        $this->_nicename = __( 'Note', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Note', 'ninja-forms' );
 
         add_filter( 'nf_sub_hidden_field_types', array( $this, 'hide_field_type' ) );
     }

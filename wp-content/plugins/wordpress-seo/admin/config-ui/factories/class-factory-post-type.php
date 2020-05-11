@@ -15,19 +15,21 @@ class WPSEO_Config_Factory_Post_Type {
 	 *
 	 * @var WPSEO_Config_Field_Choice_Post_Type[]
 	 */
-	protected static $fields = array();
+	protected static $fields = [];
 
 	/**
+	 * Retrieves a list of fields.
+	 *
 	 * @return WPSEO_Config_Field_Choice_Post_Type[] List of fields.
 	 */
 	public function get_fields() {
 
 		if ( empty( self::$fields ) ) {
 
-			$fields = array();
+			$fields = [];
 
 			// WPSEO_Post_type::get_accessible_post_types() should *not* be used to get a similar experience from the settings.
-			$post_types = get_post_types( array( 'public' => true ), 'objects' );
+			$post_types = get_post_types( [ 'public' => true ], 'objects' );
 			$post_types = WPSEO_Post_Type::filter_attachment_post_type( $post_types );
 			if ( ! empty( $post_types ) ) {
 				foreach ( $post_types as $post_type => $post_type_object ) {
@@ -53,7 +55,7 @@ class WPSEO_Config_Factory_Post_Type {
 	 * @param WPSEO_Config_Field $field     Field that corresponds to the post type.
 	 */
 	private function add_custom_properties( $post_type, $field ) {
-		if ( 'attachment' === $post_type ) {
+		if ( $post_type === 'attachment' ) {
 			$field->set_property( 'explanation', __( 'WordPress automatically generates an URL for each media item in the library. Enabling this will allow for google to index the generated URL.', 'wordpress-seo' ) );
 		}
 	}

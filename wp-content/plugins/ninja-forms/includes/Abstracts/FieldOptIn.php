@@ -36,11 +36,11 @@ abstract class NF_Abstracts_FieldOptIn extends NF_Abstracts_Input
          */
         $this->_settings[ 'type' ][ 'options' ] = array(
             array(
-                'label'     => __( 'Single', 'ninja-forms' ),
+                'label'     => esc_html__( 'Single', 'ninja-forms' ),
                 'value'     => 'single',
             ),
             array(
-                'label'     => __( 'Multiple', 'ninja-forms' ),
+                'label'     => esc_html__( 'Multiple', 'ninja-forms' ),
                 'value'     => 'multiple',
             ),
         );
@@ -48,7 +48,7 @@ abstract class NF_Abstracts_FieldOptIn extends NF_Abstracts_Input
         /*
          * Add a refresh extra for the groups fieldset.
          */
-        $this->_settings[ 'fieldset' ][ 'label' ] = __( 'Lists', 'ninja-forms' ) . ' <a href="#"><small>' . __( 'refresh', 'ninja-forms' ) . '</small></a>';
+        $this->_settings[ 'fieldset' ][ 'label' ] = esc_html__( 'Lists', 'ninja-forms' ) . ' <a href="#"><small>' . esc_html__( 'refresh', 'ninja-forms' ) . '</small></a>';
         $this->_settings[ 'fieldset' ][ 'deps' ] = array( 'type' => 'multiple' );
 
         /*

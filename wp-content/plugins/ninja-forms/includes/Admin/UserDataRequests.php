@@ -47,7 +47,7 @@ class NF_Admin_UserDataRequests {
 	 */
 	function plugin_register_exporters( $exporters = array() ) {
 		$exporters[] = array(
-			'exporter_friendly_name' => __( 'Ninja Forms Submission Data', 'ninja-forms' ),
+			'exporter_friendly_name' => esc_html__( 'Ninja Forms Submission Data', 'ninja-forms' ),
 			'callback'               => array( $this, 'plugin_user_data_exporter' ),
 		);
 		return $exporters;
@@ -62,7 +62,7 @@ class NF_Admin_UserDataRequests {
 	 */
 	function plugin_register_erasers( $erasers = array() ) {
 		$erasers[] = array(
-			'eraser_friendly_name' => __( 'Ninja Forms Submissions Data', 'ninja-forms' ),
+			'eraser_friendly_name' => esc_html__( 'Ninja Forms Submissions Data', 'ninja-forms' ),
 			'callback'               => array( $this, 'plugin_user_data_eraser' ),
 		);
 		return $erasers;
@@ -92,7 +92,7 @@ class NF_Admin_UserDataRequests {
 
 		$group_id = 'ninja-forms';
 
-		$group_label = __( 'Ninja Forms Submission Data', 'ninja-forms' );
+		$group_label = esc_html__( 'Ninja Forms Submission Data', 'ninja-forms' );
 
 		$subs = $this->get_related_subs( $email_address );
 
@@ -176,7 +176,10 @@ class NF_Admin_UserDataRequests {
 		$this->user = get_user_by( 'email', $email_address );
 		$this->request_email = $email_address;
 
-		$request_id = $_REQUEST[ 'id' ];
+		if (!isset($_REQUEST['id']) || empty($_REQUEST['id'])) {
+			return array();
+		}
+		$request_id = absint($_REQUEST[ 'id' ]);
 
 		$make_anonymous = get_post_meta( $request_id, 'nf_anonymize_data',
 			true);

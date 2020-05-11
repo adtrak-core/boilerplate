@@ -298,11 +298,11 @@ button,
 	&.blue,
 	&.button-primary {
     @extend %button;
-    background-color: color(adtrakOrange) !important;
+    background-color: color(adtrakBlue) !important;
     
     &:hover,
     &:focus {
-      background-color: darken(color(adtrakOrange), 8%) !important;  
+      background-color: darken(color(adtrakBlue), 8%) !important;  
     }
 	}
 
@@ -320,8 +320,8 @@ button,
 
   &:hover, &:focus, &:active {
     color: color(white);
-    background-color: color(adtrakOrange);
-    border: 1px solid color(adtrakOrange);
+    background-color: color(adtrakBlue);
+    border: 1px solid color(adtrakBlue);
   }
 }
 
@@ -348,8 +348,8 @@ button,
 
     &:hover,
     &:focus {
-      background-color: color(adtrakOrange);
-      border-color: color(adtrakOrange);
+      background-color: color(adtrakBlue);
+      border-color: color(adtrakBlue);
       color: color(white);
 
       .wp-media-buttons-icon:before {
@@ -366,24 +366,24 @@ button,
 		&.disabled,
 		&:disabled {
 			color: color(concrete) !important;
-			background-color: color(adtrakOrange) !important;
+			background-color: color(adtrakBlue) !important;
 		}
   }
 
 	.button-primary-disabled,
 	.button-primary[disabled] {
 		color: color(concrete) !important;
-		background-color: color(adtrakOrange) !important;
+		background-color: color(adtrakBlue) !important;
 	}
 }
 
 input[type=radio] {
 	&:focus {
-		border-color: color(adtrakOrange) !important;
+		border-color: color(adtrakBlue) !important;
 	}
 
 	&:checked:before {
-		background-color: color(adtrakOrange);
+		background-color: color(adtrakBlue);
 	}
 }
 
@@ -426,7 +426,7 @@ input[type="checkbox"]:before {
 
 // LOGIN
 body.login {
-  background-color: color(adtrakOrange);
+  background-color: color(white);
 }
 
 .login #login h1 {
@@ -447,10 +447,10 @@ body.login {
 }
 
 .login #backtoblog a, .login #nav a {
-  color: color(white);
+  color: color(adtrakNavy);
 
   &:hover {
-    color: color(white);
+    color: color(adtrakNavy);
     text-decoration: underline;
   }
 }

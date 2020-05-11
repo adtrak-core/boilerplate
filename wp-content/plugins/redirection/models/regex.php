@@ -8,7 +8,7 @@ class Red_Regex {
 	private $case;
 
 	public function __construct( $pattern, $case_insensitive = false ) {
-		$this->pattern = $pattern;
+		$this->pattern = rawurldecode( $pattern );
 		$this->case = $case_insensitive;
 	}
 
@@ -24,6 +24,14 @@ class Red_Regex {
 		return @preg_match( $this->get_regex(), $target, $matches ) > 0;
 	}
 
+	private function encode_path( $path ) {
+		return str_replace( ' ', '%20', $path );
+	}
+
+	private function encode_query( $path ) {
+		return str_replace( ' ', '+', $path );
+	}
+
 	/**
 	 * Regex replace the current pattern with $replace_pattern, applied to $target
 	 *
@@ -35,7 +43,20 @@ class Red_Regex {
 	 */
 	public function replace( $replace_pattern, $target ) {
 		$result = @preg_replace( $this->get_regex(), $replace_pattern, $target );
-		return is_null( $result ) ? $target : $result;
+
+		if ( is_null( $result ) ) {
+			return $target;
+		}
+
+		// Space encode the target
+		$split = explode( '?', $result );
+		if ( count( $split ) === 2 ) {
+			$result = implode( '?', [ $this->encode_path( $split[0] ), $this->encode_query( $split[1] ) ] );
+		} else {
+			$result = $this->encode_path( $result );
+		}
+
+		return $result;
 	}
 
 	private function get_regex() {
@@ -46,7 +67,7 @@ class Red_Regex {
 			$case = 'i';
 		}
 
-		return '@' . $at_escaped . '@' . $case;
+		return '@' . $at_escaped . '@s' . $case;
 	}
 
 	public function is_ignore_case() {

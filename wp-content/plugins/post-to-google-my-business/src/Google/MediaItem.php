@@ -22,6 +22,9 @@ class MediaItem extends AbstractGoogleJsonObject {
 		if(!in_array($mediaFormat, $this->mediaFormats)){
 			throw new InvalidArgumentException(__('Invalid media format','post-to-google-my-business'));
 		}
+		if($mediaFormat === 'VIDEO'){
+			throw new InvalidArgumentException(__('Creating posts with videos is currently not supported by Google','post-to-google-my-business'));
+		}
 		$this->jsonOutput['mediaFormat'] = $this->mediaFormat = $mediaFormat;
 	}
 

@@ -6,7 +6,7 @@
  */
 
 /**
- * @class WPSEO_MyYoast_Proxy Loads the MyYoast proxy.
+ * Loads the MyYoast proxy.
  *
  * This class registers a proxy page on `admin.php`. Which is reached with the `page=PAGE_IDENTIFIER` parameter.
  * It will read external files and serves them like they are located locally.
@@ -40,8 +40,8 @@ class WPSEO_MyYoast_Proxy implements WPSEO_WordPress_Integration {
 		}
 
 		// Register the page for the proxy.
-		add_action( 'admin_menu', array( $this, 'add_proxy_page' ) );
-		add_action( 'admin_init', array( $this, 'handle_proxy_page' ) );
+		add_action( 'admin_menu', [ $this, 'add_proxy_page' ] );
+		add_action( 'admin_init', [ $this, 'handle_proxy_page' ] );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class WPSEO_MyYoast_Proxy implements WPSEO_WordPress_Integration {
 	 */
 	public function render_proxy_page() {
 		$proxy_options = $this->determine_proxy_options();
-		if ( $proxy_options === array() ) {
+		if ( $proxy_options === [] ) {
 			// Do not accept any other file than implemented.
 			$this->set_header( 'HTTP/1.0 501 Requested file not implemented' );
 			return;
@@ -87,16 +87,6 @@ class WPSEO_MyYoast_Proxy implements WPSEO_WordPress_Integration {
 		// Set the headers before serving the remote file.
 		$this->set_header( 'Content-Type: ' . $proxy_options['content_type'] );
 		$this->set_header( 'Cache-Control: max-age=' . self::CACHE_CONTROL_MAX_AGE );
-
-		if ( $this->should_load_url_directly() ) {
-			/*
-			 * If an error occurred, fallback to the next proxy method (`wp_remote_get`).
-			 * Otherwise, we are done here.
-			 */
-			if ( $this->load_url( $proxy_options['url'] ) ) {
-				return;
-			}
-		}
 
 		try {
 			echo $this->get_remote_url_body( $proxy_options['url'] );
@@ -142,21 +132,6 @@ class WPSEO_MyYoast_Proxy implements WPSEO_WordPress_Integration {
 	}
 
 	/**
-	 * Tries to load the given url.
-	 *
-	 * @link https://php.net/manual/en/function.readfile.php
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @param string $url The url to load.
-	 *
-	 * @return bool False if an error occurred.
-	 */
-	protected function load_url( $url ) {
-		return readfile( $url ) !== false;
-	}
-
-	/**
 	 * Determines the proxy options based on the file and plugin version arguments.
 	 *
 	 * When the file is known it returns an array like this:
@@ -171,26 +146,13 @@ class WPSEO_MyYoast_Proxy implements WPSEO_WordPress_Integration {
 	 */
 	protected function determine_proxy_options() {
 		if ( $this->get_proxy_file() === 'research-webworker' ) {
-			return array(
+			return [
 				'content_type' => 'text/javascript; charset=UTF-8',
 				'url'          => 'https://my.yoast.com/api/downloads/file/analysis-worker?plugin_version=' . $this->get_plugin_version(),
-			);
+			];
 		}
 
-		return array();
-	}
-
-	/**
-	 * Checks the PHP configuration of allow_url_fopen.
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @link https://php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen
-	 *
-	 * @return bool True when the PHP configuration allows for url loading via readfile.
-	 */
-	protected function should_load_url_directly() {
-		return ! ! ini_get( 'allow_url_fopen' );
+		return [];
 	}
 
 	/**
@@ -225,7 +187,7 @@ class WPSEO_MyYoast_Proxy implements WPSEO_WordPress_Integration {
 	protected function get_plugin_version() {
 		$plugin_version = filter_input( INPUT_GET, 'plugin_version', FILTER_SANITIZE_STRING );
 		// Replace slashes to secure against requiring a file from another path.
-		$plugin_version = str_replace( array( '/', '\\' ), '_', $plugin_version );
+		$plugin_version = str_replace( [ '/', '\\' ], '_', $plugin_version );
 
 		return $plugin_version;
 	}

@@ -37,7 +37,11 @@ class NF_AJAX_Controllers_FormEndpoints extends NF_Abstracts_Controller
      */
     public function delete()
     {
-        $id = $_REQUEST[ 'form_id' ];
+        if (!isset($_REQUEST['form_id']) || empty($_REQUEST['form_id'])) {
+            $this->_data['errors'][] = 'Invalid Form ID';
+            $this->_respond();
+        }
+        $id = absint($_REQUEST['form_id']);
 
         try{
             $form = Ninja_Forms()->form( $id )->get();
@@ -50,7 +54,7 @@ class NF_AJAX_Controllers_FormEndpoints extends NF_Abstracts_Controller
 
     public function duplicate()
     {
-        $form_id = $_REQUEST[ 'form_id' ];
+        $form_id = absint($_REQUEST[ 'form_id' ]);
 
         //Copied and pasted from NF_Database_models_Form::duplicate line 136
         $form = Ninja_Forms()->form( $form_id )->get();
@@ -62,7 +66,7 @@ class NF_AJAX_Controllers_FormEndpoints extends NF_Abstracts_Controller
 
         $form_title = $form->get_setting( 'title' );
 
-        $new_form_title = $form_title . " - " . __( 'copy', 'ninja-forms' );
+        $new_form_title = $form_title . " - " . esc_html__( 'copy', 'ninja-forms' );
 
         $new_form->update_setting( 'title', $new_form_title );
 

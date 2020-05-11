@@ -1,6 +1,6 @@
 <?php if( ! $licenses ): ?>
 
-    <?php echo sprintf( __( 'To activate licenses for Ninja Forms extensions you must first %sinstall and activate%s the chosen extension. License settings will then appear below.', 'ninja-forms' ), '<a target="_blank" href="https://ninjaforms.com/docs/installation/">', '</a>' ); ?>
+    <?php echo sprintf( esc_html__( 'To activate licenses for Ninja Forms extensions you must first %sinstall and activate%s the chosen extension. License settings will then appear below.', 'ninja-forms' ), '<a target="_blank" href="https://ninjaforms.com/docs/installation/">', '</a>' ); ?>
 
 <?php else: ?>
 
@@ -24,9 +24,9 @@
                         <?php endif; ?>
 
                         <?php if( ! $license[ 'is_valid' ] ): ?>
-                        <button type="submit" class="button button-primary" name="ninja_forms_license[action]" value="activate"><?php _e( 'Activate', 'ninja-forms' ); ?></button>
+                        <button type="submit" class="button button-primary" name="ninja_forms_license[action]" value="activate"><?php esc_html_e( 'Activate', 'ninja-forms' ); ?></button>
                         <?php else: ?>
-                        <button type="submit" class="button button-secondary" name="ninja_forms_license[action]" value="deactivate"><?php _e( 'De-activate', 'ninja-forms' ); ?></button>
+                        <button type="submit" class="button button-secondary" name="ninja_forms_license[action]" value="deactivate"><?php esc_html_e( 'De-activate', 'ninja-forms' ); ?></button>
                         <?php endif; ?>
                     </form>
                 </td>

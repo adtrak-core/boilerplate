@@ -4,7 +4,7 @@
 
         <div class="nf-addon-notice">
             <p>
-                <strong><?php echo $notice[ 'title' ]; ?></strong> <?php _e( ' requires an update. You have version ', 'ninja-forms' );?><strong><?php echo $notice[ 'old_version' ]; ?></strong><?php _e( ' installed. The current version is ', 'ninja-forms' ); ?><strong><?php echo $notice[ 'new_version' ]; ?></strong>.
+                <strong><?php echo $notice[ 'title' ]; ?></strong> <?php esc_html_e( ' requires an update. You have version ', 'ninja-forms' );?><strong><?php echo $notice[ 'old_version' ]; ?></strong><?php esc_html_e( ' installed. The current version is ', 'ninja-forms' ); ?><strong><?php echo $notice[ 'new_version' ]; ?></strong>.
             </p>
         </div>
 
@@ -43,10 +43,10 @@
 
                     <?php if( ! empty( $item['docs'] ) ): ?>
 
-                    <a target="_blank" href="<?php echo $item['docs']; ?>" class="nf-button secondary nf-doc-button"><?php _e( 'Docs', 'ninja-forms' ); ?></a>
+                    <a target="_blank" href="<?php echo $item['docs']; ?>" class="nf-button secondary nf-doc-button"><?php esc_html_e( 'Docs', 'ninja-forms' ); ?></a>
                     <?php else: ?>
 
-                    <p><a><?php _e( 'Documentation coming soon.', 'ninja-forms' ); ?></a></p>
+                    <p><a><?php esc_html_e( 'Documentation coming soon.', 'ninja-forms' ); ?></a></p>
 
                     <?php endif; ?>
 
@@ -54,21 +54,21 @@
 
                         <?php if( is_plugin_active( $item['plugin'] ) ): ?>
 
-                        <span class="secondary nf-button"><?php _e( 'Active', 'ninja-forms' ); ?></span>
+                        <span class="secondary nf-button"><?php esc_html_e( 'Active', 'ninja-forms' ); ?></span>
 
                         <?php elseif( is_plugin_inactive( $item['plugin'] ) ): ?>
 
-                        <span class="secondary nf-button"><?php _e( 'Installed', 'ninja-forms' ); ?></span>
+                        <span class="secondary nf-button"><?php esc_html_e( 'Installed', 'ninja-forms' ); ?></span>
 
                         <?php else: ?>
 
-                        <a target="_blank" href="<?php echo $link; ?>" title="<?php echo $item['title']; ?>" class="primary nf-button"><?php _e( 'Learn More', 'ninja-forms' ); ?></a>
+                        <a target="_blank" href="<?php echo $link; ?>" title="<?php echo $item['title']; ?>" class="primary nf-button"><?php esc_html_e( 'Learn More', 'ninja-forms' ); ?></a>
 
                         <?php endif; ?>
 
                     <?php else: ?>
 
-                    <a target="_blank" href="<?php echo $link; ?>" title="<?php echo $item['title']; ?>" class="primary nf-button"><?php _e( 'Learn More', 'ninja-forms' ); ?></a>
+                    <a target="_blank" href="<?php echo $link; ?>" title="<?php echo $item['title']; ?>" class="primary nf-button"><?php esc_html_e( 'Learn More', 'ninja-forms' ); ?></a>
 
                     <?php endif; ?>
 

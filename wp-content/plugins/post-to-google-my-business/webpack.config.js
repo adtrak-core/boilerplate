@@ -9,10 +9,9 @@ const config = {
     entry: {
         // frontend and admin will replace the [name] portion of the output config below.
         //frontend: './js_src/front/front-index.js',
-        admin: './js_src/admin/admin-index.js',
+        settings: './js_src/admin/settings.js',
         metabox: './js_src/admin/metabox.js',
         gutenberg: './js_src/admin/gutenberg.js',
-        metabox_premium: './js_src/admin/metabox-premium.js',
         notice: './js_src/admin/notice.js'
     },
 

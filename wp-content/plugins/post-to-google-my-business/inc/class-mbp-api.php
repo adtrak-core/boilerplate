@@ -184,7 +184,11 @@ if(!class_exists('MBP_api')){
 				);
 				$query = $this->do_get('google/get_locations_v4/', $args);
 				$nextPageToken = isset($query->nextPageToken) ? $query->nextPageToken : false;
-				$locations = array_merge($locations, $query->locations);
+
+				//Additional check if we got a locations variable and whether it is an array, because empty groups don't have the locations parameter
+				if(!empty($query->locations) && is_array($query->locations)){
+					$locations = array_merge($locations, $query->locations);
+				}
 			}while($nextPageToken);
 
 			$locations = array('locations' => $locations);
@@ -210,7 +214,6 @@ if(!class_exists('MBP_api')){
 		public function create_post($company_id, $args){ //Todo: alter API to only accept valid post and location objects
 			$args['company_id'] = $company_id;
 			$publishedLocalPost = $this->do_request('google/create_post/', json_encode($args), 'POST');
-
 			return \PGMB\Google\PublishedLocalPost::fromArray($publishedLocalPost);
 
 		}

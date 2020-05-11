@@ -4,17 +4,17 @@ return apply_filters( 'ninja_forms_from_settings_types', array(
 
     'display' 			=> array(
         'id' 			=> 'display',
-        'nicename' 		=> __( 'Display Settings', 'ninja-forms' ),
+        'nicename' 		=> esc_html__( 'Display Settings', 'ninja-forms' ),
     ),
 
     'restrictions' 		=> array(
         'id' 			=> 'restrictions',
-        'nicename' 		=> __( 'Restrictions', 'ninja-forms' )
+        'nicename' 		=> esc_html__( 'Restrictions', 'ninja-forms' )
     ),
 
     'calculations' 		=> array(
     	'id' 			=> 'calculations',
-    	'nicename' 		=> __( 'Calculations', 'ninja-forms')
+    	'nicename' 		=> esc_html__( 'Calculations', 'ninja-forms')
     ),
 
 ));

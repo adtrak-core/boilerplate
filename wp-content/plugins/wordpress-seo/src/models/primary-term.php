@@ -5,9 +5,9 @@
  * @package Yoast\YoastSEO\Models
  */
 
-namespace Yoast\WP\Free\Models;
+namespace Yoast\WP\SEO\Models;
 
-use Yoast\WP\Free\Yoast_Model;
+use Yoast\WP\Lib\Model;
 
 /**
  * Primary Term model definition.
@@ -16,50 +16,29 @@ use Yoast\WP\Free\Yoast_Model;
  * @property int    $post_id  Post ID.
  * @property int    $term_id  Term ID.
  * @property string $taxonomy Taxonomy.
+ * @property int    $blog_id  Blog ID.
  *
- * @property string  $created_at
- * @property string  $updated_at
+ * @property string $created_at
+ * @property string $updated_at
  */
-class Primary_Term extends Yoast_Model {
+class Primary_Term extends Model {
 
 	/**
-	 * Retrieves an indexable by a post ID and taxonomy.
+	 * Whether nor this model uses timestamps.
 	 *
-	 * @param int    $post_id     The post the indexable is based upon.
-	 * @param string $taxonomy    The taxonomy the indexable belongs to.
-	 * @param bool   $auto_create Optional. Creates an indexable if it does not exist yet.
-	 *
-	 * @return bool|Indexable Instance of indexable.
+	 * @var bool
 	 */
-	public static function find_by_postid_and_taxonomy( $post_id, $taxonomy, $auto_create = true ) {
-		/** @var \Yoast\WP\Free\Models\Primary_Term $indexable */
-		$indexable = Yoast_Model::of_type( 'Primary_Term' )
-			->where( 'post_id', $post_id )
-			->where( 'taxonomy', $taxonomy )
-			->find_one();
-
-		if ( $auto_create && ! $indexable ) {
-			$indexable = Yoast_Model::of_type( 'Primary_Term' )->create();
-		}
-
-		return $indexable;
-	}
+	protected $uses_timestamps = true;
 
 	/**
-	 * Enhances the save method.
+	 * Which columns contain int values.
 	 *
-	 * @return boolean True on succes.
+	 * @var array
 	 */
-	public function save() {
-
-		if ( ! $this->created_at ) {
-			$this->created_at = gmdate( 'Y-m-d H:i:s' );
-		}
-
-		if ( $this->updated_at ) {
-			$this->updated_at = gmdate( 'Y-m-d H:i:s' );
-		}
-
-		return parent::save();
-	}
+	protected $int_columns = [
+		'id',
+		'post_id',
+		'term_id',
+		'blog_id',
+	];
 }

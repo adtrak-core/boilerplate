@@ -67,7 +67,7 @@ function nf_admin_notices( $notices ) {
          * THREE is Coming!
          */
         $three_info = add_query_arg( array( 'nf_admin_notice_ignore' => 'three_info' ) );
-        $three_link = nf_aff_link( 'https://ninjaforms.com/three/?utm_medium=plugin&utm_source=admin-notice&utm_campaign=Ninja+Forms+THREE&utm_content=Learn+More' );
+        $three_link = nf_aff_link( 'https://ninjaforms.com/three/?utm_source=Ninja+Forms+Plugin+Deprecated&utm_medium=Dashboard+Banner+Ad+Deprecated' );
         $notices['three_info'] = array(
             'title' => __( 'THREE is coming!', 'ninja-forms' ),
             'msg' => sprintf( __( 'A major update is coming to Ninja Forms. %sLearn more about new features, backwards compatibility, and more Frequently Asked Questions.%s', 'ninja-forms' ), '<a target="_blank" href="' . $three_link . '">', '</a>' ),
@@ -81,8 +81,8 @@ function nf_admin_notices( $notices ) {
 
 
     $one_week_support = add_query_arg( array( 'nf_admin_notice_ignore' => 'one_week_support' ) );
-    $support_link = nf_aff_link( 'https://ninjaforms.com/contact/?utm_medium=plugin&utm_source=admin-notice&utm_campaign=Ninja+Forms+Upsell&utm_content=Ninja+Forms+Support' );
-    $support_docs_link = nf_aff_link( 'http://docs.ninjaforms.com/?utm_medium=plugin&utm_source=admin-notice&utm_campaign=Ninja+Forms+Upsell&utm_content=Ninja+Forms+Docs' );
+    $support_link = nf_aff_link( 'https://ninjaforms.com/contact/?utm_source=Ninja+Forms+Plugin+Deprecated&utm_medium=System+Status+Banner+Ad+Deprecated' );
+    $support_docs_link = nf_aff_link( 'http://docs.ninjaforms.com/?utm_source=Ninja+Forms+Plugin+Deprecated&utm_medium=System+Status+Banner+Ad+Deprecated' );
     $notices['one_week_support'] = array(
         'title' => __( 'How\'s It Going?', 'ninja-forms' ),
         'msg' => __( 'Thank you for using Ninja Forms! We hope that you\'ve found everything you need, but if you have any questions:', 'ninja-forms' ),

@@ -16,23 +16,23 @@
         </li>
 
         <li class="nf-sub-info-updated">
-            <?php _e( 'Updated on: ', 'ninja-forms' ); ?><strong><?php echo $mod_date; ?></strong>
+            <?php esc_html_e( 'Updated on: ', 'ninja-forms' ); ?><strong><?php echo $mod_date; ?></strong>
             <?php do_action( 'nf_sub_edit_date_modified', $post ); ?>
         </li>
         <li class="nf-sub-info-created">
-            <?php _e ( 'Submitted on: ', 'ninja-forms' ); ?><strong><?php echo $sub_date; ?></strong>
+            <?php esc_html_e( 'Submitted on: ', 'ninja-forms' ); ?><strong><?php echo $sub_date; ?></strong>
             <?php do_action( 'nf_sub_edit_date_submitted', $post ); ?>
         </li>
 
-        <li class="nf-sub-info-user"><?php _e( 'Submitted by: ', 'ninja-forms' ); ?><strong><?php echo $user; ?></strong></li>
+        <li class="nf-sub-info-user"><?php esc_html_e( 'Submitted by: ', 'ninja-forms' ); ?><strong><?php echo $user; ?></strong></li>
 
     </ul>
 
 </div>
 
 <div id="major-publishing-actions" class="nf-sub-actions">
-    <div id="delete-action"><a class="submitdelete deletion" style="color:red;" href="<?php echo get_delete_post_link( $post->ID ); ?>"><?php _e( 'Move to Trash', 'ninja-forms' ); ?></a></div>
-    <input name="save" type="submit" class="button button-primary button-large nf-sub-actions-save" id="publish" accesskey="p" value="<?php _e( 'Update', 'ninja-forms' ); ?>">
+    <div id="delete-action"><a class="submitdelete deletion" style="color:red;" href="<?php echo get_delete_post_link( $post->ID ); ?>"><?php esc_html_e( 'Move to Trash', 'ninja-forms' ); ?></a></div>
+    <input name="save" type="submit" class="button button-primary button-large nf-sub-actions-save" id="publish" accesskey="p" value="<?php esc_html_e( 'Update', 'ninja-forms' ); ?>">
     <span class="spinner"></span>
 </div>
 

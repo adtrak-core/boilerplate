@@ -23,8 +23,8 @@ final class NF_VersionSwitcher
         $doing_ajax = ( defined( 'DOING_AJAX' ) && DOING_AJAX );
         if( $nf2to3 && ! $doing_ajax ){
             wp_die(
-                __( 'You do not have permission.', 'ninja-forms' ),
-                __( 'Permission Denied', 'ninja-forms' )
+                esc_html__( 'You do not have permission.', 'ninja-forms' ),
+                esc_html__( 'Permission Denied', 'ninja-forms' )
             );
         }
     }
@@ -39,8 +39,8 @@ final class NF_VersionSwitcher
         if( $current_user_can ) return TRUE;
 
         wp_die(
-            __( 'You do not have permission.', 'ninja-forms' ),
-            __( 'Permission Denied', 'ninja-forms' )
+            esc_html__( 'You do not have permission.', 'ninja-forms' ),
+            esc_html__( 'Permission Denied', 'ninja-forms' )
         );
     }
 
@@ -54,17 +54,21 @@ final class NF_VersionSwitcher
 
             switch( $_GET[ 'nf-switcher' ] ){
                 case 'upgrade':
-                    update_option( 'ninja_forms_load_deprecated', FALSE );
-                    update_option( 'ninja_forms_upgrade_complete', true );
-                    do_action( 'ninja_forms_upgrade' );
-                    $notice = '&nf-upgrade=complete';
+                    if ( wp_verify_nonce( $_GET['security'], 'ninja_forms_upgrade_nonce' ) ) {
+                        update_option( 'ninja_forms_load_deprecated', FALSE );
+                        update_option( 'ninja_forms_upgrade_complete', true );
+                        do_action( 'ninja_forms_upgrade' );
+                        $notice = '&nf-upgrade=complete';
+                    }
                     break;
                 case 'rollback':
-                    update_option( 'ninja_forms_load_deprecated', TRUE );
-                    update_option( 'ninja_forms_upgrade_complete', false );
-                    $this->rollback_activation();
-                    do_action( 'ninja_forms_rollback' );
-                    $notice = '&nf-rollback=complete';
+                    if ( wp_verify_nonce( $_GET['security'], 'ninja_forms_settings_nonce' ) ) {
+                        update_option( 'ninja_forms_load_deprecated', TRUE );
+                        update_option( 'ninja_forms_upgrade_complete', false );
+                        $this->rollback_activation();
+                        do_action( 'ninja_forms_rollback' );
+                        $notice = '&nf-rollback=complete';
+                    }
                     break;
             }
 
@@ -76,7 +80,7 @@ final class NF_VersionSwitcher
     {
         $args = array(
             'id'    => 'nf',
-            'title' => __( 'Ninja Forms Dev', 'ninja-forms' ),
+            'title' => esc_html__( 'Ninja Forms Dev', 'ninja-forms' ),
             'href'  => '#',
         );
         $wp_admin_bar->add_node( $args );
@@ -86,11 +90,13 @@ final class NF_VersionSwitcher
             'parent' => 'nf'
         );
         if( ! get_option( 'ninja_forms_load_deprecated' ) ) {
-            $args[ 'title' ] = __( 'DEBUG: Switch to 2.9.x', 'ninja-forms' );
+            $args[ 'title' ] = esc_html__( 'DEBUG: Switch to 2.9.x', 'ninja-forms' );
             $args[ 'href' ] .= '?nf-switcher=rollback';
+            $args[ 'href' ] .= '&security=' . wp_create_nonce( 'ninja_forms_settings_nonce' );
         } else {
-            $args[ 'title' ] = __( 'DEBUG: Switch to 3.0.x', 'ninja-forms' );
+            $args[ 'title' ] = esc_html__( 'DEBUG: Switch to 3.0.x', 'ninja-forms' );
             $args[ 'href' ] .= '?nf-switcher=upgrade';
+            $args[ 'href' ] .= '&security=' . wp_create_nonce( 'ninja_forms_upgrade_nonce' );
         }
         $wp_admin_bar->add_node($args);
     }
@@ -263,11 +269,11 @@ final class NF_VersionSwitcher
 
             // Persistance notice, until dismissed.
             $notices[ 'upgrade_compelte_notice' ] = array(
-                'title' => __( 'How do I look?', 'ninja-forms' ),
-                'msg' => __( 'Your forms were upgraded. Take a look around and make sure everything looks right.', 'ninja-forms' ),
-                'link' => '<li><span class="dashicons dashicons-welcome-learn-more"></span><a target="_blank" href="https://ninjaforms.com/documentation/?utm_medium=plugin&utm_source=admin-notice&utm_campaign=Ninja+Forms+Upsell&utm_content=Ninja+Forms+Docs">' . __( 'Learn More', 'ninja-forms' ) . '</a></li>
-                            <li><span class="dashicons dashicons-sos"></span><a target="_blank" href="https://ninjaforms.com/docs/rollback/">' . __( 'Something is wrong...', 'ninja-forms' ) . '</a></li>
-                            <li><span class="dashicons dashicons-thumbs-up"></span><a href="' . add_query_arg( array( 'nf_admin_notice_ignore' => __( 'upgrade_compelte_notice', 'ninja-forms' ) ) ) . '">' . __( 'Looks Good!' ,'ninja-forms' ) . '</a></li>',
+                'title' => esc_html__( 'How do I look?', 'ninja-forms' ),
+                'msg' => esc_html__( 'Your forms were upgraded. Take a look around and make sure everything looks right.', 'ninja-forms' ),
+                'link' => '<li><span class="dashicons dashicons-welcome-learn-more"></span><a target="_blank" href="https://ninjaforms.com/documentation/?utm_medium=plugin&utm_source=admin-notice&utm_campaign=Ninja+Forms+Upsell&utm_content=Ninja+Forms+Docs">' . esc_html__( 'Learn More', 'ninja-forms' ) . '</a></li>
+                            <li><span class="dashicons dashicons-sos"></span><a target="_blank" href="https://ninjaforms.com/docs/rollback/">' . esc_html__( 'Something is wrong...', 'ninja-forms' ) . '</a></li>
+                            <li><span class="dashicons dashicons-thumbs-up"></span><a href="' . add_query_arg( array( 'nf_admin_notice_ignore' => esc_html__( 'upgrade_compelte_notice', 'ninja-forms' ) ) ) . '">' . esc_html__( 'Looks Good!' ,'ninja-forms' ) . '</a></li>',
                 'int' => 0,
                 'pages' => array( 'ninja-forms' )
             );

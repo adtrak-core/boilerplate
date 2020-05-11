@@ -27,7 +27,7 @@ class NF_Fields_Shipping extends NF_Abstracts_Input
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Shipping', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Shipping', 'ninja-forms' );
 
         add_filter( 'ninja-forms-field-settings-groups', array( $this, 'add_setting_group' ) );
 
@@ -38,7 +38,7 @@ class NF_Fields_Shipping extends NF_Abstracts_Input
     {
         $groups[ 'advanced_shipping' ] = array(
             'id' => 'advanced_shipping',
-            'label' => __( 'Advanced Shipping', 'ninja-forms' ),
+            'label' => esc_html__( 'Advanced Shipping', 'ninja-forms' ),
         );
 
         return $groups;

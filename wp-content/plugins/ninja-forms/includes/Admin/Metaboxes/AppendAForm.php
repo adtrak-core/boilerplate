@@ -8,7 +8,7 @@ final class NF_Admin_Metaboxes_AppendAForm extends NF_Abstracts_Metabox
     {
         parent::__construct();
 
-        $this->_title = __( 'Append a Ninja Form', 'ninja-forms' );
+        $this->_title = esc_html__( 'Append a Ninja Form', 'ninja-forms' );
 
         add_filter( 'the_content', array( $this, 'append_form' ) );
     }
@@ -59,7 +59,7 @@ final class NF_Admin_Metaboxes_AppendAForm extends NF_Abstracts_Metabox
 
         $form_id = get_post_meta( $post->ID, 'ninja_forms_form', true );
 
-        $none_text = '-- ' . __( 'None', 'ninja-forms' );
+        $none_text = '-- ' . esc_html__( 'None', 'ninja-forms' );
 
         Ninja_Forms()->template( 'admin-metabox-append-a-form.html.php', compact( 'forms', 'form_id', 'none_text' ) );
     }

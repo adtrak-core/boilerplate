@@ -236,7 +236,7 @@ class NF_Updates_CacheCollateObjects extends NF_Abstracts_RequiredUpdate
             // Get the last item updated.
             $last = array_pop( $result );
             // Record it to our process object.
-            $this->running[ 0 ][ 'last_updated' ] = $result[ 'id' ];
+            $this->running[ 0 ][ 'last_updated' ] = $last[ 'id' ];
             // Also record that we ran the update on this table.
             $this->running[ 0 ][ 'updating_table' ] = $this->table;
             // Reduce our table rows by the divisor.
@@ -287,7 +287,7 @@ class NF_Updates_CacheCollateObjects extends NF_Abstracts_RequiredUpdate
             // Get the last item updated.
             $last = array_pop( $result );
             // Record it to our process object.
-            $this->running[ 0 ][ 'last_updated' ] = $result[ 'id' ];
+            $this->running[ 0 ][ 'last_updated' ] = $last[ 'id' ];
             // Also record that we ran the update on this table.
             $this->running[ 0 ][ 'updating_table' ] = $this->meta_table;
             // Reduce our meta rows by the divisor.

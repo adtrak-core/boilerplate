@@ -13,7 +13,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
     public function __construct()
     {
         if( isset( $_POST[ 'nf_resume' ] ) && isset( $_COOKIE[ 'nf_wp_session' ] ) ){
-            add_action( 'ninja_forms_loaded', array( $this, 'resume' ) );
+            add_action( 'init', array( $this, 'resume' ) );
             return;
         }
 
@@ -25,9 +25,15 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         }
 
 
+        // Ajax calls here are both handled by 'submit' in this file
         add_action( 'wp_ajax_nf_ajax_submit',   array( $this, 'submit' )  );
         add_action( 'wp_ajax_nopriv_nf_ajax_submit',   array( $this, 'submit' )  );
 
+        /**
+         * Ajax calls here are handled by 'resume' in this file. These calls
+         * are normally made by the application when returning from 'PayPal' or
+         * 'Stripe'.
+         */
         add_action( 'wp_ajax_nf_ajax_resume',   array( $this, 'resume' )  );
         add_action( 'wp_ajax_nopriv_nf_ajax_resume',   array( $this, 'resume' )  );
     }
@@ -42,7 +48,22 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
     	if( isset( $_REQUEST[ 'nonce_ts' ] ) && 0 < strlen( $_REQUEST[ 'nonce_ts' ] ) ) {
     		$nonce_name = $nonce_name . "_" . $_REQUEST[ 'nonce_ts' ];
 	    }
-        check_ajax_referer( $nonce_name, 'security' );
+        $check_ajax_referer = check_ajax_referer( $nonce_name, 'security', $die = false );
+        if(!$check_ajax_referer){
+            /**
+             * "Just in Time Nonce".
+             * If the nonce fails, then send back a new nonce for the form to resubmit.
+             * This supports the edge-case of 11:59:59 form submissions, while avoiding the form load nonce request.
+             */
+
+            $current_time_stamp = time();
+            $new_nonce_name = 'ninja_forms_display_nonce_' . $current_time_stamp;
+            $this->_errors['nonce'] = array(
+                'new_nonce' => wp_create_nonce( $new_nonce_name ),
+                'nonce_ts' => $current_time_stamp
+            );
+            $this->_respond();
+        }
 
         register_shutdown_function( array( $this, 'shutdown' ) );
 
@@ -50,10 +71,24 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
 
         $this->_form_id = $this->_form_data['id'];
 
+        /* Render Instance Fix */
+        if(strpos($this->_form_id, '_')){
+            $this->_form_instance_id = $this->_form_id;
+            list($this->_form_id, $this->_instance_id) = explode('_', $this->_form_id);
+            $updated_fields = array();
+            foreach($this->_form_data['fields'] as $field_id => $field ){
+                list($field_id) = explode('_', $field_id);
+                list($field['id']) = explode('_', $field['id']);
+                $updated_fields[$field_id] = $field;
+            }
+            $this->_form_data['fields'] = $updated_fields;
+        }
+        /* END Render Instance Fix */
+
         // If we don't have a numeric form ID...
         if ( ! is_numeric( $this->_form_id ) ) {
             // Kick the request out without processing.
-            $this->_errors[] = __( 'Form does not exist.', 'ninja-forms' );
+            $this->_errors[] = esc_html__( 'Form does not exist.', 'ninja-forms' );
             $this->_respond();
         }
 
@@ -65,8 +100,8 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
          * back to the form.
          */
         if ( $is_maintenance ) {
-            $this->_errors[ 'form' ][] = apply_filters( 'nf_maintenance_message', __( 'This form is currently undergoing maintenance. Please ', 'ninja-forms' )
-                . '<a href="' . $_SERVER[ 'HTTP_REFERER' ] . '">' . __( 'click here ', 'ninja-forms' ) . '</a>' . __( 'to reload the form and try again.', 'ninja-forms' )  ) ;
+            $this->_errors[ 'form' ][] = apply_filters( 'nf_maintenance_message', esc_html__( 'This form is currently undergoing maintenance. Please ', 'ninja-forms' )
+                . '<a href="' . $_SERVER[ 'HTTP_REFERER' ] . '">' . esc_html__( 'click here ', 'ninja-forms' ) . '</a>' . esc_html__( 'to reload the form and try again.', 'ninja-forms' )  ) ;
             $this->_respond();
         }
 
@@ -75,11 +110,22 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
             $this->_form_cache = get_user_option( 'nf_form_preview_' . $this->_form_id );
 
             if( ! $this->_form_cache ){
-                $this->_errors[ 'preview' ] = __( 'Preview does not exist.', 'ninja-forms' );
+                $this->_errors[ 'preview' ] = esc_html__( 'Preview does not exist.', 'ninja-forms' );
                 $this->_respond();
             }
         } else {
-            $this->_form_cache = WPN_Helper::get_nf_cache( $this->_form_id );
+            if( WPN_Helper::use_cache() ) {
+                $this->_form_cache = WPN_Helper::get_nf_cache( $this->_form_id );
+            }
+
+        }
+
+        // Add Field Keys to _form_data
+        if(! $this->is_preview()){
+            $form_fields = Ninja_Forms()->form($this->_form_id)->get_fields();
+            foreach ($form_fields as $id => $field) {
+                $this->_form_data['fields'][$id]['key'] = $field->get_setting('key');
+            }
         }
 
         // TODO: Update Conditional Logic to preserve field ID => [ Settings, ID ] structure.
@@ -93,7 +139,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         $this->_form_data = Ninja_Forms()->session()->get( 'nf_processing_form_data' );
         $this->_form_cache = Ninja_Forms()->session()->get( 'nf_processing_form_cache' );
         $this->_data = Ninja_Forms()->session()->get( 'nf_processing_data' );
-        $this->_data[ 'resume' ] = $_POST[ 'nf_resume' ];
+        $this->_data[ 'resume' ] = WPN_Helper::sanitize_text_field($_POST[ 'nf_resume' ]);
 
         $this->_form_id = $this->_data[ 'form_id' ];
 
@@ -112,11 +158,21 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         // Init Calc Merge Tags.
         $calcs_merge_tags = Ninja_Forms()->merge_tags[ 'calcs' ];
 
-        $form_settings = $this->_form_cache[ 'settings' ];
+        if(isset($this->_form_cache[ 'settings' ] ) ) {
+            $form_settings = $this->_form_cache[ 'settings' ];
+        } else {
+            $form_settings = false;
+        }
+
         if( ! $form_settings ){
             $form = Ninja_Forms()->form( $this->_form_id )->get();
             $form_settings = $form->get_settings();
         }
+
+	    // Init Form Merge Tags.
+	    $form_merge_tags = Ninja_Forms()->merge_tags[ 'form' ];
+	    $form_merge_tags->set_form_id( $this->_form_id );
+	    $form_merge_tags->set_form_title( $form_settings['title'] );
 
         $this->_data[ 'form_id' ] = $this->_form_data[ 'form_id' ] = $this->_form_id;
         $this->_data[ 'settings' ] = $form_settings;
@@ -216,7 +272,10 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         | Check for unique field settings.
         |--------------------------------------------------------------------------
         */
-        if ( isset ( $this->_data[ 'settings' ][ 'unique_field' ] ) && ! empty( $this->_data[ 'settings' ][ 'unique_field' ] ) ) {
+        if ( isset( $this->_data[ 'resume' ] ) && $this->_data[ 'resume' ] ){
+            // On Resume Submission, we don't need to run this check again.
+            // This section intentionally left blank.
+        } elseif ( isset ( $this->_data[ 'settings' ][ 'unique_field' ] ) && ! empty( $this->_data[ 'settings' ][ 'unique_field' ] ) ) {
             /*
              * Get our unique field
              */
@@ -228,15 +287,31 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
                 $unique_field_value = serialize( $unique_field_value );
             }
 
-            /*
-             * Check our db for the value submitted.
-             */
-            
-            global $wpdb;
-            $sql = $wpdb->prepare( "SELECT COUNT(m.meta_id) FROM `" . $wpdb->prefix . "postmeta` AS m LEFT JOIN `" . $wpdb->prefix . "posts` AS p ON p.id = m.post_id WHERE m.meta_key = '_field_%d' AND m.meta_value = '%s' AND p.post_status = 'publish'", $unique_field_id, $unique_field_value );
-            $result = $wpdb->get_results( $sql, 'ARRAY_N' );
-            if ( intval( $result[ 0 ][ 0 ] ) > 0 ) {
-                $this->_errors['fields'][ $unique_field_id ] = array( 'slug' => 'unique_field', 'message' => $unique_field_error );
+            if ( ! empty($unique_field_value) ) {
+                /*
+                 * Check our db for the value submitted.
+                 */
+                
+                global $wpdb;
+                // @TODO: Rewrite this to use our submissions API.
+                $sql = $wpdb->prepare( "SELECT COUNT(m.meta_id) FROM `" . $wpdb->prefix . "postmeta` AS m LEFT JOIN `" . $wpdb->prefix . "posts` AS p ON p.id = m.post_id WHERE m.meta_key = '_field_%d' AND m.meta_value = '%s' AND p.post_status = 'publish'", $unique_field_id, $unique_field_value );
+                $result = $wpdb->get_results( $sql, 'ARRAY_N' );
+                if ( intval( $result[ 0 ][ 0 ] ) > 0 ) {
+                    $this->_errors['fields'][ $unique_field_id ] = array( 'slug' => 'unique_field', 'message' => $unique_field_error );
+                    $this->_respond();
+                }
+            }
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Verify the submission limit.
+        |--------------------------------------------------------------------------
+        */
+        if ( isset( $this->_data[ 'settings' ][ 'sub_limit_number' ] ) && ! empty( $this->_data[ 'settings' ][ 'sub_limit_number' ] ) ) {
+            $subs = Ninja_Forms()->form( $this->_form_id )->get_subs();
+            if ( count( $subs ) >= intval( $this->_data[ 'settings' ][ 'sub_limit_number' ] ) ) {
+                $this->_errors[ 'form' ][] = $this->_data[ 'settings' ][ 'sub_limit_msg' ];
                 $this->_respond();
             }
         }
@@ -471,7 +546,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
         $error = error_get_last();
         if( $error !== NULL && in_array( $error[ 'type' ], array( E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR ) ) ) {
 
-            $this->_errors[ 'form' ][ 'last' ] = __( 'The server encountered an error during processing.', 'ninja-forms' );
+            $this->_errors[ 'form' ][ 'last' ] = esc_html__( 'The server encountered an error during processing.', 'ninja-forms' );
 
             if( current_user_can( 'manage_options' ) && isset( $error[ 'message' ] ) ){
                 $this->_errors[ 'form' ][ 'last_admin' ] = '<pre>' . $error[ 'message' ] . '</pre>';
@@ -492,7 +567,7 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
             && json_last_error() ){
             $this->_errors[] = json_last_error_msg();
         } else {
-            $this->_errors[] = __( 'An unexpected error occurred.', 'ninja-forms' );
+            $this->_errors[] = esc_html__( 'An unexpected error occurred.', 'ninja-forms' );
         }
 
         $this->_respond();
@@ -509,6 +584,21 @@ class NF_AJAX_Controllers_Submission extends NF_Abstracts_Controller
      */
     protected function _respond( $data = array() )
     {
+        // Restore form instance ID.
+        if(property_exists($this, '_form_instance_id') 
+            && $this->_form_instance_id){
+            $this->_data[ 'form_id' ] = $this->_form_instance_id;
+
+            // Maybe update IDs for field errors, if there are field errors.
+            if(isset($this->_errors['fields']) && $this->_errors['fields']){
+                $field_errors = array();
+                foreach($this->_errors['fields'] as $field_id => $error){
+                    $field_errors[$field_id . '_' . $this->_instance_id] = $error;
+                }
+                $this->_errors['fields'] = $field_errors;
+            }
+        }
+
         // Set a content type of JSON for the purpose of previnting XSS attacks.
         header( 'Content-Type: application/json' );
         // Call the parent method.

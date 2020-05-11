@@ -4,18 +4,38 @@ class NF_AJAX_Controllers_DeleteAllData extends NF_Abstracts_Controller
 {
 	public function __construct()
 	{
+		// Ajax call handled in 'delete_all_data' in this file.
 		add_action( 'wp_ajax_nf_delete_all_data', array( $this, 'delete_all_data' ) );
 	}
 
 	public function delete_all_data()
 	{
+		// Does the current user have admin privileges
+		if (!current_user_can(apply_filters('ninja_forms_admin_all_forms_capabilities', 'manage_options'))) {
+			$this->_data['errors'] = esc_html__('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+			$this->_respond();
+		}
+
+		// If we don't have a nonce...
+        // OR if the nonce is invalid...
+        if (!isset($_REQUEST['security']) || !wp_verify_nonce($_REQUEST['security'], 'ninja_forms_settings_nonce')) {
+            // Kick the request out now.
+            $this->_data['errors'] = esc_html__('Request forbidden.', 'ninja-forms');
+            $this->_respond();
+        }
+
 		check_ajax_referer( 'ninja_forms_settings_nonce', 'security' );
 
 		global $wpdb;
 		$total_subs_deleted = 0;
 		$post_result = 0;
 		$max_cnt = 500;
-		$form_id = $_POST[ 'form' ];
+
+		if (!isset($_POST['form']) || empty($_POST['form'])) {
+			$this->_respond();
+		}
+
+		$form_id = absint($_POST[ 'form' ]);
 		// SQL for getting 250 subs at a time
 		$sub_sql = "SELECT id FROM `" . $wpdb->prefix . "posts` AS p
 			LEFT JOIN `" . $wpdb->prefix . "postmeta` AS m ON p.id = m.post_id
@@ -40,7 +60,7 @@ class NF_AJAX_Controllers_DeleteAllData extends NF_Abstracts_Controller
 			}
 		}
 
-		$this->_data[ 'form_id' ] = $_POST[ 'form' ];
+		$this->_data[ 'form_id' ] = $form_id;
 		$this->_data[ 'delete_count' ] = $total_subs_deleted;
 		$this->_data[ 'success' ] = true;
 

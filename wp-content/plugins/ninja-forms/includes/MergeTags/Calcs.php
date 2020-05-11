@@ -12,7 +12,7 @@ final class NF_MergeTags_Calcs extends NF_Abstracts_MergeTags
     public function __construct()
     {
         parent::__construct();
-        $this->title = __( 'Calculations', 'ninja-forms' );
+        $this->title = esc_html__( 'Calculations', 'ninja-forms' );
         add_filter( 'ninja_forms_calc_setting',  array( $this, 'replace' ) );
     }
 
@@ -41,7 +41,6 @@ final class NF_MergeTags_Calcs extends NF_Abstracts_MergeTags
         $this->merge_tags[ $callback ] = array(
             'id' => $key,
             'tag' => "{calc:$key}",
-//            'label' => __( '', 'ninja_forms' ),
             'callback' => $callback,
             'calc_value' => number_format( $calculated_value, $round, '.', '' )
         );
@@ -51,7 +50,6 @@ final class NF_MergeTags_Calcs extends NF_Abstracts_MergeTags
         $this->merge_tags[ $callback ] = array(
             'id' => $key,
             'tag' => "{calc:$key:2}",
-//            'label' => __( '', 'ninja_forms' ),
             'callback' => $callback,
             'calc_value' => number_format( $calculated_value, 2, '.', '' )
         );

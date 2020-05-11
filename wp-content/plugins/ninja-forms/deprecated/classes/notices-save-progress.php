@@ -75,12 +75,12 @@ class NF_Notices_SP extends NF_Notices
     // Ignore function that gets ran at admin init to ensure any messages that were dismissed get marked
     public function admin_notice_ignore() {
 
-        $slug = ( isset( $_GET[ 'nf_admin_notice_ignore' ] ) ) ? $_GET[ 'nf_admin_notice_ignore' ] : '';
+        $slug = ( isset( $_GET[ 'nf_admin_notice_ignore' ] ) ) ? sanitize_text_field($_GET[ 'nf_admin_notice_ignore' ]) : '';
         // If user clicks to ignore the notice, run this action
         if ( $slug == 'multi-part19' && current_user_can( apply_filters( 'ninja_forms_admin_parent_menu_capabilities', 'manage_options' ) ) ) {
 
                 $admin_notices_extra_option = get_option( 'nf_admin_notice_extra', array() );
-                $admin_notices_extra_option[ $_GET[ 'nf_admin_notice_ignore' ] ][ 'test19' ] = 1;
+                $admin_notices_extra_option[ sanitize_text_field($_GET[ 'nf_admin_notice_ignore' ]) ][ 'test19' ] = 1;
                 update_option( 'nf_admin_notice_extra', $admin_notices_extra_option );
 
         }

@@ -7,7 +7,7 @@ class NF_AJAX_Controllers_DispatchPoints
      */
     public function __construct()
     {
-        // Add out ajax end points.
+        // Add our ajax end points. Calls are handled in this file.
         add_action( 'wp_ajax_nf_undo_click',   array( $this, 'undo_click' ) );
         add_action( 'wp_ajax_nf_form_telemetry', array( $this, 'form_telemetry' ) );
     }

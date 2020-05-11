@@ -6,6 +6,7 @@ class NF_AJAX_Controllers_Fields extends NF_Abstracts_Controller
 
 	public function __construct()
 	{
+		// Ajax call handed in 'maybe_delete_field' in this file
 		add_action( 'wp_ajax_nf_maybe_delete_field', array( $this,
 			'maybe_delete_field' ) );
 
@@ -16,7 +17,25 @@ class NF_AJAX_Controllers_Fields extends NF_Abstracts_Controller
 	 * delete field modal
 	 */
 	public function maybe_delete_field() {
-		$field_id = $_REQUEST[ 'fieldID' ];
+
+		// Does the current user have admin privileges
+		if (!current_user_can(apply_filters('ninja_forms_admin_all_forms_capabilities', 'manage_options'))) {
+			$this->_data['errors'] = esc_html__('Access denied. You must have admin privileges to perform this action.', 'ninja-forms');
+			$this->_respond();
+		}
+
+		// If we don't have a nonce...
+        // OR if the nonce is invalid...
+        if (!isset($_REQUEST['security']) || !wp_verify_nonce($_REQUEST['security'], 'ninja_forms_builder_nonce')) {
+            // Kick the request out now.
+            $this->_data['errors'] = esc_html__('Request forbidden.', 'ninja-forms');
+            $this->_respond();
+        }
+
+		if (!isset($_REQUEST['fieldID']) || empty($_REQUEST['fieldID'])) {
+			$this->_respond();
+		}
+		$field_id = absint($_REQUEST[ 'fieldID' ]);
 //		$field_key = $_REQUEST[ 'fieldKey' ];
 
 		global $wpdb;

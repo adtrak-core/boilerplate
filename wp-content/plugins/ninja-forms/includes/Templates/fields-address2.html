@@ -7,7 +7,7 @@
 			id="nf-field-{{{ data.id }}}"
 	<# if( ! data.disable_browser_autocompletes ){ #>
 	name="{{ data.custom_name_attribute || 'nf-field-' + data.id + '-' + data.type }}"
-	autocomplete="address-line1"
+	autocomplete="address-line2"
 	<# } else { #>
 	name="{{ data.custom_name_attribute || 'nf-field-' + data.id }}"
 	{{{ data.maybeDisableAutocomplete() }}}

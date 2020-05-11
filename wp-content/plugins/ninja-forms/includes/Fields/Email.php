@@ -25,7 +25,7 @@ class NF_Fields_Email extends NF_Abstracts_UserInfo
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Email', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Email', 'ninja-forms' );
 
         $this->_settings[ 'custom_name_attribute' ][ 'value' ] = 'email';
         $this->_settings[ 'personally_identifiable' ][ 'value' ] = '1';

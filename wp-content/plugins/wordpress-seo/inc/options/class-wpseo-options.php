@@ -13,24 +13,38 @@
 class WPSEO_Options {
 
 	/**
+	 * The option values.
+	 *
+	 * @var null
+	 */
+	protected static $option_values = null;
+
+	/**
 	 * Options this class uses.
 	 *
 	 * @var array Array format: (string) option_name  => (string) name of concrete class for the option.
 	 */
-	public static $options = array(
+	public static $options = [
 		'wpseo'               => 'WPSEO_Option_Wpseo',
 		'wpseo_titles'        => 'WPSEO_Option_Titles',
 		'wpseo_social'        => 'WPSEO_Option_Social',
 		'wpseo_ms'            => 'WPSEO_Option_MS',
 		'wpseo_taxonomy_meta' => 'WPSEO_Taxonomy_Meta',
-	);
+	];
 
 	/**
 	 * Array of instantiated option objects.
 	 *
 	 * @var array
 	 */
-	protected static $option_instances = array();
+	protected static $option_instances = [];
+
+	/**
+	 * Array with the option names.
+	 *
+	 * @var array
+	 */
+	protected static $option_names = [];
 
 	/**
 	 * Instance of this class.
@@ -40,32 +54,24 @@ class WPSEO_Options {
 	protected static $instance;
 
 	/**
-	 * Backfill instance.
-	 *
-	 * @var WPSEO_Options_Backfill
-	 */
-	protected static $backfill;
-
-	/**
 	 * Instantiate all the WPSEO option management classes.
 	 */
 	protected function __construct() {
-		// Backfill option values after transferring them to another base.
-		self::$backfill = new WPSEO_Options_Backfill();
-		self::$backfill->register_hooks();
+		$this->register_hooks();
 
-		$is_multisite = is_multisite();
-
-		foreach ( self::$options as $option_name => $option_class ) {
-			$instance = call_user_func( array( $option_class, 'get_instance' ) );
-
-			if ( ! $instance->multisite_only || $is_multisite ) {
-				self::$option_instances[ $option_name ] = $instance;
-			}
-			else {
-				unset( self::$options[ $option_name ] );
-			}
+		foreach ( static::$options as $option_name => $option_class ) {
+			static::register_option( call_user_func( [ $option_class, 'get_instance' ] ) );
 		}
+	}
+
+	/**
+	 * Register our hooks.
+	 */
+	public function register_hooks() {
+		add_action( 'registered_taxonomy', [ $this, 'clear_cache' ] );
+		add_action( 'unregistered_taxonomy', [ $this, 'clear_cache' ] );
+		add_action( 'registered_post_type', [ $this, 'clear_cache' ] );
+		add_action( 'unregistered_post_type', [ $this, 'clear_cache' ] );
 	}
 
 	/**
@@ -74,11 +80,41 @@ class WPSEO_Options {
 	 * @return object
 	 */
 	public static function get_instance() {
-		if ( ! ( self::$instance instanceof self ) ) {
-			self::$instance = new self();
+		if ( ! ( static::$instance instanceof self ) ) {
+			static::$instance = new self();
 		}
 
-		return self::$instance;
+		return static::$instance;
+	}
+
+	/**
+	 * Registers an option to the options list.
+	 *
+	 * @param WPSEO_Option $option_instance Instance of the option.
+	 */
+	public static function register_option( WPSEO_Option $option_instance ) {
+		$option_name = $option_instance->get_option_name();
+
+		if ( $option_instance->multisite_only && ! static::is_multisite() ) {
+			unset( static::$options[ $option_name ], static::$option_names[ $option_name ] );
+
+			return;
+		}
+
+		$is_already_registered = array_key_exists( $option_name, static::$options );
+		if ( ! $is_already_registered ) {
+			static::$options[ $option_name ] = get_class( $option_instance );
+		}
+
+		if ( $option_instance->include_in_all === true ) {
+			static::$option_names[ $option_name ] = $option_name;
+		}
+
+		static::$option_instances[ $option_name ] = $option_instance;
+
+		if ( ! $is_already_registered ) {
+			static::clear_cache();
+		}
 	}
 
 	/**
@@ -89,8 +125,8 @@ class WPSEO_Options {
 	 * @return string|bool
 	 */
 	public static function get_group_name( $option_name ) {
-		if ( isset( self::$option_instances[ $option_name ] ) ) {
-			return self::$option_instances[ $option_name ]->group_name;
+		if ( isset( static::$option_instances[ $option_name ] ) ) {
+			return static::$option_instances[ $option_name ]->group_name;
 		}
 
 		return false;
@@ -105,8 +141,8 @@ class WPSEO_Options {
 	 * @return mixed
 	 */
 	public static function get_default( $option_name, $key ) {
-		if ( isset( self::$option_instances[ $option_name ] ) ) {
-			$defaults = self::$option_instances[ $option_name ]->get_defaults();
+		if ( isset( static::$option_instances[ $option_name ] ) ) {
+			$defaults = static::$option_instances[ $option_name ]->get_defaults();
 			if ( isset( $defaults[ $key ] ) ) {
 				return $defaults[ $key ];
 			}
@@ -124,8 +160,8 @@ class WPSEO_Options {
 	 * @return bool
 	 */
 	public static function update_site_option( $option_name, $value ) {
-		if ( is_multisite() && isset( self::$option_instances[ $option_name ] ) ) {
-			return self::$option_instances[ $option_name ]->update_site_option( $value );
+		if ( is_multisite() && isset( static::$option_instances[ $option_name ] ) ) {
+			return static::$option_instances[ $option_name ]->update_site_option( $value );
 		}
 
 		return false;
@@ -139,8 +175,8 @@ class WPSEO_Options {
 	 * @return object|bool
 	 */
 	public static function get_option_instance( $option_name ) {
-		if ( isset( self::$option_instances[ $option_name ] ) ) {
-			return self::$option_instances[ $option_name ];
+		if ( isset( static::$option_instances[ $option_name ] ) ) {
+			return static::$option_instances[ $option_name ];
 		}
 
 		return false;
@@ -152,30 +188,32 @@ class WPSEO_Options {
 	 * @return array Array of option names.
 	 */
 	public static function get_option_names() {
-		static $option_names = array();
-
-		if ( $option_names === array() ) {
-			foreach ( self::$option_instances as $option_name => $option_object ) {
+		$option_names = array_values( static::$option_names );
+		if ( $option_names === [] ) {
+			foreach ( static::$option_instances as $option_name => $option_object ) {
 				if ( $option_object->include_in_all === true ) {
 					$option_names[] = $option_name;
 				}
 			}
-			$option_names = apply_filters( 'wpseo_options', $option_names );
 		}
 
-		return $option_names;
+		/**
+		 * Filter: wpseo_options - Allow developers to change the option name to include.
+		 *
+		 * @api array The option names to include in get_all and reset().
+		 */
+		return apply_filters( 'wpseo_options', $option_names );
 	}
 
 	/**
 	 * Retrieve all the options for the SEO plugin in one go.
 	 *
-	 * @todo [JRF] See if we can get some extra efficiency for this one, though probably not as options may
-	 * well change between calls (enriched defaults and such).
-	 *
 	 * @return array Array combining the values of all the options.
 	 */
 	public static function get_all() {
-		return self::get_options( self::get_option_names() );
+		static::$option_values = static::get_options( static::get_option_names() );
+
+		return static::$option_values;
 	}
 
 	/**
@@ -186,11 +224,11 @@ class WPSEO_Options {
 	 * @return array Array combining the values of the requested options.
 	 */
 	public static function get_options( array $option_names ) {
-		$options      = array();
+		$options      = [];
 		$option_names = array_filter( $option_names, 'is_string' );
 		foreach ( $option_names as $option_name ) {
-			if ( isset( self::$option_instances[ $option_name ] ) ) {
-				$option  = self::get_option( $option_name );
+			if ( isset( static::$option_instances[ $option_name ] ) ) {
+				$option  = static::get_option( $option_name );
 				$options = array_merge( $options, $option );
 			}
 		}
@@ -208,8 +246,8 @@ class WPSEO_Options {
 	public static function get_option( $option_name ) {
 		$option = null;
 		if ( is_string( $option_name ) && ! empty( $option_name ) ) {
-			if ( isset( self::$option_instances[ $option_name ] ) ) {
-				if ( self::$option_instances[ $option_name ]->multisite_only !== true ) {
+			if ( isset( static::$option_instances[ $option_name ] ) ) {
+				if ( static::$option_instances[ $option_name ]->multisite_only !== true ) {
 					$option = get_option( $option_name );
 				}
 				else {
@@ -230,18 +268,29 @@ class WPSEO_Options {
 	 * @return mixed|null Returns value if found, $default if not.
 	 */
 	public static function get( $key, $default = null ) {
-		self::$backfill->remove_hooks();
-
-		$option = self::get_all();
-		$option = self::add_ms_option( $option );
-
-		self::$backfill->register_hooks();
-
-		if ( isset( $option[ $key ] ) ) {
-			return $option[ $key ];
+		if ( static::$option_values === null ) {
+			static::prime_cache();
+		}
+		if ( isset( static::$option_values[ $key ] ) ) {
+			return static::$option_values[ $key ];
 		}
 
 		return $default;
+	}
+
+	/**
+	 * Resets the cache to null.
+	 */
+	public static function clear_cache() {
+		static::$option_values = null;
+	}
+
+	/**
+	 * Primes our cache.
+	 */
+	private static function prime_cache() {
+		static::$option_values = static::get_all();
+		static::$option_values = static::add_ms_option( static::$option_values );
 	}
 
 	/**
@@ -253,18 +302,20 @@ class WPSEO_Options {
 	 * @return mixed|null Returns value if found, $default if not.
 	 */
 	public static function set( $key, $value ) {
-		$lookup_table = self::get_lookup_table();
+		$lookup_table = static::get_lookup_table();
 
 		if ( isset( $lookup_table[ $key ] ) ) {
-			return self::save_option( $lookup_table[ $key ], $key, $value );
+			return static::save_option( $lookup_table[ $key ], $key, $value );
 		}
 
-		$patterns = self::get_pattern_table();
+		$patterns = static::get_pattern_table();
 		foreach ( $patterns as $pattern => $option ) {
 			if ( strpos( $key, $pattern ) === 0 ) {
-				return self::save_option( $option, $key, $value );
+				return static::save_option( $option, $key, $value );
 			}
 		}
+
+		static::$option_values[ $key ] = $value;
 	}
 
 	/**
@@ -277,7 +328,7 @@ class WPSEO_Options {
 	 */
 	public static function get_autoloaded_option( $option, $default = false ) {
 		$value = wp_cache_get( $option, 'options' );
-		if ( false === $value ) {
+		if ( $value === false ) {
 			$passed_default = func_num_args() > 1;
 
 			return apply_filters( "default_option_{$option}", $default, $option, $passed_default );
@@ -299,20 +350,20 @@ class WPSEO_Options {
 	 */
 	public static function clean_up( $option_name = null, $current_version = null ) {
 		if ( isset( $option_name ) && is_string( $option_name ) && $option_name !== '' ) {
-			if ( isset( self::$option_instances[ $option_name ] ) ) {
-				self::$option_instances[ $option_name ]->clean( $current_version );
+			if ( isset( static::$option_instances[ $option_name ] ) ) {
+				static::$option_instances[ $option_name ]->clean( $current_version );
 			}
 		}
-		elseif ( isset( $option_name ) && is_array( $option_name ) && $option_name !== array() ) {
+		elseif ( isset( $option_name ) && is_array( $option_name ) && $option_name !== [] ) {
 			foreach ( $option_name as $option ) {
-				if ( isset( self::$option_instances[ $option ] ) ) {
-					self::$option_instances[ $option ]->clean( $current_version );
+				if ( isset( static::$option_instances[ $option ] ) ) {
+					static::$option_instances[ $option ]->clean( $current_version );
 				}
 			}
 			unset( $option );
 		}
 		else {
-			foreach ( self::$option_instances as $instance ) {
+			foreach ( static::$option_instances as $instance ) {
 				$instance->clean( $current_version );
 			}
 			unset( $instance );
@@ -328,7 +379,7 @@ class WPSEO_Options {
 	 * @return void
 	 */
 	public static function ensure_options_exist() {
-		foreach ( self::$option_instances as $instance ) {
+		foreach ( static::$option_instances as $instance ) {
 			$instance->maybe_add_option();
 		}
 	}
@@ -352,8 +403,8 @@ class WPSEO_Options {
 	 */
 	public static function reset() {
 		if ( ! is_multisite() ) {
-			$option_names = self::get_option_names();
-			if ( is_array( $option_names ) && $option_names !== array() ) {
+			$option_names = static::get_option_names();
+			if ( is_array( $option_names ) && $option_names !== [] ) {
 				foreach ( $option_names as $option_name ) {
 					delete_option( $option_name );
 					update_option( $option_name, get_option( $option_name ) );
@@ -363,10 +414,10 @@ class WPSEO_Options {
 		}
 		else {
 			// Reset MS blog based on network default blog setting.
-			self::reset_ms_blog( get_current_blog_id() );
+			static::reset_ms_blog( get_current_blog_id() );
 		}
 
-		self::initialize();
+		static::initialize();
 	}
 
 	/**
@@ -381,11 +432,11 @@ class WPSEO_Options {
 
 		if ( is_multisite() ) {
 			if ( $option['ms_defaults_set'] === false ) {
-				self::reset_ms_blog( get_current_blog_id() );
-				self::initialize();
+				static::reset_ms_blog( get_current_blog_id() );
+				static::initialize();
 			}
 			elseif ( $force_init === true ) {
-				self::initialize();
+				static::initialize();
 			}
 		}
 	}
@@ -401,9 +452,9 @@ class WPSEO_Options {
 	public static function reset_ms_blog( $blog_id ) {
 		if ( is_multisite() ) {
 			$options      = get_site_option( 'wpseo_ms' );
-			$option_names = self::get_option_names();
+			$option_names = static::get_option_names();
 
-			if ( is_array( $option_names ) && $option_names !== array() ) {
+			if ( is_array( $option_names ) && $option_names !== [] ) {
 				$base_blog_id = $blog_id;
 				if ( $options['defaultblog'] !== '' && $options['defaultblog'] !== 0 ) {
 					$base_blog_id = $options['defaultblog'];
@@ -415,8 +466,8 @@ class WPSEO_Options {
 					$new_option = get_blog_option( $base_blog_id, $option_name );
 
 					/* Remove sensitive, theme dependent and site dependent info. */
-					if ( isset( self::$option_instances[ $option_name ] ) && self::$option_instances[ $option_name ]->ms_exclude !== array() ) {
-						foreach ( self::$option_instances[ $option_name ]->ms_exclude as $key ) {
+					if ( isset( static::$option_instances[ $option_name ] ) && static::$option_instances[ $option_name ]->ms_exclude !== [] ) {
+						foreach ( static::$option_instances[ $option_name ]->ms_exclude as $key ) {
 							unset( $new_option[ $key ] );
 						}
 					}
@@ -441,18 +492,21 @@ class WPSEO_Options {
 	 * @return boolean Returns true if the option is successfully saved in the database.
 	 */
 	public static function save_option( $wpseo_options_group_name, $option_name, $option_value ) {
-		$options                 = self::get_option( $wpseo_options_group_name );
+		$options                 = static::get_option( $wpseo_options_group_name );
 		$options[ $option_name ] = $option_value;
 
-		if ( isset( self::$option_instances[ $wpseo_options_group_name ] ) && self::$option_instances[ $wpseo_options_group_name ]->multisite_only === true ) {
-			self::update_site_option( $wpseo_options_group_name, $options );
+		if ( isset( static::$option_instances[ $wpseo_options_group_name ] ) && static::$option_instances[ $wpseo_options_group_name ]->multisite_only === true ) {
+			static::update_site_option( $wpseo_options_group_name, $options );
 		}
 		else {
 			update_option( $wpseo_options_group_name, $options );
 		}
 
 		// Check if everything got saved properly.
-		$saved_option = self::get_option( $wpseo_options_group_name );
+		$saved_option = static::get_option( $wpseo_options_group_name );
+
+		// Clear our cache.
+		static::clear_cache();
 
 		return $saved_option[ $option_name ] === $options[ $option_name ];
 	}
@@ -469,9 +523,27 @@ class WPSEO_Options {
 			return $option;
 		}
 
-		$ms_option = self::get_option( 'wpseo_ms' );
+		$ms_option = static::get_option( 'wpseo_ms' );
+		if ( $ms_option === null ) {
+			return $option;
+		}
 
 		return array_merge( $option, $ms_option );
+	}
+
+	/**
+	 * Checks if installation is multisite.
+	 *
+	 * @return bool True when is multisite.
+	 */
+	protected static function is_multisite() {
+		static $is_multisite;
+
+		if ( $is_multisite === null ) {
+			$is_multisite = is_multisite();
+		}
+
+		return $is_multisite;
 	}
 
 	/**
@@ -480,18 +552,15 @@ class WPSEO_Options {
 	 * @return array The lookup table.
 	 */
 	private static function get_lookup_table() {
-		$lookup_table = array();
+		$lookup_table = [];
 
-		self::$backfill->remove_hooks();
 
-		foreach ( array_keys( self::$options ) as $option_name ) {
-			$full_option = self::get_option( $option_name );
+		foreach ( array_keys( static::$options ) as $option_name ) {
+			$full_option = static::get_option( $option_name );
 			foreach ( $full_option as $key => $value ) {
 				$lookup_table[ $key ] = $option_name;
 			}
 		}
-
-		self::$backfill->register_hooks();
 
 		return $lookup_table;
 	}
@@ -502,10 +571,9 @@ class WPSEO_Options {
 	 * @return array The lookup table.
 	 */
 	private static function get_pattern_table() {
-		$pattern_table = array();
-		foreach ( self::$options as $option_name => $option_class ) {
-			/** @var WPSEO_Option $instance */
-			$instance = call_user_func( array( $option_class, 'get_instance' ) );
+		$pattern_table = [];
+		foreach ( static::$options as $option_name => $option_class ) {
+			$instance = call_user_func( [ $option_class, 'get_instance' ] );
 			foreach ( $instance->get_patterns() as $key ) {
 				$pattern_table[ $key ] = $option_name;
 			}
@@ -515,6 +583,17 @@ class WPSEO_Options {
 	}
 
 	/* ********************* DEPRECATED METHODS ********************* */
+
+	/**
+	 * Fills our option cache.
+	 *
+	 * @deprecated  12.8.1
+	 * @codeCoverageIgnore
+	 */
+	public static function fill_cache() {
+		_deprecated_function( __METHOD__, 'WPSEO 12.8.1', '::clear_cache' );
+		static::clear_cache();
+	}
 
 	/**
 	 * Correct the inadvertent removal of the fallback to default values from the breadcrumbs.

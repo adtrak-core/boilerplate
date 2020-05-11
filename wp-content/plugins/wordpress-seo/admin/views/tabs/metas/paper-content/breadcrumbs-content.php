@@ -26,10 +26,10 @@ if ( get_option( 'show_on_front' ) === 'page' && get_option( 'page_for_posts' ) 
 	$yform->show_hide_switch( 'breadcrumbs-display-blog-page', __( 'Show Blog page', 'wordpress-seo' ) );
 }
 
-$yoast_free_breadcrumb_bold_texts = array(
+$yoast_free_breadcrumb_bold_texts = [
 	'on'  => __( 'Bold', 'wordpress-seo' ),
 	'off' => __( 'Regular', 'wordpress-seo' ),
-);
+];
 $yform->toggle_switch(
 	'breadcrumbs-boldlast',
 	$yoast_free_breadcrumb_bold_texts,
@@ -42,13 +42,13 @@ echo '<br/><br/>';
  * WPSEO_Post_Type::get_accessible_post_types() should *not* be used here.
  * Even posts that are not indexed, should be able to get breadcrumbs for accessibility/usability.
  */
-$post_types = get_post_types( array( 'public' => true ), 'objects' );
-if ( is_array( $post_types ) && $post_types !== array() ) {
+$post_types = get_post_types( [ 'public' => true ], 'objects' );
+if ( is_array( $post_types ) && $post_types !== [] ) {
 	echo '<h2>' . esc_html__( 'Taxonomy to show in breadcrumbs for content types', 'wordpress-seo' ) . '</h2>';
 	foreach ( $post_types as $pt ) {
 		$taxonomies = get_object_taxonomies( $pt->name, 'objects' );
-		if ( is_array( $taxonomies ) && $taxonomies !== array() ) {
-			$values = array( 0 => __( 'None', 'wordpress-seo' ) );
+		if ( is_array( $taxonomies ) && $taxonomies !== [] ) {
+			$values = [ 0 => __( 'None', 'wordpress-seo' ) ];
 			foreach ( $taxonomies as $tax ) {
 				if ( ! $tax->public ) {
 					continue;
@@ -67,22 +67,21 @@ if ( is_array( $post_types ) && $post_types !== array() ) {
 echo '<br/>';
 
 $taxonomies = get_taxonomies(
-	array(
+	[
 		'public'   => true,
-		'_builtin' => false,
-	),
+	],
 	'objects'
 );
 
-if ( is_array( $taxonomies ) && $taxonomies !== array() ) {
+if ( is_array( $taxonomies ) && $taxonomies !== [] ) {
 	echo '<h2>' . esc_html__( 'Content type archive to show in breadcrumbs for taxonomies', 'wordpress-seo' ) . '</h2>';
 	foreach ( $taxonomies as $tax ) {
-		$values = array( 0 => __( 'None', 'wordpress-seo' ) );
+		$values = [ 0 => __( 'None', 'wordpress-seo' ) ];
 		if ( get_option( 'show_on_front' ) === 'page' && get_option( 'page_for_posts' ) > 0 ) {
 			$values['post'] = __( 'Blog', 'wordpress-seo' );
 		}
 
-		if ( is_array( $post_types ) && $post_types !== array() ) {
+		if ( is_array( $post_types ) && $post_types !== [] ) {
 			foreach ( $post_types as $pt ) {
 				if ( WPSEO_Post_Type::has_archive( $pt ) ) {
 					$values[ $pt->name ] = $pt->labels->name;
@@ -106,7 +105,7 @@ unset( $taxonomies, $post_types );
 	printf(
 		/* translators: %1$s / %2$s: links to the breadcrumbs implementation page on the Yoast knowledgebase */
 		esc_html__( 'Usage of this breadcrumbs feature is explained in %1$sour knowledge-base article on breadcrumbs implementation%2$s.', 'wordpress-seo' ),
-		'<a href="' . esc_url( WPSEO_Shortlinker::get( 'http://yoa.st/breadcrumbs' ) ) . '" target="_blank">',
+		'<a href="' . esc_url( WPSEO_Shortlinker::get( 'https://yoa.st/breadcrumbs' ) ) . '" target="_blank">',
 		'</a>'
 	);
 	?>

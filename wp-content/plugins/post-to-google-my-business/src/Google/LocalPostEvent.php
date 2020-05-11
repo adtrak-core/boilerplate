@@ -15,7 +15,7 @@ class LocalPostEvent extends AbstractGoogleJsonObject {
 
 	public function setTitle($title){
 		if(empty($title)){
-			throw new InvalidArgumentException(__('Event title is required', 'post-to-google-my-business'));
+			throw new InvalidArgumentException(__('Event/offer title is required', 'post-to-google-my-business'));
 		}
 		$this->jsonOutput['title'] = $title;
 	}

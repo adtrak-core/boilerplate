@@ -10,7 +10,7 @@ final class NF_MergeTags_Other extends NF_Abstracts_MergeTags
     public function __construct()
     {
         parent::__construct();
-        $this->title = __( 'Other', 'ninja-forms' );
+        $this->title = esc_html__( 'Other', 'ninja-forms' );
         $this->merge_tags = Ninja_Forms()->config( 'MergeTagsOther' );
 
         add_action( 'init', array( $this, 'init' ) );
@@ -51,7 +51,11 @@ final class NF_MergeTags_Other extends NF_Abstracts_MergeTags
         if( ! is_array( $variables ) ) return;
 
         foreach( $variables as $key => $value ){
-            $value = wp_kses_post( $value );
+            if ( is_array( $value ) ) {
+                $value = wp_kses_post_deep( $value );
+            } else {
+                $value = wp_kses_post( $value );
+            }
             $this->set_merge_tags( $key, $value );
         }
     }

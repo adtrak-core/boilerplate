@@ -20,7 +20,7 @@ class NF_Fields_Address2 extends NF_Fields_Textbox
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Address 2', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Address 2', 'ninja-forms' );
 
 	    $this->_settings[ 'custom_name_attribute' ][ 'value' ] = 'address';
 	    $this->_settings[ 'personally_identifiable' ][ 'value' ] = '1';

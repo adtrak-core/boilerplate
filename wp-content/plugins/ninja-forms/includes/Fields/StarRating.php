@@ -27,7 +27,7 @@ class NF_Fields_StarRating extends NF_Abstracts_Input
         // Put this in the primary settings group
         $this->_settings['number_of_stars']['group'] = 'primary';
 
-        $this->_nicename = __( 'Star Rating', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Star Rating', 'ninja-forms' );
     }
 
 }

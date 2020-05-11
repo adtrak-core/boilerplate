@@ -4,15 +4,15 @@ if(!class_exists('MBP_Connector')){
 	class MBP_Connector{
 		//const API_URL 		= 'https://util.tycoonmedia.net/api/v1/';
 
-		protected $plugin;
 		private $api_url;
+		private $api_connected;
 
-		public function __construct(MBP_Plugin $plugin){
-			$this->plugin = $plugin;
-			$this->api_url = apply_filters('mbp_api_url', 'https://util.tycoonmedia.net/api/v1/');
+		public function __construct($api_connected){
+			$this->api_connected = $api_connected;
 		}
 
 		public function init(){
+			$this->api_url = apply_filters('mbp_api_url', 'https://util.tycoonmedia.net/api/v1/');
 			add_action('admin_post_mbp_generate_url', array(&$this, 'generate_url'));
 			add_action('admin_post_mbp_disconnect', array(&$this, 'unlink_site'));
 			add_action('admin_post_mbp_revoke', array(&$this, 'revoke_access'));
@@ -69,7 +69,7 @@ if(!class_exists('MBP_Connector')){
 
 
 		public function refresh_token(){
-			if(!$this->plugin->is_configured()){ return; }
+			if(!$this->api_connected){ return false; }
 			$api = MBP_api::getInstance();
 			$token = $api->refresh_token();
 			if(!$token){

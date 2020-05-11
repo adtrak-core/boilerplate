@@ -21,9 +21,9 @@ class NF_Fields_PasswordConfirm extends NF_Fields_Password
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Password Confirm', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Password Confirm', 'ninja-forms' );
 
-        $this->_settings[ 'confirm_field' ][ 'value' ] = __( 'password', 'ninja-forms' );
+        $this->_settings[ 'confirm_field' ][ 'value' ] = esc_attr__( 'password', 'ninja-forms' );
         $this->_settings[ 'confirm_field' ][ 'field_types' ] = array( 'password' );
         $this->_settings[ 'confirm_field' ][ 'field_value_format' ] = 'key';
 
@@ -78,7 +78,7 @@ class NF_Fields_PasswordConfirm extends NF_Fields_Password
     {
         if( $this->_error_message ) return $this->_error_message;
 
-        $error_message = __( 'Passwords do not match', 'ninja-forms' );
+        $error_message = esc_html__( 'Passwords do not match', 'ninja-forms' );
 
         $error_message = apply_filters( 'ninja_forms_password_confirm_mismatch', $error_message );
 

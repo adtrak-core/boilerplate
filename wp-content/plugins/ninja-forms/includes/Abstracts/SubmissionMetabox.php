@@ -18,7 +18,7 @@ abstract class NF_Abstracts_SubmissionMetabox extends NF_Abstracts_Metabox
 
         if( ! isset( $_GET[ 'post' ] ) ) return;
 
-        $this->_title = __( 'Submission Metabox', 'ninja-forms' );
+        $this->_title = esc_html__( 'Submission Metabox', 'ninja-forms' );
 
         $post_id = absint( $_GET[ 'post' ] );
 

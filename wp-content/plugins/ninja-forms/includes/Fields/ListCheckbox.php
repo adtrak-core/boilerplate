@@ -23,7 +23,7 @@ class NF_Fields_ListCheckbox extends NF_Abstracts_List
     {
         parent::__construct();
 
-        $this->_nicename = __( 'Checkbox List', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Checkbox List', 'ninja-forms' );
 
         add_filter( 'ninja_forms_merge_tag_calc_value_' . $this->_type, array( $this, 'get_calc_value' ), 10, 2 );
     }
@@ -34,8 +34,13 @@ class NF_Fields_ListCheckbox extends NF_Abstracts_List
 
         $field = Ninja_Forms()->form( $form_id )->get_field( $id );
 
+        $settings = $field->get_settings();
+        $options = $field->get_setting( 'options' );
+        $options = apply_filters( 'ninja_forms_render_options', $options, $settings );
+        $options = apply_filters( 'ninja_forms_render_options_' . $this->_type, $options, $settings );
+
         $list = '';
-        foreach( $field->get_setting( 'options' ) as $option ){
+        foreach( $options as $option ){
             $checked = '';
             if( is_array( $value ) && in_array( $option[ 'value' ], $value ) ) $checked = "checked";
             $list .= "<li><label><input type='checkbox' value='{$option[ 'value' ]}' name='fields[$id][]' $checked> {$option[ 'label' ]}</label></li>";
@@ -50,7 +55,7 @@ class NF_Fields_ListCheckbox extends NF_Abstracts_List
         $value = 0;
         if( isset( $field[ 'options' ] ) ) {
             foreach ($field['options'] as $option ) {
-                if( ! isset( $option[ 'value' ] ) || ! in_array( $option[ 'value' ], $selected )  || ! isset( $option[ 'calc' ] ) ) continue;
+                if( ! isset( $option[ 'value' ] ) || ! in_array( $option[ 'value' ], $selected )  || ! isset( $option[ 'calc' ] )  || ! is_numeric( $option[ 'calc' ] )) continue;
                 $value +=  $option[ 'calc' ];
             }
         }

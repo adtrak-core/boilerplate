@@ -10,7 +10,7 @@ final class NF_MergeTags_WP extends NF_Abstracts_MergeTags
     public function __construct()
     {
         parent::__construct();
-        $this->title = __( 'WordPress', 'ninja-forms' );
+        $this->title = esc_html__( 'WordPress', 'ninja-forms' );
         $this->merge_tags = Ninja_Forms()->config( 'MergeTagsWP' );
     }
 
@@ -154,6 +154,13 @@ final class NF_MergeTags_WP extends NF_Abstracts_MergeTags
 
         return ( $current_user ) ? $current_user->display_name : '';
     }
+
+	protected function user_username()
+	{
+		$current_user = wp_get_current_user();
+
+		return ( $current_user ) ? $current_user->user_nicename : '';
+	}
 
     protected function user_email()
     {

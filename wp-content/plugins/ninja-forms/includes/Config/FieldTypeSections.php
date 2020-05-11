@@ -10,7 +10,7 @@ return apply_filters( 'ninja_forms_field_type_sections', array(
 
     'saved'             => array(
         'id'            => 'saved',
-        'nicename'      => __( 'Saved Fields', 'ninja-forms' ),
+        'nicename'      => esc_html__( 'Favorite Fields', 'ninja-forms' ),
         'classes'       => 'nf-saved',
         'fieldTypes'    => array(),
     ),
@@ -23,7 +23,7 @@ return apply_filters( 'ninja_forms_field_type_sections', array(
 
     'common' => array(
         'id' => 'common',
-        'nicename' => __( 'Common Fields', 'ninja-forms' ),
+        'nicename' => esc_html__( 'Common Fields', 'ninja-forms' ),
         'fieldTypes' => array(),
     ),
 
@@ -35,21 +35,9 @@ return apply_filters( 'ninja_forms_field_type_sections', array(
 
     'userinfo' => array(
         'id' => 'userinfo',
-        'nicename' => __( 'User Information Fields', 'ninja-forms' ),
+        'nicename' => esc_html__( 'User Information Fields', 'ninja-forms' ),
         'fieldTypes' => array(),
     ),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Pricing Fields (Deprecated)
-    |--------------------------------------------------------------------------
-    */
-
-    // 'pricing' => array(
-    //     'id' => 'pricing',
-    //     'nicename' => __( 'Pricing Fields', 'ninja-forms' ),
-    //     'fieldTypes' => array(),
-    // ),
 
     /*
     |--------------------------------------------------------------------------
@@ -59,7 +47,7 @@ return apply_filters( 'ninja_forms_field_type_sections', array(
 
     'layout' => array(
         'id' => 'layout',
-        'nicename' => __( 'Layout Fields', 'ninja-forms' ),
+        'nicename' => esc_html__( 'Layout Fields', 'ninja-forms' ),
         'fieldTypes' => array(),
     ),
 
@@ -71,7 +59,7 @@ return apply_filters( 'ninja_forms_field_type_sections', array(
 
     'misc' => array(
         'id' => 'misc',
-        'nicename' => __( 'Miscellaneous Fields', 'ninja-forms' ),
+        'nicename' => esc_html__( 'Miscellaneous Fields', 'ninja-forms' ),
         'fieldTypes' => array(),
     ),
 ));

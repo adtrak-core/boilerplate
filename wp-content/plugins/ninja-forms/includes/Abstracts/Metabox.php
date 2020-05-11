@@ -22,7 +22,7 @@ abstract class NF_Abstracts_Metabox
     {
         $this->_id = strtolower( get_class( $this ) );
 
-        $this->_title = __( 'Metabox', 'ninja-forms' );
+        $this->_title = esc_html__( 'Metabox', 'ninja-forms' );
 
         add_action( 'save_post', array( $this, '_save_post' ) );
 

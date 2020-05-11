@@ -6,7 +6,7 @@
  * @copyright (c) 2017 WP Ninjas
  * @since 3.2
  */
-define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sections/apps.js', 'views/sections/memberships.js', 'views/oauth.js', 'views/promotion.js', 'views/sections/requiredUpdates.js' ], function( WidgetView, ServicesView, AppsView, MembershipsView, OAuthView, PromotionView, RequiredUpdatesView ) {
+define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sections/apps.js', 'views/oauth.js', 'views/promotion.js', 'views/sections/requiredUpdates.js' ], function( WidgetView, ServicesView, AppsView, OAuthView, PromotionView, RequiredUpdatesView ) {
     var view = Marionette.View.extend( {
         template: "#tmpl-nf-dashboard",
 
@@ -43,14 +43,6 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
                     this.currentView = 'apps';
                 }
             },
-            'click .memberships a': function(e){
-                if( "1" != nfAdmin.requiredUpdates ) {
-                    this.showChildView( 'content', new MembershipsView() );
-                    jQuery( '.' + this.currentView).find( 'a' ).removeClass( 'active' );
-                    e.target.classList.add( 'active' );
-                    this.currentView = 'memberships';
-                }
-            },
         },
 
         initialize: function() {
@@ -69,9 +61,6 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
                     break;
                 case '#services':
                     this.currentView = 'services';
-                    break;
-                case '#memberships':
-                    this.currentView = 'memberships';
                     break;
                 case '#requiredUpdates':
                     this.currentView = 'requiredUpdates';
@@ -127,9 +116,6 @@ define( [ 'views/sections/widgets.js', 'views/sections/services.js', 'views/sect
             switch( window.location.hash ) {
                 case '#apps':
                     var childView = new AppsView();
-                    break;
-                case '#memberships':
-                    var childView = new MembershipsView();
                     break;
                 case '#services':
                     var childView = new ServicesView();

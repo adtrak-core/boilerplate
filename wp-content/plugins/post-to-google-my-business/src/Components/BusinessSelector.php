@@ -7,19 +7,15 @@ namespace PGMB\Components;
 use PGMB\API\APIInterface;
 
 class BusinessSelector {
-	protected $field_name;
 	protected $api;
+	protected $field_name = 'mbp_selected_location';
 	protected $default_location;
 	protected $multiple;
 	protected $selected;
 	protected $flush_cache;
 
-	public function __construct(APIInterface $api, $field_name = 'mbp_selected_location', $selected = false, $default_location = false, $multiple = false) {
-		$this->field_name = $field_name;
+	public function __construct(APIInterface $api) {
 		$this->api = $api;
-		$this->default_location = $default_location;
-		$this->multiple = $multiple;
-		$this->selected = $selected;
 	}
 
 	public function generate(){
@@ -27,11 +23,16 @@ class BusinessSelector {
 			$this->selected = $this->default_location;
 		}
 
-		return sprintf( "<div class=\"mbp-business-selector\"><table>%s</table></div>", $this->account_rows());
+		return "<div class=\"mbp-business-selector\"><table>{$this->account_rows()}</table></div>";
 	}
 
 	public static function draw(APIInterface $api, $field_name = 'mbp_selected_location', $selected = false, $default_location = false, $multiple = false){
-		$component = new static($api, $field_name, $selected, $default_location, $multiple);
+		$component = new static($api);
+		$component->set_field_name($field_name);
+		$component->set_selected_locations($selected);
+		$component->set_default_location($default_location);
+		$component->enable_multiple($multiple);
+		echo $component->location_blocked_info();
 		echo $component->generate();
 		echo $component->business_selector_controls();
 	}
@@ -43,10 +44,11 @@ class BusinessSelector {
 	protected function account_rows(){
 		$accounts = $this->api->get_accounts($this->flush_cache);
 		if(!is_object($accounts) || count($accounts->accounts) < 1) {
-			return $this->notice_row(__('No user account or location groups found', 'post-to-google-my-business'));
+			return $this->notice_row(__('No user account or location groups found. Did you log in to the correct Google account?', 'post-to-google-my-business'));
 		}
 
 		$rows = '';
+		$accounts->accounts = apply_filters('mbp_business_selector_accounts', $accounts->accounts);
 		foreach($accounts->accounts as $account){
 			$rows .= sprintf( "<tr><td colspan=\"2\"><strong>%s</strong></td></tr>", $account->accountName );
 			$rows .= $this->location_rows($account->name);
@@ -56,11 +58,12 @@ class BusinessSelector {
 
 	protected function location_rows($account_name){
 		$locations = $this->api->get_locations($account_name, $this->flush_cache);
-		if (!is_object( $locations ) || count( $locations->locations ) < 1 ) {
-			return $this->notice_row(__('No businesses found. Did you log in to the correct Google account?', 'post-to-google-my-business'));
+		if (!is_object( $locations ) || !isset($locations->locations) || count( $locations->locations ) < 1 ) {
+			return $this->notice_row(__('No businesses found.', 'post-to-google-my-business'));
 		}
 
 		$rows = '';
+		$locations->locations = apply_filters('mbp_business_selector_locations', $locations->locations);
 		foreach ( $locations->locations as $location ) {
 			$disabled = (isset($location->locationState->isLocalPostApiDisabled) && $location->locationState->isLocalPostApiDisabled ? true : false);
 			$checked = (is_array($this->selected) && in_array($location->name, $this->selected) || $location->name == $this->selected);
@@ -68,11 +71,10 @@ class BusinessSelector {
 			$rows .= sprintf( '<tr class="mbp-business-item%s">', $disabled ? ' mbp-business-disabled' : '' );
 
 			$rows .= sprintf(
-				'<td class="mbp-checkbox-container"><input type="%s" name="%s" id="%s" value="%s"%s%s></td>',
+				'<td class="mbp-checkbox-container"><input type="%s" name="%s"  value="%s"%s%s></td>',
 				$this->multiple ? 'checkbox' : 'radio',
-				$this->field_name . ($this->multiple ? '[]' : ''),
-				$location->name,
-				$location->name,
+				esc_attr($this->field_name),
+				esc_attr($location->name),
 				disabled($disabled, true, false),
 				checked($checked, true, false)
 			);
@@ -109,7 +111,19 @@ class BusinessSelector {
 		);
 	}
 
-
+	public function location_blocked_info(){
+		return sprintf("				
+			<div class=\"mbp-info mbp-location-blocked-info\">
+				<strong>%s</strong>
+				%s
+				<a href=\"https://posttogmb.com/localpostapiblocked\" target=\"_blank\">%s</a>
+			</div>
+		",
+			__('Location grayed out?', 'post-to-google-my-business'),
+			__('It means the location is blocked from using the LocalPostAPI, and can\'t be posted to using the plugin.', 'post-to-google-my-business'),
+			__('Learn more...', 'post-to-google-my-business')
+		);
+	}
 
 	public function business_selector_controls(){
 		$options = '<div class="mbp-business-options">
@@ -121,38 +135,8 @@ class BusinessSelector {
 		}
 
 		$options .= '
-			</div>
-			<script>
-			 jQuery(document).ready(function($) {
-
-				 $.extend($.expr[":"], {
-					 "containsi": function(elem, i, match, array) {
-						return (elem.textContent || elem.innerText || "").toLowerCase()
-							.indexOf((match[3] || "").toLowerCase()) >= 0;
-					}
-					});
-					
-					$(".mbp-filter-locations").keyup(function(){
-						let search = $(this).val();
-
-						
-						 $( ".mbp-business-selector tr.mbp-business-item").hide()
-						 .filter(":containsi(" + search + ")")
-						 .show();
-					});
-					
-					$(".mbp-select-all-locations").click(function(event){
-						$(".mbp-checkbox-container input:checkbox:visible").prop("checked", true);	    
-						event.preventDefault();
-					});
-					
-					$(".mbp-select-no-locations").click(function(event){
-						$(".mbp-checkbox-container input:checkbox:visible").prop("checked", false);	   			    
-						event.preventDefault();
-					});
-
-				});
-			</script>';
+			<button class="button mbp-refresh-locations refresh-api-cache" style="float:right;">'.__('Refresh locations', 'post-to-google-my-business').'</button>
+			</div>';
 		return $options;
 	}
 
@@ -161,4 +145,36 @@ class BusinessSelector {
 		return $flush_cache;
 	}
 
+	public function ajax_refresh(){
+		$refresh = isset($_POST['refresh']) && $_POST['refresh'] == "true" ? true : false;
+
+		$selected = isset($_POST['selected']) ? (array)$_POST['selected'] : [];
+		$selected = array_map("sanitize_text_field", $selected);
+
+		$this->set_selected_locations($selected);
+
+		$this->flush_cache($refresh);
+		echo $this->generate();
+		wp_die();
+	}
+
+	public function set_field_name($field_name){
+		$this->field_name = $field_name;
+	}
+
+	public function set_selected_locations($locations){
+		$this->selected = $locations;
+	}
+
+	public function set_default_location( $default_location ) {
+		$this->default_location = $default_location;
+	}
+
+	public function enable_multiple( $multiple ) {
+		$this->multiple = $multiple;
+	}
+
+	public function register_ajax_callbacks($prefix) {
+		add_action("wp_ajax_{$prefix}_refresh_locations", [$this, 'ajax_refresh']);
+	}
 }

@@ -25,7 +25,7 @@ class NF_Fields_Hr extends NF_Abstracts_Input
 
         $this->_settings[ 'classes' ][ 'group' ] = 'primary';
 
-        $this->_nicename = __( 'Divider', 'ninja-forms' );
+        $this->_nicename = esc_html__( 'Divider', 'ninja-forms' );
         add_filter( 'nf_sub_hidden_field_types', array( $this, 'hide_field_type' ) );
 
         unset( $this->_settings[ 'classes' ][ 'settings' ][ 'wrapper '] );

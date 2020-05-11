@@ -19,7 +19,7 @@ class NF_Admin_Processes_ImportFormTemplate extends NF_Admin_Processes_ImportFor
             $this->batch_complete();
         }
 
-        $template_file_name = $_POST[ 'extraData' ][ 'template' ];
+        $template_file_name = WPN_Helper::esc_html($_POST[ 'extraData' ][ 'template' ]);
 
         /**
          * If our template_file_name is set to 'new', then respond with 'new' as our form id.

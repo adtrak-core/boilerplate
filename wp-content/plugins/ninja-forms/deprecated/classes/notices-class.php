@@ -157,7 +157,7 @@ class NF_Notices
         if ( isset($_GET['nf_admin_notice_ignore']) && current_user_can( apply_filters( 'ninja_forms_admin_parent_menu_capabilities', 'manage_options' ) ) ) {
 
                 $admin_notices_option = get_option( 'nf_admin_notice', array() );
-                $admin_notices_option[ $_GET[ 'nf_admin_notice_ignore' ] ][ 'dismissed' ] = 1;
+                $admin_notices_option[ sanitize_text_field($_GET[ 'nf_admin_notice_ignore' ]) ][ 'dismissed' ] = 1;
                 update_option( 'nf_admin_notice', $admin_notices_option );
                 $query_str = remove_query_arg( 'nf_admin_notice_ignore' );
                 wp_redirect( $query_str );
@@ -175,12 +175,12 @@ class NF_Notices
 
                 $current_date = current_time( "n/j/Y" );
                 $date_array = explode( '/', $current_date );
-                $interval = ( isset( $_GET[ 'nf_int' ] ) ? $_GET[ 'nf_int' ] : 14 );
+                $interval = ( isset( $_GET[ 'nf_int' ] ) ? absint($_GET[ 'nf_int' ]) : 14 );
                 $date_array[1] += $interval;
                 $new_start = date( "n/j/Y", mktime( 0, 0, 0, $date_array[0], $date_array[1], $date_array[2] ) );
 
-                $admin_notices_option[ $_GET[ 'nf_admin_notice_temp_ignore' ] ][ 'start' ] = $new_start;
-                $admin_notices_option[ $_GET[ 'nf_admin_notice_temp_ignore' ] ][ 'dismissed' ] = 0;
+                $admin_notices_option[ sanitize_text_field($_GET[ 'nf_admin_notice_temp_ignore' ]) ][ 'start' ] = $new_start;
+                $admin_notices_option[ sanitize_text_field($_GET[ 'nf_admin_notice_temp_ignore' ]) ][ 'dismissed' ] = 0;
                 update_option( 'nf_admin_notice', $admin_notices_option );
                 $query_str = remove_query_arg( array( 'nf_admin_notice_temp_ignore', 'nf_int' ) );
                 wp_redirect( $query_str );

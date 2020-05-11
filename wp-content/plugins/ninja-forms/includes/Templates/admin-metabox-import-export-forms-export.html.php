@@ -6,7 +6,7 @@
             <tbody>
                 <tr id="row_nf_export_form">
 	                <th scope="row">
-		                <label for="nf_export_form_2"><?php echo __( 'Select a form', 'ninja-forms' ); ?></label>
+		                <label for="nf_export_form_2"><?php esc_html_e( 'Select a form', 'ninja-forms' ); ?></label>
 	                </th>
 	                <td style="width:30%;">
 		                <select name="nf_export_form" id="nf_export_form" class="">
@@ -43,7 +43,7 @@
                 <tr id="row_nf_export_form_encoding">
                     <th scope="row">
                         <label for="nf_export_form_turn_off_encoding"><?php
-	                        _e( 'Disable UTF-8 Encoding', 'ninja-forms' );
+	                        esc_html_e( 'Disable UTF-8 Encoding', 'ninja-forms' );
 	                        ?></label>
                     </th>
                     <td colspan="2">
@@ -58,10 +58,10 @@
                 </tr>
                 <tr id="row_nf_export_form_submit">
 	                <th scope="row">
-		                <label for="nf_export_form_submit"><?php _e( 'Export Form', 'ninja-forms' ); ?></label>
+		                <label for="nf_export_form_submit"><?php esc_html_e( 'Export Form', 'ninja-forms' ); ?></label>
 	                </th>
 	                <td>
-		                <input type="submit" id="nf_export_form_submit" class="button-secondary" value="<?php echo __( 'Export Form', 'ninja-forms' ) ;?>">
+		                <input type="submit" id="nf_export_form_submit" class="button-secondary" value="<?php esc_html_e( 'Export Form', 'ninja-forms' ) ;?>">
 	                </td>
                 </tr>
             </tbody>

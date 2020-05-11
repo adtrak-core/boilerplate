@@ -10,10 +10,10 @@ return array(
         'name' => 'success_msg',
         'type' => 'rte',
         'group' => 'primary',
-        'label' => __( 'Message', 'ninja-forms' ),
+        'label' => esc_html__( 'Message', 'ninja-forms' ),
         'placeholder' => '',
         'width' => 'full',
-        'value' => __( 'Your form has been successfully submitted.', 'ninja-forms' ),
+        'value' => esc_textarea( __( 'Your form has been successfully submitted.', 'ninja-forms' ) ),
         'use_merge_tags' => array(
             'include' => array(
                 'calcs',

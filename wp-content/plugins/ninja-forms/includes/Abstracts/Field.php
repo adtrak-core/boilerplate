@@ -168,7 +168,7 @@ abstract class NF_Abstracts_Field
      */
     public function admin_form_element( $id, $value )
     {
-        return '<input class="widefat" name="fields[' . intval( $id ) . ']" value="' . esc_attr( $value ) . '" />';
+        return '<input class="widefat" name="fields[' . absint( $id ) . ']" value="' . esc_attr( $value ) . '" type="text" />';
     }
 
     public function get_name()

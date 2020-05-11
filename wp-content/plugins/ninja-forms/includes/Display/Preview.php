@@ -11,7 +11,7 @@ final class NF_Display_Preview
     {
         if ( ! isset( $_GET['nf_preview_form'] ) ) return;
 
-        $this->_form_id = $_GET['nf_preview_form'];
+        $this->_form_id = WPN_Helper::sanitize_text_field($_GET['nf_preview_form']);
 
         add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 
@@ -38,7 +38,7 @@ final class NF_Display_Preview
 
         $form_title = Ninja_Forms()->form( $this->_form_id )->get()->get_setting( 'title' );
 
-        return $form_title . " " . __( 'Preview', 'ninja-forms' );
+        return $form_title . " " . esc_html__( 'Preview', 'ninja-forms' );
     }
 
     /**
@@ -46,20 +46,20 @@ final class NF_Display_Preview
      */
     function the_content()
     {
-        if ( ! is_user_logged_in() ) return __( 'You must be logged in to preview a form.', 'ninja-forms' );
+        if ( ! is_user_logged_in() ) return esc_html__( 'You must be logged in to preview a form.', 'ninja-forms' );
 
         // takes into account if we are trying to preview a non-published form
         $tmp_id_test = explode( '-', $this->_form_id );
 
         // if only 1 element, then is it numeric
 	    if( 1 === count( $tmp_id_test) && ! is_numeric( $tmp_id_test[ 0 ] ) ) {
-		    return __( 'You must provide a valid form ID.', 'ninja-forms' );
+		    return esc_html__( 'You must provide a valid form ID.', 'ninja-forms' );
 	    }
 	    // if 2 array elements, is the first equal to 'tmp' and the second numeric
 	    elseif ( ( 2 === count( $tmp_id_test )
 	                 && ('tmp' != $tmp_id_test[ 0 ]
                      || ! is_numeric( $tmp_id_test[ 1 ] ) ) ) ) {
-		    return __( 'You must provide a valid form ID.', 'ninja-forms' );
+		    return esc_html__( 'You must provide a valid form ID.', 'ninja-forms' );
 	    }
 
         return do_shortcode( "[nf_preview id='{$this->_form_id}']" );

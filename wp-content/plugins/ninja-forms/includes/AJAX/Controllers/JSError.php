@@ -4,6 +4,7 @@ class NF_AJAX_Controllers_JSError
 {
     public function __construct()
     {
+        // Ajax calls are handled by 'log_error' in this file
         add_action( 'wp_ajax_nf_log_js_error',   array( $this, 'log_error' ) );
         add_action( 'wp_ajax_nopriv_nf_log_js_error',   array( $this, 'log_error' ) );
     }

@@ -11,11 +11,15 @@
 class WPSEO_Meta_Table_Accessible {
 
 	/**
+	 * Indicates that the table is accessible.
+	 *
 	 * @var string
 	 */
 	const ACCESSIBLE = '0';
 
 	/**
+	 * Indicates that the table is inaccessible.
+	 *
 	 * @var string
 	 */
 	const INACCESSBILE = '1';
@@ -29,7 +33,7 @@ class WPSEO_Meta_Table_Accessible {
 		$value = get_transient( self::transient_name() );
 
 		// If the value is not set, check the table.
-		if ( false === $value ) {
+		if ( $value === false ) {
 			return self::check_table();
 		}
 

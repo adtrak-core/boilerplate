@@ -17,7 +17,7 @@ echo '<h2>' . esc_html__( 'Pinterest settings', 'wordpress-seo' ) . '</h2>';
 
 printf(
 	'<p>%s</p>',
-	esc_html__( 'Pinterest uses Open Graph metadata just like Facebook, so be sure to keep the Open Graph checkbox on the Facebook tab checked if you want to optimize your site for Pinterest.', 'wordpress-seo' )
+	esc_html__( 'Pinterest uses Open Graph metadata just like Facebook, so be sure to keep the "Add Open Graph meta data" setting on the Facebook tab enabled if you want to optimize your site for Pinterest.', 'wordpress-seo' )
 );
 printf(
 	'<p>%s</p>',
@@ -28,7 +28,7 @@ echo '<p>';
 printf(
 	/* translators: %1$s / %2$s expands to a link to pinterest.com's help page. */
 	esc_html__( 'To %1$sconfirm your site with Pinterest%2$s, add the meta tag here:', 'wordpress-seo' ),
-	'<a target="_blank" href="https://pinterest.com/settings/#claimWebsite">',
+	'<a target="_blank" href="https://www.pinterest.com/settings/claim">',
 	'</a>'
 );
 echo '</p>';

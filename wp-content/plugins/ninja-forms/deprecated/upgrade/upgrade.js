@@ -132,7 +132,7 @@ jQuery(document).ready(function($) {
             $.post( ajaxurl, { nf2to3: 1, action: 'ninja_forms_ajax_migrate_database', security: nfThreeUpgrade.nonce }, function( response ) {
 
                 $.post( ajaxurl, { action: 'nfThreeUpgrade_GetSerializedFields' }, function( fieldsExport ) {
-                    $.post(ajaxurl, { nf2to3: 1, fields: fieldsExport.serialized, action: 'ninja_forms_ajax_import_fields' }, function ( fieldsImport ) {
+                    $.post(ajaxurl, { nf2to3: 1, fields: fieldsExport.serialized, action: 'ninja_forms_ajax_import_fields', security: nfThreeUpgrade.nonce }, function ( fieldsImport ) {
                         app.convertForms();
                     }, 'json' );
                 }, 'json' );
@@ -155,7 +155,7 @@ jQuery(document).ready(function($) {
             app.updateTable();
 
             $.post(ajaxurl, {action: 'nfThreeUpgrade_GetSerializedForm', formID: form.id}, function ( formExport ) {
-                $.post(ajaxurl, { nf2to3: 1, action: 'ninja_forms_ajax_import_form', formID: form.id, import: formExport.serialized, flagged: form.flagged }, function ( formImport ) {
+                $.post(ajaxurl, { nf2to3: 1, action: 'ninja_forms_ajax_import_form', security: nfThreeUpgrade.nonce, formID: form.id, import: formExport.serialized, flagged: form.flagged }, function ( formImport ) {
                     form.converted = true;
                     form.icon = 'yes';
                     app.updateTable();

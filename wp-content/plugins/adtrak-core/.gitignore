@@ -3,3 +3,4 @@
 *.scssc
 *.config
 .idea
+.DS_Store

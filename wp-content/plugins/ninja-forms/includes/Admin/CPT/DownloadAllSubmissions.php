@@ -45,7 +45,7 @@ class NF_Admin_CPT_DownloadAllSubmissions extends NF_Step_Processing {
 
     public function step() {
         if( ! is_numeric( $this->args[ 'form_id' ] ) ){
-            wp_die( __( 'Invalid form id', 'ninja-forms' ) );
+            wp_die( esc_html__( 'Invalid form id', 'ninja-forms' ) );
         }
 
         $subs_per_step = apply_filters( 'ninja_forms_export_subs_per_step', 10 );
@@ -160,7 +160,7 @@ class NF_Admin_CPT_DownloadAllSubmissions extends NF_Step_Processing {
                     $url = admin_url( 'admin.php?page=nf-processing&action=download_all_subs&form_id=' . absint( $_REQUEST['form_id'] ) . '&redirect=' . $redirect );
                     $url = esc_url( apply_filters( 'ninja_forms_download_all_submissions_url', $url, absint( $_REQUEST['form_id'] ) ) );
                     ?>
-                    var button = '<a href="<?php echo $url; ?>" class="button-secondary nf-download-all"><?php echo __( 'Download All Submissions', 'ninja-forms' ); ?></a>';
+                    var button = '<a href="<?php echo $url; ?>" class="button-secondary nf-download-all"><?php echo esc_html__( 'Download All Submissions', 'ninja-forms' ); ?></a>';
                     jQuery( '#doaction2' ).after( button );
                     <?php
                     }

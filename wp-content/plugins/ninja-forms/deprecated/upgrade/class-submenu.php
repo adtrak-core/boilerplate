@@ -118,11 +118,12 @@ class NF_THREE_Submenu
 
         wp_enqueue_script( 'ninja-forms-three-upgrade', plugin_dir_url(__FILE__) . 'upgrade.js', array( 'jquery', 'wp-util' ), '', TRUE );
         wp_enqueue_script( 'ninja-forms-three-upgrade-jbox', plugin_dir_url(__FILE__) . 'jBox.min.js', array( 'jquery', 'wp-util' ), '', TRUE );
+        $nonce = wp_create_nonce( 'ninja_forms_upgrade_nonce' );
         wp_localize_script( 'ninja-forms-three-upgrade', 'nfThreeUpgrade', array(
             'forms' => $all_forms,
-            'redirectURL' => admin_url( 'admin.php?page=ninja-forms&nf-switcher=upgrade' ),
+            'redirectURL' => admin_url( 'admin.php?page=ninja-forms&nf-switcher=upgrade&security=' . $nonce ),
             'optedIn' => $opted_in,
-            'nonce' => wp_create_nonce( 'ninja_forms_upgrade_nonce' ),
+            'nonce' => $nonce,
         ) );
 
         include plugin_dir_path( __FILE__ ) . 'tmpl-submenu.html.php';

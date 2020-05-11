@@ -21,7 +21,7 @@ class GoogleAPIError extends Exception {
 		if(!isset($error->error->details)){ return; }
 
 		foreach($error->error->details as $detail){
-			if(!is_array($detail->errorDetails)) {
+			if(!isset($detail->errorDetails) || !is_array($detail->errorDetails)) {
 				continue;
 			}
 

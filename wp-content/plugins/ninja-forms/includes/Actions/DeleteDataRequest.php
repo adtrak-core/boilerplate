@@ -32,7 +32,7 @@ final class NF_Actions_DeleteDataRequest extends NF_Abstracts_Action
 	{
 		parent::__construct();
 
-		$this->_nicename = __( 'Delete Data Request', 'ninja-forms' );
+		$this->_nicename = esc_html__( 'Delete Data Request', 'ninja-forms' );
 
 		$settings = Ninja_Forms::config( 'ActionDeleteDataRequestSettings' );
 		$this->_settings = array_merge( $this->_settings, $settings );

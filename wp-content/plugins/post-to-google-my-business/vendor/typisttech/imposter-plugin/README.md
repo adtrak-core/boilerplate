@@ -1,13 +1,14 @@
 # Imposter Plugin
 
-[![Packagist](https://img.shields.io/packagist/v/typisttech/imposter-plugin.svg)](https://packagist.org/packages/typisttech/imposter-plugin)
-[![Packagist](https://img.shields.io/packagist/dt/typisttech/imposter-plugin.svg)](https://packagist.org/packages/typisttech/imposter-plugin)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/typisttech/imposter-plugin.svg)](https://packagist.org/packages/typisttech/imposter-plugin)
+[![Packagist](https://img.shields.io/packagist/v/typisttech/imposter-plugin.svg?style=flat-square)](https://packagist.org/packages/typisttech/imposter-plugin)
+[![Packagist](https://img.shields.io/packagist/dt/typisttech/imposter-plugin.svg?style=flat-square)](https://packagist.org/packages/typisttech/imposter-plugin)
+![PHP from Packagist](https://img.shields.io/packagist/php-v/TypistTech/imposter-plugin?style=flat-square)
 [![CircleCI](https://circleci.com/gh/TypistTech/imposter-plugin.svg?style=svg)](https://circleci.com/gh/TypistTech/imposter-plugin)
-[![License](https://img.shields.io/github/license/TypistTech/imposter-plugin.svg)](https://github.com/TypistTech/imposter-plugin/blob/master/LICENSE.md)
-[![GitHub Sponsor](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa)](https://github.com/sponsors/TangRufus)
-[![Sponsor via PayPal](https://img.shields.io/badge/Sponsor-PayPal-blue.svg)](https://typist.tech/donate/imposter-plugin/)
-[![Hire Typist Tech](https://img.shields.io/badge/Hire-Typist%20Tech-ff69b4.svg)](https://typist.tech/contact/)
+[![GitHub](https://img.shields.io/github/license/TypistTech/imposter-plugin.svg?style=flat-square)](https://github.com/TypistTech/imposter-plugin/blob/master/LICENSE)
+[![GitHub Sponsor](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?style=flat-square&logo=github)](https://github.com/sponsors/TangRufus)
+[![Sponsor via PayPal](https://img.shields.io/badge/Sponsor-PayPal-blue.svg?style=flat-square&logo=paypal)](https://typist.tech/donate/imposter-plugin/)
+[![Hire Typist Tech](https://img.shields.io/badge/Hire-Typist%20Tech-ff69b4.svg?style=flat-square)](https://typist.tech/contact/)
+[![Twitter Follow @TangRufus](https://img.shields.io/twitter/follow/TangRufus?style=flat-square&color=1da1f2&logo=twitter)](https://twitter.com/tangrufus)
 
 Wrapping all composer vendor packages inside your own namespace. Intended for WordPress plugins.
 Imposter Plugin is a composer plugin wrapper for [Imposter](https://github.com/TypistTech/imposter/).
@@ -20,20 +21,20 @@ Imposter Plugin is a composer plugin wrapper for [Imposter](https://github.com/T
 - [Install](#install)
 - [Usage](#usage)
   - [Sit Back and Relax](#sit-back-and-relax)
-  - [composer imposter:run](#composer-imposterrun)
+- [Known Issues](#known-issues)
 - [Frequently Asked Questions](#frequently-asked-questions)
   - [What can I find more information?](#what-can-i-find-more-information)
   - [How about not hooking into composer commands?](#how-about-not-hooking-into-composer-commands)
   - [Do you have real life examples that use this composer plugin?](#do-you-have-real-life-examples-that-use-this-composer-plugin)
   - [Will you add support for older PHP versions?](#will-you-add-support-for-older-php-versions)
   - [It looks awesome. Where can I find some more goodies like this?](#it-looks-awesome-where-can-i-find-some-more-goodies-like-this)
-  - [This package isn't on wp.org. Where can I give a :star::star::star::star::star: review?](#this-package-isnt-on-wporg-where-can-i-give-a-starstarstarstarstar-review)
+  - [Where can I give :star::star::star::star::star: reviews?](#where-can-i-give-starstarstarstarstar-reviews)
 - [Sponsoring :heart:](#sponsoring-heart)
   - [GitHub Sponsors Matching Fund](#github-sponsors-matching-fund)
   - [Why don't you hire me?](#why-dont-you-hire-me)
   - [Want to help in other way? Want to be a sponsor?](#want-to-help-in-other-way-want-to-be-a-sponsor)
-- [Alternatives](#alternatives)
 - [Running the Tests](#running-the-tests)
+- [Alternatives](#alternatives)
 - [Feedback](#feedback)
 - [Change log](#change-log)
 - [Security](#security)
@@ -80,27 +81,25 @@ See: [Imposter readme](https://github.com/Typisttech/imposter#config) for detail
 
 ### Sit Back and Relax
 
-Once installed, imposter plugin hooks into `composer install`, `composer update` and `composer dump-autoload`, automatically run [imposter](https://github.com/TypistTech/imposter/) for you.
+Once installed, this plugin hooks into `composer install`, `composer update` and `composer dump-autoload`, automatically run [imposter](https://github.com/TypistTech/imposter/) for you.
 Besides, imposter plugin autoloads all modified files as [classmap](https://getcomposer.org/doc/04-schema.md#classmap).
 
-### composer imposter:run
-
-If you want to run Imposter manually:
-```bash
-$ composer imposter:run
-$ composer dump-autoload
-```
-
-**Note**: You need to run `$ composer dump-autoload` after every `$ composer imposter:run`.
-
-This command:
-1. Look for `/path/to/project/root/composer.json`
-2. Find out [vendor-dir](https://getcomposer.org/doc/06-config.md#vendor-dir)
-3. Find out all [required packages](https://getcomposer.org/doc/04-schema.md#require), including those required by dependencies
-4. Find out all [autoload paths](https://getcomposer.org/doc/04-schema.md#autoload) for all required packages
-5. Prefix all namespaces with the imposter-plugin namespace defined in your `composer.json`
+When those events triggered, this plugin:
+1. looks for `/path/to/project/root/composer.json`
+2. finds out [vendor-dir](https://getcomposer.org/doc/06-config.md#vendor-dir)
+3. finds out all [required packages](https://getcomposer.org/doc/04-schema.md#require), including those required by dependencies
+4. finds out all [autoload paths](https://getcomposer.org/doc/04-schema.md#autoload) for all required packages
+5. prefixes all namespaces with the imposter-plugin namespace defined in your `composer.json`
 
 Learn more on [imposter's readme](https://github.com/TypistTech/imposter#usage).
+
+## Known Issues
+
+Help wanted. Pull requests are welcomed.
+
+1. Imposter run twice when `composer install` and `composer update`
+1. Traits are not transformed
+1. Virtual packages are not supported
 
 ## Frequently Asked Questions
 
@@ -124,27 +123,34 @@ Here you go:
 
 ### Will you add support for older PHP versions?
 
-Never! This package will only works on [actively supported PHP versions](https://secure.php.net/supported-versions.php).
+Never! This plugin will only work on [actively supported PHP versions](https://secure.php.net/supported-versions.php).
+
 Don't use it on **end of life** or **security fixes only** PHP versions.
 
 ### It looks awesome. Where can I find some more goodies like this?
 
-* Articles on Typist Tech's [blog](https://typist.tech)
-* [Tang Rufus' WordPress plugins](https://profiles.wordpress.org/tangrufus#content-plugins) on wp.org
-* More projects on [Typist Tech's GitHub profile](https://github.com/TypistTech)
-* Stay tuned on [Typist Tech's newsletter](https://typist.tech/go/newsletter)
-* Follow [Tang Rufus' Twitter account](https://twitter.com/TangRufus)
-* Hire [Tang Rufus](https://typist.tech/contact) to build your next awesome site
+- Articles on Typist Tech's [blog](https://typist.tech)
+- More projects on [Typist Tech's GitHub profile](https://github.com/TypistTech/)
+- More plugins on [TangRufus'](https://profiles.wordpress.org/tangrufus/#content-plugins) wp.org profiles
+- Stay tuned on [Typist Tech's newsletter](https://typist.tech/go/newsletter)
+- Follow [@TangRufus](https://twitter.com/tangrufus) on Twitter
+- Hire [Tang Rufus](https://typist.tech/contact) to build your next awesome site
 
-### This package isn't on wp.org. Where can I give a :star::star::star::star::star: review?
+### Where can I give :star::star::star::star::star: reviews?
 
-Thanks!
+Thanks! Glad you like it. It's important to let my know somebody is using this project. Since this is not hosted on wordpress.org, please consider:
 
-Consider writing a blog post, submitting pull requests, [sponsoring](https://typist.tech/donation/) or [hiring me](https://typist.tech/contact/) instead.
+- tweet something good with mentioning [@TangRufus](https://twitter.com/tangrufus)
+- :star: star this [Github repo](https://github.com/typisttech/imposter-plugin)
+- :eyes: [watch](https://github.com/typisttech/imposter-plugin/subscription) this Github repo
+- write blog posts
+- submit [pull requests](https://github.com/typisttech/imposter-plugin)
+- [sponsor](https://github.com/sponsors/TangRufus) Tang Rufus to maintain his open source projects
+- hire [Tang Rufus](https://typist.tech/contact) to build your next awesome site
 
 ## Sponsoring :heart:
 
-Love `imposter-plugin`? Help me maintain it, a [sponsorship here](https://typist.tech/donation/) can help with it.
+Love `Imposter Plugin`? Help me maintain it, a [sponsorship here](https://typist.tech/donation/) can help with it.
 
 ### GitHub Sponsors Matching Fund
 
@@ -160,6 +166,15 @@ Ready to take freelance WordPress jobs. Contact me via the contact form [here](h
 
 Contact: [Tang Rufus](mailto:tangrufus@gmail.com)
 
+## Running the Tests
+
+Run the tests:
+
+``` bash
+$ composer test
+$ composer style:check
+```
+
 ## Alternatives
 
 Here is a list of alternatives that I found. But none satisfied my requirements.
@@ -172,15 +187,6 @@ Here is a list of alternatives that I found. But none satisfied my requirements.
 
 * [PHP Scoper](https://github.com/humbug/php-scoper)
     - Prefixes all PHP namespaces in a file/directory to isolate the code bundled in PHARs
-
-## Running the Tests
-
-Run the tests:
-
-``` bash
-$ composer test
-$ composer style:check
-```
 
 ## Feedback
 

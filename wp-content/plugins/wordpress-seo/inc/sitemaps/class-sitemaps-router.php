@@ -15,9 +15,9 @@ class WPSEO_Sitemaps_Router {
 	 */
 	public function __construct() {
 
-		add_action( 'init', array( $this, 'init' ), 1 );
-		add_filter( 'redirect_canonical', array( $this, 'redirect_canonical' ) );
-		add_action( 'template_redirect', array( $this, 'template_redirect' ), 0 );
+		add_action( 'init', [ $this, 'init' ], 1 );
+		add_filter( 'redirect_canonical', [ $this, 'redirect_canonical' ] );
+		add_action( 'template_redirect', [ $this, 'template_redirect' ], 0 );
 	}
 
 	/**
@@ -29,11 +29,11 @@ class WPSEO_Sitemaps_Router {
 
 		$wp->add_query_var( 'sitemap' );
 		$wp->add_query_var( 'sitemap_n' );
-		$wp->add_query_var( 'xsl' );
+		$wp->add_query_var( 'yoast-sitemap-xsl' );
 
 		add_rewrite_rule( 'sitemap_index\.xml$', 'index.php?sitemap=1', 'top' );
 		add_rewrite_rule( '([^/]+?)-sitemap([0-9]+)?\.xml$', 'index.php?sitemap=$matches[1]&sitemap_n=$matches[2]', 'top' );
-		add_rewrite_rule( '([a-z]+)?-?sitemap\.xsl$', 'index.php?xsl=$matches[1]', 'top' );
+		add_rewrite_rule( '([a-z]+)?-?sitemap\.xsl$', 'index.php?yoast-sitemap-xsl=$matches[1]', 'top' );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class WPSEO_Sitemaps_Router {
 	 */
 	public function redirect_canonical( $redirect ) {
 
-		if ( get_query_var( 'sitemap' ) || get_query_var( 'xsl' ) ) {
+		if ( get_query_var( 'sitemap' ) || get_query_var( 'yoast-sitemap-xsl' ) ) {
 			return false;
 		}
 
@@ -60,8 +60,7 @@ class WPSEO_Sitemaps_Router {
 			return;
 		}
 
-		header( 'X-Redirect-By: Yoast SEO' );
-		wp_redirect( home_url( '/sitemap_index.xml' ), 301, 'Yoast SEO' );
+		wp_safe_redirect( home_url( '/sitemap_index.xml' ), 301, 'Yoast SEO' );
 		exit;
 	}
 
@@ -91,7 +90,7 @@ class WPSEO_Sitemaps_Router {
 		}
 
 		// Due to different environment configurations, we need to check both SERVER_NAME and HTTP_HOST.
-		$check_urls = array( $protocol . $domain . $path );
+		$check_urls = [ $protocol . $domain . $path ];
 		if ( ! empty( $_SERVER['HTTP_HOST'] ) ) {
 			$check_urls[] = $protocol . sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) . $path;
 		}

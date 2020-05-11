@@ -8,7 +8,7 @@ final class NF_AJAX_Requests_DeleteField extends WP_Async_Request
 
         if( ! isset( $_POST[ 'field_id' ] ) ) return;
 
-        $field = Ninja_Forms()->form()->get_field( $_POST[ 'field_id' ] );
+        $field = Ninja_Forms()->form()->get_field(absint($_POST['field_id']));
         $field->delete();
     }
 }

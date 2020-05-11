@@ -4,11 +4,16 @@
 namespace PGMB\BackgroundProcessing;
 
 
+use stdClass;
 use WP_Background_Process;
 
 class PostPublishProcess extends WP_Background_Process implements BackgroundProcess {
 
 	protected $action = 'mbp_background_process';
+	/**
+	 * @var string
+	 */
+	protected $batch_key;
 
 
 	public function __construct() {
@@ -35,7 +40,23 @@ class PostPublishProcess extends WP_Background_Process implements BackgroundProc
 		return false;
 	}
 
+	public function save() {
+		$key = $this->generate_key();
 
+		if ( ! empty( $this->data ) ) {
+			update_site_option( $key, $this->data );
+		}
+		$this->batch_key = $key;
+		return $this;
+	}
+
+	public function get_batch_key(){
+		return $this->batch_key;
+	}
+
+	public function get_batch_by_key($key){
+		return get_option($key);
+	}
 
 	protected function complete() {
 		parent::complete();

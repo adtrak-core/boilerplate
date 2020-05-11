@@ -36,13 +36,13 @@ abstract class Red_Match {
 		return $regex->replace( $target_url, $requested_url );
 	}
 
-	static function create( $name, $data = '' ) {
+	public static function create( $name, $data = '' ) {
 		$avail = self::available();
 		if ( isset( $avail[ strtolower( $name ) ] ) ) {
 			$classname = $name . '_match';
 
 			if ( ! class_exists( strtolower( $classname ) ) ) {
-				include( dirname( __FILE__ ) . '/../matches/' . $avail[ strtolower( $name ) ] );
+				include dirname( __FILE__ ) . '/../matches/' . $avail[ strtolower( $name ) ];
 			}
 
 			$class = new $classname( $data );
@@ -53,7 +53,7 @@ abstract class Red_Match {
 		return false;
 	}
 
-	static function all() {
+	public static function all() {
 		$data = array();
 
 		$avail = self::available();
@@ -65,7 +65,7 @@ abstract class Red_Match {
 		return $data;
 	}
 
-	static function available() {
+	public static function available() {
 		return array(
 			'url'      => 'url.php',
 			'referrer' => 'referrer.php',
@@ -78,6 +78,7 @@ abstract class Red_Match {
 			'server'   => 'server.php',
 			'ip'       => 'ip.php',
 			'page'     => 'page.php',
+			'language' => 'language.php',
 		);
 	}
 }
@@ -169,7 +170,7 @@ trait FromNotFrom_Match {
 	}
 
 	private function load_data( $values ) {
-		$values = unserialize( $values );
+		$values = @unserialize( $values );
 
 		if ( isset( $values['url_from'] ) ) {
 			$this->url_from = $values['url_from'];

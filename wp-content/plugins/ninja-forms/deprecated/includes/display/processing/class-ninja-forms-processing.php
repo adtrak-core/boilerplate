@@ -154,7 +154,7 @@ class Ninja_Forms_Processing {
 
 			foreach($_POST as $key => $val){
 				if(substr($key, 0, 1) == '_'){
-					$this->data['extra'][$key] = $val;
+					$this->data['extra'][$key] = sanitize_text_field($val);
 				}
 			}
 
@@ -985,7 +985,7 @@ class Ninja_Forms_Processing {
 			$sub_total = str_replace('.', '', $sub_total );
 		}
 
-		$sub_total = intval( $sub_total );
+		$sub_total = absint( $sub_total );
 
 		// Get our total if it exists.
 		$total = $this->get_calc_total( false, false );

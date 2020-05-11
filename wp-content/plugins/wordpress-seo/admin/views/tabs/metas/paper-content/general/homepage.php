@@ -10,7 +10,7 @@
 ?>
 <div class="tab-block">
 	<?php
-	if ( 'posts' === get_option( 'show_on_front' ) ) {
+	if ( get_option( 'show_on_front' ) === 'posts' ) {
 		$homepage_help = new WPSEO_Admin_Help_Panel(
 			'search-appearance-homepage',
 			__( 'Learn more about the homepage setting', 'wordpress-seo' ),
@@ -23,13 +23,13 @@
 
 		$editor = new WPSEO_Replacevar_Editor(
 			$yform,
-			array(
+			[
 				'title'                 => 'title-home-wpseo',
 				'description'           => 'metadesc-home-wpseo',
 				'page_type_recommended' => 'homepage',
 				'page_type_specific'    => 'page',
 				'paper_style'           => false,
-			)
+			]
 		);
 		$editor->render();
 	}
@@ -38,7 +38,7 @@
 		echo '<p>';
 		printf(
 			/* translators: 1: link open tag; 2: link close tag. */
-			esc_html__( 'You can determine the title and description for the front page by %1$sediting the front page itself &raquo;%2$s', 'wordpress-seo' ),
+			esc_html__( 'You can determine the title and description for the front page by %1$sediting the front page itself%2$s.', 'wordpress-seo' ),
 			'<a href="' . esc_url( get_edit_post_link( get_option( 'page_on_front' ) ) ) . '">',
 			'</a>'
 		);
@@ -47,7 +47,7 @@
 			echo '<p>';
 			printf(
 				/* translators: 1: link open tag; 2: link close tag. */
-				esc_html__( 'You can determine the title and description for the blog page by %1$sediting the blog page itself &raquo;%2$s', 'wordpress-seo' ),
+				esc_html__( 'You can determine the title and description for the blog page by %1$sediting the blog page itself%2$s.', 'wordpress-seo' ),
 				'<a href="' . esc_url( get_edit_post_link( get_option( 'page_for_posts' ) ) ) . '">',
 				'</a>'
 			);
