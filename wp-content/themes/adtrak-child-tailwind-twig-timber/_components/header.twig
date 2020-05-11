@@ -1,33 +1,59 @@
-<header class="absolute top-0 left-0 w-full pt-10 lg:pt-0">
+<header class="pt-10 lg:pt-0">
 
-  <div class="container flex flex-wrap justify-between items-center lg:py-4">
+  <div class="top-bar hidden bg-gray-100 lg:block">
 
-    <div clas="w-1/2">
-      <a class="block lg:inline-block" href="{{site.site_url}}">
-        <img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site.title}} Logo" />
-      </a>
-    </div>    
+    <div class="container">
 
-    <div class="w-full order-2">
-      <a href="#" class="btn btn-primary">Button example one</a>
-      <a href="#" class="btn btn-outline">Button example two</a>
+      <nav id="navigation" class="hidden bg-blue-100 container lg:block">
+        <ul class="menu-primary w-full flex flex-wrap justify-center">
+          {% for item in secondaryMenu.items %}
+          <li class="{{item.class}}">
+            <a href="{{item.url}}">{{item.name}}</a>
+            {% if item.children %}
+            <ul class="sub-menu">
+              {% for child in item.children %}
+              <li class="{{child.class}}">
+                <a href="{{item.url}}">{{item.name}}</a>
+              </li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
     </div>
 
-    <div class="menu w-1/3">MENU BUTTOn</div>
+  </div>
+
+  <div class="container lg:py-4 lg:flex flex-wrap justify-between items-center">
+
+    <a class="block lg:inline-block" href="{{site.site_url}}">
+      <img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site.title}} Logo" />
+    </a>
+
+    {% include "_components/phone-top-right.twig" %}
 
   </div>
 
   <nav id="navigation" class="hidden bg-blue-100 container lg:block">
-    <ul class="menu-primary">
+    <ul class="menu-primary w-full flex flex-wrap justify-center">
       {% for item in primaryMenu.items %}
-        <li class="{{item.class}}">
-          <a href="{{item.url}}">{{item.name}}</a>
-          {% if item.children %}
-            Children go here
-          {% endif %}
-        </li>
+      <li class="{{item.class}}">
+        <a href="{{item.url}}">{{item.name}}</a>
+        {% if item.children %}
+          <ul class="sub-menu">
+            {% for child in item.children %}
+              <li class="{{child.class}}">
+                <a href="{{item.url}}">{{item.name}}</a>
+              </li>
+            {% endfor %}
+          </ul>          
+        {% endif %}
+      </li>
       {% endfor %}
     </ul>
-  </nav>  
+  </nav>
 
 </header>
