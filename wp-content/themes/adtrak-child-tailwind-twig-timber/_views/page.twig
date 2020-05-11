@@ -1,0 +1,12 @@
+{% extends 'base.twig' %}
+
+{% block page_content %}
+
+  {% include "_components/why-choose-us.twig" %}
+
+  <div>
+    <h1>{{post.post_title}}</h1>
+    {{post.post_content}}
+  </div>
+
+{% endblock %}

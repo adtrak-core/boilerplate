@@ -1,0 +1,26 @@
+<div class="hero w-full min-h-128 bg-cover bg-center">
+    {% if taxonomy %}
+      {% set hero_small = taxonomy.meta('region_image').url|resize('800') %}
+      {% set hero_medium = taxonomy.meta('region_image').url|resize('1200') %}
+      {% set hero_large = taxonomy.meta('region_image').url|resize('2000') %}
+    {% else %}
+      {% set hero_small = post.thumbnail.src|resize('800') %}
+      {% set hero_medium = post.thumbnail.src|resize('1200') %}
+      {% set hero_large = post.thumbnail.src|resize('2000') %}
+    {% endif %}
+    <style>
+      .hero {
+        background-image: url('{{hero_small}}');
+      }
+      @media (min-width: 800px) {
+        .hero {
+          background-image: url('{{hero_medium}}');
+        }
+      }
+      @media (min-width: 1200px) {
+        .hero {
+          background-image: url('{{hero_large}}');
+        }
+      }
+    </style>
+</div>

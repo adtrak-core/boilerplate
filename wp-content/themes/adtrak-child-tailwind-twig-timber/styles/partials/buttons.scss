@@ -1,0 +1,31 @@
+/***********************************************************
+Buttons ***************************************************/
+
+input[type="button"],
+button,
+.btn {
+  @apply
+    rounded    
+    py-2 px-4
+    rounded-full
+    uppercase
+    tracking-wide;
+    transition: .2s ease;
+}
+
+.btn-primary {
+  @apply bg-primary-light text-white;
+
+  &:hover {
+    @apply bg-primary;
+  }
+}
+
+.btn-outline {
+  @apply border-2 border-white text-white;
+
+  &:hover {
+    @apply bg-white text-primary;
+  }
+}
+

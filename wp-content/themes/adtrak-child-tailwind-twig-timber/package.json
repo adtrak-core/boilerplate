@@ -1,0 +1,41 @@
+{
+  "name": "adtrak-child-tailwind",
+  "version": "1.0.0",
+  "description": "Theme for [Client Name]",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp --production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Tom Nightingale <tom.nightingale@adtrak.co.uk>",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "devDependencies": {
+    "browser-sync": "^2.26.5",
+    "del": "^4.1.0",
+    "gulp": "^4.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-purgecss": "^1.2.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.6.1",
+    "cssnano": "^4.1.10",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-rename": "^1.4.0",
+    "postcss-import": "^12.0.1",
+    "tailwindcss": "^1.1.2",
+    "yargs": "^14.0.0"
+  }
+}

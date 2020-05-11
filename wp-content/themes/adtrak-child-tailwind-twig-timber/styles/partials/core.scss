@@ -1,0 +1,48 @@
+/***********************************************************
+Layouts ***************************************************/
+
+body {
+  @apply
+    font-sans
+    antialiased
+    text-blue-500
+    leading-relaxed;
+}
+
+.container {
+  @apply
+    w-full
+    mx-auto
+    px-4;
+}
+
+@screen xl {
+  .container {
+    @apply px-0 max-w-xxl;
+  }
+}
+
+/***********************************************************
+Lazyload **************************************************/
+
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+
+.lazyloaded {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+/***********************************************************
+SVG Icons **************************************************/
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}

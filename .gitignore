@@ -109,8 +109,12 @@ Thumbs.db
 
 !wp-content/themes/adtrak-child/
 !wp-content/themes/adtrak-child-tailwind/
+!wp-content/themes/adtrak-child-tailwind-twig-timber/
 !wp-content/themes/adtrak-parent/
 !wp-content/themes/twd-darth-vader/
+
+wp-content/themes/adtrak-child-tailwind-twig-timber/node_modules
+wp-content/themes/adtrak-child-tailwind-twig-timber/vendor
 
 *.codekit
 *.DS_store
