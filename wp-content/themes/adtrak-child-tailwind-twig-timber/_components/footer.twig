@@ -1,37 +1,49 @@
-    <footer class="p-4 bg-primary-darkest md:p-8 lg:px-0">
+<footer class="p-4 bg-gray-100 text-center md:p-8 lg:px-0 lg:text-left">
 
-      <div class="container lg:flex flex-wrap justify-between items-center text-white text-center lg:text-left">
+  <div class="container lg:flex flex-wrap">
 
-        <div class="w-full lg:w-1/3 p-4"> 
-          <p class="font-bold">Contact Us</p>
-          <p><a href="mailto:{{options.site_email}}">{{options.site_email}}</a></p>
-          <p>{% do action('ld_default', false, true, true) %}</p>
-        </div>
-
-        <div class="w-full lg:w-1/3 p-4 lg:text-center">
-          <img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site_title}} Logo" />
-          // social icons here
-        </div>
-
-        <div class="w-full lg:w-1/3 p-4 lg:text-right">
-          <p class="font-bold">{{site.name}}</p>
-          {{ function('address_stacked') }}
-        </div>
-        
-      </div>
-
-    </footer>
-
-    <!-- Back to top arrow -->
-    <p id="back-top"
-      class="rounded-xl fixed bottom-4 right-4 z-50 opacity-50 text-center bg-gray-500 hover:bg-gray-600 transition-300 p-2">
-      <a class="text-black no-underline text-sm">
-        <?php icon('angle-up', 'w-8 h-8'); ?> <span class="block text-lg uppercase">Top</span>
+    <div class="w-full mb-8 lg:w-3/12">
+      <a class="block lg:inline-block" href="{{site.site_url}}">
+        <img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site.title}} Logo" />
       </a>
-    </p>
+    </div>
 
-  </div><!-- wrapper -->
+    <div class="w-full mb-8 lg:w-3/12">
+      <h6>Explore</h6>
+      {% for item in primaryMenu.items %}
+        <li class="{{item.class}}">
+          <a href="{{item.url}}">{{item.name}}</a>
+        </li>
+      {% endfor %}
+    </div>
 
-</body>
+    <div class="w-full lg:w-1/2">
+      <p>Address: {{ function('address_stacked') }}</p>
+      <p>Email: <a href="mailto:{{options.site_email}}">{{options.site_email}}</a>
+      </p>
+      <p>{{site.title}} is a registered company in England.</p>
 
-</html>
+      {% if options.reg_number %}
+        <p>Registered Number: {{options.reg_number}}</p>
+      {% endif %}
+
+      {% if options.vat_number %}
+        <p>VAT Number: {{options.vat_number}}</p>
+      {% endif %}
+
+      <p>&copy; {{site.title}} {{ 'now' | date('Y') }}. All Rights Reserved</p>
+      
+      <a class="block mx-auto max-w-32 adtrak" href="https://www.adtrak.co.uk"><?php echo get_adtrak_logo(); ?></a>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Back to top arrow -->
+<p id="back-top"
+  class="rounded-xl fixed bottom-4 right-4 z-50 opacity-50 text-center bg-gray-500 hover:bg-gray-600 transition-300 p-2">
+  <a class="text-black no-underline text-sm">
+    {{ function('icon', 'angle-up', 'w-8 h-8') }} <span class="block text-lg uppercase">Top</span>
+  </a>
+</p>
