@@ -1,13 +1,7 @@
 <div class="hero w-full min-h-128 bg-cover bg-center">
-    {% if taxonomy %}
-      {% set hero_small = taxonomy.meta('region_image').url|resize('800') %}
-      {% set hero_medium = taxonomy.meta('region_image').url|resize('1200') %}
-      {% set hero_large = taxonomy.meta('region_image').url|resize('2000') %}
-    {% else %}
-      {% set hero_small = post.thumbnail.src|resize('800') %}
-      {% set hero_medium = post.thumbnail.src|resize('1200') %}
-      {% set hero_large = post.thumbnail.src|resize('2000') %}
-    {% endif %}
+    {% set hero_small = post.thumbnail.src|resize('800') %}
+    {% set hero_medium = post.thumbnail.src|resize('1200') %}
+    {% set hero_large = post.thumbnail.src|resize('2000') %}
     <style>
       .hero {
         background-image: url('{{hero_small}}');

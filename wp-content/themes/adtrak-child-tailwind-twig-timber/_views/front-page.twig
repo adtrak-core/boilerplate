@@ -2,25 +2,9 @@
 
 {% block page_content %}
 
-  {% include "_components/why-choose-us.twig" %}
-
-  {% for member in members %}
-    <div>
-      {{member.post_title}}
-      <a class="btn btn-outline" href="{{ function('get_permalink', member.ID) }}">View {{member.post_title}}</a>
-    </div>    
-  {% endfor %}
-
   <div>
     <h1>{{post.post_title}}</h1>
     {{post.post_content}}
-  </div>
-
-  <div>
-    <h2>What our members say</h2>
-    {% for testimonial in testimonials %}
-      {{testimonial.post_title}}
-    {% endfor %}
   </div>
 
 {% endblock %}
