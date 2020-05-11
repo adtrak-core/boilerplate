@@ -6,128 +6,145 @@ if( ! class_exists('ACF_Ajax_Query') ) :
 
 class ACF_Ajax_Query extends ACF_Ajax {
 	
-	/** @var array The ACF field used for querying */
-	var $field = false;
+	/** @var bool Prevents access for non-logged in users. */
+	var $public = true;
 	
-	/** @var int The page of results to return */
+	/** @var int The page of results to return. */
 	var $page = 1;
 	
-	/** @var int The number of results per page */
+	/** @var int The number of results per page. */
 	var $per_page = 20;
 	
-	/** @var string The searched term */
+	/** @var bool Signifies whether or not this AJAX query has more pages to load. */
+	var $more = false;
+	
+	/** @var string The searched term. */
 	var $search = '';
 	
-	/** @var int The number of results found */
-	var $count = 0;
+	/** @var bool Signifies whether the current query is a search. */
+	var $is_search = false;
+	
+	/** @var (int|string) The post_id being edited. */
+	var $post_id = 0;
+	
+	/** @var array The ACF field related to this query. */
+	var $field = false;
 	
 	/**
-	*  response
-	*
-	*  The actual logic for this AJAX request.
-	*
-	*  @date	31/7/18
-	*  @since	5.7.2
-	*
-	*  @param	void
-	*  @return	void
-	*/
-	
-	function response() {
+	 * get_response
+	 *
+	 * Returns the response data to sent back.
+	 *
+	 * @date	31/7/18
+	 * @since	5.7.2
+	 *
+	 * @param	array $request The request args.
+	 * @return	(array|WP_Error) The response data or WP_Error.
+	 */
+	function get_response( $request ) {
 		
-		// field
-		if( $this->has('field_key') ) {
-			$this->field = acf_get_field( $this->get('field_key') );
+		// Init request.
+		$this->init_request( $request );
+		
+		// Get query args.
+		$args = $this->get_args( $request );
+		
+		// Get query results.
+		$results = $this->get_results( $args );
+		if( is_wp_error($results) ) {
+			return $results;
 		}
 		
-		// pagination
-		if( $this->has('paged') ) {
-			$this->page = (int) $this->get('paged');
-		}
-		
-		// search
-		if( $this->has('s') ) {
-			$this->search = $this->get('s');
-		}
-		
-		// get response
-		$args = $this->get_args();
-		$results = $this->get_results($args);
-		$response = $this->get_response($results, $args);
-		
-		// return
-		return $response;
+		// Return response.
+		return array(
+			'results'	=> $results,
+			'more'		=> $this->more
+		);
 	}
 	
+	/**
+	 * init_request
+	 *
+	 * Called at the beginning of a request to setup properties.
+	 *
+	 * @date	23/5/19
+	 * @since	5.8.1
+	 *
+	 * @param	array $request The request args.
+	 * @return	void
+	 */
+	function init_request( $request ) {
+		
+		// Get field for this query.
+		if( isset($request['field_key']) ) {
+			$this->field = acf_get_field( $request['field_key'] );
+		}
+		
+		// Update query properties.
+		if( isset($request['page']) ) {
+			$this->page = intval($request['page']);
+		}
+		if( isset($request['per_page']) ) {
+			$this->per_page = intval($request['per_page']);
+		}
+		if( isset($request['search']) && acf_not_empty($request['search']) ) {
+			$this->search = sanitize_text_field($request['search']);
+			$this->is_search = true;
+		}
+		if( isset($request['post_id']) ) {
+			$this->post_id = $request['post_id'];
+		}
+	}
 	
 	/**
-	*  get_args
-	*
-	*  description
-	*
-	*  @date	31/7/18
-	*  @since	5.7.2
-	*
-	*  @param	type $var Description. Default.
-	*  @return	type Description.
-	*/
-	
-	function get_args() {
+	 * get_args
+	 *
+	 * Returns an array of args for this query.
+	 *
+	 * @date	31/7/18
+	 * @since	5.7.2
+	 *
+	 * @param	array $request The request args.
+	 * @return	array
+	 */
+	function get_args( $request ) {
+		
+		// Allow for custom "query" arg.
+		if( isset($request['query']) ) {
+			return (array) $request['query'];
+		}
 		return array();
 	}
 	
 	/**
-	*  get_results
-	*
-	*  description
-	*
-	*  @date	31/7/18
-	*  @since	5.7.2
-	*
-	*  @param	type $var Description. Default.
-	*  @return	type Description.
-	*/
-	
+	 * get_items
+	 *
+	 * Returns an array of results for the given args.
+	 *
+	 * @date	31/7/18
+	 * @since	5.7.2
+	 *
+	 * @param	array args The query args.
+	 * @return	array
+	 */
 	function get_results( $args ) {
 		return array();
 	}
 	
 	/**
-	*  get_result
-	*
-	*  description
-	*
-	*  @date	31/7/18
-	*  @since	5.7.2
-	*
-	*  @param	type $var Description. Default.
-	*  @return	type Description.
-	*/
-	
+	 * get_item
+	 *
+	 * Returns a single result for the given item object.
+	 *
+	 * @date	31/7/18
+	 * @since	5.7.2
+	 *
+	 * @param	mixed $item A single item from the queried results.
+	 * @return	array An array containing "id" and "text".
+	 */
 	function get_result( $item ) {
-		return '';
-	}
-	
-	/**
-	*  get_response
-	*
-	*  description
-	*
-	*  @date	31/7/18
-	*  @since	5.6.9
-	*
-	*  @param	type $var Description. Default.
-	*  @return	type Description.
-	*/
-	
-	function get_response( $results, $args ) {
-		return array(
-			'results'	=> $results,
-			'more'		=> ($this->count >= $this->per_page)
-		);
+		return false;
 	}
 }
 
 endif; // class_exists check
-
-?>

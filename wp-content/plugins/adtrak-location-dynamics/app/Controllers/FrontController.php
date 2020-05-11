@@ -146,18 +146,17 @@ class FrontController
         # If plugin isnt setup show message
         if (!isset($dynamics)) {
             echo "No numbers set";
-            return;
-        }
-
-        # If GET or cookie is set get location from that
-        if (isset($_GET['a']) || isset($_COOKIE['area'])) {
-            $loc = isset($_GET['a']) ? $_GET['a'] : $_COOKIE['area'];
-        }
-
-        if (isset($loc)) {
-            echo ucfirst($loc);
         } else {
-            echo "UK";
+            # If GET or cookie is set get location from that
+            if (isset($_GET['a']) || isset($_COOKIE['area'])) {
+                $loc = isset($_GET['a']) ? $_GET['a'] : $_COOKIE['area'];
+            }
+
+            if (isset($loc)) {
+                echo ucfirst($loc);
+            } else {
+                echo "UK";
+            }
         }
          
         $content = ob_get_contents();
@@ -210,54 +209,49 @@ class FrontController
         # If plugin isnt setup show message
         if (!isset($dynamics)) {
             echo "No numbers set";
-            return;
-        }
-
-        $dynamics = unserialize($dynamics->option_value);
-
-        # If location isnt set show default
-        if ($location == null) {
-            $this->ld_default($calltag);
-            return;
-        }
-
-        # If no numbers are set show message
-        if (!isset($dynamics['dynamics'])) {
-            echo "No numbers set";
-            return;
-        }
-
-        # List numbers by name
-        $order = [];
-        foreach ($dynamics['dynamics'] as $dynamic) {
-            $order[$dynamic['location']] = $dynamic;
-        }
-
-        # If location doesnt exist
-        if (!isset($order[$location])) {
-            $this->ld_default($calltag);
-            return;
-        }
-
-        # If calltag is requested, show calltag
-        if ($calltag) {
-            echo $order[$location]['calltag'] . " ";
-        }
-
-        # If GET or cookie is set get location from that
-        if (isset($_GET['a']) || isset($_COOKIE['area'])) {
-            $loc = isset($_GET['a']) ? $_GET['a'] : $_COOKIE['area'];
-        }
-
-        # If PPC number is the same as this single show the PPC number else show the seo number
-        if (isset($loc) && $loc == $location && $ppc == false) {
-            echo "<span class='ld-phonenumber ".  $order[$location]['insights'] ."'><a href='tel:". str_replace(' ', '', $order[$location]['ppc']) ."'>". $order[$location]['ppc'] . "</a></span>";
-        } elseif ($linked) {
-            echo "<span class='ld-phonenumber'><a href='tel:". str_replace(' ', '', $order[$location]['seo']) ."'>". $order[$location]['seo'] . "</a></span>";
         } else {
-            echo "<span class='ld-phonenumber'>". $order[$location]['seo'] . "</span>";
+            $dynamics = unserialize($dynamics->option_value);
+
+            # If location isnt set show default
+            if ($location == null) {
+                $this->ld_default($calltag);
+            } elseif (!isset($dynamics['dynamics'])) {
+                # If no numbers are set show message
+                echo "No numbers set";
+                return;
+            } else {
+                # List numbers by name
+                $order = [];
+                foreach ($dynamics['dynamics'] as $dynamic) {
+                    $order[$dynamic['location']] = $dynamic;
+                }
+
+                # If location doesnt exist
+                if (!isset($order[$location])) {
+                    $this->ld_default($calltag);
+                } else {
+                    # If calltag is requested, show calltag
+                    if ($calltag) {
+                        echo $order[$location]['calltag'] . " ";
+                    }
+
+                    # If GET or cookie is set get location from that
+                    if (isset($_GET['a']) || isset($_COOKIE['area'])) {
+                        $loc = isset($_GET['a']) ? $_GET['a'] : $_COOKIE['area'];
+                    }
+
+                    # If PPC number is the same as this single show the PPC number else show the seo number
+                    if (isset($loc) && $loc == $location && $ppc == false) {
+                        echo "<span class='ld-phonenumber ".  $order[$location]['insights'] ."'><a href='tel:". str_replace(' ', '', $order[$location]['ppc']) ."'>". $order[$location]['ppc'] . "</a></span>";
+                    } elseif ($linked) {
+                        echo "<span class='ld-phonenumber'><a href='tel:". str_replace(' ', '', $order[$location]['seo']) ."'>". $order[$location]['seo'] . "</a></span>";
+                    } else {
+                        echo "<span class='ld-phonenumber'>". $order[$location]['seo'] . "</span>";
+                    }
+                }
+            }
         }
-        
+            
         $content = ob_get_contents();
         ob_end_clean();
         if ($short) {
@@ -311,50 +305,52 @@ class FrontController
         # If plugin isnt setup show message
         if (!isset($dynamics)) {
             echo "No numbers set";
-            return;
-        }
-
-        $dynamics = unserialize($dynamics->option_value);
-
-        # If no numbers are set show message
-        if (!isset($dynamics['dynamics'])) {
-            echo "No numbers set";
-            return;
-        }
-
-        # List numbers by name
-        $order = [];
-        foreach ($dynamics['dynamics'] as $dynamic) {
-            $order[$dynamic['location']] = $dynamic;
-        }  
-
-        # Check if a GET request is used or cookie
-        if ((isset($_GET['a']) && $_GET['a'] == 'gen') || (isset($_COOKIE['area']) && $_COOKIE['area'] && $_COOKIE['area'] == 'gen')) {
-            $loc = 'uk';
-            $type = 'ppc';
-            echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
-        } else if (isset($_GET['a']) && !isset($order[$_GET['a']]['ppc'])) {
-            $loc = 'uk';
-            $type = 'seo';
-            echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
-        } else if (isset($_GET['a'])) {
-            # If location doesnt exist
-            # Check if a GET request is used
-            $loc = $_GET['a'];
-            $type = 'ppc';
-            echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
-        } elseif (isset($_COOKIE['area']) && $_COOKIE['area']) {
-            # Check if a cookie is used
-            $loc = $_COOKIE['area'];
-            $type = 'ppc';
-            echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
         } else {
-            # Show SEO number if above is not satisfied
-            $loc = 'uk';
-            $type = 'seo';
-            echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
+            $dynamics = unserialize($dynamics->option_value);
+
+            # If no numbers are set show message
+            if (!isset($dynamics['dynamics'])) {
+                echo "No numbers set";
+            } else {
+                # List numbers by name
+                $order = [];
+                foreach ($dynamics['dynamics'] as $dynamic) {
+                    $order[$dynamic['location']] = $dynamic;
+                }  
+
+                # Check if a GET request is used or cookie
+                if ((isset($_GET['a']) && $_GET['a'] == 'gen') || (isset($_COOKIE['area']) && $_COOKIE['area'] && $_COOKIE['area'] == 'gen')) {
+                    $loc = 'uk';
+                    $type = 'ppc';
+                    echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
+                } else if (isset($_GET['a']) && (!isset($order[$_GET['a']]['ppc']) || empty($order[$_GET['a']]['ppc']))) {
+                    $loc = 'uk';
+                    $type = 'seo';
+                    echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
+                } else if (isset($_COOKIE['area']) && (!isset($order[$_COOKIE['area']]['ppc']) || empty($order[$_COOKIE['area']]['ppc']))) {
+                    $loc = 'uk';
+                    $type = 'seo';
+                    echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
+                } else if (isset($_GET['a'])) {
+                    # If location doesnt exist
+                    # Check if a GET request is used
+                    $loc = $_GET['a'];
+                    $type = 'ppc';
+                    echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
+                } elseif (isset($_COOKIE['area']) && $_COOKIE['area']) {
+                    # Check if a cookie is used
+                    $loc = $_COOKIE['area'];
+                    $type = 'ppc';
+                    echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
+                } else {
+                    # Show SEO number if above is not satisfied
+                    $loc = 'uk';
+                    $type = 'seo';
+                    echo $this->buildNumber($order, $loc, $type, $calltag, $linked);
+                }
+            }
         }
-                
+                    
         $content = ob_get_contents();
         ob_end_clean();
         if ($short) {
@@ -416,105 +412,104 @@ class FrontController
         # If plugin isnt setup show message
         if (!isset($dynamics)) {
             echo "No numbers set";
-            return;
-        }
-
-        $dynamics = unserialize($dynamics->option_value);
-
-        # If no numbers are set show message
-        if (!isset($dynamics['dynamics'])) {
-            echo "No numbers set";
-            return;
-        }
-
-        # List numbers by name
-        $order = [];
-        foreach ($dynamics['dynamics'] as $dynamic) {
-            $order[$dynamic['location']] = $dynamic;
-        }
-        unset($order['uk']);
-        unset($order['the-milky-way']);
-
-        $listBuilder = "";
-
-        # Create the dropdown list
-        if ($listType == 'dropdown') {
-            $listBuilder .= "<a href='#' class='ld-toggle'>". $listLabel ."</a>";
-
-            $listBuilder .= "<div class='ld-list ld-dropdown'>";
-
-            foreach ($order as $number) {
-                if (empty($number['seo'])) {
-                    continue;
-                }
-                $listBuilder .= "<div class='ld-location'>";
-                $listBuilder .= "<div class='ld-area'>";
-                if (isset($number['label']) && !empty($number['label'])) {
-                    $tag = $number['label'];
-                } else {
-                    $tag = ucwords(str_replace("-", " ", $number['location']));
-                }
-                $listBuilder .= $tag;
-                $listBuilder .= "</div>";
-
-                if (!empty($number['insights'])) {
-                    $listBuilder .= "<div class='ld-number ". $number['insights'] ."'>";
-                } else {
-                    $listBuilder .= "<div class='ld-number'><a href='tel:" . str_replace(' ', '', $number['seo']) . "'>";
-                }
-                $listBuilder .= $number['seo'];
-                if (empty($number['insights'])) {
-                    $listBuilder .= "</a>";
-                }
-                $listBuilder .= "</div>";
-                $listBuilder .= "</div>";
-            }
-
-            $listBuilder .= "</div>";
-        }
-
-        # Create the inline list
-        if ($listType == 'inline') {
-            $listBuilder .= "<div class='ld-list'>";
-
-            foreach ($order as $number) {
-                if (empty($number['seo'])) {
-                    continue;
-                }
-                $listBuilder .= "<div class='ld-location'>";
-                $listBuilder .= "<div class='ld-area'>";
-                if (isset($number['label']) && !empty($number['label'])) {
-                    $tag = $number['label'];
-                } else {
-                    $tag = ucwords(str_replace("-", " ", $number['location']));
-                }
-                $listBuilder .= $tag;
-                $listBuilder .= "</div>";
-
-                $listBuilder .= "<div class='ld-number'><a href='tel:" .  str_replace(' ', '', $number['seo']) . "'>";
-                $listBuilder .= $number['seo'];
-                $listBuilder .= "</a></div>";
-                $listBuilder .= "</div>";
-            }
-
-            $listBuilder .= "</div>";
-        }
-
-        # Check if the area or cookie is set
-        $stop = false;
-        if (! ((isset($_GET['a']) && $_GET['a'] != 'uk') || (isset($_COOKIE['area']) && $_COOKIE['area']))) {
-            $stop = false;
         } else {
-            $stop = true;
-        }
+            $dynamics = unserialize($dynamics->option_value);
 
-        # Show the list if ppc is true
-        if ($ppc) {
-            echo $listBuilder;
-        } else {
-            # Show the list only is ppc is false and a cookie is not set
-            if (!$stop) {
-                echo $listBuilder;
+            # If no numbers are set show message
+            if (!isset($dynamics['dynamics'])) {
+                echo "No numbers set";
+            } else {
+
+                # List numbers by name
+                $order = [];
+                foreach ($dynamics['dynamics'] as $dynamic) {
+                    $order[$dynamic['location']] = $dynamic;
+                }
+                unset($order['uk']);
+                unset($order['the-milky-way']);
+
+                $listBuilder = "";
+
+                # Create the dropdown list
+                if ($listType == 'dropdown') {
+                    $listBuilder .= "<a href='#' class='ld-toggle'>". $listLabel ."</a>";
+
+                    $listBuilder .= "<div class='ld-list ld-dropdown'>";
+
+                    foreach ($order as $number) {
+                        if (empty($number['seo'])) {
+                            continue;
+                        }
+                        $listBuilder .= "<div class='ld-location'>";
+                        $listBuilder .= "<div class='ld-area'>";
+                        if (isset($number['label']) && !empty($number['label'])) {
+                            $tag = $number['label'];
+                        } else {
+                            $tag = ucwords(str_replace("-", " ", $number['location']));
+                        }
+                        $listBuilder .= $tag;
+                        $listBuilder .= "</div>";
+
+                        if (!empty($number['insights'])) {
+                            $listBuilder .= "<div class='ld-number ". $number['insights'] ."'>";
+                        } else {
+                            $listBuilder .= "<div class='ld-number'><a href='tel:" . str_replace(' ', '', $number['seo']) . "'>";
+                        }
+                        $listBuilder .= $number['seo'];
+                        if (empty($number['insights'])) {
+                            $listBuilder .= "</a>";
+                        }
+                        $listBuilder .= "</div>";
+                        $listBuilder .= "</div>";
+                    }
+
+                    $listBuilder .= "</div>";
+                }
+
+                # Create the inline list
+                if ($listType == 'inline') {
+                    $listBuilder .= "<div class='ld-list'>";
+
+                    foreach ($order as $number) {
+                        if (empty($number['seo'])) {
+                            continue;
+                        }
+                        $listBuilder .= "<div class='ld-location'>";
+                        $listBuilder .= "<div class='ld-area'>";
+                        if (isset($number['label']) && !empty($number['label'])) {
+                            $tag = $number['label'];
+                        } else {
+                            $tag = ucwords(str_replace("-", " ", $number['location']));
+                        }
+                        $listBuilder .= $tag;
+                        $listBuilder .= "</div>";
+
+                        $listBuilder .= "<div class='ld-number'><a href='tel:" .  str_replace(' ', '', $number['seo']) . "'>";
+                        $listBuilder .= $number['seo'];
+                        $listBuilder .= "</a></div>";
+                        $listBuilder .= "</div>";
+                    }
+
+                    $listBuilder .= "</div>";
+                }
+
+                # Check if the area or cookie is set
+                $stop = false;
+                if (! ((isset($_GET['a']) && $_GET['a'] != 'uk') || (isset($_COOKIE['area']) && $_COOKIE['area']))) {
+                    $stop = false;
+                } else {
+                    $stop = true;
+                }
+
+                # Show the list if ppc is true
+                if ($ppc) {
+                    echo $listBuilder;
+                } else {
+                    # Show the list only is ppc is false and a cookie is not set
+                    if (!$stop) {
+                        echo $listBuilder;
+                    }
+                }
             }
         }
 
@@ -547,16 +542,50 @@ class FrontController
             }
         } elseif ($calltag) {
             if ($linked) {
-                echo "<span class='ld-phonenumber'>" . $numbers[$location]['calltag'] . " <a href='tel:" .  str_replace(' ', '', $numbers[$location][$type]) . "'>" . $numbers[$location][$type] . "</a></span>";
+                echo "<span class='ld-phonenumber'>" . $numbers[$location]['calltag'] . " <a onClick='". $this->buildTrackingCode($numbers, $location) ."' href='tel:" .  str_replace(' ', '', $numbers[$location][$type]) . "'>" . $numbers[$location][$type] . "</a></span>";
             } else {
                 echo "<span class='ld-phonenumber'>" . $numbers[$location]['calltag'] . " <span class='ld-number'>" . $numbers[$location][$type] . "</span></span>";
             }
         } else {
             if ($linked) {
-                echo "<span class='ld-phonenumber'><a href='tel:" . str_replace(' ', '', $numbers[$location][$type]) . "'>" . $numbers[$location][$type] . "</a></span>";
+                echo "<span class='ld-phonenumber'><a onClick='". $this->buildTrackingCode($numbers, $location) ."' href='tel:" . str_replace(' ', '', $numbers[$location][$type]) . "'>" . $numbers[$location][$type] . "</a></span>";
             } else {
                 echo "<span class='ld-phonenumber'>" . $numbers[$location][$type] . "</span>";
             }
         }
+    }
+
+    public function buildTrackingCode($numbers, $location)
+    {   
+        $dynamics = Option::where(['option_name' => 'ald_numbers'])->first();
+        $dynamics = unserialize($dynamics->option_value);
+
+        $oldAnalytics = true;
+
+        if (isset($dynamics['tracking-type']) && $dynamics['tracking-type'] == 'gtag') {
+            $oldAnalytics = false;
+        }
+
+        if (isset($numbers[$location]['tracking']) && !empty($numbers[$location]['tracking'])) {
+            if ($oldAnalytics) {
+                $code = 'ga("send", "event", "Phone Number", "Click", "'. $numbers[$location]['tracking'] .' '. get_the_title() .'");';
+            } else {
+                $code = 'gtag("event" , "Click", { "event_category" : "Phone Number", "event_label" : "'. $numbers[$location]['tracking'] .' '. get_the_title() .'" });';
+            }
+        } elseif (isset($dynamics['default-tracking']) && !empty($dynamics['default-tracking'])) {
+            if ($oldAnalytics) {
+                $code = 'ga("send", "event", "Phone Number", "Click", "'. $dynamics['default-tracking'] . ' ' . $numbers[$location]['label'] . ' '. get_the_title() .'");';
+            } else {
+                $code = 'gtag("event" , "Click" , { "event_category" : "Phone Number", "event_label" : "'. $dynamics['default-tracking'] . ' ' . $numbers[$location]['label'] . ' '. get_the_title() .'" });';
+            }
+        } else {
+            if ($oldAnalytics) {
+                $code = 'ga("send", "event", "Phone Number", "Click", "Click Phone Number ' . $numbers[$location]['label'] . ' '. get_the_title() .'");';
+            } else {
+                $code = 'gtag("event" , "Click" , { "event_category" : "Phone Number", "event_label" : "Click Phone Number ' . $numbers[$location]['label'] . ' '. get_the_title() .'" });';
+            }
+        }
+
+        return $code;
     }
 }

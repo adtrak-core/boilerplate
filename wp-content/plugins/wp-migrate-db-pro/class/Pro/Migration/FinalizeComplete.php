@@ -172,7 +172,13 @@ class FinalizeComplete {
 	 * @return bool|null
 	 */
 	function fire_migration_complete() {
-		$state_data    = $this->migration_state_manager->set_post_data();
+		$state_data    = $this->migration_state_manager->set_post_data(
+			[
+				'action' => 'string',
+				'url' => 'string',
+				'sig' => 'string'
+			]
+		);
 		$filtered_post = $this->http_helper->filter_post_elements( $state_data, array( 'action', 'url' ) );
 
 		if ( ! $this->http_helper->verify_signature( $filtered_post, $this->settings['key'] ) ) {

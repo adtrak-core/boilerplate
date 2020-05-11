@@ -14,6 +14,7 @@
 				<div class="ald-table__heading-label">SEO Number</div>
 				<div class="ald-table__heading-label">PPC Number</div>
 				<div class="ald-table__heading-label">Insights Class</div>
+				<div class="ald-table__heading-label">Tracking Label</div>
 				<div class="ald-table__heading-label"></div>
 			
 			</div>
@@ -28,6 +29,7 @@
 					<div class="ald-table__field"><input type="text" name="dynamics[dynamic0][seo]" required placeholder="SEO Number" value="{{ uknumber.seo }}"></div>
 					<div class="ald-table__field"><input type="text" name="dynamics[dynamic0][ppc]" placeholder="PPC Number" value="{{ uknumber.ppc }}"></div>
 					<div class="ald-table__field"><input type="text" name="dynamics[dynamic0][insights]" placeholder="Insights Class" value="{{ uknumber.insights }}"></div>
+					<div class="ald-table__field"><input type="text" name="dynamics[dynamic0][tracking]" placeholder="Tracking Label" value="{{ uknumber.tracking }}"></div>
 					<div class="ald-table__field"></div>
 
 				</div>
@@ -41,7 +43,8 @@
 			</div>
 
 			<div class="ald-table__bottom">
-				<a href="#" class="new-row button button-primary button-large">+ New Row</a>
+				<input type="submit" name="submit" value="Save" class="button button-primary button-large">
+				<a href="#" class="new-row button button-secondary button-large">+ New Row</a>
 			</div>
 
 		</div>
@@ -54,7 +57,20 @@
 			<textarea name="insights-code">{% if numbers.insights_code %}{{numbers.insights_code}}{% endif %}</textarea>
 		</div>
 		<div class="ald-right__pane">
-			<input type="submit" name="submit" value="Save" class="button button-primary button-large">
+			<p>Tracking Type:</p>
+			<select name="tracking-type">
+				<option {% if numbers.tracking_type == 'gtag' %}selected{% endif %} value="gtag">gtag</option>
+				<option {% if numbers.tracking_type == 'ga' or numbers.tracking_type is not defined %}selected{% endif %} value="ga">ga</option>
+			</select>
+			<p></p>
+			<p>Default Tracking Label:</p>
+			<input name="default-tracking" type="text" value="{% if numbers.default_tracking %}{{numbers.default_tracking}}{% endif %}">
+
+			<p></p>
+			<p>What your tracking code looks like:</p>
+			<span class="tracking-label">
+				{% if numbers.default_tracking %}{{numbers.default_tracking}} UK Homepage{% else %} Click Phone Number UK Homepage {% endif %}
+			</span>
 		</div>
 	</div>
 

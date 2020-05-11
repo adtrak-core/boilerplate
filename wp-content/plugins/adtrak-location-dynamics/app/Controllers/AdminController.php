@@ -51,9 +51,12 @@ class AdminController
                 $num['label'] = stripslashes($num['label']);
                 $num['calltag'] = stripslashes($num['calltag']);
                 $num['location'] = str_replace(["'", '/', '\\'], "", $num['location']);
+                $num['tracking'] = stripslashes($num['tracking']);
                 $nums['dynamics'][$key] = $num;
             }
             $nums['insights-code'] = $_POST['insights-code'];
+            $nums['default-tracking'] = $_POST['default-tracking'];
+            $nums['tracking-type'] = $_POST['tracking-type'];
             $dynamics->option_value = serialize($nums);
             $dynamics->autoload = 'yes';
 
@@ -95,6 +98,11 @@ class AdminController
                 $dynamics['insights_code'] = "";
             } else {
                 $dynamics['insights_code'] = str_replace("\\", "", $dynamics['insights_code']);
+            }
+            if (!isset($dynamics['default_tracking'])) {
+                $dynamics['default_tracking'] = "";
+            } else {
+                $dynamics['default_tracking'] = str_replace("\\", "", $dynamics['default_tracking']);
             }
         }
 

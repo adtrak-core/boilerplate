@@ -36,7 +36,7 @@ class BackupsManager {
 			return false;
 		}
 
-		$backup = filter_input( INPUT_GET, 'wpmdb-download-backup' );
+		$backup = filter_input( INPUT_GET, 'wpmdb-download-backup', FILTER_SANITIZE_STRING );
 		if ( empty( $backup ) ) {
 			wp_die( __( 'Backup not found.', 'wp-migrate-db' ) );
 		}

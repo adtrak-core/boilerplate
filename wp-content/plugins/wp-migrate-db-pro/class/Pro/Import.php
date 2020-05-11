@@ -156,7 +156,7 @@ class Import {
 	 * @return array
 	 */
 	public function parse_file_header( $data ) {
-		$lines  = explode( PHP_EOL, $data );
+		$lines  = preg_split('/\n|\r\n?/', $data);
 		$return = array();
 
 		if ( is_array( $lines ) && 10 <= count( $lines ) ) {

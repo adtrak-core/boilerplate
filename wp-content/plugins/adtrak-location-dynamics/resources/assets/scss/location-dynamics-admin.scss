@@ -5,28 +5,26 @@
 	}
 
 	.ald-left {
-		width: 75%;
-		float: left;
-		overflow: hidden;
+		width: 100%;
+
+		input[type="submit"] {
+			margin-left: 10px;
+		}
 	}
 
 	.ald-right {
-		width: 25%;
-		float: right;
-		overflow: hidden;
-		padding-left: 1%;
+		display: flex;
+		flex-wrap: nowrap;
+		margin-top: 15px;
 
 		.ald-right__pane {
-			&:first-of-type {
-				margin-top: 13px;
-			}
+			width: 25%;
+			margin-right: 15px;
 			padding: 1em;
 			background: #fff;
 			border: 1px solid #ddd;
-			box-shadow: 0 1px 2px rgba(0,0,0,.07);
-			margin-bottom: 1em;
-			clear: right;
-			width: 100%;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, .07);
+			align-self: flex-start;
 			p {
 				margin: .25em 0 .75em 0;
 				font-weight: bold;
@@ -35,7 +33,7 @@
 				width: 100%;
 				height: 250px;
 			}
-			input[type="submit"] {
+			input, select {
 				width: 100%;
 			}
 		}
@@ -84,7 +82,7 @@
 		}
 
 		.ald-table__heading-label, .ald-table__field {
-			width: 14.285%;
+			width: 12.5%;
 			float: left;
 			padding: .75em;
 		}

@@ -39,7 +39,7 @@ class View
 			'charset' 			=> 'utf-8',
 			'auto_reload' 		=> true,
             'strict_variables' 	=> false,
-            'autoescape' 		=> true,
+            'autoescape' 		=> 'html',
 			'debug'				=> true
 		];
 

@@ -19,4 +19,12 @@ jQuery(function ($) {
 		$(this).parent().parent().remove();
 		e.preventDefault();
 	});
+
+	$('input[name=default-tracking]').keyup(function(e) {
+		if ($(this).val() == '') {
+			$('.tracking-label').html('Click Phone Number UK Homepage');
+		} else {
+			$('.tracking-label').html($(this).val() + ' UK Homepage');
+		}
+	});
 });

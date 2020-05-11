@@ -557,6 +557,12 @@ class MediaFilesBase {
 					$attachment['sizes'][] = $size_data;
 				}
 			}
+
+            if ( ! empty( $attachment['metadata']['original_image'] )){
+                $size_data = array( 'file' => $upload_dir . $attachment['metadata']['original_image'] );
+                $size_data = $this->apply_file_size( $size_data );
+                $attachment['sizes'][] = $size_data;
+            }
 		}
 		unset( $attachment['metadata'] );
 

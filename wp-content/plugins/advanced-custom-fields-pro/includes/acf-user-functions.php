@@ -34,6 +34,64 @@ function acf_get_users( $args = array() ) {
 }
 
 /**
+ * acf_get_user_result
+ *
+ * Returns a result containing "id" and "text" for the given user.
+ *
+ * @date	21/5/19
+ * @since	5.8.1
+ *
+ * @param	WP_User $user The user object.
+ * @return	array
+ */
+function acf_get_user_result( $user ) {
+	
+	// Vars.
+	$id = $user->ID;
+	$text = $user->user_login;
+	
+	// Add name.
+	if( $user->first_name && $user->last_name ) {
+		$text .= " ({$user->first_name} {$user->last_name})";
+	} elseif( $user->first_name ) {
+		$text .= " ({$user->first_name})";
+	}
+	return compact('id', 'text');
+}
+
+
+/**
+ * acf_get_user_role_labels
+ *
+ * Returns an array of user roles in the format "name => label".
+ *
+ * @date	20/5/19
+ * @since	5.8.1
+ *
+ * @param	array $roles A specific array of roles.
+ * @return	array
+ */
+function acf_get_user_role_labels( $roles = array() ) {
+	$all_roles = wp_roles()->get_names();
+	
+	// Load all roles if none provided.
+	if( empty($roles) ) {
+		$roles = array_keys( $all_roles );
+	}
+	
+	// Loop over roles and populare labels.
+	$lables = array();
+	foreach( $roles as $role ) {
+		if( isset($all_roles[ $role ]) ) {
+			$lables[ $role ] = translate_user_role( $all_roles[ $role ] );
+		}
+	}
+	
+	// Return labels.
+	return $lables;
+}
+
+/**
  * acf_allow_unfiltered_html
  *
  * Returns true if the current user is allowed to save unfiltered HTML.

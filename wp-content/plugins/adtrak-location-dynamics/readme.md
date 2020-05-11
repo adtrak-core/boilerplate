@@ -1,6 +1,20 @@
 # Adtrak Location Dynamics
 ## Changelog
 
+### v3.4.3
+- [Bug] Fixed an issue with returns being inside object buffers
+- [Bug] Fixed an issue with twig autoescape being set to true, changed to html
+
+### v3.4.2
+- [Bug] Fixed missing quote on ga tags
+
+### v3.4.1
+- [Bug] Fixed issue with gtag tracking
+
+### v3.4.0
+- [Improvement] Tracking now added to phone numbers
+- [Bug] Fixed issue with locations that do not exist
+
 ### v3.3.9
 - [Bug] Added measures to prevent apostrophe's being added to slugs
 
