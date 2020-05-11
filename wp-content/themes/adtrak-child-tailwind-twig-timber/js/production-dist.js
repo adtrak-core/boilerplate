@@ -7,7 +7,6 @@
 	// add all of your code within here, not above or below
 	$(function() {
 
-
 		var iconAngleUp = "<svg class='icon icon-angle-up'><use xlink:href='"+themeURL.themeURL+"/images/icons-sprite.svg#icon-angle-up'></use></svg>";
 		var iconAngleDown = "<svg class='icon icon-angle-down'><use xlink:href='"+themeURL.themeURL+"/images/icons-sprite.svg#icon-angle-down'></use></svg>";
 
@@ -54,7 +53,7 @@
 		}
 
 		// Add Close Icon element
-		$( "<div class='mob-nav-close'><svg class='icon icon-times'><use xlink:href='"+themeURL+"/images/icons-sprite.svg#icon-times'></use></svg></div>" ).insertAfter( ".mob-nav .scroll-container" );
+		$( "<div class='mob-nav-close'><svg class='icon icon-times'><use xlink:href='"+themeURL.themeURL+"/images/icons-sprite.svg#icon-times'></use></svg></div>" ).insertAfter( ".mob-nav .scroll-container" );
 
 		// Add dropdown arrow to links with sub-menus
         $( "<span class='sub-arrow'>"+iconAngleDown+iconAngleUp+"</span>" ).insertAfter( ".mob-nav .menu-item-has-children > a" );
