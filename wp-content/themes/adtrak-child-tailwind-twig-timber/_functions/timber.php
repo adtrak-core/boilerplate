@@ -41,6 +41,7 @@
       $context['site'] = $this;
       $context['options'] = get_fields('option');
       $context['primaryMenu'] = new Timber\Menu('Primary Menu');
+      $context['secondaryMenu'] = new Timber\Menu('Secondary Menu');
       $context['footerMenu'] = new Timber\Menu('Footer Menu');
       return $context;
     }

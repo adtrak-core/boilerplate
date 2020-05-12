@@ -7,13 +7,13 @@
       <nav id="navigation" class="hidden bg-blue-100 container lg:block">
         <ul class="menu-primary w-full flex flex-wrap justify-center">
           {% for item in secondaryMenu.items %}
-          <li class="{{item.class}}">
-            <a href="{{item.url}}">{{item.name}}</a>
+          <li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
+            <a href="{{item.link}}">{{item.name}}</a>
             {% if item.children %}
             <ul class="sub-menu">
               {% for child in item.children %}
               <li class="{{child.class}}">
-                <a href="{{item.url}}">{{item.name}}</a>
+                <a href="{{item.link}}">{{item.name}}</a>
               </li>
               {% endfor %}
             </ul>
@@ -40,13 +40,13 @@
   <nav id="navigation" class="hidden bg-blue-100 container lg:block">
     <ul class="menu-primary w-full flex flex-wrap justify-center">
       {% for item in primaryMenu.items %}
-      <li class="{{item.class}}">
-        <a href="{{item.url}}">{{item.name}}</a>
+      <li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
+        <a href="{{item.link}}">{{item.name}}</a>
         {% if item.children %}
           <ul class="sub-menu">
             {% for child in item.children %}
               <li class="{{child.class}}">
-                <a href="{{item.url}}">{{item.name}}</a>
+                <a href="{{item.link}}">{{item.name}}</a>
               </li>
             {% endfor %}
           </ul>          
