@@ -15,18 +15,22 @@
 3. Extract Wordpress to your new folder
 4. Delete the ```wp-content``` folder from your new folder
 5. Download this boilerplate. Extract it to the folder you create in Step 2.
-6. Open the Command Line / Terminal 
-7. Change Directory to the theme folder (```cd /[FOLDER NAME]/wp-content/themes/adtrak-boilerplate-tailwind-twig-timber```)
-8. Run ```npm install```
-9. Run ```composer install```
-10. From the theme folder, open ```gulpfile.js```
-11. Edit line ```89``` to the name of your local site. (e.g. my-new-site.vm)
-12. Save the ```gulpfile```
-13. Visit your new site in the browser and set up Wordpress
-14. Activate the theme through the WordPress admin console
-15. Open the Command Line / Terminal 
-16. Run ```npm run dev``` or ```gulp```
-17. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
+6. Change theme folder name and update theme details in style.css
+7. Open ```.gitignore```
+8. Edit lines ```116``` & ```117``` and replace the theme name to prevent ```node_modules``` and ```vendor``` files being committed 
+9. Create local database
+10. Open the Command Line / Terminal 
+11. Change Directory to the theme folder (```cd /[FOLDER NAME]/wp-content/themes/[YOUR NEW THEME NAME]```)
+12. Run ```npm install```
+13. Run ```composer install```
+14. From the theme folder, open ```gulpfile.js```
+15. Edit line ```89``` to the name of your local site. (e.g. my-new-site.vm)
+16. Save the ```gulpfile```
+17. Visit your new site in the browser and set up Wordpress (the wp-config file will be ignored by GIT)
+18. Activate the theme through the WordPress admin console
+19. Open the Command Line / Terminal 
+20. Run ```npm run dev``` or ```gulp```
+21. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
 
 #### The theme structure has changed for this boilerplate. ####
 
