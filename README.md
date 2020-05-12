@@ -2,8 +2,8 @@
 
 ## Prerequisites ##
 1. You need to have ```composer``` installed on your machine [https://getcomposer.org/download/](https://getcomposer.org/download/)
-2. You need to have NodeJS installed on your machine [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
-3. You need to have NPM installed on your machine [https://www.npmjs.com/get-npm](https://www.npmjs.com/get-npm)
+2. You need to have ```NodeJS``` installed on your machine [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+3. You need to have ```NPM``` installed on your machine [https://www.npmjs.com/get-npm](https://www.npmjs.com/get-npm)
 4. You will need a local working environment (WAMP, MAMP, etc).
 
 ### You're now ready to begin ###
@@ -28,7 +28,7 @@
 16. Run ```npm run dev``` or ```gulp```
 17. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
 
-The theme structure has changed for this boilerplate.
+#### The theme structure has changed for this boilerplate. ####
 
 1. All components (```header```, ```footer```, ```phone-top-right``` etc) can be found in ```_components``` 
 2. All functions (```script enqueuing```, ```Custom Post Types```, ```Custom Taxonomies``` etc) can be found in ```_functions```
