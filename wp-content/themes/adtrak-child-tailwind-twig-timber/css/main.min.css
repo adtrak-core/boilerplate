@@ -1074,41 +1074,41 @@ Cookie Notice *********************************************/
 /***********************************************************
 Article ***************************************************/
 
-article > p {
+.copy > p {
   line-height: 1.625;
   margin-bottom: 1.5rem;
 }
 
-article a {
+.copy a {
   display: inline-block;
   background-color: #ebf8ff;
 }
 
-article a:hover {
+.copy a:hover {
   background-color: #2a4365;
 }
 
-article ol,
-article ul {
+.copy ol,
+.copy ul {
   padding-left: 1rem;
   margin-bottom: 2rem;
 }
 
-article ol li,
-  article ul li {
+.copy ol li,
+  .copy ul li {
   line-height: 1.625;
   margin-bottom: 0.5rem;
 }
 
-article ul li {
+.copy ul li {
   list-style-type: disc;
 }
 
-article ol li {
+.copy ol li {
   list-style-type: decimal;
 }
 
-article blockquote {
+.copy blockquote {
   padding: 1rem;
   margin-bottom: 2rem;
   background-color: #f7fafc;
