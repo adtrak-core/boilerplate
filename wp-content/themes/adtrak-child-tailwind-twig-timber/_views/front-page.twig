@@ -20,6 +20,9 @@
 
   <aside class="bg-gray-100 lg:w-1/3">
     {% include "_components/sidebar.twig" %}
+    {% filter shortcodes %}
+      [ninja_form id=1]
+    {% endfilter %}
   </aside>
 
 </div>

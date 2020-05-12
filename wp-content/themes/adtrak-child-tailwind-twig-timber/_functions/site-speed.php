@@ -18,6 +18,7 @@ function add_defer_attribute($tag, $handle) {
 }
 add_filter('script_loader_tag', 'add_defer_attribute', 10, 2);
 
+
 /* ========================================================================================================================
 
 Remove unwanted plugins
@@ -37,6 +38,7 @@ function remove_unwanted_plugins() {
 }
 add_action('wp_head', 'remove_unwanted_plugins', 1);
 
+
 /* ========================================================================================================================
 
 Deregister styles
@@ -48,6 +50,14 @@ function my_deregister_styles() {
   wp_deregister_style( 'dashicons' );
 }
 add_action('wp_print_styles', 'my_deregister_styles', 100);
+
+// Remove ninja form stylesheets
+function wpgood_nf_display_enqueue_scripts(){
+    wp_dequeue_style( 'nf-display' );
+    wp_dequeue_style( 'nf-fu-jquery-fileupload' );
+}
+add_action( 'nf_display_enqueue_scripts', 'wpgood_nf_display_enqueue_scripts');
+
 
 
 /* ========================================================================================================================
@@ -62,6 +72,7 @@ function dequeue_jquery_migrate( &$scripts){
     $scripts->add( 'jquery', false, array( 'jquery-core' ), '1.10.2' );
   }
 }
+
 
 /* ========================================================================================================================
 
