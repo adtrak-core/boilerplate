@@ -1,16 +1,40 @@
 # WD Boilerplate
 
-1. Clone/Download this repo. Extract it somewhere.
-2. Download latest release of WordPress [https://wordpress.org/latest.zip](https://wordpress.org/latest.zip)
-3. Extract it to a folder.
-4. Delete the wp-content and wp-config-sample from the downloaded file.
-5. Copy the contents into the repo folder you downloaded earlier.
-6. Edit the wp-config.php with new salt keys/live site details.
-7. Edit the wp-config-local.php with your local database settings.
-8. Edit the wp-config-staging.php with your staging database settings.
-9. Go to town.
+## Prerequisites ##
+1. You need to have ```composer``` installed on your machine [https://getcomposer.org/download/](https://getcomposer.org/download/)
+2. You need to have NodeJS installed on your machine [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+3. You need to have NPM installed on your machine [https://www.npmjs.com/get-npm](https://www.npmjs.com/get-npm)
+4. You will need a local working environment (WAMP, MAMP, etc).
 
-## Adtrak Child Tailwind Theme
+### You're now ready to begin ###
+
+## Adtrak Child Tailwind Theme with Twig & Timber (Preferred)
+
+1. Download latest release of WordPress [https://wordpress.org/latest.zip](https://wordpress.org/latest.zip)
+2. Create a new folder on your virtual machine / local working environment
+3. Extract Wordpress to your new folder
+4. Delete the ```wp-content``` folder from your new folder
+5. Download this boilerplate. Extract it to the folder you create in Step 2.
+6. Open the Command Line / Terminal 
+7. Change Directory to the theme folder (```cd /[FOLDER NAME]/wp-content/themes/adtrak-boilerplate-tailwind-twig-timber```)
+8. Run ```npm install```
+9. Run ```composer install```
+10. From the theme folder, open ```gulpfile.js```
+11. Edit line ```89``` to the name of your local site. (e.g. my-new-site.vm)
+12. Save the ```gulpfile```
+13. Visit your new site in the browser and set up Wordpress
+14. Activate the theme through the WordPress admin console
+15. Open the Command Line / Terminal 
+16. Run ```npm run dev``` or ```gulp```
+17. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
+
+The theme structure has changed for this boilerplate.
+
+1. All components (```header```, ```footer```, ```phone-top-right``` etc) can be found in ```_components``` 
+2. All functions (```script enqueuing```, ```Custom Post Types```, ```Custom Taxonomies``` etc) can be found in ```_functions```
+3. All page templates (```front-page.twig```, ```page.twig```, etc) can be found in ```_views```
+
+## Adtrak Child Tailwind Theme (Without Twig & Timber)
 
 To get the Tailwind theme set up:
 

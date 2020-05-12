@@ -1,0 +1,13 @@
+{{ options.logos_header ? options.logos_header }}
+
+{% if options.logos %}
+  {% for logo in options.logos %}
+
+    {{logo.name}}
+    <img class="lazyload" data-src="{{logo.image.url|resize('150', '150')}}" alt="{{logo.name}} Logo">
+    {{logo.link}}
+
+  {% endfor %}
+{% endif %}
+
+
