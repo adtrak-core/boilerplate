@@ -7,6 +7,7 @@
 	// add all of your code within here, not above or below
 	$(function() {
 
+		
 		var iconAngleUp = "<svg class='icon icon-angle-up'><use xlink:href='"+themeURL.themeURL+"/images/icons-sprite.svg#icon-angle-up'></use></svg>";
 		var iconAngleDown = "<svg class='icon icon-angle-down'><use xlink:href='"+themeURL.themeURL+"/images/icons-sprite.svg#icon-angle-down'></use></svg>";
 
@@ -44,11 +45,11 @@
 		// Copy primary and secondary menus to .mob-nav element
 		var mobNav = document.querySelector('.mob-nav .scroll-container');
 
-		var copyPrimaryMenu = document.querySelector('#navigation .menu-primary').cloneNode(true);
+		var copyPrimaryMenu = document.querySelector('#menu-primary .menu-primary').cloneNode(true);
 		mobNav.appendChild(copyPrimaryMenu);
 
-		if($('#menu-secondary-menu').length) {
-			var copySecondaryMenu = document.querySelector('#menu-secondary-menu').cloneNode(true);
+		if($('#menu-secondary').length) {
+			var copySecondaryMenu = document.querySelector('#menu-secondary .menu-secondary').cloneNode(true);
 			mobNav.appendChild(copySecondaryMenu);
 		}
 
