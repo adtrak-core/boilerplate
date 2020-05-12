@@ -5,16 +5,20 @@
 <div class="container p-4 md:p-8 lg:px-0 lg:flex flex-wrap flex-grow">
 
   <main class="lg:w-2/3 lg:pr-16">
+    
+    {% for post in posts %}
 
-    <article class="copy">
-      {% for post in posts %}
-      <div>
+      <article class="copy">
+
         <h1>{{post.post_title}}</h1>
+
         {{post.post_content}}
+
         <a href="{{ function("get_permalink", post.ID)}}">Read More</a>
-      </div>  
-      {% endfor %}    
-    </article>
+
+      </article>  
+
+    {% endfor %}        
 
   </main>
 
