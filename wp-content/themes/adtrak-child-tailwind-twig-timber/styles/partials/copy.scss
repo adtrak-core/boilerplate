@@ -52,24 +52,21 @@ Article ***************************************************/
 }
 
 @screen md {
-  article {
+  .copy {
     img {
-        width: auto;
+        @apply w-auto;
     }
 
     .alignleft {
-        float: left;
-        margin: 10px 10px 10px 0;
+      @apply float-left mt-1 mr-1 mb-1;
     }
 
     .aligncenter {
-        clear: both;
-        margin: 0 auto;
+      @apply float-none clearfix mx-auto my-0;
     }
 
     .alignright {
-        float: right;
-        margin: 10px 0 10px 10px;
+      @apply float-right mt-1 ml-1 mb-1;
     }
   }
 }
