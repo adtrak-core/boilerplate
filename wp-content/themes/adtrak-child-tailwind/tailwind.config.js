@@ -42,7 +42,7 @@ module.exports = {
         }
       },
       screens: {
-        xxl: '1600px',
+        '2xl': '1600px',
       },
       spacing: {
         '72': '18rem',
