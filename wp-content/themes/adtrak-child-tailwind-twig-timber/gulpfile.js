@@ -52,7 +52,7 @@ gulp.task('styles', function () {
     })
   ))
   .pipe(rename('main.min.css'))
-  .pipe(gulp.dest('css/'))
+  .pipe(gulp.dest('dist/'))
   .pipe(browserSync.reload({
     stream: true
   }))
@@ -62,10 +62,10 @@ gulp.task('styles', function () {
  * Task Scripts
 **************************/
 gulp.task('scripts', function() {
-  return gulp.src('js/scripts/*.js')
+  return gulp.src('js/*.js')
     .pipe(concat('production-dist.js'))
     .pipe(gulpIf(argv.production, uglify()))
-    .pipe(gulp.dest('js/'))
+    .pipe(gulp.dest('dist/'))
     .pipe(browserSync.reload({
      stream: true
   }))
