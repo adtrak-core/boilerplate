@@ -1,0 +1,25 @@
+{% extends 'base.twig' %}
+
+{% block page_content %}
+
+<div class="container p-4 md:p-8 lg:px-0 lg:flex flex-wrap flex-grow">
+
+  <main class="lg:w-2/3 lg:pr-16">
+
+    <article class="copy">
+
+      <h1>Page not found</h1>
+
+      <p>Please go <a href="{{site.site_url}}">home</a>.</p>
+
+    </article>
+
+  </main>
+
+  <aside class="bg-gray-100 lg:w-1/3">
+    {% include "_components/sidebar.twig" %}
+  </aside>
+
+</div>
+
+{% endblock %}
