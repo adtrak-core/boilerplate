@@ -1,5 +1,5 @@
 {
-  "name": "adtrak-child-tailwind",
+  "name": "adtrak-child-tailwind-twig-timber",
   "version": "1.0.0",
   "description": "Theme for [Client Name]",
   "main": "index.js",
@@ -12,7 +12,7 @@
     "type": "git",
     "url": ""
   },
-  "author": "Tom Nightingale <tom.nightingale@adtrak.co.uk>",
+  "author": "Adtrak Media Ltd <hello@adtrak.co.uk>",
   "license": "ISC",
   "bugs": {
     "url": ""
