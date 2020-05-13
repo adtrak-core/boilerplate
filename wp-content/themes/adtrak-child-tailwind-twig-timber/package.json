@@ -1,7 +1,7 @@
 {
   "name": "adtrak-child-tailwind-twig-timber",
   "version": "1.0.0",
-  "description": "Theme for [Client Name]",
+  "description": "Standard theme for all Adtrak clients",
   "main": "index.js",
   "scripts": {
     "dev": "gulp",
