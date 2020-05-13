@@ -89,7 +89,7 @@
 		// --------------------------------------------------------------------------------------------------
 		if(window.innerWidth >= 1000) {
 			// Primary Menu
-			$(".desktop-nav > ul > .menu-item-has-children > a").append(iconAngleDown);
+			$(".menu > ul > .menu-item-has-children > a").append(iconAngleDown);
 		}
 		function addDropdownIcon() {
 			if(window.innerWidth < 1000) {

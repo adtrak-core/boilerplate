@@ -732,7 +732,7 @@ Desktop Navs **********************************************/
   .menu-primary .icon-angle-down,
   .menu-secondary .icon-angle-down {
     position: absolute;
-    bottom: 20px;
+    bottom: 2px;
     left: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
