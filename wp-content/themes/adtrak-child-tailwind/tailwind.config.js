@@ -26,19 +26,19 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          lighter: '#507192',
+          light: '#507192',
           default: '#2c3e50',
-          darker: '#0e1419',
+          dark: '#0e1419',
         },
         secondary: {
-          lighter: '#5faee3',
+          light: '#5faee3',
           default: '#3498db',
-          darker: '#217dbb',
+          dark: '#217dbb',
         },
         tertiary: {
-          lighter: '#36d278',
+          light: '#36d278',
           default: '#27ae60',
-          darker: '#1e8449',
+          dark: '#1e8449',
         }
       },
       screens: {
