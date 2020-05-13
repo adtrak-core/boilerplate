@@ -16,9 +16,9 @@ body {
     px-4;
 }
 
-@screen xxl {
+@screen 2xl {
   .container {
-    @apply px-0 max-w-xxl;
+    @apply px-0 max-w-2xl;
   }
 }
 
