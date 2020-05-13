@@ -11,7 +11,7 @@
 ## Adtrak Child Tailwind Theme with Twig & Timber (Preferred)
 
 1. Create a new repository on gitlab and clone it to your local machine (```git clone [REPO URL] [FOLDER NAME]```)
-2. Download latest release of WordPress [https://wordpress.org/latest.zip](https://wordpress.org/latest.zip)2. 
+2. Download latest release of WordPress [https://wordpress.org/latest.zip](https://wordpress.org/latest.zip) 
 3. Extract Wordpress to your new folder
 4. Delete the ```wp-content``` folder from your new folder
 5. Download this boilerplate. Extract it to the folder you create in Step 2.
