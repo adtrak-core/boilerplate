@@ -16,7 +16,7 @@
 4. Delete the ```wp-content``` folder from your new folder
 5. Download this boilerplate. Extract it to the folder you create in Step 2.
 6. Change theme folder name and update theme details in style.css
-7. Open ```.gitignore```
+7. Rename ```example.gitignore``` to ```.gitignore``` and open the file
 8. Edit lines ```116``` & ```117``` and replace the theme name to prevent ```node_modules``` and ```vendor``` files being committed 
 9. Create local database
 10. Open the Command Line / Terminal 
