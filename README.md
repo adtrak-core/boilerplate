@@ -26,7 +26,7 @@
 14. From the theme folder, open ```gulpfile.js```
 15. Edit line ```89``` to the name of your local site. (e.g. my-new-site.vm)
 16. Save the ```gulpfile```
-17. Visit your new site in the browser and set up Wordpress **Make sure to use ```adtrakwp_``` as your table prefix** (the wp-config file will be ignored by GIT)  
+17. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the wp-config file will be ignored by GIT)  
 18. Log in and activate the theme through the WordPress admin console
 19. Open the Command Line / Terminal and make sure you're in your theme folder
 20. Run ```npm run dev``` or ```gulp```
