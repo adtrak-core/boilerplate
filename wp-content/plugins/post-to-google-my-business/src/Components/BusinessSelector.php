@@ -65,7 +65,8 @@ class BusinessSelector {
 		$rows = '';
 		$locations->locations = apply_filters('mbp_business_selector_locations', $locations->locations);
 		foreach ( $locations->locations as $location ) {
-			$disabled = (isset($location->locationState->isLocalPostApiDisabled) && $location->locationState->isLocalPostApiDisabled ? true : false);
+			//$disabled = false; //Todo: Temporary due to covid-19  //isset($location->locationState->isLocalPostApiDisabled) && $location->locationState->isLocalPostApiDisabled;
+			$disabled = !isset($location->locationState->isVerified) || !$location->locationState->isVerified || !isset($location->locationState->isPublished) || !$location->locationState->isPublished;
 			$checked = (is_array($this->selected) && in_array($location->name, $this->selected) || $location->name == $this->selected);
 
 			$rows .= sprintf( '<tr class="mbp-business-item%s">', $disabled ? ' mbp-business-disabled' : '' );
@@ -146,7 +147,7 @@ class BusinessSelector {
 	}
 
 	public function ajax_refresh(){
-		$refresh = isset($_POST['refresh']) && $_POST['refresh'] == "true" ? true : false;
+		$refresh = isset($_POST['refresh']) && $_POST['refresh'] == "true";
 
 		$selected = isset($_POST['selected']) ? (array)$_POST['selected'] : [];
 		$selected = array_map("sanitize_text_field", $selected);

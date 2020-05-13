@@ -4,7 +4,7 @@ Donate link: https://tycoonmedia.net/?utm_source=repository&utm_medium=link&utm_
 Tags: google my business, google, business, posts, post, local search, google my business posts, google places, google plus, google+
 Requires at least: 4.9.0
 Tested up to: 5.4.1
-Stable tag: 2.2.17
+Stable tag: 2.2.18
 Requires PHP: 5.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -76,7 +76,7 @@ The quick post feature will not work at all in that case, because it uses the UR
 
 = Why is/are my location(s) grayed out? =
 
-Not every Google My Business listing is allowed to use the "LocalPostAPI". Especially chains of locations (businesses with 10+ locations) are blocked from using it. This means the plugin can't post to them.
+Not every Google My Business listing is allowed to create posts on Google My Business (localPostAPI is disabled). This means the plugin can't create posts on those locations. First, make sure your location is fully verified & live. Business chains (10+ locations) are normally exempt from creating posts, but are temporarily allowed to create them to share updates about the corona virus.
 
 = Why are my scheduled posts being published too late/not at all? =
 
@@ -93,6 +93,9 @@ Post to Google My Business relies on the WP Cron system to send out scheduled po
 6. Auto-post template settings
 
 == Changelog ==
+
+= 2.2.18 =
+* Temporarily remove check for isLocalPostApiDisabled due to COVID-19
 
 = 2.2.17 =
 * Added COVID-19 post

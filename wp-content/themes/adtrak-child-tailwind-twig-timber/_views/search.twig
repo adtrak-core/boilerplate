@@ -1,0 +1,61 @@
+{% extends 'base.twig' %}
+
+{% block page_content %}
+
+<div class="container p-4 md:p-8 lg:px-0 lg:flex flex-wrap flex-grow">
+
+  <main class="lg:w-2/3 lg:pr-16">
+
+    {% if posts %}
+
+      <h1>Results for {{search_query}}</h1>
+      
+      {% for post in posts %}       
+
+        <article class="copy">
+
+          {{post.title}}
+          {{post.preview}}
+          <img class="lazyload" data-src="{{post.thumbnail.src|resize(150, 150)}}" alt="{{post.title}}" />
+        
+        </article>
+
+      {% endfor %}
+
+      {% if posts.pagination.prev %}
+        <a href="{{posts.pagination.prev.link}}" class="prev {{posts.pagination.prev.link|length ? '' : 'invisible'}}">Prev</a>
+        {% endif %}
+        <ul class="pages">
+          {% for page in posts.pagination.pages %}
+          <li>
+            {% if page.link %}
+            <a href="{{page.link}}" class="{{page.class}}">{{page.title}}</a>
+            {% else %}
+            <span class="{{page.class}}">{{page.title}}</span>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% if posts.pagination.next %}
+        <a href="{{posts.pagination.next.link}}" class="next {{posts.pagination.next.link|length ? '' : 'invisible'}}">Next</a>
+      {% endif %}
+
+    {% else %} 
+
+      <article class="copy">
+      
+        <h1>No results</h1>
+      
+      </article>
+
+    {% endif %}    
+
+  </main>
+
+  <aside class="bg-gray-100 lg:w-1/3">
+    {% include "_components/sidebar.twig" %}
+  </aside>
+
+</div>
+
+{% endblock %}
