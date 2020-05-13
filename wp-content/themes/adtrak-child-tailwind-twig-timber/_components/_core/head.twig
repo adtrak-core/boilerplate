@@ -12,11 +12,11 @@
   {% endblock %}
 
   {% if option.google_analytics %}
-  {{ google.google_analytics}}
+    {{ option.google_analytics}}
   {% endif %}
 
   {% if option.schema %}
-  {{ option.schema}}
+    {{ option.schema}}
   {% endif %}
 
   {{ function('wp_head') }}
