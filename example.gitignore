@@ -15,8 +15,6 @@
 !wp-content/
 *config.codekit
 
-!example.gitignore
-
 # ignore everything in the "wp-content" directory, except:
 # mu-plugins, plugins, and themes directories
 wp-content/*
@@ -92,6 +90,7 @@ Thumbs.db
 
 # track acf options
 !acf-options/
+!example.gitignore
 
 # track these mu-plugins, plugins, and themes
 # add your own entries here
