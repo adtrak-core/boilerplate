@@ -625,6 +625,10 @@ video {
 /***********************************************************
 Layouts ***************************************************/
 
+body, html {
+  min-height: 101%;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   -webkit-font-smoothing: antialiased;
@@ -899,8 +903,6 @@ button,
   padding-left: 1rem;
   padding-right: 1rem;
   border-radius: 9999px;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
   transition: .2s ease;
 }
 
@@ -1222,23 +1224,30 @@ Article ***************************************************/
 }
 
 @media (min-width: 768px) {
-  article img {
+  .copy img {
     width: auto;
   }
 
-  article .alignleft {
+  .copy .alignleft {
     float: left;
-    margin: 10px 10px 10px 0;
+    margin-top: 0.25rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
   }
 
-  article .aligncenter {
-    clear: both;
-    margin: 0 auto;
+  .copy .aligncenter {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
-  article .alignright {
+  .copy .alignright {
     float: right;
-    margin: 10px 0 10px 10px;
+    margin-top: 0.25rem;
+    margin-left: 0.25rem;
+    margin-bottom: 0.25rem;
   }
 }
 

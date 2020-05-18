@@ -93,7 +93,7 @@
 		}
 		function addDropdownIcon() {
 			if(window.innerWidth < 1000) {
-				$('.menu-primary > li > a > .icon').remove();
+				$('.menu > li > a > .icon').remove();
 			}
 		}
         window.addEventListener('resize', addDropdownIcon);

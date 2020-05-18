@@ -1,16 +1,10 @@
 /***********************************************************
 Buttons ***************************************************/
-
 input[type="button"],
 button,
 .btn {
-  @apply
-    rounded    
-    py-2 px-4
-    rounded-full
-    uppercase
-    tracking-wide;
-    transition: .2s ease;
+  @apply rounded py-2 px-4 rounded-full;
+  transition: .2s ease;
 }
 
 .btn-primary {
