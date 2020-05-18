@@ -1,41 +1,11 @@
-# -----------------------------------------------------------------
-#
-# By default all files are ignored.  You'll need to whitelist
-# any mu-plugins, plugins, or themes you want to include in the repo.
-#
-# To ignore uncommitted changes in a file that is already tracked, use
-# git update-index --assume-unchanged
-#
-# To stop tracking a file that is currently tracked, use
-# git rm --cached
-# -----------------------------------------------------------------
-
-# ignore everything in the root except the "wp-content" directory.
-/*
-!wp-content/
-*config.codekit
-
-!example.gitignore
-
-# ignore everything in the "wp-content" directory, except:
-# mu-plugins, plugins, and themes directories
-wp-content/*
-!wp-content/mu-plugins/
-!wp-content/plugins/
-!wp-content/themes/
-
-# ignore all mu-plugins, plugins, and themes
-# unless explicitly whitelisted at the end of this file
-wp-content/mu-plugins/*
-wp-content/plugins/*
-wp-content/themes/*
+# Let's ignore the config
+wp-config.php
+# Ignore the uploads 'cause it's massive
+wp-content/uploads/*
 
 # ignore all files starting with . or ~
 .*
 ~*
-
-# ignore node dependency directories (used by grunt)
-node_modules/
 
 # ignore OS generated files
 ehthumbs.db
@@ -69,57 +39,9 @@ Thumbs.db
 *.tar
 *.zip
 
-# -------------------------
-# BEGIN Whitelisted Files
-# -------------------------
+# Ignore node_modules
+wp-content/themes/adtrak-child-tailwind/node_modules/*
+wp-content/themes/adtrak-child-tailwind/vendor/*
 
-# track these files, if they exist
-!.gitignore
-!.editorconfig
-!README.md
-!CHANGELOG.md
-!composer.json
-
-# track favicon files, if they exist
-!android-chrome-*.png
-!apple-touch-icon*.png
-!browserconfig.xml
-!favicon*.png
-!favicon*.ico
-!manifest.json
-!mstile-*.png
-!safari-pinned-tab.svg
-
-# track acf options
-!acf-options/
-
-# track these mu-plugins, plugins, and themes
-# add your own entries here
-!wp-content/plugins/adtrak-location-dynamics/
-!wp-content/plugins/adtrak-core/
-!wp-content/plugins/advanced-custom-fields-pro/
-!wp-content/plugins/aryo-activity-log/
-!wp-content/plugins/public-post-preview/
-!wp-content/plugins/public-post-preview-configurator/
-!wp-content/plugins/redirection/
-!wp-content/plugins/wordpress-seo/
-!wp-content/plugins/wp-migrate-db-pro/
-!wp-content/plugins/wp-migrate-db-pro-media-files/
-!wp-content/plugins/ninja-forms/
-!wp-content/plugins/wp-mail-smtp/
-!wp-content/plugins/post-to-google-my-business/
-
-!wp-content/themes/adtrak-child/
-!wp-content/themes/adtrak-child-tailwind/
-!wp-content/themes/adtrak-child-tailwind-twig-timber/
-!wp-content/themes/adtrak-parent/
-!wp-content/themes/twd-darth-vader/
-
-wp-content/themes/adtrak-child-tailwind-twig-timber/node_modules
-wp-content/themes/adtrak-child-tailwind-twig-timber/vendor
-
-*.codekit
-*.DS_store
-
-prepros-6.config
-config.codekit3
+wp-content/themes/adtrak-child-tailwind-twig-timber/node_modules/*
+wp-content/themes/adtrak-child-tailwind-twig-timber/vendor/*
