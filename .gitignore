@@ -113,10 +113,16 @@ Thumbs.db
 !wp-content/themes/adtrak-child-tailwind-twig-timber/
 !wp-content/themes/adtrak-parent/
 
+
+# Ignore node_modules and vendor files
 wp-content/themes/adtrak-child-tailwind/node_modules
 
 wp-content/themes/adtrak-child-tailwind-twig-timber/node_modules
 wp-content/themes/adtrak-child-tailwind-twig-timber/vendor
+
+# Ignore dist folder
+wp-content/themes/adtrak-child-tailwind-twig-timber/dist/
+
 
 *.codekit
 *.DS_store
