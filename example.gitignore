@@ -45,3 +45,6 @@ wp-content/themes/adtrak-child-tailwind/vendor/*
 
 wp-content/themes/adtrak-child-tailwind-twig-timber/node_modules/*
 wp-content/themes/adtrak-child-tailwind-twig-timber/vendor/*
+
+# Ignore dist folder
+wp-content/themes/adtrak-child-tailwind-twig-timber/dist/
