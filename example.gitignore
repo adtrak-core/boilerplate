@@ -1,5 +1,20 @@
-# Let's ignore the config
+##### Edit Below This Line #####
+
+# Ignore node_modules
+wp-content/themes/adtrak-child-tailwind/node_modules/*
+wp-content/themes/adtrak-child-tailwind/vendor/*
+
+wp-content/themes/adtrak-child-tailwind-twig-timber/node_modules/*
+wp-content/themes/adtrak-child-tailwind-twig-timber/vendor/*
+
+# Ignore dist folder
+wp-content/themes/adtrak-child-tailwind-twig-timber/dist/
+
+##### DO NOT EDIT BELOW THIS LINE #####
+
+# Ignore the config
 wp-config.php
+
 # Ignore the uploads 'cause it's massive
 wp-content/uploads/*
 
@@ -38,13 +53,3 @@ Thumbs.db
 *.rar
 *.tar
 *.zip
-
-# Ignore node_modules
-wp-content/themes/adtrak-child-tailwind/node_modules/*
-wp-content/themes/adtrak-child-tailwind/vendor/*
-
-wp-content/themes/adtrak-child-tailwind-twig-timber/node_modules/*
-wp-content/themes/adtrak-child-tailwind-twig-timber/vendor/*
-
-# Ignore dist folder
-wp-content/themes/adtrak-child-tailwind-twig-timber/dist/

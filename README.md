@@ -17,7 +17,7 @@
 5. Download this boilerplate. Extract it to the folder you create in Step 2.
 6. Change theme folder name and update theme details in style.css
 7. Rename ```example.gitignore``` to ```.gitignore``` and open the file
-8. Edit lines ```116``` & ```117``` and replace the theme name to prevent ```node_modules``` and ```vendor``` files being committed 
+8. Edit lines ```7``` & ```8``` and replace the theme name to prevent ```node_modules``` and ```vendor``` files being committed 
 9. Create local database
 10. Open the Command Line / Terminal 
 11. Change Directory to the theme folder (```cd /[FOLDER NAME]/wp-content/themes/[YOUR NEW THEME NAME]```)
@@ -27,11 +27,12 @@
 15. Edit line ```89``` to the name of your local site. (e.g. my-new-site.vm)
 16. Save the ```gulpfile```
 17. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the wp-config file will be ignored by GIT)  
-18. Log in and activate all plugins
-19. Activate your theme through the WordPress admin console
-20. Open the Command Line / Terminal and make sure you're in your theme folder
-21. Run ```npm run dev``` or ```gulp```
-22. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
+18. You may need to edit the ```wp-congig.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
+19. Log in and activate all plugins
+20. Activate your theme through the WordPress admin console
+21. Open the Command Line / Terminal and make sure you're in your theme folder
+22. Run ```npm run dev``` or ```gulp```
+23. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
 
 #### The theme structure has changed for this boilerplate. ####
 
