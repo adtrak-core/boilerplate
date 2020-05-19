@@ -72,13 +72,13 @@
 	    // Show underlay and fix the body scroll when menu button is clicked
 	    $('.menu-btn').click(function() {
 	    	$('.mob-nav,.mob-nav-underlay').addClass('mob-nav--active');
-	    	$('body').addClass('fixed');
+	    	$('body').addClass('overflow-hidden');
 	    });
 
 	    // Hide menu when close icon or underlay is clicked
 	    $('.mob-nav-underlay,.mob-nav-close').click(function() {
 	    	$('.mob-nav,.mob-nav-underlay').removeClass('mob-nav--active');
-	    	$('body').removeClass('fixed');
+	    	$('body').removeClass('overflow-hidden');
         });
         
 
