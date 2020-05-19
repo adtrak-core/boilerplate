@@ -13,7 +13,7 @@
     include locate_template('parts/hero.php');
 ?>
 
-<div class="container p-4 md:p-8 lg:px-0 lg:flex flex-wrap flex-grow">
+<div class="container flex-wrap flex-grow lg:flex">
 
 	<?php if (have_posts()): ?>
 
