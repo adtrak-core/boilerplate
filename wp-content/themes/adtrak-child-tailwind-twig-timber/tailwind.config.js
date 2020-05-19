@@ -63,6 +63,8 @@ module.exports = {
       }),
     }
   },
-  variants: {
-  }
+  variants: {},
+  corePlugins: {
+      container: false,
+  },
 }
