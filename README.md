@@ -27,7 +27,7 @@
 15. Edit line ```89``` to the name of your local site. (e.g. my-new-site.vm)
 16. Save the ```gulpfile```
 17. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the wp-config file will be ignored by GIT)  
-18. You may need to edit the ```wp-congig.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
+18. You may need to edit the ```wp-config.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
 19. Log in and activate all plugins
 20. Activate your theme through the WordPress admin console
 21. Open the Command Line / Terminal and make sure you're in your theme folder
