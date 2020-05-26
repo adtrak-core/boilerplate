@@ -1,11 +1,11 @@
 <header class="pt-10 lg:pt-0">
 
-  <div class="top-bar hidden bg-gray-100 lg:block">
+  <div class="hidden bg-gray-100 top-bar lg:block">
 
     <div class="container">
 
-      <nav id="menu-secondary" class="menu hidden bg-blue-100 container lg:block">
-        <ul class="menu-secondary w-full flex flex-wrap justify-center">
+      <nav id="menu-secondary" class="container hidden bg-blue-100 menu lg:block">
+        <ul class="flex flex-wrap justify-center w-full menu-secondary">
           {% for item in secondaryMenu.items %}
           <li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
             <a href="{{item.link}}">{{item.name}}</a>
@@ -27,9 +27,9 @@
 
   </div>
 
-  <div class="container lg:py-4 lg:flex flex-wrap justify-between items-center">
+  <div class="container flex-wrap items-center justify-between lg:py-4 lg:flex">
 
-    <a class="block lg:inline-block" href="{{site.site_url}}">
+    <a aria-label="Go to homepage" class="block lg:inline-block" href="{{site.site_url}}">
       <img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site.title}} Logo" />
     </a>
 
@@ -37,8 +37,8 @@
 
   </div>
 
-  <nav id="menu-primary" class="menu hidden bg-blue-100 container lg:block">
-    <ul class="menu-primary w-full flex flex-wrap justify-center">
+  <nav id="menu-primary" class="container hidden bg-blue-100 menu lg:block">
+    <ul class="flex flex-wrap justify-center w-full menu-primary">
       {% for item in primaryMenu.items %}
       <li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
         <a href="{{item.link}}">{{item.name}}</a>
