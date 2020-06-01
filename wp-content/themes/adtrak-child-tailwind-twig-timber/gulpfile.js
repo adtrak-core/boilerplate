@@ -13,7 +13,18 @@ let gulp            = require('gulp'),
     rename          = require("gulp-rename"),    
     postcss         = require('gulp-postcss'),
     purgecss        = require('gulp-purgecss'),    
-    concat          = require('gulp-concat');
+    source          = require('vinyl-source-stream'),
+    buffer          = require('vinyl-buffer'),
+    rollup          = require('@rollup/stream'),
+
+    // Allows for multiple input files for Rollup
+    multi           = require('@rollup/plugin-multi-entry'),
+    
+    // Add support for require() syntax
+    commonjs        = require('@rollup/plugin-commonjs'),
+
+    // Add support for importing from node_modules folder like import x from 'module-name'
+    nodeResolve     = require('@rollup/plugin-node-resolve');
 
 
 class TailwindExtractor {
@@ -58,19 +69,39 @@ gulp.task('styles', function () {
   }))
 })
 
+
+
 /**************************
- * Task Scripts
+ * Scripts using rollup.js
+ * https://stackoverflow.com/questions/47632435/es6-import-module-with-gulp/59786169#59786169
 **************************/
+
+var cache;
+
 gulp.task('scripts', function() {
-  return gulp.src('js/*.js')
-    .pipe(concat('production-dist.js'))
+  return rollup({
+      // Point to the entry folder for all JS files
+      input: 'js/*.js',
+      // Apply plugins
+      plugins: [commonjs(), nodeResolve(), multi()],
+      // Use cache for better performance
+      cache: cache,
+      // Output bundle is intended for use in browsers
+      format: 'iife',
+    })
+    .on('bundle', function(bundle) {
+      // Update cache data after every bundle is created
+      cache = bundle;
+    })
+    // Name of the output file.
+    .pipe(source('production-dist.js'))
+    .pipe(buffer())
     .pipe(gulpIf(argv.production, uglify()))
     .pipe(gulp.dest('dist/'))
     .pipe(browserSync.reload({
-     stream: true
-  }))
+      stream: true
+    }))
 });
-
 
 /**************************
  * Task Watch
