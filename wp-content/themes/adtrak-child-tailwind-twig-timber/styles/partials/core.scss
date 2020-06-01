@@ -3,6 +3,7 @@ Layouts ***************************************************/
 
 body, html {
   min-height: 101%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -11,6 +12,15 @@ body {
     antialiased
     text-blue-500
     leading-relaxed;
+}
+
+// Uses IntersectionObserver to identify when the viewport has scrolled, and then show back to top
+#pixel-to-watch {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  top: 300px;
+  left: 0;
 }
 
 .container {
