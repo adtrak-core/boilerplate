@@ -2,10 +2,8 @@
 // Back to top
 // -- Uses IntersectionObserver API to determine if the window has
 // -- scrolled past the pixel-to-watch (in footer.twig)
+// -- Not supported in IE11 only
 // --------------------------------------------------------------------------------------------------
-
-// Polyfill for IE
-require('intersection-observer');
 
 // // Set a variable to identify the back to top button
 var backToTopBtn = document.getElementById("back-top")
