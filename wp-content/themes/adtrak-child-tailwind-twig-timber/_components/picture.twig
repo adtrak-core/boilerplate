@@ -40,13 +40,13 @@ Custom picture, useful for any image. See bottom of this file for a full example
       source|
       tojpg|
       resize(
-        options.img.w|default(640),
-        options.img.h|default(640),
-        options.img.crop|default('center')
+        img.w|default(640),
+        img.h|default(640),
+        img.crop|default('center')
       )
     }}"
-    alt="{{ options.img.alt|default(site.title) }}"
-    class="{{ options.img.classes }} lazyload"
+    alt="{{ img.alt|default(site.title) }}"
+    class="{{ img.classes }} lazyload"
   >
 </picture>
 
@@ -55,7 +55,7 @@ Custom picture, useful for any image. See bottom of this file for a full example
 --- Usage
 
 {% include "_components/atoms/picture.twig" with {
-  source: post.thumbnail,
+  source: post.thumbnail.src,
   breakpoints: {
     "1530px" : {
       w: 1800,
@@ -86,10 +86,11 @@ Custom picture, useful for any image. See bottom of this file for a full example
   img: {
     classes: '',
     alt: '',
-    width: null,
-    height: 600,
+    w: null,
+    h: 600,
     crop: 'center',
   }
-} %}
+}
+%}
 
  #}
