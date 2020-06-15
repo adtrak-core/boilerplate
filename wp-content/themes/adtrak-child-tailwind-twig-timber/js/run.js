@@ -5,29 +5,8 @@
 	// add all of your code within here, not above or below
 	$(function() {
 
-		
 		var iconAngleUp = "<svg class='icon icon-angle-up'><use xlink:href='"+themeURL.themeURL+"/images/icons-sprite.svg#icon-angle-up'></use></svg>";
 		var iconAngleDown = "<svg class='icon icon-angle-down'><use xlink:href='"+themeURL.themeURL+"/images/icons-sprite.svg#icon-angle-down'></use></svg>";
-
-		// --------------------------------------------------------------------------------------------------
-		// Back to top
-		// --------------------------------------------------------------------------------------------------
-		$("#back-top").hide();
-		$(function () {
-			$(window).scroll(function () {
-				if ($(this).scrollTop() > 300) {
-					$('#back-top').fadeIn();
-				} else {
-					$('#back-top').fadeOut();
-				}
-			});
-		});
-		$("#back-top").click(function() {
-			$("html, body").animate({
-			scrollTop: $("header").offset().top
-			}, 750);
-		});
-
 
 		// --------------------------------------------------------------------------------------------------
 		// Toggle Location Numbers
