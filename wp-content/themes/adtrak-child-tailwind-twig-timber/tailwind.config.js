@@ -6,6 +6,10 @@ module.exports = {
         'sans-serif'
       ],
     },    
+    filter: {
+      'none': 'none',
+      'grayscale': 'grayscale(1)',
+    },
     extend: {
       colors: {
         primary: {
@@ -44,9 +48,13 @@ module.exports = {
         '50': '50vh',
         '75': '75vh',
       }),
-    }
+    },
   },
   variants: {},
+  plugins: [
+    require('tailwindcss-filters'), // https://github.com/benface/tailwindcss-filters
+    require('tailwindcss-gradients'), //https://github.com/benface/tailwindcss-gradients
+  ],
   corePlugins: {
       container: false,
   },

@@ -41,6 +41,8 @@
     "postcss-import": "^12.0.1",
     "rollup": "^2.10.4",
     "tailwindcss": "^1.4.6",
+    "tailwindcss-filters": "^3.0.0",
+    "tailwindcss-gradients": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "yargs": "^14.2.3"
