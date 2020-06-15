@@ -1,16 +1,14 @@
 @tailwind base;
 @tailwind components;
 
-@import 'partials/core.scss';
-@import 'partials/headings.scss';
-@import 'partials/desktop-nav.scss';
-@import 'partials/forms.scss';
-@import 'partials/buttons.scss';
-@import 'partials/mobile-nav.scss';
-@import 'partials/cookies.scss';
-@import 'partials/copy.scss';
+@import   'partials/core.scss',
+          'partials/buttons.scss',
+          'partials/cookies.scss',
+          'partials/desktop-nav.scss',
+          'partials/forms.scss',
+          'partials/mobile-nav.scss',
+          'partials/typography.scss';
 
 @tailwind utilities;
-
 
 // Custom CSS Here
