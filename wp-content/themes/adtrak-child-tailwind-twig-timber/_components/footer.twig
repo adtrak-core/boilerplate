@@ -1,53 +1,59 @@
 <footer class="p-4 text-center bg-gray-100 md:p-8 lg:px-0 lg:text-left">
 
-  <div class="container flex-wrap lg:flex">
+	<div class="container flex-wrap lg:flex">
 
-    <div class="w-full mb-8 lg:w-3/12">
-      <a aria-label="Go to homepage" class="block lg:inline-block" href="{{site.site_url}}">
-        <img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site.title}} Logo" />
-      </a>
-    </div>
+		<div class="w-full mb-8 lg:w-3/12">
+			<a aria-label="Go to homepage" class="block lg:inline-block" href="{{site.site_url}}">
+				<img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site.title}} Logo"/>
+			</a>
+		</div>
 
-    <div class="w-full mb-8 lg:w-3/12">
-      <h6>Explore</h6>
-      {% for item in primaryMenu.items %}
-        <li class="{{item.class}}">
-          <a href="{{item.url}}">{{item.name}}</a>
-        </li>
-      {% endfor %}
-    </div>
+		<div class="w-full mb-8 lg:w-3/12">
+			<h6>Explore</h6>
+			<ul>
+				{% for item in primaryMenu.items %}
+					<li class="{{item.class}}">
+						<a href="{{item.url}}">{{item.name}}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
 
-    <div class="w-full lg:w-1/2">
-      <p>Address: {{ function('address_stacked') }}</p>
-      <p>Email: <a href="mailto:{{options.site_email}}">{{options.site_email}}</a>
-      </p>
-      <p>{{site.title}} is a registered company in England.</p>
+		<div class="w-full lg:w-1/2">
+			<p>Address:
+				{{ function('address_stacked') }}</p>
+			<p>Email:
+				<a href="mailto:{{options.site_email}}">{{options.site_email}}</a>
+			</p>
+			<p>{{site.title}}
+				is a registered company in England.</p>
 
-      {% if options.reg_number %}
-        <p>Registered Number: {{options.reg_number}}</p>
-      {% endif %}
+			{% if options.reg_number %}
+				<p>Registered Number:
+					{{options.reg_number}}</p>
+			{% endif %}
 
-      {% if options.vat_number %}
-        <p>VAT Number: {{options.vat_number}}</p>
-      {% endif %}
+			{% if options.vat_number %}
+				<p>VAT Number:
+					{{options.vat_number}}</p>
+			{% endif %}
 
-      <p>&copy; {{site.title}} {{ 'now' | date('Y') }}. All Rights Reserved</p>
-      
-      <a class="block mx-auto max-w-32 adtrak" href="https://www.adtrak.co.uk">{{function('get_adtrak_logo_new')}}</a>
-    </div>
+			<p>&copy;
+				{{site.title}}
+				{{ 'now' | date('Y') }}. All Rights Reserved</p>
 
-  </div>
+			<a class="block mx-auto max-w-32 adtrak" href="https://www.adtrak.co.uk">{{function('get_adtrak_logo_new')}}</a>
+		</div>
+
+	</div>
 
 </footer>
 
-<a 
-  id="back-top"
-  class="fixed bottom-0 right-0 z-50 p-2 -mb-20 text-center transition-all duration-1000 bg-gray-500 opacity-0 rounded-xl hover:bg-gray-600"
-  href="javascript:"
->
-  <span class="text-sm text-black no-underline">
-    {{ function('icon', 'angle-up', 'w-8 h-8') }} <span class="block text-lg uppercase">Top</span>
-  </span>
+<a id="back-top" class="fixed bottom-0 right-0 z-50 p-2 -mb-20 text-center transition-all duration-1000 bg-gray-500 opacity-0 rounded-xl hover:bg-gray-600" href="javascript:">
+	<span class="text-sm text-black no-underline">
+		{{ function('icon', 'angle-up', 'w-8 h-8') }}
+		<span class="block text-lg uppercase">Top</span>
+	</span>
 </a>
 
 <div id="pixel-to-watch"></div>
