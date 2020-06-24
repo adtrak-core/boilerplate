@@ -8,7 +8,7 @@ let gulp            = require('gulp'),
     cssnano         = require('cssnano'),
     argv            = require('yargs').argv,
     sass            = require('gulp-sass'), // Requires the gulp-sass plugin
-    uglify          = require('gulp-uglify'),    
+    terser          = require('gulp-terser'), // Uglify, but does ES6   
     gulpIf          = require('gulp-if'),    
     rename          = require("gulp-rename"),    
     postcss         = require('gulp-postcss'),
@@ -70,7 +70,6 @@ gulp.task('styles', function () {
 })
 
 
-
 /**************************
  * Scripts using rollup.js
  * https://stackoverflow.com/questions/47632435/es6-import-module-with-gulp/59786169#59786169
@@ -96,7 +95,7 @@ gulp.task('scripts', function() {
     // Name of the output file.
     .pipe(source('production-dist.js'))
     .pipe(buffer())
-    .pipe(gulpIf(argv.production, uglify()))
+    .pipe(gulpIf(argv.production, terser()))
     .pipe(gulp.dest('dist/'))
     .pipe(browserSync.reload({
       stream: true
