@@ -11,12 +11,12 @@
   <link rel="stylesheet" href="{{ theme.link ~ '/dist/main.min.css' }}">
   {% endblock %}
 
-  {% if option.google_analytics %}
-    {{ option.google_analytics}}
+  {% if options.google_analytics %}
+    {{ options.google_analytics}}
   {% endif %}
 
-  {% if option.schema %}
-    {{ option.schema}}
+  {% if options.schema %}
+    {{ options.schema}}
   {% endif %}
 
   {{ function('wp_head') }}
