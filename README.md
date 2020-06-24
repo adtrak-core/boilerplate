@@ -15,7 +15,7 @@
 3. Extract Wordpress to your new folder
 4. Delete the ```wp-content``` folder from your new folder
 5. Download this boilerplate. Extract it to the folder you create in Step 2.
-6. Change theme folder name and update theme details in style.css
+6. Change theme folder name and update theme details in ```style.css```, update your *screenshot.png*
 7. Rename ```example.gitignore``` to ```.gitignore``` and open the file
 8. Edit lines ```7``` & ```8``` and replace the theme name to prevent ```node_modules``` and ```vendor``` files being committed 
 9. Create local database
@@ -24,7 +24,7 @@
 12. Run ```npm install```
 13. Run ```composer install```
 14. From the theme folder, open ```gulpfile.js```
-15. Edit line ```89``` to the name of your local site. (e.g. my-new-site.vm)
+15. Edit line ```119``` to the name of your local site. *(e.g. my-new-site.vm)*
 16. Save the ```gulpfile```
 17. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the wp-config file will be ignored by GIT)  
 18. You may need to edit the ```wp-config.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
@@ -32,9 +32,9 @@
 20. Activate your theme through the WordPress admin console
 21. Open the Command Line / Terminal and make sure you're in your theme folder
 22. Run ```npm run dev``` or ```gulp```
-23. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
+23. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS nor Javascript
 
-#### The theme structure has changed for this boilerplate. ####
+#### The theme structure has changed for this boilerplate ####
 
 1. All components (```header```, ```footer```, ```phone-top-right``` etc) can be found in ```_components``` 
 2. All functions (```script enqueuing```, ```Custom Post Types```, ```Custom Taxonomies``` etc) can be found in ```_functions```
@@ -52,9 +52,33 @@ To get the Tailwind theme set up:
 6. Once ```npm install``` has finished installing your dependencies, run ```npm run dev``` or ```gulp```
 7. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
 
+## WordPress Settings ##
+
+1. Permalinks: ```/news/%postname%/```
+2. Discussion: CHECK: Before a comment appears, comment must be manually approved
+3. Discussion: CHECK: Users must be registered and logged in to comment
+4. Discussion: UNCHECK: Allow people to post comments on new articles
+5. Create home page, go to *Settings > Reading*, and front-page displays your new home page
+6. Create your menus, and change their display locations to suit
+
+## Useful Commands ##
+
+The following are useful locally and when [setting up DeployHQ](http://resources.adtrak.agency/local-working-using-deployhq/).
+
+```
+cd wp-content/themes/your-theme-name
+npm install --save --quiet
+npm run build
+
+cd wp-content/themes/your-theme-name
+composer install
+```
+
+```npm run dev``` will run your local development
+
 ## TailwindCSS
 
-We have created a Tailwind Config file that is easily editable in ```tailwind.config.js```. If you need to add colours, fonts etc, they can be added or edited in this file.
+We have created a [Tailwind](https://tailwindcss.com/docs/installation/) config file that is easily editable in ```tailwind.config.js```. If you need to add colours, fonts etc., they can be added or edited in this file.
 
 You can access the primary, secondary & tertiary colours by using classes as follows:
 
@@ -90,11 +114,15 @@ To do this you need to run a different ```gulp``` command. You can either do thi
 3. Click 'NPM' from the Template options
 4. In the Command textarea, enter the content below:
 ```
-cd wp-content/themes/adtrak-child-tailwind
+cd wp-content/themes/your-theme-name
 npm install --save --quiet
 npm run build
 ```
 **Remember to change the command if you have changed the theme name!**
 
-
-
+5. If you are using Timber/Twig, click 'Composer'
+6. Enter the content below
+```
+cd wp-content/themes/your-theme-name
+composer install --no-progress
+```
