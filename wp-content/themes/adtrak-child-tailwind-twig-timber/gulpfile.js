@@ -53,7 +53,8 @@ gulp.task('styles', function () {
     argv.production,
     purgecss({
       content: ['**/*.twig'],
-      whitelist: ['buckets--num-4','wp-notification', 'wp-notification-container', 'wp-notification-toggle', 'closed', 'open', 'sub-menu', 'mob-nav--active', 'mob-nav-underlay', 'sub-arrow', 'mob-nav-close', 'ninja-forms-field', 'active'],
+      whitelistPatterns: [/nf/, /wp/],
+      whitelist: ['buckets--num-4','textarea','ld-area','ld-location','closed', 'open', 'sub-menu', 'mob-nav--active', 'mob-nav-underlay', 'sub-arrow', 'mob-nav-close', 'ninja-forms-field', 'active'],
       extractors: [
         {
           extractor: TailwindExtractor,
