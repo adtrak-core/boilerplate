@@ -14,7 +14,7 @@
 2. Download latest release of WordPress [https://wordpress.org/latest.zip](https://wordpress.org/latest.zip) 
 3. Extract Wordpress to your new folder
 4. Delete the ```wp-content``` folder from your new folder
-5. Download this boilerplate. Extract it to the folder you create in Step 2.
+5. Download this boilerplate. Copy ```wp-content``` and ```example.gitignore``` to your folder
 6. Change theme folder name and update theme details in ```style.css```, update your *screenshot.png*
 7. Rename ```example.gitignore``` to ```.gitignore``` and open the file
 8. Edit lines ```7``` & ```8``` and replace the theme name to prevent ```node_modules``` and ```vendor``` files being committed 
