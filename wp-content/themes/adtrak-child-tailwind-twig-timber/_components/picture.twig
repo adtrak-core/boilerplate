@@ -6,7 +6,8 @@ Custom picture, useful for any image. See bottom of this file for a full example
 
 	{% for breakpoint, options in breakpoints %}
     
-{# 		<source
+     <source
+      type="image/webp"
       srcset="{{
         source|
         resize(
@@ -18,9 +19,9 @@ Custom picture, useful for any image. See bottom of this file for a full example
       }}"
       media="(min-width: {{breakpoint}})"
     >
-     #}
     
-		<source
+    <source
+      type="image/jpeg"
       srcset="{{
         source|
         resize(
