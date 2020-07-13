@@ -17,8 +17,7 @@ Desktop Navs **********************************************/
 
         &:hover {
           @apply
-            bg-gray-600
-            text-blue-500;
+            text-black;
 
           & + .sub-menu {
             @apply
@@ -30,37 +29,51 @@ Desktop Navs **********************************************/
     }
 
     .icon-angle-down {
-        position: absolute;
-        bottom: 2px;
-        left: 50%;
-        -webkit-transform: translateX(-50%);
-        transform: translateX(-50%);
-        width: .9em;
-        height: .9em;
-        opacity: .5;
+        @apply
+          absolute
+          bottom-0
+          left-1/2
+          transform
+          -translate-x-1/2
+          w-4
+          h-4
+          opacity-50;
     }
 
-    .current-menu-item a,
-    .current-menu-parent a {
+    .current-menu-item > a,
+    .current-menu-parent > a {
       @apply
-        text-white
-        bg-gray-800;
+        text-white;
 
         &:hover {
-          @apply text-white;
+          @apply text-black;
         }
     }
 
     .sub-menu {
       @apply
-        w-full
         absolute
         top-full
-        left-0
-        z-50
+        z-40
         opacity-0
         hidden
-        bg-white;
+        left-1/2
+        transform
+        shadow-lg
+        bg-white
+        -translate-x-1/2;
+
+        width: 200px;
+
+        a {
+          @apply
+            text-black;
+
+            &:hover {
+              @apply
+                text-gray-500;
+            }
+        }
 
         &:hover {
           @apply

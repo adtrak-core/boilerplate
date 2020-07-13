@@ -4,7 +4,7 @@
   {% for logo in options.logos %}
 
     {{logo.name}}
-    <img class="lazyload" data-src="{{logo.image.url|resize('150', '150')}}" alt="{{logo.name}} Logo">
+    <img class="lazyload" src="" data-src="{{logo.image.url|letterbox('150', '150','#fff')}}" alt="{{logo.name}} Logo">
     {{logo.link}}
 
   {% endfor %}

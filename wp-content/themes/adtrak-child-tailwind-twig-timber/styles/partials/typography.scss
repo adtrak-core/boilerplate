@@ -52,10 +52,10 @@ h3 {
   a {
     @apply
       inline-block
-      bg-blue-100;
+      text-primary;
 
       &:hover {
-        @apply bg-blue-900
+        @apply underline;
       }
   }
 

@@ -1,59 +1,63 @@
 <header class="pt-10 lg:pt-0">
 
-  <div class="hidden bg-gray-100 top-bar lg:block">
+	<div class="hidden bg-primary top-bar lg:block">
 
-    <div class="container">
+		<div class="container">
 
-      <nav id="menu-secondary" class="container hidden bg-blue-100 menu lg:block">
-        <ul class="flex flex-wrap justify-center w-full menu-secondary">
-          {% for item in secondaryMenu.items %}
-          <li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
-            <a href="{{item.link}}">{{item.name}}</a>
-            {% if item.children %}
-            <ul class="sub-menu">
-              {% for child in item.children %}
-              <li class="{{child.class}}">
-                <a href="{{item.link}}">{{item.name}}</a>
-              </li>
-              {% endfor %}
-            </ul>
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
-      </nav>
+			<nav id="menu-secondary" class="container hidden menu lg:block">
+				<ul class="flex flex-wrap justify-center w-full menu-secondary">
+					{% for item in secondaryMenu.items %}
+						<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
+							<a href="{{item.link}}">{{item.name}}</a>
+							{% if item.children %}
+								<ul class="sub-menu">
+									{% for child in item.children %}
+										<li class="{{child.class}}">
+											<a href="{{item.link}}">{{item.name}}</a>
+										</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</nav>
 
-    </div>
+		</div>
 
-  </div>
+	</div>
 
-  <div class="container flex-wrap items-center justify-between lg:py-4 lg:flex">
+	<div class="container flex-wrap items-center justify-between lg:py-4 lg:flex">
 
-    <a aria-label="Go to homepage" class="block lg:inline-block" href="{{site.site_url}}">
-      <img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site.title}} Logo" />
-    </a>
+		<a aria-label="Go to homepage" class="block lg:inline-block" href="{{site.site_url}}">
+			<img class="mx-auto max-w-40" src="{{options.site_logo.url}}" alt="{{site.title}} Logo"/>
+		</a>
 
-    {% include "_components/phone-top-right.twig" %}
+		{% include "_components/phone-top-right.twig" %}
 
-  </div>
+	</div>
 
-  <nav id="menu-primary" class="container hidden bg-blue-100 menu lg:block">
-    <ul class="flex flex-wrap justify-center w-full menu-primary">
-      {% for item in primaryMenu.items %}
-      <li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
-        <a href="{{item.link}}">{{item.name}}</a>
-        {% if item.children %}
-          <ul class="sub-menu">
-            {% for child in item.children %}
-              <li class="{{child.class}}">
-                <a href="{{child.link}}">{{child.name}}</a>
-              </li>
-            {% endfor %}
-          </ul>          
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-  </nav>
+	<div class="hidden bg-secondary lg:block">
+
+		<nav id="menu-primary" class="container menu">
+			<ul class="flex flex-wrap justify-center w-full menu-primary">
+				{% for item in primaryMenu.items %}
+					<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
+						<a href="{{item.link}}">{{item.name}}</a>
+						{% if item.children %}
+							<ul class="sub-menu">
+								{% for child in item.children %}
+									<li class="{{child.class}}">
+										<a href="{{child.link}}">{{child.name}}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		</nav>
+
+	</div>
 
 </header>
