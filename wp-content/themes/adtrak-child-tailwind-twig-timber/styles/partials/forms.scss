@@ -6,13 +6,14 @@ input,
 textarea,
 select {
     @apply
-    rounded-full
-    border-0
     px-4
     py-3
     w-full
+    bg-white
+    border
+    border-gray-300
+    border-solid
     text-sm
-    shadow-inner
     text-gray-900;
 
     @screen sm {
@@ -36,7 +37,6 @@ select {
 
 textarea {
     height: 150px;
-    border-radius: 25px;
 }
 
 // The below placeholder selectors don't work when comma separated
@@ -69,16 +69,18 @@ textarea::placeholder {
 input[type="button"],
 input[type="submit"] {
     @apply
-    bg-secondary
+    bg-black
     text-white
     font-semibold
+    inline-block
     text-base
+    w-auto
     cursor-pointer;
     transition: .3s;
     
     &:hover {
         @apply
-        bg-secondary-dark;
+        bg-red-700;
     }
 }
 

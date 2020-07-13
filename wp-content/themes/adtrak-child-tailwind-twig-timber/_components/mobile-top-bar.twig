@@ -1,19 +1,19 @@
-<div class="fixed z-50 z w-full flex flex-wrap bg-gray-100 lg:hidden">
+<div class="fixed z-50 flex flex-wrap w-full bg-primary z lg:hidden">
 
  {#<div class="w-1/2 p-2 text-center bg-gray-500">
     {% do action('ld_default', false) %}
 </div>#}
 
-<div class="w-1/2 p-2 text-center bg-gray-500">
+<div class="w-1/2 p-2 text-center bg-secondary">
   {% do action('ld_mobile_top', "Call us today") %}
 </div>
 
-<div class="location-numbers hidden absolute top-10 left-0 z-10 w-full p-4 bg-gray-500 ">
+<div class="absolute left-0 z-10 hidden w-full p-4 bg-secondary location-numbers top-10 ">
   {% do action('ld_default', true) %}
   {% do action('ld_list', false, "inline") %}
 </div>
 
-<div class="menu-btn w-1/2 p-2 text-center bg-gray-40 flex items-center justify-center">{{ function('icon', 'bars') }}<span
+<div class="flex items-center justify-center w-1/2 p-2 text-center menu-btn bg-primary">{{ function('icon', 'bars') }}<span
     class="ml-2">Menu</span></div>
 
 </div>
