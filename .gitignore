@@ -107,6 +107,9 @@ Thumbs.db
 !wp-content/plugins/ninja-forms/
 !wp-content/plugins/wp-mail-smtp/
 !wp-content/plugins/post-to-google-my-business/
+!wp-content/plugins/woocommerce/
+!wp-content/plugins/woocommerce-gateway-stripe/
+!wp-content/plugins/woo-gutenberg-products-block/
 
 !wp-content/themes/adtrak-child/
 !wp-content/themes/adtrak-child-tailwind/
