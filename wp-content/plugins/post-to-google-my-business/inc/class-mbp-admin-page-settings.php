@@ -6,7 +6,8 @@ use  PGMB\WeDevsSettingsAPI ;
 if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
     class MBP_Admin_Page_Settings
     {
-        const  AJAX_CALLBACK_PREFIX = "mbp_settings" ;
+        const  POST_EDITOR_CALLBACK_PREFIX = 'mbp_settings_posteditor' ;
+        const  BUSINESSSELECTOR_CALLBACK_PREFIX = "mbp_settings_selector" ;
         const  SETTINGS_PAGE = 'post_to_google_my_business' ;
         const  FIELD_PREFIX = 'mbp_quick_post_settings[autopost_template]' ;
         const  NOTIFICATION_SECTION = "dashboard-notifications" ;
@@ -35,8 +36,8 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             add_action( 'wp_ajax_mbp_delete_notification', [ $this, 'ajax_delete_notification' ] );
             //add_action('w$this->business_selectorp_ajax_mbp_get_businesses', array(&$this, 'get_businesses_ajax'));
             $post_editor = new \PGMB\Components\PostEditor();
-            $post_editor->register_ajax_callbacks( self::AJAX_CALLBACK_PREFIX );
-            $this->business_selector->register_ajax_callbacks( self::AJAX_CALLBACK_PREFIX );
+            $post_editor->register_ajax_callbacks( self::POST_EDITOR_CALLBACK_PREFIX );
+            $this->business_selector->register_ajax_callbacks( self::BUSINESSSELECTOR_CALLBACK_PREFIX );
             $this->business_selector->set_field_name( 'mbp_google_settings[google_location]' );
             $calendar_feed = new \PGMB\Calendar\Feed();
             $calendar_feed->init( 'mbp_get_timegrid_feed' );
@@ -60,9 +61,6 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             add_action( 'wsa_form_top_mbp_quick_post_settings', array( $this, 'quick_post_top' ) );
             add_action( 'wsa_form_bottom_mbp_debug_info', array( &$this, 'debug_info' ) );
             add_action( 'wsa_form_bottom_mbp_dashboard', [ $this, 'dashboard' ] );
-            if ( !mbp_fs()->is_plan_or_trial( 'pro' ) ) {
-                add_action( 'wsa_form_bottom_mbp_post_type_settings', array( &$this, 'post_type_bottom' ) );
-            }
             //add_action('wsa_form_bottom_mbp_google_settings', array(&$this, 'google_form_bottom'));
         }
         
@@ -73,19 +71,21 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
         
         public function enqueue_scripts( $hook )
         {
+            wp_enqueue_style( 'jquery-ui', plugins_url( '../css/jquery-ui.min.css', __FILE__ ) );
             wp_enqueue_script(
                 'mbp-settings-page',
                 plugins_url( '../js/settings.js', __FILE__ ),
-                array( 'jquery' ),
+                array( 'jquery', 'jquery-ui-datepicker' ),
                 $this->plugin_version,
                 true
             );
             $localize_vars = [
-                'refresh_locations'    => __( 'Refresh locations', 'post-to-google-my-business' ),
-                'please_wait'          => __( 'Please wait...', 'post-to-google-my-business' ),
-                'AJAX_CALLBACK_PREFIX' => self::AJAX_CALLBACK_PREFIX,
-                'FIELD_PREFIX'         => self::FIELD_PREFIX,
-                'CALENDAR_TIMEZONE'    => WpDateTimeZone::getWpTimezone()->getName(),
+                'refresh_locations'                => __( 'Refresh locations', 'post-to-google-my-business' ),
+                'please_wait'                      => __( 'Please wait...', 'post-to-google-my-business' ),
+                'POST_EDITOR_CALLBACK_PREFIX'      => self::POST_EDITOR_CALLBACK_PREFIX,
+                'BUSINESSSELECTOR_CALLBACK_PREFIX' => self::BUSINESSSELECTOR_CALLBACK_PREFIX,
+                'FIELD_PREFIX'                     => self::FIELD_PREFIX,
+                'CALENDAR_TIMEZONE'                => WpDateTimeZone::getWpTimezone()->getName(),
             ];
             wp_localize_script( 'mbp-settings-page', 'mbp_localize_script', $localize_vars );
         }
@@ -161,6 +161,26 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
                 'default'           => \PGMB\FormFields::default_autopost_fields(),
             ) ),
             );
+            //					$fields['mbp_quick_post_settings'][] =
+            //						array(
+            //							'name'			=> 'url',
+            //							'label'			=> __('Button URL', 'post-to-google-my-business'),
+            //							'desc'			=> __('The URL where people should be redirected after clicking the button', 'post-to-google-my-business'),
+            //							'type'			=> 'text',
+            //							'sanitize_callback' => array(&$this, 'validate_quick_post_template'),
+            //							'default'		=> '%post_permalink%'
+            //						);
+            $fields['mbp_post_type_settings'] = array( array(
+                'name'              => 'post_types',
+                'label'             => __( 'Enabled for post types', 'post-to-google-my-business' ),
+                'desc'              => __( 'Select the post-types where the GMB metabox should be displayed', 'post-to-google-my-business' ),
+                'type'              => 'multicheck',
+                'default'           => array(
+                'post' => 'post',
+            ),
+                'options'           => $this->settings_field_post_types(),
+                'sanitize_callback' => array( $this, 'validate_post_types__premium_only' ),
+            ) );
             return $fields;
         }
         
@@ -247,11 +267,6 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             echo  $this->is_configured() ;
             echo  $this->auth_urls() ;
             echo  '<br /><br />' ;
-        }
-        
-        public function post_type_bottom()
-        {
-            echo  sprintf( __( 'Support for other post types is a <a href="%s">Pro feature</a>.', 'post-to-google-my-business' ), mbp_fs()->get_upgrade_url() ) ;
         }
         
         public function quick_post_top()
@@ -556,6 +571,19 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             }
             
             return false;
+        }
+        
+        public function settings_field_post_types()
+        {
+            $query_args = array(
+                'public' => true,
+            );
+            //Maybe add some additional filtering later
+            $post_types = array();
+            foreach ( get_post_types( $query_args, 'objects' ) as $type ) {
+                $post_types[$type->name] = $type->label;
+            }
+            return $post_types;
         }
     
     }

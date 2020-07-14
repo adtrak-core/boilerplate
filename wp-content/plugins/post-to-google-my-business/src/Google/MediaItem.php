@@ -29,7 +29,7 @@ class MediaItem extends AbstractGoogleJsonObject {
 	}
 
 	public function setSourceUrl($sourceUrl){
-		if(!filter_var($sourceUrl, FILTER_VALIDATE_URL)){
+		if(esc_url_raw($sourceUrl) !== $sourceUrl){
 			throw new InvalidArgumentException(__('Invalid media URL','post-to-google-my-business'));
 		}
 		if($this->mediaFormat === 'PHOTO'){

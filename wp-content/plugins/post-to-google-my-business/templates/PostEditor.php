@@ -76,8 +76,7 @@ if ( $this instanceof \PGMB\Components\PostEditor ) {
 
                     <!-- What's new fields -->
 
-                    <tr class='mbp-whatsnew-field<?php 
-    ?>'
+                    <tr class='mbp-whatsnew-field mbp-event-field mbp-offer-field'
                         id="post-image-container"> <!-- mbp-product-field -->
                         <th><label
                                 for='post_image'><?php 
@@ -97,8 +96,7 @@ if ( $this instanceof \PGMB\Components\PostEditor ) {
                         </td>
                     </tr>
 
-                    <tr class='mbp-whatsnew-field mbp-alert-field<?php 
-    ?>'
+                    <tr class='mbp-whatsnew-field mbp-alert-field mbp-event-field mbp-offer-field'
                         id='post-text-container'>
                         <th><label for='post_text'><?php 
     _e( 'Post text', 'post-to-google-my-business' );
@@ -128,36 +126,205 @@ if ( $this instanceof \PGMB\Components\PostEditor ) {
                         </td>
                     </tr>
 
-                    <?php 
-    ?>
-                        <tr class='mbp-product-field mbp-offer-field mbp-event-field hidden'>
-                            <td colspan='2'>
-                                <p><?php 
-    _e( 'Have more people engage with your events, products or offers.', 'post-to-google-my-business' );
-    ?>
-                                    <a target="_blank"
-                                       href="<?php 
-    echo  mbp_fs()->get_upgrade_url() ;
-    ?>"><?php 
-    _e( 'Upgrade to premium', 'post-to-google-my-business' );
-    ?></a> <?php 
-    _e( 'and start creating your Event, Offer and Product posts right from the WordPress dashboard!', 'post-to-google-my-business' );
-    ?>
-                                </p><br/>
-                                <a target="_blank" class='button-primary'
-                                   href="<?php 
-    echo  mbp_fs()->get_upgrade_url() ;
-    ?>"><?php 
-    _e( 'Upgrade now!', 'post-to-google-my-business' );
-    ?></a>
+
+                        <!-- Event fields -->
+                        <tr class='mbp-event-field hidden' id='event-title-container'>
+                            <th><label
+                                    for='event_title'><?php 
+    _e( 'Event title', 'post-to-google-my-business' );
+    ?></label>
+                            </th>
+                            <td>
+                                <input type='text' id='event_title' class='mbp-required'
+                                       name='<?php 
+    echo  $this->fieldName ;
+    ?>[mbp_event_title]'
+                                       value="<?php 
+    echo  $this->fields['mbp_event_title'] ;
+    ?>"/>
                             </td>
                         </tr>
-                    <?php 
+                        <tr class='mbp-event-field mbp-offer-field hidden'>
+                            <th></th>
+                            <td>
+                                <label><input type="checkbox" name="<?php 
+    echo  $this->fieldName ;
+    ?>[mbp_event_all_day]" id="mbp_event_all_day" /> <?php 
+    esc_html_e( 'All day event (time will be ignored)', 'post-to-google-my-business' );
+    ?></label>
+                            </td>
+                        </tr>
+                        <tr class='mbp-event-field mbp-offer-field hidden' id='event-start-date-container'>
+                            <th><label
+                                    for='event_start_date'><?php 
+    _e( 'Start date', 'post-to-google-my-business' );
+    ?></label>
+                            </th>
+                            <td>
+                                <input type='text' id='event_start_date'
+                                       class='mbp-required mbp-validate-date'
+                                       name='<?php 
+    echo  $this->fieldName ;
+    ?>[mbp_event_start_date]'
+                                       value="<?php 
+    echo  $this->fields['mbp_event_start_date'] ;
+    ?>"/>
+                                <span id="event_start_date_validator" class="mbp-validated-date-display"></span>
+                            </td>
+                        </tr>
+                        <tr class='mbp-event-field mbp-offer-field hidden' id='event-end-date-container'>
+                            <th><label
+                                    for='event_end_date'><?php 
+    _e( 'End date', 'post-to-google-my-business' );
+    ?></label>
+                            </th>
+                            <td>
+                                <input type='text' id='event_end_date'
+                                       class='mbp-required mbp-validate-date'
+                                       name='<?php 
+    echo  $this->fieldName ;
+    ?>[mbp_event_end_date]'
+                                       value="<?php 
+    echo  $this->fields['mbp_event_end_date'] ;
+    ?>"/>
+                                <span id="event_end_date_validator" class="mbp-validated-date-display"></span>
+                            </td>
+                        </tr>
+
+
+                        <!-- Offer fields -->
+                        <tr class='mbp-offer-field hidden' id='offer-title-container'>
+                            <th><label
+                                    for='offer_title'><?php 
+    _e( 'Offer title', 'post-to-google-my-business' );
+    ?></label>
+                            </th>
+                            <td>
+                                <input type='text' id='offer_title' class='mbp-required'
+                                       name='<?php 
+    echo  $this->fieldName ;
+    ?>[mbp_offer_title]'
+                                       value="<?php 
+    echo  $this->fields['mbp_offer_title'] ;
+    ?>"/>
+                                <br/><span
+                                    class='description'><?php 
+    _e( 'Example: 20% off in store or online', 'post-to-google-my-business' );
+    ?></span>
+                            </td>
+                        </tr>
+                        <tr class='mbp-offer-field hidden' id='offer-coupon-container'>
+                            <th><label
+                                    for='offer_coupon'><?php 
+    _e( 'Coupon code (optional)', 'post-to-google-my-business' );
+    ?></label>
+                            </th>
+                            <td>
+                                <input type='text' id='offer_coupon' class=''
+                                       name='<?php 
+    echo  $this->fieldName ;
+    ?>[mbp_offer_coupon]'
+                                       value="<?php 
+    echo  $this->fields['mbp_offer_coupon'] ;
+    ?>"/>
+                            </td>
+                        </tr>
+                        <tr class='mbp-offer-field hidden' id='offer-redeemlink-container'>
+                            <th><label
+                                    for='offer_redeemlink'><?php 
+    _e( 'Link to redeem offer (optional)', 'post-to-google-my-business' );
+    ?></label>
+                            </th>
+                            <td>
+                                <input type='text' id='offer_redeemlink' class=''
+                                       name='<?php 
+    echo  $this->fieldName ;
+    ?>[mbp_offer_redeemlink]'
+                                       value="<?php 
+    echo  $this->fields['mbp_offer_redeemlink'] ;
+    ?>"/>
+                            </td>
+                        </tr>
+                        <tr class='mbp-offer-field hidden' id='offer-terms-container'>
+                            <th><label
+                                    for='offer_terms'><?php 
+    _e( 'Terms and conditions (optional)', 'post-to-google-my-business' );
+    ?></label>
+                            </th>
+                            <td>
+                                <input type='text' id='offer_terms' class=''
+                                       name='<?php 
+    echo  $this->fieldName ;
+    ?>[mbp_offer_terms]'
+                                       value="<?php 
+    echo  $this->fields['mbp_offer_terms'] ;
+    ?>"/>
+                            </td>
+                        </tr>
+
+
+                        <!-- Product fields -->
+                        <tr class='mbp-product-field hidden' id='product-name-container'>
+                            <td colspan="2">
+                                <?php 
+    _e( 'The ability to create Product posts has been (temporarily?) removed from the Google My Business API.', 'post-to-google-my-business' );
+    ?><br /><br />
+                                <strong>
+
+
+                                <?php 
+    printf( __( 'Check out %s for (auto-)publishing your WooCommerce products on Google My Business.', 'post-to-google-my-business' ), sprintf( '<a href="https://tycoonmedia.net/blog/auto-publish-woocommerce-products-to-google-my-business/" target="_blank">%s</a>', __( 'this workaround', 'post-to-google-my-business' ) ) );
     ?>
+                                </strong>
+                            </td>
+                        </tr>
+                        <?php 
+    /*
+    <tr class='mbp-product-field hidden' id='product-name-container'>
+        <th><label for='product_name'><?php _e('Product name', 'post-to-google-my-business'); ?></label></th>
+        <td>
+            <input type='text' id='product_name' class='mbp-required' name='mbp_product_name' placeholder='<?php esc_html_e('Product Name', 'post-to-google-my-business'); ?>' />
+        </td>
+    </tr>
+    <tr class='mbp-product-field hidden' id='product-price-container'>
+        <th><label for='product_minprice'><?php _e('Price', 'post-to-google-my-business'); ?></label></th>
+        <td>
+            <!--<input type='number' id='mbp_product_price' class='mbp-required' name='mbp_product_price' placeholder='Price' step="0.01" /> -->
+    
+            <input type='number' id='product_minprice' class='' name='mbp_product_minprice' placeholder='<?php esc_html_e('Price', 'post-to-google-my-business'); ?>' step="0.01"/>
+            <input type='number' id='product_maxprice' class='hidden' name='mbp_product_maxprice' placeholder='<?php esc_html_e('Max', 'post-to-google-my-business'); ?>' step="0.01" />
+    
+            <br />
+            <label><input type='checkbox' name='mbp_product_pricerange' id='mbp_product_pricerange' value='1' /> <?php _e('Range', 'post-to-google-my-business'); ?></label>
+            <br /><span class='description'><?php _e('Format: 123.45', 'post-to-google-my-business'); ?></span>
+        </td>
+    </tr>
+    <tr class='mbp-product-field hidden' id='product-currency-container'>
+        <th><label for='product_currency'><?php _e('Currency', 'post-to-google-my-business'); ?></label></th>
+        <td>
+            <select name='mbp_product_currency' id='product_currency'>
+                <?php echo $this->get_currency_options__premium_only(new MBP_Currency_Codes(), 'USD'); ?>
+            </select>
+        </td>
+    </tr>
+    */
+    ?>
+                        <!--
+                <tr class='mbp-product-field hidden' id='product-details-container'>
+                    <th><label for='product_details'><?php 
+    esc_html_e( 'Details', 'post-to-google-my-business' );
+    ?></label></th>
+                    <td>
+                        <textarea id='product_details' name='mbp_product_details' rows="8" cols="100" style='width:100%' class='mbp-required'></textarea>
+                        <br /><span class='description'><?php 
+    esc_html_e( 'The text that should appear on your post. Recommended 150-300 characters. 80 characters show in the SERPS. 1500 characters maximum.', 'post-to-google-my-business' );
+    ?></span>
+                    </td>
+                </tr>
+                -->
 
                     <!-- Button field -->
-                    <tr class='mbp-whatsnew-field mbp-alert-field<?php 
-    ?>'>
+                    <tr class='mbp-whatsnew-field mbp-alert-field mbp-event-field mbp-offer-field'>
                         <!-- mbp-product-field -->
                         <th><label
                                 for='post_text'><?php 

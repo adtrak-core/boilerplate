@@ -88,19 +88,22 @@ class MiscTab extends PageAbstract {
 								'<code>wp-config.php</code>'
 							);
 						} else {
-							printf( /* translators: %s - file to put that constant in. */
-								esc_html__( 'If you want to enable this option using constants, put the lines below to your %s file:', 'wp-mail-smtp' ),
-								'<code>wp-config.php</code>'
+							printf(
+								wp_kses( /* translators: %s - The URL to the constants support article. */
+									__( 'Please read this <a href="%s" target="_blank" rel="noopener noreferrer">support article</a> if you want to enable this option using constants.', 'wp-mail-smtp' ),
+									[
+										'a' => [
+											'href'   => [],
+											'target' => [],
+											'rel'    => [],
+										],
+									]
+								),
+								'https://wpmailsmtp.com/docs/how-to-secure-smtp-settings-by-using-constants/'
 							);
 						}
 						?>
 					</p>
-					<?php if ( ! $options->is_const_defined( 'general', 'do_not_send' ) ) : ?>
-						<pre>
-							define( 'WPMS_ON', true );
-							define( 'WPMS_DO_NOT_SEND', true );
-						</pre>
-					<?php endif; ?>
 				</div>
 			</div>
 
@@ -195,7 +198,12 @@ class MiscTab extends PageAbstract {
 	}
 
 	/**
-	 * @inheritdoc
+	 * Process tab form submission ($_POST).
+	 *
+	 * @since 1.0.0
+	 * @since 2.2.0 Fixed checkbox saving and use the correct merge to prevent breaking other 'general' checkboxes.
+	 *
+	 * @param array $data Tab data specific for the plugin ($_POST).
 	 */
 	public function process_post( $data ) {
 
@@ -204,14 +212,20 @@ class MiscTab extends PageAbstract {
 		$options = new Options();
 
 		// Unchecked checkboxes doesn't exist in $_POST, so we need to ensure we actually have them in data to save.
+		if ( empty( $data['general']['do_not_send'] ) ) {
+			$data['general']['do_not_send'] = false;
+		}
 		if ( empty( $data['general']['am_notifications_hidden'] ) ) {
 			$data['general']['am_notifications_hidden'] = false;
+		}
+		if ( empty( $data['general']['email_delivery_errors_hidden'] ) ) {
+			$data['general']['email_delivery_errors_hidden'] = false;
 		}
 		if ( empty( $data['general']['uninstall'] ) ) {
 			$data['general']['uninstall'] = false;
 		}
 
-		$to_save = array_merge( $options->get_all(), $data );
+		$to_save = Options::array_merge_recursive( $options->get_all(), $data );
 
 		// All the sanitization is done there.
 		$options->set( $to_save );

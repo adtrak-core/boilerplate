@@ -89,6 +89,37 @@ class ParseFormFields
             $localPost->addCallToAction( $callToAction );
         }
         
+        //Add offer
+        
+        if ( $topicType == 'OFFER' ) {
+            $localPostOffer = new \PGMB\Google\LocalPostOffer( $this->form_fields['mbp_offer_coupon'], $this->form_fields['mbp_offer_redeemlink'], $this->form_fields['mbp_offer_terms'] );
+            $localPost->addLocalPostOffer( $localPostOffer );
+        }
+        
+        //Add Event (used by Offer too)
+        
+        if ( $topicType == 'OFFER' || $topicType == 'EVENT' ) {
+            $eventTitle = ( $topicType == 'OFFER' ? $this->form_fields['mbp_offer_title'] : $this->form_fields['mbp_event_title'] );
+            //get the appropriate event title
+            $startdate = new \DateTime( $this->form_fields['mbp_event_start_date'], WpDateTimeZone::getWpTimezone() );
+            $enddate = new \DateTime( $this->form_fields['mbp_event_end_date'], WpDateTimeZone::getWpTimezone() );
+            $startDate = new \PGMB\Google\Date( $startdate->format( 'Y' ), $startdate->format( 'm' ), $startdate->format( 'd' ) );
+            $startTime = new \PGMB\Google\TimeOfDay( $startdate->format( 'H' ), $startdate->format( 'i' ) );
+            $endDate = new \PGMB\Google\Date( $enddate->format( 'Y' ), $enddate->format( 'm' ), $enddate->format( 'd' ) );
+            $endTime = new \PGMB\Google\TimeOfDay( $enddate->format( 'H' ), $enddate->format( 'i' ) );
+            $timeInterval = new \PGMB\Google\TimeInterval(
+                $startDate,
+                $startTime,
+                $endDate,
+                $endTime
+            );
+            if ( isset( $this->form_fields['mbp_event_all_day'] ) && $this->form_fields['mbp_event_all_day'] ) {
+                $timeInterval->setAllDay( true );
+            }
+            $localPostEvent = new \PGMB\Google\LocalPostEvent( $eventTitle, $timeInterval );
+            $localPost->addLocalPostEvent( $localPostEvent );
+        }
+        
         return $localPost;
     }
     

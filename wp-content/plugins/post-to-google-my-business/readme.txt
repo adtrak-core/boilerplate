@@ -1,10 +1,10 @@
 === Post to Google My Business ===
-Contributors: koen12344, tycoon12344, freemius
+Contributors: koen12344, freemius
 Donate link: https://tycoonmedia.net/?utm_source=repository&utm_medium=link&utm_campaign=donate
-Tags: google my business, google, business, posts, post, local search, google my business posts, google places, google plus, google+
+Tags: google my business, google, business, auto publish, posts, post, local search, google my business posts, google places, google plus, google+
 Requires at least: 4.9.0
-Tested up to: 5.4.1
-Stable tag: 2.2.18
+Tested up to: 5.4.2
+Stable tag: 2.2.25
 Requires PHP: 5.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,19 @@ Post to Google My Business relies on the WP Cron system to send out scheduled po
 6. Auto-post template settings
 
 == Changelog ==
+
+= 2.2.25 =
+* Make all GMB post types and WP post types available in free version
+* Fix Gutenberg assets being loaded in post type that was disabled
+
+> **Premium**
+>
+> * Fix campaigns feature being partially available in Pro version
+> * Fix default location selector showing checkboxes instead of radiobuttons when refreshing
+
+= 2.2.19 =
+* Fixed handling of URLs containing non-ascii characters
+* Added more info about product posts
 
 = 2.2.18 =
 * Temporarily remove check for isLocalPostApiDisabled due to COVID-19

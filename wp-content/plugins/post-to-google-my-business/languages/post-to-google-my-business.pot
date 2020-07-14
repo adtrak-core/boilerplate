@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Post to Google My Business package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Post to Google My Business 2.2.15\n"
+"Project-Id-Version: Post to Google My Business 2.2.20\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/post-to-google-my-business\n"
-"POT-Creation-Date: 2020-05-05 13:47:15+00:00\n"
+"POT-Creation-Date: 2020-07-01 10:40:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,207 +25,207 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: inc/class-mbp-admin-page-settings.php:106
-#: src/Components/BusinessSelector.php:138
+#: inc/class-mbp-admin-page-settings.php:110
+#: src/Components/BusinessSelector.php:139
 msgid "Refresh locations"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:107
+#: inc/class-mbp-admin-page-settings.php:111
 msgid "Please wait..."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:141
+#: inc/class-mbp-admin-page-settings.php:146
 msgid "Dashboard"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:145
+#: inc/class-mbp-admin-page-settings.php:150
 msgid "Google settings"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:150
+#: inc/class-mbp-admin-page-settings.php:155
 msgid "Auto-post settings"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:154
+#: inc/class-mbp-admin-page-settings.php:159
 msgid "Post type settings"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:158
+#: inc/class-mbp-admin-page-settings.php:163
 msgid "Debug"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:168
+#: inc/class-mbp-admin-page-settings.php:173
 msgid "Default location"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:169
-#: inc/class-mbp-admin-page-settings.php:246
+#: inc/class-mbp-admin-page-settings.php:174
+#: inc/class-mbp-admin-page-settings.php:251
 msgid "Select the post-types where the GMB metabox should be displayed"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:176
+#: inc/class-mbp-admin-page-settings.php:181
 msgid "Post to GMB by default"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:177
+#: inc/class-mbp-admin-page-settings.php:182
 msgid ""
 "The Auto-post checkbox will be checked by default, and your WordPress posts "
 "will be automatically published to GMB, unless you uncheck it."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:183
+#: inc/class-mbp-admin-page-settings.php:188
 msgid "Default template"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:184
+#: inc/class-mbp-admin-page-settings.php:189
 msgid ""
 "The template for new Google posts when using quick post. Supports <a "
 "target=\"_blank\" href=\"%s\">variables</a> and <a target=\"_blank\" "
 "href=\"%s\">spintax</a> (premium only)"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:245
+#: inc/class-mbp-admin-page-settings.php:250
 msgid "Enabled for post types"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:294
-#: inc/class-mbp-admin-page-settings.php:305 templates/settings.php:2
+#: inc/class-mbp-admin-page-settings.php:299
+#: inc/class-mbp-admin-page-settings.php:310 templates/settings.php:2
 msgid "Post to Google My Business settings"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:295
+#: inc/class-mbp-admin-page-settings.php:300
 msgid "Post to GMB %s"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:306
+#: inc/class-mbp-admin-page-settings.php:311
 msgid "Settings %s"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:328
+#: inc/class-mbp-admin-page-settings.php:333
 msgid "Connected"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:330
+#: inc/class-mbp-admin-page-settings.php:335
 msgid "Not connected"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:335
+#: inc/class-mbp-admin-page-settings.php:340
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:348
+#: inc/class-mbp-admin-page-settings.php:353
 msgid "Support for other post types is a <a href=\"%s\">Pro feature</a>."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:372
+#: inc/class-mbp-admin-page-settings.php:377
 msgid ""
 "Your WordPress version does not yet support the WP_Debug_Data class, please "
 "update."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:378
+#: inc/class-mbp-admin-page-settings.php:383
 msgid "Please supply the debug data below with your support requests"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:391
+#: inc/class-mbp-admin-page-settings.php:396
 msgid "Copy site info to clipboard"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:393
+#: inc/class-mbp-admin-page-settings.php:398
 msgid "Copied!"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:482
+#: inc/class-mbp-admin-page-settings.php:487
 msgid "Reconnect to Google My Business"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:482
+#: inc/class-mbp-admin-page-settings.php:487
 msgid "Connect to Google My Business"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:488
+#: inc/class-mbp-admin-page-settings.php:493
 msgid "Disconnect this website from Google My Business"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:493
+#: inc/class-mbp-admin-page-settings.php:498
 msgid "Revoke Google account authorization"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:508
-#: inc/class-mbp-admin-page-settings.php:523
+#: inc/class-mbp-admin-page-settings.php:513
+#: inc/class-mbp-admin-page-settings.php:528
 msgid "Dismiss this notice."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:552
+#: inc/class-mbp-admin-page-settings.php:557
 msgid "Manage multiple businesses or locations?"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:554
-#: inc/class-mbp-admin-page-settings.php:560
-#: inc/class-mbp-admin-page-settings.php:566
-#: inc/class-mbp-admin-page-settings.php:572
-#: inc/class-mbp-admin-page-settings.php:578
-#: inc/class-mbp-admin-page-settings.php:589
+#: inc/class-mbp-admin-page-settings.php:559
+#: inc/class-mbp-admin-page-settings.php:565
+#: inc/class-mbp-admin-page-settings.php:571
+#: inc/class-mbp-admin-page-settings.php:577
+#: inc/class-mbp-admin-page-settings.php:583
+#: inc/class-mbp-admin-page-settings.php:594
 msgid "Upgrade to Premium"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:555
+#: inc/class-mbp-admin-page-settings.php:560
 msgid "to pick a location per post, or post to multiple locations at once."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:558
+#: inc/class-mbp-admin-page-settings.php:563
 msgid "Not the right time?"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:561
+#: inc/class-mbp-admin-page-settings.php:566
 msgid "and schedule your posts to be automagically published at a later time."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:564
+#: inc/class-mbp-admin-page-settings.php:569
 msgid "Wonder how well your Google My Business post is doing?"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:567
+#: inc/class-mbp-admin-page-settings.php:572
 msgid "to view post statistics and easily include Google Analytics UTM parameters."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:570
+#: inc/class-mbp-admin-page-settings.php:575
 msgid ""
 "Use Post to Google My Business for your pages, projects, WooCommerce "
 "products and more."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:573
+#: inc/class-mbp-admin-page-settings.php:578
 msgid "to enable Post to Google my Business for any post type."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:576
+#: inc/class-mbp-admin-page-settings.php:581
 msgid "Automatically repost your GMB posts a specific or unlimited amount of times."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:579
+#: inc/class-mbp-admin-page-settings.php:584
 msgid "to set custom intervals and specify the amount of reposts."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:582
+#: inc/class-mbp-admin-page-settings.php:587
 msgid ""
 "I hope you enjoy using my Post to Google My Business plugin! Help spread "
 "the word with a"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:583
+#: inc/class-mbp-admin-page-settings.php:588
 msgid "5-star rating on WordPress.org"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:584
+#: inc/class-mbp-admin-page-settings.php:589
 msgid ". Many thanks! - Koen Reus, plugin developer"
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:587
+#: inc/class-mbp-admin-page-settings.php:592
 msgid "Create unique posts every time."
 msgstr ""
 
-#: inc/class-mbp-admin-page-settings.php:590
+#: inc/class-mbp-admin-page-settings.php:595
 msgid "to use spintax and %variables% in your post text."
 msgstr ""
 
@@ -641,46 +641,46 @@ msgstr ""
 msgid "Zimbabwe Dollar"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:140
+#: inc/class-mbp-metabox.php:147
 msgid ""
 "You're working on a Google My Business post, but it has not yet been "
 "published/scheduled. Press OK to publish/schedule it now, or Cancel to save "
 "it as a draft."
 msgstr ""
 
-#: inc/class-mbp-metabox.php:141
+#: inc/class-mbp-metabox.php:148
 msgid "Please Wait..."
 msgstr ""
 
-#: inc/class-mbp-metabox.php:142
+#: inc/class-mbp-metabox.php:149
 msgid "Publish"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:143
+#: inc/class-mbp-metabox.php:150
 msgid "Update"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:144 templates/PostEditor.php:416
+#: inc/class-mbp-metabox.php:151 templates/PostEditor.php:415
 msgid "Save draft"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:145 templates/PostEditor.php:335
+#: inc/class-mbp-metabox.php:152 templates/PostEditor.php:334
 msgid "Schedule post"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:146
+#: inc/class-mbp-metabox.php:153
 msgid "Save template"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:155
+#: inc/class-mbp-metabox.php:162
 msgid "Min"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:156
+#: inc/class-mbp-metabox.php:163
 msgid "Price"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:175
+#: inc/class-mbp-metabox.php:182
 msgid "Auto-post to GMB"
 msgstr ""
 
@@ -688,97 +688,97 @@ msgstr ""
 msgid "Post to Google My Business"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:204
+#: inc/class-mbp-metabox.php:211
 msgid "Please configure Post to Google My Business first"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:206
+#: inc/class-mbp-metabox.php:213
 msgid "(Connect, pick a default location and Save Changes)"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:412 templates/PostEditor.php:10
+#: inc/class-mbp-metabox.php:419 templates/PostEditor.php:10
 msgid "What's New"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:416 templates/PostEditor.php:13
+#: inc/class-mbp-metabox.php:423 templates/PostEditor.php:13
 msgid "Event"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:420 templates/PostEditor.php:16
+#: inc/class-mbp-metabox.php:427 templates/PostEditor.php:16
 msgid "Offer"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:424 templates/PostEditor.php:19
+#: inc/class-mbp-metabox.php:431 templates/PostEditor.php:19
 msgid "Product"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:428 templates/PostEditor.php:6
+#: inc/class-mbp-metabox.php:435 templates/PostEditor.php:6
 msgid "COVID-19 update"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:524
+#: inc/class-mbp-metabox.php:536
 msgid "No GMB posts found."
 msgstr ""
 
-#: inc/class-mbp-metabox.php:556
+#: inc/class-mbp-metabox.php:568
 msgid "Repost enabled"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:562
+#: inc/class-mbp-metabox.php:574
 msgid "List created posts"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:564 inc/class-mbp-post-type-google-posts.php:28
+#: inc/class-mbp-metabox.php:576 inc/class-mbp-post-type-google-posts.php:28
 msgid "Edit"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:565
+#: inc/class-mbp-metabox.php:577
 msgid "Duplicate"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:566
+#: inc/class-mbp-metabox.php:578
 msgid "Delete"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:570
+#: inc/class-mbp-metabox.php:582
 msgid "Draft"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:593
+#: inc/class-mbp-metabox.php:605
 msgid "You do not have permission to publish posts"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:628
+#: inc/class-mbp-metabox.php:640
 msgid "Error creating post: %s"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:657
+#: inc/class-mbp-metabox.php:669
 msgid "Auto-post template successfully updated"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:670
+#: inc/class-mbp-metabox.php:682
 msgid "You do not have permission to edit posts"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:688
+#: inc/class-mbp-metabox.php:700
 msgid "Post could not be loaded"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:696
+#: inc/class-mbp-metabox.php:708
 msgid "You do not have permission to delete posts"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:708
+#: inc/class-mbp-metabox.php:720
 msgid "Invalid post ID"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:736
+#: inc/class-mbp-metabox.php:748
 msgid ""
 "No posts found. The posting process may still be in progress, or no "
 "location was selected."
 msgstr ""
 
-#: inc/class-mbp-metabox.php:750
+#: inc/class-mbp-metabox.php:762
 msgid "Unknown"
 msgstr ""
 
@@ -966,33 +966,33 @@ msgstr ""
 msgid "No businesses found."
 msgstr ""
 
-#: src/Components/BusinessSelector.php:122
+#: src/Components/BusinessSelector.php:123
 msgid "Location grayed out?"
 msgstr ""
 
-#: src/Components/BusinessSelector.php:123
+#: src/Components/BusinessSelector.php:124
 msgid ""
 "It means the location is blocked from using the LocalPostAPI, and can't be "
 "posted to using the plugin."
 msgstr ""
 
-#: src/Components/BusinessSelector.php:124
+#: src/Components/BusinessSelector.php:125
 msgid "Learn more..."
 msgstr ""
 
-#: src/Components/BusinessSelector.php:130
+#: src/Components/BusinessSelector.php:131
 msgid "Search/Filter locations..."
 msgstr ""
 
-#: src/Components/BusinessSelector.php:133
+#: src/Components/BusinessSelector.php:134
 msgid "Select all"
 msgstr ""
 
-#: src/Components/BusinessSelector.php:134
+#: src/Components/BusinessSelector.php:135
 msgid "Select none"
 msgstr ""
 
-#: src/Components/PostEditor.php:70
+#: src/Components/PostEditor.php:72
 msgid ", Timezone: "
 msgstr ""
 
@@ -1241,161 +1241,157 @@ msgstr ""
 #: templates/PostEditor.php:170
 msgid ""
 "The ability to create Product posts has been (temporarily?) removed from "
-"the Google My Business API. Please check back later."
+"the Google My Business API."
 msgstr ""
 
-#: templates/PostEditor.php:206
+#: templates/PostEditor.php:175
+msgid ""
+"Check out %s for (auto-)publishing your WooCommerce products on Google My "
+"Business."
+msgstr ""
+
+#: templates/PostEditor.php:178
+msgid "this workaround"
+msgstr ""
+
+#: templates/PostEditor.php:217
 msgid "Details"
 msgstr ""
 
-#: templates/PostEditor.php:209
+#: templates/PostEditor.php:220
 msgid ""
 "The text that should appear on your post. Recommended 150-300 characters. "
 "80 characters show in the SERPS. 1500 characters maximum."
 msgstr ""
 
-#: templates/PostEditor.php:216
-msgid "Have more people engage with your events, products or offers."
-msgstr ""
-
-#: templates/PostEditor.php:218
-msgid "Upgrade to premium"
-msgstr ""
-
-#: templates/PostEditor.php:218
-msgid ""
-"and start creating your Event, Offer and Product posts right from the "
-"WordPress dashboard!"
-msgstr ""
-
-#: templates/PostEditor.php:221 templates/PostEditor.php:323
-msgid "Upgrade now!"
-msgstr ""
-
-#: templates/PostEditor.php:230
+#: templates/PostEditor.php:229
 msgid "Button"
 msgstr ""
 
-#: templates/PostEditor.php:235
+#: templates/PostEditor.php:234
 msgid "Add a button"
 msgstr ""
 
-#: templates/PostEditor.php:240
+#: templates/PostEditor.php:239
 msgid "Button type"
 msgstr ""
 
-#: templates/PostEditor.php:244
+#: templates/PostEditor.php:243
 msgid "Book"
 msgstr ""
 
-#: templates/PostEditor.php:248
+#: templates/PostEditor.php:247
 msgid "Order"
 msgstr ""
 
-#: templates/PostEditor.php:252
+#: templates/PostEditor.php:251
 msgid "Shop"
 msgstr ""
 
-#: templates/PostEditor.php:256
+#: templates/PostEditor.php:255
 msgid "Learn more"
 msgstr ""
 
-#: templates/PostEditor.php:260
+#: templates/PostEditor.php:259
 msgid "Sign up"
 msgstr ""
 
-#: templates/PostEditor.php:264
+#: templates/PostEditor.php:263
 msgid "Get offer"
 msgstr ""
 
-#: templates/PostEditor.php:268
+#: templates/PostEditor.php:267
 msgid "Call now (uses primary phone number of business)"
 msgstr ""
 
-#: templates/PostEditor.php:271
+#: templates/PostEditor.php:270
 msgid "The text that should appear on your button"
 msgstr ""
 
-#: templates/PostEditor.php:276
+#: templates/PostEditor.php:275
 msgid "Alternative button URL"
 msgstr ""
 
-#: templates/PostEditor.php:284
+#: templates/PostEditor.php:283
 msgid ""
 "Optional. Where the user should go when clicking the button. Leave at "
 "default to send them to your newly created WordPress post."
 msgstr ""
 
-#: templates/PostEditor.php:292
+#: templates/PostEditor.php:291
 msgid "Advanced post settings"
 msgstr ""
 
-#: templates/PostEditor.php:298
+#: templates/PostEditor.php:297
 msgid "Image settings"
 msgstr ""
 
-#: templates/PostEditor.php:304
+#: templates/PostEditor.php:303
 msgid "Fetch image from post content"
 msgstr ""
 
-#: templates/PostEditor.php:307
+#: templates/PostEditor.php:306
 msgid ""
 "Try to get an image from the post content (when no custom image is set). "
 "This takes priority over the featured image."
 msgstr ""
 
-#: templates/PostEditor.php:311
+#: templates/PostEditor.php:310
 msgid "Use Featured Image as GMB post image"
 msgstr ""
 
-#: templates/PostEditor.php:314
+#: templates/PostEditor.php:313
 msgid "Use the Featured Image as GMB Post image (when no custom image is set)"
 msgstr ""
 
-#: templates/PostEditor.php:320
+#: templates/PostEditor.php:319
 msgid ""
 "Schedule your Google My Business posts, automatically repost them at "
 "specified interval, and pick one or more locations to post to. And many "
 "more features!"
 msgstr ""
 
-#: templates/PostEditor.php:345
+#: templates/PostEditor.php:322
+msgid "Upgrade now!"
+msgstr ""
+
+#: templates/PostEditor.php:344
 msgid "When the post should be first published"
 msgstr ""
 
-#: templates/PostEditor.php:356
+#: templates/PostEditor.php:355
 msgid "Automatic repost"
 msgstr ""
 
-#: templates/PostEditor.php:366
+#: templates/PostEditor.php:365
 msgid "Stop after"
 msgstr ""
 
-#: templates/PostEditor.php:370
+#: templates/PostEditor.php:369
 msgid "Never"
 msgstr ""
 
-#: templates/PostEditor.php:372
+#: templates/PostEditor.php:371
 msgid "Date"
 msgstr ""
 
-#: templates/PostEditor.php:374
+#: templates/PostEditor.php:373
 msgid "Executions"
 msgstr ""
 
-#: templates/PostEditor.php:387
+#: templates/PostEditor.php:386
 msgid "executions"
 msgstr ""
 
-#: templates/PostEditor.php:394
+#: templates/PostEditor.php:393
 msgid "Post to location(s)"
 msgstr ""
 
-#: templates/PostEditor.php:414
+#: templates/PostEditor.php:413
 msgid "Cancel"
 msgstr ""
 
-#: templates/PostEditor.php:420
+#: templates/PostEditor.php:419
 msgid "Publish Now"
 msgstr ""
 
@@ -1469,7 +1465,7 @@ msgstr ""
 msgid "https://tycoonmedia.net"
 msgstr ""
 
-#: inc/class-mbp-metabox.php:570
+#: inc/class-mbp-metabox.php:582
 msgctxt "%s = human-readable time difference"
 msgid "%s ago"
 msgstr ""

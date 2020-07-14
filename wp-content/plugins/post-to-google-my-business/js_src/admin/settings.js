@@ -18,16 +18,17 @@ import '@fullcalendar/timegrid/main.css';
 import { Calendar } from '@fullcalendar/core';
 import timeGridPlugin  from '@fullcalendar/timegrid';
 
-const AJAX_CALLBACK_PREFIX = mbp_localize_script.AJAX_CALLBACK_PREFIX;
+const BUSINESSSELECTOR_CALLBACK_PREFIX = mbp_localize_script.BUSINESSSELECTOR_CALLBACK_PREFIX;
+const POST_EDITOR_CALLBACK_PREFIX = mbp_localize_script.POST_EDITOR_CALLBACK_PREFIX;
 const FIELD_PREFIX = mbp_localize_script.FIELD_PREFIX;
 const CALENDAR_TIMEZONE = mbp_localize_script.CALENDAR_TIMEZONE;
 
-let postEditor = new PostEditor(false, AJAX_CALLBACK_PREFIX);
+let postEditor = new PostEditor(false, POST_EDITOR_CALLBACK_PREFIX);
 postEditor.setFieldPrefix(FIELD_PREFIX);
 
 
 
-new BusinessSelector($('.mbp-google-settings-business-selector'), AJAX_CALLBACK_PREFIX);
+new BusinessSelector($('.mbp-google-settings-business-selector'), BUSINESSSELECTOR_CALLBACK_PREFIX);
 
 postEditor.mediaUploader.setFieldName(FIELD_PREFIX);
 
@@ -134,4 +135,4 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 
-export { postEditor, FIELD_PREFIX, AJAX_CALLBACK_PREFIX };
+export { postEditor, FIELD_PREFIX, POST_EDITOR_CALLBACK_PREFIX };

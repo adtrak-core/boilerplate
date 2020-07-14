@@ -119,11 +119,17 @@ class Indexable_Repository {
 		}
 
 		if ( $indexable === false ) {
-			return $this->query()->create( [ 'object_type' => 'unknown', 'post_status' => 'unindexed' ] );
+			return $this->query()->create(
+				[
+					'object_type' => 'unknown',
+					'post_status' => 'unindexed',
+				]
+			);
 		}
 
 		return $indexable;
 	}
+
 	/**
 	 * Retrieves an indexable by its permalink.
 	 *
@@ -347,19 +353,20 @@ class Indexable_Repository {
 	 * @return Indexable[] All ancestors of the given indexable.
 	 */
 	public function get_ancestors( Indexable $indexable ) {
-		$ancestors = $this->hierarchy_repository->find_ancestors( $indexable );
-
-		if ( is_array( $indexable->ancestors ) && ! empty( $indexable->ancestors ) ) {
+		// If we've already set ancestors on the indexable no need to get them again.
+		if ( \is_array( $indexable->ancestors ) && ! empty( $indexable->ancestors ) ) {
 			return \array_map( [ $this, 'ensure_permalink' ], $indexable->ancestors );
 		}
 
-		if ( empty( $ancestors ) ) {
-			return [];
+		$indexable_ids = $this->hierarchy_repository->find_ancestors( $indexable );
+
+		// If we've set ancestors on the indexable because we had to build them to find them.
+		if ( \is_array( $indexable->ancestors ) && ! empty( $indexable->ancestors ) ) {
+			return \array_map( [ $this, 'ensure_permalink' ], $indexable->ancestors );
 		}
 
-		$indexable_ids = [];
-		foreach ( $ancestors as $ancestor ) {
-			$indexable_ids[] = $ancestor->ancestor_id;
+		if ( empty( $indexable_ids ) ) {
+			return [];
 		}
 
 		if ( $indexable_ids[0] === 0 && \count( $indexable_ids ) === 1 ) {
@@ -367,11 +374,31 @@ class Indexable_Repository {
 		}
 
 		$indexables = $this->query()
-						   ->where_in( 'id', $indexable_ids )
-						   ->order_by_expr( 'FIELD(id,' . \implode( ',', $indexable_ids ) . ')' )
-						   ->find_many();
+			->where_in( 'id', $indexable_ids )
+			->order_by_expr( 'FIELD(id,' . \implode( ',', $indexable_ids ) . ')' )
+			->find_many();
 
 		return \array_map( [ $this, 'ensure_permalink' ], $indexables );
+	}
+
+	/**
+	 * Returns all subpages with a given post_parent.
+	 *
+	 * @param int   $post_parent the post parent.
+	 * @param array $exclude_ids the ids to exclude.
+	 *
+	 * @return Indexable[] array of indexables.
+	 */
+	public function get_subpages_by_post_parent( $post_parent, $exclude_ids = [] ) {
+		$query = $this->query()
+			->where( 'post_parent', $post_parent )
+			->where( 'object_type', 'post' )
+			->where( 'post_status' ,'publish' );
+
+		if ( ! empty( $exclude_ids ) ) {
+			$query->where_not_in( 'object_id', $exclude_ids );
+		}
+		return $query->find_many();
 	}
 
 	/**
@@ -384,7 +411,11 @@ class Indexable_Repository {
 	protected function ensure_permalink( $indexable ) {
 		if ( $indexable && $indexable->permalink === null ) {
 			$indexable->permalink = $this->get_permalink_for_indexable( $indexable );
-			$indexable->save();
+
+			// Only save if changed.
+			if ( $indexable->permalink !== null ) {
+				$indexable->save();
+			}
 		}
 		return $indexable;
 	}

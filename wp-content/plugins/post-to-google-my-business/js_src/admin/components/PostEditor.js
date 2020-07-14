@@ -3,6 +3,10 @@ import BusinessSelector from "./BusinessSelector";
 
 import * as $ from 'jquery';
 
+//require("jquery-ui-timepicker-addon");
+import "jquery-ui-timepicker-addon";
+import "jquery-ui-timepicker-addon/src/jquery-ui-timepicker-addon.css";
+
 let PostEditor = function(ajax, ajax_prefix, default_fields){
     let ajaxEnabled = ajax || false;
     const postEditorInstance = this;
@@ -20,6 +24,48 @@ let PostEditor = function(ajax, ajax_prefix, default_fields){
     this.setFieldPrefix = function(prefix){
         fieldPrefix = prefix;
     };
+
+    let eventStartDate = $('#event_start_date');
+    let eventEndDate = $('#event_end_date');
+
+    $.timepicker.datetimeRange(
+        eventStartDate,
+        eventEndDate,
+        {
+            showOn: "button",
+            buttonText: "<span class=\"dashicons dashicons-calendar-alt\"></span>",
+            minInterval: (1000*60*60), // 1hr
+            dateFormat : 'yy-mm-dd',
+            timeFormat: 'HH:mm',
+            minDate : 0,
+            constrainInput: false,
+            start: {}, // start picker options
+            end: {} // end picker options
+        }
+    );
+
+    $('.mbp-validate-date').change(function () {
+        let closestDateDisplay = $(this).closest('td').find('.mbp-validated-date-display');
+        if ($(this).val() === "") {
+            //$('#event_start_date_validator').html('');
+            $(closestDateDisplay).html('');
+            return false;
+        }
+        const data = {
+            'action': ajax_prefix + '_check_date',
+            'mbp_post_nonce': mbp_localize_script.post_nonce,
+            'timestring': $(this).val()
+        };
+        $.post(ajaxurl, data, function (response) {
+            if (response.success) {
+                $(closestDateDisplay).html(response.data);
+                return true;
+            } else {
+                $(closestDateDisplay).html('Invalid date');
+                return false;
+            }
+        });
+    });
 
     /**
      * Switch tabs by providing a selector for a valid tab
@@ -178,6 +224,7 @@ let PostEditor = function(ajax, ajax_prefix, default_fields){
      */
     if(!ajaxEnabled){
         //trigger changes when the form is not loaded through ajax
+        $('.mbp-validate-date').trigger("change");
         $('#mbp_button').trigger("change");
         $('.mbp-button-type').trigger("change");
         $(postTextField).trigger("keyup");

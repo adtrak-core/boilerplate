@@ -10,6 +10,18 @@ namespace WPMailSMTP;
 class Processor {
 
 	/**
+	 * This attribute will hold the "original" WP from email address passed to the wp_mail_from filter,
+	 * that is not equal to the default email address.
+	 *
+	 * It should hold an email address set via the wp_mail_from filter, before we might overwrite it.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @var string
+	 */
+	protected $wp_mail_from;
+
+	/**
 	 * Processor constructor.
 	 *
 	 * @since 1.0.0
@@ -81,6 +93,11 @@ class Processor {
 			$phpmailer->SMTPAutoTLS = false;
 		}
 
+		// Check if original WP from email can be set as the reply_to attribute.
+		if ( $this->allow_setting_original_from_email_to_reply_to( $phpmailer->getReplyToAddresses(), $mailer ) ) {
+			$phpmailer->addReplyTo( $this->wp_mail_from );
+		}
+
 		// If we're sending via SMTP, set the host.
 		if ( 'smtp' === $mailer ) {
 			// Set the other options.
@@ -104,10 +121,51 @@ class Processor {
 			$phpmailer->Password   = $options->get( $mailer, 'pass' );
 		}
 
+		// Maybe set default reply-to header.
+		$this->set_default_reply_to( $phpmailer );
+
 		// You can add your own options here.
 		// See the phpmailer documentation for more info: https://github.com/PHPMailer/PHPMailer/tree/5.2-stable.
 		/** @noinspection PhpUnusedLocalVariableInspection It's passed by reference. */
 		$phpmailer = apply_filters( 'wp_mail_smtp_custom_options', $phpmailer );
+	}
+
+	/**
+	 * Check if it's allowed to set the original WP from email to the reply_to field.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param array  $reply_to Array of currently set reply to emails.
+	 * @param string $mailer   The slug of current mailer.
+	 *
+	 * @return bool
+	 */
+	protected function allow_setting_original_from_email_to_reply_to( $reply_to, $mailer ) {
+
+		$options    = new Options();
+		$forced     = $options->get( 'mail', 'from_email_force' );
+		$from_email = $options->get( 'mail', 'from_email' );
+
+		if ( ! empty( $reply_to ) || empty( $this->wp_mail_from ) ) {
+			return false;
+		}
+
+		if ( $mailer === 'gmail' ) {
+			$forced = true;
+		} elseif ( $mailer === 'outlook' ) {
+			$sender     = $options->get( 'outlook', 'user_details' );
+			$from_email = ! empty( $sender['email'] ) ? $sender['email'] : '';
+			$forced     = true;
+		}
+
+		if (
+			$from_email === $this->wp_mail_from ||
+			! $forced
+		) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -146,7 +204,7 @@ class Processor {
 	 * @since 1.3.0 Forcing email rewrite if option is selected.
 	 * @since 1.7.0 Default email may be empty, so pay attention to that as well.
 	 *
-	 * @param string $wp_email
+	 * @param string $wp_email The email address passed by the filter.
 	 *
 	 * @return string
 	 */
@@ -155,7 +213,12 @@ class Processor {
 		$options    = new Options();
 		$forced     = $options->get( 'mail', 'from_email_force' );
 		$from_email = $options->get( 'mail', 'from_email' );
-		$def_email  = $this->get_default_email();
+		$def_email  = WP::get_default_email();
+
+		// Save the "original" set WP email from address for later use.
+		if ( $wp_email !== $def_email ) {
+			$this->wp_mail_from = filter_var( $wp_email, FILTER_VALIDATE_EMAIL );
+		}
 
 		// Return FROM EMAIL if forced in settings.
 		if ( $forced & ! empty( $from_email ) ) {
@@ -236,7 +299,7 @@ class Processor {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @return \WPMailSMTP\MailCatcher
+	 * @return MailCatcherInterface
 	 */
 	public function get_phpmailer() {
 
@@ -244,10 +307,39 @@ class Processor {
 
 		// Make sure the PHPMailer class has been instantiated.
 		if ( ! is_object( $phpmailer ) || ! is_a( $phpmailer, 'PHPMailer' ) ) {
-			require_once ABSPATH . WPINC . '/class-phpmailer.php';
-			$phpmailer = new MailCatcher( true ); // phpcs:ignore
+			$phpmailer = wp_mail_smtp()->generate_mail_catcher( true ); // phpcs:ignore
 		}
 
 		return $phpmailer;
+	}
+
+	/**
+	 * Set the default reply_to header, if:
+	 * - no other reply_to headers are already set and,
+	 * - the default reply_to address filter `wp_mail_smtp_processor_default_reply_to_addresses` is configured.
+	 *
+	 * @since 2.1.1
+	 *
+	 * @param MailCatcherInterface $phpmailer The PHPMailer object.
+	 */
+	private function set_default_reply_to( $phpmailer ) {
+
+		if ( ! empty( $phpmailer->getReplyToAddresses() ) ) {
+			return;
+		}
+
+		$default_reply_to_emails = apply_filters( 'wp_mail_smtp_processor_set_default_reply_to', '' );
+
+		if ( empty( $default_reply_to_emails ) ) {
+			return;
+		}
+
+		foreach ( explode( ',', $default_reply_to_emails ) as $email ) {
+			$email = trim( $email );
+
+			if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+				$phpmailer->addReplyTo( $email );
+			}
+		}
 	}
 }

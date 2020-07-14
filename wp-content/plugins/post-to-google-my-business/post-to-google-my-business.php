@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: Post to Google My Business
-Plugin URI: https://tycoonmedia.net/wordpress-google-my-business-post/
+Plugin URI: https://tycoonmedia.net
 Description: Automatically create a post on Google My Business when creating a new WordPress post
-Author: tyCoon Media
-Version: 2.2.18
-Author URI: https://tycoonmedia.net
+Author: Koen Reus
+Version: 2.2.25
+Author URI: https://koenreus.com
 */
 if ( !defined( 'ABSPATH' ) ) {
     die;

@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Post to Google My Business 2.0.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/post-to-google-my-"
 "business\n"
-"POT-Creation-Date: 2020-05-05 13:47:15+00:00\n"
-"PO-Revision-Date: 2020-05-05 15:49+0200\n"
+"POT-Creation-Date: 2020-05-13 10:35:01+00:00\n"
+"PO-Revision-Date: 2020-05-13 12:37+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: inc/class-mbp-admin-page-settings.php:106
-#: src/Components/BusinessSelector.php:138
+#: src/Components/BusinessSelector.php:139
 msgid "Refresh locations"
 msgstr "Locaties vernieuwen"
 
@@ -676,11 +676,11 @@ msgstr "Publiceren"
 msgid "Update"
 msgstr "Bijwerken"
 
-#: inc/class-mbp-metabox.php:144 templates/PostEditor.php:416
+#: inc/class-mbp-metabox.php:144 templates/PostEditor.php:427
 msgid "Save draft"
 msgstr "Concept opslaan"
 
-#: inc/class-mbp-metabox.php:145 templates/PostEditor.php:335
+#: inc/class-mbp-metabox.php:145 templates/PostEditor.php:346
 msgid "Schedule post"
 msgstr "Post inplannen"
 
@@ -732,63 +732,63 @@ msgstr "Product"
 msgid "COVID-19 update"
 msgstr "COVID-19 update"
 
-#: inc/class-mbp-metabox.php:524
+#: inc/class-mbp-metabox.php:529
 msgid "No GMB posts found."
 msgstr "Geen GMB posts gevonden."
 
-#: inc/class-mbp-metabox.php:556
+#: inc/class-mbp-metabox.php:561
 msgid "Repost enabled"
 msgstr "Repost ingeschakeld"
 
-#: inc/class-mbp-metabox.php:562
+#: inc/class-mbp-metabox.php:567
 msgid "List created posts"
 msgstr "Laat aangemaakte posts zien"
 
-#: inc/class-mbp-metabox.php:564 inc/class-mbp-post-type-google-posts.php:28
+#: inc/class-mbp-metabox.php:569 inc/class-mbp-post-type-google-posts.php:28
 msgid "Edit"
 msgstr "Bewerk"
 
-#: inc/class-mbp-metabox.php:565
+#: inc/class-mbp-metabox.php:570
 msgid "Duplicate"
 msgstr "Dupliceren"
 
-#: inc/class-mbp-metabox.php:566
+#: inc/class-mbp-metabox.php:571
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: inc/class-mbp-metabox.php:570
+#: inc/class-mbp-metabox.php:575
 msgid "Draft"
 msgstr "Concept"
 
-#: inc/class-mbp-metabox.php:593
+#: inc/class-mbp-metabox.php:598
 msgid "You do not have permission to publish posts"
 msgstr "Je hebt geen toestemming om berichten te plaatsen"
 
-#: inc/class-mbp-metabox.php:628
+#: inc/class-mbp-metabox.php:633
 msgid "Error creating post: %s"
 msgstr "Error aanmaken post: %s"
 
-#: inc/class-mbp-metabox.php:657
+#: inc/class-mbp-metabox.php:662
 msgid "Auto-post template successfully updated"
 msgstr "Auto-post template succesvol aangepast"
 
-#: inc/class-mbp-metabox.php:670
+#: inc/class-mbp-metabox.php:675
 msgid "You do not have permission to edit posts"
 msgstr "Je hebt geen toestemming om berichten aan te passen"
 
-#: inc/class-mbp-metabox.php:688
+#: inc/class-mbp-metabox.php:693
 msgid "Post could not be loaded"
 msgstr "Post kon niet worden geladen"
 
-#: inc/class-mbp-metabox.php:696
+#: inc/class-mbp-metabox.php:701
 msgid "You do not have permission to delete posts"
 msgstr "Je hebt geen toestemming om berichten te verwijderen"
 
-#: inc/class-mbp-metabox.php:708
+#: inc/class-mbp-metabox.php:713
 msgid "Invalid post ID"
 msgstr "Ongeldige post ID"
 
-#: inc/class-mbp-metabox.php:736
+#: inc/class-mbp-metabox.php:741
 msgid ""
 "No posts found. The posting process may still be in progress, or no location "
 "was selected."
@@ -796,7 +796,7 @@ msgstr ""
 "Geen posts gevonden. Het post proces kan nog bezig zijn, of er is geen "
 "locatie geselecteerd."
 
-#: inc/class-mbp-metabox.php:750
+#: inc/class-mbp-metabox.php:755
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -1043,11 +1043,11 @@ msgstr ""
 msgid "No businesses found."
 msgstr "Geen bedrijven gevonden."
 
-#: src/Components/BusinessSelector.php:122
+#: src/Components/BusinessSelector.php:123
 msgid "Location grayed out?"
 msgstr "Locatie in het grijs?"
 
-#: src/Components/BusinessSelector.php:123
+#: src/Components/BusinessSelector.php:124
 msgid ""
 "It means the location is blocked from using the LocalPostAPI, and can't be "
 "posted to using the plugin."
@@ -1055,23 +1055,23 @@ msgstr ""
 "Dit betekend dat de locatie geblokkeerd is van de LocalPostAPI, en geen "
 "gebruik kan maken van de plugin."
 
-#: src/Components/BusinessSelector.php:124
+#: src/Components/BusinessSelector.php:125
 msgid "Learn more..."
 msgstr "Meer informatie..."
 
-#: src/Components/BusinessSelector.php:130
+#: src/Components/BusinessSelector.php:131
 msgid "Search/Filter locations..."
 msgstr "Zoek/Filter locaties..."
 
-#: src/Components/BusinessSelector.php:133
+#: src/Components/BusinessSelector.php:134
 msgid "Select all"
 msgstr "Selecteer alle"
 
-#: src/Components/BusinessSelector.php:134
+#: src/Components/BusinessSelector.php:135
 msgid "Select none"
 msgstr "Selecteer geen"
 
-#: src/Components/PostEditor.php:70
+#: src/Components/PostEditor.php:72
 msgid ", Timezone: "
 msgstr ", Tijdzone: "
 
@@ -1350,16 +1350,28 @@ msgstr "Algemene voorwaarden (optioneel)"
 #: templates/PostEditor.php:170
 msgid ""
 "The ability to create Product posts has been (temporarily?) removed from the "
-"Google My Business API. Please check back later."
+"Google My Business API."
 msgstr ""
 "De mogelijkheid om Product posts aan te maken is (tijdelijk?) verwijderd uit "
-"de Google My Business API. Controleer later opnieuw."
+"de Google My Business API."
 
-#: templates/PostEditor.php:206
+#: templates/PostEditor.php:175
+msgid ""
+"Check out %s for (auto-)publishing your WooCommerce products on Google My "
+"Business."
+msgstr ""
+"Check %s om (automatisch) je WooCommerce producten op Google Mijn bedrijf te "
+"plaatsen."
+
+#: templates/PostEditor.php:178
+msgid "this workaround"
+msgstr "deze workaround"
+
+#: templates/PostEditor.php:217
 msgid "Details"
 msgstr "Details"
 
-#: templates/PostEditor.php:209
+#: templates/PostEditor.php:220
 msgid ""
 "The text that should appear on your post. Recommended 150-300 characters. 80 "
 "characters show in the SERPS. 1500 characters maximum."
@@ -1368,17 +1380,17 @@ msgstr ""
 "aanbevolen. 80 karakters zijn te zien in de zoekresultaten. 1500 karakters "
 "maximaal."
 
-#: templates/PostEditor.php:216
+#: templates/PostEditor.php:227
 msgid "Have more people engage with your events, products or offers."
 msgstr ""
 "Laat meer mensen met je evenementen, producten of aanbiedingen in contact "
 "komen."
 
-#: templates/PostEditor.php:218
+#: templates/PostEditor.php:229
 msgid "Upgrade to premium"
 msgstr "Upgrade naar Premium"
 
-#: templates/PostEditor.php:218
+#: templates/PostEditor.php:229
 msgid ""
 "and start creating your Event, Offer and Product posts right from the "
 "WordPress dashboard!"
@@ -1386,59 +1398,59 @@ msgstr ""
 "en begin met het aanmaken van je Evenement, Product en Aanbieding-posts, "
 "direct vanaf het WordPress dashboard!"
 
-#: templates/PostEditor.php:221 templates/PostEditor.php:323
+#: templates/PostEditor.php:232 templates/PostEditor.php:334
 msgid "Upgrade now!"
 msgstr "Upgrade nu!"
 
-#: templates/PostEditor.php:230
+#: templates/PostEditor.php:241
 msgid "Button"
 msgstr "Knop"
 
-#: templates/PostEditor.php:235
+#: templates/PostEditor.php:246
 msgid "Add a button"
 msgstr "Voeg een knop toe"
 
-#: templates/PostEditor.php:240
+#: templates/PostEditor.php:251
 msgid "Button type"
 msgstr "Knop type"
 
-#: templates/PostEditor.php:244
+#: templates/PostEditor.php:255
 msgid "Book"
 msgstr "Reserveren"
 
-#: templates/PostEditor.php:248
+#: templates/PostEditor.php:259
 msgid "Order"
 msgstr "Bestellen"
 
-#: templates/PostEditor.php:252
+#: templates/PostEditor.php:263
 msgid "Shop"
 msgstr "Online bestellen"
 
-#: templates/PostEditor.php:256
+#: templates/PostEditor.php:267
 msgid "Learn more"
 msgstr "Meer informatie"
 
-#: templates/PostEditor.php:260
+#: templates/PostEditor.php:271
 msgid "Sign up"
 msgstr "Registreren"
 
-#: templates/PostEditor.php:264
+#: templates/PostEditor.php:275
 msgid "Get offer"
 msgstr "Aanbod bekijken"
 
-#: templates/PostEditor.php:268
+#: templates/PostEditor.php:279
 msgid "Call now (uses primary phone number of business)"
 msgstr "Bel nu (Primaire telefoonnummer van bedrijf)"
 
-#: templates/PostEditor.php:271
+#: templates/PostEditor.php:282
 msgid "The text that should appear on your button"
 msgstr "De tekst die op je knop moet verschijnen"
 
-#: templates/PostEditor.php:276
+#: templates/PostEditor.php:287
 msgid "Alternative button URL"
 msgstr "Alternatieve button link"
 
-#: templates/PostEditor.php:284
+#: templates/PostEditor.php:295
 msgid ""
 "Optional. Where the user should go when clicking the button. Leave at "
 "default to send them to your newly created WordPress post."
@@ -1446,19 +1458,19 @@ msgstr ""
 "Optioneel. Waar de bezoeker heengaat als deze op de knop drukt. Laat op de "
 "standaard waarde staan om ze naar je nieuwe WordPress post toe te sturen."
 
-#: templates/PostEditor.php:292
+#: templates/PostEditor.php:303
 msgid "Advanced post settings"
 msgstr "Geavanceerde post instellingen"
 
-#: templates/PostEditor.php:298
+#: templates/PostEditor.php:309
 msgid "Image settings"
 msgstr "Afbeelding instellingen"
 
-#: templates/PostEditor.php:304
+#: templates/PostEditor.php:315
 msgid "Fetch image from post content"
 msgstr "Afbeelding uit post inhoud ophalen"
 
-#: templates/PostEditor.php:307
+#: templates/PostEditor.php:318
 msgid ""
 "Try to get an image from the post content (when no custom image is set). "
 "This takes priority over the featured image."
@@ -1467,17 +1479,17 @@ msgstr ""
 "handmatige afbeelding ingesteld is). Dit heeft voorrang op de Uitgelichte "
 "afbeelding."
 
-#: templates/PostEditor.php:311
+#: templates/PostEditor.php:322
 msgid "Use Featured Image as GMB post image"
 msgstr "Gebruik Uitgelichte afbeelding als GMB post afbeelding"
 
-#: templates/PostEditor.php:314
+#: templates/PostEditor.php:325
 msgid "Use the Featured Image as GMB Post image (when no custom image is set)"
 msgstr ""
 "Gebruik de uitgelichte afbeelding als GMB post afbeelding (als er geen post "
 "afbeelding ingesteld is)"
 
-#: templates/PostEditor.php:320
+#: templates/PostEditor.php:331
 msgid ""
 "Schedule your Google My Business posts, automatically repost them at "
 "specified interval, and pick one or more locations to post to. And many more "
@@ -1487,43 +1499,43 @@ msgstr ""
 "interval, en kies één of meerdere locaties om naar te posten. En nog veel "
 "meer functies!"
 
-#: templates/PostEditor.php:345
+#: templates/PostEditor.php:356
 msgid "When the post should be first published"
 msgstr "Wanneer de post voor het eerst gepubliceerd moet worden"
 
-#: templates/PostEditor.php:356
+#: templates/PostEditor.php:367
 msgid "Automatic repost"
 msgstr "Automatische repost"
 
-#: templates/PostEditor.php:366
+#: templates/PostEditor.php:377
 msgid "Stop after"
 msgstr "Stop na"
 
-#: templates/PostEditor.php:370
+#: templates/PostEditor.php:381
 msgid "Never"
 msgstr "Nooit"
 
-#: templates/PostEditor.php:372
+#: templates/PostEditor.php:383
 msgid "Date"
 msgstr "Datum"
 
-#: templates/PostEditor.php:374
+#: templates/PostEditor.php:385
 msgid "Executions"
 msgstr "Uitvoeringen"
 
-#: templates/PostEditor.php:387
+#: templates/PostEditor.php:398
 msgid "executions"
 msgstr "uitvoeringen"
 
-#: templates/PostEditor.php:394
+#: templates/PostEditor.php:405
 msgid "Post to location(s)"
 msgstr "Plaatsen op locatie(s)"
 
-#: templates/PostEditor.php:414
+#: templates/PostEditor.php:425
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: templates/PostEditor.php:420
+#: templates/PostEditor.php:431
 msgid "Publish Now"
 msgstr "Nu publiceren"
 
@@ -1603,7 +1615,7 @@ msgstr "tyCoon Media"
 msgid "https://tycoonmedia.net"
 msgstr "https://tycoonmedia.net"
 
-#: inc/class-mbp-metabox.php:570
+#: inc/class-mbp-metabox.php:575
 msgctxt "%s = human-readable time difference"
 msgid "%s ago"
 msgstr "%s geleden"

@@ -102,6 +102,12 @@ if ( !class_exists( 'MBP_Metabox' ) ) {
         
         public function enqueue_gutenberg_assets()
         {
+            /*
+             * Not sure why this method isn't used in enqueue_metabox_scripts(), take care...
+             */
+            if ( !in_array( get_post_type(), $this->enabled_post_types ) ) {
+                return;
+            }
             wp_enqueue_script(
                 'mbp-gutenberg',
                 plugins_url( '../js/gutenberg.js', __FILE__ ),
@@ -132,6 +138,7 @@ if ( !class_exists( 'MBP_Metabox' ) ) {
             if ( !is_object( $screen ) || !in_array( $screen->post_type, $this->enabled_post_types ) ) {
                 return;
             }
+            wp_enqueue_style( 'jquery-ui', plugins_url( '../css/jquery-ui.min.css', __FILE__ ) );
             $metabox_path = '../js/metabox.js';
             wp_enqueue_media();
             add_thickbox();
@@ -422,11 +429,16 @@ if ( !class_exists( 'MBP_Metabox' ) ) {
          *
          * @param array $textarea_fields - Fields that should be sanitized as textarea
          *
+         * @param array $ignored_fields
+         *
          * @return array - Sanitized form fields
          */
-        public function sanitize_form_fields( $fields, $textarea_fields = array() )
+        public function sanitize_form_fields( $fields, $textarea_fields = array(), $ignored_fields = array() )
         {
             foreach ( $fields as $name => $value ) {
+                if ( in_array( $name, $ignored_fields ) ) {
+                    continue;
+                }
                 
                 if ( is_array( $value ) ) {
                     $fields[$name] = array_map( 'sanitize_text_field', $value );
@@ -608,7 +620,7 @@ if ( !class_exists( 'MBP_Metabox' ) ) {
             $data_mode = sanitize_text_field( $_POST['mbp_data_mode'] );
             //$form_fields = $this->sanitize_form_fields($_POST['mbp_form_fields'], ['mbp_post_text']);
             parse_str( $_POST['mbp_serialized_fieldset'], $parsed_fieldset );
-            $form_fields = $this->sanitize_form_fields( $parsed_fieldset['mbp_form_fields'], [ 'mbp_post_text' ] );
+            $form_fields = $this->sanitize_form_fields( $parsed_fieldset['mbp_form_fields'], [ 'mbp_post_text' ], [ 'mbp_button_url', 'mbp_offer_redeemlink', 'mbp_post_attachment' ] );
             $types = $this->gmb_topic_types();
             $json_args = [];
             switch ( $data_mode ) {

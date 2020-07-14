@@ -3,7 +3,7 @@
 use  PGMB\WeDevsSettingsAPI ;
 class MBP_Plugin
 {
-    const  PLUGIN_VERSION = '2.2.18' ;
+    const  PLUGIN_VERSION = '2.2.25' ;
     protected  $settings_page ;
     private  $taxonomy_fields = array() ;
     private  $enabled_post_types = array() ;
@@ -367,7 +367,8 @@ class MBP_Plugin
     
     private function register_enabled_post_types()
     {
-        $this->enabled_post_types = apply_filters( 'mbp_post_types', array( 'post' ) );
+        $this->enabled_post_types = array_values( $this->settings_page->get_current_setting( 'post_types', 'mbp_post_type_settings', array( 'post' ) ) );
+        $this->enabled_post_types = apply_filters( 'mbp_post_types', $this->enabled_post_types );
     }
 
 }

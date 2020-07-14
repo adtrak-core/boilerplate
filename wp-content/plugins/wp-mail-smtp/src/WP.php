@@ -18,24 +18,32 @@ class WP {
 	 */
 	protected static $admin_notices = array();
 	/**
+	 * CSS class for a success notice.
+	 *
 	 * @since 1.0.0
 	 *
 	 * @var string
 	 */
 	const ADMIN_NOTICE_SUCCESS = 'notice-success';
 	/**
+	 * CSS class for an error notice.
+	 *
 	 * @since 1.0.0
 	 *
 	 * @var string
 	 */
 	const ADMIN_NOTICE_ERROR = 'notice-error';
 	/**
+	 * CSS class for an info notice.
+	 *
 	 * @since 1.0.0
 	 *
 	 * @var string
 	 */
 	const ADMIN_NOTICE_INFO = 'notice-info';
 	/**
+	 * CSS class for a warning notice.
+	 *
 	 * @since 1.0.0
 	 *
 	 * @var string
@@ -43,7 +51,7 @@ class WP {
 	const ADMIN_NOTICE_WARNING = 'notice-warning';
 
 	/**
-	 * True is WP is processing an AJAX call.
+	 * True if WP is processing an AJAX call.
 	 *
 	 * @since 1.0.0
 	 *
@@ -103,7 +111,7 @@ class WP {
 
 			<div class="notice wp-mail-smtp-notice <?php echo esc_attr( $notice['class'] ); ?> notice <?php echo esc_attr( $dismissible ); ?>">
 				<p>
-					<?php echo $notice['message']; ?>
+					<?php echo wp_kses_post( $notice['message'] ); ?>
 				</p>
 			</div>
 
@@ -160,7 +168,7 @@ class WP {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string $string
+	 * @param string $string String we want to test if it's json.
 	 *
 	 * @return bool
 	 */
@@ -178,8 +186,7 @@ class WP {
 	 */
 	public static function datetime_format() {
 
-		return sprintf(
-			/* translators: %1$s - date, \a\t - specially escaped "at", %2$s - time. */
+		return sprintf( /* translators: %1$s - date, \a\t - specially escaped "at", %2$s - time. */
 			esc_html__( '%1$s \a\t %2$s', 'wp-mail-smtp' ),
 			get_option( 'date_format' ),
 			get_option( 'time_format' )
@@ -199,14 +206,14 @@ class WP {
 	}
 
 	/**
-	 * Sanitize the value, similar to sanitize_text_field(), but a bit differently.
+	 * Sanitize the value, similar to `sanitize_text_field()`, but a bit differently.
 	 * It preserves `<` and `>` for non-HTML tags.
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param string $value
+	 * @param string $value String we want to sanitize.
 	 *
-	 * @return mixed|string|string[]|null
+	 * @return string
 	 */
 	public static function sanitize_value( $value ) {
 
@@ -230,5 +237,64 @@ class WP {
 		}
 
 		return $filtered;
+	}
+
+	/**
+	 * Get default email address.
+	 *
+	 * This is the same code as used in WP core for getting the default email address.
+	 *
+	 * @see https://github.com/WordPress/WordPress/blob/master/wp-includes/pluggable.php#L332
+	 *
+	 * @since 2.2.0
+	 *
+	 * @return string
+	 */
+	public static function get_default_email() {
+
+		$sitename = strtolower( $_SERVER['SERVER_NAME'] ); // phpcs:ignore
+
+		if ( 'www.' === substr( $sitename, 0, 4 ) ) {
+			$sitename = substr( $sitename, 4 );
+		}
+
+		return 'wordpress@' . $sitename;
+	}
+
+	/**
+	 * Wrapper for the WP `admin_url` method that should be used in the plugin.
+	 *
+	 * We can filter into it, to maybe call `network_admin_url` for multisite support.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param string $path   Optional path relative to the admin URL.
+	 * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl().
+	 *                       'http' or 'https' can be passed to force those schemes.
+	 *
+	 * @return string Admin URL link with optional path appended.
+	 */
+	public static function admin_url( $path = '', $scheme = 'admin' ) {
+
+		return apply_filters( 'wp_mail_smtp_admin_url', \admin_url( $path, $scheme ), $path, $scheme );
+	}
+
+	/**
+	 * Check if the global plugin option in a multisite should be used.
+	 * If the global plugin option "multisite" is set and true.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @return bool
+	 */
+	public static function use_global_plugin_settings() {
+
+		if ( ! is_multisite() ) {
+			return false;
+		}
+
+		$main_site_options = get_blog_option( get_main_site_id(), Options::META_KEY, [] );
+
+		return ! empty( $main_site_options['general']['network_wide'] );
 	}
 }

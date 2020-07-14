@@ -17,7 +17,7 @@ class LocalPostOffer extends AbstractGoogleJsonObject {
 	}
 
 	public function setRedeemOnlineUrl($redeemOnlineUrl){
-		if($redeemOnlineUrl && !filter_var($redeemOnlineUrl, FILTER_VALIDATE_URL)){
+		if($redeemOnlineUrl && esc_url_raw($redeemOnlineUrl) !== $redeemOnlineUrl){
 			throw new InvalidArgumentException(__('Offer redeem online URL is invalid', 'post-to-google-my-business'));
 		}
 		$this->jsonOutput['redeemOnlineUrl'] = $redeemOnlineUrl;

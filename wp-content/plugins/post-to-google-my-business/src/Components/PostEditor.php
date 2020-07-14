@@ -40,5 +40,17 @@ class PostEditor
     public function register_ajax_callbacks( $prefix )
     {
     }
+    
+    public function ajax_validate_time()
+    {
+        $timestring = sanitize_text_field( $_POST['timestring'] );
+        try {
+            //$datetime = new \DateTime($timestring, WpDateTimeZone::getWpTimezone());
+            $datetime = new WpDateTime( $timestring, WpDateTimeZone::getWpTimezone() );
+        } catch ( \Exception $e ) {
+            wp_send_json_error();
+        }
+        wp_send_json_success( $datetime->formatDate() . " " . $datetime->formatTime() . __( ', Timezone: ', 'post-to-google-my-business' ) . WpDateTimeZone::getWpTimezone()->getName() );
+    }
 
 }

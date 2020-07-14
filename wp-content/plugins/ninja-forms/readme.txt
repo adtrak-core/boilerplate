@@ -3,7 +3,7 @@ Contributors: wpninjasllc, kstover, jameslaws, kbjohnson90, klhall1987, krmoorho
 Tags: forms, contact form, email form, form builder, custom form, pdf form, registration form, payment form, login form, contact me, signature form, upload form, file upload form, conditional form, feedback form, appointment form, quote form, survey form, contact button, signup form, form plugin, contact form plugin, subscription form, email subscription form, newsletter form, donation form, booking form, quote request form, multi page form, conditional logic form, subscription form, application form, employment verification form, star rating form, rating form, event form, mailchimp form, campaign monitor form, constant contact form, mailpoet form, aweber form, cleverreach form, emma form, convertkit form, active campaign form, salesforce form, zoho form, capsule form, insightly form, pipelinedeals form, onepagecrm form
 Requires at least: 5.2
 Tested up to: 5.4
-Stable tag: 3.4.24.2
+Stable tag: 3.4.24.3
 License: GPLv2 or later
 
 The 100% beginner friendly WordPress form builder. Drag & drop form fields to build beautiful, professional contact forms in minutes.
@@ -303,13 +303,27 @@ This section describes how to install the plugin and get it working.
 
 == Upgrade Notice ==
 
-= 3.4.24.2 (28 April 2020) =
+= 3.4.24.3 (21 May 2020) =
 
 *Security:*
 
-* Fixed Cross-Site Request Forgery(CSRF) to stored Cross-Site Scripting(XSS) [reported responsibly](https://ninjaforms.com/security) by Ramuel Gall (Wordfence Threat Intelligence Team).
+* Patched an HTML injection vulnerability in our deprecated 2.9x codebase [reported responsibly](https://ninjaforms.com/security) by Dave Job.
+
+*Bugs:*
+
+* Corrected an error in our required field validation that was allowing targeted spam through the submission process.
 
 == Changelog ==
+
+= 3.4.24.3 (21 May 2020) =
+
+*Security:*
+
+* Patched an HTML injection vulnerability in our deprecated 2.9x codebase [reported responsibly](https://ninjaforms.com/security) by Dave Job.
+
+*Bugs:*
+
+* Corrected an error in our required field validation that was allowing targeted spam through the submission process.
 
 = 3.4.24.2 (28 April 2020) =
 

@@ -37,7 +37,7 @@ class CallToAction extends AbstractGoogleJsonObject {
 			return;
 		} //CALL action doesnt use URL
 
-		if(!filter_var($url, FILTER_VALIDATE_URL)){
+		if(esc_url_raw($url) !== $url){
 			throw new InvalidArgumentException(__('Invalid URL supplied for call to action', 'post-to-google-my-business'));
 		}
 
