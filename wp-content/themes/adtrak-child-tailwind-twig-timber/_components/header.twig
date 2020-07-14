@@ -13,7 +13,7 @@
 								<ul class="sub-menu">
 									{% for child in item.children %}
 										<li class="{{child.class}}">
-											<a href="{{item.link}}">{{item.name}}</a>
+											<a href="{{child.link}}">{{child.name}}</a>
 										</li>
 									{% endfor %}
 								</ul>
