@@ -1,0 +1,22 @@
+<div class="product column w-full md:w-6/12 lg:w-4/12 mb-8">
+	{{ fn('timber_set_product', post) }}
+
+	<div class="product__info">
+		<a href="{{ post.link }}">
+			{% do action('woocommerce_before_shop_loop_item_title') %}
+		</a>
+
+		{% if post.title %}
+			<h3 class="entry-title">
+				<a href="{{ post.link }}">{{ post.title }}</a>
+			</h3>
+		{% else %}
+			<h3 class="entry-title">
+				<a href="{{ post.link }}">{{ fn('the_title') }}</a>
+			</h3>
+		{% endif %}
+
+		{% do action( 'woocommerce_after_shop_loop_item_title' ) %}
+		{% do action( 'woocommerce_after_shop_loop_item' ) %}
+	</div>
+</div>

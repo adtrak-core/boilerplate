@@ -1,0 +1,8 @@
+<a
+    class="cart-mini-contents"
+    href="{{ fn('wc_get_cart_url') }}"
+    title="{{ __('View cart', 'my-theme-textdomain') }}"
+>
+    <span class="amount">{{ cart.get_cart_subtotal }}</span>
+    <span class="count">({{ cart.get_cart_contents_count }} Items)</span>
+</a> 

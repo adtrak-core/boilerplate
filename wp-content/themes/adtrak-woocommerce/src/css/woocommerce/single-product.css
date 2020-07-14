@@ -1,0 +1,71 @@
+.summary .price {
+  del .amount {
+  }
+
+  ins .amount {
+  }
+}
+
+.woocommerce-product-rating {
+  @apply flex items-center;
+  @apply mb-2;
+}
+
+.woocommerce .star-rating {
+  overflow: hidden;
+  position: relative;
+  height: 1em;
+  line-height: 1;
+  font-size: 20px;
+  width: 110px;
+  @apply mr-1;
+
+  &::before,
+  &::after {
+    content: ' ';
+    display: table;
+  }
+
+  &::before {
+    content: '★★★★★';
+    color: #d3ced2;
+    float: left;
+    top: 0;
+    left: 0;
+    position: absolute;
+  }
+
+  span {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 1.5em;
+  }
+
+  span::before {
+    content: '★★★★★';
+    position: absolute;
+    color: gold;
+    top: 0;
+    left: 0;
+  }
+}
+
+.single-cart {
+  @apply flex;
+}
+
+.product-tab-link {
+  @apply block;
+  @apply py-2 px-4;
+
+  &.active {
+    @apply font-bold;
+  }
+}
+
+.product-tab-panel {
+  @apply border;
+  @apply py-4 px-6;
+}

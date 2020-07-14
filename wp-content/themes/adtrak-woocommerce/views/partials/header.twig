@@ -1,0 +1,15 @@
+<header class="mb-10 bg-secondary">
+  <div class="container flex flex-wrap items-center justify-between py-4">
+  {% block header %}
+    <h1 class="w-full lg:w-4/12">
+      <a href="{{ site.url }}" rel="home">{{ site.name }}</a>
+    </h1>
+
+    <nav class="w-full lg:w-8/12 lg:flex lg:justify-end" id="nav-main" role="navigation">
+      {% include 'partials/header-menu.twig' %}
+    	{% include 'partials/shop/cart-fragment-link.twig' %}
+    </nav>
+
+  {% endblock %}
+  </div>
+</header>
