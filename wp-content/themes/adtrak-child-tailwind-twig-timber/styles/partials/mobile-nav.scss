@@ -31,10 +31,11 @@ $closeTextBg :        theme('colors.red.600');
     h-full
     bg-gray-900
     w-4/5
-    transform
-    translate-x-full
-    duration-300
-    transition;
+    duration-300;
+  
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    transition: .4s;
     
   display: block !important;
   z-index: 99999999;
