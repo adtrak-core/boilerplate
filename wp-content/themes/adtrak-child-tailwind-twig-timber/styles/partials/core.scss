@@ -20,13 +20,8 @@ body {
 }
 
 .container {
-  @apply w-full mx-auto px-4 max-w-3xl;
-}
-
-@screen 3xl {
-  .container {
-    @apply px-0;
-  }
+  @apply w-full mx-auto px-4;
+  max-width: calc(theme('screens.3xl') + theme('spacing.8'));
 }
 
 a {
