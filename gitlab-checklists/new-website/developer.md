@@ -6,7 +6,6 @@
  - [ ] Are you waiting on any phone numbers? Raise a ticket with telecoms department if you are.
  - [ ] Add VAT & Registration numbers into website
  - [ ] Is this site having any additional products that need adding, like Data Capture or Mouseflow?
- - [ ] Is this site going on to HTTPS hosting?
  - [ ] Ensure you know about all domains
  - [ ] Ensure you know how emails will be set up
  - [ ] Ensure `noreply@` email address has been set up if possible (or use Send In Blue)
@@ -27,14 +26,14 @@
 
  - [ ] Check hover states for all links
  - [ ] On states for all pages (main and sub) - mobile & desktop
- - [ ] Check Contact page - does it convey key messages across desktop and mobile?
+ - [ ] Check Contact page - ensure contact details aren't buried down the page
  - [ ] Links look like links
  - [ ] Call to actions - need to link? Don't link to self page?
  - [ ] Relevant pictures for each page
 
 ## Phone Numbers
 
- - [ ] Site is using numbers supplied by Adtrak (NOT their direct line)
+ - [ ] Site is using numbers supplied by Adtrak (NOT their direct line), unless otherwise instructed
  - [ ] Ensure site displays the location dynamics for IM & PM across the whole site and is styled accordingly
  - [ ] Ensure the default SEO phone number is the same in the LD and the fallback in Site Specific: Phone & Location
  - [ ] Are phone numbers displaying correctly on both mobile and desktop?
@@ -64,7 +63,6 @@
 
 ## Proofing
 
- - [ ] Subnavs - website is easy to navigate from touch screen without going back
  - [ ] Xenu Link Sleuth / Screaming Frog - check for broken links
  - [ ] On staging, do a Lighthouse check - are there any areas you can improve on before you proceed?
 
