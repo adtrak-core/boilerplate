@@ -1,4 +1,4 @@
-# Peer Checks
+# Peer Checklist (New Website)
 
 NB: Issues found should usually be raised as individual issues in Gitlab and assigned to the developer.
 

@@ -1,4 +1,4 @@
-# Developer Checks
+# Developer Checklist (New Website)
 
 # Pre-Live
 
@@ -83,10 +83,10 @@
 - [ ] Android | Google Pixel 3
 - [ ] Android | Samsung Galaxy S9
 
-## Peer Checks
+## Peer Checklist
 
 - [ ] Set a Project Task to the Copywriter to check the site for spelling errors
-- [ ] Create a new Gitlab issue for `Peer Checks`
+- [ ] Create a new Gitlab issue for `Peer Checklist`
 - [ ] Set a Project Task to a discipline peer to do their peer checks, and assign the above issue to them
 
 # Go Live
