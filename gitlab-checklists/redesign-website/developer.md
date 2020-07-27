@@ -24,7 +24,6 @@
 - [ ] Browse the site as a potential end user - are there any problems or irregularities?
 - [ ] Does the site have a favicon?
 - [ ] Ensure that Redirection plugin is active
-- [ ] Live link is on Adobe Fonts settings (in the shared account, not your own!)
 - [ ] Are you serving the right size of image, rarely using the full image?
 - [ ] Is your map's scroll function not interfering with your website scroll?
 - [ ] Do you have any parked domains that need copying over?
