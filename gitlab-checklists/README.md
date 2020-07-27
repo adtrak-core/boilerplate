@@ -28,7 +28,7 @@ Issues in Gitlab are a great way to track changes to a website. You can invite a
 - Always set an Assignee
 - Markdown can be used
 - Invite the marketers into the relevant repos
-- Marketers should be set as Reviewers
+- Marketers should be set as Reporters
 
 ## Closing issues with command line
 
