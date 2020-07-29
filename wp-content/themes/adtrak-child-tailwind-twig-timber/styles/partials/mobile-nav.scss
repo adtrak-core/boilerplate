@@ -57,6 +57,7 @@ $closeTextBg :        theme('colors.red.600');
 
     &--active {
       @apply
+        transform
         translate-x-0;
         box-shadow: -10px 0 30px rgba(#000,.2);
     }
