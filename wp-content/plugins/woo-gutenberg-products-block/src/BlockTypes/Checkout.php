@@ -37,6 +37,7 @@ class Checkout extends AbstractBlock {
 				'editor_style'    => 'wc-block-editor',
 				'style'           => 'wc-block-style',
 				'script'          => 'wc-' . $this->block_name . '-block-frontend',
+				'supports'        => [],
 			)
 		);
 	}
@@ -59,6 +60,12 @@ class Checkout extends AbstractBlock {
 		do_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_before' );
 		$this->enqueue_assets( $block_attributes );
 		do_action( 'woocommerce_blocks_enqueue_checkout_block_scripts_after' );
+
+		// Deregister core checkout scripts and styles.
+		wp_deregister_script( 'wc-checkout' );
+		wp_deregister_script( 'wc-password-strength-meter' );
+		wp_deregister_script( 'selectWoo' );
+		wp_deregister_style( 'select2' );
 
 		return $this->inject_html_data_attributes( $content . $this->get_skeleton(), $block_attributes );
 	}
