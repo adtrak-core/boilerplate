@@ -11,8 +11,8 @@ use WP_REST_Response;
 use Yoast\WP\SEO\Actions\Indexation\Indexable_Complete_Indexation_Action;
 use Yoast\WP\SEO\Actions\Indexation\Indexable_General_Indexation_Action;
 use Yoast\WP\SEO\Actions\Indexation\Indexable_Post_Indexation_Action;
-use Yoast\WP\SEO\Actions\Indexation\Indexable_Term_Indexation_Action;
 use Yoast\WP\SEO\Actions\Indexation\Indexable_Post_Type_Archive_Indexation_Action;
+use Yoast\WP\SEO\Actions\Indexation\Indexable_Term_Indexation_Action;
 use Yoast\WP\SEO\Actions\Indexation\Indexation_Action_Interface;
 use Yoast\WP\SEO\Conditionals\No_Conditionals;
 use Yoast\WP\SEO\Helpers\Options_Helper;
@@ -47,7 +47,7 @@ class Indexable_Indexation_Route extends Abstract_Indexation_Route {
 	const PREPARE_ROUTE = 'indexation/prepare';
 
 	/**
-	 * The full indexation complete route constant.
+	 * The full indexation prepare route constant.
 	 *
 	 * @var string
 	 */
