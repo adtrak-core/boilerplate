@@ -81,7 +81,7 @@ var cache;
 gulp.task('scripts', function() {
   return rollup({
       // Point to the entry folder for all JS files
-      input: 'js/*.js',
+      input: '_resources/js/*.js',
       // Apply plugins
       plugins: [commonjs(), nodeResolve(), multi()],
       // Use cache for better performance
@@ -107,8 +107,8 @@ gulp.task('scripts', function() {
  * Task Watch
 **************************/
 gulp.task('watch', () => {
-  gulp.watch(`styles/**/*.scss`, gulp.series('styles'));
-  gulp.watch(`js/**/*.js`, gulp.series('scripts'));
+  gulp.watch(`_resources/styles/**/*.scss`, gulp.series('styles'));
+  gulp.watch(`_resources/js/**/*.js`, gulp.series('scripts'));
 });
 
 
