@@ -6,8 +6,8 @@
 	$(function() {
 
 
-        var iconAngleUp = "<svg class='icon icon-angle-up'><use xlink:href='"+themeURL+"/_resources/images/icons-sprite.svg#icon-angle-up'></use></svg>";
-        var iconAngleDown = "<svg class='icon icon-angle-down'><use xlink:href='"+themeURL+"/_resources/images/icons-sprite.svg#icon-angle-down'></use></svg>";
+        var iconAngleUp = "<svg class='icon icon-angle-up'><use xlink:href='"+themeURL+"/images/icons-sprite.svg#icon-angle-up'></use></svg>";
+        var iconAngleDown = "<svg class='icon icon-angle-down'><use xlink:href='"+themeURL+"/images/icons-sprite.svg#icon-angle-down'></use></svg>";
 
 		// --------------------------------------------------------------------------------------------------
 		// Back to top
