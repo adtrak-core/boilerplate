@@ -81,7 +81,7 @@ var cache;
 gulp.task('scripts', function() {
   return rollup({
       // Point to the entry folder for all JS files
-      input: '_resources/js/*.js',
+      input: '_resources/**/*.js',
       // Apply plugins
       plugins: [commonjs(), nodeResolve(), multi()],
       // Use cache for better performance
