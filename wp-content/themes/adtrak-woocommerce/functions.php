@@ -21,21 +21,21 @@ if (!class_exists('Timber')) {
 /**
  * Initialise Timber Directories
  */
-Timber::$dirname = ['views'];
+Timber::$dirname = ['_views'];
 Timber::$autoescape = false;
 
 
 /**
  * Initialise Theme Classes
  */
-require_once(__DIR__ . '/classes/BaseSite.php');
-require_once(__DIR__ . '/classes/Cleanup.php');
-require_once(__DIR__ . '/classes/Scripts.php');
-require_once(__DIR__ . '/classes/CustomPostTypes.php');
-require_once(__DIR__ . '/classes/Image.php');
-require_once(__DIR__ . '/classes/Svg.php');
-require_once(__DIR__ . '/classes/CustomFieldBlocks.php');
-require_once(__DIR__ . '/classes/Adtrak.php');
+require_once(__DIR__ . '/_functions/BaseSite.php');
+require_once(__DIR__ . '/_functions/Cleanup.php');
+require_once(__DIR__ . '/_functions/Scripts.php');
+require_once(__DIR__ . '/_functions/CustomPostTypes.php');
+require_once(__DIR__ . '/_functions/Image.php');
+require_once(__DIR__ . '/_functions/Svg.php');
+require_once(__DIR__ . '/_functions/CustomFieldBlocks.php');
+require_once(__DIR__ . '/_functions/Adtrak.php');
 
 new BaseSite();
 new Scripts();
@@ -81,8 +81,8 @@ function get_adtrak_logo($colour = null, $icon = false)
 /**
  * Initialise Commerce Based Class Features
  */
-require_once(__DIR__ . '/classes/commerce/MiniCart.php');
-require_once(__DIR__ . '/classes/commerce/CommerceOverrides.php');
+require_once(__DIR__ . '/_functions/commerce/MiniCart.php');
+require_once(__DIR__ . '/_functions/commerce/CommerceOverrides.php');
 
 new CommerceMiniCart();
 new CommerceOverrides();

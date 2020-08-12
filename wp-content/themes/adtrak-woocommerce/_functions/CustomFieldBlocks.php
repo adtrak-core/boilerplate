@@ -54,6 +54,6 @@ class CustomFieldBlocks
         $context['block'] = $block;
         $context['fields'] = get_fields();
 
-        Timber::render('components/hero.twig', $context);
+        Timber::render('_components/hero.twig', $context);
     }
 }
