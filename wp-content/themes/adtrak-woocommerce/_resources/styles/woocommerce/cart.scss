@@ -12,6 +12,10 @@
     @apply uppercase;
     @apply text-xs text-left;
   }
+
+  td {
+    @apply p-3;
+  }
 }
 
 .shop_table.cart {
@@ -34,4 +38,8 @@
 
 .cart__actions {
   @apply flex justify-between items-center;
+}
+
+.quantity label {
+  @apply text-sm;
 }

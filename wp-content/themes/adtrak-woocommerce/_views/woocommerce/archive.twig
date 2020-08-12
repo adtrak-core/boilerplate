@@ -17,9 +17,7 @@
 		<div class="w-full md:w-9/12">
 			<div class="flex flex-wrap products">
 				{% for post in products %}
-					<div class="bg-white">
-						{% include ["partials/shop/tease-product.twig"] %}
-					</div>
+					{% include ["partials/shop/tease-product.twig"] %}
 				{% endfor %}
 			</div>
 		</div>

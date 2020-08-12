@@ -1,9 +1,9 @@
 .products {
-  @apply bg-gray-100 p-4;
+  @apply p-4;
 }
 
 .products .product {
-  @apply relative text-center w-full bg-white;
+  @apply relative text-center;
 
   .button {
     @apply bg-primary-dark text-white;

@@ -1,22 +1,28 @@
-<div class="w-full mb-8 product column md:w-6/12 lg:w-4/12">
-	{{ fn('timber_set_product', post) }}
+<div class="w-full p-4 mb-8 product column md:w-6/12 lg:w-4/12">
 
-	<div class="w-full product__info">
-		<a href="{{ post.link }}">
-			{% do action('woocommerce_before_shop_loop_item_title') %}
-		</a>
+	<div class="p-4 bg-white">
+		
+		{{ fn('timber_set_product', post) }}
 
-		{% if post.title %}
-			<h3 class="entry-title">
-				<a href="{{ post.link }}">{{ post.title }}</a>
-			</h3>
-		{% else %}
-			<h3 class="entry-title">
-				<a href="{{ post.link }}">{{ fn('the_title') }}</a>
-			</h3>
-		{% endif %}
+		<div class="product__info">
+			<a href="{{ post.link }}">
+				{% do action('woocommerce_before_shop_loop_item_title') %}
+			</a>
 
-		{% do action( 'woocommerce_after_shop_loop_item_title' ) %}
-		{% do action( 'woocommerce_after_shop_loop_item' ) %}
+			{% if post.title %}
+				<h3 class="entry-title">
+					<a href="{{ post.link }}">{{ post.title }}</a>
+				</h3>
+			{% else %}
+				<h3 class="entry-title">
+					<a href="{{ post.link }}">{{ fn('the_title') }}</a>
+				</h3>
+			{% endif %}
+
+			{% do action( 'woocommerce_after_shop_loop_item_title' ) %}
+			{% do action( 'woocommerce_after_shop_loop_item' ) %}
+		</div>
+
 	</div>
+	
 </div>

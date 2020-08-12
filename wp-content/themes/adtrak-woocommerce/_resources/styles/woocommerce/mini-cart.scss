@@ -8,7 +8,7 @@
  */
 .cart-slideout {
   transform: translateX(100%);
-  transition: var(--default-transition);
+  transition: .3s;
   max-width: 340px;
 
   @apply w-full;
