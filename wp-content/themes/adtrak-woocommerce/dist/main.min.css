@@ -650,7 +650,8 @@ Buttons ***************************************************/
 
 input[type="button"],
 button,
-.btn {
+.btn,
+.button {
   border-radius: 0.25rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -660,7 +661,7 @@ button,
   transition-duration: 300ms;
 }
 
-.btn--primary {
+.btn-primary {
   --bg-opacity: 1;
   background-color: #ccc;
   background-color: rgba(204, 204, 204, var(--bg-opacity));
@@ -669,7 +670,7 @@ button,
   color: rgba(255, 255, 255, var(--text-opacity));
 }
 
-.btn--primary:hover {
+.btn-primary:hover {
   --bg-opacity: 1;
   background-color: #666;
   background-color: rgba(102, 102, 102, var(--bg-opacity));
@@ -1552,9 +1553,29 @@ h3 {
   color: gold;
 }
 
+.products {
+  --bg-opacity: 1;
+  background-color: #f5f5f5;
+  background-color: rgba(245, 245, 245, var(--bg-opacity));
+  padding: 1rem;
+}
+
 .products .product {
   position: relative;
   text-align: center;
+  width: 100%;
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+}
+
+.products .product .button {
+  --bg-opacity: 1;
+  background-color: #666;
+  background-color: rgba(102, 102, 102, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 .onsale {
@@ -1736,6 +1757,12 @@ h3 {
   font-size: 0.875rem;
 }
 
+.cart__actions button {
+  --bg-opacity: 1;
+  background-color: #ccc;
+  background-color: rgba(204, 204, 204, var(--bg-opacity));
+}
+
 .woocommerce-pagination {
   margin-top: 0.75rem;
 }
@@ -1804,6 +1831,16 @@ h3 {
 .woocommerce-address-fields label {
   width: 100%;
   display: block;
+}
+
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.column {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* Extra Add On Content Normalize */

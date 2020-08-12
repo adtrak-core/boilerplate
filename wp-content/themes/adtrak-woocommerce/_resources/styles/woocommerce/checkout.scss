@@ -67,3 +67,7 @@
 .woocommerce-privacy-policy-text p {
   @apply my-3 text-sm;
 }
+
+.cart__actions button {
+  @apply bg-primary;
+}

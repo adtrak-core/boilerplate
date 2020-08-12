@@ -1,9 +1,6 @@
 <?php
 
 $context = Timber::context();
-
 $context['post'] = new Timber\Post();
 
-$templates = ['index.twig'];
-
-Timber::render($templates, $context);
+Timber::render( [ 'front-page.twig' ], $context );

@@ -9,16 +9,17 @@
           'partials/mobile-nav.scss',
           'partials/typography.scss';
 
-@import './woocommerce/single-product';
-@import './woocommerce/mini-cart';
-@import './woocommerce/reviews';
-@import './woocommerce/loop';
-@import './woocommerce/cart';
-@import './woocommerce/checkout';
-@import './woocommerce/pagination';
-@import './woocommerce/account';
+@import 'woocommerce/single-product.scss', 
+        'woocommerce/mini-cart.scss',
+        'woocommerce/reviews.scss',
+        'woocommerce/loop.scss',
+        'woocommerce/cart.scss',
+        'woocommerce/checkout.scss',
+        'woocommerce/pagination.scss',
+        'woocommerce/account.scss',
+        'woocommerce/grid.scss';
 
 /* Extra Add On Content Normalize */
-@import './woocommerce/subscriptions';
+@import 'woocommerce/subscriptions.scss';
 
 @tailwind utilities;

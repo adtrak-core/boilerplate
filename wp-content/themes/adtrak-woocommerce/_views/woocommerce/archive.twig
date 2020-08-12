@@ -10,16 +10,18 @@
 		{% do action('woocommerce_before_shop_loop') %}
 	</div>
 
-	<section class="flex flex-wrap row">
-		<div class="w-full column md:w-9/12">
-			<div class="flex flex-wrap products row">
+	<section class="flex flex-wrap">
+		<div class="w-full md:w-9/12">
+			<div class="flex flex-wrap products">
 				{% for post in products %}
-					{% include ["partials/shop/tease-product.twig"] %}
+					<div class="bg-white">
+						{% include ["partials/shop/tease-product.twig"] %}
+					</div>
 				{% endfor %}
 			</div>
 		</div>
 
-		<aside class="w-full column md:w-3/12">
+		<aside class="w-full md:w-3/12">
 		{% do action('woocommerce_sidebar') %}
 		</aside>
 	</section>

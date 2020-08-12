@@ -1,6 +1,13 @@
+.products {
+  @apply bg-gray-100 p-4;
+}
+
 .products .product {
-  @apply relative;
-  @apply text-center;
+  @apply relative text-center w-full bg-white;
+
+  .button {
+    @apply bg-primary-dark text-white;
+  }
 }
 
 .onsale {

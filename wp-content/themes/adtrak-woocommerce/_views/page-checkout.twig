@@ -2,10 +2,20 @@
 
 {% block content %}
 
-<div class="container">
-  <h1 class="mb-4">{{ post.title }}</h1>
-  
-	{{ post.content }}
+<div class="container flex-wrap flex-grow my-8 lg:flex lg:my-16">
+
+  <main class="lg:w-2/3 lg:pr-16">
+
+    <article class="copy">
+
+      <h1>{{post.title}}</h1>
+
+      {{post.content}}
+
+    </article>
+
+  </main>
+
 </div>
 
 {% endblock %}

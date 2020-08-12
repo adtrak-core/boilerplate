@@ -2,11 +2,12 @@
 Buttons ***************************************************/
 input[type="button"],
 button,
-.btn {
+.btn,
+.button {
   @apply rounded py-2 px-4 transition duration-300;
 }
 
-.btn--primary {
+.btn-primary {
   @apply bg-primary text-white;
 
   &:hover {

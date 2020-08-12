@@ -1,7 +1,21 @@
 {% extends "_layout/base.twig" %}
 
 {% block content %}
-	<div class="container">
-		{{content}}
-	</div>
+
+<div class="container flex-wrap flex-grow my-8 lg:flex lg:my-16">
+
+	<main class="lg:w-2/3 lg:pr-16">
+
+		<article class="copy">
+
+			<h1>{{post.title}}</h1>
+
+			{{content}}
+
+		</article>
+
+	</main>
+
+</div>
+
 {% endblock %}
