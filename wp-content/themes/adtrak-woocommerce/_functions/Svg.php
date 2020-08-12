@@ -7,7 +7,7 @@ class Svg
      *
      * @var string
      */
-    public static $path = '/assets/svg/';
+    public static $path = '/_resources/images/';
 
     /**
      * __construct

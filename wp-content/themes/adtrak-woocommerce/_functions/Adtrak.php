@@ -35,7 +35,7 @@ class Adtrak
                 break;
         }
 
-        $logo = get_theme_file_uri('_resources/svg/' . $logo . $end);
+        $logo = get_theme_file_uri('_resources/images/' . $logo . $end);
 
         return sprintf('<img src="%s" alt="Adtrak Logo">', $logo);
     }
