@@ -55,9 +55,11 @@ class BaseSite extends Timber\Site
      */
     public function add_to_context($context)
     {
-        $context['header_menu']  = new Timber\Menu('primary');
-        $context['footer_menu']  = new Timber\Menu('footer');
-        $context['site']  = $this;
+        $context['site'] = $this;
+        $context['options'] = get_fields('option');
+        $context['primaryMenu'] = new Timber\Menu('Primary Menu');
+        $context['secondaryMenu'] = new Timber\Menu('Secondary Menu');
+        $context['footerMenu'] = new Timber\Menu('Footer Menu');
         return $context;
     }
 
@@ -70,6 +72,7 @@ class BaseSite extends Timber\Site
     {
         register_nav_menus([
             'primary' => __('Primary Menu', 'adtrak'),
+            'secondary' => __('Secondary Menu', 'adtrak'),
             'footer' => __('Footer Menu', 'adtrak')
         ]);
     }
