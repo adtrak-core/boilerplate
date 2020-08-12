@@ -1,11 +1,13 @@
 @tailwind base;
 @tailwind components;
 
-@import './partials/base';
-@import './partials/grid';
-@import './partials/typography';
-@import './partials/buttons';
-@import './partials/form';
+@import   'partials/core.scss',
+          'partials/buttons.scss',
+          'partials/cookies.scss',
+          'partials/desktop-nav.scss',
+          'partials/forms.scss',
+          'partials/mobile-nav.scss',
+          'partials/typography.scss';
 
 @import './woocommerce/single-product';
 @import './woocommerce/mini-cart';

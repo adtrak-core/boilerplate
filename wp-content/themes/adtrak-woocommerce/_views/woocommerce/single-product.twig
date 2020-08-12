@@ -1,4 +1,4 @@
-{% extends 'layout/base.twig' %}
+{% extends '_layout/base.twig' %}
 
 {% block content %}
 
@@ -8,12 +8,12 @@
 	{% do action('woocommerce_before_single_product') %}
 
 	<article itemscope itemtype="http://schema.org/Product" class="{{ post.class }}">
-		<div class="row flex flex-wrap mb-10">
-			<div class="column w-full lg:w-6/12 entry-images">
+		<div class="flex flex-wrap mb-10 row">
+			<div class="w-full column lg:w-6/12 entry-images">
 				{% do action('woocommerce_before_single_product_summary') %}
 			</div>
 
-			<div class="column w-full lg:w-6/12">
+			<div class="w-full column lg:w-6/12">
 				{% do action('woocommerce_single_product_summary') %}
 			</div>
 		</div>

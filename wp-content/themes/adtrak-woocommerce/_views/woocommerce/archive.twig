@@ -1,4 +1,4 @@
-{% extends 'layout/base.twig' %}
+{% extends '_layout/base.twig' %}
 
 {% block content %}
 
@@ -11,15 +11,15 @@
 	</div>
 
 	<section class="flex flex-wrap row">
-		<div class="column w-full md:w-9/12">
-			<div class="products row flex flex-wrap">
+		<div class="w-full column md:w-9/12">
+			<div class="flex flex-wrap products row">
 				{% for post in products %}
 					{% include ["partials/shop/tease-product.twig"] %}
 				{% endfor %}
 			</div>
 		</div>
 
-		<aside class="column w-full md:w-3/12">
+		<aside class="w-full column md:w-3/12">
 		{% do action('woocommerce_sidebar') %}
 		</aside>
 	</section>

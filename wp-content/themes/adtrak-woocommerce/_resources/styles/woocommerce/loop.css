@@ -5,9 +5,9 @@
 
 .onsale {
   @apply absolute top-0;
-  @apply py-1 px-2;
-  @apply uppercase text-sm;
-  @apply bg-link;
+  @apply px-2 py-1;
+  @apply text-sm uppercase;
+  @apply bg-secondary;
 
   left: 20px;
 }
@@ -38,7 +38,7 @@
  */
 
 .before-shop-loop {
-  @apply flex flex-wrap justify-between items-center my-3;
+  @apply flex flex-wrap items-center justify-between my-3;
 }
 
 .woocommerce-notices-wrapper {
