@@ -1,0 +1,37 @@
+.shop_table {
+  .product-thumbnail img {
+    max-width: 50px;
+  }
+
+  td,
+  th {
+    @apply py-3;
+  }
+
+  th {
+    @apply uppercase;
+    @apply text-xs text-left;
+  }
+}
+
+.shop_table.cart {
+  @apply w-full;
+  @apply mb-10;
+
+  td,
+  th {
+    @apply border-b;
+  }
+
+  .actions {
+  }
+}
+
+.cart-collaterals {
+  @apply p-3;
+  @apply border;
+}
+
+.cart__actions {
+  @apply flex justify-between items-center;
+}

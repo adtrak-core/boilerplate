@@ -1,0 +1,32 @@
+.woocommerce p.stars {
+  a {
+    position: relative;
+    height: 1em;
+    width: 1em;
+    text-indent: -999em;
+    display: inline-block;
+    text-decoration: none;
+    color: #ccc;
+  }
+
+  a:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    content: '★';
+    text-indent: 0;
+  }
+
+  a:hover {
+    color: gold;
+  }
+
+  .selected,
+  .active {
+    color: gold;
+  }
+}
