@@ -99,6 +99,9 @@ function timber_set_product($post)
     }
 }
 
+/* Hide the admin bar for logged in users */
+show_admin_bar(false);
+
 /**
  * Handy function to dump the value and wrap in pre tags. Used for debugging only.
  * Doesn't display anything is debug is not enabled.
