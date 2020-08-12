@@ -1,16 +1,40 @@
-<meta charset="{{ site.charset }}"/>
-<meta name="description" content="{{ site.description }}">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="author" href="{{ site.theme.link }}/humans.txt"/>
-<link rel="pingback" href="{{ site.pingback_url }}"/>
-<link rel="profile" href="http://gmpg.org/xfn/11">
+<!DOCTYPE html>
+<html {{site.language_attributes}}>
 
-<link rel="stylesheet" href="{{ site.theme.link }}/assets/css/app.css" type="text/css" media="screen"/>
+<head>
+    <meta charset="{{ site.charset }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# <title>{{ site.title }}</title> #}
 
-<script src="{{ site.theme.link }}/assets/js/app.js" defer></script>
+    {% block htmlheader %}
+    <link rel="stylesheet" href="{{ theme.link ~ '/dist/main.min.css' }}">
+    {% endblock %}
 
-{{ function('wp_head') }}
+    {% if options.google_analytics %}
+    {{ options.google_analytics}}
+    {% endif %}
 
-{% block head %}{% endblock %}
+    {% if options.schema %}
+    {{ options.schema}}
+    {% endif %}
+
+    <link rel="stylesheet" href="{{ site.theme.link }}/dist/main.min.css" type="text/css" media="screen" />
+    <script src="{{ site.theme.link }}/dist/production-dist.js" defer></script>
+
+    {{ function('wp_head') }}
+</head>
+
+<body class="{{body_class}}">
+
+    {{ fn('wp_body_open') }}
+
+    <nav class="mob-nav">
+        <div class="scroll-container">
+        </div>
+    </nav>
+
+    <div class="wrapper">
+
+        {% include "_components/mobile-top-bar.twig" %}
+

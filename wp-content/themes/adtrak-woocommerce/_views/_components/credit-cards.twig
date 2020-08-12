@@ -1,0 +1,7 @@
+{{ options.cc_header ? options.cc_header }}
+
+{% for item in options.credit_cards %}
+
+<img class="lazyload" src="" data-src="{{item.card.url|resize('25', '25')}}" alt="Credit Card Logo" />
+
+{% endfor %}

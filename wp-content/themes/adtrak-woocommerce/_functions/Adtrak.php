@@ -27,8 +27,8 @@ class Adtrak
             case 'white':
                 $logo = 'adtrak-white';
                 break;
-            case 'black':
-                $logo = 'adtrak-black';
+            case 'navy':
+                $logo = 'adtrak-navy';
                 break;
             default:
                 $logo = 'adtrak';

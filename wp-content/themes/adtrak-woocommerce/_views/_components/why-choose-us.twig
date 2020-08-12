@@ -1,0 +1,10 @@
+
+{{ options.why_header ? options.why_header }}
+   
+{% for item in options.why_choose_us %}
+
+  {{ function('icon', item.icon) }}
+
+  {{item.reason}}
+  
+{% endfor %}

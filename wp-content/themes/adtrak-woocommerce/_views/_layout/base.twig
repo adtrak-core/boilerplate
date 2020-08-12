@@ -1,25 +1,21 @@
-<!doctype html>
-<html {{ site.language_attributes }}>
-	<head>
-		{% include 'layout/head.twig' %}
-	</head>
-	<body class="{{ body_class }}">
-		{{ fn('wp_body_open') }}
+{% include '_layout/head.twig' %}
 
-		{% include 'partials/header.twig' %}
+{% block header %}
+	{% include "_components/header.twig" %}
+{% endblock %}
 
-		{# Ajax Cart Slideout. Remove this if not needed. #}
-		{% include 'partials/shop/ajax-cart.twig' %}
+{% block hero %}
+	{% include "_components/hero.twig" %}
+{% endblock %}
 
-		<main>
-			<section id="content" role="main">
-				{% block content %}{% endblock %}
-				{% block sidebar %}{% endblock %}
-			</section>
-		</main>
+{% block page_content %}
+{% endblock %}
 
-		{% include 'partials/footer.twig' %}
+{% block footer %}
+	{% include "_components/footer.twig" %}
+	{# Ajax Cart Slideout. Remove this if not needed. #}
+	{% include 'partials/shop/ajax-cart.twig' %}
+{% endblock %}
 
-		{{ function('wp_footer') }}
-	</body>
-</html>
+{% include "_layout/foot.twig" %}
+

@@ -1,4 +1,20 @@
-<div id="example-{{ block.id }}" class="p-10 bg-secondary text-center mb-4">
-	<h1>{{ fields.title }}</h1>
-	<p>{{ fields.subtitle }}</p>
+<div class="w-full bg-center bg-cover hero min-h-128">
+    {% set hero_small = post.thumbnail.src|resize('800') %}
+    {% set hero_medium = post.thumbnail.src|resize('1200') %}
+    {% set hero_large = post.thumbnail.src|resize('2000') %}
+    <style>
+      .hero {
+        background-image: url('{{hero_small}}');
+      }
+      @media (min-width: 800px) {
+        .hero {
+          background-image: url('{{hero_medium}}');
+        }
+      }
+      @media (min-width: 1200px) {
+        .hero {
+          background-image: url('{{hero_large}}');
+        }
+      }
+    </style>
 </div>
