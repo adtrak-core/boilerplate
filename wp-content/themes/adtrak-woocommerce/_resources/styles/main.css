@@ -1,11 +1,11 @@
 @tailwind base;
 @tailwind components;
 
-@import './globals/base';
-@import './globals/grid';
-@import './globals/typography';
-@import './globals/buttons';
-@import './globals/form';
+@import './partials/base';
+@import './partials/grid';
+@import './partials/typography';
+@import './partials/buttons';
+@import './partials/form';
 
 @import './woocommerce/single-product';
 @import './woocommerce/mini-cart';
