@@ -29,7 +29,7 @@
     "gulp-postcss": "^8.0.0",
     "gulp-purgecss": "^1.2.0",
     "gulp-sass": "^4.1.0",
-    "vue-template-compiler": "^2.6.11",
+    "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
     "cross-env": "^7.0.2",

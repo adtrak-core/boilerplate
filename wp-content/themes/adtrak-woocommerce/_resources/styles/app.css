@@ -1,6 +1,5 @@
-@import 'tailwindcss/base';
-
-@import 'tailwindcss/components';
+@tailwind base;
+@tailwind components;
 
 @import './globals/base';
 @import './globals/grid';
@@ -20,4 +19,4 @@
 /* Extra Add On Content Normalize */
 @import './woocommerce/subscriptions';
 
-@import 'tailwindcss/utilities';
+@tailwind utilities;

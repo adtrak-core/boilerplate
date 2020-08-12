@@ -37,7 +37,7 @@ class TailwindExtractor {
  * Task Styles
 **************************/
 gulp.task('styles', function () {
-  return gulp.src('_resources/*/**.scss')
+  return gulp.src('_resources/*/**.css')
   .pipe(sass())
   .pipe(gulpIf(argv.production, 
     postcss([
