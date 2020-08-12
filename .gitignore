@@ -112,6 +112,13 @@ Thumbs.db
 !wp-content/plugins/woocommerce-gateway-stripe/
 !wp-content/plugins/woo-gutenberg-products-block/
 
+!wp-content/plugins/contact-form-7/
+!wp-content/plugins/flamingo/
+!wp-content/plugins/slickplan-importer/
+!wp-content/plugins/wp-fastest-cache/
+!wp-content/plugins/wp-nested-pages/
+
+
 !wp-content/themes/adtrak-woocommerce/
 !wp-content/themes/adtrak-child-tailwind/
 !wp-content/themes/adtrak-child-tailwind-twig-timber/
