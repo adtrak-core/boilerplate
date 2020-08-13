@@ -948,11 +948,11 @@ input[aria-invalid="true"],
 }
 
 select {
-  background-image: url(../images/angle-down-light.svg);
-  background-position: 90% center;
+  -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%), linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 20px) calc(1.5em + 2px), calc(100% - 15px) calc(1.5em + 2px), calc(100% - 2.5em) 1em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
   background-repeat: no-repeat;
-  background-size: 12px;
-  background-color: #fff;
 }
 
 textarea {
@@ -1552,10 +1552,6 @@ h3 {
   color: gold;
 }
 
-.products {
-  padding: 1rem;
-}
-
 .products .product {
   position: relative;
   text-align: center;
@@ -1568,21 +1564,27 @@ h3 {
   --text-opacity: 1;
   color: #fff;
   color: rgba(255, 255, 255, var(--text-opacity));
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .onsale {
   position: absolute;
-  top: 0;
+  top: 1rem;
+  left: 1rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   font-size: 0.875rem;
   text-transform: uppercase;
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  font-weight: 700;
   --bg-opacity: 1;
-  background-color: #d0dfe5;
-  background-color: rgba(208, 223, 229, var(--bg-opacity));
-  left: 20px;
+  background-color: #f56565;
+  background-color: rgba(245, 101, 101, var(--bg-opacity));
 }
 
 .size-woocommerce_thumbnail {
@@ -1600,7 +1602,6 @@ h3 {
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .woocommerce-LoopProduct-link .price,

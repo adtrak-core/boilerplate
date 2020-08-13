@@ -1,22 +1,20 @@
-.products {
-  @apply p-4;
-}
+// .products {
+//   @apply p-4;
+// }
 
 .products .product {
   @apply relative text-center;
 
   .button {
-    @apply bg-primary-dark text-white;
+    @apply bg-primary-dark text-white mx-auto;
   }
 }
 
 .onsale {
-  @apply absolute top-0;
+  @apply absolute top-4 left-4;
   @apply px-2 py-1;
-  @apply text-sm uppercase;
-  @apply bg-secondary;
-
-  left: 20px;
+  @apply text-sm uppercase text-white font-bold;
+  @apply bg-red-500;
 }
 
 .size-woocommerce_thumbnail {
@@ -32,7 +30,6 @@
 .product__info {
   @apply text-center;
   @apply flex flex-col;
-  @apply items-center;
 
   .price {
     @apply block;
