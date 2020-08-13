@@ -6,7 +6,11 @@
 {% block content %}
 
 <div class="container">
-	{% do action('woocommerce_before_main_content') %}
+	
+	<div class="mt-4 text-sm">
+		{# breadcrumbs #}
+		{% do action('woocommerce_before_main_content') %}
+	</div>
 
 	{% do action('woocommerce_before_single_product') %}
 
