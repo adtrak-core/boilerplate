@@ -11,7 +11,7 @@
 }
 
 .onsale {
-  @apply absolute top-4 left-4;
+  @apply absolute top-4 left-4 z-20;
   @apply px-2 py-1;
   @apply text-sm uppercase text-white font-bold;
   @apply bg-red-500;

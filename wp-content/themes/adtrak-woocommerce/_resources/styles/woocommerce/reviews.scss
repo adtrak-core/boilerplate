@@ -1,8 +1,8 @@
 .woocommerce p.stars {
   a {
     position: relative;
-    height: 1em;
-    width: 1em;
+    height: 1.5em;
+    width: 1.5em;
     text-indent: -999em;
     display: inline-block;
     text-decoration: none;
@@ -14,11 +14,12 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 1em;
-    height: 1em;
+    width: 1.5em;
+    height: 1.5em;
     line-height: 1;
     content: '★';
     text-indent: 0;
+    font-size: 1.5em;
   }
 
   a:hover {

@@ -31,8 +31,7 @@ $product_tabs = apply_filters('woocommerce_product_tabs', array());
 
 if (!empty($product_tabs)) : ?>
 
-  <div class="flex justify-between mb-10">
-    <nav class="w-2/12" role="tablist">
+    <nav class="flex justify-center w-full" role="tablist">
       <?php $i = 0;
       foreach ($product_tabs as $key => $product_tab) : ?>
         <a class="product-tab-link <?= ($i == 0) ? 'active' : ''; ?>" href="#tab-<?= esc_attr($key); ?>">
@@ -42,10 +41,13 @@ if (!empty($product_tabs)) : ?>
       endforeach; ?>
     </nav>
 
+  <div class="flex justify-between mb-10">
+    
+
     <?php
     $i = 0;
     foreach ($product_tabs as $key => $product_tab) : ?>
-      <div class="w-10/12 product-tab-panel <?= ($i != 0) ? 'hidden' : ''; ?>" id="tab-<?= esc_attr($key); ?>" role="tabpanel" aria-labelledby="tab-title-<?= esc_attr($key); ?>">
+      <div class="w-full product-tab-panel copy <?= ($i != 0) ? 'hidden' : ''; ?>" id="tab-<?= esc_attr($key); ?>" role="tabpanel" aria-labelledby="tab-title-<?= esc_attr($key); ?>">
         <?php
         if (isset($product_tab['callback'])) {
           call_user_func($product_tab['callback'], $key, $product_tab);

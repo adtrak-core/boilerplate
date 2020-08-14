@@ -1,23 +1,51 @@
-.summary .price {
+.price {
+  @apply font-bold;
+
   del .amount {
+      @apply text-red-600;
   }
 
-  ins .amount {
+  ins {
+    @apply no-underline;
+
+     .amount {
+      @apply  border-none;
+    }
   }
 }
 
+/* Ratings */
 .woocommerce-product-rating {
   @apply flex items-center;
   @apply mb-2;
 }
 
+.woocommerce .comment-form-rating {
+  @apply my-4;
+}
+
+.woocommerce .comment-form-cookies-consent {
+  @apply text-xs mt-4 flex;
+
+  input {
+    @apply mr-4 w-auto;
+  }
+}
+
+.woocommerce .comment-form {
+  .form-row {
+    @apply mb-4;
+  }
+  .form-submit {
+    @apply inline-block mt-4;
+  }
+}
+
 .woocommerce .star-rating {
-  overflow: hidden;
-  position: relative;
   height: 1em;
   line-height: 1;
-  font-size: 20px;
   width: 110px;
+  @apply relative overflow-hidden;
   @apply mr-1;
 
   &::before,
@@ -52,20 +80,99 @@
   }
 }
 
-.single-cart {
-  @apply flex;
+/* Single product main image */
+.woocommerce-product-gallery {
+  @apply relative;
+
+  .woocommerce-product-gallery__trigger {
+    @apply absolute top-0 right-0 bg-white w-12 h-12 z-50 flex items-center justify-center;
+  }
+
+  .woocommerce-product-gallery__wrapper img {
+    @apply w-full h-auto cursor-pointer;
+  }  
 }
 
+
+/* Single product gallery thumbnails */
+.flex-control-thumbs {
+  @apply flex flex-wrap items-center mt-4;
+
+  li {
+    @apply p-2 w-1/2 cursor-pointer;
+
+    img {
+      @apply w-full object-cover;
+    }
+  }
+
+  @screen 2xs {
+    li {
+      @apply w-1/3;
+    }
+  }
+
+  @screen xs {
+    li {
+      @apply w-1/4;
+    }
+  }
+
+  @screen sm {
+    li {
+      @apply w-1/6;
+    }
+  }
+}
+
+/* Notice that appears after product added to cart */
+.woocommerce-notices-wrapper {
+  @apply bg-secondary p-4 mb-4 text-sm rounded-md text-center font-bold;
+
+  a {
+    @apply block mb-2 bg-white text-center;
+  }
+
+  @screen md {
+    @apply mb-8 text-left;
+
+    a {
+      @apply inline-block mr-8 mb-0;
+    }
+  }
+}
+
+
+/* Product quantity and add to cart */
+.single-cart {
+  @apply bg-gray-100 p-4 mt-4;
+
+  label {
+    @apply my-2;
+  }
+
+  button {
+    @apply bg-secondary mt-4;
+  }
+}
+
+
+/* Tabs */
 .product-tab-link {
-  @apply block;
-  @apply py-2 px-4;
+  @apply inline-block;
+  @apply py-2 px-4 mx-2;
 
   &.active {
-    @apply font-bold;
+    @apply font-bold bg-secondary rounded-t;
   }
 }
 
 .product-tab-panel {
   @apply border;
   @apply py-4 px-6;
+}
+
+/* Related products */
+.related {
+  @apply bg-gray-100 p-8 mb-8;
 }
