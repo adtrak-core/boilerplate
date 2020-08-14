@@ -275,15 +275,7 @@
           window.addEventListener('resize', addDropdownIcon);
 
 
-          // --------------------------------------------------------------------------------------------------
-  		// Ninja Forms event tracking | https://www.chrisains.com/seo/tracking-ninja-form-submissions-with-google-analytics-jquery/
-  		// --------------------------------------------------------------------------------------------------
-          jQuery( document ).on( 'nfFormReady', function() {
-          	nfRadio.channel('forms').on('submit:response', function(form) {
-                  gtag('event', 'conversion', {'event_category': form.data.settings.title,'event_action': 'Send Form','event_label': 'Successful '+form.data.settings.title+' Enquiry'});
-          		console.log(form.data.settings.title + ' successfully submitted');
-          	});
-          });
+          
 
   	});
 
