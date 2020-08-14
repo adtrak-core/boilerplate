@@ -76,15 +76,21 @@
         window.addEventListener('resize', addDropdownIcon);
 
 
-        // --------------------------------------------------------------------------------------------------
-		// Ninja Forms event tracking | https://www.chrisains.com/seo/tracking-ninja-form-submissions-with-google-analytics-jquery/
 		// --------------------------------------------------------------------------------------------------
-        jQuery( document ).on( 'nfFormReady', function() {
-        	nfRadio.channel('forms').on('submit:response', function(form) {
-                gtag('event', 'conversion', {'event_category': form.data.settings.title,'event_action': 'Send Form','event_label': 'Successful '+form.data.settings.title+' Enquiry'});
-        		console.log(form.data.settings.title + ' successfully submitted');
-        	});
-        });
+		// Contact form 7 tracking
+		// ** To use this replace the FORMID with the id of your contact form and then replace the FORM NAME with the form name.
+		// ** Use as many if statement as required to cover off your forms.
+		// --------------------------------------------------------------------------------------------------
+		document.addEventListener('wpcf7mailsent', function (event) {
+			if ('FORMID' == event.detail.contactFormId) {
+				// ga('send', 'event', 'Contact Form', 'Submit', 'Contact Form A');
+				gtag('event', 'Course Form Submission', { 'event-category': 'FORM NAME Submission', 'event_label': 'FORM NAME Submission ' + window.location });
+			}
+			else if ('FORMID' == event.detail.contactFormId) {
+				// ga('send', 'event', 'Contact Form', 'Submit', 'Contact Form B');
+				gtag('event', 'Contact Form Submission', { 'event-category': 'FORM NAME Submission', 'event_label': 'FORM NAME Submission' });
+			}
+		}, false);
 
 	});
 
