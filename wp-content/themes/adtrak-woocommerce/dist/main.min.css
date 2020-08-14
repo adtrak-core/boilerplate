@@ -1902,6 +1902,7 @@ h3 {
   --text-opacity: 1;
   color: #666;
   color: rgba(102, 102, 102, var(--text-opacity));
+  margin-top: 1rem;
 }
 
 /* Coupons */
@@ -2053,10 +2054,11 @@ h3 {
   font-size: 0.875rem;
 }
 
-.cart__actions button {
+.place-order button {
   --bg-opacity: 1;
-  background-color: #ccc;
-  background-color: rgba(204, 204, 204, var(--bg-opacity));
+  background-color: #d0dfe5;
+  background-color: rgba(208, 223, 229, var(--bg-opacity));
+  font-weight: 700;
 }
 
 .woocommerce-pagination {
@@ -2127,6 +2129,33 @@ h3 {
 .woocommerce-address-fields label {
   width: 100%;
   display: block;
+}
+
+.woocommerce-form-login__rememberme {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.woocommerce-form-login__rememberme input {
+  margin-right: 1rem;
+  width: auto;
+}
+
+.woocommerce-form-login__submit {
+  display: block;
+  --bg-opacity: 1;
+  background-color: #d0dfe5;
+  background-color: rgba(208, 223, 229, var(--bg-opacity));
+  font-weight: 700;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.lost_password {
+  font-size: 0.875rem;
+  margin-top: 1rem;
 }
 
 .widget {

@@ -30,11 +30,11 @@ if (!$checkout->is_registration_enabled() && $checkout->is_registration_required
 
 ?>
 
-<form name="checkout" method="post" class="checkout woocommerce-checkout flex flex-wrap row" action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
+<form name="checkout" method="post" class="flex flex-wrap checkout woocommerce-checkout row" action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
 
   <?php if ($checkout->get_checkout_fields()) : ?>
     <?php do_action('woocommerce_checkout_before_customer_details'); ?>
-    <div class="column w-7/12 billing-shipping">
+    <div class="w-full column lg:w-7/12 billing-shipping">
       <div>
         <?php do_action('woocommerce_checkout_billing'); ?>
       </div>
@@ -47,7 +47,7 @@ if (!$checkout->is_registration_enabled() && $checkout->is_registration_required
     <?php do_action('woocommerce_checkout_after_customer_details'); ?>
   <?php endif; ?>
 
-  <div class="column w-5/12">
+  <div class="w-full column lg:w-5/12">
     <div class="p-3 border">
       <?php do_action('woocommerce_checkout_before_order_review_heading'); ?>
 

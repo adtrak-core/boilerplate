@@ -61,13 +61,12 @@
   @apply bg-gray-300 p-4;
 
   .checkout-button {
-    @apply bg-white font-bold text-primary-dark;
+    @apply bg-white font-bold text-primary-dark mt-4;
   }
 }
 
 /* Coupons */
 .woocommerce-cart-form {
-  
   .coupon {
     @apply w-full flex flex-wrap text-sm;
 
