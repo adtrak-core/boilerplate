@@ -126,11 +126,11 @@
 }
 
 /* Notice that appears after product added to cart */
-.woocommerce-notices-wrapper {
-  @apply bg-secondary p-4 mb-4 text-sm rounded-md text-center font-bold;
+.woocommerce-message {
+  @apply bg-secondary mb-4 text-sm rounded-md text-center font-bold p-4;
 
   a {
-    @apply block mb-2 bg-white text-center;
+    @apply block mb-2 bg-white text-center p-4;
   }
 
   @screen md {
