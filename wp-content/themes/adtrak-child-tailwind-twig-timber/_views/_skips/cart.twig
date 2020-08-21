@@ -1,0 +1,27 @@
+{% extends '_layout/base.twig' %}
+
+{% block content %}
+
+<div class="container flex-wrap flex-grow my-8 lg:flex lg:my-16">
+
+    <main class="lg:w-2/3 lg:pr-16">
+
+        <article class="copy">
+
+            {% do action('ash_wrapper_start') %}
+            {% do action('ash_before_cart') %}
+            {% do action('ash_cart') %}
+            {% do action('ash_after_cart') %}
+            {% do action('ash_wrapper_end') %}
+
+        </article>
+
+    </main>
+
+    <aside class="bg-gray-100 lg:w-1/3">
+        {% include "_components/sidebar.twig" %}
+    </aside>
+
+</div>
+
+{% endblock %}
