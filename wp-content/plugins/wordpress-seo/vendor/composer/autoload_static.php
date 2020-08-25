@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b
+class ComposerStaticInit69c430ed36a8ee92b13fbb33b8a9373d
 {
     public static $prefixLengthsPsr4 = array (
         'C' => 
@@ -606,10 +606,11 @@ class ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b
         'Yoast\\WP\\Lib\\Model' => __DIR__ . '/../..' . '/lib/model.php',
         'Yoast\\WP\\Lib\\ORM' => __DIR__ . '/../..' . '/lib/orm.php',
         'Yoast\\WP\\SEO\\Actions\\Indexables\\Indexable_Head_Action' => __DIR__ . '/../..' . '/src/actions/indexables/indexable-head-action.php',
-        'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Complete_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexables/indexable-complete-indexation-action.php',
+        'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Complete_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-complete-indexation-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_General_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-general-indexation-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Post_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-post-indexation-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Post_Type_Archive_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-post-type-archive-indexation-action.php',
+        'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Prepare_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-prepare-indexation-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Term_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-term-indexation-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexation_Action_Interface' => __DIR__ . '/../..' . '/src/actions/indexation/indexation-action-interface.php',
         'Yoast\\WP\\SEO\\Builders\\Indexable_Author_Builder' => __DIR__ . '/../..' . '/src/builders/indexable-author-builder.php',
@@ -644,7 +645,6 @@ class ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b
         'Yoast\\WP\\SEO\\Conditionals\\XMLRPC_Conditional' => __DIR__ . '/../..' . '/src/conditionals/xmlrpc-conditional.php',
         'Yoast\\WP\\SEO\\Conditionals\\Yoast_Admin_And_Dashboard_Conditional' => __DIR__ . '/../..' . '/src/conditionals/yoast-admin-and-dashboard-conditional.php',
         'Yoast\\WP\\SEO\\Conditionals\\Yoast_Tools_Page_Conditional' => __DIR__ . '/../..' . '/src/conditionals/yoast-tools-page-conditional.php',
-        'Yoast\\WP\\SEO\\Config\\Dependency_Management' => __DIR__ . '/../..' . '/src/config/dependency-management.php',
         'Yoast\\WP\\SEO\\Config\\Migration_Status' => __DIR__ . '/../..' . '/src/config/migration-status.php',
         'Yoast\\WP\\SEO\\Config\\Migrations\\AddCollationToTables' => __DIR__ . '/../..' . '/src/config/migrations/20200408101900_AddCollationToTables.php',
         'Yoast\\WP\\SEO\\Config\\Migrations\\AddColumnsToIndexables' => __DIR__ . '/../..' . '/src/config/migrations/20200420073606_AddColumnsToIndexables.php',
@@ -664,6 +664,7 @@ class ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b
         'Yoast\\WP\\SEO\\Config\\Migrations\\WpYoastIndexableHierarchy' => __DIR__ . '/../..' . '/src/config/migrations/20191011111109_WpYoastIndexableHierarchy.php',
         'Yoast\\WP\\SEO\\Config\\Migrations\\WpYoastPrimaryTerm' => __DIR__ . '/../..' . '/src/config/migrations/20171228151841_WpYoastPrimaryTerm.php',
         'Yoast\\WP\\SEO\\Config\\Schema_IDs' => __DIR__ . '/../..' . '/src/config/schema-ids.php',
+        'Yoast\\WP\\SEO\\Config\\Schema_Types' => __DIR__ . '/../..' . '/src/config/schema-types.php',
         'Yoast\\WP\\SEO\\Context\\Meta_Tags_Context' => __DIR__ . '/../..' . '/src/context/meta-tags-context.php',
         'Yoast\\WP\\SEO\\Exceptions\\Missing_Method' => __DIR__ . '/../..' . '/src/exceptions/missing-method.php',
         'Yoast\\WP\\SEO\\Generated\\Cached_Container' => __DIR__ . '/../..' . '/src/generated/container.php',
@@ -716,6 +717,7 @@ class ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b
         'Yoast\\WP\\SEO\\Initializers\\Disable_Core_Sitemaps' => __DIR__ . '/../..' . '/src/initializers/disable-core-sitemaps.php',
         'Yoast\\WP\\SEO\\Initializers\\Initializer_Interface' => __DIR__ . '/../..' . '/src/initializers/initializer-interface.php',
         'Yoast\\WP\\SEO\\Initializers\\Migration_Runner' => __DIR__ . '/../..' . '/src/initializers/migration-runner.php',
+        'Yoast\\WP\\SEO\\Integrations\\Admin\\Disable_Concatenate_Scripts_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/disable-concatenate-scripts-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Indexation_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/indexation-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Migration_Error_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/migration-error-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Blocks\\Dynamic_Block' => __DIR__ . '/../..' . '/src/integrations/blocks/abstract-dynamic-block.php',
@@ -882,9 +884,9 @@ class ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInite2f8bba49d1d906710f639a61e99bd9b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit69c430ed36a8ee92b13fbb33b8a9373d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit69c430ed36a8ee92b13fbb33b8a9373d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit69c430ed36a8ee92b13fbb33b8a9373d::$classMap;
 
         }, null, ClassLoader::class);
     }

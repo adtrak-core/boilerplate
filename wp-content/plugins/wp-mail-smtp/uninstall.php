@@ -47,6 +47,13 @@ $am_announcement_params = [
 	'fields'      => 'ids',
 ];
 
+/**
+ * Disable Action Schedule Queue Runner, to prevent a fatal error on the shutdown WP hook.
+ */
+if ( class_exists( 'ActionScheduler_QueueRunner' ) ) {
+	ActionScheduler_QueueRunner::instance()->unhook_dispatch_async_request();
+}
+
 // WP MS uninstall process.
 if ( is_multisite() ) {
 	$main_site_settings = get_blog_option( get_main_site_id(), 'wp_mail_smtp', [] );
