@@ -2,9 +2,9 @@
 Contributors: automattic, royho, akeda, mattyza, bor0, woothemes
 Tags: credit card, stripe, apple pay, payment request, google pay, sepa, sofort, bancontact, alipay, giropay, ideal, p24, woocommerce, automattic
 Requires at least: 4.4
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 4.5.0
+Stable tag: 4.5.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Attributions: thorsten-stripe
@@ -24,21 +24,35 @@ Stripe is available for Store Owners and Merchants in:
 * Australia
 * Austria
 * Belgium
+* Bulgaria
 * Canada
+* Cyprus
+* Czech Republic
 * Denmark
+* Estonia
 * Finland
 * France
 * Germany
+* Greece
 * Hong Kong
 * Ireland
 * Italy
 * Japan
+* Latvia
+* Lithuania
 * Luxembourg
+* Malaysia
+* Malta
+* Mexico
 * Netherlands
 * New Zealand
 * Norway
+* Poland
 * Portugal
+* Puerto Rico
 * Singapore
+* Slovakia
+* Slovenia
 * Spain
 * Sweden
 * Switzerland
@@ -112,58 +126,8 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
-= 4.5.0 2020-06-24 =
-* Tweak - Improve branded Google Pay button user agent detection.
-* Add   - New filter to manage the display of payment request buttons in cart.
-* Fix   - Display Apple Pay button with text if branded type is text and logo.
-* Fix   - Prevent branded payment request button duplication when checkout is re-calculated.
-* Fix   - Payment request buttons on a single product page now correctly show the product name instead of a subtotal.
-* Fix   - Quotes in variadic product attributes no longer cause payment request buttons to show only the cheapest variation.
-
-= 4.4.0 2020-05-21 =
-* Tweak - Remove support for WooCommerce versions lower than 3.0.
-* Tweak - Update plugin assets.
-* Tweak - Improve performance on order pay screen.
-* Tweak - Compress payment methods SVGs.
-* Add   - Support for custom payment request button.
-* Fix   - Prevent users from entering secret key in the public key field and stop it from showing if they did.
-* Fix   - Revert caching layer removal to speed up My Account subscriptions tab.
-* Fix   - Bug where source ID was not set resulting in an uncaught exception.
-* Fix   - Collecting level 3 data triggers a warning.
-* Fix   - Custom button class typo.
-* Fix   - Payment Request incorrect shipping option passed.
-* Fix   - Payment Requests, like Apple Pay, not initially showing correct quantity if used on Product Page.
-* Fix   - State abbreviation breaks Payment Request button.
-* Fix   - Stripe Payment Request button using incorrect Google Pay brand asset by adding a special branded button.
-* Fix   - Move docs and support links in the plugins list page.
-
-= 4.3.3 2020-04-08 =
-* Fix - Fix Payment Request issue when product attribute has quotes
-* Fix - Fix "no such customer" error on checkout after the keys have been changed
-* Add - Add alert for end of support WC < 3.0 in future releases
-* Fix - Fix crash when used with WooCommerce Subscriptions <2.6
-* Fix - Add missing customer ID to subscriptions before processing payment
-* Fix - Fix transactions failing with trailing slash
-
-= 4.3.2 2020-02-17 =
-* Fix - Add compatibility to payment request buttons with some of the WooCommerce Product Add-ons on the product page
-* Fix - Improved compatibility for free orders with other extensions
-* Add - Support for multisite when sites use different Stripe accounts
-* Fix - Display a localized error message when a customer tries to save a card during checkout, but there's an error
-* Add - Send level 3 credit card data for purchases when possible
-
-= 4.3.1 2019-11-12 =
-* Fix - Overwrite the previous Apple Pay verification file if it has changed.
-* Fix - Avoid re-mounting card elements if they are already mounted in the DOM.
-* Fix - Compatibility with WooCommerce Deposits by retrieving order statuses in a different way.
-* Fix - Duplicate payment notifications for subscriptions.
-* Fix - Use the same customer after a new credit card has been entered.
-* Fix - Google Pay buttons on subscriptions.
-* Add - A filter, which allows all subscriptions' payment methods to be overwritten when adding a new payment method.
+= 4.5.2 - 2020-08-19 =
+* Fix - Allow extension to attempt to run in all countries, not just officially supported ones
 
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/woocommerce-gateway-stripe/master/changelog.txt).
 
-== Upgrade Notice ==
-
-= 4.2 =
-4.2 is a minor release. Please do a full site backup and test on a staging site before deploying to a live/production server.

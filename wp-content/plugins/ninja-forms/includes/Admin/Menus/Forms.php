@@ -192,7 +192,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
 
             $required_updates = get_option( 'ninja_forms_needs_updates', 0 );
 
-            wp_enqueue_script( 'backbone-radio', Ninja_Forms::$url . 'assets/js/lib/backbone.radio.min.js', array( 'jquery', 'backbone' ) );
+            wp_enqueue_script( 'backbone-radio', Ninja_Forms::$url . 'assets/js/lib/backbone.radio.min.js', array( 'jquery', 'jquery-migrate', 'backbone' ) );
             wp_enqueue_script( 'backbone-marionette-3', Ninja_Forms::$url . 'assets/js/lib/backbone.marionette3.min.js', array( 'jquery', 'backbone' ) );
             wp_enqueue_script( 'nf-jbox', Ninja_Forms::$url . 'assets/js/lib/jBox.min.js', array( 'jquery' ) );
             wp_enqueue_script( 'nf-ninjamodal', Ninja_Forms::$url . 'assets/js/lib/ninjaModal.js', array( 'jquery' ), $this->ver );
@@ -296,7 +296,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
          * JS Libraries
          */
         wp_enqueue_script( 'wp-util' );
-        wp_enqueue_script( 'jquery-autoNumeric', Ninja_Forms::$url . 'assets/js/lib/jquery.autoNumeric.min.js', array( 'jquery', 'backbone' ) );
+        wp_enqueue_script( 'jquery-autoNumeric', Ninja_Forms::$url . 'assets/js/lib/jquery.autoNumeric.min.js', array( 'jquery', 'jquery-migrate', 'backbone' ) );
         wp_enqueue_script( 'jquery-maskedinput', Ninja_Forms::$url . 'assets/js/lib/jquery.maskedinput.min.js', array( 'jquery', 'backbone' ) );
         wp_enqueue_script( 'backbone-marionette', Ninja_Forms::$url . 'assets/js/lib/backbone.marionette.min.js', array( 'jquery', 'backbone' ) );
         wp_enqueue_script( 'backbone-radio', Ninja_Forms::$url . 'assets/js/lib/backbone.radio.min.js', array( 'jquery', 'backbone' ) );

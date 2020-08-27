@@ -417,6 +417,12 @@ class NF_Admin_CPT_Submission
         $form_id = absint( $_REQUEST['form_id'] );
         $hidden = isset( $_POST['hidden'] ) ? explode( ',', esc_html( $_POST['hidden'] ) ) : array();
         $hidden = array_filter( $hidden );
+        $hidden = array_map( function($field) {
+            if( is_numeric($field) ) {
+                $field = absint($field);
+            }
+            return $field;
+        }, $hidden );
         update_user_option( $user->ID, 'manageedit-nf_subcolumnshidden-form-' . $form_id, $hidden, true );
         die();
     }

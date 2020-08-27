@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit72f613a3d0c2cc77892490951b6e5352
+class ComposerStaticInitecc5aee58cbc7fae6cdc39ef5e9f1f73
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -24,6 +24,7 @@ class ComposerStaticInit72f613a3d0c2cc77892490951b6e5352
         ),
         'W' => 
         array (
+            'Wikimedia\\Composer\\' => 19,
             'WPMailSMTP\\' => 11,
         ),
         'S' => 
@@ -64,6 +65,10 @@ class ComposerStaticInit72f613a3d0c2cc77892490951b6e5352
         'phpseclib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
+        'Wikimedia\\Composer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wikimedia/composer-merge-plugin/src',
         ),
         'WPMailSMTP\\' => 
         array (
@@ -149,10 +154,10 @@ class ComposerStaticInit72f613a3d0c2cc77892490951b6e5352
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit72f613a3d0c2cc77892490951b6e5352::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit72f613a3d0c2cc77892490951b6e5352::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit72f613a3d0c2cc77892490951b6e5352::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit72f613a3d0c2cc77892490951b6e5352::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitecc5aee58cbc7fae6cdc39ef5e9f1f73::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitecc5aee58cbc7fae6cdc39ef5e9f1f73::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitecc5aee58cbc7fae6cdc39ef5e9f1f73::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitecc5aee58cbc7fae6cdc39ef5e9f1f73::$classMap;
 
         }, null, ClassLoader::class);
     }

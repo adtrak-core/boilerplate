@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1eb5156cec1d7f81ea3abf86c8e336b0
+class ComposerStaticInite28a3826cc873afccbdf43e1e4d218ca
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -13,6 +13,7 @@ class ComposerStaticInit1eb5156cec1d7f81ea3abf86c8e336b0
         ),
         'P' => 
         array (
+            'Psr\\Container\\' => 14,
             'Pelago\\' => 7,
         ),
         'M' => 
@@ -39,6 +40,10 @@ class ComposerStaticInit1eb5156cec1d7f81ea3abf86c8e336b0
         'Symfony\\Component\\CssSelector\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
         ),
         'Pelago\\' => 
         array (
@@ -184,9 +189,9 @@ class ComposerStaticInit1eb5156cec1d7f81ea3abf86c8e336b0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1eb5156cec1d7f81ea3abf86c8e336b0::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1eb5156cec1d7f81ea3abf86c8e336b0::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit1eb5156cec1d7f81ea3abf86c8e336b0::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite28a3826cc873afccbdf43e1e4d218ca::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite28a3826cc873afccbdf43e1e4d218ca::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite28a3826cc873afccbdf43e1e4d218ca::$classMap;
 
         }, null, ClassLoader::class);
     }

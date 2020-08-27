@@ -2,6 +2,8 @@
 
 namespace WPMailSMTP;
 
+use WPMailSMTP\UsageTracking\UsageTracking;
+
 /**
  * Class Options to handle all options management.
  * WordPress does all the heavy work for caching get_option() data,
@@ -48,6 +50,11 @@ class Options {
 			'client_secret',
 		],
 		'outlook'     => [
+			'client_id',
+			'client_secret',
+		],
+		'zoho'        => [
+			'domain',
 			'client_id',
 			'client_secret',
 		],
@@ -463,6 +470,24 @@ class Options {
 
 				break;
 
+			case 'zoho':
+				switch ( $key ) {
+					case 'domain':
+						/** No inspection comment @noinspection PhpUndefinedConstantInspection */
+						$return = $this->is_const_defined( $group, $key ) ? WPMS_ZOHO_DOMAIN : $value;
+						break;
+					case 'client_id':
+						/** No inspection comment @noinspection PhpUndefinedConstantInspection */
+						$return = $this->is_const_defined( $group, $key ) ? WPMS_ZOHO_CLIENT_ID : $value;
+						break;
+					case 'client_secret':
+						/** No inspection comment @noinspection PhpUndefinedConstantInspection */
+						$return = $this->is_const_defined( $group, $key ) ? WPMS_ZOHO_CLIENT_SECRET : $value;
+						break;
+				}
+
+				break;
+
 			case 'amazonses':
 				switch ( $key ) {
 					case 'client_id':
@@ -689,6 +714,21 @@ class Options {
 
 				break;
 
+			case 'zoho':
+				switch ( $key ) {
+					case 'domain':
+						$return = defined( 'WPMS_ZOHO_DOMAIN' ) && WPMS_ZOHO_DOMAIN;
+						break;
+					case 'client_id':
+						$return = defined( 'WPMS_ZOHO_CLIENT_ID' ) && WPMS_ZOHO_CLIENT_ID;
+						break;
+					case 'client_secret':
+						$return = defined( 'WPMS_ZOHO_CLIENT_SECRET' ) && WPMS_ZOHO_CLIENT_SECRET;
+						break;
+				}
+
+				break;
+
 			case 'amazonses':
 				switch ( $key ) {
 					case 'client_id':
@@ -828,6 +868,7 @@ class Options {
 							case 'am_notifications_hidden':
 							case 'email_delivery_errors_hidden':
 							case 'uninstall':
+							case UsageTracking::SETTINGS_SLUG:
 								$options[ $group ][ $option_name ] = (bool) $option_value;
 								break;
 						}
@@ -841,7 +882,7 @@ class Options {
 		if (
 			! empty( $options['mail']['mailer'] ) &&
 			isset( $options[ $options['mail']['mailer'] ] ) &&
-			in_array( $options['mail']['mailer'], array( 'pepipost', 'pepipostapi', 'smtp', 'sendgrid', 'smtpcom', 'sendinblue', 'mailgun', 'gmail', 'outlook' ), true )
+			in_array( $options['mail']['mailer'], [ 'pepipost', 'pepipostapi', 'smtp', 'sendgrid', 'smtpcom', 'sendinblue', 'mailgun', 'gmail', 'outlook', 'zoho' ], true )
 		) {
 
 			$mailer = $options['mail']['mailer'];
@@ -870,16 +911,16 @@ class Options {
 						break;
 
 					case 'api_key': // mailgun/sendgrid/sendinblue/pepipostapi/smtpcom.
-					case 'domain': // mailgun.
-					case 'client_id': // gmail/outlook/amazonses.
-					case 'client_secret': // gmail/outlook/amazonses.
+					case 'domain': // mailgun/zoho.
+					case 'client_id': // gmail/outlook/amazonses/zoho.
+					case 'client_secret': // gmail/outlook/amazonses/zoho.
 					case 'auth_code': // gmail/outlook.
 					case 'channel': // smtpcom.
 						$options[ $mailer ][ $option_name ] = $this->is_const_defined( $mailer, $option_name ) ? '' : sanitize_text_field( $option_value );
 						break;
 
-					case 'access_token': // gmail/outlook, array().
-					case 'user_details': // outlook, array().
+					case 'access_token': // gmail/outlook/zoho, is an array.
+					case 'user_details': // outlook/zoho, is an array.
 					case 'emails_pending': // amazonses, array().
 						// These options don't support constants.
 						$options[ $mailer ][ $option_name ] = $option_value;
@@ -899,6 +940,8 @@ class Options {
 
 		// Now we need to re-cache values.
 		$this->populate_options();
+
+		do_action( 'wp_mail_smtp_options_set_after', $options );
 	}
 
 	/**
@@ -959,6 +1002,25 @@ class Options {
 	 */
 	public function is_pepipost_active() {
 		return apply_filters( 'wp_mail_smtp_options_is_pepipost_active', $this->get( 'mail', 'mailer' ) === 'pepipost' );
+	}
+
+	/**
+	 * Check whether the site is using provided mailer or not.
+	 *
+	 * @since 2.3.0
+	 *
+	 * @param string $mailer The mailer slug.
+	 *
+	 * @return bool
+	 */
+	public function is_mailer_active( $mailer ) {
+
+		$mailer = sanitize_key( $mailer );
+
+		return apply_filters(
+			"wp_mail_smtp_options_is_mailer_active_{$mailer}",
+			$this->get( 'mail', 'mailer' ) === $mailer
+		);
 	}
 
 	/**
