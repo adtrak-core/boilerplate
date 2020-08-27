@@ -5,13 +5,6 @@
 	// add all of your code within here, not above or below
 	$(function() {
 
-		// --------------------------------------------------------------------------------------------------
-		// Toggle Location Numbers
-		// --------------------------------------------------------------------------------------------------
-		
-		$('.js-toggle-location-numbers').click(function(){
-			$('.location-numbers').toggleClass('hidden');
-		});
 
 	});
 
