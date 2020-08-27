@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Public Post Preview
- * Version: 2.9.0
+ * Version: 2.9.1
  * Description: Allow anonymous users to preview a post before it is published.
  * Author: Dominik Schilling
  * Author URI: https://dominikschilling.de/
@@ -11,7 +11,7 @@
  *
  * Previously (2009-2011) maintained by Jonathan Dingman and Matt Martz.
  *
- *  Copyright (C) 2012-2019 Dominik Schilling
+ *  Copyright (C) 2012-2020 Dominik Schilling
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -48,7 +48,6 @@ class DS_Public_Post_Preview {
 	 * @since 1.0.0
 	 */
 	public static function init() {
-		add_action( 'init', array( __CLASS__, 'load_textdomain' ) );
 		add_action( 'transition_post_status', array( __CLASS__, 'unregister_public_preview_on_status_change' ), 20, 3 );
 		add_action( 'post_updated', array( __CLASS__, 'unregister_public_preview_on_edit' ), 20, 2 );
 
@@ -67,15 +66,6 @@ class DS_Public_Post_Preview {
 	}
 
 	/**
-	 * Registers the textdomain.
-	 *
-	 * @since 2.0.0
-	 */
-	public static function load_textdomain() {
-		return load_plugin_textdomain( 'public-post-preview' );
-	}
-
-	/**
 	 * Registers the JavaScript file for post(-new).php.
 	 *
 	 * @since 2.0.0
@@ -88,13 +78,18 @@ class DS_Public_Post_Preview {
 		}
 
 		if ( get_current_screen()->is_block_editor() ) {
-			$script_dependencies_path = plugin_dir_path( __FILE__ ) . 'js/gutenberg-integration.deps.json';
-			$script_dependencies      = file_exists( $script_dependencies_path ) ? json_decode( file_get_contents( $script_dependencies_path ) ) : array();
+			$script_assets_path = plugin_dir_path( __FILE__ ) . 'js/dist/gutenberg-integration.asset.php';
+			$script_assets      = file_exists( $script_assets_path ) ?
+				require $script_assets_path :
+				array(
+					'dependencies' => array(),
+					'version'      => '',
+				);
 			wp_enqueue_script(
 				'public-post-preview-gutenberg',
-				plugins_url( 'js/gutenberg-integration.js', __FILE__ ),
-				$script_dependencies,
-				'20190720',
+				plugins_url( 'js/dist/gutenberg-integration.js', __FILE__ ),
+				$script_assets['dependencies'],
+				$script_assets['version'],
 				true
 			);
 
@@ -457,6 +452,7 @@ class DS_Public_Post_Preview {
 		) {
 			if ( ! headers_sent() ) {
 				nocache_headers();
+				header( 'X-Robots-Tag: noindex' );
 			}
 			add_action( 'wp_head', 'wp_no_robots' );
 
@@ -481,11 +477,11 @@ class DS_Public_Post_Preview {
 		}
 
 		if ( ! self::verify_nonce( get_query_var( '_ppp' ), 'public_post_preview_' . $post_id ) ) {
-			wp_die( __( 'This link has expired!', 'public-post-preview' ) );
+			wp_die( __( 'This link has expired!', 'public-post-preview' ), 403 );
 		}
 
 		if ( ! in_array( $post_id, self::get_preview_post_ids(), true ) ) {
-			wp_die( __( 'No public preview available!', 'public-post-preview' ) );
+			wp_die( __( 'No public preview available!', 'public-post-preview' ), 404 );
 		}
 
 		return true;

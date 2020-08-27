@@ -70,7 +70,6 @@
 
 [Lambda Test](https://adtrak.lightning.force.com/lightning/r/Password__c/a0J1n00000CwHbeEAF/view)
 
-- [ ] Windows | Internet Explorer 11
 - [ ] Windows | Edge
 - [ ] Windows | Chrome
 - [ ] Windows | Firefox

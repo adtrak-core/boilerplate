@@ -102,12 +102,13 @@ function timber_set_product($post)
 /**
  * Handy function to dump the value and wrap in pre tags. Used for debugging only.
  * Doesn't display anything is debug is not enabled.
+ * Commented out due to conflict with Location Dynamics Plugin
  */
-function dump($value)
-{
-    if (defined('WP_DEBUG') && WP_DEBUG === TRUE) {
-        echo '<pre>';
-        print_r($value);
-        echo '</pre>';
-    }
-}
+// function dump($value)
+// {
+//     if (defined('WP_DEBUG') && WP_DEBUG === TRUE) {
+//         echo '<pre>';
+//         print_r($value);
+//         echo '</pre>';
+//     }
+// }

@@ -141,6 +141,7 @@ const ReviewsByCategoryEditor = ( {
 					'Reviews by Category',
 					'woo-gutenberg-products-block'
 				) }
+				className="wc-block-reviews-by-category"
 			>
 				{ __(
 					'Show product reviews from specific categories.',
@@ -173,7 +174,6 @@ const ReviewsByCategoryEditor = ( {
 			{ getInspectorControls() }
 			<EditorContainerBlock
 				attributes={ attributes }
-				className="wc-block-reviews-by-category"
 				icon={
 					<Icon
 						srcElement={ review }

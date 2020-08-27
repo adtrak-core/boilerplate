@@ -31,6 +31,10 @@ export const DISPLAY_ITEMIZED_TAXES = getSetting(
 	'displayItemizedTaxes',
 	false
 );
+export const HAS_DARK_EDITOR_STYLE_SUPPORT = getSetting(
+	'hasDarkEditorStyleSupport',
+	false
+);
 export const DISPLAY_SHOP_PRICES_INCLUDING_TAX = getSetting(
 	'displayShopPricesIncludingTax',
 	false
@@ -54,6 +58,7 @@ export const WOOCOMMERCE_BLOCKS_PHASE = getSetting(
 	1
 );
 export const WC_BLOCKS_ASSET_URL = getSetting( 'wcBlocksAssetUrl', '' );
+export const WC_BLOCKS_BUILD_URL = getSetting( 'wcBlocksBuildUrl', '' );
 export const SHIPPING_COUNTRIES = getSetting( 'shippingCountries', {} );
 export const ALLOWED_COUNTRIES = getSetting( 'allowedCountries', {} );
 export const SHIPPING_STATES = getSetting( 'shippingStates', {} );
@@ -61,6 +66,11 @@ export const ALLOWED_STATES = getSetting( 'allowedStates', {} );
 export const SHIPPING_METHODS_EXIST = getSetting(
 	'shippingMethodsExist',
 	false
+);
+
+export const PAYMENT_GATEWAY_SORT_ORDER = getSetting(
+	'paymentGatewaySortOrder',
+	[]
 );
 
 export const CHECKOUT_SHOW_LOGIN_REMINDER = getSetting(

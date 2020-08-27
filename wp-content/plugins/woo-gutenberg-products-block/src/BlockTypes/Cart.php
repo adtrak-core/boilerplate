@@ -36,6 +36,7 @@ class Cart extends AbstractBlock {
 				'editor_style'    => 'wc-block-editor',
 				'style'           => [ 'wc-block-style', 'wc-block-vendors-style' ],
 				'script'          => 'wc-' . $this->block_name . '-block-frontend',
+				'supports'        => [],
 			)
 		);
 	}
@@ -62,6 +63,12 @@ class Cart extends AbstractBlock {
 				echo '<div class="wc-block-cart__submit-container-push"></div>';
 			}
 		);
+
+		// Deregister core cart scripts and styles.
+		wp_deregister_script( 'wc-cart' );
+		wp_deregister_script( 'wc-password-strength-meter' );
+		wp_deregister_script( 'selectWoo' );
+		wp_deregister_style( 'select2' );
 
 		return $this->inject_html_data_attributes( $content . $this->get_skeleton(), $block_attributes );
 	}

@@ -70,6 +70,10 @@ add_filter('wp_title', function () {
 
 	$name = get_bloginfo('name');
 	$description = get_bloginfo('description');
+	
+	if($post === NULL){
+		return $name;
+	}
 
 	if (is_front_page() || is_home()) {
 		if ($description) {
@@ -116,7 +120,7 @@ add_action('init', function() {
             'menu_title' 	=> 'Site Options',
             'menu_slug' 	=> 'site-options',
             'position' 		=> 75,
-            'capability' 	=> 'edit_themes',
+            'capability' 	=> 'update_core',
             'icon_url' 		=> 'dashicons-hammer',
             'redirect' 		=> false
         ]);
@@ -126,7 +130,7 @@ add_action('init', function() {
             'menu_title' 	=> 'Marketing',
             'menu_slug' 	=> 'marketing',
             'position' 		=> 75,
-            'capability' 	=> 'edit_themes',
+            'capability' 	=> 'update_core',
             'icon_url' 		=> 'dashicons-randomize',
             'redirect' 		=> false
         ]);
@@ -172,3 +176,8 @@ add_action('wp_head', function() {
     }
 
 });
+
+/**
+ * Prevent theme edit
+ */
+define( 'DISALLOW_FILE_EDIT', true );

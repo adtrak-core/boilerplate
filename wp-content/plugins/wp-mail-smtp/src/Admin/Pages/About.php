@@ -142,6 +142,8 @@ class About extends PageAbstract {
 				<?php echo \esc_html( $this->get_label( $this->get_current_tab() ) ); ?>
 			</h1>
 
+			<?php do_action( 'wp_mail_smtp_admin_pages_before_content' ); ?>
+
 			<?php
 			$callback = 'display_' . $this->get_current_tab();
 

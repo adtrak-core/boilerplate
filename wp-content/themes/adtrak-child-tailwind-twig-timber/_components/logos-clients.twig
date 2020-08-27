@@ -1,13 +1,21 @@
-{{ options.logos_header ? options.logos_header }}
+<div class="container">
 
-{% if options.logos %}
-  {% for logo in options.logos %}
+	{{ options.logos_header ? '<h3 class="text-center">' ~ options.logos_header ~ '</h3>' }}
 
-    {{logo.name}}
-    <img class="lazyload" src="" data-src="{{logo.image.url|letterbox('150', '150','#fff')}}" alt="{{logo.name}} Logo">
-    {{logo.link}}
+	<div class="flex flex-wrap justify-center p-8 lg:justify-around">
 
-  {% endfor %}
-{% endif %}
+		{% if options.logos %}
+			{% for logo in options.logos %}
 
+				<img
+					class="self-center inline-block h-auto m-2 lazyload max-h-8"
+					data-src="{{ logo.image.url|tojpg|letterbox('120', '50', '#fff') }}"
+					alt="{{ logo.name }} Logo"
+				/>
 
+			{% endfor %}
+		{% endif %}
+
+	</div>
+
+</div>

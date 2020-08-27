@@ -1,8 +1,9 @@
 /**
  * External dependencies
  */
+import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
-import FeedbackPrompt from '@woocommerce/block-components/feedback-prompt';
+import { CartCheckoutFeedbackPrompt } from '@woocommerce/block-components/feedback-prompt';
 import { InspectorControls } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -25,7 +26,6 @@ import PageSelector from '@woocommerce/block-components/page-selector';
 import {
 	previewCart,
 	previewSavedPaymentMethods,
-	checkoutBlockPreview,
 } from '@woocommerce/resource-previews';
 
 /**
@@ -41,9 +41,11 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 		showPhoneField,
 		requireCompanyField,
 		requirePhoneField,
+		showOrderNotes,
 		showPolicyLinks,
 		showReturnToCart,
 		cartPageId,
+		hasDarkControls,
 	} = attributes;
 	const { currentPostId } = useEditorContext();
 	const { current: savedCartPageId } = useRef( cartPageId );
@@ -149,6 +151,28 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 				) }
 			</PanelBody>
 			<PanelBody
+				title={ __( 'Order notes', 'woo-gutenberg-products-block' ) }
+			>
+				<p className="wc-block-checkout__controls-text">
+					{ __(
+						'Reduce the number of fields to checkout.',
+						'woo-gutenberg-products-block'
+					) }
+				</p>
+				<ToggleControl
+					label={ __(
+						'Allow customers to optionally add order notes',
+						'woo-gutenberg-products-block'
+					) }
+					checked={ showOrderNotes }
+					onChange={ () =>
+						setAttributes( {
+							showOrderNotes: ! showOrderNotes,
+						} )
+					}
+				/>
+			</PanelBody>
+			<PanelBody
 				title={ __(
 					'Navigation options',
 					'woo-gutenberg-products-block'
@@ -239,29 +263,44 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 						} }
 					/>
 				) }
-
-			<FeedbackPrompt
-				text={ __(
-					'We are currently working on improving our cart and checkout blocks, providing merchants with the tools and customization options they need.',
-					'woo-gutenberg-products-block'
-				) }
-			/>
+			<PanelBody title={ __( 'Style', 'woo-gutenberg-products-block' ) }>
+				<ToggleControl
+					label={ __(
+						'Dark mode inputs',
+						'woo-gutenberg-products-block'
+					) }
+					help={ __(
+						'Inputs styled specifically for use on dark background colors.',
+						'woo-gutenberg-products-block'
+					) }
+					checked={ hasDarkControls }
+					onChange={ () =>
+						setAttributes( {
+							hasDarkControls: ! hasDarkControls,
+						} )
+					}
+				/>
+			</PanelBody>
+			<CartCheckoutFeedbackPrompt />
 		</InspectorControls>
 	);
 };
 
 const CheckoutEditor = ( { attributes, setAttributes } ) => {
 	const { className, isPreview } = attributes;
-
-	if ( isPreview ) {
-		return checkoutBlockPreview;
-	}
-
 	return (
 		<EditorProvider
 			previewData={ { previewCart, previewSavedPaymentMethods } }
 		>
-			<div className={ className }>
+			<div
+				className={ classnames(
+					className,
+					'wp-block-woocommerce-checkout',
+					{
+						'is-editor-preview': isPreview,
+					}
+				) }
+			>
 				<BlockSettings
 					attributes={ attributes }
 					setAttributes={ setAttributes }

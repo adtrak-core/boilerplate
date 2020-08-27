@@ -12,7 +12,7 @@ import { decodeEntities } from '@wordpress/html-entities';
 import { PAYMENT_METHOD_NAME } from './constants';
 
 const settings = getSetting( 'cheque_data', {} );
-const defaultLabel = __( 'Check Payment', 'woo-gutenberg-products-block' );
+const defaultLabel = __( 'Check payment', 'woo-gutenberg-products-block' );
 const label = decodeEntities( settings.title ) || defaultLabel;
 
 /**
@@ -33,7 +33,7 @@ const Content = () => {
  */
 const Label = ( props ) => {
 	const { PaymentMethodLabel } = props.components;
-	return <PaymentMethodLabel icon="checkPayment" text={ label } />;
+	return <PaymentMethodLabel text={ label } />;
 };
 
 /**

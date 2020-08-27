@@ -1,9 +1,9 @@
 === Ninja Forms Contact Form - The Drag and Drop Form Builder for WordPress ===
 Contributors: wpninjasllc, kstover, jameslaws, kbjohnson90, klhall1987, krmoorhouse, jmcelhaney, wpnzach, ericwindhamsd
 Tags: forms, contact form, email form, form builder, custom form, pdf form, registration form, payment form, login form, contact me, signature form, upload form, file upload form, conditional form, feedback form, appointment form, quote form, survey form, contact button, signup form, form plugin, contact form plugin, subscription form, email subscription form, newsletter form, donation form, booking form, quote request form, multi page form, conditional logic form, subscription form, application form, employment verification form, star rating form, rating form, event form, mailchimp form, campaign monitor form, constant contact form, mailpoet form, aweber form, cleverreach form, emma form, convertkit form, active campaign form, salesforce form, zoho form, capsule form, insightly form, pipelinedeals form, onepagecrm form
-Requires at least: 5.2
-Tested up to: 5.4
-Stable tag: 3.4.24.3
+Requires at least: 5.3
+Tested up to: 5.5
+Stable tag: 3.4.26
 License: GPLv2 or later
 
 The 100% beginner friendly WordPress form builder. Drag & drop form fields to build beautiful, professional contact forms in minutes.
@@ -303,17 +303,20 @@ This section describes how to install the plugin and get it working.
 
 == Upgrade Notice ==
 
-= 3.4.24.3 (21 May 2020) =
-
-*Security:*
-
-* Patched an HTML injection vulnerability in our deprecated 2.9x codebase [reported responsibly](https://ninjaforms.com/security) by Dave Job.
+= 3.4.26 (25 August 2020) =
 
 *Bugs:*
 
-* Corrected an error in our required field validation that was allowing targeted spam through the submission process.
+* Sites with WP_DEBUG enabled should no longer display a deprecated parent error on PHP version 7.4.
+* Resolved an issue that was preventing our Screen Options settings from being saved on the submissions page.
 
 == Changelog ==
+
+= 3.4.25 (12 August 2020) =
+
+*Bugs:*
+
+* Resolved an issue that caused settings changed with a toggle switch to not be saved on WordPress 5.5.
 
 = 3.4.24.3 (21 May 2020) =
 

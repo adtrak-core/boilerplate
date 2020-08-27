@@ -20,6 +20,9 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
 use Automattic\WooCommerce\Blocks\Payments\Integrations\Stripe;
 use Automattic\WooCommerce\Blocks\Payments\Integrations\Cheque;
 use Automattic\WooCommerce\Blocks\Payments\Integrations\PayPal;
+use Automattic\WooCommerce\Blocks\Payments\Integrations\BankTransfer;
+use Automattic\WooCommerce\Blocks\Payments\Integrations\CashOnDelivery;
+use Automattic\WooCommerce\Blocks\Domain\Services\DraftOrders;
 
 /**
  * Takes care of bootstrapping the plugin.
@@ -77,7 +80,7 @@ class Bootstrap {
 			$this->container->get( Installer::class );
 			BlockAssets::init();
 		}
-
+		$this->container->get( DraftOrders::class )->init();
 		$this->container->get( PaymentsApi::class );
 		$this->container->get( RestApi::class );
 		Library::init();
@@ -190,6 +193,12 @@ class Bootstrap {
 				return new Installer();
 			}
 		);
+		$this->container->register(
+			DraftOrders::class,
+			function( Container $container ) {
+				return new DraftOrders( $container->get( Package::class ) );
+			}
+		);
 	}
 
 	/**
@@ -218,6 +227,20 @@ class Bootstrap {
 			function( Container $container ) {
 				$asset_api = $container->get( AssetApi::class );
 				return new PayPal( $asset_api );
+			}
+		);
+		$this->container->register(
+			BankTransfer::class,
+			function( Container $container ) {
+				$asset_api = $container->get( AssetApi::class );
+				return new BankTransfer( $asset_api );
+			}
+		);
+		$this->container->register(
+			CashOnDelivery::class,
+			function( Container $container ) {
+				$asset_api = $container->get( AssetApi::class );
+				return new CashOnDelivery( $asset_api );
 			}
 		);
 	}

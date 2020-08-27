@@ -771,7 +771,7 @@ class License {
 
 		$_POST = Sanitize::sanitize_data( $_POST, $key_rules, __METHOD__ );
 
-		if ( false === $_POST ) {
+		if ( is_wp_error( $_POST ) ) {
 			exit;
 		}
 

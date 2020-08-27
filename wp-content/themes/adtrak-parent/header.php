@@ -19,6 +19,7 @@
 
 	<?php if (get_field('google_analytics', 'options')) echo get_field('google_analytics', 'options'); ?>
 	<?php if (get_field('schema', 'options')) echo get_field('schema', 'options'); ?>
+	<?php if (get_field('meta_tags', 'options')) echo get_field('meta_tags', 'options'); ?>
 </head>
 
 <body <?php body_class(); ?>>

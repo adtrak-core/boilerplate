@@ -2,12 +2,15 @@ module.exports = {
 	purge: [],
 	theme: {
 		screens: {
-			sm: "360px",
-			md: "560px",
-			lg: "768px",
-			xl: "960px",
-			xxl: "1180px",
-			sup: "1440px"
+			'2xs': '375px',
+			'xs': '480px',
+			'sm': '600px',
+			'md': '768px',
+			'lg': '1024px',
+			'xl': '1280px',
+			'2xl': '1400px',
+			'3xl': '1600px',
+			'4xl': '1900px',
 		},
 		textColor: {
 			transparent: "transparent",

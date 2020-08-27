@@ -21,6 +21,9 @@ wp-content/uploads/*
 # ignore all files starting with . or ~
 .*
 ~*
+# Don't ignore the gitignore or htaccess #
+!.gitignore
+!.htaccess
 
 # ignore OS generated files
 ehthumbs.db

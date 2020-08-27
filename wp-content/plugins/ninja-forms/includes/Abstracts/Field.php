@@ -3,7 +3,7 @@
 /**
  * Class NF_Abstracts_Field
  */
-abstract class NF_Abstracts_Field
+abstract class NF_Abstracts_Field extends NF_Abstracts_Element
 {
     /**
     * @var string
@@ -210,8 +210,9 @@ abstract class NF_Abstracts_Field
         if( $this->_parent_type ){
             return $this->_parent_type;
         }
+
         // If a type is not set, return 'textbox'
-        return ( get_parent_class() ) ? parent::$_type : 'textbox';
+        return ( get_parent_class() && isset ( parent::$_type ) ) ? parent::$_type : 'textbox';
     }
 
     public function get_settings()

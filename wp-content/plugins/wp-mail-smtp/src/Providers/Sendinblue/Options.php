@@ -23,11 +23,12 @@ class Options extends OptionsAbstract {
 	 * Options constructor.
 	 *
 	 * @since 1.6.0
+	 * @since 2.3.0 Added supports parameter.
 	 */
 	public function __construct() {
 
 		parent::__construct(
-			array(
+			[
 				'logo_url'    => wp_mail_smtp()->assets_url . '/images/providers/sendinblue.svg',
 				'slug'        => self::SLUG,
 				'title'       => esc_html__( 'Sendinblue', 'wp-mail-smtp' ),
@@ -38,19 +39,26 @@ class Options extends OptionsAbstract {
 						'<br><br>' .
 						/* translators: %2$s - URL to wpmailsmtp.com doc. */
 						__( 'Read our <a href="%2$s" target="_blank" rel="noopener noreferrer">Sendinblue documentation</a> to learn how to configure Sendinblue and improve your email deliverability.', 'wp-mail-smtp' ),
-						array(
+						[
 							'br' => true,
-							'a'  => array(
+							'a'  => [
 								'href'   => true,
 								'rel'    => true,
 								'target' => true,
-							),
-						)
+							],
+						]
 					),
 					'https://wpmailsmtp.com/go/sendinblue/',
 					'https://wpmailsmtp.com/docs/how-to-set-up-the-sendinblue-mailer-in-wp-mail-smtp'
 				),
-			)
+				'supports'    => [
+					'from_email'       => true,
+					'from_name'        => true,
+					'return_path'      => false,
+					'from_email_force' => true,
+					'from_name_force'  => true,
+				],
+			]
 		);
 	}
 
