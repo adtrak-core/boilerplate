@@ -36,9 +36,28 @@
 
 #### The theme structure has changed for this boilerplate ####
 
-1. All components (```header```, ```footer```, ```phone-top-right``` etc) can be found in ```_components``` 
+1. All components (```header```, ```footer```, ```phone-top-right``` etc) can be found in ```_views/_components``` 
 2. All functions (```script enqueuing```, ```Custom Post Types```, ```Custom Taxonomies``` etc) can be found in ```_functions```
 3. All page templates (```front-page.twig```, ```page.twig```, etc) can be found in ```_views```
+4. Images, styles, js and fonts can now be found in ```_resources```
+
+## Adtrak Child With Woocommerce
+
+1. Follow steps 1-23 in the guide above
+2. Go to the Wordpress Admin area
+3. Select 'WooCommerce'
+4. Follow the Woocommerce Set Up Guide, entering your clients details as required
+5. Do not install any of the add ons when prompted
+6. Do not install Jetpack when prompted.
+7. Once complete, you can add payment gateways
+8. Go to WooCommerce -> Settings -> Payments (tab)
+9. Enable Paypal and Stripe and follow the set up guides
+10. Enable Paypal Sandbox / Stripe Test Mode whilst testing your WooCommerce website
+11. Once complete, you can add products to your website
+12. Select 'Products' -> Add New
+13. Scroll to the Product Data section and select your product options.
+14. Publish your products
+15. Continue to develop our theme
 
 ## Adtrak Child Tailwind Theme (Without Twig & Timber)
 
