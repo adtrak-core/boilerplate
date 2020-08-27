@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import classnames from 'classnames';
 import { useMemo, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import {
@@ -57,6 +58,7 @@ import {
  */
 import CheckoutSidebar from './sidebar';
 import CheckoutOrderError from './checkout-order-error';
+import CheckoutOrderNotes from './checkout-order-notes';
 import NoShippingPlaceholder from './no-shipping-placeholder';
 import './style.scss';
 
@@ -118,7 +120,10 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 		isProcessing: checkoutIsProcessing,
 		customerId,
 		onSubmit,
+		orderNotes,
+		dispatchActions,
 	} = useCheckoutContext();
+	const { setOrderNotes } = dispatchActions;
 	const {
 		hasValidationErrors,
 		showAllValidationErrors,
@@ -166,7 +171,7 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 			showAllValidationErrors();
 			scrollToTop( { focusableSelector: 'input:invalid' } );
 		}
-	}, [ hasErrorsToDisplay ] );
+	}, [ hasErrorsToDisplay, scrollToTop, showAllValidationErrors ] );
 
 	if ( ! isEditor && ! hasOrder ) {
 		return <CheckoutOrderError />;
@@ -176,7 +181,7 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 		window.location.href
 	) }`;
 
-	if ( ! customerId && ! CHECKOUT_ALLOWS_GUEST ) {
+	if ( ! isEditor && ! customerId && ! CHECKOUT_ALLOWS_GUEST ) {
 		return (
 			<>
 				{ __(
@@ -207,9 +212,12 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 			</>
 		);
 
+	const checkoutClassName = classnames( 'wc-block-checkout', {
+		'has-dark-controls': attributes.hasDarkControls,
+	} );
 	return (
 		<>
-			<SidebarLayout className="wc-block-checkout">
+			<SidebarLayout className={ checkoutClassName }>
 				<Main className="wc-block-checkout__main">
 					{ cartNeedsPayment && <ExpressCheckoutFormControl /> }
 					<CheckoutForm onSubmit={ onSubmit }>
@@ -387,6 +395,26 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 								<StoreNoticesProvider context="wc/payment-area">
 									<PaymentMethods />
 								</StoreNoticesProvider>
+							</FormStep>
+						) }
+						{ attributes.showOrderNotes && (
+							<FormStep id="order-notes" showStepNumber={ false }>
+								<CheckoutOrderNotes
+									disabled={ checkoutIsProcessing }
+									onChange={ setOrderNotes }
+									placeholder={
+										needsShipping
+											? __(
+													'Notes about your order, e.g. special notes for delivery.',
+													'woo-gutenberg-products-block'
+											  )
+											: __(
+													'Notes about your order.',
+													'woo-gutenberg-products-block'
+											  )
+									}
+									value={ orderNotes }
+								/>
 							</FormStep>
 						) }
 					</CheckoutForm>
