@@ -4,11 +4,11 @@
     {% do action('ld_default', false) %}
 </div>#}
 
-<div class="w-1/2 p-2 text-center bg-secondary">
+<div class="w-1/2 p-2 text-center bg-secondary mobile-toggle-location-numbers">
   {% do action('ld_mobile_top', "Call us today") %}
 </div>
 
-<div class="absolute left-0 z-10 hidden w-full p-4 bg-secondary location-numbers top-10 ">
+<div class="absolute left-0 z-10 hidden w-full p-4 bg-secondary location-numbers top-full">
   {% do action('ld_default', true) %}
   {% do action('ld_list', false, "inline") %}
 </div>
