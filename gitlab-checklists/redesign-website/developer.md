@@ -115,6 +115,7 @@ The deployment/emails/DNS process has its own guides and things to do. Please re
 - [ ] Create any parked URLs in Salesforce
 - [ ] If applicable, let PPC Consultant know they can start their campaign on the new website
 - [ ] Archive any old Gitlab projects for the previous site, if applicable
+- [ ] Delete any superfluous/old projects in DeployHQ
 - [ ] Backup and delete any old dev-server or web-server versions
 - [ ] Delete any old staging sites for the old website
 
