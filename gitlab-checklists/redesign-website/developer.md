@@ -113,7 +113,6 @@ The deployment/emails/DNS process has its own guides and things to do. Please re
 
 - [ ] Create the URL in Salesforce adding relevant data
 - [ ] Create any parked URLs in Salesforce
-- [ ] If applicable, let PPC Consultant know they can start their campaign on the new website
 - [ ] Archive any old Gitlab projects for the previous site, if applicable
 - [ ] Delete any superfluous/old projects in DeployHQ
 - [ ] Backup and delete any old dev-server or web-server versions
@@ -123,12 +122,12 @@ The deployment/emails/DNS process has its own guides and things to do. Please re
 
 - [ ] Final Lighthouse speed check - can anything be improved?
 - [ ] If applicable, check that Engage is recording data
+- [ ] If applicable, let PPC Consultant know they can start their campaign on the new website
 - [ ] Liaise with Internet Marketer (and Paid Marketer where relevant) to check everything is performing as expected (i.e. redirects are working)
 - [ ] Test each form - confirm receipt
 - [ ] Add time to any relevant Salesforce delivery task, and close any relevant delivery tasks
 - [ ] Ensure Staging URL is on Salesforce
 - [ ] Update Primary URL on Salesforce with any new information (i.e. if it is now running on HTTPS)
-- [ ] Let the Paid Marketing Consulant know their PPC campaign can be restarted
 
 ## StatusCake
 
