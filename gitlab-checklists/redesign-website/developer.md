@@ -133,7 +133,7 @@ The deployment/emails/DNS process has its own guides and things to do. Please re
 ## StatusCake
 
 - [ ] Add the website to [StatusCake](https://resources.adtrak.agency/statuscake/), using the FULL url with HTTP(S)
-- [ ] Contact group: Default Contact Group
+- [ ] Contact group: Default Contact Group and your team's group
 - [ ] Check Rate: 5 Min
 - [ ] Is the site running on SSL? If so, use the resource centre guide to add an SSL check too
 
