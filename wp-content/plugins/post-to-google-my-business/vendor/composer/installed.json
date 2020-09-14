@@ -168,7 +168,8 @@
             "time",
             "timezone",
             "wordpress"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "typisttech/imposter",

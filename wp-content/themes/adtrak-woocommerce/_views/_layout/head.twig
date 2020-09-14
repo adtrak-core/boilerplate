@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html {{site.language_attributes}}>
+
+<head>
+    <meta charset="{{ site.charset }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# <title>{{ site.title }}</title> #}
+
+    {% block htmlheader %}
+    <link rel="stylesheet" href="{{ theme.link ~ '/dist/main.min.css' }}">
+    {% endblock %}
+
+    {% if options.google_analytics %}
+    {{ options.google_analytics}}
+    {% endif %}
+
+    {% if options.schema %}
+    {{ options.schema}}
+    {% endif %}
+
+    {# <link rel="stylesheet" href="{{ site.theme.link }}/dist/main.min.css" type="text/css" media="screen" /> #}
+    {# <script src="{{ site.theme.link }}/dist/production-dist.js" defer></script> #}
+
+    {{ function('wp_head') }}
+</head>
+
+<body class="{{body_class}}">
+
+    {{ fn('wp_body_open') }}
+
+    <nav class="mob-nav">
+        <div class="scroll-container">
+        </div>
+    </nav>
+
+    <div class="wrapper">
+
+        {% include "_components/mobile-top-bar.twig" %}
+

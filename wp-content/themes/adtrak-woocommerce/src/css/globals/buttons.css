@@ -1,9 +1,0 @@
-.button,
-button[type='submit'],
-input[type='submit'] {
-  @apply py-1 px-2;
-  @apply bg-link;
-  @apply text-white;
-  @apply rounded-sm;
-  @apply inline-block;
-}

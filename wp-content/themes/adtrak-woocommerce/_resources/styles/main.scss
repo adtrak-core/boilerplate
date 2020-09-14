@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+
+@import   'partials/core.scss',
+          'partials/buttons.scss',
+          'partials/cookies.scss',
+          'partials/desktop-nav.scss',
+          'partials/forms.scss',
+          'partials/mobile-nav.scss',
+          'partials/typography.scss';
+
+@import 'woocommerce/single-product.scss', 
+        'woocommerce/mini-cart.scss',
+        'woocommerce/reviews.scss',
+        'woocommerce/loop.scss',
+        'woocommerce/cart.scss',
+        'woocommerce/checkout.scss',
+        'woocommerce/pagination.scss',
+        'woocommerce/account.scss',
+        'woocommerce/widgets.scss',
+        'woocommerce/grid.scss';
+
+/* Extra Add On Content Normalize */
+@import 'woocommerce/subscriptions.scss';
+
+@tailwind utilities;

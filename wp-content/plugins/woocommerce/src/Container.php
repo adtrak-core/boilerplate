@@ -1,8 +1,11 @@
 <?php
 /**
  * Container class file.
+<<<<<<< HEAD
  *
  * @package Automattic\WooCommerce
+=======
+>>>>>>> develop
  */
 
 namespace Automattic\WooCommerce;

@@ -21,21 +21,21 @@ if (!class_exists('Timber')) {
 /**
  * Initialise Timber Directories
  */
-Timber::$dirname = ['views'];
+Timber::$dirname = ['_views'];
 Timber::$autoescape = false;
 
 
 /**
  * Initialise Theme Classes
  */
-require_once(__DIR__ . '/classes/BaseSite.php');
-require_once(__DIR__ . '/classes/Cleanup.php');
-require_once(__DIR__ . '/classes/Scripts.php');
-require_once(__DIR__ . '/classes/CustomPostTypes.php');
-require_once(__DIR__ . '/classes/Image.php');
-require_once(__DIR__ . '/classes/Svg.php');
-require_once(__DIR__ . '/classes/CustomFieldBlocks.php');
-require_once(__DIR__ . '/classes/Adtrak.php');
+require_once(__DIR__ . '/_functions/BaseSite.php');
+require_once(__DIR__ . '/_functions/Cleanup.php');
+require_once(__DIR__ . '/_functions/Scripts.php');
+require_once(__DIR__ . '/_functions/CustomPostTypes.php');
+require_once(__DIR__ . '/_functions/Image.php');
+require_once(__DIR__ . '/_functions/Svg.php');
+require_once(__DIR__ . '/_functions/CustomFieldBlocks.php');
+require_once(__DIR__ . '/_functions/Adtrak.php');
 
 new BaseSite();
 new Scripts();
@@ -81,8 +81,8 @@ function get_adtrak_logo($colour = null, $icon = false)
 /**
  * Initialise Commerce Based Class Features
  */
-require_once(__DIR__ . '/classes/commerce/MiniCart.php');
-require_once(__DIR__ . '/classes/commerce/CommerceOverrides.php');
+require_once(__DIR__ . '/_functions/commerce/MiniCart.php');
+require_once(__DIR__ . '/_functions/commerce/CommerceOverrides.php');
 
 new CommerceMiniCart();
 new CommerceOverrides();
@@ -99,6 +99,9 @@ function timber_set_product($post)
     }
 }
 
+/* Hide the admin bar for logged in users */
+show_admin_bar(false);
+
 /**
  * Handy function to dump the value and wrap in pre tags. Used for debugging only.
  * Doesn't display anything is debug is not enabled.
@@ -112,3 +115,12 @@ function timber_set_product($post)
 //         echo '</pre>';
 //     }
 // }
+
+
+add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_script('production', get_theme_file_uri() . '/dist/production-dist.js', ['jquery'], '', true);
+    wp_localize_script('production', 'themeURL', array(
+        'themeURL' => get_stylesheet_directory_uri()
+        )
+    );
+});

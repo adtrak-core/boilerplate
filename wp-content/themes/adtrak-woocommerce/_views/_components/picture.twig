@@ -1,0 +1,98 @@
+{# 
+Custom picture, useful for any image. See bottom of this file for a full example.
+ #}
+
+<picture class="w-full {{ pictureClasses }}">
+
+	{% for breakpoint, options in breakpoints %}
+    
+     <source
+      type="image/webp"
+      srcset="{{
+        source|
+        resize(
+          options.w|default(1000),
+          options.h|default(500),
+          options.crop|default('center')
+          )|
+        towebp
+      }}"
+      media="(min-width: {{breakpoint}})"
+    >
+    
+    <source
+      type="image/jpeg"
+      srcset="{{
+        source|
+        resize(
+          options.w|default(1000),
+          options.h|default(500),
+          options.crop|default('center')
+          )|
+        tojpg
+      }}"
+      media="(min-width: {{breakpoint}})"
+    >
+
+	{% endfor %}
+
+	<img
+    src=""
+    data-src="{{
+      source|
+      tojpg|
+      resize(
+        img.w|default(640),
+        img.h|default(640),
+        img.crop|default('center')
+      )
+    }}"
+    alt="{{ img.alt|default(site.title) }}"
+    class="{{ img.classes }} lazyload"
+  >
+</picture>
+
+{# 
+
+--- Usage
+
+{% include "_components/picture.twig" with {
+  source: post.thumbnail.src,
+  breakpoints: {
+    "1530px" : {
+      w: 1800,
+      h: 500,
+      crop: 'center'
+    },
+    "1280px" : {
+      w: 1530,
+      h: 500,
+      crop: 'center'
+    },
+    "1024px" : {
+      w: 1280,
+      h: 500,
+      crop: 'center'
+    },
+    "768px" : {
+      w: 1024,
+      h: 500,
+      crop: 'center'
+    },
+    "640px" : {
+      w: 768,
+      h: 400,
+      crop: 'center'
+    },
+  },
+  img: {
+    classes: '',
+    alt: img.alt|default(site.title),
+    w: null,
+    h: 600,
+    crop: 'center',
+  }
+}
+%}
+
+ #}

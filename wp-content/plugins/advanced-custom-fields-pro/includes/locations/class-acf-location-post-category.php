@@ -47,6 +47,7 @@ class ACF_Location_Post_Category extends ACF_Location {
 	 * @return	array
 	 */
 	public function get_values( $rule ) {
+<<<<<<< HEAD
 		
 		// Get grouped terms.
 		$groups = acf_get_grouped_terms(array(
@@ -58,6 +59,13 @@ class ACF_Location_Post_Category extends ACF_Location {
 		
 		// Return first group.
 		return reset( $grouped_choices );
+=======
+		$choices = acf_get_taxonomy_terms(array( 'category' ));
+		if( $choices ) {
+			return reset( $choices );
+		}
+		return array();
+>>>>>>> develop
 	}
 	
 	/**

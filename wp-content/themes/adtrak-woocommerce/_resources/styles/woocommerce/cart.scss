@@ -1,0 +1,111 @@
+.shop_table {
+  @apply text-xs; 
+
+  .product-thumbnail img {
+    max-width: 50px;
+  }
+
+  td,
+  th {
+    @apply py-1;
+  }
+
+  th {
+    @apply uppercase;
+    @apply text-xs text-center;
+  }
+
+  td {
+    @apply p-1;
+  }
+
+  input {
+    @apply p-1 text-xs border-0 text-center;
+  }
+
+  .screen-reader-text {
+    @apply sr-only;
+  }
+
+}
+
+.shop_table.cart {
+  @apply w-full;
+  @apply mb-10;
+
+  td,
+  th {
+    @apply border-b;
+  }
+
+  .actions {
+  }
+}
+
+
+/* Aside Cart upsells */
+.cross-sells {
+  @apply p-4 bg-gray-100 mb-8;
+
+  h2 {
+    @apply text-base;
+  }
+
+  a {
+    @apply text-primary-dark;
+  }
+}
+
+/* Aside Cart Totals */
+.cart_totals {
+  @apply bg-gray-300 p-4;
+
+  .checkout-button {
+    @apply bg-white font-bold text-primary-dark mt-4;
+  }
+}
+
+/* Coupons */
+.woocommerce-cart-form {
+  .coupon {
+    @apply w-full flex flex-wrap text-sm;
+
+    label {
+      @apply w-full font-bold mb-2;
+    }
+
+    input {
+      @apply w-3/5;
+    } 
+
+    button {
+      @apply w-2/5 rounded-l-none font-bold m-0;
+    }
+  }
+
+  @screen sm {
+   .coupon {
+     input {
+       @apply w-4/5;
+     }
+
+     button.button {
+       @apply w-1/5 mt-0;
+     }
+   } 
+  }
+}
+
+.cart__actions {
+  @apply flex flex-wrap justify-between items-center;
+
+  button.button {
+    @apply w-full mt-4 bg-secondary;
+  }
+
+  @screen sm {
+    button.button {
+      @apply w-1/3 ml-auto bg-secondary;
+    }
+  }
+}

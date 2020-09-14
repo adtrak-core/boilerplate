@@ -42,8 +42,13 @@ function autoloader( $class_name ) {
  * @param Version_Selector $version_selector The Version_Selector object.
  */
 function enqueue_files( $plugins_handler, $version_selector ) {
+<<<<<<< HEAD
 	require_once __DIR__ . '/../class-classes-handler.php';
 	require_once __DIR__ . '/../class-files-handler.php';
+=======
+	require_once __DIR__ . '/class-classes-handler.php';
+	require_once __DIR__ . '/class-files-handler.php';
+>>>>>>> develop
 
 	$classes_handler = new Classes_Handler( $plugins_handler, $version_selector );
 	$classes_handler->set_class_paths();
@@ -62,9 +67,15 @@ function set_up_autoloader() {
 	global $jetpack_autoloader_latest_version;
 	global $jetpack_packages_classmap;
 
+<<<<<<< HEAD
 	require_once __DIR__ . '/../class-plugins-handler.php';
 	require_once __DIR__ . '/../class-version-selector.php';
 	require_once __DIR__ . '/../class-autoloader-handler.php';
+=======
+	require_once __DIR__ . '/class-plugins-handler.php';
+	require_once __DIR__ . '/class-version-selector.php';
+	require_once __DIR__ . '/class-autoloader-handler.php';
+>>>>>>> develop
 
 	$plugins_handler    = new Plugins_Handler();
 	$version_selector   = new Version_Selector();
@@ -104,6 +115,10 @@ function set_up_autoloader() {
  * @return bool The passed in $response param.
  */
 function reset_maps_after_update( $response, $hook_extra, $result ) {
+<<<<<<< HEAD
+=======
+	global $jetpack_autoloader_latest_version;
+>>>>>>> develop
 	global $jetpack_packages_classmap;
 
 	if ( isset( $hook_extra['plugin'] ) ) {
@@ -125,6 +140,7 @@ function reset_maps_after_update( $response, $hook_extra, $result ) {
 
 		/*
 		 * $plugin is the path to the plugin file relative to the plugins directory.
+<<<<<<< HEAD
 		 */
 		$plugin_dir  = str_replace( '\\', '/', WP_PLUGIN_DIR );
 		$plugin_path = trailingslashit( $plugin_dir ) . trailingslashit( explode( '/', $plugin )[0] );
@@ -132,6 +148,16 @@ function reset_maps_after_update( $response, $hook_extra, $result ) {
 		if ( is_readable( $plugin_path . 'vendor/jetpack-autoloader/autoload_functions.php' ) ) {
 			// The plugin has a >=v2.2 autoloader, so reset the classmap.
 			$jetpack_packages_classmap = array();
+=======
+		 * What if this plugin is not in the plugins directory, for example an mu plugin?
+		 */
+		$plugin_path = trailingslashit( WP_PLUGIN_DIR ) . trailingslashit( explode( '/', $plugin )[0] );
+
+		if ( is_readable( $plugin_path . 'vendor/autoload_functions.php' ) ) {
+			// The plugin has a v2.x autoloader, so reset it.
+			$jetpack_autoloader_latest_version = null;
+			$jetpack_packages_classmap         = array();
+>>>>>>> develop
 
 			set_up_autoloader();
 		}
@@ -139,3 +165,7 @@ function reset_maps_after_update( $response, $hook_extra, $result ) {
 
 	return $response;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop

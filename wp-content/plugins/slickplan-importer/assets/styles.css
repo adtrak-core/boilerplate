@@ -1,0 +1,52 @@
+#slickplan-importer h2 {
+    border-bottom: 1px solid #eee;
+    font-size: 1.25em;
+    font-weight: 700;
+    margin: 0;
+    padding: .4em .6em;
+}
+
+#slickplan-importer span.description {
+    opacity: .5;
+    display: inline-block;
+    padding-top: 4px;
+}
+
+#slickplan-importer table.users-mapping td {
+    padding: 5px 0;
+}
+
+#slickplan-importer td[colspan="2"] {
+    padding: 0;
+}
+
+#slickplan-importer .slickplan-summary {
+    overflow: auto;
+}
+
+#slickplan-progressbar {
+    position: relative;
+    background: #fff;
+    border: 1px solid #aaa;
+    color: #222;
+    height: 29px;
+}
+
+#slickplan-progressbar .ui-progressbar-value {
+    background: #ccc;
+    color: #222;
+    font-weight: bold;
+    height: 29px;
+    width: 0px;
+    -webkit-transition: width .2s ease;
+    -moz-transition: width .2s ease;
+    transition: width .2s ease;
+}
+
+#slickplan-progressbar .progress-label {
+    position: absolute;
+    left: 49%;
+    top: 5px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+}

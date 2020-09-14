@@ -21,7 +21,7 @@ defined('ABSPATH') || exit;
 do_action('woocommerce_before_cart'); ?>
 
 <div class="flex flex-wrap justify-between row">
-  <form class="woocommerce-cart-form column w-8/12" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post">
+  <form class="w-full woocommerce-cart-form column md:w-8/12" action="<?php echo esc_url(wc_get_cart_url()); ?>" method="post">
     <?php do_action('woocommerce_before_cart_table'); ?>
 
     <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
@@ -166,7 +166,7 @@ do_action('woocommerce_before_cart'); ?>
 
   <?php do_action('woocommerce_before_cart_collaterals'); ?>
 
-  <div class="column w-4/12">
+  <div class="w-full mt-4 md:w-4/12 column">
     <div class="cart-collaterals">
       <?php do_action('woocommerce_cart_collaterals'); ?>
     </div>

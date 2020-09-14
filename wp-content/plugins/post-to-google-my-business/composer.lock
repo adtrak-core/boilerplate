@@ -167,6 +167,7 @@
                 "timezone",
                 "wordpress"
             ],
+            "abandoned": true,
             "time": "2019-05-27T11:32:59+00:00"
         },
         {
@@ -872,6 +873,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-11-27T05:48:46+00:00"
         },
         {

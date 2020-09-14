@@ -5820,6 +5820,172 @@
 	/**
 	*  acf.newPostbox
 	*
+<<<<<<< HEAD
+=======
+	*  description
+	*
+	*  @date	1/2/18
+	*  @since	5.6.5
+	*
+	*  @param	void
+	*  @return	void
+	*/
+	
+	var SelectionGreaterThan = GreaterThan.extend({
+		type: 'selectionGreaterThan',
+		label: __('Selection is greater than'),
+		fieldTypes: [ 'checkbox', 'select', 'post_object', 'page_link', 'relationship', 'taxonomy', 'user' ],
+	});
+	
+	acf.registerConditionType( SelectionGreaterThan );
+	
+	/**
+	*  SelectedGreaterThan
+	*
+	*  description
+	*
+	*  @date	1/2/18
+	*  @since	5.6.5
+	*
+	*  @param	void
+	*  @return	void
+	*/
+	
+	var SelectionLessThan = LessThan.extend({
+		type: 'selectionLessThan',
+		label: __('Selection is less than'),
+		fieldTypes: [ 'checkbox', 'select', 'post_object', 'page_link', 'relationship', 'taxonomy', 'user' ],
+	});
+	
+	acf.registerConditionType( SelectionLessThan );
+	
+})(jQuery);
+
+(function($, undefined){
+	
+	acf.unload = new acf.Model({
+		
+		wait: 'load',
+		active: true,
+		changed: false,
+		
+		actions: {
+			'validation_failure':	'startListening',
+			'validation_success':	'stopListening'
+		},
+		
+		events: {
+			'change form .acf-field':	'startListening',
+			'submit form':				'stopListening'
+		},
+		
+		enable: function(){
+			this.active = true;
+		},
+		
+		disable: function(){
+			this.active = false;
+		},
+		
+		reset: function(){
+			this.stopListening();
+		},
+		
+		startListening: function(){
+			
+			// bail ealry if already changed, not active
+			if( this.changed || !this.active ) {
+				return;
+			}
+			
+			// update 
+			this.changed = true;
+			
+			// add event
+			$(window).on('beforeunload', this.onUnload);
+			
+		},
+		
+		stopListening: function(){
+			
+			// update 
+			this.changed = false;
+			
+			// remove event
+			$(window).off('beforeunload', this.onUnload);
+			
+		},
+		
+		onUnload: function(){
+			return acf.__('The changes you made will be lost if you navigate away from this page');
+		}
+		 
+	});
+	
+})(jQuery);
+
+(function($, undefined){
+	
+	/**
+	 * postboxManager
+	 *
+	 * Manages postboxes on the screen.
+	 *
+	 * @date	25/5/19
+	 * @since	5.8.1
+	 *
+	 * @param	void
+	 * @return	void
+	 */
+	var postboxManager = new acf.Model({
+		wait: 'prepare',
+		priority: 1,
+		initialize: function(){
+			(acf.get('postboxes') || []).map( acf.newPostbox );
+		},
+	});
+	
+	/**
+	*  acf.getPostbox
+	*
+	*  Returns a postbox instance.
+	*
+	*  @date	23/9/18
+	*  @since	5.7.7
+	*
+	*  @param	mixed $el Either a jQuery element or the postbox id.
+	*  @return	object
+	*/
+	acf.getPostbox = function( $el ){
+		
+		// allow string parameter
+		if( typeof arguments[0] == 'string' ) {
+			$el = $('#' + arguments[0]);
+		}
+		
+		// return instance
+		return acf.getInstance( $el );
+	};
+	
+	/**
+	*  acf.getPostboxes
+	*
+	*  Returns an array of postbox instances.
+	*
+	*  @date	23/9/18
+	*  @since	5.7.7
+	*
+	*  @param	void
+	*  @return	array
+	*/
+	acf.getPostboxes = function(){
+		return acf.getInstances( $('.acf-postbox') );
+	};
+	
+	/**
+	*  acf.newPostbox
+	*
+>>>>>>> develop
 	*  Returns a new postbox instance for the given props.
 	*
 	*  @date	20/9/18
@@ -9680,6 +9846,7 @@
 			});
 
 			// Create validation version.
+<<<<<<< HEAD
 			editor.savePost = function(){
 
 				// Bail early if validation is not neeed.
@@ -9731,6 +9898,76 @@
 				
 				// Save post as normal.
 				savePost();
+=======
+			editor.savePost = function( options ){
+				options = options || {};
+
+				// Backup vars.
+				var _this = this;
+				var _args = arguments;
+
+				// Perform validation within a Promise.
+				return new Promise(function( resolve, reject ) {
+					
+					// Bail early if is autosave or preview.
+					if( options.isAutosave || options.isPreview ) {
+						return resolve( 'Validation ignored (autosave).' );
+					}
+
+					// Bail early if validation is not neeed.
+					if( !useValidation ) {
+						return resolve( 'Validation ignored (draft).' );
+					}
+
+					// Validate the editor form.
+					var valid = acf.validateForm({
+						form: $('#editor'),
+						reset: true,
+						complete: function( $form, validator ){
+
+							// Always unlock the form after AJAX.
+							editor.unlockPostSaving( 'acf' );
+						},
+						failure: function( $form, validator ){
+							
+							// Get validation error and append to Gutenberg notices.
+							var notice = validator.get('notice');
+							notices.createErrorNotice( notice.get('text'), { 
+								id: 'acf-validation', 
+								isDismissible: true
+							});
+							notice.remove();
+
+							// Restore last non "publish" status.
+							if( lastPostStatus ) {
+								editor.editPost({
+									status: lastPostStatus
+								});
+							}
+
+							// Rejext promise and prevent savePost().
+							reject( 'Validation failed.' );
+						},
+						success: function(){
+							notices.removeNotice( 'acf-validation' );
+							
+							// Resolve promise and allow savePost().
+							resolve( 'Validation success.' );
+						}
+					});
+
+					// Resolve promise and allow savePost() if no validation is needed.
+					if( valid ) {
+						resolve( 'Validation bypassed.' );
+					
+					// Otherwise, lock the form and wait for AJAX response.
+					} else {
+						editor.lockPostSaving( 'acf' );
+					}
+				}).then(function(){
+					return savePost.apply(_this, _args);
+				});
+>>>>>>> develop
 			};
 		}
 	});

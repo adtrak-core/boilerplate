@@ -1,0 +1,51 @@
+.woocommerce-MyAccount-orders,
+.woocommerce-MyAccount-paymentMethods {
+  @apply w-full;
+
+  td,
+  th {
+    @apply py-1;
+  }
+
+  thead tr,
+  tfoot tr,
+  tbody tr:last-child {
+    @apply border-b;
+  }
+}
+
+/* Edit Account Details */
+.edit-account {
+  input {
+    @apply w-full block;
+    @apply mb-3;
+  }
+}
+
+/* Address Updates */
+.woocommerce-address-fields {
+  .form-row {
+    @apply mb-3;
+  }
+
+  input:not([type='checkbox']),
+  label {
+    @apply w-full block;
+  }
+}
+
+.woocommerce-form-login__rememberme {
+  @apply flex items-center mt-4 text-sm;
+  
+  input {
+    @apply mr-4 w-auto;
+  }
+}
+
+.woocommerce-form-login__submit {
+  @apply block bg-secondary font-bold mt-4 text-center;
+}
+
+.lost_password {
+  @apply text-sm mt-4;
+}

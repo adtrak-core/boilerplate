@@ -440,11 +440,20 @@ class Meta_Tags_Context extends Abstract_Presentation {
 		}
 
 		/**
+<<<<<<< HEAD
 		 * Filter: 'wpseo_schema_webpage_type' - Allow changing the WebPage type.
 		 *
 		 * @api string|array $type The Article type.
 		 */
 		return \apply_filters( 'wpseo_schema_article_type', $type );
+=======
+		 * Filter: 'wpseo_schema_article_type' - Allow changing the Article type.
+		 *
+		 * @param string|string[] $type      The Article type.
+		 * @param Indexable       $indexable The indexable.
+		 */
+		return \apply_filters( 'wpseo_schema_article_type', $type, $this->indexable );
+>>>>>>> develop
 	}
 
 	/**

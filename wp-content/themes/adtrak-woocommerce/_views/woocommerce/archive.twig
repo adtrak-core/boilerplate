@@ -1,0 +1,41 @@
+{% extends '_layout/base.twig' %}
+
+{% block hero %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+	<div class="mt-4 text-sm">
+		{# breadcrumbs #}
+		{% do action('woocommerce_before_main_content') %}
+	</div>
+
+	<div class="before-shop-loop">
+		<h1>Shop</h1>
+		{% do action('woocommerce_before_shop_loop') %}
+	</div>
+
+	<section class="flex flex-wrap">
+
+		<div class="w-full md:w-8/12 lg:w-9/12">
+			<div class="flex flex-wrap products">
+				{% for post in products %}
+					{% include ["partials/shop/tease-product.twig"] %}
+				{% endfor %}
+			</div>
+		</div>
+
+		<aside class="w-full md:w-4/12 md:p-6 lg:w-3/12">
+			{% do action('woocommerce_sidebar') %}
+		</aside>
+
+	</section>
+
+	{% do action('woocommerce_after_shop_loop') %}
+	{% do action('woocommerce_after_main_content') %}
+
+</div>
+
+{% endblock  %}

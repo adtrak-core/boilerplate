@@ -1,9 +1,0 @@
-{% extends "layout/base.twig" %}
-
-{% block content %}
-	<section class="container">
-		{{ post.content }}
-
-		{{ responsive_image_from_thumb(post.id) }}
-	</section>
-{% endblock %}

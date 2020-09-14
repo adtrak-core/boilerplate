@@ -2,12 +2,20 @@
 /**
  * Shows a shipping line
  *
+<<<<<<< HEAD
  * @package WooCommerce/Admin
+=======
+ * @package WooCommerce\Admin
+>>>>>>> develop
  *
  * @var object $item The item being displayed
  * @var int $item_id The id of the item being displayed
  *
+<<<<<<< HEAD
  * @package WooCommerce/Admin/Views
+=======
+ * @package WooCommerce\Admin\Views
+>>>>>>> develop
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

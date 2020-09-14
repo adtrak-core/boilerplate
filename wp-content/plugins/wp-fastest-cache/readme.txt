@@ -1,0 +1,281 @@
+=== WP Fastest Cache ===
+Contributors: emrevona
+Donate link: http://profiles.wordpress.org/emrevona/
+Tags: cache, caching, performance, wp-cache, total cache, super cache, cdn
+Requires at least: 3.3
+Tested up to: 5.5
+Stable tag: 0.9.1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+The simplest and fastest WP Cache system
+
+== Description ==
+
+<h4>Official Website</h4>
+
+You can find more information on our web site (<a href="http://www.wpfastestcache.com/">wpfastestcache.com</a>)
+
+When a page is rendered, php and mysql are used. Therefore, system needs RAM and CPU. 
+If many visitors come to a site, system uses lots of RAM and CPU so page is rendered so slowly. In this case, you need a cache system not to render page again and again. Cache system generates a static html file and saves. Other users reach to static html page.
+<br><br>
+In addition, the site speed is used in Google’s search ranking algorithm so cache plugins that can improve your page load time will also improve your SEO ranking.
+<br><br>
+Setup of this plugin is so easy. You don't need to modify the .htacces file. It will be modified automatically.
+
+<h4>Features</h4>
+
+1. Mod_Rewrite which is the fastest method is used in this plugin
+2. All cache files are deleted when a post or page is published
+3. Admin can delete all cached files from the options page
+4. Admin can delete minified css and js files from the options page
+5. Block cache for specific page or post with Short Code
+6. Cache Timeout - All cached files are deleted at the determinated time
+7. Cache Timeout for specific pages
+8. Enable/Disable cache option for mobile devices
+9. Enable/Disable cache option for logged-in users
+10. SSL support
+11. CDN support
+12. Cloudflare support
+13. Preload Cache - Create the cache of all the site automatically
+14. Exclude pages and user-agents
+
+<h4>Performance Optimization</h4>
+
+In the premium version there are many features such as Minify Html, Minify Css, Enable Gzip Compression, Leverage Browser Caching, Add Expires Headers, Combine CSS, Combine JS, Disable Emoji.
+
+1. Generating static html files from your dynamic WordPress blog
+2. Minify Html - You can decrease the size of page
+3. Minify Css - You can decrease the size of css files
+4. Enable Gzip Compression - Reduce the size of files sent from your server to increase the speed to which they are transferred to the browser
+5. Leverage browser caching - Reduce page load times for repeat visitors
+6. Combine CSS - Reduce number of HTTP round-trips by combining multiple CSS resources into one
+7. Combine JS
+8. Disable Emoji - You can remove the emoji inline css and wp-emoji-release.min.js
+
+<h4>Premium Performance Optimization</h4>
+
+The free version is enough to speed up your site but in the premium version there are extra features such as Mobile Cache, Widget Cache, Minify HTML Plus, Minify CSS Plus, Minify JS, Combine JS Plus, Defer Javascript, Optimize Images, Convert WebP, Database Cleanup, Google Fonts Async, Lazy Load for super fast load times.
+
+1. Mobile Cache
+2. Widget Cache
+3. Minify HTML Plus
+4. Minify CSS Plus
+5. Minify Javascript - Minifying JavaScript files can reduce payload sizes and script parse time
+6. Combine JS Plus
+7. Defer Javascript - Eliminate render-blocking JavaScript resources. Consider delivering critical JS inline and deferring all non-critical JS
+8. Optimize Images - Optimized images load faster and consume less cellular data
+9. Convert WebP - Serve images in next-gen formats. Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption
+10. Database Cleanup
+11. Google Fonts Async
+12. Lazy Load - Defer offscreen images. Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive
+
+<h4>Supported languages: </h4>
+
+* 中文 (by suifengtec)
+* Deutsch
+* English
+* Español (by Javier Esteban)
+* Español de Venezuela (by Yordan Soares)
+* Español de Argentina (by Mauricio Lopez)
+* فارسی (by Javad Rahimi)
+* Français (by Cyrille Sanson)
+* Italiana (by Luisa Ravelli)
+* 日本語 (by KUCKLU)
+* Nederlands (by Frans Pronk https://ifra.nl)
+* Polski (by roan24.pl)
+* Português
+* Português do Brasil (Mario Antonio Sesso Junior)
+* Română
+* Русский (by Maxim)
+* Slovenčina
+* Suomi (by Arhi Paivarinta)
+* Svenska (by Linus Wileryd)
+* Türkçe
+* 繁體中文 (Alex Lion)
+
+== Installation ==
+
+1. Upload `wp-fastest-cache` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Permission of .htacces must 644
+4. Enable this plugin on option page
+
+== Screenshots ==
+
+1. Performance Comparison
+2. Other Performance Comparison
+3. Without Cache
+4. With Cache
+5. Main Settings Page
+6. Preload
+7. New Post
+8. Update Cache
+9. Delete Cache
+10. All cached files are deleted at the determinated time
+11. Block caching for post and pages (TinyMCE)
+12. Clean cached files via admin toolbar easily
+13. Exclude Page
+14. CDN
+15. Enter CDN Information
+16. File Types
+17. Specify Sources
+18. Database Cleanup
+
+== Changelog ==
+
+= 0.9.1.0 =
+* to fix PHP Notice: Undefined property: stdClass::$excludekeywords in wpFastestCache.php on line 1935
+* to fix Undefined offset: 0 in cache.php on line 865
+
+= 0.9.0.9 =
+* <strong>[FEATURE]</strong> to add wizard allows you to show the clear cache button which exists on the admin toolbar based on user roles [<a target="_blank" href="https://www.wpfastestcache.com/features/clear-cache-link-on-the-toolbar/">Details</a>]
+* to fix the replace problem when the cdn-url starts with a number
+* to fix the little issue on the cloudflare integration
+
+= 0.9.0.8 =
+* to exclude PDF files from caching
+* to add Modified Time into htaccess
+* to add "Clear Cache of All Sites" feature for Clear Cache via URL [<a target="_blank" href="https://www.wpfastestcache.com/features/clear-cache-via-url/">Details</a>]
+
+= 0.9.0.7 =
+* <strong>[FEATURE]</strong> to add "exclude sources" feature for CDN
+* to remove the DNS prefetch of s.w.org when emoji is disabled
+* <strong>[FEATURE]</strong> to add wpfc_css_content filter [<a target="_blank" href="https://www.wpfastestcache.com/tutorial/modify-minified-css-by-calling-the-function-hook/">Details</a>]
+* to fix scandir(): (errno 2): No such file or directory on js-utilities.php line 238
+
+= 0.9.0.6 =
+* <strong>[FEATURE]</strong> to add WP-CLI command for clearing minified sources [<a target="_blank" href="https://www.wpfastestcache.com/features/wp-cli-commands/">Details</a>]
+* to fix Warning: parse_url() expects parameter 1 to be string, object given in preload.php on line 458
+* <strong>[FEATURE]</strong> Compatible with <a target="_blank" href="https://wordpress.org/plugins/multiple-domain/">Multiple Domain</a>
+* <strong>[FEATURE]</strong> to add Clear Cache of All Sites button [<a target="_blank" href="https://www.wpfastestcache.com/features/clear-cache-of-all-sites/">Details</a>]
+
+= 0.9.0.5 =
+* to fix replacing urls on the json source with cdn url
+* to fix clearing cache on sites using Polylang plugin
+* to prevent creating cache for feed of nonexistent content
+
+= 0.9.0.4 =
+* to fix PHP Fatal error:  Call to a member function lazy_load() on null in cache.php on line 798
+* to clear sitemap cache after updating or publishing post
+* to clear cache of the static posts page
+* to replace urls on data-siteorigin-parallax attribute with cdn-url
+* to fix the problem abour "Mobile" option
+* <strong>[FEATURE]</strong> Clear cache after theme or plugin update [<a target="_blank" href="https://www.wpfastestcache.com/features/clear-cache-after-theme-or-plugin-update/">Details</a>]
+
+= 0.9.0.3 =
+* <strong>[FEATURE]</strong> Compatible with Multiple Domain Mapping on single site
+* <strong>[BETA FEATURE]</strong> to create cache after publishing new post or updating a post [<a target="_blank" href="https://www.wpfastestcache.com/features/automatic-cache/">Details</a>]
+* to fix clearing search (/?s=) result cache 
+* to add settings link on the plugin list
+* <strong>[FEATURE]</strong> Compatible with Polylang with one different subdomain or domain per language
+* to exclude url which ends with slash if the permalink does not end with slush
+* to exclude images for cdn if the url contains brizy_media=
+
+= 0.9.0.2 =
+* <strong>[FEATURE]</strong> to add Spanish (Argentina) language
+* to add WPFC_TOOLBAR_FOR_SHOP_MANAGER [<a target="_blank" href="https://www.wpfastestcache.com/features/clear-cache-link-at-the-toolbar/">Details</a>]
+* to support MultiSite
+* to add wpfc_exclude_current_page() for excluding current page [<a target="_blank" href="https://www.wpfastestcache.com/features/exclude-page/#hook">Details</a>]
+* <strong>[FEATURE]</strong> to add French language
+* <strong>[FEATURE]</strong> to add Slovak language
+* to show the solution for AWS S3 Access Denied [<a target="_blank" href="https://www.wpfastestcache.com/warnings/amazon-s3-cloudfront-access-denied-403-forbidden/">Details</a>]
+* to show the solution for Using CDN on SSL Sites [<a target="_blank" href="https://www.wpfastestcache.com/warnings/how-to-use-cdn-on-ssl-sites/">Details</a>]
+
+= 0.9.0.1 =
+* to remove the clear cache button from column and to add clear cache action on row actions [<a target="_blank" href="https://www.wpfastestcache.com/tutorial/clear-cache-for-specific-page/">Details</a>]
+* to hide clear cache icon on toolbar for IE
+* to fix replacing cdn-url on data-product_variations attribute
+* to add WPFC_TOOLBAR_FOR_EDITOR [<a target="_blank" href="https://www.wpfastestcache.com/features/clear-cache-link-at-the-toolbar/">Details</a>]
+* <strong>[FEATURE]</strong> to add Persian language
+* <strong>[FEATURE]</strong> to add Chinese (Taiwan) language
+* <strong>[FEATURE]</strong> to add Spanish (Venezuela) language
+* refactoring of checking admin users for exclution
+* to fix E_WARNING on wpFastestCache.php line 1064
+
+= 0.9.0.0 =
+* to exclude the css source of elementor which is /elementor/css/post-[number].css to avoid increasing the size of minified sources
+* to replace urls which have data-vc-parallax-image attribute with cdn-url
+* to avoid clearing cache of feed after voting (All In One Schema.org Rich Snippets)
+* to fix clearing cache after switching url on WPML
+
+= 0.8.9.9 =
+* to fix Undefined variable: count_posts in preload.php on line 112
+* to update of Spanish translation
+* to preload the language pages (WPML)
+* to clear cache of the commend feed as well after clearing cache of a post
+
+= 0.8.9.8 =
+* to clear cache of /feed as well after clearing cache of a post
+* to fix PHP Notice: Undefined index: wpfc in timeout.php on line 132
+* to clear cache when a approved commens is updated
+* to add swf extension for cdn
+* to replace urls which have data-fullurl, data-bg, data-mobileurl and data-lazy attribute with cdn-url
+* <strong>[FEATURE]</strong> Traditional Chinese language has been added
+* to convert the icon from png to svg [by Roni Laukkarinen]
+* to fix Undefined index: HTTP_HOST cache.php on line 321
+
+EARLIER VERSIONS
+For the changelog of earlier versions, please refer to [<a target="_blank" href="https://www.wpfastestcache.com/changelog/earlier-changelog-of-freemium-version/">the changelog on wpfastestcache.com</a>]
+
+== Frequently Asked Questions ==
+
+= How do I know my blog is being cached? =
+You need to refresh a page twice. If a page is cached, at the bottom of the page there is a text like "&lt;!-- WP Fastest Cache file was created in 0.330816984177 seconds, on 08-01-14 9:01:35 --&gt;".
+
+= Does it work with Nginx? =
+Yes, it works with Nginx properly.
+
+= Does it work with IIS (Windows Server) ? =
+Yes, it works with IIS properly.
+
+= Is this plugin compatible with Multisite? =
+Yes, it is compatible with Multisite.
+
+= Is this plugin compatible with Subdirectory Installation? =
+Yes, it is compatible with Subdirectory Installation.
+
+= Is this plugin compatible with Http Secure (https) ? =
+Yes, it is compatible with Http Secure (https).
+
+= Is this plugin compatible with Adsense? =
+Yes, it is compatible with Adsense 100%.
+
+= Is this plugin compatible with CloudFlare? =
+Yes, it is but you need to read the details. <a href="http://www.wpfastestcache.com/tutorial/wp-fastest-cache-cloudflarecloudfront/">Click</a>
+
+= Is this plugin compatible with WP-Polls? =
+Yes, it is compatible with WP-Polls 100%.
+
+= Is this plugin compatible with Bulletproof Security? =
+Yes, it is compatible with Bulletproof Security 100%.
+
+= Is this plugin compatible with Wordfence Security? =
+Yes, it is compatible with Wordfence Security 100%.
+
+= Is this plugin compatible with qTranslate? =
+Yes, it is compatible with qTranslate 100%.
+
+= Is this plugin compatible with WPtouch Mobile? =
+Yes, it is compatible with WPtouch Mobile.
+
+= Is this plugin compatible with WP-PostRatings? =
+Yes, it is compatible with WP-PostRatings.
+
+= Is this plugin compatible with AdRotate? =
+No, it is NOT compatible with AdRotate.
+
+= Is this plugin compatible with WP Hide & Security Enhancer? =
+Yes, it is compatible with WP Hide & Security Enhancer.
+
+= Is this plugin compatible with WP-PostViews? =
+Yes, it is compatible with WP-PostViews. The current post views appear on the admin panel. The visitors cannot see the current post views. The developer of WP-PostViews needs to fix this issue.
+
+= Is this plugin compatible with MobilePress? =
+No, it is NOT compatible with MobilePress. We advise WPtouch Mobile.
+
+= Is this plugin compatible with WooCommerce Themes? =
+Yes, it is compatible with WooCommerce Themes 100%.
+
+== Upgrade notice ==
+....

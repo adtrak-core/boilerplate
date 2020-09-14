@@ -82,6 +82,7 @@ class ACF_Location_Post_Taxonomy extends ACF_Location {
 	 * @return	array
 	 */
 	public function get_values( $rule ) {
+<<<<<<< HEAD
 		
 		// Get taxonomies.
 		$taxonomies = acf_get_taxonomies();
@@ -119,6 +120,32 @@ class ACF_Location_Post_Taxonomy extends ACF_Location {
 		}
 		return '';
 	}
+=======
+		return acf_get_taxonomy_terms();
+	}
+	
+	/**
+	 * Returns the object_subtype connected to this location.
+	 *
+	 * @date	1/4/20
+	 * @since	5.9.0
+	 *
+	 * @param	array $rule A location rule.
+	 * @return	string|array
+	 */
+	public function get_object_subtype( $rule ) {
+		if( $rule['operator'] === '==' ) {
+			$term = acf_decode_term( $rule['value'] );
+			if( $term ) {
+				$taxonomy = get_taxonomy( $term['taxonomy'] );
+				if( $taxonomy ) {
+					return $taxonomy->object_type;
+				}
+			}
+		}
+		return '';
+	}
+>>>>>>> develop
 }
 
 // initialize

@@ -1,0 +1,36 @@
+{% extends '_layout/base.twig' %}
+
+{% block hero %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	
+	<div class="my-4 text-sm md:my-8">
+		{# breadcrumbs #}
+		{% do action('woocommerce_before_main_content') %}
+	</div>
+
+	{% do action('woocommerce_before_single_product') %}
+
+	<article itemscope itemtype="http://schema.org/Product" class="{{ post.class }}">
+		<div class="flex flex-wrap mb-10">
+
+			<div class="relative w-full md:w-6/12 entry-images">
+				{% do action('woocommerce_before_single_product_summary') %}
+			</div>
+
+			<div class="w-full md:w-6/12 md:px-8 xl:p-12 copy">
+				{% do action('woocommerce_single_product_summary') %}
+			</div>
+		</div>
+
+		{% do action('woocommerce_after_single_product_summary') %}
+
+		<meta itemprop="url" content="{{ post.link }}"/>
+	</article>
+
+	{% do action('woocommerce_after_single_product') %}
+</div>
+{% endblock  %}
