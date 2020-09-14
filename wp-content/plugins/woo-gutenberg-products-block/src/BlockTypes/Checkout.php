@@ -185,6 +185,10 @@ class Checkout extends AbstractBlock {
 	 * @param AssetDataRegistry $data_registry Data registry instance.
 	 */
 	protected function hydrate_from_api( AssetDataRegistry $data_registry ) {
+		// Print existing notices now, otherwise they are caught by the Cart
+		// Controller and converted to exceptions.
+		wc_print_notices();
+
 		if ( ! $data_registry->exists( 'cartData' ) ) {
 			$data_registry->add( 'cartData', WC()->api->get_endpoint_data( '/wc/store/cart' ) );
 		}
@@ -202,8 +206,8 @@ class Checkout extends AbstractBlock {
 		return '
 			<div class="wc-block-skeleton wc-block-components-sidebar-layout wc-block-checkout wc-block-checkout--is-loading wc-block-checkout--skeleton hidden" aria-hidden="true">
 				<div class="wc-block-components-main wc-block-checkout__main">
-					<div class="wc-block-components-express-checkout"></div>
-					<div class="wc-block-components-express-checkout-continue-rule"><span></span></div>
+					<div class="wc-block-components-express-payment wc-block-components-express-payment--checkout"></div>
+					<div class="wc-block-components-express-payment-continue-rule wc-block-components-express-payment-continue-rule--checkout"><span></span></div>
 					<form class="wc-block-components-checkout-form">
 						<fieldset class="wc-block-checkout__contact-fields wc-block-components-checkout-step">
 							<div class="wc-block-components-checkout-step__heading">

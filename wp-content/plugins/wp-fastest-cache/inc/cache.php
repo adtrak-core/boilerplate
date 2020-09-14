@@ -662,6 +662,13 @@
 				}
 			}
 
+			// for iThemes Security: not to cache 403 pages
+			if(defined('DONOTCACHEPAGE') && $this->isPluginActive('better-wp-security/better-wp-security.php')){
+				if(function_exists("http_response_code") && http_response_code() == 403){
+					return $buffer."<!-- DONOTCACHEPAGE is defined as TRUE -->";
+				}
+			}
+
 			if($this->exclude_page($buffer)){
 				$buffer = preg_replace('/<\!--WPFC_PAGE_TYPE_[a-z]+-->/i', '', $buffer);	
 				return $buffer;
@@ -862,11 +869,11 @@
 						    set $path /path/$1/index.html;
 						}
 						*/
-						$pre_buffer[0][$key] = preg_replace('/\$(\d)/', '\\\$$1', $pre_buffer[0][$key]);
+						if(isset($pre_buffer[0][$key])){
+							$pre_buffer[0][$key] = preg_replace('/\$(\d)/', '\\\$$1', $pre_buffer[0][$key]);
 
-						
-
-						$content = preg_replace("/".preg_quote($value, "/")."/", $pre_buffer[0][$key], $content);
+							$content = preg_replace("/".preg_quote($value, "/")."/", $pre_buffer[0][$key], $content);
+						}
 					}
 				}
 			}

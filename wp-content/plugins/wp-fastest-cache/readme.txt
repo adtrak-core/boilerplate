@@ -3,8 +3,8 @@ Contributors: emrevona
 Donate link: http://profiles.wordpress.org/emrevona/
 Tags: cache, caching, performance, wp-cache, total cache, super cache, cdn
 Requires at least: 3.3
-Tested up to: 5.4
-Stable tag: 0.9.0.9
+Tested up to: 5.5
+Stable tag: 0.9.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,6 +123,10 @@ The free version is enough to speed up your site but in the premium version ther
 18. Database Cleanup
 
 == Changelog ==
+
+= 0.9.1.0 =
+* to fix PHP Notice: Undefined property: stdClass::$excludekeywords in wpFastestCache.php on line 1935
+* to fix Undefined offset: 0 in cache.php on line 865
 
 = 0.9.0.9 =
 * <strong>[FEATURE]</strong> to add wizard allows you to show the clear cache button which exists on the admin toolbar based on user roles [<a target="_blank" href="https://www.wpfastestcache.com/features/clear-cache-link-on-the-toolbar/">Details</a>]
