@@ -4,7 +4,7 @@
 
 ## Discovery
 
-- [ ] Are you waiting on any phone numbers? Raise a ticket with telecoms department if you are.
+- [ ] Raise a ticket with telecoms to double-check all numbers/setup is complete
 - [ ] Add VAT & Registration numbers into website
 - [ ] Is this site having any additional products that need adding, like Data Capture or Mouseflow?
 - [ ] Ensure you know about domains - primary & aliases
