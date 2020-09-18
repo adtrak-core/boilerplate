@@ -13,11 +13,7 @@
  * the readme will list any important changes.
  *
  * @see     https://docs.woocommerce.com/document/template-structure/
-<<<<<<< HEAD
- * @package WooCommerce/Templates
-=======
  * @package WooCommerce\Templates
->>>>>>> develop
  * @version 4.4.0
  */
 

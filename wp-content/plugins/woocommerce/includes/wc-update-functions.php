@@ -2175,8 +2175,6 @@ function wc_update_440_insert_attribute_terms_for_variable_products() {
 function wc_update_440_db_version() {
 	WC_Install::update_db_version( '4.4.0' );
 }
-<<<<<<< HEAD
-=======
 
 /**
  * Update DB version to 4.5.0.
@@ -2244,4 +2242,3 @@ function wc_update_450_sanitize_coupons_code() {
 	delete_option( 'woocommerce_update_450_last_coupon_id' );
 	return false;
 }
->>>>>>> develop

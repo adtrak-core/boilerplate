@@ -298,15 +298,6 @@ return array(
 		'DZ-03' => __( 'Laghouat', 'woocommerce' ),
 		'DZ-04' => __( 'Oum El Bouaghi', 'woocommerce' ),
 		'DZ-05' => __( 'Batna', 'woocommerce' ),
-<<<<<<< HEAD
-		'DZ-06' => __( 'B&eacute;ja&iuml;a', 'woocommerce' ),
-		'DZ-07' => __( 'Biskra', 'woocommerce' ),
-		'DZ-08' => __( 'B&eacute;char', 'woocommerce' ),
-		'DZ-09' => __( 'Blida', 'woocommerce' ),
-		'DZ-10' => __( 'Bouira', 'woocommerce' ),
-		'DZ-11' => __( 'Tamanghasset', 'woocommerce' ),
-		'DZ-12' => __( 'T&eacute;bessa', 'woocommerce' ),
-=======
 		'DZ-06' => __( 'Béjaïa', 'woocommerce' ),
 		'DZ-07' => __( 'Biskra', 'woocommerce' ),
 		'DZ-08' => __( 'Béchar', 'woocommerce' ),
@@ -314,25 +305,12 @@ return array(
 		'DZ-10' => __( 'Bouira', 'woocommerce' ),
 		'DZ-11' => __( 'Tamanghasset', 'woocommerce' ),
 		'DZ-12' => __( 'Tébessa', 'woocommerce' ),
->>>>>>> develop
 		'DZ-13' => __( 'Tlemcen', 'woocommerce' ),
 		'DZ-14' => __( 'Tiaret', 'woocommerce' ),
 		'DZ-15' => __( 'Tizi Ouzou', 'woocommerce' ),
 		'DZ-16' => __( 'Algiers', 'woocommerce' ),
 		'DZ-17' => __( 'Djelfa', 'woocommerce' ),
 		'DZ-18' => __( 'Jijel', 'woocommerce' ),
-<<<<<<< HEAD
-		'DZ-19' => __( 'S&eacute;tif', 'woocommerce' ),
-		'DZ-20' => __( 'Sa&iuml;da', 'woocommerce' ),
-		'DZ-21' => __( 'Skikda', 'woocommerce' ),
-		'DZ-22' => __( 'Sidi Bel Abb&egrave;s', 'woocommerce' ),
-		'DZ-23' => __( 'Annaba', 'woocommerce' ),
-		'DZ-24' => __( 'Guelma', 'woocommerce' ),
-		'DZ-25' => __( 'Constantine', 'woocommerce' ),
-		'DZ-26' => __( 'M&eacute;d&eacute;a', 'woocommerce' ),
-		'DZ-27' => __( 'Mostaganem', 'woocommerce' ),
-		'DZ-28' => __( 'M&rsquo;Sila', 'woocommerce' ),
-=======
 		'DZ-19' => __( 'Sétif', 'woocommerce' ),
 		'DZ-20' => __( 'Saïda', 'woocommerce' ),
 		'DZ-21' => __( 'Skikda', 'woocommerce' ),
@@ -343,19 +321,13 @@ return array(
 		'DZ-26' => __( 'Médéa', 'woocommerce' ),
 		'DZ-27' => __( 'Mostaganem', 'woocommerce' ),
 		'DZ-28' => __( 'M’Sila', 'woocommerce' ),
->>>>>>> develop
 		'DZ-29' => __( 'Mascara', 'woocommerce' ),
 		'DZ-30' => __( 'Ouargla', 'woocommerce' ),
 		'DZ-31' => __( 'Oran', 'woocommerce' ),
 		'DZ-32' => __( 'El Bayadh', 'woocommerce' ),
 		'DZ-33' => __( 'Illizi', 'woocommerce' ),
-<<<<<<< HEAD
-		'DZ-34' => __( 'Bordj Bou Arr&eacute;ridj', 'woocommerce' ),
-		'DZ-35' => __( 'Boumerd&egrave;s', 'woocommerce' ),
-=======
 		'DZ-34' => __( 'Bordj Bou Arréridj', 'woocommerce' ),
 		'DZ-35' => __( 'Boumerdès', 'woocommerce' ),
->>>>>>> develop
 		'DZ-36' => __( 'El Tarf', 'woocommerce' ),
 		'DZ-37' => __( 'Tindouf', 'woocommerce' ),
 		'DZ-38' => __( 'Tissemsilt', 'woocommerce' ),
@@ -364,17 +336,10 @@ return array(
 		'DZ-41' => __( 'Souk Ahras', 'woocommerce' ),
 		'DZ-42' => __( 'Tipasa', 'woocommerce' ),
 		'DZ-43' => __( 'Mila', 'woocommerce' ),
-<<<<<<< HEAD
-		'DZ-44' => __( 'A&iuml;n Defla', 'woocommerce' ),
-		'DZ-45' => __( 'Naama', 'woocommerce' ),
-		'DZ-46' => __( 'A&iuml;n T&eacute;mouchent', 'woocommerce' ),
-		'DZ-47' => __( 'Gharda&iuml;a', 'woocommerce' ),
-=======
 		'DZ-44' => __( 'Aïn Defla', 'woocommerce' ),
 		'DZ-45' => __( 'Naama', 'woocommerce' ),
 		'DZ-46' => __( 'Aïn Témouchent', 'woocommerce' ),
 		'DZ-47' => __( 'Ghardaïa', 'woocommerce' ),
->>>>>>> develop
 		'DZ-48' => __( 'Relizane', 'woocommerce' ),
 	),
 	'EE' => array(),

@@ -953,4 +953,29 @@ class Core {
 
 		return $notifications;
 	}
+
+	/**
+	 * Prepare the HTML output for a plugin loader/spinner.
+	 *
+	 * @since 2.4.0
+	 *
+	 * @param string $color The color of the loader ('', 'blue' or 'white'), where '' is default orange.
+	 * @param string $size  The size of the loader ('lg', 'md', 'sm').
+	 *
+	 * @return string
+	 */
+	public function prepare_loader( $color = '', $size = 'md' ) {
+
+		$svg_name = 'loading';
+
+		if ( in_array( $color, [ 'blue', 'white' ], true ) ) {
+			$svg_name .= '-' . $color;
+		}
+
+		if ( ! in_array( $size, [ 'lg', 'md', 'sm' ], true ) ) {
+			$size = 'md';
+		}
+
+		return '<img src="' . esc_url( $this->plugin_url . '/assets/images/loaders/' . $svg_name . '.svg' ) . '" alt="' . esc_html__( 'Loading', 'wp-mail-smtp' ) . '" class="wp-mail-smtp-loading wp-mail-smtp-loading-' . $size . '">';
+	}
 }

@@ -566,10 +566,7 @@ return array(
     'Yoast\\WP\\Lib\\Model' => $baseDir . '/lib/model.php',
     'Yoast\\WP\\Lib\\ORM' => $baseDir . '/lib/orm.php',
     'Yoast\\WP\\SEO\\Actions\\Indexables\\Indexable_Head_Action' => $baseDir . '/src/actions/indexables/indexable-head-action.php',
-<<<<<<< HEAD
-=======
     'Yoast\\WP\\SEO\\Actions\\Indexation\\Abstract_Link_Indexing_Action' => $baseDir . '/src/actions/indexation/abstract-link-indexing-action.php',
->>>>>>> develop
     'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Complete_Indexation_Action' => $baseDir . '/src/actions/indexation/indexable-complete-indexation-action.php',
     'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_General_Indexation_Action' => $baseDir . '/src/actions/indexation/indexable-general-indexation-action.php',
     'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Post_Indexation_Action' => $baseDir . '/src/actions/indexation/indexable-post-indexation-action.php',
@@ -689,10 +686,7 @@ return array(
     'Yoast\\WP\\SEO\\Initializers\\Disable_Core_Sitemaps' => $baseDir . '/src/initializers/disable-core-sitemaps.php',
     'Yoast\\WP\\SEO\\Initializers\\Initializer_Interface' => $baseDir . '/src/initializers/initializer-interface.php',
     'Yoast\\WP\\SEO\\Initializers\\Migration_Runner' => $baseDir . '/src/initializers/migration-runner.php',
-<<<<<<< HEAD
-=======
     'Yoast\\WP\\SEO\\Integrations\\Admin\\Admin_Columns_Cache_Integration' => $baseDir . '/src/integrations/admin/admin-columns-cache-integration.php',
->>>>>>> develop
     'Yoast\\WP\\SEO\\Integrations\\Admin\\Disable_Concatenate_Scripts_Integration' => $baseDir . '/src/integrations/admin/disable-concatenate-scripts-integration.php',
     'Yoast\\WP\\SEO\\Integrations\\Admin\\Indexation_Integration' => $baseDir . '/src/integrations/admin/indexation-integration.php',
     'Yoast\\WP\\SEO\\Integrations\\Admin\\Link_Count_Columns_Integration' => $baseDir . '/src/integrations/admin/link-count-columns-integration.php',

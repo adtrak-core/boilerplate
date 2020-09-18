@@ -173,11 +173,7 @@ $generated_i18n_strings = array(
 	// Reference: js/src/components/SettingsReplacementVariableEditor.js:39
 	__( 'Modify your meta description by editing it right here', 'wordpress-seo' ),
 
-<<<<<<< HEAD
-	// Reference: js/src/components/SnippetPreviewModal.js:59
-=======
 	// Reference: js/src/components/SnippetPreviewModal.js:62
->>>>>>> develop
 	// Reference: js/src/components/fills/MetaboxFill.js:58
 	__( 'Google preview', 'wordpress-seo' ),
 
@@ -305,15 +301,6 @@ $generated_i18n_strings = array(
 	/* translators: %s expands to the social medium name, which is either Twitter or Facebook. %s expands to Yoast SEO Premium */
 	__( 'Do you want to preview what it will look like if people share this post on %s? You can, with %s.', 'wordpress-seo' ),
 
-<<<<<<< HEAD
-	// Reference: js/src/containers/FacebookEditor.js:18
-	// Reference: js/src/containers/TwitterEditor.js:18
-	/* translators: %s expands to the social medium name, i.e. Faceboook. */
-	__( 'Modify your %s title by editing it right here...', 'wordpress-seo' ),
-
-	// Reference: js/src/containers/FacebookEditor.js:25
-	// Reference: js/src/containers/TwitterEditor.js:25
-=======
 	// Reference: js/src/containers/FacebookEditor.js:16
 	// Reference: js/src/containers/TwitterEditor.js:16
 	/* translators: %s expands to the social medium name, i.e. Faceboook. */
@@ -321,7 +308,6 @@ $generated_i18n_strings = array(
 
 	// Reference: js/src/containers/FacebookEditor.js:23
 	// Reference: js/src/containers/TwitterEditor.js:23
->>>>>>> develop
 	/* translators: %s expands to the social medium name, i.e. Faceboook. */
 	__( 'Modify your %s description by editing it right here...', 'wordpress-seo' ),
 
@@ -338,21 +324,13 @@ $generated_i18n_strings = array(
 	/* translators: %1$s expands to the plural name of the current post type, %2$s expands to the current site wide default. */
 	__( 'Default for %1$s (%2$s)', 'wordpress-seo' ),
 
-<<<<<<< HEAD
-	// Reference: js/src/containers/SnippetEditor.js:56
-=======
 	// Reference: js/src/containers/SnippetEditor.js:63
->>>>>>> develop
 	__( 'Please provide a meta description by editing the snippet below.', 'wordpress-seo' ),
 
 	// Reference: js/src/help-scout-beacon.js:208
 	__( 'When you click OK we will open our HelpScout beacon where you can find answers to your questions. This beacon will load our support data and also potentially set cookies.', 'wordpress-seo' ),
 
-<<<<<<< HEAD
-	// Reference: js/src/initializers/edit.js:216
-=======
 	// Reference: js/src/initializers/block-editor-integration.js:139
->>>>>>> develop
 	__( 'Yoast SEO', 'wordpress-seo' ),
 
 	// Reference: js/src/initializers/block-editor-integration.js:52

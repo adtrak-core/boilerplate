@@ -186,7 +186,7 @@ class Task {
 		$action_id = null;
 
 		// No processing if ActionScheduler is not usable.
-		if ( ! wp_mail_smtp()->get_tasks()->is_usable() ) {
+		if ( ! Tasks::is_usable() ) {
 			return $action_id;
 		}
 

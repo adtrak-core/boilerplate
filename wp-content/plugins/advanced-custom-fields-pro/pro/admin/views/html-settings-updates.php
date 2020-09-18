@@ -18,39 +18,6 @@ $readonly = $active ? 1 : 0;
 		<div class="inner">
 			<p><?php printf(__('To unlock updates, please enter your license key below. If you don\'t have a licence key, please see <a href="%s" target="_blank">details & pricing</a>.','acf'), esc_url('https://www.advancedcustomfields.com/pro')); ?></p>
 			<form action="" method="post">
-<<<<<<< HEAD
-			<div class="acf-hidden">
-				<?php acf_nonce_input($nonce); ?>
-			</div>
-			<table class="form-table">
-                <tbody>
-                	<tr>
-                    	<th>
-                    		<label for="acf-field-acf_pro_licence"><?php _e('License Key', 'acf'); ?></label>
-                    	</th>
-						<td>
-							<?php 
-							
-							// render field
-							acf_render_field(array(
-								'type'		=> 'text',
-								'name'		=> 'acf_pro_licence',
-								'value'		=> str_repeat('*', strlen($license)),
-								'readonly'	=> $readonly
-							));
-							
-							?>
-						</td>
-					</tr>
-					<tr>
-						<th></th>
-						<td>
-							<input type="submit" value="<?php echo $button; ?>" class="button button-primary">
-						</td>
-					</tr>
-				</tbody>
-			</table>
-=======
 				<?php acf_nonce_input( $nonce ); ?>
 				<table class="form-table">
 					<tbody>
@@ -80,7 +47,6 @@ $readonly = $active ? 1 : 0;
 						</tr>
 					</tbody>
 				</table>
->>>>>>> develop
 			</form>
             
 		</div>

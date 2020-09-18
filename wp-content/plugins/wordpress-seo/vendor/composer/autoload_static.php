@@ -4,11 +4,7 @@
 
 namespace Composer\Autoload;
 
-<<<<<<< HEAD
-class ComposerStaticInit69c430ed36a8ee92b13fbb33b8a9373d
-=======
 class ComposerStaticInitcf563d3d240745ed37266229ad7db5d6
->>>>>>> develop
 {
     public static $prefixLengthsPsr4 = array (
         'C' => 
@@ -585,10 +581,7 @@ class ComposerStaticInitcf563d3d240745ed37266229ad7db5d6
         'Yoast\\WP\\Lib\\Model' => __DIR__ . '/../..' . '/lib/model.php',
         'Yoast\\WP\\Lib\\ORM' => __DIR__ . '/../..' . '/lib/orm.php',
         'Yoast\\WP\\SEO\\Actions\\Indexables\\Indexable_Head_Action' => __DIR__ . '/../..' . '/src/actions/indexables/indexable-head-action.php',
-<<<<<<< HEAD
-=======
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Abstract_Link_Indexing_Action' => __DIR__ . '/../..' . '/src/actions/indexation/abstract-link-indexing-action.php',
->>>>>>> develop
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Complete_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-complete-indexation-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_General_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-general-indexation-action.php',
         'Yoast\\WP\\SEO\\Actions\\Indexation\\Indexable_Post_Indexation_Action' => __DIR__ . '/../..' . '/src/actions/indexation/indexable-post-indexation-action.php',
@@ -708,10 +701,7 @@ class ComposerStaticInitcf563d3d240745ed37266229ad7db5d6
         'Yoast\\WP\\SEO\\Initializers\\Disable_Core_Sitemaps' => __DIR__ . '/../..' . '/src/initializers/disable-core-sitemaps.php',
         'Yoast\\WP\\SEO\\Initializers\\Initializer_Interface' => __DIR__ . '/../..' . '/src/initializers/initializer-interface.php',
         'Yoast\\WP\\SEO\\Initializers\\Migration_Runner' => __DIR__ . '/../..' . '/src/initializers/migration-runner.php',
-<<<<<<< HEAD
-=======
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Admin_Columns_Cache_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/admin-columns-cache-integration.php',
->>>>>>> develop
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Disable_Concatenate_Scripts_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/disable-concatenate-scripts-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Indexation_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/indexation-integration.php',
         'Yoast\\WP\\SEO\\Integrations\\Admin\\Link_Count_Columns_Integration' => __DIR__ . '/../..' . '/src/integrations/admin/link-count-columns-integration.php',
@@ -886,15 +876,9 @@ class ComposerStaticInitcf563d3d240745ed37266229ad7db5d6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-<<<<<<< HEAD
-            $loader->prefixLengthsPsr4 = ComposerStaticInit69c430ed36a8ee92b13fbb33b8a9373d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit69c430ed36a8ee92b13fbb33b8a9373d::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit69c430ed36a8ee92b13fbb33b8a9373d::$classMap;
-=======
             $loader->prefixLengthsPsr4 = ComposerStaticInitcf563d3d240745ed37266229ad7db5d6::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitcf563d3d240745ed37266229ad7db5d6::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInitcf563d3d240745ed37266229ad7db5d6::$classMap;
->>>>>>> develop
 
         }, null, ClassLoader::class);
     }

@@ -5,11 +5,7 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: SEO, XML sitemap, Content analysis, Readability, Schema
 Tested up to: 5.5
-<<<<<<< HEAD
-Stable tag: 14.8.1
-=======
 Stable tag: 14.9
->>>>>>> develop
 Requires PHP: 5.6.20
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.
@@ -212,48 +208,8 @@ Your question has most likely been answered on our knowledge base: [kb.yoast.com
 
 == Changelog ==
 
-<<<<<<< HEAD
-= 14.8.1 =
-Release Date: August 25th, 2020
-
-Bugfixes:
-
-* Fixes a bug in WordPress itself where script concatenation was causing JavaScript errors, which in turn led to Yoast SEO malfunctioning. This bug was introduced in WordPress 5.5. We’re fixing it by disabling script concatenation entirely.
-
-= 14.8 =
-Release Date: August 18th, 2020
-
-Get ready for a brand new version of Yoast SEO! In this version you'll find new Schema functionality, an improved readability analysis for Portuguese & Indonesian, and improved keyword recognition for right-to-left languages. Read more about those changes in [our release post](https://yoa.st/release-14-8)!
-
-Enhancements:
-
-* Adds a Schema section to the metabox and sidebar. This section allows the user to change their Schema settings on posts, pages and custom post types.
-* Adds a new section to the Search Appearance settings. This section allows the user to change their Schema defaults for posts, pages and custom post types.
-* Fixes an inconsistency in the feedback strings that are produced by the keyphrase in SEO title assessment.
-* Improves the accuracy of the following assessments for right-to-left languages: sentence length, keyphrase in introduction, keyphrase distribution, keyphrase density, and keyphrase in meta description.
-* Improves all keyphrase-based assessments for Arabic by filtering function words and by allowing keyphrases to be recognized in a text when preceded by a prefix (e.g., "ل" or "ب").
-* Adds the following assessments for Indonesian: sentence beginnings, transition words and passive voice.
-* Adds the following assessments for Portuguese: Flesch reading ease and passive voice.
-* Cleans up Schema @type values:
-	* If it's an array with multiple values, only output unique values.
-	* If it's a single value, output it as a string instead of an array.
-
-Bugfixes:
-
-* Fixes a bug where the Yoast Dashboard widget would trigger an error when other plugins or temporary conditions would make the Yoast API response fail.
-* Fixes a bug where block editor dependencies would be loaded unnecessarily on classic editor, causing issues with NextGEN gallery. Posts with NextGEN galleries that have been broken due to this bug will need to be re-saved.
-
-Other:
-
-* Sets the minimum WP version to 5.4.
-* Optimizes the logic involved in default filters for our options. This should lead to a very small increase in performance as well as avoiding an edge case where the default filter would be removed.
-
-= 14.7 =
-Release Date: August 5th, 2020
-=======
 = 14.9 =
 Release Date: September 1st, 2020
->>>>>>> develop
 
 Yoast SEO 14.9 comes with a new round of improvements, plus a new language-based enhancement: improved keyphrase recognition for Hebrew. Read more about those changes in [our release post](https://yoa.st/release-14-9)!
 
@@ -271,8 +227,6 @@ Bugfixes:
 
 Enhancements:
 
-<<<<<<< HEAD
-=======
 * Adds an update notification for major and minor releases.
 * Improves the SQL performance by not performing unnecessary update queries when updating a post’s public status.
 * Optimizes performance by preventing regular database queries.
@@ -321,6 +275,5 @@ Other:
 * Sets the minimum WP version to 5.4.
 * Optimizes the logic involved in default filters for our options. This should lead to a very small increase in performance as well as avoiding an edge case where the default filter would be removed.
 
->>>>>>> develop
 = Earlier versions =
 For the changelog of earlier versions, please refer to [the changelog on yoast.com](https://yoa.st/yoast-seo-changelog).

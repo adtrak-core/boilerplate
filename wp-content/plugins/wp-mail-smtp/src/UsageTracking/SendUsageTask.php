@@ -25,7 +25,7 @@ class SendUsageTask extends Task {
 	 *
 	 * @var string
 	 */
-	const TRACK_URL = 'https://usage.wpmailsmtp.com/v1/smtptrack';
+	const TRACK_URL = 'https://wpmailsmtpusage.com/v1/smtptrack';
 
 	/**
 	 * Class constructor.

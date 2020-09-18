@@ -4,11 +4,7 @@ Tags: ecommerce, e-commerce, store, sales, reports, analytics, dashboard, activi
 Requires at least: 5.3.0
 Tested up to: 5.4.2
 Requires PHP: 5.6.20
-<<<<<<< HEAD
-Stable tag: 1.4.0
-=======
 Stable tag: 1.5.0
->>>>>>> develop
 License: GPLv3
 License URI: https://github.com/woocommerce/woocommerce-admin/blob/main/license.txt
 
@@ -74,8 +70,6 @@ Release and roadmap notes are available on the [WooCommerce Developers Blog](htt
 3. Analytics
 
 == Changelog ==
-<<<<<<< HEAD
-=======
 
 = 1.5.0 2020-08-07 =
 - Dev: New notification: Don't forget to test your checkout. #4805
@@ -98,7 +92,6 @@ Release and roadmap notes are available on the [WooCommerce Developers Blog](htt
 - Tweak: New marketing copy for the Kliken Google Ads plugin. #5074
 - Tweak: Add ToS agreement copy to the WCPay setup task. #5085
 
->>>>>>> develop
 = 1.4.0 2020-07-22 =
 - Fix: Update returning customer total to include customers whose first order was within the report date range #4430
 - Fix: Fix an error in the Analytics/Orders table when there is an order deleted directly from the database #4630
@@ -118,10 +111,6 @@ Release and roadmap notes are available on the [WooCommerce Developers Blog](htt
 - Enhancement: Move the WooCommerce > Coupons dashboard menu item to Marketing > Coupons. #4786
 - Tweak: Add education and travel to the onboarding industry types #4694
 - Tweak: Refactor Jetpack connection flows #4655
-<<<<<<< HEAD
-- Tweak: Remove the Composite products option from the onboarding wizard #4703
-=======
->>>>>>> develop
 - Tweak: Refactor tax task to use promise chain #4683
 - Tweak: Add bundle install UI to Business Details step #4695
 - Tweak: Include Product Bundles and Product Add-ons as OBW product options #4705
@@ -140,15 +129,12 @@ Release and roadmap notes are available on the [WooCommerce Developers Blog](htt
 - Tweak: Add copy that WCS TOS will be accepted upon install #4799
 - Dev: Customize webpack jsonpFunction to avoid potential collision with other Webpack bundles #4644 🎉 @aaemnnosttv
 - Dev: Update @wordpress/base-styles and replace deprecated variables #4759
-<<<<<<< HEAD
-=======
 
 = 1.3.2 2020-07-29 =
 - Fix: bug preventing saving user preferences on WP 5.3. #4869
 
 = 1.3.1 2020-07-20 =
 - Fix: PHP Fatal errors when columns are missing from the Notes table. #4831
->>>>>>> develop
 
 = 1.3.0 2020-07-08 =
 - Enhancement: Add Jetpack stats to performance indicatorts / homepage #4291

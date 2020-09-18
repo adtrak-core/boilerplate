@@ -82,45 +82,6 @@ class ACF_Location_Post_Taxonomy extends ACF_Location {
 	 * @return	array
 	 */
 	public function get_values( $rule ) {
-<<<<<<< HEAD
-		
-		// Get taxonomies.
-		$taxonomies = acf_get_taxonomies();
-		if( isset($taxonomies['post_format']) ) {
-			unset( $taxonomies['post_format']) ;
-		}
-		
-		// Get grouped terms.
-		$groups = acf_get_grouped_terms(array(
-			'taxonomy' => $taxonomies
-		));
-		
-		// Return grouped terms as choices.
-		return acf_get_choices_from_grouped_terms( $groups, 'slug' );
-	}
-	
-	/**
-	 * Returns the object_subtype connected to this location.
-	 *
-	 * @date	1/4/20
-	 * @since	5.9.0
-	 *
-	 * @param	array $rule A location rule.
-	 * @return	string|array
-	 */
-	public function get_object_subtype( $rule ) {
-		if( $rule['operator'] === '==' ) {
-			$term = acf_decode_term( $rule['value'] );
-			if( $term ) {
-				$taxonomy = get_taxonomy( $term['taxonomy'] );
-				if( $taxonomy ) {
-					return $taxonomy->object_type;
-				}
-			}
-		}
-		return '';
-	}
-=======
 		return acf_get_taxonomy_terms();
 	}
 	
@@ -145,7 +106,6 @@ class ACF_Location_Post_Taxonomy extends ACF_Location {
 		}
 		return '';
 	}
->>>>>>> develop
 }
 
 // initialize

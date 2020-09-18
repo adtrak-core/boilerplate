@@ -67,8 +67,6 @@ From your WordPress dashboard
 
 == Changelog ==
 
-<<<<<<< HEAD
-=======
 = 5.9.1 =
 *Release Date - 8 September 2020*
 
@@ -80,7 +78,6 @@ From your WordPress dashboard
 * i18n - Updated Indonesian translations thanks to Rio Bahtiar.
 * i18n - Updated Turkish translation thanks to Emre Erkan.
 
->>>>>>> develop
 = 5.9.0 =
 *Release Date - 17 August 2020*
 

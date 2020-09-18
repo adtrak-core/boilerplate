@@ -153,13 +153,10 @@ class WC_Install {
 			'wc_update_440_insert_attribute_terms_for_variable_products',
 			'wc_update_440_db_version',
 		),
-<<<<<<< HEAD
-=======
 		'4.5.0' => array(
 			'wc_update_450_sanitize_coupons_code',
 			'wc_update_450_db_version',
 		),
->>>>>>> develop
 	);
 
 	/**
@@ -756,20 +753,8 @@ class WC_Install {
 
 		// Add constraint to download logs if the columns matches.
 		if ( ! empty( $download_permissions_column_type ) && ! empty( $download_log_column_type ) && $download_permissions_column_type === $download_log_column_type ) {
-<<<<<<< HEAD
-			$fk_result = $wpdb->get_row(
-				"SELECT COUNT(*) AS fk_count
-				FROM information_schema.TABLE_CONSTRAINTS
-				WHERE CONSTRAINT_SCHEMA = '{$wpdb->dbname}'
-				AND CONSTRAINT_NAME = 'fk_{$wpdb->prefix}wc_download_log_permission_id'
-				AND CONSTRAINT_TYPE = 'FOREIGN KEY'
-				AND TABLE_NAME = '{$wpdb->prefix}wc_download_log'"
-			);
-			if ( 0 === (int) $fk_result->fk_count ) {
-=======
 			$fk_result = $wpdb->get_row( "SHOW CREATE TABLE {$wpdb->prefix}wc_download_log" ); // WPCS: unprepared SQL ok.
 			if ( false === strpos( $fk_result->{'Create Table'}, "fk_{$wpdb->prefix}wc_download_log_permission_id" ) ) {
->>>>>>> develop
 				$wpdb->query(
 					"ALTER TABLE `{$wpdb->prefix}wc_download_log`
 					ADD CONSTRAINT `fk_{$wpdb->prefix}wc_download_log_permission_id`

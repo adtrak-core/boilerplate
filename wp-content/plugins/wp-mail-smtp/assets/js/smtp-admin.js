@@ -296,7 +296,7 @@ WPMailSMTP.Admin.Settings = WPMailSMTP.Admin.Settings || ( function( document, w
 			} );
 
 			// Set settings changed attribute, if any input was changed.
-			$( ':input:not( #wp-mail-smtp-setting-license-key )', $settingPages ).on( 'change', function() {
+			$( ':input:not( #wp-mail-smtp-setting-license-key, .wp-mail-smtp-not-form-input )', $settingPages ).on( 'change', function() {
 				app.pluginSettingsChanged = true;
 			} );
 

@@ -72,22 +72,15 @@ class Indexable_Repository {
 	 * @param Logger                         $logger               The logger.
 	 * @param Indexable_Hierarchy_Repository $hierarchy_repository The hierarchy repository.
 	 * @param wpdb                           $wpdb                 The WordPress database instance.
-<<<<<<< HEAD
-=======
 	 * @param Indexable_Helper               $indexable_helper     The indexable helper.
->>>>>>> develop
 	 */
 	public function __construct(
 		Indexable_Builder $builder,
 		Current_Page_Helper $current_page,
 		Logger $logger,
 		Indexable_Hierarchy_Repository $hierarchy_repository,
-<<<<<<< HEAD
-		wpdb $wpdb
-=======
 		wpdb $wpdb,
 		Indexable_Helper $indexable_helper
->>>>>>> develop
 	) {
 		$this->builder              = $builder;
 		$this->current_page         = $current_page;

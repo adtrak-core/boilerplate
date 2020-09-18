@@ -51,7 +51,11 @@ $am_announcement_params = [
  * Disable Action Schedule Queue Runner, to prevent a fatal error on the shutdown WP hook.
  */
 if ( class_exists( 'ActionScheduler_QueueRunner' ) ) {
-	ActionScheduler_QueueRunner::instance()->unhook_dispatch_async_request();
+	$as_queue_runner = \ActionScheduler_QueueRunner::instance();
+
+	if ( method_exists( $as_queue_runner, 'unhook_dispatch_async_request' ) ) {
+		$as_queue_runner->unhook_dispatch_async_request();
+	}
 }
 
 // WP MS uninstall process.

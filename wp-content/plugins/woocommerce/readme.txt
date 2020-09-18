@@ -1,19 +1,10 @@
 === WooCommerce ===
-<<<<<<< HEAD
-Contributors: automattic, mikejolley, jameskoster, claudiosanches, kloon, rodrigosprimo, peterfabian1000, vedjain, jamosova, obliviousharmony, konamiman
-Tags: e-commerce, store, sales, sell, woo, shop, cart, checkout, downloadable, downloads, payments, paypal, storefront, stripe, woo commerce
-Requires at least: 5.2
-Tested up to: 5.5
-Requires PHP: 7.0
-Stable tag: 4.4.1
-=======
 Contributors: automattic, mikejolley, jameskoster, claudiosanches, kloon, rodrigosprimo, peterfabian1000, vedjain, jamosova, obliviousharmony, konamiman, sadowski
 Tags: e-commerce, store, sales, sell, woo, shop, cart, checkout, downloadable, downloads, payments, paypal, storefront, stripe, woo commerce
 Requires at least: 5.3
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 4.5.1
->>>>>>> develop
+Stable tag: 4.5.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -169,15 +160,10 @@ WooCommerce comes with some sample data you can use to see how products look; im
 
 == Changelog ==
 
-<<<<<<< HEAD
-= 4.4.1 - 2020-08-19 =
+= 4.5.2 - 2020-09-14 =
+* Fix - Revert the changes in filtering by attribute that were introduced in WooCommerce 4.4. #27625
+* Fix - Adjusted validation to allow for variations with "0" as an attribute value. #27633
 
-**WooCommerce**
-* Fix - Add protection to run adjust methods only if product query. #27396
-* Dev - Stripped the internals of the DI Container to address plugin dependency conflicts it caused. #27395
-* Fix - Add more protection for field locale property incase it's not defined. #27405
-
-=======
 = 4.5.1 - 2020-09-09 =
 
 **WooCommerce**
@@ -223,7 +209,6 @@ WooCommerce comes with some sample data you can use to see how products look; im
 * Dev - Display modal with more info about the new homescreen. #4890
 * Dev - Task list - add a shortcut back to store setup. #4853
 * Dev - Update the colors of the illustrations in the welcome modal. #4945
->>>>>>> develop
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/woocommerce/master/changelog.txt).
 
 == Upgrade Notice ==

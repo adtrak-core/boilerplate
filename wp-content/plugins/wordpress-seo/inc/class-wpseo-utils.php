@@ -1113,10 +1113,6 @@ SVG;
 		$wpseo_admin_l10n = [
 			'displayAdvancedTab'   => WPSEO_Capability_Utils::current_user_can( 'wpseo_edit_advanced_metadata' ) || ! WPSEO_Options::get( 'disableadvanced_meta' ),
 			'noIndex'              => (bool) $no_index,
-<<<<<<< HEAD
-			'isPremium'            => self::is_yoast_seo_premium(),
-=======
->>>>>>> develop
 			'isPostType'           => (bool) get_post_type(),
 			'postType'             => get_post_type(),
 			'postTypeNamePlural'   => ( $page_type === 'post' ) ? $label_object->label : $label_object->name,

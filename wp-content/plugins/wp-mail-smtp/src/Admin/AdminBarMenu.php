@@ -3,6 +3,7 @@
 namespace WPMailSMTP\Admin;
 
 use WPMailSMTP\Debug;
+use WPMailSMTP\Options;
 
 /**
  * WP Mail SMTP admin bar menu.
@@ -73,6 +74,10 @@ class AdminBarMenu {
 	 */
 	public function enqueues() {
 
+		if ( ! is_admin_bar_showing() ) {
+			return;
+		}
+
 		if ( ! $this->has_access() ) {
 			return;
 		}
@@ -97,7 +102,10 @@ class AdminBarMenu {
 		if (
 			! $this->has_access() ||
 			(
-				empty( Debug::get_last() ) &&
+				(
+					empty( Debug::get_last() ) ||
+					(bool) Options::init()->get( 'general', 'email_delivery_errors_hidden' )
+				) &&
 				empty( $this->has_notifications() )
 			)
 		) {
@@ -128,7 +136,10 @@ class AdminBarMenu {
 	 */
 	public function main_menu( \WP_Admin_Bar $wp_admin_bar ) {
 
-		if ( ! empty( Debug::get_last() ) ) {
+		if (
+			! empty( Debug::get_last() ) &&
+			! (bool) Options::init()->get( 'general', 'email_delivery_errors_hidden' )
+		) {
 			$indicator = ' <span class="wp-mail-smtp-admin-bar-menu-error">!</span>';
 		} elseif ( ! empty( $this->has_notifications() ) ) {
 			$count     = $this->has_notifications() < 10 ? $this->has_notifications() : '!';

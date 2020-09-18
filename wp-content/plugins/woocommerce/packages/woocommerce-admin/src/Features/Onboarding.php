@@ -324,14 +324,6 @@ class Onboarding {
 					'use_description'   => false,
 					'description_label' => '',
 				),
-<<<<<<< HEAD
-				'travel-and-tourism'              => array(
-					'label'             => __( 'Travel and tourism', 'woocommerce' ),
-					'use_description'   => false,
-					'description_label' => '',
-				),
-=======
->>>>>>> develop
 				'other'                           => array(
 					'label'             => __( 'Other', 'woocommerce' ),
 					'use_description'   => true,
@@ -364,13 +356,6 @@ class Onboarding {
 					'label'   => __( 'Memberships', 'woocommerce' ),
 					'product' => 958589,
 				),
-<<<<<<< HEAD
-				'composite'       => array(
-					'label'   => __( 'Composite Products', 'woocommerce' ),
-					'product' => 216836,
-				),
-=======
->>>>>>> develop
 				'bookings'        => array(
 					'label'   => __( 'Bookings', 'woocommerce' ),
 					'product' => 390890,

@@ -7,11 +7,11 @@ $baseDir = dirname($vendorDir);
 
 return array(
     '7b11c4dc42b3b3023073cb14e519683c' => $vendorDir . '/ralouphie/getallheaders/src/getallheaders.php',
-    'a0edc8309cc5e1d60e3047b5df6b7052' => $vendorDir . '/guzzlehttp/psr7/src/functions_include.php',
-    'c964ee0ededf28c96ebd9db5099ef910' => $vendorDir . '/guzzlehttp/promises/src/functions_include.php',
-    '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
-    '25072dd6e2470089de65ae7bf11d3109' => $vendorDir . '/symfony/polyfill-php72/bootstrap.php',
-    'f598d06aa772fa33d905e87be6398fb1' => $vendorDir . '/symfony/polyfill-intl-idn/bootstrap.php',
-    '37a3dc5111fe8f707ab4c132ef1dbc62' => $vendorDir . '/guzzlehttp/guzzle/src/functions_include.php',
-    'decc78cc4436b1292c6c0d151b19445c' => $vendorDir . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
+    '840b8504e40a63aaa679ca25c0b2a1cc' => $baseDir . '/vendor_prefixed/guzzlehttp/psr7/src/functions_include.php',
+    'e3e111437f37e10e6bcab5eacc08fb6f' => $baseDir . '/vendor_prefixed/guzzlehttp/promises/src/functions_include.php',
+    '2bb094e40611cb5eccea789f32aff634' => $baseDir . '/vendor_prefixed/symfony/polyfill-mbstring/bootstrap.php',
+    '1fd84176824b5a44e7bd8da85eca7e14' => $baseDir . '/vendor_prefixed/symfony/polyfill-php72/bootstrap.php',
+    '606299e0d90ec13f1e6b53164b8387df' => $baseDir . '/vendor_prefixed/symfony/polyfill-intl-idn/bootstrap.php',
+    '6fe0d6ea1deb6acc74bbe64573a83e1c' => $baseDir . '/vendor_prefixed/guzzlehttp/guzzle/src/functions_include.php',
+    '3ed0dcebed83aa26dfe4c549d730cf2e' => $baseDir . '/vendor_prefixed/phpseclib/phpseclib/phpseclib/bootstrap.php',
 );

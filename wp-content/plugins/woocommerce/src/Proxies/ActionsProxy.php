@@ -1,11 +1,6 @@
 <?php
 /**
  * ActionsProxy class file.
-<<<<<<< HEAD
- *
- * @package Automattic/WooCommerce/Tools/Proxies
-=======
->>>>>>> develop
  */
 
 namespace Automattic\WooCommerce\Proxies;
@@ -14,11 +9,6 @@ namespace Automattic\WooCommerce\Proxies;
  * Proxy for interacting with WordPress actions and filters.
  *
  * This class should be used instead of directly accessing the WordPress functions, to ease unit testing.
-<<<<<<< HEAD
- *
- * @package Automattic\WooCommerce\Proxies
-=======
->>>>>>> develop
  */
 class ActionsProxy {
 
