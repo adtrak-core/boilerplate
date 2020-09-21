@@ -81,7 +81,7 @@ document
   .insertAdjacentElement("afterend", mobNavUnderlay);
 
 // Show underlay and fix the body scroll when menu button is clicked
-var menuBtn = document.querySelector(".menu-btn");
+var menuBtn = document.querySelector('[data-mobile-menu-toggle]')
 
 menuBtn.addEventListener("click", function () {
   document.querySelector(".mob-nav-underlay").classList.add("mob-nav--active");
