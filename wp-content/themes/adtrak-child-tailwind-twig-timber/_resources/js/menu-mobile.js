@@ -16,13 +16,13 @@ var iconAngleDown =
 var mobNav = document.querySelector(".mob-nav .scroll-container");
 
 var copyPrimaryMenu = document
-  .querySelector("#menu-primary .menu-primary")
+  .querySelector("#menu-primary .menu-primary-js")
   .cloneNode(true);
 mobNav.appendChild(copyPrimaryMenu);
 
 if (document.getElementById("menu-secondary")) {
   var copySecondaryMenu = document
-    .querySelector("#menu-secondary .menu-secondary")
+    .querySelector("#menu-secondary .menu-secondary-js")
     .cloneNode(true);
   mobNav.appendChild(copySecondaryMenu);
 }

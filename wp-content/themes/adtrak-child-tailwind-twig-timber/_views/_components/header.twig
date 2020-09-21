@@ -5,7 +5,7 @@
 		<div class="container">
 
 			<nav id="menu-secondary" class="container hidden menu lg:block">
-				<ul class="flex flex-wrap justify-center w-full menu-secondary">
+				<ul class="flex flex-wrap justify-center w-full menu-secondary menu-secondary-js">
 					{% for item in secondaryMenu.items %}
 						<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
 							<a href="{{item.link}}">{{item.name}}</a>
@@ -40,7 +40,7 @@
 	<div class="hidden bg-secondary lg:block">
 
 		<nav id="menu-primary" class="container menu">
-			<ul class="flex flex-wrap justify-center w-full menu-primary">
+			<ul class="flex flex-wrap justify-center w-full menu-primary menu-primary-js">
 				{% for item in primaryMenu.items %}
 					<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
 						<a href="{{item.link}}">{{item.name}}</a>
