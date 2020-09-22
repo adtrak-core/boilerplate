@@ -6,26 +6,14 @@
 var iconAngleUp =
   "<svg class='icon icon-angle-up'><use xlink:href='" +
   themeURL.themeURL +
-  "/images/icons-sprite.svg#icon-angle-up'></use></svg>";
+  "/_resources/images/icons-sprite.svg#icon-angle-up'></use></svg>";
 var iconAngleDown =
   "<svg class='icon icon-angle-down'><use xlink:href='" +
   themeURL.themeURL +
-  "/images/icons-sprite.svg#icon-angle-down'></use></svg>";
+  "/_resources/images/icons-sprite.svg#icon-angle-down'></use></svg>";
 
 // // Copy primary and secondary menus to .mob-nav element
 var mobNav = document.querySelector(".mob-nav .scroll-container");
-
-var copyPrimaryMenu = document
-  .querySelector("#menu-primary .menu-primary-js")
-  .cloneNode(true);
-mobNav.appendChild(copyPrimaryMenu);
-
-if (document.getElementById("menu-secondary")) {
-  var copySecondaryMenu = document
-    .querySelector("#menu-secondary .menu-secondary-js")
-    .cloneNode(true);
-  mobNav.appendChild(copySecondaryMenu);
-}
 
 // // Add Close Icon element
 var closeBtn = document.createElement("div");
@@ -33,7 +21,7 @@ closeBtn.setAttribute("class", "mob-nav-close");
 closeBtn.innerHTML =
   "<svg class='icon icon-times'><use xlink:href='" +
   themeURL.themeURL +
-  "/images/icons-sprite.svg#icon-times'></use></svg>";
+  "/_resources/images/icons-sprite.svg#icon-times'></use></svg>";
 mobNav.insertAdjacentElement("beforeend", closeBtn);
 
 // Add dropdown arrow to links with sub-menus
