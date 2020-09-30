@@ -7,6 +7,12 @@ Desktop Navs **********************************************/
 
     li {
       @apply relative;
+
+        &:focus-within > .sub-menu {
+          @apply
+            block
+            opacity-100;
+        }
     }
 
     a {
@@ -22,8 +28,7 @@ Desktop Navs **********************************************/
           & + .sub-menu {
             @apply
               block
-              opacity-100
-              visible;
+              opacity-100;
           }
         }
     }
@@ -62,6 +67,13 @@ Desktop Navs **********************************************/
         shadow-lg
         bg-white
         -translate-x-1/2;
+
+        &:focus-within {
+          @apply
+            block
+            opacity-100
+            visible;
+        }
 
         width: 200px;
 

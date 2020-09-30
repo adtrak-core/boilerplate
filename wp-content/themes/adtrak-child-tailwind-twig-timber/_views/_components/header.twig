@@ -5,7 +5,7 @@
 		<div class="container">
 
 			<nav id="menu-secondary" class="container hidden menu lg:block">
-				<ul class="flex flex-wrap justify-center w-full menu-secondary">
+				<ul class="flex flex-wrap justify-center w-full menu-secondary menu-secondary-js">
 					{% for item in secondaryMenu.items %}
 						<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
 							<a href="{{item.link}}">{{item.name}}</a>
