@@ -86,8 +86,8 @@ gulp.task('watch', () => {
 **************************/
 gulp.task('serve', () => {
     browserSync.init({
-    proxy: `boilerplate.vm`,
-    files: `**/*`,
+    proxy: `adtrak-boilerplate.vm`,
+    files: ['**/*.php', '**/*.js', '**/*.twig', '**/*.scss'],
     ghostMode : false
   })
 })
