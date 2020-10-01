@@ -7,8 +7,8 @@
 			<nav id="menu-secondary" class="container hidden menu lg:block">
 				<ul class="flex flex-wrap justify-center w-full menu-secondary menu-secondary-js">
 					{% for item in secondaryMenu.items %}
-						<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
-							<a href="{{item.link}}">{{item.name}}</a>
+						<li class="{{item.class}}">
+							<a href="{{item.link}}" class="relative block p-4 hover:text-black focus:text-black {{ item.current ? 'text-red-500' }}">{{item.name}}</a>
 							{% if item.children %}
 								<ul class="sub-menu">
 									{% for child in item.children %}
@@ -42,8 +42,8 @@
 		<nav id="menu-primary" class="container menu">
 			<ul class="flex flex-wrap justify-center w-full menu-primary">
 				{% for item in primaryMenu.items %}
-					<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
-						<a href="{{item.link}}">{{item.name}}</a>
+					<li class="{{item.class}}">
+						<a href="{{item.link}}" class="relative block p-4 hover:text-black focus:text-black {{ item.current ? 'text-red-500' }}">{{item.name}}</a>
 						{% if item.children %}
 							<ul class="sub-menu">
 								{% for child in item.children %}

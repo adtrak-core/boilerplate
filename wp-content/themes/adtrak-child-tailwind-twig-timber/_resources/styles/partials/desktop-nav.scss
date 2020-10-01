@@ -4,10 +4,8 @@ Desktop Navs **********************************************/
 @screen lg {
   .menu-primary,
   .menu-secondary {
-
     li {
       @apply relative;
-
         &:focus-within > .sub-menu {
           @apply
             block
@@ -16,83 +14,55 @@ Desktop Navs **********************************************/
     }
 
     a {
-      @apply
-        relative
-        block
-        p-4;
-
-        &:hover {
+      &:hover {
+        & + .sub-menu {
           @apply
-            text-black;
-
-          & + .sub-menu {
-            @apply
-              block
-              opacity-100;
-          }
+            block
+            opacity-100;
         }
+      }
     }
 
     .icon-angle-down {
-        @apply
-          absolute
-          bottom-0
-          left-1/2
-          transform
-          -translate-x-1/2
-          w-4
-          h-4
-          opacity-50;
-    }
-
-    .current-menu-item > a,
-    .current-menu-parent > a {
-      @apply
-        text-white;
-
-        &:hover {
-          @apply text-black;
-        }
-    }
-
-    .sub-menu {
       @apply
         absolute
-        top-full
-        z-40
-        opacity-0
-        hidden
+        bottom-0
         left-1/2
         transform
-        shadow-lg
-        bg-white
-        -translate-x-1/2;
-
-        &:focus-within {
-          @apply
-            block
-            opacity-100
-            visible;
-        }
-
-        width: 200px;
-
-        a {
-          @apply
-            text-black;
-
-            &:hover {
-              @apply
-                text-gray-500;
-            }
-        }
-
-        &:hover {
-          @apply
-            block
-            opacity-100
-            visible;
-        }
+        -translate-x-1/2
+        w-4
+        h-4
+        opacity-50;
     }
+  }
+
+  .sub-menu {
+    @apply
+      absolute
+      top-full
+      z-40
+      opacity-0
+      hidden
+      left-1/2
+      transform
+      shadow-lg
+      bg-white
+      -translate-x-1/2;
+
+      &:focus-within {
+        @apply
+          block
+          opacity-100
+          visible;
+      }
+
+      width: 200px;
+
+      &:hover {
+        @apply
+          block
+          opacity-100
+          visible;
+      }
   }
 }
