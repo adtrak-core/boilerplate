@@ -60,6 +60,7 @@
 - [ ] Check the `to` address for each form - will the client get it?
 - [ ] Check the messages each form displays - are they in keeping with the tone of the website?
 - [ ] Form is sending via an SMTP plugin and `SendInBlue` OR using `noreply@`
+- [ ] Update tracking code to match your form solution
 
 ## Proofing
 
@@ -109,6 +110,7 @@ The deployment/emails/DNS process has its own guides and things to do. Please re
 ## General
 
 - [ ] Final Lighthouse speed check - can anything be improved?
+- [ ] Check the form tracking is working with the Internet Marketer
 - [ ] If applicable, check that Engage is recording data
 - [ ] If applicable, let PPC Consultant know they can start their campaign on the new website
 - [ ] Liaise with Internet Marketer (and Paid Marketer where relevant) to check everything is performing as expected (i.e. redirects are working)
