@@ -6,10 +6,10 @@
 document.addEventListener('wpcf7mailsent', function (event) {
     if ('FORMID' == event.detail.contactFormId) {
         // ga('send', 'event', 'Contact Form', 'Submit', 'Contact Form A');
-        gtag('event', 'Course Form Submission', { 'event-category': 'FORM NAME Submission', 'event_label': 'FORM NAME Submission ' + window.location });
+        gtag('event', 'Course Form Submission', { 'event_category': 'FORM NAME Submission', 'event_label': 'FORM NAME Submission ' + window.location });
     }
     else if ('FORMID' == event.detail.contactFormId) {
         // ga('send', 'event', 'Contact Form', 'Submit', 'Contact Form B');
-        gtag('event', 'Contact Form Submission', { 'event-category': 'FORM NAME Submission', 'event_label': 'FORM NAME Submission' });
+        gtag('event', 'Contact Form Submission', { 'event_category': 'FORM NAME Submission', 'event_label': 'FORM NAME Submission' });
     }
 }, false);
