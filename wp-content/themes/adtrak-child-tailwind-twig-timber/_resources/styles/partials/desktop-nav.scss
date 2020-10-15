@@ -34,6 +34,12 @@ Desktop Navs **********************************************/
         h-4
         opacity-50;
     }
+    
+    .current-menu-item>a,
+    .current-menu-parent>a {
+      @apply text-red-500;
+    }
+    
   }
 
   .sub-menu {
