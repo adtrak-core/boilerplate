@@ -10,7 +10,7 @@
 
       <article class="copy">
 
-        <h1>{{post.title}}</h1>
+        <h1><a href="{{ function("get_permalink", post.ID)}}">{{post.title}}</a></h1>
 
         {{post.content}}
 
