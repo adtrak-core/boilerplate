@@ -49,7 +49,8 @@
 				 * 'icon' (as true or false)
 				 * e.g. for the black icon use get_adtrak_logo('black', true)
 				*/ ?>
-		      <a class="block mx-auto max-w-32 adtrak" href="https://www.adtrak.co.uk"><?php echo get_adtrak_logo(); ?></a>
+		      <a class="block mx-auto max-w-32 adtrak" href="https://www.adtrak.co.uk/website-referral/" target="_blank" rel="noreferrer noopener"><?php echo get_adtrak_logo(); ?></a>
+				
 		    </div>
 
 		</div>
