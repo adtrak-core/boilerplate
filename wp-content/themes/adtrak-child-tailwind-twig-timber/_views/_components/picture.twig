@@ -4,11 +4,21 @@ Custom picture, useful for any image. See bottom of this file for a full example
 
 <picture class="w-full {{ pictureClasses }}">
 
-	{% for breakpoint, options in breakpoints %}
+  {% for breakpoint, options in breakpoints %}
     
-     <source
+    <source
       type="image/webp"
       srcset="{{
+        lazyload != false ? '' :
+        source|
+        resize(
+          options.w|default(1000),
+          options.h|default(500),
+          options.crop|default('center')
+          )|
+        towebp
+      }}"
+      data-srcset="{{
         source|
         resize(
           options.w|default(1000),
@@ -23,6 +33,16 @@ Custom picture, useful for any image. See bottom of this file for a full example
     <source
       type="image/jpeg"
       srcset="{{
+        lazyload != false ? '' :
+        source|
+        resize(
+          options.w|default(1000),
+          options.h|default(500),
+          options.crop|default('center')
+          )|
+        tojpg
+      }}"
+      data-srcset="{{
         source|
         resize(
           options.w|default(1000),
@@ -34,11 +54,21 @@ Custom picture, useful for any image. See bottom of this file for a full example
       media="(min-width: {{breakpoint}})"
     >
 
-	{% endfor %}
+  {% endfor %}
 	
-		<source
+    <source
       type="image/webp"
       srcset="{{
+        lazyload != false ? '' :
+        source|
+        resize(
+          img.w|default(640),
+          img.h|default(640),
+          img.crop|default('center')
+          )|
+        towebp
+      }}"
+      data-srcset="{{
         source|
         resize(
           img.w|default(640),
@@ -52,6 +82,16 @@ Custom picture, useful for any image. See bottom of this file for a full example
     <source
       type="image/jpeg"
       srcset="{{
+        lazyload != false ? '' :
+        source|
+        resize(
+          img.w|default(640),
+          img.h|default(640),
+          img.crop|default('center')
+        )|
+        tojpg
+      }}"
+      data-srcset="{{
         source|
         resize(
           img.w|default(640),
@@ -62,8 +102,17 @@ Custom picture, useful for any image. See bottom of this file for a full example
       }}"
     >
 
-	<img
-    src=""
+  <img
+    src="{{
+      lazyload != false ? '' :
+        source|
+        tojpg|
+        resize(
+          img.w|default(640),
+          img.h|default(640),
+          img.crop|default('center')
+        )
+    }}"
     data-src="{{
       source|
       tojpg|
@@ -80,7 +129,7 @@ Custom picture, useful for any image. See bottom of this file for a full example
 
 {# 
 
---- Usage
+--- Usage (for a lazyloaded image)
 
 {% include "_components/picture.twig" with {
   source: post.thumbnail.src,
@@ -113,6 +162,49 @@ Custom picture, useful for any image. See bottom of this file for a full example
   },
   img: {
     classes: 'lazyload',
+    w: null,
+    h: 600,
+    crop: 'center',
+  }
+}
+%}
+
+
+
+--- Usage (for a non-lazyloaded image)
+
+{% include "_components/picture.twig" with {
+  source: post.thumbnail.src,
+  lazyload: false,
+  breakpoints: {
+    "1530px" : {
+      w: 1800,
+      h: 500,
+      crop: 'center'
+    },
+    "1280px" : {
+      w: 1530,
+      h: 500,
+      crop: 'center'
+    },
+    "1024px" : {
+      w: 1280,
+      h: 500,
+      crop: 'center'
+    },
+    "768px" : {
+      w: 1024,
+      h: 500,
+      crop: 'center'
+    },
+    "640px" : {
+      w: 768,
+      h: 400,
+      crop: 'center'
+    },
+  },
+  img: {
+    classes: '',
     w: null,
     h: 600,
     crop: 'center',
