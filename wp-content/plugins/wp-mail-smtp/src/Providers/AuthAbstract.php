@@ -85,7 +85,8 @@ abstract class AuthAbstract implements AuthInterface {
 		// To save in currently retrieved options array.
 		$this->options['auth_code'] = $code;
 
-		$options->set( $all );
+		// NOTE: These options need to be saved by overwriting all options, because WP automatic updates can cause an issue: GH #575!
+		$options->set( $all, false, true );
 	}
 
 	/**
@@ -106,7 +107,8 @@ abstract class AuthAbstract implements AuthInterface {
 		// To save in currently retrieved options array.
 		$this->options['access_token'] = $token;
 
-		$options->set( $all );
+		// NOTE: These options need to be saved by overwriting all options, because WP automatic updates can cause an issue: GH #575!
+		$options->set( $all, false, true );
 	}
 
 	/**
@@ -127,7 +129,8 @@ abstract class AuthAbstract implements AuthInterface {
 		// To save in currently retrieved options array.
 		$this->options['refresh_token'] = $token;
 
-		$options->set( $all );
+		// NOTE: These options need to be saved by overwriting all options, because WP automatic updates can cause an issue: GH #575!
+		$options->set( $all, false, true );
 	}
 
 	/**

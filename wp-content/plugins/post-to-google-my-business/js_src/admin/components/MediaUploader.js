@@ -14,7 +14,10 @@ let MediaUploader = function(selector, fieldname) {
     let locale = {
         add_photos: "Add photo or video",
         invalid_media_type: "Invalid media type selected, only images and videos are supported",
-        one_image: "Currently the Google My Business API only supports uploading a single image or video to a post"
+        one_image: "Currently the Google My Business API only supports uploading a single image or video to a post",
+        image_too_small: "Post image must be at least 250x250px.",
+        image_file_too_small: "Post image must be at least 10KB",
+        image_file_too_big: "Post image must be at most 5MB",
     };
 
     let wp_media_uploader = wp.media({
@@ -111,7 +114,19 @@ let MediaUploader = function(selector, fieldname) {
         //json.forEach(element => loadItem(element.type, element.url, element.sizes.medium.url));
         json.forEach((element) => {
             if(element.type === "image"){
-                instance.loadItem("PHOTO", element.url, element.sizes.medium.url);
+                if(element.width < 250 || element.height < 250){
+                    adminNotice(locale.image_too_small);
+                    return;
+                }else if(element.filesizeInBytes < 10240){ //10KB
+                    adminNotice(locale.image_file_too_small);
+                    return;
+                }else if(element.filesizeInBytes > 5242880){ //5MB
+                    adminNotice(locale.image_file_too_big);
+                    return;
+                }
+
+                //Use the thumbnail size if the image is too small to have a medium size image
+                instance.loadItem("PHOTO", element.url, typeof element.sizes.medium !== 'undefined' ? element.sizes.medium.url : element.sizes.thumbnail.url);
             }else if(element.type === "video"){
                 instance.loadItem("VIDEO", element.url, element.thumb.src);
             }else{

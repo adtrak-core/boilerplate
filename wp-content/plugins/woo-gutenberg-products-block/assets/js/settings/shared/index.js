@@ -10,6 +10,7 @@ import { getSetting } from './get-setting';
 
 export * from './default-constants';
 export { setSetting } from './set-setting';
+import '../../filters/exclude-draft-status-from-analytics';
 
 /**
  * Note: this attempts to coerce the wpVersion to a semver for comparison
@@ -23,10 +24,15 @@ export { setSetting } from './set-setting';
  * to `rc`.
  *
  * @param {string} version Version to compare.
+ * @param {string} setting Setting name (e.g. wpVersion or wcVersion).
  * @param {string} operator Comparison operator.
  */
-export const compareWithWpVersion = ( version, operator ) => {
-	let replacement = getSetting( 'wpVersion', '' ).replace(
+const compareVersionSettingIgnorePrerelease = (
+	version,
+	setting,
+	operator
+) => {
+	let replacement = getSetting( setting, '' ).replace(
 		/-[a-zA-Z0-9]*[\-]*/,
 		'.0-rc.'
 	);
@@ -34,6 +40,22 @@ export const compareWithWpVersion = ( version, operator ) => {
 		? replacement.substring( 0, replacement.length - 1 )
 		: replacement;
 	return compareVersions.compare( version, replacement, operator );
+};
+
+export const compareWithWpVersion = ( version, operator ) => {
+	return compareVersionSettingIgnorePrerelease(
+		version,
+		'wpVersion',
+		operator
+	);
+};
+
+export const compareWithWooVersion = ( version, operator ) => {
+	return compareVersionSettingIgnorePrerelease(
+		version,
+		'wcVersion',
+		operator
+	);
 };
 
 export { compareVersions, getSetting };

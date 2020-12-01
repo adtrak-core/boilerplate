@@ -40,7 +40,7 @@ class UpdraftPlus_Tour {
 		add_filter('plugin_action_links', array($this, 'plugin_action_links'), 10, 2);
 
 		// only init and load assets if the tour hasn't been canceled
-		if (isset($_REQUEST['updraftplus_tour']) && 0 === intval($_REQUEST['updraftplus_tour'])) {
+		if (isset($_REQUEST['updraftplus_tour']) && 0 === (int) $_REQUEST['updraftplus_tour']) {
 			$this->set_tour_status(array('current_step' => 'start'));
 			return;
 		}
@@ -51,7 +51,7 @@ class UpdraftPlus_Tour {
 		}
 
 		// if 'Take tour' link was used, reset tour
-		if (isset($_REQUEST['updraftplus_tour']) && 1 === intval($_REQUEST['updraftplus_tour'])) {
+		if (isset($_REQUEST['updraftplus_tour']) && 1 === (int) $_REQUEST['updraftplus_tour']) {
 			$this->reset_tour_status();
 		}
 

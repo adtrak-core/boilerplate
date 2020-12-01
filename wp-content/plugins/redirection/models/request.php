@@ -1,18 +1,75 @@
 <?php
 
 class Redirection_Request {
-	public static function get_server_name() {
-		$host = '';
+	public static function get_request_headers() {
+		$ignore = apply_filters( 'redirection_request_headers_ignore', [
+			'cookie',
+			'host',
+		] );
+		$headers = [];
 
-		if ( isset( $_SERVER['HTTP_HOST'] ) ) {
-			$host = $_SERVER['HTTP_HOST'];
+		foreach ( $_SERVER as $name => $value ) {
+			if ( substr( $name, 0, 5 ) === 'HTTP_' ) {
+				$name = strtolower( substr( $name, 5 ) );
+				$name = str_replace( '_', ' ', $name );
+				$name = ucwords( $name );
+				$name = str_replace( ' ', '-', $name );
+
+				if ( ! in_array( strtolower( $name ), $ignore, true ) ) {
+					$headers[ $name ] = $value;
+				}
+			}
 		}
+
+		return apply_filters( 'redirection_request_headers', $headers );
+	}
+
+	public static function get_request_method() {
+		$method = '';
+
+		if ( isset( $_SERVER['REQUEST_METHOD'] ) ) {
+			$method = $_SERVER['REQUEST_METHOD'];
+		}
+
+		return apply_filters( 'redirection_request_method', $method );
+	}
+
+	/**
+	 * Get the server name (from $_SERVER['SERVER_NAME]), or use the request name ($_SERVER['HTTP_HOST']) if not present
+	 *
+	 * @return string
+	 */
+	public static function get_server_name() {
+		$host = self::get_request_server_name();
 
 		if ( isset( $_SERVER['SERVER_NAME'] ) ) {
 			$host = $_SERVER['SERVER_NAME'];
 		}
 
 		return apply_filters( 'redirection_request_server', $host );
+	}
+
+	/**
+	 * Get the request server name (from $_SERVER['HTTP_HOST])
+	 *
+	 * @return string
+	 */
+	public static function get_request_server_name() {
+		$host = '';
+
+		if ( isset( $_SERVER['HTTP_HOST'] ) ) {
+			$host = $_SERVER['HTTP_HOST'];
+		}
+
+		return apply_filters( 'redirection_request_server_host', $host );
+	}
+
+	public static function get_server() {
+		return self::get_protocol() . '://' . self::get_server_name();
+	}
+
+	public static function get_protocol() {
+		return is_ssl() ? 'https' : 'http';
 	}
 
 	public static function get_request_url() {
@@ -45,21 +102,37 @@ class Redirection_Request {
 		return apply_filters( 'redirection_request_referrer', $referrer );
 	}
 
+	public static function get_ip_headers() {
+		return [
+			'HTTP_CF_CONNECTING_IP',
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_X_CLUSTER_CLIENT_IP',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'HTTP_VIA',
+			'REMOTE_ADDR',
+		];
+	}
+
 	public static function get_ip() {
 		$ip = '';
 
-		if ( isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ) {
-			$ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
-		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			$ip = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
-			$ip = array_shift( $ip );
-		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-			$ip = $_SERVER['REMOTE_ADDR'];
+		foreach ( self::get_ip_headers() as $var ) {
+			if ( ! empty( $_SERVER[ $var ] ) ) {
+				$ip = $_SERVER[ $var ];
+				$ip = explode( ',', $ip );
+				$ip = array_shift( $ip );
+				break;
+			}
 		}
 
 		// Convert to binary
+		// phpcs:ignore
 		$ip = @inet_pton( trim( $ip ) );
 		if ( $ip !== false ) {
+			// phpcs:ignore
 			$ip = @inet_ntop( $ip );  // Convert back to string
 		}
 

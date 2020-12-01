@@ -247,11 +247,11 @@ form.delete-line .left .submit input{
     width: 165px;
     white-space: pre-line !important;
 }
-.revert:before{
+td div.revert:before{
     font-family: "dashicons";
     content: "\f531";
 }
-.revert{
+td div.revert{
     width:16px;
     height:16px;
     vertical-align: middle;
@@ -268,12 +268,12 @@ form.delete-line .left .submit input{
     background-color: white;
 }
 
-.revert:hover{
+td div.revert:hover{
     border-color:#000;
     background-color: white;
 }
 
-.revert:active{
+td div.revert:active{
     background-color: #F5F5F5;
 }
 

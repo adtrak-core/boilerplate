@@ -30,6 +30,6 @@ class LazyOpenStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterf
      */
     protected function createStream()
     {
-        return stream_for(try_fopen($this->filename, $this->mode));
+        return \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Utils::streamFor(\WPMailSMTP\Vendor\GuzzleHttp\Psr7\Utils::tryFopen($this->filename, $this->mode));
     }
 }

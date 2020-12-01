@@ -94,7 +94,7 @@ jQuery( function( $ ) {
 				billing_last_name:         null !== name ? name.split( ' ' ).slice( 1 ).join( ' ' ) : '',
 				billing_company:           '',
 				billing_email:             null !== email   ? email : evt.payerEmail,
-				billing_phone:             null !== phone   ? phone : evt.payerPhone.replace( '/[() -]/g', '' ),
+				billing_phone:             null !== phone   ? phone : evt.payerPhone && evt.payerPhone.replace( '/[() -]/g', '' ),
 				billing_country:           null !== billing ? billing.country : '',
 				billing_address_1:         null !== billing ? billing.line1 : '',
 				billing_address_2:         null !== billing ? billing.line2 : '',
@@ -315,7 +315,7 @@ jQuery( function( $ ) {
 				country: wc_stripe_payment_request_params.checkout.country_code,
 				requestPayerName: true,
 				requestPayerEmail: true,
-				requestPayerPhone: true,
+				requestPayerPhone: wc_stripe_payment_request_params.checkout.needs_payer_phone,
 				requestShipping: wc_stripe_payment_request_params.product.requestShipping,
 				displayItems: wc_stripe_payment_request_params.product.displayItems
 			};
@@ -342,7 +342,7 @@ jQuery( function( $ ) {
 					country: cart.order_data.country_code,
 					requestPayerName: true,
 					requestPayerEmail: true,
-					requestPayerPhone: true,
+					requestPayerPhone: wc_stripe_payment_request_params.checkout.needs_payer_phone,
 					requestShipping: cart.shipping_required ? true : false,
 					displayItems: cart.order_data.displayItems
 				};

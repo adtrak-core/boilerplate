@@ -18,7 +18,7 @@ foreach ($default_options as $k => $v) {
 // $backup_history is passed in
 if (false === $backup_history) $backup_history = UpdraftPlus_Backup_History::get_history();
 
-if (!empty($options['include_header'])) echo '<h2>'.__('Existing Backups', 'updraftplus').' ('.count($backup_history).')</h2>';
+if (!empty($options['include_header'])) echo '<h2>'.__('Existing backups', 'updraftplus').' ('.count($backup_history).')</h2>';
 
 ?>
 <div class="download-backups form-table">
@@ -41,7 +41,7 @@ if (!empty($options['include_header'])) echo '<h2>'.__('Existing Backups', 'updr
 	?>
 	
 	<div class="updraft_existing_backups_wrapper">
-		<h3 id="updraft-existing-backups-heading"><?php echo __('Existing Backups', 'updraftplus');?> <span class="updraft_existing_backups_count"><?php echo count($backup_history);?></span></h3>
+		<h3 id="updraft-existing-backups-heading"><?php echo __('Existing backups', 'updraftplus');?> <span class="updraft_existing_backups_count"><?php echo count($backup_history);?></span></h3>
 		<ul class="updraft-disk-space-actions">
 			<?php
 				echo UpdraftPlus_Filesystem_Functions::web_server_disk_space($options['will_immediately_calculate_disk_space']);

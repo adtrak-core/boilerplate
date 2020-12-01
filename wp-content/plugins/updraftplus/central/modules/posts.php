@@ -16,9 +16,9 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 	 * @param array  $data       an array of data post or get fields
 	 * @param array  $extra_info extrainfo use in the udrpc_action, e.g. user_id
 	 *
-	 * link to udrpc_action main function in class UpdraftPlus_UpdraftCentral_Listener
+	 * link to udrpc_action main function in class UpdraftCentral_Listener
 	 */
-	public function _pre_action($command, $data, $extra_info) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+	public function _pre_action($command, $data, $extra_info) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- This function is called from listner.php and $extra_info is being sent.
 		// Here we assign the current blog_id to a variable $blog_id
 		$blog_id = get_current_blog_id();
 		if (!empty($data['site_id'])) $blog_id = $data['site_id'];
@@ -35,7 +35,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 	 * @param array  $data       an array of data post or get fields
 	 * @param array  $extra_info extrainfo use in the udrpc_action, e.g. user_id
 	 *
-	 * link to udrpc_action main function in class UpdraftPlus_UpdraftCentral_Listener
+	 * link to udrpc_action main function in class UpdraftCentral_Listener
 	 */
 	public function _post_action($command, $data, $extra_info) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found, VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		// Here, we're restoring to the current (default) blog before we switched
@@ -120,13 +120,14 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 			'posts' => $posts,
 			'options' => $this->get_options(),
 			'info' => $info,
-			'posts_count' => $this->get_post_status_counts('post'),
+			'posts_count' => $this->get_post_status_counts('post')
 		);
 
 		// Load any additional information if preload parameter is set. Will only be
 		// requested on initial load of items in UpdraftCentral.
 		if (isset($params['preload']) && $params['preload']) {
-			$response = array_merge($response, $this->get_preload_data());
+			$timeout = !empty($params['timeout']) ? $params['timeout'] : 30;
+			$response = array_merge($response, $this->get_preload_data($timeout));
 		}
 
 		return $this->_response($response);
@@ -163,9 +164,12 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 	 * Retrieves information that will be preloaded in UC for quick and easy access
 	 * when editing a certain page or post
 	 *
+	 * @param int $timeout The user-defined timeout from UpdraftCentral
 	 * @return array
 	 */
-	private function get_preload_data() {
+	private function get_preload_data($timeout) {
+		global $updraftplus;
+
 		if (!function_exists('get_page_templates')) {
 			require_once(ABSPATH.'wp-admin/includes/theme.php');
 		}
@@ -193,8 +197,149 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 				'authors' => $authors['data']['authors'],
 				'parent_pages' => $parent_pages['data']['pages'],
 				'templates' => $templates,
+				'editor_styles' => $this->get_editor_styles($timeout),
+				'wp_version' => $updraftplus->get_wordpress_version()
 			))
 		);
+	}
+
+	/**
+	 * Extract content from the given css path
+	 *
+	 * @param string $style   CSS file path
+	 * @param int    $timeout The user-defined timeout from UpdraftCentral
+	 * @return string
+	 */
+	private function extract_css_content($style, $timeout) {
+
+		$content = '';
+		if (1 === preg_match('~^(https?:)?//~i', $style)) {
+			$response = wp_remote_get($style, array('timeout' => $timeout));
+			if (!is_wp_error($response)) {
+				$result = trim(wp_remote_retrieve_body($response));
+				if (!empty($result)) $content = $result;
+			}
+		} else {
+			// Editor styles that resides in "css/dist"
+			if (false !== ($pos = stripos($style, 'css/dist'))) {
+				$file = ABSPATH.WPINC.substr_replace($style, '/', 0, $pos);
+			} else {
+				// Styles that resides in "wp-content/themes" (coming from $editor_styles global var)
+				$file = get_theme_file_path($style);
+			}
+
+			$is_valid = (function_exists('is_file')) ? is_file($file) : file_exists($file);
+			if ($is_valid) {
+				$result = trim(file_get_contents($file));
+				if (!empty($result)) $content = $result;
+			}
+		}
+
+		return $this->filter_url($content);
+	}
+
+	/**
+	 * Convert URL entries contained in the CSS content to absolute URLs
+	 *
+	 * @param string $content The content of the CSS file
+	 * @return string
+	 */
+	private function filter_url($content) {
+
+		// Replace with valid URL (absolute)
+		preg_match_all('~url\((.+?)\)~i', $content, $all_matches);
+		if (!empty($all_matches) && isset($all_matches[1])) {
+			$urls = array_unique($all_matches[1]);
+			foreach ($urls as $url) {
+				$url = str_replace('"', '', $url);
+				if (false !== strpos($url, 'data:')) continue;
+
+				if (1 !== preg_match('~^(https?:)?//~i', $url)) {
+					if (1 === preg_match('~(plugins|themes)~i', $url, $matches)) {
+						if (false !== ($pos = stripos($url, $matches[1]))) {
+							if (!function_exists('content_url')) {
+								require_once ABSPATH.WPINC.'/link-template.php';
+							}
+
+							$absolute_url = rtrim(content_url(), '/').substr_replace($url, '/', 0, $pos);
+							$content = str_replace($url, $absolute_url, $content);
+						}
+					} else {
+						$path = preg_replace('~(\.+\/)~', '', $url);
+						$dirpath = trailingslashit(get_stylesheet_directory());
+						if (!file_exists($dirpath.$url)) $path = $this->resolve_path($path);
+
+						$absolute_url = (!empty($path)) ? trailingslashit(get_stylesheet_directory_uri()).ltrim($path, '/') : '';
+						$content = str_replace($url, $absolute_url, $content);
+					}
+				}
+			}
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Resolve URL to its actual absolute path
+	 *
+	 * @param string $path Some relative path to check
+	 * @return string
+	 */
+	private function resolve_path($path) {
+		$dir = trailingslashit(get_stylesheet_directory());
+		// Some relative paths declared within the css file (e.g. only has '../fonts/etc/', called deep down from a subfolder) where parent
+		// subfolder is not articulated needs to be resolve further to get its actual absolute path. Using glob will pinpoint its actual location
+		// rather than iterating through a series of sublevels just to find the actual file.
+		$result = str_replace($dir, '', glob($dir.'{,*/}{'.$path.'}', GLOB_BRACE));
+		
+		if (!empty($result)) return $result[0];
+		return false;
+	}
+
+	/**
+	 * Retrieve the editor styles/assets to be use by UpdraftCentral when editing a post
+	 *
+	 * @param int $timeout The user-defined timeout from UpdraftCentral
+	 * @return array()
+	 */
+	private function get_editor_styles($timeout) {
+		global $editor_styles, $wp_styles;
+		$editing_styles = $loaded = array();
+
+		$required = array('css/dist/editor/style.css', 'css/dist/block-library/style.css', 'css/dist/block-library/theme.css');
+		foreach ($required as $style) {
+			$editing_styles[] = array('css' => $this->extract_css_content($style, $timeout), 'inline' => '');
+		};
+
+		do_action('enqueue_block_editor_assets');
+		do_action('enqueue_block_assets');
+
+		// Checking for editor styles support since styles make vary from theme to theme
+		if ($editor_styles) {
+			foreach ($editor_styles as $style) {
+				if (false !== array_search($style, $loaded)) continue;
+
+				$editing_styles[] = array('css' => $this->extract_css_content($style, $timeout), 'inline' => '');
+				$loaded[] = $style;
+			}
+		}
+
+		if ($wp_styles) {
+			foreach ($wp_styles->queue as $handle) {
+				$style = $wp_styles->registered[$handle]->src;
+				if (false !== array_search($style, $loaded)) continue;
+	
+				$inline = $wp_styles->print_inline_style($handle, false);
+				$editing_styles[] = array(
+					'css' => $this->extract_css_content($style, $timeout),
+					'inline' => (!$inline) ? '' : $inline
+				);
+				$loaded[] = $style;
+			}
+		}
+
+		$editing_styles[] = array('css' => $this->extract_css_content('/style.css', $timeout), 'inline' => '');
+		return $editing_styles;
 	}
 
 	/**
@@ -293,7 +438,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 	 */
 	public function get_categories($query = array()) {
 		$page = !empty($query['page']) ? (int) $query['page'] : 1;
-		$items_per_page = !empty($query['per_page']) ? (int) $query['per_page'] : 50;
+		$items_per_page = !empty($query['per_page']) ? (int) $query['per_page'] : 100;
 		$offset = ($page - 1) * $items_per_page;
 		$order = !empty($query['order']) ? $query['order'] : 'asc';
 		$orderby = !empty($query['orderby']) ? $query['orderby'] : 'name';
@@ -381,7 +526,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 	 */
 	public function get_tags($query = array()) {
 		$page = !empty($query['page']) ? (int) $query['page'] : 1;
-		$items_per_page = !empty($query['per_page']) ? (int) $query['per_page'] : 50;
+		$items_per_page = !empty($query['per_page']) ? (int) $query['per_page'] : 100;
 		$offset = ($page - 1) * $items_per_page;
 		$order = !empty($query['order']) ? $query['order'] : 'desc';
 		$orderby = !empty($query['orderby']) ? $query['orderby'] : 'count';
@@ -543,12 +688,22 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 			);
 
 			$taxonomies = $this->get_taxonomies_terms($post);
+			$sample_permalink = get_sample_permalink($post->ID, $post->post_title, '');
+			$permalink = get_permalink($post->ID);
+			$slug = $post->post_name;
+
+			if (!empty($sample_permalink) && !empty($slug)) {
+				if (isset($sample_permalink[0])) {
+					$permalink = str_replace('%postname%/', '', $sample_permalink[0]).$slug;
+				}
+			}
+
 			$response = array(
 				'post' => $encode ? json_encode($post) : $post,
 				'misc' => array(
 					'guid_rendered' => apply_filters('get_the_guid', $post->guid, $post->ID),
-					'link' => get_permalink($post->ID),
-					'slug' => $post->post_name,
+					'link' => $permalink,
+					'slug' => $slug,
 					'site_url' => site_url('/'),
 					'title_rendered' => get_the_title($post->ID),
 					'content_rendered' => apply_filters('the_content', $post->post_content),
@@ -672,7 +827,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 		$result = array();
 		if (!empty($params['list'])) {
 			$posts = array();
-			foreach ($params['list'] as $key => $id) {
+			foreach ($params['list'] as $id) {
 				$post = $this->apply_state($id, $params['action']);
 				if (!empty($post)) {
 					array_push($posts, $post);
@@ -916,7 +1071,11 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 				$args['post_date'] = $post_date;
 				$args['post_date_gmt'] = gmdate('Y-m-d H:i:s', $datetime);
 
-				if (strtotime($post_date) > strtotime(date('Y-m-d H:i:s'))) $args['post_status'] = 'future';
+				// We only change the status to "future" based from the submitted date if the post status
+				// is not empty and equal to 'publish' and the date is for the coming future.
+				if (!empty($params['status']) && 'publish' == $params['status']) {
+					if (strtotime($post_date) > strtotime(date('Y-m-d H:i:s'))) $args['post_status'] = 'future';
+				}
 			}
 
 			// Make sure we have a slug/post_name generated before insert/update
@@ -969,7 +1128,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 				$categories_updated = false;
 				if (!empty($params['categories'])) {
 					$term_ids = array();
-					foreach ($params['categories'] as $key => $value) {
+					foreach ($params['categories'] as $value) {
 						$category = sanitize_text_field($value);
 						$parent = 0;
 
@@ -997,7 +1156,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 				$tags_updated = false;
 				if (!empty($params['tags'])) {
 					$term_ids = array();
-					foreach ($params['tags'] as $key => $value) {
+					foreach ($params['tags'] as $value) {
 						$tag = sanitize_text_field($value);
 						$field = is_numeric($tag) ? 'id' : 'name';
 
@@ -1022,7 +1181,8 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 				$postdata = $this->get_postdata($post_id);
 
 				if (!empty($params['new'])) {
-					$postdata = array_merge($postdata, $this->get_preload_data());
+					$timeout = !empty($params['timeout']) ? $params['timeout'] : 30;
+					$postdata = array_merge($postdata, $this->get_preload_data($timeout));
 				} else {
 					if ($categories_updated || $tags_updated) {
 						$categories = $this->get_categories();
@@ -1035,6 +1195,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 					}
 				}
 
+				$postdata['options'] = $this->get_options();
 				return $this->_response($postdata);
 			} else {
 				// ERROR: error creating or updating post

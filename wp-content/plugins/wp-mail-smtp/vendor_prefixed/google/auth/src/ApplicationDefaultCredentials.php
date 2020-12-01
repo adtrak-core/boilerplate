@@ -119,7 +119,7 @@ class ApplicationDefaultCredentials
      * If supplied, $scope is used to in creating the credentials instance if
      * this does not fallback to the Compute Engine defaults.
      *
-     * @param string|array scope the scope of the access request, expressed
+     * @param string|array $scope the scope of the access request, expressed
      *        either as an Array or as a space-delimited String.
      * @param callable $httpHandler callback which delivers psr7 request
      * @param array $cacheConfig configuration for the cache when it's present
@@ -127,14 +127,18 @@ class ApplicationDefaultCredentials
      *        provided if you have one already available for use.
      * @param string $quotaProject specifies a project to bill for access
      *   charges associated with the request.
+     * @param string|array $defaultScope The default scope to use if no
+     *   user-defined scopes exist, expressed either as an Array or as a
+     *   space-delimited string.
      *
      * @return CredentialsLoader
      * @throws DomainException if no implementation can be obtained.
      */
-    public static function getCredentials($scope = null, callable $httpHandler = null, array $cacheConfig = null, \WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInterface $cache = null, $quotaProject = null)
+    public static function getCredentials($scope = null, callable $httpHandler = null, array $cacheConfig = null, \WPMailSMTP\Vendor\Psr\Cache\CacheItemPoolInterface $cache = null, $quotaProject = null, $defaultScope = null)
     {
         $creds = null;
         $jsonKey = \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader::fromEnv() ?: \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader::fromWellKnownFile();
+        $anyScope = $scope ?: $defaultScope;
         if (!$httpHandler) {
             if (!($client = \WPMailSMTP\Vendor\Google\Auth\HttpHandler\HttpClientCache::getHttpClient())) {
                 $client = new \WPMailSMTP\Vendor\GuzzleHttp\Client();
@@ -146,11 +150,11 @@ class ApplicationDefaultCredentials
             if ($quotaProject) {
                 $jsonKey['quota_project_id'] = $quotaProject;
             }
-            $creds = \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader::makeCredentials($scope, $jsonKey);
+            $creds = \WPMailSMTP\Vendor\Google\Auth\CredentialsLoader::makeCredentials($scope, $jsonKey, $defaultScope);
         } elseif (\WPMailSMTP\Vendor\Google\Auth\Credentials\AppIdentityCredentials::onAppEngine() && !\WPMailSMTP\Vendor\Google\Auth\Credentials\GCECredentials::onAppEngineFlexible()) {
-            $creds = new \WPMailSMTP\Vendor\Google\Auth\Credentials\AppIdentityCredentials($scope);
+            $creds = new \WPMailSMTP\Vendor\Google\Auth\Credentials\AppIdentityCredentials($anyScope);
         } elseif (self::onGce($httpHandler, $cacheConfig, $cache)) {
-            $creds = new \WPMailSMTP\Vendor\Google\Auth\Credentials\GCECredentials(null, $scope, null, $quotaProject);
+            $creds = new \WPMailSMTP\Vendor\Google\Auth\Credentials\GCECredentials(null, $anyScope, null, $quotaProject);
         }
         if (\is_null($creds)) {
             throw new \DomainException(self::notFound());

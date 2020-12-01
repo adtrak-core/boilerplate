@@ -4,9 +4,11 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4505233c9771255f4bcd3288908993ad
+class ComposerStaticInit43034736f284196d23971ba5470288b6
 {
     public static $files = array (
+        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '840b8504e40a63aaa679ca25c0b2a1cc' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/functions_include.php',
         'e3e111437f37e10e6bcab5eacc08fb6f' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/functions_include.php',
@@ -208,8 +210,11 @@ class ComposerStaticInit4505233c9771255f4bcd3288908993ad
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\AggregateException' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/AggregateException.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\CancellationException' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/CancellationException.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\Coroutine' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/Coroutine.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\Create' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/Create.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\Each' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/Each.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\EachPromise' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/EachPromise.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\FulfilledPromise' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/FulfilledPromise.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\Is' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/Is.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\Promise' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/Promise.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\PromiseInterface' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/PromiseInterface.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\PromisorInterface' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/PromisorInterface.php',
@@ -217,18 +222,23 @@ class ComposerStaticInit4505233c9771255f4bcd3288908993ad
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\RejectionException' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/RejectionException.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\TaskQueue' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/TaskQueue.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\TaskQueueInterface' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/TaskQueueInterface.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Promise\\Utils' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/promises/src/Utils.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\AppendStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/AppendStream.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\BufferStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/BufferStream.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\CachingStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/CachingStream.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\DroppingStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/DroppingStream.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\FnStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/FnStream.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\Header' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/Header.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\InflateStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/InflateStream.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\LazyOpenStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/LazyOpenStream.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\LimitStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/LimitStream.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\Message' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/Message.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\MessageTrait' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/MessageTrait.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\MimeType' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/MimeType.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\MultipartStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/MultipartStream.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\NoSeekStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/NoSeekStream.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\PumpStream' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/PumpStream.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\Query' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/Query.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\Request' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/Request.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\Response' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/Response.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\Rfc7230' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/Rfc7230.php',
@@ -240,6 +250,7 @@ class ComposerStaticInit4505233c9771255f4bcd3288908993ad
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\Uri' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/Uri.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\UriNormalizer' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/UriNormalizer.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\UriResolver' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/UriResolver.php',
+        'WPMailSMTP\\Vendor\\GuzzleHttp\\Psr7\\Utils' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/psr7/src/Utils.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\RedirectMiddleware' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/guzzle/src/RedirectMiddleware.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\RequestOptions' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/guzzle/src/RequestOptions.php',
         'WPMailSMTP\\Vendor\\GuzzleHttp\\RetryMiddleware' => __DIR__ . '/../..' . '/vendor_prefixed/guzzlehttp/guzzle/src/RetryMiddleware.php',
@@ -586,9 +597,9 @@ class ComposerStaticInit4505233c9771255f4bcd3288908993ad
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4505233c9771255f4bcd3288908993ad::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4505233c9771255f4bcd3288908993ad::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4505233c9771255f4bcd3288908993ad::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit43034736f284196d23971ba5470288b6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit43034736f284196d23971ba5470288b6::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit43034736f284196d23971ba5470288b6::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -29,6 +29,9 @@ class Redirection_Admin {
 		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 4 );
 		add_filter( 'redirection_save_options', [ $this, 'flush_schedule' ] );
 		add_filter( 'set-screen-option', [ $this, 'set_per_page' ], 10, 3 );
+		add_filter( 'set_screen_option_redirection_log_per_page', function( $ignore, $option, $value ) {
+			return $value;
+		}, 10, 3 );
 		add_action( 'redirection_redirect_updated', [ $this, 'set_default_group' ], 10, 2 );
 
 		if ( defined( 'REDIRECTION_FLYING_SOLO' ) && REDIRECTION_FLYING_SOLO ) {
@@ -88,7 +91,7 @@ class Redirection_Admin {
 
 		// Known HTML and so isn't escaped
 		// phpcs:ignore
-		echo '<div class="update-nag">' . $message . '</div>';
+		echo '<div class="update-nag notice notice-warning" style="width: 95%">' . $message . '</div>';
 	}
 
 	// So it finally came to this... some plugins include their JS in all pages, whether they are needed or not. If there is an error
@@ -131,7 +134,8 @@ class Redirection_Admin {
 
 	public function set_per_page( $status, $option, $value ) {
 		if ( $option === 'redirection_log_per_page' ) {
-			return max( 1, min( intval( $value, 10 ), RED_MAX_PER_PAGE ) );
+			$value = max( 1, min( intval( $value, 10 ), RED_MAX_PER_PAGE ) );
+			return $value;
 		}
 
 		return $status;
@@ -195,7 +199,7 @@ class Redirection_Admin {
 			'WordPress: ' . $wp_version . ' (' . ( is_multisite() ? 'multi' : 'single' ) . ')',
 			'PHP: ' . phpversion(),
 			'Browser: ' . Redirection_Request::get_user_agent(),
-			'JavaScript: ' . plugin_dir_url( REDIRECTION_FILE ) . 'redirection.js',
+			'JavaScript: ' . plugin_dir_url( REDIRECTION_FILE ) . 'redirection.js?ver=' . $build,
 			'REST API: ' . red_get_rest_api(),
 		);
 
@@ -222,10 +226,13 @@ class Redirection_Admin {
 		$status = new Red_Database_Status();
 		$status->check_tables_exist();
 
+		$translations = $this->get_i18n_data();
+
 		wp_localize_script( 'redirection', 'Redirectioni10n', array(
 			'api' => [
 				'WP_API_root' => esc_url_raw( red_get_rest_api() ),
 				'WP_API_nonce' => wp_create_nonce( 'wp_rest' ),
+				'site_health' => admin_url( 'site-health.php' ),
 				'current' => $options['rest_api'],
 				'routes' => [
 					REDIRECTION_API_JSON => red_get_rest_api( REDIRECTION_API_JSON ),
@@ -236,8 +243,11 @@ class Redirection_Admin {
 			'pluginBaseUrl' => plugins_url( '', REDIRECTION_FILE ),
 			'pluginRoot' => $this->get_plugin_url(),
 			'per_page' => $this->get_per_page(),
-			'locale' => $this->get_i18n_data(),
-			'localeSlug' => get_locale(),
+			'locale' => [
+				'translations' => $translations,
+				'localeSlug' => get_locale(),
+				'Plural-Forms' => isset( $translations['plural-forms'] ) ? $translations['plural-forms'] : 'nplurals=2; plural=n != 1;',
+			],
 			'settings' => $options,
 			'preload' => $preload,
 			'versions' => implode( "\n", $versions ),
@@ -359,7 +369,7 @@ class Redirection_Admin {
 			$locale_data = @file_get_contents( $i18n_json );
 
 			if ( $locale_data ) {
-				return json_decode( $locale_data );
+				return json_decode( $locale_data, true );
 			}
 		}
 
@@ -488,7 +498,7 @@ class Redirection_Admin {
 			document.querySelector( '.react-loading' ).style.display = 'none';
 			document.querySelector( '.react-error' ).style.display = 'block';
 
-			if ( typeof Redirectioni10n !== 'undefined' ) {
+			if ( typeof Redirectioni10n !== 'undefined' && Redirectioni10n ) {
 				document.querySelector( '.versions' ).innerHTML = Redirectioni10n.versions.replace( /\n/g, '<br />' );
 				document.querySelector( '.react-error .button-primary' ).href += '&body=' + encodeURIComponent( errorText ) + encodeURIComponent( Redirectioni10n.versions );
 			}
@@ -564,9 +574,9 @@ class Redirection_Admin {
 	private function try_export_logs() {
 		if ( Redirection_Capabilities::has_access( Redirection_Capabilities::CAP_IO_MANAGE ) && isset( $_POST['export-csv'] ) && check_admin_referer( 'wp_rest' ) ) {
 			if ( $this->get_current_page() === 'log' ) {
-				RE_Log::export_to_csv();
+				Red_Redirect_Log::export_to_csv();
 			} elseif ( $this->get_current_page() === '404s' ) {
-				RE_404::export_to_csv();
+				Red_404_Log::export_to_csv();
 			}
 
 			die();
@@ -601,7 +611,7 @@ add_action( 'init', array( 'Redirection_Admin', 'init' ) );
 add_filter( 'qtranslate_language_detect_redirect', function( $lang, $url ) {
 	$url = Redirection_Request::get_request_url();
 
-	if ( strpos( $url, '/wp-json/' ) !== false || strpos( $url, 'index.php?rest_route' ) !== false ) {
+	if ( strpos( $url, '/wp-json/' ) !== false || strpos( $url, '?rest_route' ) !== false ) {
 		return false;
 	}
 

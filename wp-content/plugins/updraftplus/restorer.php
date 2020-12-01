@@ -98,6 +98,8 @@ class Updraft_Restorer {
 	private $generated_columns_exist_in_the_statement = array();
 
 	private $printed_new_table_prefix = false;
+	
+	private $old_table_prefix = null;
 
 	/**
 	 * Constructor
@@ -929,7 +931,7 @@ class Updraft_Restorer {
 		return $working_dir;
 	}
 
-	public function tar_wrote($result, $file) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public function tar_wrote($result, $file) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		if (0 !== strpos($file, $this->ud_extract_dir)) return false;
 		global $wp_filesystem, $updraftplus;
 		if (!is_a($wp_filesystem, 'WP_Filesystem_Direct')) {
@@ -1981,7 +1983,7 @@ class Updraft_Restorer {
 	private function chmod_if_needed($dir, $chmod, $recursive = false, $wpfs = false, $suppress = true) {
 
 		// Do nothing on Windows
-		if ('WIN' === strtoupper(substr(php_uname('s'), 0, 3))) return true;
+		if ('WIN' === strtoupper(substr(PHP_OS, 0, 3))) return true;
 
 		if (false == $wpfs) {
 			global $wp_filesystem;
@@ -2095,7 +2097,7 @@ class Updraft_Restorer {
 	 *
 	 * @return String - filtered value
 	 */
-	public function option_filter_permalink_structure($val) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public function option_filter_permalink_structure($val) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		global $updraftplus;
 		return $updraftplus->option_filter_get('permalink_structure');
 	}
@@ -2107,7 +2109,7 @@ class Updraft_Restorer {
 	 *
 	 * @return String - filtered value
 	 */
-	public function option_filter_page_on_front($val) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public function option_filter_page_on_front($val) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		global $updraftplus;
 		return $updraftplus->option_filter_get('page_on_front');
 	}
@@ -2119,7 +2121,7 @@ class Updraft_Restorer {
 	 *
 	 * @return String - filtered value
 	 */
-	public function option_filter_rewrite_rules($val) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public function option_filter_rewrite_rules($val) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		global $updraftplus;
 		return $updraftplus->option_filter_get('rewrite_rules');
 	}
@@ -2182,7 +2184,7 @@ class Updraft_Restorer {
 		$updraft_restorer_collate = isset($this->restore_options['updraft_restorer_collate']) ? $this->restore_options['updraft_restorer_collate'] : '';
 
 		// Legacy, less reliable - in case it was not caught before. We added it in here (CREATE) as well as in DROP because of SQL dumps which lack DROP statements.
-		if ('' == $this->old_table_prefix && preg_match('/^([a-z0-9]+)_.*$/i', $this->table_name, $tmatches)) {
+		if (null === $this->old_table_prefix && preg_match('/^([a-z0-9]+)_.*$/i', $this->table_name, $tmatches)) {
 			$this->old_table_prefix = $tmatches[1].'_';
 			$updraftplus->log(__('Old table prefix:', 'updraftplus').' '.$this->old_table_prefix, 'notice-restore', 'old-table-prefix');
 			$updraftplus->log("Old table prefix (detected from creating first table): ".$this->old_table_prefix);
@@ -2191,7 +2193,11 @@ class Updraft_Restorer {
 		// MySQL 4.1 outputs TYPE=, but accepts ENGINE=; 5.1 onwards accept *only* ENGINE=
 		$create_table_statement = UpdraftPlus_Manipulation_Functions::str_lreplace('TYPE=', 'ENGINE=', $create_table_statement);
 
-		$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
+		if ('' === $this->old_table_prefix) {
+			$this->new_table_name = $import_table_prefix.$this->table_name;
+		} else {
+			$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
+		}
 
 		// This CREATE TABLE command may be the de-facto mark for the end of processing a previous table (which is so if this is not the first table in the SQL dump)
 		if ($this->restoring_table) {
@@ -2310,14 +2316,18 @@ class Updraft_Restorer {
 		}
 		$print_line = sprintf(__('Processing table (%s)', 'updraftplus'), $this->table_engine).":  ".$this->table_name;
 		$logline = "Processing table ($this->table_engine): ".$this->table_name;
-		if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) {
+		if (null !== $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) {
 			if ($this->restore_this_table($this->table_name)) {
 				$print_line .= ' - '.__('will restore as:', 'updraftplus').' '.htmlspecialchars($this->new_table_name);
 				$logline .= " - will restore as: ".$this->new_table_name;
 			} else {
 				$logline .= ' - skipping';
 			}
-			$create_table_statement = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $create_table_statement);
+			if ('' === $this->old_table_prefix) {
+				$create_table_statement = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->new_table_name, $create_table_statement);
+			} else {
+				$create_table_statement = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $create_table_statement);
+			}
 
 			$this->restored_table_names[] = $this->new_table_name;
 		}
@@ -2543,7 +2553,7 @@ class Updraft_Restorer {
 		$this->old_home = '';
 		$this->old_content = '';
 		$this->old_uploads = '';
-		$this->old_table_prefix = (defined('UPDRAFTPLUS_OVERRIDE_IMPORT_PREFIX') && UPDRAFTPLUS_OVERRIDE_IMPORT_PREFIX) ? UPDRAFTPLUS_OVERRIDE_IMPORT_PREFIX : '';
+		$this->old_table_prefix = (defined('UPDRAFTPLUS_OVERRIDE_IMPORT_PREFIX') && UPDRAFTPLUS_OVERRIDE_IMPORT_PREFIX) ? UPDRAFTPLUS_OVERRIDE_IMPORT_PREFIX : null;
 		$old_siteinfo = array();
 		$gathering_siteinfo = true;
 
@@ -2729,7 +2739,7 @@ class Updraft_Restorer {
 					$updraftplus->log(__('Uploads URL:', 'updraftplus').' '.$this->old_uploads, 'notice-restore', 'uploads-url');
 					$updraftplus->log('Uploads URL: '.$this->old_uploads);
 					do_action('updraftplus_restore_db_record_old_uploads', $this->old_uploads);
-				} elseif ('' == $this->old_table_prefix && (preg_match('/^\# Table prefix: (\S+)$/', $buffer, $matches) || preg_match('/^-- Table Prefix: (\S+)$/i', $buffer, $matches))) {
+				} elseif (null === $this->old_table_prefix && (preg_match('/^\# Table prefix: ?(\S*)$/', $buffer, $matches) || preg_match('/^-- Table Prefix: ?(\S*)$/i', $buffer, $matches))) {
 					// We also support backwpup style:
 					// -- Table Prefix: wp_
 					$this->old_table_prefix = $matches[1];
@@ -2827,7 +2837,13 @@ class Updraft_Restorer {
 				
 				// Remove the final comma; replace with delimiter
 				$sql_line = substr(rtrim($sql_line), 0, strlen($sql_line)-1).';';
-				if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) $sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+				if ($import_table_prefix != $this->old_table_prefix) {
+					if ('' != $this->old_table_prefix) {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+					} else {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->table_prefix.$this->table_name, $sql_line);
+					}
+				}
 				// Run the SQL command; then set up for the next one.
 				$this->line++;
 				$updraftplus->log(__("Split line to avoid exceeding maximum packet size", 'updraftplus')." (".strlen($sql_line)." + ".strlen($buffer)." : ".$this->max_allowed_packet.")", 'notice-restore');
@@ -2885,7 +2901,7 @@ class Updraft_Restorer {
 				}
 				
 				// Legacy, less reliable - in case it was not caught before
-				if ('' == $this->old_table_prefix && preg_match('/^([a-z0-9]+)_.*$/i', $this->table_name, $tmatches)) {
+				if (null === $this->old_table_prefix && preg_match('/^([a-z0-9]+)_.*$/i', $this->table_name, $tmatches)) {
 					$this->old_table_prefix = $tmatches[1].'_';
 					$updraftplus->log(__('Old table prefix:', 'updraftplus').' '.$this->old_table_prefix, 'notice-restore', 'old-table-prefix');
 					$updraftplus->log("Old table prefix (detected from first table): ".$this->old_table_prefix);
@@ -2893,8 +2909,12 @@ class Updraft_Restorer {
 
 				$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
 
-				if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) {
-					$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+				if ($import_table_prefix != $this->old_table_prefix) {
+					if ('' != $this->old_table_prefix) {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+					} else {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->new_table_name, $sql_line);
+					}
 				}
 				
 				if (empty($matches[1])) {
@@ -2935,11 +2955,23 @@ class Updraft_Restorer {
 					$sql_type = -1;
 					continue;
 				}
-				if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) $sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+				if ($import_table_prefix != $this->old_table_prefix) {
+					if ('' != $this->old_table_prefix) {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+					} else {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->new_table_name, $sql_line);
+					}
+				}
 			} elseif (preg_match('/^\s*(\/\*\!40000 )?(alter|lock) tables? \`?([^\`\(]*)\`?\s+(write|disable|enable)/i', $sql_line, $matches)) {
 				// Only binary mysqldump produces this pattern (LOCK TABLES `table` WRITE, ALTER TABLE `table` (DISABLE|ENABLE) KEYS)
 				$sql_type = 4;
-				if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) $sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+				if ($import_table_prefix != $this->old_table_prefix) {
+					if ('' != $this->old_table_prefix) {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+					} else {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->new_table_name, $sql_line);
+					}
+				}
 			} elseif (preg_match('/^(un)?lock tables/i', $sql_line)) {
 				// BackWPup produces these
 				$sql_type = 5;
@@ -2970,7 +3002,13 @@ class Updraft_Restorer {
 				// If it's a comment then continue;
 				if (preg_match('/(?:--|#).+?'.$delimiter_regex.'\s*$/i', $buffer)) continue;
 				$updraftplus->log_restore_update(array('type' => 'state', 'stage' => 'db', 'data' => array('stage' => 'trigger', 'table' => '')));
-				if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) $sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+				if ($import_table_prefix != $this->old_table_prefix) {
+					if ('' != $this->old_table_prefix) {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
+					} else {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->new_table_name, $sql_line);
+					}
+				}
 				if (';' !== $delimiter) {
 					$sql_line = preg_replace('/END\s*'.$delimiter_regex.'\s*$/', 'END', $sql_line);
 					// handle trigger statement which doesn't include begin and end in the trigger body, and remove the delimiter
@@ -3097,11 +3135,11 @@ class Updraft_Restorer {
 				// remove DEFINER clause from the create view statement and add or replace SQL SECURITY DEFINER with INVOKER
 				// https://regex101.com/r/2tOEhe/4/
 				$sql_line = preg_replace('/^(\s*CREATE\s\s*(?\'or_replace\'OR\s\s*REPLACE\s\s*)?(?\'algorithm\'ALGORITHM\s*=\s*[^\s]+\s\s*)?)(?\'definer\'DEFINER\s*=\s*(?:`.{1,17}`@`[^\s]+`\s*|\'.{1,17}\'@\'[^\s]+\'\s*|[^\s]+?\s\s*))?(?\'sql_security\'SQL\s\s*SECURITY\s\s*[^\s]+?\s\s*)?(VIEW(?:\s\s*IF\s\s*NOT\s\s*EXISTS)?(?:\s*`(?:[^`]|``)+`\s*|\s\s*[^\s]+\s\s*)AS)/is', "$1 SQL SECURITY INVOKER $6", $sql_line);
-				if ($this->old_table_prefix) {
+				if (null !== $this->old_table_prefix) {
 					foreach (array_keys($this->restore_this_table) as $table_name) {
 						// Code for a view can contain pretty much anything. As such, we want to be minimise the risks of unwanted matches.
 						if (false !== strpos($sql_line, $table_name)) {
-							$new_table_name = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $table_name);
+							$new_table_name = ('' == $this->old_table_prefix) ? $import_table_prefix.$table_name : UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $table_name);
 							$sql_line = str_replace($table_name, $new_table_name, $sql_line);
 						}
 					}
@@ -3606,7 +3644,7 @@ class Updraft_Restorer {
 	 *
 	 * @return String - filtered value
 	 */
-	public function option_filter_template($val) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public function option_filter_template($val) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		global $updraftplus;
 		return $updraftplus->option_filter_get('template');
 	}
@@ -3618,7 +3656,7 @@ class Updraft_Restorer {
 	 *
 	 * @return String - filtered value
 	 */
-	public function option_filter_stylesheet($val) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public function option_filter_stylesheet($val) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		global $updraftplus;
 		return $updraftplus->option_filter_get('stylesheet');
 	}
@@ -3630,7 +3668,7 @@ class Updraft_Restorer {
 	 *
 	 * @return String - filtered value
 	 */
-	public function option_filter_template_root($val) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public function option_filter_template_root($val) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		global $updraftplus;
 		return $updraftplus->option_filter_get('template_root');
 	}
@@ -3642,7 +3680,7 @@ class Updraft_Restorer {
 	 *
 	 * @return String - filtered value
 	 */
-	public function option_filter_stylesheet_root($val) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	public function option_filter_stylesheet_root($val) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		global $updraftplus;
 		return $updraftplus->option_filter_get('stylesheet_root');
 	}
@@ -3956,7 +3994,7 @@ class Updraft_Restorer {
 				$updraftplus->log("$server_config_file configuration file has been detected during the restoration. Trying to open the file now for various-fixing tasks");
 				$server_config_file_content = file_get_contents($this->abspath.$server_config_file);
 				if (false !== $server_config_file_content) {
-					foreach ($external_plugins as $name => $data) {
+					foreach ($external_plugins as $data) {
 						$file_pattern = str_replace(array('/', '.', "'", '"'), array('\/', '\.', "\'", '\"'), $data['filename']);
 						if (file_exists($this->abspath.$data['filename'])) {
 							if (!$wp_filesystem->put_contents($this->abspath.$server_config_file, preg_replace('/((?:php_value\s\s*)?auto_prepend_file(?:\s*=)?\s*(?:\'|")).+?'.$file_pattern.'(\'|")/is', "$1{$this->abspath}{$data['filename']}$2", $server_config_file_content))) {
@@ -4034,6 +4072,15 @@ if (!class_exists('WP_Filesystem_Direct')) {
 }
 class UpdraftPlus_WP_Filesystem_Direct extends WP_Filesystem_Direct {
 
+	/**
+	 * Moves a file
+	 *
+	 * @param String  $source      Path to the source file.
+	 * @param String  $destination Path to the destination file.
+	 * @param Boolean $overwrite   Whether to overwrite the destination file if it exists.
+	 *
+	 * @return Boolean Success status
+	 */
 	public function move($source, $destination, $overwrite = false) {
 		if (!$overwrite && $this->exists($destination))
 			return false;

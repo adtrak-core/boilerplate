@@ -106,6 +106,8 @@ class ServiceAccountJwtAccessCredentials extends \WPMailSMTP\Vendor\Google\Auth\
             return null;
         }
         $access_token = $this->auth->toJwt();
+        // Set the self-signed access token in OAuth2 for getLastReceivedToken
+        $this->auth->setAccessToken($access_token);
         return array('access_token' => $access_token);
     }
     /**

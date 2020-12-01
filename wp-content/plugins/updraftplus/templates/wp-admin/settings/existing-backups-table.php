@@ -55,7 +55,7 @@ $image_folder_url = UPDRAFTPLUS_URL.'/images/icons/';
 
 			$log_button = $updraftplus_admin->log_button($backup);
 
-			// Remote backups with no log result in useless empty rows. However, not showing anything messes up the "Existing Backups (14)" display, until we tweak that code to count differently
+			// Remote backups with no log result in useless empty rows. However, not showing anything messes up the "Existing backups (14)" display, until we tweak that code to count differently
 			// if ($remote_sent && !$log_button) continue;
 
 			?>

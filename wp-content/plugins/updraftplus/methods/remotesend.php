@@ -63,7 +63,7 @@ class UpdraftPlus_BackupModule_remotesend extends UpdraftPlus_RemoteStorage_Addo
 		$get_remote_size = $this->send_message('get_file_status', $file, 30);
 		
 		if (is_wp_error($get_remote_size)) {
-			throw new Exception($get_remote_size->get_error_message().' ('.$get_remote_size->get_error_code().')');
+			throw new Exception($get_remote_size->get_error_message().' (get_file_status: '.$get_remote_size->get_error_code().')');
 		}
 
 		if (!is_array($get_remote_size) || empty($get_remote_size['response'])) throw new Exception(__('Unexpected response:', 'updraftplus').' '.serialize($get_remote_size));
@@ -303,7 +303,7 @@ class UpdraftPlus_BackupModule_remotesend extends UpdraftPlus_RemoteStorage_Addo
 			$response = $this->send_message('upload_complete', array('job_id' => $updraftplus->nonce), 30);
 
 			if (is_wp_error($response)) {
-				$message = $response->get_error_message().' ('.$response->get_error_code().')';
+				$message = $response->get_error_message().' (upload_complete: '.$response->get_error_code().')';
 				$this->log("RPC service error: ".$message);
 				$this->log($message, 'error');
 			} elseif (!is_array($response) || empty($response['response'])) {
@@ -316,6 +316,7 @@ class UpdraftPlus_BackupModule_remotesend extends UpdraftPlus_RemoteStorage_Addo
 				$this->log($msg, 'error');
 			} elseif ('file_status' == $response['response']) {
 				$success = true;
+				break;
 			}
 
 			sleep(5);

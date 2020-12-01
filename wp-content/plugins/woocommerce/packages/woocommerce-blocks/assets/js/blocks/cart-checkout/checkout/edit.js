@@ -1,8 +1,9 @@
 /**
  * External dependencies
  */
+import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
-import FeedbackPrompt from '@woocommerce/block-components/feedback-prompt';
+import { CartCheckoutFeedbackPrompt } from '@woocommerce/editor-components/feedback-prompt';
 import { InspectorControls } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -16,16 +17,20 @@ import {
 	PRIVACY_URL,
 	TERMS_URL,
 	CHECKOUT_PAGE_ID,
+	isExperimentalBuild,
 } from '@woocommerce/block-settings';
 import { getAdminLink } from '@woocommerce/settings';
-import { __experimentalCreateInterpolateElement } from 'wordpress-element';
+import { createInterpolateElement } from 'wordpress-element';
 import { useRef } from '@wordpress/element';
-import { EditorProvider, useEditorContext } from '@woocommerce/base-context';
-import PageSelector from '@woocommerce/block-components/page-selector';
+import {
+	EditorProvider,
+	useEditorContext,
+	StoreNoticesProvider,
+} from '@woocommerce/base-context';
+import PageSelector from '@woocommerce/editor-components/page-selector';
 import {
 	previewCart,
 	previewSavedPaymentMethods,
-	checkoutBlockPreview,
 } from '@woocommerce/resource-previews';
 
 /**
@@ -41,9 +46,12 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 		showPhoneField,
 		requireCompanyField,
 		requirePhoneField,
+		allowCreateAccount,
+		showOrderNotes,
 		showPolicyLinks,
 		showReturnToCart,
 		cartPageId,
+		hasDarkControls,
 	} = attributes;
 	const { currentPostId } = useEditorContext();
 	const { current: savedCartPageId } = useRef( cartPageId );
@@ -55,7 +63,7 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 					isDismissible={ false }
 					status="warning"
 				>
-					{ __experimentalCreateInterpolateElement(
+					{ createInterpolateElement(
 						__(
 							'If you would like to use this block as your default checkout you must update your <a>page settings in WooCommerce</a>.',
 							'woocommerce'
@@ -148,6 +156,49 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 					/>
 				) }
 			</PanelBody>
+			{ isExperimentalBuild() && (
+				<PanelBody
+					title={ __(
+						'Account options',
+						'woocommerce'
+					) }
+				>
+					<ToggleControl
+						label={ __(
+							'Allow shopper to sign up for a user account during checkout',
+							'woocommerce'
+						) }
+						checked={ allowCreateAccount }
+						onChange={ () =>
+							setAttributes( {
+								allowCreateAccount: ! allowCreateAccount,
+							} )
+						}
+					/>
+				</PanelBody>
+			) }
+			<PanelBody
+				title={ __( 'Order notes', 'woocommerce' ) }
+			>
+				<p className="wc-block-checkout__controls-text">
+					{ __(
+						'Reduce the number of fields to checkout.',
+						'woocommerce'
+					) }
+				</p>
+				<ToggleControl
+					label={ __(
+						'Allow customers to optionally add order notes',
+						'woocommerce'
+					) }
+					checked={ showOrderNotes }
+					onChange={ () =>
+						setAttributes( {
+							showOrderNotes: ! showOrderNotes,
+						} )
+					}
+				/>
+			</PanelBody>
 			<PanelBody
 				title={ __(
 					'Navigation options',
@@ -175,7 +226,7 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 						className="wc-block-base-control-notice"
 						isDismissible={ false }
 					>
-						{ __experimentalCreateInterpolateElement(
+						{ createInterpolateElement(
 							__(
 								'Pages must be first setup in store settings: <a1>Privacy policy</a1>, <a2>Terms and conditions</a2>.',
 								'woocommerce'
@@ -239,29 +290,44 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 						} }
 					/>
 				) }
-
-			<FeedbackPrompt
-				text={ __(
-					'We are currently working on improving our cart and checkout blocks, providing merchants with the tools and customization options they need.',
-					'woocommerce'
-				) }
-			/>
+			<PanelBody title={ __( 'Style', 'woocommerce' ) }>
+				<ToggleControl
+					label={ __(
+						'Dark mode inputs',
+						'woocommerce'
+					) }
+					help={ __(
+						'Inputs styled specifically for use on dark background colors.',
+						'woocommerce'
+					) }
+					checked={ hasDarkControls }
+					onChange={ () =>
+						setAttributes( {
+							hasDarkControls: ! hasDarkControls,
+						} )
+					}
+				/>
+			</PanelBody>
+			<CartCheckoutFeedbackPrompt />
 		</InspectorControls>
 	);
 };
 
 const CheckoutEditor = ( { attributes, setAttributes } ) => {
 	const { className, isPreview } = attributes;
-
-	if ( isPreview ) {
-		return checkoutBlockPreview;
-	}
-
 	return (
 		<EditorProvider
 			previewData={ { previewCart, previewSavedPaymentMethods } }
 		>
-			<div className={ className }>
+			<div
+				className={ classnames(
+					className,
+					'wp-block-woocommerce-checkout',
+					{
+						'is-editor-preview': isPreview,
+					}
+				) }
+			>
 				<BlockSettings
 					attributes={ attributes }
 					setAttributes={ setAttributes }
@@ -281,9 +347,11 @@ const CheckoutEditor = ( { attributes, setAttributes } ) => {
 						'woocommerce'
 					) }
 				>
-					<Disabled>
-						<Block attributes={ attributes } />
-					</Disabled>
+					<StoreNoticesProvider context="wc/checkout">
+						<Disabled>
+							<Block attributes={ attributes } />
+						</Disabled>
+					</StoreNoticesProvider>
 				</BlockErrorBoundary>
 			</div>
 		</EditorProvider>

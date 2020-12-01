@@ -34,6 +34,10 @@ import './style.scss';
 
 /**
  * Component displaying an attribute filter.
+ *
+ * @param {Object} props Incoming props for the component.
+ * @param {Object} props.attributes Incoming block attributes.
+ * @param {boolean} props.isEditor
  */
 const AttributeFilterBlock = ( {
 	attributes: blockAttributes,
@@ -252,9 +256,9 @@ const AttributeFilterBlock = ( {
 				if ( filterAddedName && filterRemovedName ) {
 					speak(
 						sprintf(
+							/* Translators: %1$s and %2$s are attribute terms (for example: 'red', 'blue', 'large'...). */
 							__(
-								// translators: %s attribute terms (for example: 'red', 'blue', 'large'...)
-								'%s filter replaced with %s.',
+								'%1$s filter replaced with %2$s.',
 								'woocommerce'
 							),
 							filterAddedName,
@@ -264,7 +268,7 @@ const AttributeFilterBlock = ( {
 				} else if ( filterAddedName ) {
 					speak(
 						sprintf(
-							// translators: %s attribute term (for example: 'red', 'blue', 'large'...)
+							/* Translators: %s attribute term (for example: 'red', 'blue', 'large'...) */
 							__(
 								'%s filter added.',
 								'woocommerce'
@@ -275,7 +279,7 @@ const AttributeFilterBlock = ( {
 				} else if ( filterRemovedName ) {
 					speak(
 						sprintf(
-							// translators: %s attribute term (for example: 'red', 'blue', 'large'...)
+							/* Translators: %s attribute term (for example: 'red', 'blue', 'large'...) */
 							__(
 								'%s filter removed.',
 								'woocommerce'

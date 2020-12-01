@@ -37,7 +37,7 @@ import {
 	usePaymentMethods,
 	useExpressPaymentMethods,
 } from './use-payment-method-registration';
-import { useBillingDataContext } from '../billing';
+import { useCustomerDataContext } from '../customer';
 import { useCheckoutContext } from '../checkout-state';
 import { useShippingDataContext } from '../shipping';
 import {
@@ -116,7 +116,7 @@ const getCustomerPaymentMethods = ( availablePaymentMethods = [] ) => {
  *                                           provider.
  */
 export const PaymentMethodDataProvider = ( { children } ) => {
-	const { setBillingData } = useBillingDataContext();
+	const { setBillingData } = useCustomerDataContext();
 	const {
 		isProcessing: checkoutIsProcessing,
 		isIdle: checkoutIsIdle,
@@ -195,17 +195,17 @@ export const PaymentMethodDataProvider = ( { children } ) => {
 		( message ) => {
 			if ( message ) {
 				addErrorNotice( message, {
-					context: 'wc/express-payment-area',
 					id: 'wc-express-payment-error',
+					context: noticeContexts.EXPRESS_PAYMENTS,
 				} );
 			} else {
 				removeNotice(
 					'wc-express-payment-error',
-					'wc/express-payment-area'
+					noticeContexts.EXPRESS_PAYMENTS
 				);
 			}
 		},
-		[ addErrorNotice, removeNotice ]
+		[ addErrorNotice, noticeContexts.EXPRESS_PAYMENTS, removeNotice ]
 	);
 	// ensure observers are always current.
 	useEffect( () => {
@@ -337,6 +337,10 @@ export const PaymentMethodDataProvider = ( { children } ) => {
 	// Set active (selected) payment method as needed.
 	useEffect( () => {
 		const paymentMethodKeys = Object.keys( paymentData.paymentMethods );
+		const allPaymentMethodKeys = [
+			...paymentMethodKeys,
+			...Object.keys( paymentData.expressPaymentMethods ),
+		];
 		if ( ! paymentMethodsInitialized || ! paymentMethodKeys.length ) {
 			return;
 		}
@@ -344,16 +348,24 @@ export const PaymentMethodDataProvider = ( { children } ) => {
 		setActive( ( currentActivePaymentMethod ) => {
 			// If there's no active payment method, or the active payment method has
 			// been removed (e.g. COD vs shipping methods), set one as active.
+			// Note: It's possible that the active payment method might be an
+			// express payment method. So registered express payment methods are
+			// included in the check here.
 			if (
 				! currentActivePaymentMethod ||
-				! paymentMethodKeys.includes( currentActivePaymentMethod )
+				! allPaymentMethodKeys.includes( currentActivePaymentMethod )
 			) {
 				dispatch( statusOnly( PRISTINE ) );
 				return Object.keys( paymentData.paymentMethods )[ 0 ];
 			}
 			return currentActivePaymentMethod;
 		} );
-	}, [ paymentMethodsInitialized, paymentData.paymentMethods, setActive ] );
+	}, [
+		paymentMethodsInitialized,
+		paymentData.paymentMethods,
+		paymentData.expressPaymentMethods,
+		setActive,
+	] );
 
 	// emit events.
 	useEffect( () => {

@@ -22,7 +22,7 @@
 		}
 
 		public function load_toolbar_js(){
-			wp_enqueue_script("wpfc-toolbar", plugins_url("wp-fastest-cache/js/toolbar.js"), array(), time(), true);
+			wp_enqueue_script("wpfc-toolbar", plugins_url("wp-fastest-cache/js/toolbar.js"), array('jquery'), time(), true);
 		}
 
 		public function load_toolbar_css(){

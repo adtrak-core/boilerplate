@@ -19,18 +19,22 @@
 
 				if (!this.product_url || (this.product_url && this.product_url != $target.data('embed-checkout'))) {
 					this.product_url = $target.data('embed-checkout');
-					this.setup();
+					// Disabled because of SameSite cookie issues
+					// this.setup();
 				}
 
 				this.show_checkout();
 
-				// adds / remove classes
-				$('body').addClass('udp-modal-is-opened');
-				this.$el.removeClass('iframe-is-opened');
+				if (0) {
+					// Disabled because of SameSite cookie issues
+					// adds / remove classes
+					$('body').addClass('udp-modal-is-opened');
+					this.$el.removeClass('iframe-is-opened');
 
-				// Show it.
-				this.$el.appendTo('body').show();
-				window.scrollTo(0,0);
+					// Show it.
+					this.$el.appendTo('body').show();
+					window.scrollTo(0,0);
+				}
 			},
 			setup: function() {
 				if (this.$el) {
@@ -69,13 +73,18 @@
 				this.$el.hide();
 			},
 			show_checkout: function() {
-				this.$el.addClass('loading iframe-is-opened');
-				this.$iframe = $('<iframe src="' + this.product_url + '"/>');
-				this.$iframe_container = $('<div class="udp-modal__iframe"/>').appendTo(this.$el.find('.udp-modal__modal')).append(this.$iframe);
+				if (1) {
+					window.location.assign(this.product_url);
+				} else {
+					// Disabled because of SameSite problems
+					this.$el.addClass('loading iframe-is-opened');
+					this.$iframe = $('<iframe src="' + this.product_url + '"/>');
+					this.$iframe_container = $('<div class="udp-modal__iframe"/>').appendTo(this.$el.find('.udp-modal__modal')).append(this.$iframe);
+				}
 			}
 		}
 	}
-	$(document).ready(function(e) {
+	jQuery(function(e) {
 		checkout_embed.init();
 	});
 })(jQuery);

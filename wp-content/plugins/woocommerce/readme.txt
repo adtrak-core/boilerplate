@@ -1,10 +1,10 @@
 === WooCommerce ===
-Contributors: automattic, mikejolley, jameskoster, claudiosanches, kloon, rodrigosprimo, peterfabian1000, vedjain, jamosova, obliviousharmony, konamiman, sadowski
+Contributors: automattic, mikejolley, jameskoster, claudiosanches, rodrigosprimo, peterfabian1000, vedjain, jamosova, obliviousharmony, konamiman, sadowski, royho
 Tags: e-commerce, store, sales, sell, woo, shop, cart, checkout, downloadable, downloads, payments, paypal, storefront, stripe, woo commerce
 Requires at least: 5.3
 Tested up to: 5.5
 Requires PHP: 7.0
-Stable tag: 4.5.2
+Stable tag: 4.7.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,7 +12,7 @@ WooCommerce is the world’s most popular open-source eCommerce solution.
 
 == Description ==
 
-WooCommerce is the world’s most popular open-source eCommerce solution. 
+WooCommerce is [the world’s most popular](https://trends.builtwith.com/shop) open-source eCommerce solution. 
 
 Our core platform is free, flexible, and amplified by a global community. The freedom of open-source means you retain full ownership of your store’s content and data forever.
 
@@ -160,55 +160,68 @@ WooCommerce comes with some sample data you can use to see how products look; im
 
 == Changelog ==
 
-= 4.5.2 - 2020-09-14 =
-* Fix - Revert the changes in filtering by attribute that were introduced in WooCommerce 4.4. #27625
-* Fix - Adjusted validation to allow for variations with "0" as an attribute value. #27633
-
-= 4.5.1 - 2020-09-09 =
+= 4.7.1 - 2020-11-24 =
 
 **WooCommerce**
-* Fix - Check for state and postcode fields only if required in `show_shipping`. #27628
 
-= 4.5.0 - 2020-09-08 =
+* Fix - Prevent variable product to be added to cart until a valid variation is selected first. #28103
+* Fix - Restored support for custom `taxonomy-product_cat-<SLUG>.php` and `taxonomy-product_tag-<SLUG>.php` templates. #28377
+* Fix - Display overrides of `taxonomy-product_<cat|tag>.php` and `content-product_cat.php` templates in Status page. #28378
+* Dev - Apply `woocommerce_cart_needs_payment` filter in `WC_Checkout::process_checkout()` to make backwards compatible. #28281
+
+= 4.7.0 - 2020-11-10 =
 
 **WooCommerce**
-* Localization - Added postcode validation for Bosnia and Herzegovina. #27048
-* Localization - Added the postcode validation for Liechtenstein. #27059
-* Localization - Add i18n locale information for Liechtenstein, Switzerland and Austria. #27193
-* Tweak - Increase priority of `admin_body_class` filter to avoid comflict with plugins that incorrectly remove all body classes from WP. #27426
-* Tweak - Rename built-in PayPal payment method to PayPal Standard. #27468
-* Fix - Remove whitespace within a link. #26897
-* Fix - `get_review_count_for_product` return all comments count not only 'review' types #26928
-* Fix - Hidden field type is now supported by `woocommerce_form_field`. #27023
-* Fix - Remove state for country liechtenstein. #27057
-* Fix - Fixed validation of variation attributes while adding products to the cart. #27115
-* Fix - Coupon code inconsistent between admins and shop owners. #27140
-* Fix - Fixed the logic behind "Hide shipping costs until an address is entered". #27143
-* Fix - Searches for variations now will fallback to parent SKU if one is not entered. #27171
-* Fix - Release coupon holds for cancelled orders previously in pending status. #27179
-* Fix - Fixes Japan zip code format issue (dash is now optional). #27244
-* Fix - Restore backward compatibility with WC 4.x and forward compatibility with WC 5.5. #27318
-* Fix - Switch to site locale before translating refund reason. #27323
-* Fix - Declare `WC_Post_Types::updated_term_messages` as a static method to remove PHP deprecation warning. #27436
-* Fix - Allow HTML to be entered in product title for formatting purposes. #27465
-* Fix - Filter by attribute widget not working properly for variations having attribute values of "Any...". #27508
-* Fix - Fixed the layout of the variations and attributes sections in the product page in the admin when running WP >= 5.5. #27590
-* Dev - Added additional stock-based cart filters including `woocommerce_cart_product_cannot_add_another_message`, `woocommerce_cart_product_out_of_stock_message`, and `woocommerce_cart_product_not_enough_stock_message`. #26439
-* Dev - Changed text domain to `woocommerce` for REST API files. #27248
-* Dev - Added file path to the `woocommerce_file_download_method` filter. #27152
-* Dev - Merge API Package into core. #27100
 
-**WooCommerce Admin 1.5.0**
-* Enhancement - Add eWAY to Payment Setup for AU/NZ Stores. #4947
-* Fix - Use clipRule and fillRule props. #4889, part of #4864
-* Fix - Admin order page shipping label prompt compatibility with WCS 1.24. #5025
-* Dev - New notification: Don't forget to test your checkout. #4805
-* Dev - Enable tax calculation before redirecting to standard tax rates page. #4878
-* Dev - Added event recording to Orders, Stock, and Reviews panels. #4861
-* Dev - Added personalization to purchase extension task. #4849
-* Dev - Display modal with more info about the new homescreen. #4890
-* Dev - Task list - add a shortcut back to store setup. #4853
-* Dev - Update the colors of the illustrations in the welcome modal. #4945
+* Tweak - Update `product_cat/tag` taxonomy template file names to `product-cat/tag`. #27736
+* Tweak - Exclude draft pages from the "Shop page" setting. #27890
+* Tweak - Styling to properly display product reviews within the dashboard activity widget. #27968
+* Fix - Fixes Photoswipe action buttons being obscured by admin bar. #27010
+* Fix - Allow variation image to be removed via REST API. #27299
+* Fix - Fixed WP CLI command to delete tax classes. #27310
+* Fix - Prevent regenerate image filter loop. #27483
+* Fix - Fixed some race conditions in `WC_Install`. #27696
+* Fix - Improved PHP 8 support for `Automattic\WooCommerce\RestApi\Utilities\SingletonTrait`. #27707
+* Fix - Adjust stock even if `reduce_stock` meta is not set in `wc_maybe_reduce_stock_levels`. #27763
+* Fix - Removed duplicated CSS code from jQuery UI. #27767
+* Fix - HTML syntax error in scheduled product message. #27842
+* Fix - Update logic to determine if an order requires payment to check the order instead of the cart. #27893
+* Fix - Use `Set password` title for lost password reset form when applicable. #27898
+* Fix - REST API - Fixed deprecated notices while querying orders and refunds through REST API v1 endpoints. #27934
+* Fix - Email address starting with `www` being displayed as a URL link in the admin order details page. #27983
+* Fix - Unexpected HTTP 401 "Sorry, you cannot list resources" REST API responses that occur when a plugin or custom code determines the current WordPress user before WooCommerce is fully initialized. #27587
+* Dev - Add `woocommerce_should_send_low_stock_notification` filter. #27819
+* Dev - Introduce (again) a dependency injection framework for the code in the src directory. #27733
+* Dev - Remove leftover code and data from the reverted improvement for variations filtering by attribute. #27748
+* Dev - Escaped labels in `woocommerce_form_field()`. #27800
+* Dev - Add a `NumberUtil::round` method to workaround a breaking change in the buil-in round function in PHP8. #27830
+* Dev - Remove default value from optional parameters that are followed by required parameters in functions/methods, since those are de-facto required and trigger a deprectation notice in PHP 8. #27840
+* Dev - REST API - Add user-friendly attribute names and values to order line items metadata.
+* Dev - REST API - Adds `parent_name` to `line_items` of the GET /orders endpoint.
+* Localization - Added Serbia districts. #27778
+* Localization - Make city, and postcode non-required fields. #27779
+* Localization - Add i18n locale information for Uganda, Kenya and Tanzania. #27164
+* Localization - Renamed "Postcode / ZIP" to "Pin code", and renamed "State / County" to "State" for India. #27516
+* Localization - Added postcode validation for addresses in India. #27546
+
+**WooCommerce Blocks - 3.5.0 & 3.6.0**
+
+* Make 'retry' property on errors from checkoutAfterProcessingWithSuccess/Error observers default to true if it's undefined. ([3261](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3261))
+* Ensure new payment methods are only displayed when no saved payment method is selected. ([3247](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3247))
+* Load WC Blocks CSS after editor CSS. ([3219](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3219))
+* Restore saved payment method data after closing an express payment method. ([3210](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3210))
+* Use light default background colour for country/state dropdowns. ([3189](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3189))
+* Fix broken Express Payment Method use in the Checkout block for logged out or incognito users. ([3165](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3165))
+* Fix State label for Spain. ([3147](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3147))
+* Don't throw an error when registering a payment method fails. ([3134](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3134))
+* Don't load contents of payment method hidden tabs. ([3227](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3227))
+* Use noticeContexts from useEmitResponse instead of hardcoded values. ([3161](https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/3161))
+
+**WooCommerce Admin - 1.6.3**
+
+* Tweak: Add BR and IN to list of stripe countries [#5377](https://github.com/woocommerce/woocommerce-admin/pull/5377)
+* Fix: Redirect instead of stalling on WCPay Inbox note action [#5413](https://github.com/woocommerce/woocommerce-admin/pull/5413)
+
 [See changelog for all versions](https://raw.githubusercontent.com/woocommerce/woocommerce/master/changelog.txt).
 
 == Upgrade Notice ==

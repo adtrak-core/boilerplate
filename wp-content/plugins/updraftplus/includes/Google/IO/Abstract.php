@@ -19,7 +19,7 @@
  * Abstract IO base class
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -44,10 +44,10 @@ abstract class Google_IO_Abstract
   );
 
 
-  /** @var Google_Client */
+  /** @var UDP_Google_Client */
   protected $client;
 
-  public function __construct(Google_Client $client)
+  public function __construct(UDP_Google_Client $client)
   {
     $this->client = $client;
     $timeout = $client->getClassConfig('Google_IO_Abstract', 'request_timeout_seconds');

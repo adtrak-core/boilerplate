@@ -155,7 +155,7 @@
 
 				if(isset($options->wpFastestCacheMobileTheme) && $options->wpFastestCacheMobileTheme){
 					$mobile_theme = true;
-					$number = $number/2;
+					$number = round($number/2);
 				}else{
 					$mobile_theme = false;
 				}

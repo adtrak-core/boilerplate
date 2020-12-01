@@ -6,7 +6,7 @@ import triggerFetch from '@wordpress/api-fetch';
 import {
 	useCheckoutContext,
 	useShippingDataContext,
-	useBillingDataContext,
+	useCustomerDataContext,
 	usePaymentMethodDataContext,
 	useValidationContext,
 } from '@woocommerce/base-context';
@@ -20,31 +20,9 @@ import {
 import { useStoreCart, useStoreNotices } from '@woocommerce/base-hooks';
 
 /**
- * @typedef {import('@woocommerce/type-defs/payments').PaymentDataItem} PaymentDataItem
+ * Internal dependencies
  */
-
-/**
- * Utility function for preparing payment data for the request.
- *
- * @param {Object}  paymentData          Arbitrary payment data provided by the payment method.
- * @param {boolean} shouldSave           Whether to save the payment method info to user account.
- * @param {Object}  activePaymentMethod  The current active payment method.
- *
- * @return {PaymentDataItem[]} Returns the payment data as an array of
- *                             PaymentDataItem objects.
- */
-const preparePaymentData = ( paymentData, shouldSave, activePaymentMethod ) => {
-	const apiData = Object.keys( paymentData ).map( ( property ) => {
-		const value = paymentData[ property ];
-		return { key: property, value };
-	}, [] );
-	const savePaymentMethodKey = `wc-${ activePaymentMethod }-new-payment-method`;
-	apiData.push( {
-		key: savePaymentMethodKey,
-		value: shouldSave,
-	} );
-	return apiData;
-};
+import { preparePaymentData } from './utils';
 
 /**
  * CheckoutProcessor component.
@@ -63,10 +41,11 @@ const CheckoutProcessor = () => {
 		isBeforeProcessing: checkoutIsBeforeProcessing,
 		isComplete: checkoutIsComplete,
 		orderNotes,
+		shouldCreateAccount,
 	} = useCheckoutContext();
 	const { hasValidationErrors } = useValidationContext();
-	const { shippingAddress, shippingErrorStatus } = useShippingDataContext();
-	const { billingData } = useBillingDataContext();
+	const { shippingErrorStatus } = useShippingDataContext();
+	const { billingData, shippingAddress } = useCustomerDataContext();
 	const { cartNeedsPayment, receiveCart } = useStoreCart();
 	const {
 		activePaymentMethod,
@@ -188,6 +167,7 @@ const CheckoutProcessor = () => {
 			billing_address: currentBillingData.current,
 			shipping_address: currentShippingAddress.current,
 			customer_note: orderNotes,
+			should_create_account: shouldCreateAccount,
 		};
 		if ( cartNeedsPayment ) {
 			data = {
@@ -258,6 +238,7 @@ const CheckoutProcessor = () => {
 		receiveCart,
 		dispatchActions,
 		orderNotes,
+		shouldCreateAccount,
 	] );
 	// redirect when checkout is complete and there is a redirect url.
 	useEffect( () => {

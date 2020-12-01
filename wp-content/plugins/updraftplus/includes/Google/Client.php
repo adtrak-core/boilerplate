@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -23,10 +23,10 @@ if (!class_exists('Google_Client')) {
  * The Google API Client
  * http://code.google.com/p/google-api-php-client/
  */
-class Google_Client
+class UDP_Google_Client
 {
   const LIBVER = "1.1.4";
-  const USER_AGENT_SUFFIX = "google-api-php-client/";
+  const USER_AGENT_SUFFIX = "google-api-php-client-ud/";
   /**
    * @var Google_Auth_Abstract $auth
    */
@@ -43,7 +43,7 @@ class Google_Client
   private $cache;
 
   /**
-   * @var Google_Config $config
+   * @var UDP_Google_Config $config
    */
   private $config;
 
@@ -70,14 +70,14 @@ class Google_Client
   /**
    * Construct the Google Client.
    *
-   * @param $config Google_Config or string for the ini file to load
+   * @param $config UDP_Google_Config or string for the ini file to load
    */
   public function __construct($config = null)
   {
     if (is_string($config) && strlen($config)) {
-      $config = new Google_Config($config);
-    } else if ( !($config instanceof Google_Config)) {
-      $config = new Google_Config();
+      $config = new UDP_Google_Config($config);
+    } else if ( !($config instanceof UDP_Google_Config)) {
+      $config = new UDP_Google_Config();
 
       if ($this->isAppEngine()) {
         // Automatically use Memcache if we're in AppEngine.
@@ -90,7 +90,7 @@ class Google_Client
       }
     }
 
-    if ($config->getIoClass() == Google_Config::USE_AUTO_IO_SELECTION) {
+    if ($config->getIoClass() == UDP_Google_Config::USE_AUTO_IO_SELECTION) {
       if (function_exists('curl_version') && function_exists('curl_exec')
           && !$this->isAppEngine()) {
         $config->setIoClass("Google_IO_Curl");
@@ -202,7 +202,7 @@ class Google_Client
 
   /**
    * Set the OAuth 2.0 access token using the string that resulted from calling createAuthUrl()
-   * or Google_Client#getAccessToken().
+   * or UDP_Google_Client#getAccessToken().
    * @param string $accessToken JSON encoded string containing in the following format:
    * {"access_token":"TOKEN", "refresh_token":"TOKEN", "token_type":"Bearer",
    *  "expires_in":3600, "id_token":"TOKEN", "created":1320790426}

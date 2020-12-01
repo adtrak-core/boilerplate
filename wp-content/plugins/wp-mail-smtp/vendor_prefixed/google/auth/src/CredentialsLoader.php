@@ -119,18 +119,24 @@ abstract class CredentialsLoader implements \WPMailSMTP\Vendor\Google\Auth\Fetch
      * @param string|array $scope the scope of the access request, expressed
      *        either as an Array or as a space-delimited String.
      * @param array $jsonKey the JSON credentials.
+     * @param string|array $defaultScope The default scope to use if no
+     *   user-defined scopes exist, expressed either as an Array or as a
+     *   space-delimited string.
+     *
      * @return ServiceAccountCredentials|UserRefreshCredentials
      */
-    public static function makeCredentials($scope, array $jsonKey)
+    public static function makeCredentials($scope, array $jsonKey, $defaultScope = null)
     {
         if (!\array_key_exists('type', $jsonKey)) {
             throw new \InvalidArgumentException('json key is missing the type field');
         }
         if ($jsonKey['type'] == 'service_account') {
+            // Do not pass $defaultScope to ServiceAccountCredentials
             return new \WPMailSMTP\Vendor\Google\Auth\Credentials\ServiceAccountCredentials($scope, $jsonKey);
         }
         if ($jsonKey['type'] == 'authorized_user') {
-            return new \WPMailSMTP\Vendor\Google\Auth\Credentials\UserRefreshCredentials($scope, $jsonKey);
+            $anyScope = $scope ?: $defaultScope;
+            return new \WPMailSMTP\Vendor\Google\Auth\Credentials\UserRefreshCredentials($anyScope, $jsonKey);
         }
         throw new \InvalidArgumentException('invalid value in the type field');
     }
@@ -188,7 +194,7 @@ abstract class CredentialsLoader implements \WPMailSMTP\Vendor\Google\Auth\Fetch
     {
         if (isset($metadata[self::AUTH_METADATA_KEY])) {
             // Auth metadata has already been set
-            return $metdadata;
+            return $metadata;
         }
         $result = $this->fetchAuthToken($httpHandler);
         if (!isset($result['access_token'])) {

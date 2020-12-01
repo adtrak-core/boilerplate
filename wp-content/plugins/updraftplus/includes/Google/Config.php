@@ -18,7 +18,7 @@
 /**
  * A class to contain the library configuration for the Google API client.
  */
-class Google_Config
+class UDP_Google_Config
 {
   const GZIP_DISABLED = true;
   const GZIP_ENABLED = false;
@@ -31,7 +31,7 @@ class Google_Config
   protected $configuration;
 
   /**
-   * Create a new Google_Config. Can accept an ini file location with the
+   * Create a new UDP_Google_Config. Can accept an ini file location with the
    * local configuration. For example:
    *     application_name="My App"
    *
@@ -136,10 +136,11 @@ class Google_Config
         ),
         // Set a default directory for the file cache.
         'Google_Cache_File' => array(
-          'directory' => sys_get_temp_dir() . '/Google_Client'
+          'directory' => sys_get_temp_dir() . '/UDP_Google_Client'
         )
       ),
     );
+
     if ($ini_file_location) {
       $ini = parse_ini_file($ini_file_location, true);
       if (is_array($ini) && count($ini)) {

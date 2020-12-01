@@ -18,6 +18,7 @@
                         "swf",
                         "ttf",
                         "webm",
+                        "webp",
                         "woff",
                         "woff2"
                         );

@@ -1,14 +1,9 @@
 <?php
-/**
- * Checkout route.
- *
- * @package WooCommerce/Blocks
- */
-
 namespace Automattic\WooCommerce\Blocks\StoreApi\Routes;
 
-defined( 'ABSPATH' ) || exit;
-
+use \Exception;
+use Automattic\WooCommerce\Blocks\Package;
+use Automattic\WooCommerce\Blocks\Domain\Services\CreateAccount;
 use Automattic\WooCommerce\Blocks\StoreApi\Utilities\CartController;
 use Automattic\WooCommerce\Blocks\StoreApi\Utilities\OrderController;
 use Automattic\WooCommerce\Blocks\StoreApi\Utilities\ReserveStock;
@@ -18,6 +13,8 @@ use Automattic\WooCommerce\Blocks\Payments\PaymentContext;
 
 /**
  * Checkout class.
+ *
+ * @internal This API is used internally by Blocks--it is still in flux and may be subject to revisions.
  */
 class Checkout extends AbstractRoute {
 	/**
@@ -166,6 +163,16 @@ class Checkout extends AbstractRoute {
 
 		// Check order is still valid.
 		$order_controller->validate_order_before_payment( $order_object );
+
+		// Create a new user account as necessary.
+		// Note - CreateAccount class includes feature gating logic (i.e. this
+		// may not create an account depending on build).
+		try {
+			$create_account = Package::container()->get( CreateAccount::class );
+			$create_account->from_order_request( $order_object, $request );
+		} catch ( Exception $error ) {
+			$this->handle_error( $error );
+		}
 
 		// Persist customer address data to account.
 		$order_controller->sync_customer_data_with_order( $order_object );
@@ -318,6 +325,34 @@ class Checkout extends AbstractRoute {
 		}
 
 		return $order_object;
+	}
+
+	/**
+	 * Convert an account creation error to a Store API error.
+	 *
+	 * @param \Exception $error Caught exception.
+	 *
+	 * @throws RouteException API error object with error details.
+	 */
+	private function handle_error( Exception $error ) {
+		switch ( $error->getMessage() ) {
+			case 'registration-error-invalid-email':
+				throw new RouteException(
+					'registration-error-invalid-email',
+					__( 'Please provide a valid email address.', 'woocommerce' ),
+					400
+				);
+
+			case 'registration-error-email-exists':
+				throw new RouteException(
+					'registration-error-email-exists',
+					apply_filters(
+						'woocommerce_registration_error_email_exists',
+						__( 'An account is already registered with your email address. Please log in.', 'woocommerce' )
+					),
+					400
+				);
+		}
 	}
 
 	/**

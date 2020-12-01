@@ -18,7 +18,7 @@ foreach ($default_options as $k => $v) {
 // $backup_history is passed in
 if (false === $backup_history) $backup_history = UpdraftPlus_Backup_History::get_history();
 
-if (!empty($options['include_header'])) echo '<h2>'.__('Existing Backups', 'updraftplus').' ('.count($backup_history).')</h2>';
+if (!empty($options['include_header'])) echo '<h2>'.__('Existing backups', 'updraftplus').' ('.count($backup_history).')</h2>';
 
 ?>
 <div class="download-backups form-table">

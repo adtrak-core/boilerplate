@@ -142,15 +142,19 @@ class ParseFormFields
         
         if ( !empty($this->form_fields['mbp_post_attachment']) ) {
             $image_id = attachment_url_to_postid( $this->form_fields['mbp_post_attachment'] );
+            
             if ( $image_id && wp_attachment_is_image( $image_id ) ) {
-                $this->validate_image_size( $image_id );
+                $this->validate_wp_image_size( $image_id );
+            } else {
+                $this->validate_external_image_size( $this->form_fields['mbp_post_attachment'] );
             }
+            
             return new \PGMB\Google\MediaItem( $this->form_fields['mbp_attachment_type'], $this->form_fields['mbp_post_attachment'] );
         } elseif ( isset( $this->form_fields['mbp_content_image'] ) && $this->form_fields['mbp_content_image'] && ($image_url = $this->get_content_image( $parent_post_id )) ) {
             return new \PGMB\Google\MediaItem( 'PHOTO', $image_url );
         } elseif ( isset( $this->form_fields['mbp_featured_image'] ) && $this->form_fields['mbp_featured_image'] && ($image_url = get_the_post_thumbnail_url( $parent_post_id, 'large' )) ) {
             $image_id = get_post_thumbnail_id( $parent_post_id );
-            $this->validate_image_size( $image_id );
+            $this->validate_wp_image_size( $image_id );
             return new \PGMB\Google\MediaItem( 'PHOTO', $image_url );
         }
         
@@ -164,23 +168,45 @@ class ParseFormFields
             return false;
         }
         $image_details = wp_get_attachment_image_src( $image->ID, 'large' );
-        $this->validate_image_size( $image->ID );
+        $this->validate_wp_image_size( $image->ID );
         return reset( $image_details );
         //Return the first item in the array (which is the url)
     }
     
-    public function validate_image_size( $image_id )
+    /**
+     * Check whether a file uploaded within the WordPress Media Uploader matches the requirements for GMB
+     *
+     * @param int $image_id - ID of the image within WordPress
+     */
+    public function validate_wp_image_size( $image_id )
     {
-        $image_details = wp_get_attachment_image_src( $image_id, 'large' );
-        if ( $image_details[1] < 250 || $image_details[2] < 250 ) {
-            throw new InvalidArgumentException( sprintf( __( 'Post image must be at least 250x250px. Current image is: %dx%dpx', 'post-to-google-my-business' ), $image_details[1], $image_details[2] ) );
+        list( $url, $width, $height ) = wp_get_attachment_image_src( $image_id, 'large' );
+        $this->validate_image_props( $url, $width, $height );
+    }
+    
+    /**
+     * Check if externally hosted image meets the GMB requirements
+     *
+     * @param string $url - URL of the image
+     */
+    public function validate_external_image_size( $url )
+    {
+        list( $width, $height ) = getimagesize( $url );
+        $this->validate_image_props( $url, $width, $height );
+    }
+    
+    public function validate_image_props( $url, $width, $height )
+    {
+        if ( $width < 250 || $height < 250 ) {
+            throw new InvalidArgumentException( sprintf( __( 'Post image must be at least 250x250px. Selected image is %dx%dpx', 'post-to-google-my-business' ), $width, $height ) );
         }
-        $image_file_size = filesize( get_attached_file( $image_id ) );
+        $headers = get_headers( $url, true );
+        $image_file_size = intval( $headers['Content-Length'] );
         
         if ( $image_file_size < 10240 ) {
-            throw new InvalidArgumentException( __( 'Post image too small, must be at least 10KB', 'post-to-google-my-business' ) );
+            throw new InvalidArgumentException( sprintf( __( 'Post image file too small, must be at least 10 KB. Selected image is %s', 'post-to-google-my-business' ), size_format( $image_file_size ) ) );
         } elseif ( $image_file_size > 5242880 ) {
-            throw new InvalidArgumentException( __( 'Post image too big, must be 5MB at most', 'post-to-google-my-business' ) );
+            throw new InvalidArgumentException( sprintf( __( 'Post image file too big, must be 5 MB at most. Selected image is %s', 'post-to-google-my-business' ), size_format( $image_file_size ) ) );
         }
     
     }

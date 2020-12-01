@@ -1,6 +1,9 @@
 <?php
 namespace Automattic\WooCommerce\Blocks\StoreApi\Routes;
 
+use \Exception;
+use Automattic\WooCommerce\Blocks\Package;
+use Automattic\WooCommerce\Blocks\Domain\Services\CreateAccount;
 use Automattic\WooCommerce\Blocks\StoreApi\Utilities\CartController;
 use Automattic\WooCommerce\Blocks\StoreApi\Utilities\OrderController;
 use Automattic\WooCommerce\Blocks\StoreApi\Utilities\ReserveStock;
@@ -120,8 +123,10 @@ class Checkout extends AbstractRoute {
 	 * @return \WP_REST_Response
 	 */
 	protected function get_route_update_response( \WP_REST_Request $request ) {
-		$order_object = $this->create_or_update_draft_order();
+		// Update customer first since orders will be created using that data.
+		$this->update_customer_from_request( $request );
 
+		$order_object = $this->create_or_update_draft_order();
 		$this->update_order_from_request( $order_object, $request );
 
 		return $this->prepare_item_for_response(
@@ -141,10 +146,13 @@ class Checkout extends AbstractRoute {
 	 * @return \WP_REST_Response
 	 */
 	protected function get_route_post_response( \WP_REST_Request $request ) {
+		// Update customer first since orders will be created using that data.
+		$this->update_customer_from_request( $request );
+
 		$order_controller = new OrderController();
 		$order_object     = $this->get_draft_order_object( $this->get_draft_order_id() );
 
-		if ( ! $order_object ) {
+		if ( ! $order_object instanceof \WC_Order ) {
 			throw new RouteException(
 				'woocommerce_rest_checkout_invalid_order',
 				__( 'This session has no orders pending payment.', 'woo-gutenberg-products-block' ),
@@ -155,6 +163,21 @@ class Checkout extends AbstractRoute {
 		// Ensure order still matches cart.
 		$order_controller->update_order_from_cart( $order_object );
 
+		// Create a new user account as necessary.
+		// Note - CreateAccount class includes feature gating logic (i.e. this
+		// may not create an account depending on build).
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '4.7', '>=' ) ) {
+			// Checkout signup is feature gated to WooCommerce 4.7 and newer;
+			// Because it requires updated my-account/lost-password screen in 4.7+
+			// for setting initial password.
+			try {
+				$create_account = Package::container()->get( CreateAccount::class );
+				$create_account->from_order_request( $request );
+				$order_object->set_customer_id( get_current_user_id() );
+			} catch ( Exception $error ) {
+				$this->handle_error( $error );
+			}
+		}
 		// If any form fields were posted, update the order.
 		$this->update_order_from_request( $order_object, $request );
 
@@ -163,6 +186,14 @@ class Checkout extends AbstractRoute {
 
 		// Persist customer address data to account.
 		$order_controller->sync_customer_data_with_order( $order_object );
+
+		/*
+		* Fire woocommerce_blocks_checkout_order_processed, should work the same way as woocommerce_checkout_order_processed
+		* But we're opting for a new action because the original ones attaches POST data.
+		* NOTE: this hook is still experimental, and might change or get removed.
+		* @todo: Document and stabilize __experimental_woocommerce_blocks_checkout_order_processed
+		*/
+		do_action( '__experimental_woocommerce_blocks_checkout_order_processed', $order_object );
 
 		if ( ! $order_object->needs_payment() ) {
 			$payment_result = $this->process_without_payment( $order_object, $request );
@@ -246,29 +277,44 @@ class Checkout extends AbstractRoute {
 	}
 
 	/**
+	 * Whether the passed argument is a draft order or an order that is
+	 * pending/failed and the cart hasn't changed.
+	 *
+	 * @param \WC_Order $order_object Order object to check.
+	 * @return boolean Whether the order is valid as a draft order.
+	 */
+	protected function is_valid_draft_order( $order_object ) {
+		if ( ! $order_object instanceof \WC_Order ) {
+			return false;
+		}
+
+		// Draft orders are okay.
+		if ( $order_object->has_status( 'checkout-draft' ) ) {
+			return true;
+		}
+
+		// Pending and failed orders can be retried if the cart hasn't changed.
+		if ( $order_object->needs_payment() && $order_object->has_cart_hash( wc()->cart->get_cart_hash() ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get an order object, either using a current draft order, or returning a new one.
 	 *
 	 * @param integer $order_id Draft order ID.
 	 * @return \WC_Order|boolean Either the draft order, or false if one has not yet been created.
 	 */
 	protected function get_draft_order_object( $order_id ) {
+		// If order ID doesn't exist or it doesn't match a draft order, create
+		// a new draft order. That might happen when trying to checkout directly
+		// from the Cart block with an express payment method and the draft
+		// order hasn't been created yet.
 		$draft_order_object = $order_id ? wc_get_order( $order_id ) : false;
 
-		if ( ! $draft_order_object ) {
-			return false;
-		}
-
-		// Draft orders are okay.
-		if ( $draft_order_object->has_status( 'checkout-draft' ) ) {
-			return $draft_order_object;
-		}
-
-		// Pending and failed orders can be retried if the cart hasn't changed.
-		if ( $draft_order_object->needs_payment() && $draft_order_object->has_cart_hash( wc()->cart->get_cart_hash() ) ) {
-			return $draft_order_object;
-		}
-
-		return false;
+		return $this->is_valid_draft_order( $draft_order_object ) ? $draft_order_object : $this->create_or_update_draft_order();
 	}
 
 	/**
@@ -282,14 +328,14 @@ class Checkout extends AbstractRoute {
 		$cart_controller  = new CartController();
 		$order_controller = new OrderController();
 		$reserve_stock    = \class_exists( '\Automattic\WooCommerce\Checkout\Helpers\ReserveStock' ) ? new \Automattic\WooCommerce\Checkout\Helpers\ReserveStock() : new ReserveStock();
-		$order_object     = $this->get_draft_order_object( $this->get_draft_order_id() );
+		$order_object     = $this->get_draft_order_id() ? wc_get_order( $this->get_draft_order_id() ) : null;
 		$created          = false;
 
 		// Validate items etc are allowed in the order before it gets created.
 		$cart_controller->validate_cart_items();
 		$cart_controller->validate_cart_coupons();
 
-		if ( ! $order_object ) {
+		if ( ! $this->is_valid_draft_order( $order_object ) ) {
 			$order_object = $order_controller->create_order_from_cart();
 			$created      = true;
 		} else {
@@ -315,28 +361,72 @@ class Checkout extends AbstractRoute {
 	}
 
 	/**
-	 * Update an order using the posted values from the request.
+	 * Convert an account creation error to a Store API error.
 	 *
-	 * @param \WC_Order        $order Object to prepare for the response.
+	 * @param \Exception $error Caught exception.
+	 *
+	 * @throws RouteException API error object with error details.
+	 */
+	private function handle_error( Exception $error ) {
+		switch ( $error->getMessage() ) {
+			case 'registration-error-invalid-email':
+				throw new RouteException(
+					'registration-error-invalid-email',
+					__( 'Please provide a valid email address.', 'woo-gutenberg-products-block' ),
+					400
+				);
+
+			case 'registration-error-email-exists':
+				throw new RouteException(
+					'registration-error-email-exists',
+					apply_filters(
+						'woocommerce_registration_error_email_exists',
+						__( 'An account is already registered with your email address. Please log in.', 'woo-gutenberg-products-block' )
+					),
+					400
+				);
+		}
+	}
+
+	/**
+	 * Updates the current customer session using data from the request (e.g. address data).
+	 *
+	 * Address session data is synced to the order itself later on by OrderController::update_order_from_cart()
+	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 */
-	protected function update_order_from_request( \WC_Order $order, \WP_REST_Request $request ) {
-		$schema = $this->get_item_schema();
+	protected function update_customer_from_request( \WP_REST_Request $request ) {
+		$schema   = $this->get_item_schema();
+		$customer = wc()->customer;
 
 		if ( isset( $request['billing_address'] ) ) {
 			$allowed_billing_values = array_intersect_key( $request['billing_address'], $schema['properties']['billing_address']['properties'] );
 			foreach ( $allowed_billing_values as $key => $value ) {
-				$order->{"set_billing_$key"}( $value );
+				if ( is_callable( [ $customer, "set_billing_$key" ] ) ) {
+					$customer->{"set_billing_$key"}( $value );
+				}
 			}
 		}
 
 		if ( isset( $request['shipping_address'] ) ) {
 			$allowed_shipping_values = array_intersect_key( $request['shipping_address'], $schema['properties']['shipping_address']['properties'] );
 			foreach ( $allowed_shipping_values as $key => $value ) {
-				$order->{"set_shipping_$key"}( $value );
+				if ( is_callable( [ $customer, "set_shipping_$key" ] ) ) {
+					$customer->{"set_shipping_$key"}( $value );
+				}
 			}
 		}
 
+		$customer->save();
+	}
+
+	/**
+	 * Update an order using the posted values from the request.
+	 *
+	 * @param \WC_Order        $order Object to prepare for the response.
+	 * @param \WP_REST_Request $request Full details about the request.
+	 */
+	protected function update_order_from_request( \WC_Order $order, \WP_REST_Request $request ) {
 		if ( isset( $request['customer_note'] ) ) {
 			$order->set_customer_note( $request['customer_note'] );
 		}

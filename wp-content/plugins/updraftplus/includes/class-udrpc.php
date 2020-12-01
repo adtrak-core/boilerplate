@@ -59,7 +59,7 @@ if (!class_exists('UpdraftPlus_Remote_Communications')) :
 class UpdraftPlus_Remote_Communications {
 
 	// Version numbers relate to versions of this PHP library only (i.e. it's not a protocol support number, and version numbers of other compatible libraries (e.g. JavaScript) are not comparable)
-	public $version = '1.4.20';
+	public $version = '1.4.21';
 
 	private $key_name_indicator;
 
@@ -1045,9 +1045,14 @@ class UpdraftPlus_Remote_Communications {
 			}
 
 			$data = isset($response['data']) ? $response['data'] : null;
-			echo json_encode($this->create_message($response['response'], $data, true));
+			
+			$final_response = json_encode($this->create_message($response['response'], $data, true));
+			
+			do_action('udrpc_action_send_response', $final_response, $command);
+			
+			echo $final_response;
 		}
-
+		
 		die;
 
 	}

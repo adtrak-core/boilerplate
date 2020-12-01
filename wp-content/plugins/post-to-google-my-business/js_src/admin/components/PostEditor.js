@@ -180,19 +180,20 @@ let PostEditor = function(ajax, ajax_prefix, default_fields){
 
             if(field.is(':checkbox') || field.is(':radio')) {
                 //Uncheck everything first
-                field.attr('checked', false);
+                field.prop('checked', false);
+
                 if ($.isArray(value)) {
                     $.each(value, function (key, checkboxVal) {
-                        $('[name="' + fieldPrefix + '[' + name + '][]"][value="' + checkboxVal + '"]').attr('checked', true);
+                        $('[name="' + fieldPrefix + '[' + name + '][]"][value="' + checkboxVal + '"]').prop('checked', true);
                     });
                 } else {
                     if(value === "1" || value === "on"){
                         value = true;
                     }
                     if(typeof value === 'boolean'){
-                        $('[name="' + fieldPrefix + '[' + name + ']"]').attr('checked', value);
+                        $('[name="' + fieldPrefix + '[' + name + ']"]').prop('checked', value);
                     }else{
-                        $('[name="' + fieldPrefix + '[' + name + ']"][value="' + value + '"]').attr('checked', true);
+                        $('[name="' + fieldPrefix + '[' + name + ']"][value="' + value + '"]').prop('checked', true);
                     }
                 }
 

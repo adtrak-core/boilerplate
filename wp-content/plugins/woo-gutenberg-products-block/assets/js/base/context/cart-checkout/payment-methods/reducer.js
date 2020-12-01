@@ -26,6 +26,11 @@ const hasSavedPaymentToken = ( paymentMethodData ) => {
  *
  * @param {Object} state  Current state.
  * @param {Object} action Current action.
+ * @param {string} action.type Action type.
+ * @param {Object} action.paymentMethodData Payment method data payload.
+ * @param {boolean} action.shouldSavePaymentMethod Should save payment method flag.
+ * @param {string} action.errorMessage Error message to store in state.
+ * @param {Object} action.paymentMethods Registered payment methods.
  */
 const reducer = (
 	state = DEFAULT_PAYMENT_DATA,
@@ -112,10 +117,7 @@ const reducer = (
 		case SET_REGISTERED_EXPRESS_PAYMENT_METHODS:
 			return {
 				...state,
-				expressPaymentMethods: {
-					...state.expressPaymentMethods,
-					...paymentMethods,
-				},
+				expressPaymentMethods: paymentMethods,
 			};
 		case SET_SHOULD_SAVE_PAYMENT_METHOD:
 			return {

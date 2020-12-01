@@ -54,7 +54,7 @@ class AppendStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterfac
     }
     public function getContents()
     {
-        return copy_to_string($this);
+        return \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Utils::copyToString($this);
     }
     /**
      * Closes each attached stream.
@@ -85,6 +85,7 @@ class AppendStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterfac
             $stream->detach();
         }
         $this->streams = [];
+        return null;
     }
     public function tell()
     {

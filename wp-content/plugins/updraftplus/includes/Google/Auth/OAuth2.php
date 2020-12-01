@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -47,7 +47,7 @@ class Google_Auth_OAuth2 extends Google_Auth_Abstract
   private $token = array();
 
   /**
-   * @var Google_Client the base client
+   * @var UDP_Google_Client the base client
    */
   private $client;
 
@@ -55,7 +55,7 @@ class Google_Auth_OAuth2 extends Google_Auth_Abstract
    * Instantiates the class, but does not initiate the login flow, leaving it
    * to the discretion of the caller.
    */
-  public function __construct(Google_Client $client)
+  public function __construct(UDP_Google_Client $client)
   {
     $this->client = $client;
   }

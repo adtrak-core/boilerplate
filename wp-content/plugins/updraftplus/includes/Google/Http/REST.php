@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -28,13 +28,13 @@ class Google_Http_REST
    * Executes a Google_Http_Request and (if applicable) automatically retries
    * when errors occur.
    *
-   * @param Google_Client $client
+   * @param UDP_Google_Client $client
    * @param Google_Http_Request $req
    * @return array decoded result
    * @throws Google_Service_Exception on server side error (ie: not authenticated,
    *  invalid or malformed post body, invalid url)
    */
-  public static function execute(Google_Client $client, Google_Http_Request $req)
+  public static function execute(UDP_Google_Client $client, Google_Http_Request $req)
   {
     $runner = new Google_Task_Runner(
         $client,
@@ -49,13 +49,13 @@ class Google_Http_REST
   /**
    * Executes a Google_Http_Request
    *
-   * @param Google_Client $client
+   * @param UDP_Google_Client $client
    * @param Google_Http_Request $req
    * @return array decoded result
    * @throws Google_Service_Exception on server side error (ie: not authenticated,
    *  invalid or malformed post body, invalid url)
    */
-  public static function doExecute(Google_Client $client, Google_Http_Request $req)
+  public static function doExecute(UDP_Google_Client $client, Google_Http_Request $req)
   {
     $httpRequest = $client->getIo()->makeRequest($req);
     $httpRequest->setExpectedClass($req->getExpectedClass());
@@ -67,10 +67,10 @@ class Google_Http_REST
    * @static
    * @throws Google_Service_Exception
    * @param Google_Http_Request $response The http response to be decoded.
-   * @param Google_Client $client
+   * @param UDP_Google_Client $client
    * @return mixed|null
    */
-  public static function decodeHttpResponse($response, Google_Client $client = null)
+  public static function decodeHttpResponse($response, UDP_Google_Client $client = null)
   {
     $code = $response->getResponseHttpCode();
     $body = $response->getResponseBody();

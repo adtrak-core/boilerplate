@@ -44,7 +44,7 @@ class UpdraftCentral_Updates_Commands extends UpdraftCentral_Commands {
 
 		$cores = empty($updates['core']) ? array() : $updates['core'];
 		$core_updates = array();
-		foreach ($cores as $core) {
+		foreach ($cores as $core) {	// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- We dont use $core but we need the AS in the foreach so it needs to stay
 			$core_updates[] = $this->_update_core(null);
 			// Only one (and always we go to the latest version) - i.e. we ignore the passed parameters
 			break;
@@ -516,7 +516,7 @@ class UpdraftCentral_Updates_Commands extends UpdraftCentral_Commands {
 						// key from "get_themes", otherwise, no updates will be found
 						// even if it does have one. "get_themes" returns the name of the
 						// theme as the key while "wp_get_themes" returns the slug.
-						foreach ($themes as $slug => $theme) {
+						foreach ($themes as $theme) {
 							$all_items[$theme->Name] = $theme;
 						}
 					}

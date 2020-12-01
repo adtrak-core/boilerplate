@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit919fd489cab6eb1af7206cf25f3cb2af
+class ComposerStaticInite9648bc4fe12f93fb6b4f4bd68e9b1c4
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -72,6 +72,8 @@ class ComposerStaticInit919fd489cab6eb1af7206cf25f3cb2af
         'PGMB\\Calendar\\Feed' => __DIR__ . '/../..' . '/src/Calendar/Feed.php',
         'PGMB\\Components\\BusinessSelector' => __DIR__ . '/../..' . '/src/Components/BusinessSelector.php',
         'PGMB\\Components\\PostEditor' => __DIR__ . '/../..' . '/src/Components/PostEditor.php',
+        'PGMB\\DependencyInjection\\Container' => __DIR__ . '/../..' . '/src/DependencyInjection/Container.php',
+        'PGMB\\DependencyInjection\\ContainerConfigurationInterface' => __DIR__ . '/../..' . '/src/DependencyInjection/ContainerConfigurationInterface.php',
         'PGMB\\Epitrove' => __DIR__ . '/../..' . '/src/Epitrove.php',
         'PGMB\\FormFields' => __DIR__ . '/../..' . '/src/FormFields.php',
         'PGMB\\Google\\AbstractGoogleJsonObject' => __DIR__ . '/../..' . '/src/Google/AbstractGoogleJsonObject.php',
@@ -99,6 +101,7 @@ class ComposerStaticInit919fd489cab6eb1af7206cf25f3cb2af
         'PGMB\\Placeholders\\SiteVariables' => __DIR__ . '/../..' . '/src/Placeholders/SiteVariables.php',
         'PGMB\\Placeholders\\UserVariables' => __DIR__ . '/../..' . '/src/Placeholders/UserVariables.php',
         'PGMB\\Placeholders\\VariableInterface' => __DIR__ . '/../..' . '/src/Placeholders/VariableInterface.php',
+        'PGMB\\Plugin' => __DIR__ . '/../..' . '/src/Plugin.php',
         'PGMB\\PostTypes\\AbstractPostType' => __DIR__ . '/../..' . '/src/PostTypes/AbstractPostType.php',
         'PGMB\\PostTypes\\PostTypeDefinition' => __DIR__ . '/../..' . '/src/PostTypes/PostTypeDefinition.php',
         'PGMB\\PostTypes\\PostTypeItem' => __DIR__ . '/../..' . '/src/PostTypes/PostTypeItem.php',
@@ -177,9 +180,9 @@ class ComposerStaticInit919fd489cab6eb1af7206cf25f3cb2af
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit919fd489cab6eb1af7206cf25f3cb2af::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit919fd489cab6eb1af7206cf25f3cb2af::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit919fd489cab6eb1af7206cf25f3cb2af::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite9648bc4fe12f93fb6b4f4bd68e9b1c4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite9648bc4fe12f93fb6b4f4bd68e9b1c4::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite9648bc4fe12f93fb6b4f4bd68e9b1c4::$classMap;
 
         }, null, ClassLoader::class);
     }

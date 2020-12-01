@@ -9,12 +9,11 @@ import {
 	useMemo,
 	useRef,
 } from '@wordpress/element';
+import { useStoreCart, useSelectShippingRate } from '@woocommerce/base-hooks';
 import {
-	useShippingAddress,
-	useStoreCart,
-	useSelectShippingRate,
-} from '@woocommerce/base-hooks';
-import { useCheckoutContext } from '@woocommerce/base-context';
+	useCheckoutContext,
+	useCustomerDataContext,
+} from '@woocommerce/base-context';
 
 /**
  * Internal dependencies
@@ -33,6 +32,7 @@ import {
 
 /**
  * @typedef {import('@woocommerce/type-defs/contexts').ShippingDataContext} ShippingDataContext
+ * @typedef {import('react')} React
  */
 
 const { NONE, INVALID_ADDRESS, UNKNOWN } = ERROR_TYPES;
@@ -42,6 +42,7 @@ const { NONE, INVALID_ADDRESS, UNKNOWN } = ERROR_TYPES;
  *
  * @param {string} state  The current status.
  * @param {Object} action The incoming action.
+ * @param {string} action.type The type of action.
  */
 const errorStatusReducer = ( state, { type } ) => {
 	if ( Object.values( ERROR_TYPES ).includes( type ) ) {
@@ -77,11 +78,14 @@ const hasInvalidShippingAddress = ( errors ) => {
  * checkout/cart.
  *
  * @param {Object} props Incoming props for provider
+ * @param {React.ReactElement} props.children
  */
 export const ShippingDataProvider = ( { children } ) => {
 	const { dispatchActions } = useCheckoutContext();
+	const { shippingAddress, setShippingAddress } = useCustomerDataContext();
 	const {
 		cartNeedsShipping: needsShipping,
+		cartHasCalculatedShipping: hasCalculatedShipping,
 		shippingRates,
 		shippingRatesLoading,
 		cartErrors,
@@ -91,7 +95,6 @@ export const ShippingDataProvider = ( { children } ) => {
 		NONE
 	);
 	const [ observers, subscriber ] = useReducer( emitReducer, {} );
-	const { shippingAddress, setShippingAddress } = useShippingAddress();
 	const currentObservers = useRef( observers );
 	const {
 		selectShippingRate: setSelectedRates,
@@ -248,6 +251,7 @@ export const ShippingDataProvider = ( { children } ) => {
 			eventSubscribers.onShippingRateSelectSuccess,
 		onShippingRateSelectFail: eventSubscribers.onShippingRateSelectFail,
 		needsShipping,
+		hasCalculatedShipping,
 	};
 	return (
 		<>

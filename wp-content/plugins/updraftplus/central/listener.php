@@ -3,9 +3,9 @@
 if (!defined('UPDRAFTCENTRAL_CLIENT_DIR')) die('No access.');
 
 /**
- * This class is the basic glue between the lower-level UpdraftPlus_Remote_Communications (UDRPC) class, and UpdraftPlus. It does not contain actual commands themselves; the class names to use for actual commands are passed in as a parameter to the constructor.
+ * This class is the basic glue between the lower-level Remote Communications (RPC) class in UpdraftCentral, and the host plugin. It does not contain actual commands themselves; the class names to use for actual commands are passed in as a parameter to the constructor.
  */
-class UpdraftPlus_UpdraftCentral_Listener {
+class UpdraftCentral_Listener {
 
 	public $udrpc_version;
 

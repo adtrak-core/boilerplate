@@ -1,5 +1,5 @@
 {
-  "version": "14.9",
-  "release_description": "We now have Hebrew keyphrase recognition and some great performance improvements!",
-  "shortlink": "https://yoa.st/yoast14-9"
+  "version": "15.3",
+  "release_description": "Writing in Hebrew? You can now check if your texts are easy to read in the readability analysis.",
+  "shortlink": "https://yoa.st/yoast15-3"
 }

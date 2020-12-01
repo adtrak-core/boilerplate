@@ -26,7 +26,7 @@ import {
 	emitEventWithAbort,
 	reducer as emitReducer,
 } from './event-emit';
-import { useValidationContext } from '../validation';
+import { useValidationContext } from '../../shared/validation';
 
 /**
  * @typedef {import('@woocommerce/type-defs/checkout').CheckoutDispatchActions} CheckoutDispatchActions
@@ -43,6 +43,7 @@ const CheckoutContext = createContext( {
 	hasError: false,
 	redirectUrl: '',
 	orderId: 0,
+	orderNotes: '',
 	customerId: 0,
 	onSubmit: () => void null,
 	onCheckoutAfterProcessingWithSuccess: ( callback ) => void callback,
@@ -56,6 +57,7 @@ const CheckoutContext = createContext( {
 		incrementCalculating: () => void null,
 		decrementCalculating: () => void null,
 		setOrderId: ( id ) => void id,
+		setOrderNotes: ( orderNotes ) => void orderNotes,
 	},
 	hasOrder: false,
 	isCart: false,
@@ -99,6 +101,7 @@ export const CheckoutStateProvider = ( {
 		isSuccessResponse,
 		isErrorResponse,
 		isFailResponse,
+		shouldRetry,
 	} = useEmitResponse();
 
 	// set observers on ref so it's always current.
@@ -137,6 +140,8 @@ export const CheckoutStateProvider = ( {
 				void dispatch( actions.decrementCalculating() ),
 			setOrderId: ( orderId ) =>
 				void dispatch( actions.setOrderId( orderId ) ),
+			setOrderNotes: ( orderNotes ) =>
+				void dispatch( actions.setOrderNotes( orderNotes ) ),
 			setAfterProcessing: ( response ) => {
 				// capture general error message if this is an error response.
 				if (
@@ -233,10 +238,7 @@ export const CheckoutStateProvider = ( {
 							addErrorNotice( response.message, errorOptions );
 						}
 						// irrecoverable error so set complete
-						if (
-							typeof response.retry !== 'undefined' &&
-							response.retry !== true
-						) {
+						if ( ! shouldRetry( response ) ) {
 							dispatch( actions.setComplete( response ) );
 						} else {
 							dispatch( actions.setIdle() );
@@ -274,7 +276,7 @@ export const CheckoutStateProvider = ( {
 								: undefined;
 							addErrorNotice( response.message, errorOptions );
 						}
-						if ( ! response.retry ) {
+						if ( ! shouldRetry( response ) ) {
 							dispatch( actions.setComplete( response ) );
 						} else {
 							// this will set an error which will end up
@@ -330,6 +332,10 @@ export const CheckoutStateProvider = ( {
 		orderId: checkoutState.orderId,
 		hasOrder: !! checkoutState.orderId,
 		customerId: checkoutState.customerId,
+		orderNotes: checkoutState.orderNotes,
+		shouldCreateAccount: checkoutState.shouldCreateAccount,
+		setShouldCreateAccount: ( value ) =>
+			dispatch( actions.setShouldCreateAccount( value ) ),
 	};
 	return (
 		<CheckoutContext.Provider value={ checkoutData }>

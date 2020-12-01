@@ -63,8 +63,15 @@ class UpdraftPlus_Job_Scheduler {
 		self::record_still_alive();
 
 		if (!$updraftplus->something_useful_happened) {
-			$useful_checkin = $updraftplus->jobdata_get('useful_checkin');
-			if (empty($useful_checkin) || $updraftplus->current_resumption > $useful_checkin) $updraftplus->jobdata_set('useful_checkin', $updraftplus->current_resumption);
+		
+			// Update the record of when something useful happened
+			$useful_checkins = $updraftplus->jobdata_get('useful_checkins');
+			if (!is_array($useful_checkins)) $useful_checkins = array();
+			if (!in_array($updraftplus->current_resumption, $useful_checkins)) {
+				$useful_checkins[] = $updraftplus->current_resumption;
+				$updraftplus->jobdata_set('useful_checkins', $useful_checkins);
+			}
+			
 		}
 
 		$updraftplus->something_useful_happened = true;
@@ -179,7 +186,7 @@ class UpdraftPlus_Job_Scheduler {
 
 		global $updraftplus;
 	
-		$resume_interval = max(intval($updraftplus->jobdata_get('resume_interval')), (0 === $howmuch) ? 120 : 300);
+		$resume_interval = max((int) $updraftplus->jobdata_get('resume_interval'), (0 === $howmuch) ? 120 : 300);
 
 		if (empty($updraftplus->newresumption_scheduled) && $due_to_overlap) {
 			$updraftplus->log('A new resumption will be scheduled to prevent the job ending');

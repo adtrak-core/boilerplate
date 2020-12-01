@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -118,9 +118,9 @@ abstract class Google_Logger_Abstract
   protected $allowNewLines = false;
 
   /**
-   * @param Google_Client $client  The current Google client
+   * @param UDP_Google_Client $client  The current Google client
    */
-  public function __construct(Google_Client $client)
+  public function __construct(UDP_Google_Client $client)
   {
     $this->setLevel(
         $client->getClassConfig('Google_Logger_Abstract', 'level')

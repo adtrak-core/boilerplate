@@ -1191,6 +1191,37 @@ label[for=updraft_servicecheckbox_updraftvault] {
 	display: block;
 }
 
+div.conditional_remote_backup select.logic_type {
+	vertical-align: inherit !important;
+}
+
+div.conditional_remote_backup label.updraft_toggle_instance_label.radio_group {
+	display: block;
+	margin-top: 7px;
+}
+
+div.conditional_remote_backup div.logic ul.rules input.rule_value {
+	vertical-align: middle;
+}
+
+div.conditional_remote_backup p {
+	margin-bottom: 10px;
+}
+
+div.conditional_remote_backup div.logic ul.rules span svg {
+	width: 20px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+div.conditional_remote_backup div.logic ul.rules span svg {
+	margin-left: 3px;
+}
+
+div.conditional_remote_backup div.logic select.logic_type {
+	vertical-align: unset;
+}
+
 /* jstree styles */
 
 /* these styles hide the dots from the parent but keep the arrows */
@@ -1323,6 +1354,10 @@ input[id^="updraft_include_more_path_restore_"] {
 .updraftplus-morefiles-row-delete,
 .updraftplus-morefiles-row-edit {
 	cursor: pointer;
+}
+
+#updraft_include_more_paths_error {
+	color: #DE3C3C;
 }
 
 #updraft-wrap .form-table th {
@@ -1969,6 +2004,14 @@ section.premium-upgrade-purchase-success p {
 	overflow: auto;
 }
 
+#backupnow_database_moreoptions div.backupnow-db-tables {
+	margin-bottom: 5px;
+}
+
+#backupnow_database_moreoptions div.backupnow-db-tables > a {
+	color: #0073AA;
+}
+
 .form-table #updraft_activejobsrow .minimum-height {
 	min-height: 100px;
 }
@@ -2219,7 +2262,9 @@ small.ud_massactions-tip {
 }
 
 .updraft-no-backups-msg {
+	padding: 10px 40px;
 	text-align: center;
+	font-style: italic;
 }
 
 .tr-bottom-4 {

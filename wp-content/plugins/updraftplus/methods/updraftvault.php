@@ -142,6 +142,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 		}
 		
 		$details_retrieved = false;
+		$cache_in_job = false;
 		if (!is_wp_error($getconfig) && false != $getconfig && isset($getconfig['body'])) {
 
 			$response_code = wp_remote_retrieve_response_code($getconfig);
@@ -158,6 +159,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 
 				if (is_array($response) && isset($response['accesskey']) && isset($response['secretkey']) && isset($response['path'])) {
 					$details_retrieved = true;
+					$cache_in_job = true;
 					$opts['last_config']['accesskey'] = $response['accesskey'];
 					$opts['last_config']['secretkey'] = $response['secretkey'];
 					$opts['last_config']['path'] = $response['path'];
@@ -189,8 +191,10 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 					unset($config['quota']);
 					if (!empty($response['message'])) $config['error_message'] = $response['message'];
 					$details_retrieved = true;
+					$cache_in_job = true;
 				} else {
 					if (is_array($response) && !empty($response['result'])) {
+						$cache_in_job = true;
 						$msg = "response code: ".$response['result'];
 						if (!empty($response['code'])) $msg .= " (".$response['code'].")";
 						if (!empty($response['message'])) $msg .= " (".$response['message'].")";
@@ -226,6 +230,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 					if (!empty($last_config['secretkey'])) $config['secretkey'] = $last_config['secretkey'];
 					if (isset($last_config['path'])) $config['path'] = $last_config['path'];
 					if (isset($opts['quota'])) $config['quota'] = $opts['quota'];
+					$cache_in_job = true;
 				} else {
 					if ($updraftplus->backup_time) $this->log("failed to retrieve access details from updraftplus.com: no recently stored configuration was found to use instead");
 				}
@@ -234,7 +239,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 
 		$config['server_side_encryption'] = 'AES256';
 		$this->vault_config = $config;
-		$this->jobdata_set('config', $config);
+		if ($cache_in_job) $this->jobdata_set('config', $config);
 		// N.B. This isn't multi-server compatible
 		set_transient('udvault_last_config', $config, 86400*7);
 		return $config;

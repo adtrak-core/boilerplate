@@ -52,6 +52,7 @@ class UpdraftPlus_Storage_Methods_Interface {
 			if (!$object->supports_feature('multi_options')) {
 				ob_start();
 				do_action('updraftplus_config_print_before_storage', $method, null);
+				do_action('updraftplus_config_print_add_conditional_logic', $method, $object);
 				$object->config_print();
 				$templates[$method] = ob_get_clean();
 			} else {

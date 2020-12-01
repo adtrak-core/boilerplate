@@ -1,5 +1,5 @@
 var updraft_restore_screen = true;
-jQuery(document).ready(function($) {
+jQuery(function($) {
 
 	var job_id = $('#updraftplus_ajax_restore_job_id').val();
 	var action = $('#updraftplus_ajax_restore_action').val();
@@ -12,6 +12,8 @@ jQuery(document).ready(function($) {
 	var logged_out = false;
 	var auto_resume_count = 0;
 	var server_500_count = 0;
+
+	$('#updraft-restore-hidethis').remove();
 
 	updraft_restore_command(job_id, action);
 

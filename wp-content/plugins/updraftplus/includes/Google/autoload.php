@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-function google_api_php_client_autoload_updraftplus($className)
-{
+function google_api_php_client_autoload_updraftplus($className) {
+
+  $className = str_replace('UDP_', '', $className);
   $classPath = explode('_', $className);
   if ($classPath[0] != 'Google') {
     return;
   }
+
   // Drop 'Google', and maximum class file path depth in this project is 3.
   $classPath = array_slice($classPath, 1, 2);
 

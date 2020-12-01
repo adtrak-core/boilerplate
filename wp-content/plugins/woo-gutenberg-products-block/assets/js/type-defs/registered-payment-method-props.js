@@ -1,7 +1,7 @@
 /**
  * @typedef {import('@woocommerce/type-defs/cart').CartTotalItem} CartTotalItem
  * @typedef {import('@woocommerce/type-defs/cart').CartShippingOption} CartShippingOption
- * @typedef {import('@woocommerce/type-defs/cart').CartShippingAddress} CartShippingAddress
+ * @typedef {import('@woocommerce/type-defs/shipping').ShippingAddress} ShippingAddress
  * @typedef {import('@woocommerce/type-defs/billing').BillingData} BillingData
  * @typedef {import('@woocommerce/type-defs/contexts').PaymentMethodCurrentStatus} PaymentMethodCurrentStatus
  * @typedef {import('@woocommerce/type-defs/contexts').PaymentStatusDispatch} PaymentStatusDispatch
@@ -17,12 +17,12 @@
  *
  * @typedef {Object} PaymentStatusActions
  *
- * @property {Function} started
- * @property {Function} processing
- * @property {Function} completed
- * @property {Function} error
- * @property {Function} failed
- * @property {Function} success
+ * @property {Function} started    Set started status.
+ * @property {Function} processing Set processing status.
+ * @property {Function} completed  Set completed status.
+ * @property {Function} error      Set error status.
+ * @property {Function} failed     Set failed status.
+ * @property {Function} success    Set success status.
  */
 
 /**
@@ -97,10 +97,10 @@
  *                                                       rates (rate ids).
  * @property {Function}             setSelectedRates     A function for setting
  *                                                       selected rates
- *                                                       (recieves id)
+ *                                                       (receives id)
  * @property {boolean}              isSelectingRate      True when rates are
  *                                                       being selected.
- * @property {CartShippingAddress}  shippingAddress      The current set
+ * @property {ShippingAddress}      shippingAddress      The current set
  *                                                       shipping address.
  * @property {Function}             setShippingAddress   A function for setting
  *                                                       the shipping address.
@@ -199,7 +199,7 @@
  *                                                                 observer response objects.
  * @property {Function}                   [onSubmit]               Used to trigger checkout
  *                                                                 processing.
- * @property {string}                     [activePaymentMethod]    Indicates what the active payment
+ * @property {string}                     activePaymentMethod      Indicates what the active payment
  *                                                                 method is.
  * @property {ComponentProps}             components               Components exposed to payment
  *                                                                 methods for use.

@@ -79,6 +79,33 @@ class UpdraftPlus_Database_Utility {
 	}
 
 	/**
+	 * Detect if the table has a composite primary key (composed from multiple columns)
+	 *
+	 * @param String	  $table	- table to examine
+	 * @param Object|Null $wpdb_obj - WPDB-like object (requires the get_results() method), or null to use the global default
+	 *
+	 * @return Boolean
+	 */
+	public static function table_has_composite_private_key($table, $wpdb_obj = null) {
+	
+		$wpdb = (null === $wpdb_obj) ? $GLOBALS['wpdb'] : $wpdb_obj;
+	
+		$table_structure = $wpdb->get_results("DESCRIBE ".UpdraftPlus_Manipulation_Functions::backquote($table));
+		if (!$table_structure) return false;
+		
+		$primary_key_columns_found = 0;
+		
+		foreach ($table_structure as $struct) {
+			if (isset($struct->Key) && 'PRI' == $struct->Key) {
+				$primary_key_columns_found++;
+				if ($primary_key_columns_found > 1) return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Set MySQL server system variable
 	 *
 	 * @param String          $variable  The name of the system variable

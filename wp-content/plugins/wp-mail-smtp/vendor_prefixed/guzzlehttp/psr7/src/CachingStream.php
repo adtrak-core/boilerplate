@@ -109,7 +109,7 @@ class CachingStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterfa
     private function cacheEntireStream()
     {
         $target = new \WPMailSMTP\Vendor\GuzzleHttp\Psr7\FnStream(['write' => 'strlen']);
-        copy_to_stream($this, $target);
+        \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Utils::copyToStream($this, $target);
         return $this->tell();
     }
 }

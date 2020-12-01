@@ -43,6 +43,7 @@ class BufferStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterfac
     public function detach()
     {
         $this->close();
+        return null;
     }
     public function getSize()
     {

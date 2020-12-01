@@ -49,6 +49,10 @@ class UpdraftPlus_BackupModule_AddonNotYetPresent extends UpdraftPlus_BackupModu
 	 * the remote storage module can output its configuration in
 	 * Handlebars format via the get_configuration_template() method.
 	 *
+	 * - conditional_logic : indicates that the remote storage module
+	 * can handle predefined logics regarding how backups should be
+	 * sent to the remote storage
+	 *
 	 * @return Array - an array of supported features (any features not
 	 * mentioned are assumed to not be supported)
 	 */

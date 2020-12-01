@@ -14,7 +14,7 @@ if (!class_exists('Updraft_Checkout_Embed')) {
 		 *
 		 * @var string
 		 */
-		private static $version = '1.0.0';
+		private static $version = '1.0.1';
 
 		/**
 		 * Products list

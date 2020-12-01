@@ -9,9 +9,9 @@ define('UPDRAFTCENTRAL_CLIENT_DIR', dirname(__FILE__));
 // This file is included during plugins_loaded
 
 // Load the listener class that we rely on to pick up messages
-if (!class_exists('UpdraftPlus_UpdraftCentral_Listener')) require_once('listener.php');
+if (!class_exists('UpdraftCentral_Listener')) require_once('listener.php');
 
-class UpdraftPlus_UpdraftCentral_Main {
+class UpdraftCentral_Main {
 
 	/**
 	 * Class constructor
@@ -45,7 +45,7 @@ class UpdraftPlus_UpdraftCentral_Main {
 		// These are different from the remote send keys, which are set up in the Migrator add-on
 		$our_keys = UpdraftPlus_Options::get_updraft_option('updraft_central_localkeys');
 		if (is_array($our_keys) && !empty($our_keys)) {
-			new UpdraftPlus_UpdraftCentral_Listener($our_keys, $command_classes);
+			new UpdraftCentral_Listener($our_keys, $command_classes);
 		}
 
 	}
@@ -177,10 +177,9 @@ class UpdraftPlus_UpdraftCentral_Main {
 	/**
 	 * Get UpdraftCentral Log
 	 *
-	 * @param array $params which have action, subaction and nonce
 	 * @return array which contains log_contents. If error, Returns array which contains fatal_error flag and fatal_error_message
 	 */
-	public function get_log($params) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+	public function get_log() {
 	
 		$udrpc_log = get_site_option('updraftcentral_client_log');
 		if (!is_array($udrpc_log)) $udrpc_log = array();
@@ -630,5 +629,5 @@ class UpdraftPlus_UpdraftCentral_Main {
 	}
 }
 
-global $updraftplus_updraftcentral_main;
-$updraftplus_updraftcentral_main = new UpdraftPlus_UpdraftCentral_Main();
+global $updraftcentral_main;
+$updraftcentral_main = new UpdraftCentral_Main();

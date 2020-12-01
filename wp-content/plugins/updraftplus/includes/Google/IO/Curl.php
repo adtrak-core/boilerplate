@@ -21,7 +21,7 @@
  * @author Stuart Langley <slangley@google.com>
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -32,7 +32,7 @@ class Google_IO_Curl extends Google_IO_Abstract
 
   private $options = array();
 
-  public function __construct(Google_Client $client)
+  public function __construct(UDP_Google_Client $client)
   {
     if (!extension_loaded('curl')) {
       $error = 'The cURL IO handler requires the cURL extension to be enabled';

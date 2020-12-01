@@ -1,9 +1,4 @@
 <?php
-/**
- * A helper object for options.
- *
- * @package Yoast\YoastSEO\Helpers
- */
 
 namespace Yoast\WP\SEO\Helpers;
 
@@ -11,7 +6,7 @@ use WPSEO_Option_Titles;
 use WPSEO_Options;
 
 /**
- * Class Options_Helper
+ * A helper object for options.
  */
 class Options_Helper {
 
@@ -35,7 +30,7 @@ class Options_Helper {
 	 * @param string $key   The key to set.
 	 * @param mixed  $value The value to set.
 	 *
-	 * @return mixed|null Returns value if found, $default if not.
+	 * @return mixed|null Returns value if found.
 	 */
 	public function set( $key, $value ) {
 		return WPSEO_Options::set( $key, $value );

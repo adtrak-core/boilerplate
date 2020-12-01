@@ -3,7 +3,7 @@
  */
 import { PaymentMethodDataProvider } from '../payment-methods';
 import { ShippingDataProvider } from '../shipping';
-import { BillingDataProvider } from '../billing';
+import { CustomerDataProvider } from '../customer';
 import { CheckoutStateProvider } from '../checkout-state';
 import CheckoutProcessor from './processor';
 
@@ -14,21 +14,27 @@ import CheckoutProcessor from './processor';
  *
  * @param {Object}  props               Incoming props for the provider.
  * @param {Object}  props.children      The children being wrapped.
+ * @param {boolean} [props.isCart]      Whether it's rendered in the Cart
+ *                                      component.
  * @param {string}  [props.redirectUrl] Initialize what the checkout will
  *                                      redirect to after successful
  *                                      submit.
  */
-export const CheckoutProvider = ( { children, redirectUrl } ) => {
+export const CheckoutProvider = ( {
+	children,
+	isCart = false,
+	redirectUrl,
+} ) => {
 	return (
-		<CheckoutStateProvider redirectUrl={ redirectUrl } isCart={ false }>
-			<BillingDataProvider>
+		<CheckoutStateProvider redirectUrl={ redirectUrl } isCart={ isCart }>
+			<CustomerDataProvider>
 				<ShippingDataProvider>
 					<PaymentMethodDataProvider>
 						{ children }
 						<CheckoutProcessor />
 					</PaymentMethodDataProvider>
 				</ShippingDataProvider>
-			</BillingDataProvider>
+			</CustomerDataProvider>
 		</CheckoutStateProvider>
 	);
 };

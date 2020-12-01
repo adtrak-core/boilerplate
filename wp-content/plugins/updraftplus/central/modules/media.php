@@ -16,9 +16,9 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 	 * @param array  $data       an array of data post or get fields
 	 * @param array  $extra_info extrainfo use in the udrpc_action, e.g. user_id
 	 *
-	 * link to udrpc_action main function in class UpdraftPlus_UpdraftCentral_Listener
+	 * link to udrpc_action main function in class UpdraftCentral_Listener
 	 */
-	public function _pre_action($command, $data, $extra_info) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+	public function _pre_action($command, $data, $extra_info) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- This function is called from listner.php and $extra_info is being sent.
 		// Here we assign the current blog_id to a variable $blog_id
 		$blog_id = get_current_blog_id();
 		if (!empty($data['site_id'])) $blog_id = $data['site_id'];
@@ -35,7 +35,7 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 	 * @param array  $data       an array of data post or get fields
 	 * @param array  $extra_info extrainfo use in the udrpc_action, e.g. user_id
 	 *
-	 * link to udrpc_action main function in class UpdraftPlus_UpdraftCentral_Listener
+	 * link to udrpc_action main function in class UpdraftCentral_Listener
 	 */
 	public function _post_action($command, $data, $extra_info) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		// Here, we're restoring to the current (default) blog before we switched
@@ -516,7 +516,7 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 		$error = $this->_validate_capabilities(array('edit_posts'));
 		if (!empty($error)) return $error;
 
-		$attachment_id = intval($params['postid']);
+		$attachment_id = (int) $params['postid'];
 		$this->populate_request($params);
 
 		if (!function_exists('load_image_to_edit')) {
@@ -555,7 +555,7 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 
 		include_once(ABSPATH.'wp-admin/includes/image-edit.php');
 		$this->populate_request($params);
-		$post_id = intval($params['postid']);
+		$post_id = (int) $params['postid'];
 
 		ob_start();
 		stream_preview_image($post_id);

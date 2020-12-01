@@ -104,6 +104,10 @@ abstract class UpdraftPlus_BackupModule {
 	 * the remote storage module can output its configuration in
 	 * Handlebars format via the get_configuration_template() method.
 	 *
+	 * - conditional_logic : indicates that the remote storage module
+	 * can handle predefined logics regarding how backups should be
+	 * sent to the remote storage
+	 *
 	 * @return Array - an array of supported features (any features not
 	 * mentioned are assumed to not be supported)
 	 */
@@ -227,15 +231,16 @@ abstract class UpdraftPlus_BackupModule {
 			{{/if}}
 			<?php
 			do_action('updraftplus_config_print_before_storage', $this->get_id(), $this);
-
+			do_action('updraftplus_config_print_add_conditional_logic', $this->get_id(), $this);
 			if ($this->supports_feature('multi_storage')) {
-					do_action('updraftplus_config_print_add_instance_label', $this->get_id(), $this);
+				do_action('updraftplus_config_print_add_instance_label', $this->get_id(), $this);
 			}
 
 			$template = ob_get_clean();
 			$template .= $this->get_configuration_template();
 		} else {
 			do_action('updraftplus_config_print_before_storage', $this->get_id(), $this);
+			do_action('updraftplus_config_print_add_conditional_logic', $this->get_id(), $this);
 			// N.B. These are mutually exclusive: config_print() is not used if config_templates is supported. So, even during transition, the UpdraftPlus_BackupModule instance only needs to support one of the two, not both.
 			$this->config_print();
 			$template = ob_get_clean();

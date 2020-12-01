@@ -45,7 +45,7 @@ class PumpStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface
     public function __toString()
     {
         try {
-            return copy_to_string($this);
+            return \WPMailSMTP\Vendor\GuzzleHttp\Psr7\Utils::copyToString($this);
         } catch (\Exception $e) {
             return '';
         }
@@ -58,6 +58,7 @@ class PumpStream implements \WPMailSMTP\Vendor\Psr\Http\Message\StreamInterface
     {
         $this->tellPos = \false;
         $this->source = null;
+        return null;
     }
     public function getSize()
     {

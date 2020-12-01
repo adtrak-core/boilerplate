@@ -73,7 +73,7 @@ class UpdraftCentral_Users_Commands extends UpdraftCentral_Commands {
 
 			// Sort users:
 			usort($users, array($this, 'compare_user_id'));
-			$offset = (intval($query['page_no']) * intval($query['per_page'])) - intval($query['per_page']);
+			$offset = ((int) $query['page_no'] * (int) $query['per_page']) - (int) $query['per_page'];
 			$user_list = array_slice($users, $offset, $query['per_page']);
 			
 			return array(

@@ -6,25 +6,29 @@
 	<table>
 	<?php
 
-	// It appears (Mar 2015) that some mod_security distributions block the output of the string el6.x86_64 in PHP output, on the silly assumption that only hackers are interested in knowing what environment PHP is running on.
-	$uname_info = @php_uname('s').' '.@php_uname('n').' ';// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+	if (function_exists('php_uname')) {
+		// It appears (Mar 2015) that some mod_security distributions block the output of the string el6.x86_64 in PHP output, on the silly assumption that only hackers are interested in knowing what environment PHP is running on.
+		$uname_info = @php_uname('s').' '.@php_uname('n').' ';// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
-	$release_name = @php_uname('r');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
-	if (preg_match('/^(.*)\.(x86_64|[3456]86)$/', $release_name, $matches)) {
-		$release_name = $matches[1].' ';
+		$release_name = @php_uname('r');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		if (preg_match('/^(.*)\.(x86_64|[3456]86)$/', $release_name, $matches)) {
+			$release_name = $matches[1].' ';
+		} else {
+			$release_name = '';
+		}
+
+		// In case someone does something similar with just the processor type string
+		$mtype = @php_uname('m');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		if ('x86_64' == $mtype) {
+			$mtype = '64-bit';
+		} elseif (preg_match('/^i([3456]86)$/', $mtype, $matches)) {
+			$mtype = $matches[1];
+		}
+
+		$uname_info .= $release_name.$mtype.' '.@php_uname('v');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 	} else {
-		$release_name = '';
+		$uname_info = PHP_OS;
 	}
-
-	// In case someone does something similar with just the processor type string
-	$mtype = @php_uname('m');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
-	if ('x86_64' == $mtype) {
-		$mtype = '64-bit';
-	} elseif (preg_match('/^i([3456]86)$/', $mtype, $matches)) {
-		$mtype = $matches[1];
-	}
-
-	$uname_info .= $release_name.$mtype.' '.@php_uname('v');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 	
 	$web_server = $_SERVER["SERVER_SOFTWARE"];
 

@@ -86,7 +86,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	 */
 	public function get_supported_features() {
 		// This options format is handled via only accessing options via $this->get_options()
-		return array('multi_options', 'config_templates', 'multi_storage');
+		return array('multi_options', 'config_templates', 'multi_storage', 'conditional_logic');
 	}
 
 	/**
@@ -936,7 +936,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 		$key = empty($opts['secret']) ? '' : $opts['secret'];
 		$sec = empty($opts['appkey']) ? '' : $opts['appkey'];
 		
-		$oauth2_id = base64_decode('aXA3NGR2Zm1sOHFteTA5');
+		$oauth2_id = base64_decode('dzQxM3o0cWhqejY1Nm5l');
 
 		// Set the callback URL
 		$callbackhome = UpdraftPlus_Options::admin_page_url().'?page=updraftplus&action=updraftmethod-dropbox-auth';

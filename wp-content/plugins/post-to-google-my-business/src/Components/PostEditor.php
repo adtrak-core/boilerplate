@@ -39,6 +39,7 @@ class PostEditor
     
     public function register_ajax_callbacks( $prefix )
     {
+        add_action( "wp_ajax_{$prefix}_check_date", [ $this, 'ajax_validate_time' ] );
     }
     
     public function ajax_validate_time()

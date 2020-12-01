@@ -33,7 +33,7 @@ class UpdraftPlus_UpdraftCentral_Cloud extends UpdraftPlus_Login {
 	 * @return array - The response from the request
 	 */
 	protected function login_or_register($data, $register = false) {
-		global $updraftplus, $updraftplus_updraftcentral_main;
+		global $updraftplus, $updraftcentral_main;
 
 		$action = ($register) ? 'updraftcentral_cloud_register' : 'updraftcentral_cloud_login';
 		if (empty($data['site_url'])) $data['site_url'] = trailingslashit(network_site_url());
@@ -46,8 +46,8 @@ class UpdraftPlus_UpdraftCentral_Cloud extends UpdraftPlus_Login {
 				if (in_array($response['status'], array('authenticated', 'registered'))) {
 					$response['redirect_url'] = $updraftplus->get_url('mothership').'/?udm_action=updraftcentral_cloud_redirect';
 
-					if (is_a($updraftplus_updraftcentral_main, 'UpdraftPlus_UpdraftCentral_Main')) {
-						$response['keys_table'] = $updraftplus_updraftcentral_main->get_keys_table();
+					if (is_a($updraftcentral_main, 'UpdraftCentral_Main')) {
+						$response['keys_table'] = $updraftcentral_main->get_keys_table();
 					}
 
 					if (!empty($data['addons_options_connect']) && class_exists('UpdraftPlus_Options')) {
