@@ -7,9 +7,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {# <title>{{ site.title }}</title> #}
 
-  {% block htmlheader %}
-  <link rel="stylesheet" href="{{ theme.link ~ '/dist/main.min.css' }}">
-  {% endblock %}
+		{% block htmlheader %}
+
+			{% if (site.url == "http://localhost:3000" or site.url == "http://YOUR_SITE_NAME.vm") %}
+				<link rel="stylesheet" href="{{ theme.link ~ '/dist/main.min.css' }}">
+			{% else %}
+				<style>
+					{{source("dist/main.min.css")}}
+				</style>
+			{% endif %}
+
+		{% endblock %}
 
   {% if options.google_analytics %}
     {{ options.google_analytics}}
