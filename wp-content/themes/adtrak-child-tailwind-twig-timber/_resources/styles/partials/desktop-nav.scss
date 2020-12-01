@@ -35,8 +35,8 @@ Desktop Navs **********************************************/
         opacity-50;
     }
     
-    .current-menu-item>a,
-    .current-menu-parent>a {
+    .current-menu-item > a,
+    .current-menu-parent > a {
       @apply text-red-500;
     }
     

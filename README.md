@@ -23,16 +23,18 @@
 11. Change Directory to the theme folder (```cd /[FOLDER NAME]/wp-content/themes/[YOUR NEW THEME NAME]```)
 12. Run ```npm install```
 13. Run ```composer install```
-14. From the theme folder, open ```gulpfile.js```
+14. Open ```gulpfile.js``` in the theme folder
 15. Edit line ```119``` to the name of your local site. *(e.g. my-new-site.vm)*
 16. Save the ```gulpfile```
-17. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the wp-config file will be ignored by GIT)  
-18. You may need to edit the ```wp-config.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
-19. Log in and activate all plugins (except WooCoommerce plugins if you're site will not use them - delete these if so)
-20. Activate your theme through the WordPress admin console
-21. Open the Command Line / Terminal and make sure you're in your theme folder
-22. Run ```npm run dev``` or ```gulp```
-23. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS nor Javascript
+17. Open ```_views/_layout/head.twig```in your theme folder
+18. Edit line ```12``` to the name of your local site. *(e.g. my-new-site.vm)*
+19. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the wp-config file will be ignored by GIT)  
+20. You may need to edit the ```wp-config.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
+21. Log in and activate all plugins (except WooCoommerce plugins if you're site will not use them - delete these if so)
+22. Activate your theme through the WordPress admin console
+23. Open the Command Line / Terminal and make sure you're in your theme folder
+24. Run ```npm run dev``` or ```gulp```
+25. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS nor Javascript
 
 #### The theme structure has changed for this boilerplate ####
 
@@ -94,6 +96,14 @@ composer install
 ```
 
 ```npm run dev``` will run your local development
+
+## CriticalCSS with Tailwind
+
+Due to the minified and purged size of Tailwind, we can inline our CSS completely using the Twig ```source``` function. The new ```head.twig``` import checks the URL - if its a local URL, it uses a normal stylesheet link. If not, it inlines all your CSS in the head.
+
+This has been done in the ```adtrak-child-tailwind-twig-timber``` theme.
+
+In order for your images to work in CSS, simply use the full URL, e.g. ```background-image: url('/wp-content/themes/my-theme/_resources/images/tick.png');```
 
 ## TailwindCSS
 

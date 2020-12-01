@@ -26,14 +26,14 @@ select {
     }
 }
 
-select {
-    background-image: url(../images/angle-down-light.svg);
-    background-position: 90% center;
-    background-repeat: no-repeat;
-    background-size: 12px;
-    -webkit-appearance: none;
-    background-color: #fff;
-}
+// select {
+//     background-image: url("/wp-content/adtrak-child-tailwind-twig-timber/_resources/images/angle-arrow-down.svg");
+//     background-position: 90% center;
+//     background-repeat: no-repeat;
+//     background-size: 12px;
+//     -webkit-appearance: none;
+//     background-color: #fff;
+// }
 
 textarea {
     height: 150px;
