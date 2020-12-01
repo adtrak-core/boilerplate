@@ -87,7 +87,13 @@ gulp.task('scripts', function() {
       // Use cache for better performance
       cache: cache,
       // Output bundle is intended for use in browsers
-      format: 'iife',
+      output: {
+        // (iife = "Immediately Invoked Function Expression")
+        format: "iife",
+        // Show source code when debugging in browser
+        sourcemap: false,
+        name: "output",
+      },
     })
     .on('bundle', function(bundle) {
       // Update cache data after every bundle is created

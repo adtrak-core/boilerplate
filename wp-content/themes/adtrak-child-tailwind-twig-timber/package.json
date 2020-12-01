@@ -26,7 +26,8 @@
     "browser-sync": "^2.26.12",
     "del": "^4.1.0",
     "gulp": "^4.0.1",
-    "gulp-postcss": "^8.0.0",
+    "gulp-postcss": "^9.0.0",
+    "postcss": "^8.1.10",
     "gulp-purgecss": "^1.2.0",
     "gulp-sass": "^4.1.0"
   },
@@ -40,7 +41,7 @@
     "node-sass": "^4.14.1",
     "postcss-import": "^12.0.1",
     "rollup": "^2.10.4",
-    "tailwindcss": "^1.8.10",
+    "tailwindcss": "^2.0.1",
     "tailwindcss-filters": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
