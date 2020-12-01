@@ -15,9 +15,9 @@
 3. Extract Wordpress to your new folder
 4. Delete the ```wp-content``` folder from your new folder
 5. Download this boilerplate. Copy ```wp-content``` and ```example.gitignore``` to your folder
-6. Change theme folder name and update theme details in ```style.css```, update your *screenshot.png*
+6. Rename the theme folder and update theme details in ```style.css```, update your *screenshot.png*
 7. Rename ```example.gitignore``` to ```.gitignore``` and open the file
-8. Edit lines ```7```, ```8``` & ```11``` and replace the theme name to prevent ```node_modules``` and ```vendor``` files being committed 
+8. Edit lines ```5```, ```6``` & ```7``` and replace the theme name to prevent ```node_modules```, ```dist``` and ```vendor``` files being committed 
 9. Create local database
 10. Open the Command Line / Terminal 
 11. Change Directory to the theme folder (```cd /[FOLDER NAME]/wp-content/themes/[YOUR NEW THEME NAME]```)
@@ -30,7 +30,7 @@
 18. Edit line ```12``` to the name of your local site. *(e.g. my-new-site.vm)*
 19. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the wp-config file will be ignored by GIT)  
 20. You may need to edit the ```wp-config.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
-21. Log in and activate all plugins (except WooCoommerce plugins if you're site will not use them - delete these if so)
+21. Log in and activate relevant plugins (except WooCoommerce plugins if you're site will not use them - delete these if so)
 22. Activate your theme through the WordPress admin console
 23. Open the Command Line / Terminal and make sure you're in your theme folder
 24. Run ```npm run dev``` or ```gulp```

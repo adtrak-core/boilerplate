@@ -1,14 +1,9 @@
 ##### Edit Below This Line #####
 
-# Ignore node_modules
-wp-content/themes/adtrak-child-tailwind/node_modules/*
-wp-content/themes/adtrak-child-tailwind/vendor/*
-
-wp-content/themes/adtrak-child-tailwind-twig-timber/node_modules/*
-wp-content/themes/adtrak-child-tailwind-twig-timber/vendor/*
-
-# Ignore dist folder
-wp-content/themes/adtrak-child-tailwind-twig-timber/dist/
+# Ignore node_modules, dist folder and composer
+wp-content/themes/YOUR_THEME_NAME/node_modules/*
+wp-content/themes/YOUR_THEME_NAME/vendor/*
+wp-content/themes/YOUR_THEME_NAME/dist/*
 
 ##### DO NOT EDIT BELOW THIS LINE #####
 
