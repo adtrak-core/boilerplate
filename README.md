@@ -2,14 +2,13 @@
 
 ## Contents
 1. [Prerequisites](#prerequisites)
+1. [Adtrak Child Tailwind Theme with Twig & Timber](#Adtrak Child Tailwind Theme with Twig & Timber (Preferred))
 
 ## Prerequisites ##
 1. You need to have ```composer``` installed on your machine [https://getcomposer.org/download/](https://getcomposer.org/download/)
 2. You need to have ```NodeJS 12+``` installed on your machine [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 3. You need to have ```NPM``` installed on your machine [https://www.npmjs.com/get-npm](https://www.npmjs.com/get-npm)
 4. You will need a local working environment (WAMP, MAMP, etc).
-
-### You're now ready to begin ###
 
 ## Adtrak Child Tailwind Theme with Twig & Timber (Preferred)
 
