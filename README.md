@@ -1,5 +1,8 @@
 # WD Boilerplate
 
+## Contents
+1. [Prerequisites](#prerequisites)
+
 ## Prerequisites ##
 1. You need to have ```composer``` installed on your machine [https://getcomposer.org/download/](https://getcomposer.org/download/)
 2. You need to have ```NodeJS 12+``` installed on your machine [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
