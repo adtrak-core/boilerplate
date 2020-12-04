@@ -53,6 +53,7 @@
 23. Open the Command Line / Terminal and make sure you're in your theme folder
 24. Run ```npm run dev``` or ```gulp```
 25. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS nor Javascript
+1. Go to [WordPress Settings](#wordpress-settings)
 
 #### The theme structure has changed for this boilerplate ####
 
@@ -78,6 +79,7 @@
 13. Scroll to the Product Data section and select your product options.
 14. Publish your products
 15. Continue to develop our theme
+1. Go to [WordPress Settings](#wordpress-settings)
 
 ### Adtrak Child Tailwind Theme (without Twig & Timber)
 
@@ -90,6 +92,7 @@ To get the Tailwind theme set up:
 5. Run ```npm install``` 
 6. Once ```npm install``` has finished installing your dependencies, run ```npm run dev``` or ```gulp```
 7. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
+1. Go to [WordPress Settings](#wordpress-settings)
 
 ## WordPress Settings ##
 
