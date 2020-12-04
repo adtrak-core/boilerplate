@@ -4,6 +4,15 @@
 1. [Prerequisites](#prerequisites)
 1. [Adtrak Child Tailwind Theme with Twig & Timber](#adtrak-child-tailwind-theme-with-twig--timber-preferred)
 1. [Adtrak Child With Woocommerce](#adtrak-child-with-woocommerce)
+1. [Adtrak Child Tailwind Theme (without Twig & Timber)](#adtrak-child-tailwind-theme-without-twig--timber)
+1. [WordPress Settings](#wordpress-settings)
+1. [Useful Commands](#useful-commands)
+1. [TailwindCSS](#tailwindcss)
+    1. [CriticalCSS](#criticalcss)
+    1. [Defaults](#defaults)
+1. [Before Deployment](#before-deployment)
+1. [Building production assets locally](#building-production-assets-locally)
+1. [Building production assets on DeployHQ](#building-production-assets-on-deployhq)
 
 
 ## Prerequisites ##
@@ -19,7 +28,9 @@
 3. Extract Wordpress to your new folder
 4. Delete the ```wp-content``` folder from your new folder
 5. Download this boilerplate. Copy ```wp-content``` and ```example.gitignore``` to your folder
-6. Rename the theme folder and update theme details in ```style.css```, update your *screenshot.png*
+6. Rename the theme folder
+6. Update ```style.css``` with your client name
+6. Update *screenshot.png* with the client's branding
 7. Rename ```example.gitignore``` to ```.gitignore``` and open the file
 8. Edit lines ```5```, ```6``` & ```7``` and replace the theme name to prevent ```node_modules```, ```dist``` and ```vendor``` files being committed 
 9. Create local database
@@ -32,7 +43,7 @@
 16. Save the ```gulpfile```
 17. Open ```_views/_layout/head.twig```in your theme folder
 18. Edit line ```12``` to the name of your local site. *(e.g. my-new-site.vm)*
-19. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the wp-config file will be ignored by GIT)  
+19. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the ```wp-config``` file will be ignored by GIT)  
 20. You may need to edit the ```wp-config.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
 21. Log in and activate relevant plugins (except WooCoommerce plugins if you're site will not use them - delete these if so)
 22. Activate your theme through the WordPress admin console
@@ -65,7 +76,7 @@
 14. Publish your products
 15. Continue to develop our theme
 
-## Adtrak Child Tailwind Theme (Without Twig & Timber)
+## Adtrak Child Tailwind Theme (without Twig & Timber)
 
 To get the Tailwind theme set up:
 
@@ -101,14 +112,6 @@ composer install
 
 ```npm run dev``` will run your local development
 
-## CriticalCSS with Tailwind
-
-Due to the minified and purged size of Tailwind, we can inline our CSS completely using the Twig ```source``` function. The new ```head.twig``` import checks the URL - if its a local URL, it uses a normal stylesheet link. If not, it inlines all your CSS in the head.
-
-This has been done in the ```adtrak-child-tailwind-twig-timber``` theme.
-
-In order for your images to work in CSS, simply use the full URL, e.g. ```background-image: url('/wp-content/themes/my-theme/_resources/images/tick.png');```
-
 ## TailwindCSS
 
 We have created a [Tailwind](https://tailwindcss.com/docs/installation/) config file that is easily editable in ```tailwind.config.js```. If you need to add colours, fonts etc., they can be added or edited in this file.
@@ -125,7 +128,15 @@ You can access the primary, secondary & tertiary colours by using classes as fol
 
 **Feel free to add your own extensions**
 
-### Tailwind Defaults
+### CriticalCSS
+
+Due to the minified and purged size of Tailwind, we can inline our CSS completely using the Twig ```source``` function. The new ```head.twig``` import checks the URL - if its a local URL, it uses a normal stylesheet link. If not, it inlines all your CSS in the head.
+
+This has been done in the ```adtrak-child-tailwind-twig-timber``` theme.
+
+In order for your images to work in CSS, simply use the full URL, e.g. ```background-image: url('/wp-content/themes/my-theme/_resources/images/tick.png');```
+
+#### Defaults
 
 The default Tailwind config can be found in ```tailwind.config-default.js```. This is included by default, and is purely here for reference.
 
