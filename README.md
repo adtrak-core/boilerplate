@@ -11,8 +11,8 @@
     1. [CriticalCSS](#criticalcss)
     1. [Defaults](#defaults)
 1. [Before Deployment](#before-deployment)
-1. [Building production assets locally](#building-production-assets-locally)
-1. [Building production assets on DeployHQ](#building-production-assets-on-deployhq)
+    1. [Building production assets locally](#building-production-assets-locally)
+    1. [Building production assets on DeployHQ](#building-production-assets-on-deployhq)
 
 
 ## Prerequisites ##
