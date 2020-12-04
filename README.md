@@ -2,9 +2,10 @@
 
 ## Contents
 1. [Prerequisites](#prerequisites)
-1. [Adtrak Child Tailwind Theme with Twig & Timber](#adtrak-child-tailwind-theme-with-twig--timber-preferred)
-1. [Adtrak Child With Woocommerce](#adtrak-child-with-woocommerce)
-1. [Adtrak Child Tailwind Theme (without Twig & Timber)](#adtrak-child-tailwind-theme-without-twig--timber)
+1. [Theme Setup](#theme-setup)
+    1. [Adtrak Child Tailwind Theme with Twig & Timber](#adtrak-child-tailwind-theme-with-twig--timber-preferred)
+    1. [Adtrak Child With Woocommerce](#adtrak-child-with-woocommerce)
+    1. [Adtrak Child Tailwind Theme (without Twig & Timber)](#adtrak-child-tailwind-theme-without-twig--timber)
 1. [WordPress Settings](#wordpress-settings)
 1. [Useful Commands](#useful-commands)
 1. [TailwindCSS](#tailwindcss)
@@ -21,7 +22,9 @@
 3. You need to have ```NPM``` installed on your machine [https://www.npmjs.com/get-npm](https://www.npmjs.com/get-npm)
 4. You will need a local working environment (WAMP, MAMP, etc).
 
-## Adtrak Child Tailwind Theme with Twig & Timber (Preferred)
+## Theme Setup
+
+### Adtrak Child Tailwind Theme with Twig & Timber (Preferred)
 
 1. Create a new repository on gitlab (lowercase/hyphenated) and clone it to your local machine (```git clone [REPO URL] [FOLDER NAME]```)
 2. Download latest release of WordPress [https://wordpress.org/latest.zip](https://wordpress.org/latest.zip) 
@@ -58,7 +61,7 @@
 3. All page templates (```front-page.twig```, ```page.twig```, etc) can be found in ```_views```
 4. Images, styles, js and fonts can now be found in ```_resources```
 
-## Adtrak Child With Woocommerce
+### Adtrak Child With Woocommerce
 
 1. Follow steps 1-23 in the guide above
 2. Go to the Wordpress Admin area
@@ -76,7 +79,7 @@
 14. Publish your products
 15. Continue to develop our theme
 
-## Adtrak Child Tailwind Theme (without Twig & Timber)
+### Adtrak Child Tailwind Theme (without Twig & Timber)
 
 To get the Tailwind theme set up:
 
