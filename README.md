@@ -136,7 +136,7 @@ This has been done in the ```adtrak-child-tailwind-twig-timber``` theme.
 
 In order for your images to work in CSS, simply use the full URL, e.g. ```background-image: url('/wp-content/themes/my-theme/_resources/images/tick.png');```
 
-#### Defaults
+### Defaults
 
 The default Tailwind config can be found in ```tailwind.config-default.js```. This is included by default, and is purely here for reference.
 
