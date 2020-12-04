@@ -2,7 +2,7 @@
 
 ## Contents
 1. [Prerequisites](#prerequisites)
-1. [Adtrak Child Tailwind Theme with Twig & Timber](#Adtrak Child Tailwind Theme with Twig & Timber (Preferred))
+1. [Adtrak Child Tailwind Theme with Twig & Timber](#adtrak-child-tailwind-theme-with-twig-&-timber-preferred)
 
 ## Prerequisites ##
 1. You need to have ```composer``` installed on your machine [https://getcomposer.org/download/](https://getcomposer.org/download/)
