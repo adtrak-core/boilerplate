@@ -90,11 +90,11 @@ class Cleanup
 	 * cleanup output of script <script> tags.
 	 * @since    1.0.0
 	 */
-	public function clean_scripts($input)
-	{
-		$input = str_replace("type='text/javascript' ", '', $input);
-		return str_replace("'", '"', $input);
-	}
+	// public function clean_scripts($input)
+	// {
+	// 	$input = str_replace("type='text/javascript' ", '', $input);
+	// 	return str_replace("'", '"', $input);
+	// }
 
 	/**
 	 * cleanup output of <body> tag, make usable classes.

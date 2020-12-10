@@ -90,7 +90,7 @@ class Core
 		# clean up scripts
 		$this->loader->add_action('wp_enqueue_scripts', $cleanup, 'js_to_footer');		
 		$this->loader->add_filter('script_loader_src', $cleanup, 'remove_script_version', 15, 1);
-		$this->loader->add_filter('script_loader_tag', $cleanup, 'clean_scripts');
+		// $this->loader->add_filter('script_loader_tag', $cleanup, 'clean_scripts');
 
 		# clean up styles		
 		$this->loader->add_filter('style_loader_src', $cleanup, 'remove_script_version', 15, 1);
