@@ -186,6 +186,10 @@
 
 				if(isset($zone->errors) && isset($zone->errors[0])){
 					$res = array("success" => false, "error_message" => $zone->errors[0]->message);
+
+					if(isset($zone->errors[0]->error_chain) && isset($zone->errors[0]->error_chain[0])){
+						$res = array("success" => false, "error_message" => $zone->errors[0]->error_chain[0]->message);
+					}
 				}else{
 					if(isset($zone->result) && isset($zone->result[0])){
 						foreach ($zone->result as $zone_key => $zone_value) {

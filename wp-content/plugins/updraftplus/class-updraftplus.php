@@ -3748,6 +3748,7 @@ class UpdraftPlus {
 	private function save_last_backup($backup_array) {
 		$success = ($this->error_count() == 0) ? 1 : 0;
 		$last_backup = UpdraftPlus_Options::get_updraft_option('updraft_last_backup', array());
+		if (empty($last_backup)) $last_backup = array();
 		if ('incremental' === $this->jobdata_get('job_type')) {
 			$last_backup['incremental_backup_time'] = $this->backup_time; // the incremental_backup_time index is used only for storing time of the incremental job type
 		} else {
@@ -5682,6 +5683,7 @@ class UpdraftPlus {
 	public function is_hosting_backup_limit_reached() {
 		$res = array();
 		$last_backup = UpdraftPlus_Options::get_updraft_option('updraft_last_backup', array());
+		if (empty($last_backup)) $last_backup = array();
 		$current_time = time();
 		if (!empty($last_backup['incremental_backup_time'])) {
 			// $next_day_from_last_backup = strtotime(gmdate('Y-m-d', (int) $last_backup['backup_time'])) + 86400;

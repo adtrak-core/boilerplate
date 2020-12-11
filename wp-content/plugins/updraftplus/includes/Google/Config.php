@@ -69,7 +69,7 @@ class UDP_Google_Config
           'mode' => 0640,
           'lock' => false,
         ),
-        'Google_Http_Request' => array(
+        'UDP_Google_Http_Request' => array(
           // Disable the use of gzip on calls if set to true. Defaults to false.
           'disable_gzip' => self::GZIP_ENABLED,
 

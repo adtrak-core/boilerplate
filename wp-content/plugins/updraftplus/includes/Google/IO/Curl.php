@@ -50,7 +50,7 @@ class Google_IO_Curl extends Google_IO_Abstract
    * @return array containing response headers, body, and http code
    * @throws Google_IO_Exception on curl or IO error
    */
-  public function executeRequest(Google_Http_Request $request)
+  public function executeRequest(UDP_Google_Http_Request $request)
   {
     $curl = curl_init();
 

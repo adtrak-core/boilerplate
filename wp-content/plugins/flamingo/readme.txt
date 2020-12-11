@@ -2,8 +2,8 @@
 Contributors: takayukister, megumithemes, itpixelz
 Tags: bird, contact, mail, crm
 Requires at least: 5.4
-Tested up to: 5.5
-Stable tag: 2.2
+Tested up to: 5.6
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,16 @@ This plugin stores submission data collected through contact forms, which may in
 == Screenshots ==
 
 == Changelog ==
+
+= 2.2.1 =
+
+* Outputs a local date/time in a CSV export file.
+* Removes `load_plugin_textdomain()` calls.
+* Removes a reference to `$_wp_last_object_menu`.
+* Removes the `set-screen-option` filter.
+* Inherits `post_status` from the previous admin page.
+* Avoids using `wp_date()` for MySQL DATETIME values.
+* Has been tested with WordPress 5.6.
 
 = 2.2 =
 

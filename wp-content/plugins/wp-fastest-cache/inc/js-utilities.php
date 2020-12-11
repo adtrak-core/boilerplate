@@ -81,8 +81,10 @@
 										}
 									}
 								}else{
-									$this->mergeJs($prev_content, $this->jsLinks[$key - 1]);
-									$prev_content = "";
+									if($key > 0 && $prev_content){
+										$this->mergeJs($prev_content, $this->jsLinks[$key - 1]);
+										$prev_content = "";
+									}
 								}
 							}else{
 								if($key > 0 && $prev_content){

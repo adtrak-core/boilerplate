@@ -14,7 +14,7 @@ interface APIInterface {
 	public function create_post($company_id, $args);
 
 
-	public function delete_post($post_id);
+	public function delete_post($name);
 
 	/**
 	 * @param $post_id

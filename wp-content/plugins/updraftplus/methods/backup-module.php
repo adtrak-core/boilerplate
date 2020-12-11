@@ -639,6 +639,47 @@ abstract class UpdraftPlus_BackupModule {
 	}
 
 	/**
+	 * Get the manual authorisation template
+	 *
+	 * @return String - the template
+	 */
+	public function get_manual_authorisation_template() {
+
+		$id = $this->get_id();
+		$description = $this->get_description();
+
+		$template = "<div id='updraftplus_manual_authorisation_template_{$id}'>";
+		$template .= "<strong>".sprintf(__('%s authentication:', 'updraftplus'), $description)."</strong>";
+		$template .= "<p>".sprintf(__('If you are having problems authenticating with %s you can manually authorize here.', 'updraftplus'), $description)."</p>";
+		$template .= "<p>".__('To complete manual authentication, at the orange UpdraftPlus authentication screen select the "Having problems authenticating?" link, then copy and paste the code given here.', 'updraftplus')."</p>";
+		$template .= "<label for='updraftplus_manual_authentication_data_{$id}'>".sprintf(__('%s authentication code:', 'updraftplus'), $description)."</label> <input type='text' id='updraftplus_manual_authentication_data_{$id}' name='updraftplus_manual_authentication_data_{$id}'>";
+		$template .= "<p id='updraftplus_manual_authentication_error_{$id}'></p>";
+		$template .= "<button type='button' class='button button-primary' id='updraftplus_manual_authorisation_submit_{$id}'>".__('Complete manual authentication', 'updraftplus')."</button>";
+		$template .= '<span class="updraftplus_spinner spinner">' . __('Processing', 'updraftplus') . '...</span>';
+		$template .= "</div>";
+
+		return $template;
+	}
+
+	/**
+	 * This will call the remote storage methods complete authentication function
+	 *
+	 * @param string $state - the remote storage authentication state
+	 * @param string $code  - the remote storage authentication code
+	 *
+	 * @return string - returns a string response
+	 */
+	public function complete_authentication($state, $code) {
+		if (method_exists($this, 'do_complete_authentication')) {
+			return $this->do_complete_authentication($state, $code, true);
+		} else {
+			$message = $this->get_id().": module does not have an complete authentication method (coding bug)";
+			error_log($message);
+			return $message;
+		}
+	}
+
+	/**
 	 * Over-ride this to allow methods to output extra information about using the correct account for OAuth storage methods
 	 *
 	 * @return Boolean - return false so that no extra information is output

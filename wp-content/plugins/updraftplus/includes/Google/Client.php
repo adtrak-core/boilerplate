@@ -86,7 +86,7 @@ class UDP_Google_Client
 
       if (version_compare(phpversion(), "5.3.4", "<=") || $this->isAppEngine()) {
         // Automatically disable compress.zlib, as currently unsupported.
-        $config->setClassConfig('Google_Http_Request', 'disable_gzip', true);
+        $config->setClassConfig('UDP_Google_Http_Request', 'disable_gzip', true);
       }
     }
 
@@ -577,13 +577,13 @@ class UDP_Google_Client
    */
   public function execute($request)
   {
-    if ($request instanceof Google_Http_Request) {
+    if ($request instanceof UDP_Google_Http_Request) {
       $request->setUserAgent(
           $this->getApplicationName()
           . " " . self::USER_AGENT_SUFFIX
           . $this->getLibraryVersion()
       );
-      if (!$this->getClassConfig("Google_Http_Request", "disable_gzip")) {
+      if (!$this->getClassConfig("UDP_Google_Http_Request", "disable_gzip")) {
         $request->enableGzip();
       }
       $request->maybeMoveParametersToBody();

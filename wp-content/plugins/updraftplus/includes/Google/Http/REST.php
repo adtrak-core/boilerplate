@@ -34,7 +34,7 @@ class Google_Http_REST
    * @throws Google_Service_Exception on server side error (ie: not authenticated,
    *  invalid or malformed post body, invalid url)
    */
-  public static function execute(UDP_Google_Client $client, Google_Http_Request $req)
+  public static function execute(UDP_Google_Client $client, UDP_Google_Http_Request $req)
   {
     $runner = new Google_Task_Runner(
         $client,
@@ -55,7 +55,7 @@ class Google_Http_REST
    * @throws Google_Service_Exception on server side error (ie: not authenticated,
    *  invalid or malformed post body, invalid url)
    */
-  public static function doExecute(UDP_Google_Client $client, Google_Http_Request $req)
+  public static function doExecute(UDP_Google_Client $client, UDP_Google_Http_Request $req)
   {
     $httpRequest = $client->getIo()->makeRequest($req);
     $httpRequest->setExpectedClass($req->getExpectedClass());

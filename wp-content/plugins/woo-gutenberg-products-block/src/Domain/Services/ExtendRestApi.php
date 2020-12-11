@@ -3,6 +3,8 @@ namespace Automattic\WooCommerce\Blocks\Domain\Services;
 
 use Automattic\WooCommerce\Blocks\Domain\Package;
 use Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartItemSchema;
+use Automattic\WooCommerce\Blocks\StoreApi\Schemas\CartSchema;
+use Automattic\WooCommerce\Blocks\StoreApi\Formatters;
 use Throwable;
 use Exception;
 
@@ -18,12 +20,31 @@ class ExtendRestApi {
 	private $package;
 
 	/**
+	 * Holds the formatters class instance.
+	 *
+	 * @var Formatters
+	 */
+	private $formatters;
+
+	/**
 	 * Constructor
 	 *
-	 * @param Package $package An instance of the package class.
+	 * @param Package    $package An instance of the package class.
+	 * @param Formatters $formatters An instance of the formatters class.
 	 */
-	public function __construct( Package $package ) {
-		$this->package = $package;
+	public function __construct( Package $package, Formatters $formatters ) {
+		$this->package    = $package;
+		$this->formatters = $formatters;
+	}
+
+	/**
+	 * Returns a formatter instance.
+	 *
+	 * @param string $name Formatter name.
+	 * @return FormatterInterface
+	 */
+	public function get_formatter( $name ) {
+		return $this->formatters->$name;
 	}
 
 	/**
@@ -31,7 +52,7 @@ class ExtendRestApi {
 	 *
 	 * @var array
 	 */
-	private $endpoints = [ CartItemSchema::IDENTIFIER ];
+	private $endpoints = [ CartItemSchema::IDENTIFIER, CartSchema::IDENTIFIER ];
 
 	/**
 	 * Data to be extended
@@ -43,36 +64,40 @@ class ExtendRestApi {
 	/**
 	 * An endpoint that validates registration method call
 	 *
-	 * @param string   $endpoint The endpoint to extend.
-	 * @param string   $namespace Plugin namespace.
-	 * @param callable $schema_callback Callback executed to add schema data.
-	 * @param callable $data_callback Callback executed to add endpoint data.
+	 * @param array $args {
+	 *     An array of elements that make up a post to update or insert.
+	 *
+	 *     @type string   $endpoint The endpoint to extend.
+	 *     @type string   $namespace Plugin namespace.
+	 *     @type callable $schema_callback Callback executed to add schema data.
+	 *     @type callable $data_callback Callback executed to add endpoint data.
+	 * }
 	 *
 	 * @throws Exception On failure to register.
 	 * @return boolean True on success.
 	 */
-	public function register_endpoint_data( $endpoint, $namespace, $schema_callback, $data_callback ) {
-		if ( ! is_string( $namespace ) ) {
+	public function register_endpoint_data( $args ) {
+		if ( ! is_string( $args['namespace'] ) ) {
 			$this->throw_exception( 'You must provide a plugin namespace when extending a Store REST endpoint.' );
 		}
 
-		if ( ! is_string( $endpoint ) || ! in_array( $endpoint, $this->endpoints, true ) ) {
+		if ( ! is_string( $args['endpoint'] ) || ! in_array( $args['endpoint'], $this->endpoints, true ) ) {
 			$this->throw_exception(
-				sprintf( 'You must provide a valid Store REST endpoint to extend, valid endpoints are: %1$s. You provided %2$s.', implode( ', ', $this->endpoints ), $endpoint )
+				sprintf( 'You must provide a valid Store REST endpoint to extend, valid endpoints are: %1$s. You provided %2$s.', implode( ', ', $this->endpoints ), $args['endpoint'] )
 			);
 		}
 
-		if ( ! is_callable( $schema_callback ) ) {
+		if ( ! is_callable( $args['schema_callback'] ) ) {
 			$this->throw_exception( '$schema_callback must be a callable function.' );
 		}
 
-		if ( ! is_callable( $data_callback ) ) {
+		if ( ! is_callable( $args['data_callback'] ) ) {
 			$this->throw_exception( '$data_callback must be a callable function.' );
 		}
 
-		$this->extend_data[ $endpoint ][ $namespace ] = [
-			'schema_callback' => $schema_callback,
-			'data_callback'   => $data_callback,
+		$this->extend_data[ $args['endpoint'] ][ $args['namespace'] ] = [
+			'schema_callback' => $args['schema_callback'],
+			'data_callback'   => $args['data_callback'],
 		];
 
 		return true;
@@ -176,7 +201,7 @@ class ExtendRestApi {
 		return [
 			/* translators: %s: extension namespace */
 			'description' => sprintf( __( 'Extension data registered by %s', 'woo-gutenberg-products-block' ), $namespace ),
-			'type'        => 'object',
+			'type'        => [ 'object', 'null' ],
 			'context'     => [ 'view', 'edit' ],
 			'readonly'    => true,
 			'properties'  => $schema,

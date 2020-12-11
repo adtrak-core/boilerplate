@@ -86,7 +86,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	 */
 	public function get_supported_features() {
 		// This options format is handled via only accessing options via $this->get_options()
-		return array('multi_options', 'config_templates', 'multi_storage', 'conditional_logic');
+		return array('multi_options', 'config_templates', 'multi_storage', 'conditional_logic', 'manual_authentication');
 	}
 
 	/**
@@ -423,6 +423,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 		foreach ($matches as $item) {
 			$item = $item->metadata;
 			if (!is_object($item)) continue;
+			if (isset($item->metadata)) $item = $item->metadata; // 2/files/search_v2 has a slightly different output structure compared to 2/files/search model
 
 			if ((!isset($item->size) || $item->size > 0) && 'folder' != $item->{'.tag'} && !empty($item->path_display) && 0 === strpos($item->path_display, $searchpath)) {
 
@@ -756,30 +757,44 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 				if (isset($_GET['code'])) $raw_code = $_GET['code'];
 			}
 
-			// Get the CSRF from setting and check it matches the one returned if it does no CSRF attack has happened
-			$opts = $this->get_options();
-			$csrf = $opts['CSRF'];
-			$state = stripslashes($raw_state);
-			// Check the state to see if an instance_id has been attached and if it has then extract the state
-			$parts = explode(':', $state);
-			$state = $parts[0];
-
-			if (strcmp($csrf, $state) == 0) {
-				$opts['CSRF'] = '';
-				if (isset($raw_code)) {
-					// set code so it can be accessed in the next authentication step
-					$opts['code'] = stripslashes($raw_code);
-					$this->set_options($opts, true);
-					$this->auth_token();
-				}
-			} else {
-				error_log("UpdraftPlus: CSRF comparison failure: $csrf != $state");
-			}
+			$this->do_complete_authentication($raw_state, $raw_code);
 		}
 		try {
 			$this->auth_request();
 		} catch (Exception $e) {
 			$this->log(sprintf(__("%s error: %s", 'updraftplus'), sprintf(__("%s authentication", 'updraftplus'), 'Dropbox'), $e->getMessage()), 'error');
+		}
+	}
+
+	/**
+	 * This function will complete the oAuth flow, if admin_notice is true then add the action to display the authed admin notice, otherwise echo this notice to page.
+	 *
+	 * @param string  $raw_state              - the state
+	 * @param string  $raw_code               - the oauth code
+	 * @param boolean $return_instead_of_echo - a boolean to indicate if we should return the result or echo it
+	 *
+	 * @return void|string - returns the authentication message if return_instead_of_echo is true
+	 */
+	public function do_complete_authentication($raw_state, $raw_code, $return_instead_of_echo = false) {
+		// Get the CSRF from setting and check it matches the one returned if it does no CSRF attack has happened
+		$opts = $this->get_options();
+		$csrf = $opts['CSRF'];
+		$state = stripslashes($raw_state);
+		// Check the state to see if an instance_id has been attached and if it has then extract the state
+		$parts = explode(':', $state);
+		$state = $parts[0];
+
+		if (strcmp($csrf, $state) == 0) {
+			$opts['CSRF'] = '';
+			if (isset($raw_code)) {
+				// set code so it can be accessed in the next authentication step
+				$opts['code'] = stripslashes($raw_code);
+				$this->set_options($opts, true);
+				$auth_result = $this->auth_token($return_instead_of_echo);
+				if ($return_instead_of_echo) return $auth_result;
+			}
+		} else {
+			error_log("UpdraftPlus: CSRF comparison failure: $csrf != $state");
 		}
 	}
 
@@ -818,7 +833,14 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 		}
 	}
 
-	public function show_authed_admin_warning() {
+	/**
+	 * This method will setup the authenticated admin warning, it can either return this or echo it
+	 *
+	 * @param boolean $return_instead_of_echo - a boolean to indicate if we should return the result or echo it
+	 *
+	 * @return void|string - returns the authentication message if return_instead_of_echo is true
+	 */
+	public function show_authed_admin_warning($return_instead_of_echo) {
 		global $updraftplus_admin;
 
 		$dropbox = $this->bootstrap();
@@ -885,18 +907,30 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 			}
 
 		}
-		$updraftplus_admin->show_admin_warning($message);
+		if ($return_instead_of_echo) {
+			return "<div class='updraftmessage updated'><p>{$message}</p></div>";
+		} else {
+			$updraftplus_admin->show_admin_warning($message);
+		}
 
 	}
 
 	/**
-	 * Bootstrap and check token
+	 * Bootstrap and check token, can also return the authentication method if return_instead_of_echo is true
+	 *
+	 * @param boolean $return_instead_of_echo - a boolean to indicate if we should return the result or echo it
+	 *
+	 * @return void|string - returns the authentication message if return_instead_of_echo is true
 	 */
-	public function auth_token() {
+	public function auth_token($return_instead_of_echo) {
 		$this->bootstrap();
 		$opts = $this->get_options();
 		if (!empty($opts['tk_access_token'])) {
-			add_action('all_admin_notices', array($this, 'show_authed_admin_warning'));
+			if ($return_instead_of_echo) {
+				return $this->show_authed_admin_warning($return_instead_of_echo);
+			} else {
+				add_action('all_admin_notices', array($this, 'show_authed_admin_warning'));
+			}
 		}
 	}
 

@@ -3,7 +3,7 @@ Contributors: Backup with UpdraftPlus, DavidAnderson, DNutbourne, aporter, snigh
 Tags: backup, restore, database backup, wordpress backup, cloud backup, s3, dropbox, google drive, onedrive, ftp, backups
 Requires at least: 3.2
 Tested up to: 5.6
-Stable tag: 1.16.41
+Stable tag: 1.16.42
 Author URI: https://updraftplus.com
 Donate link: https://david.dw-perspective.org.uk/donate
 License: GPLv3 or later
@@ -167,6 +167,20 @@ Unfortunately not; since this is free software, there’s no warranty and no gua
 The <a href="https://updraftplus.com/news/">UpdraftPlus backup blog</a> is the best place to learn in more detail about any important changes.
 
 N.B. Paid versions of UpdraftPlus Backup / Restore have a version number which is 1 higher in the first digit, and has an extra component on the end, but the changelog below still applies. i.e. changes listed for 1.16.32.x of the free version correspond to changes made in 2.16.32.x of the paid version.
+
+= 1.16.42 - 10/Dec/2020 =
+
+* FEATURE: Added the ability to manually complete authentication with Dropbox (Avoids issues where security modules/plugins break the authentication flow)
+* TWEAK: Replace BlockUI's deprecated jQuery functions and/or shorthand events with the appropriate method accordingly
+* TWEAK: Replace /2/files/search Dropbox API calls with /2/files/search_v2
+* TWEAK: Replace Labelauty's deprecated jQuery functions and/or shorthand events with the appropriate method accordingly
+* TWEAK: Fix broken multiple range selection's highlighters due to the absence of jquery-migrate in the WordPress core on version 5.5
+* TWEAK: Add the latest jQuery UI CSS framework for compatibility with WordPress 5.6 and all ongoing versions of WordPress
+* TWEAK: Add support for PHP 8.0 in UpdraftClone
+* TWEAK: Prevent a couple of PHP coding notices on PHP 8.0
+* TWEAK: Tweak in the backing up of tables to reduce PHP memory use when working with very long row contents
+* TWEAK: Prevent a PHP warning when starting a backup
+* TWEAK: Fix a UI issue in the "send backup to remote site" options
 
 = 1.16.41 - 27/Nov/2020 =
 
@@ -1172,4 +1186,4 @@ Reliance upon any non-English translation is at your own risk; UpdraftPlus can g
 We recognise and thank those mentioned at https://updraftplus.com/acknowledgements/ for code and/or libraries used and/or modified under the terms of their open source licences.
 
 == Upgrade Notice ==
-* 1.16.41: Update the Dropbox client ID (necessary for new authentications). Prevent unnecessary resumptions when creating a clone. A recommended update for all.
+* 1.16.42: Added the ability to manually complete authentication with Dropbox (avoids issues where security modules/plugins break the authentication flow); various other small tweaks and improvements. A recommended update for all.

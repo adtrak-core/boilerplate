@@ -733,7 +733,8 @@ var updraft_backups_selection = {};
 		if ("undefined" === typeof updraft_backups_selection.firstMultipleSelectionIndex) return;
 		delete updraft_backups_selection.firstMultipleSelectionIndex;
 		$('#updraft-navtab-backups-content .updraft_existing_backups .updraft_existing_backups_row').removeClass('range-selection range-selection-start');
-		$('#updraft-navtab-backups-content').off('hover', '.updraft_existing_backups .updraft_existing_backups_row', this.hightlight_backup_rows);
+		$('#updraft-navtab-backups-content').off('mouseenter', '.updraft_existing_backups .updraft_existing_backups_row', this.hightlight_backup_rows);
+		$('#updraft-navtab-backups-content').off('mouseleave', '.updraft_existing_backups .updraft_existing_backups_row', this.hightlight_backup_rows);
 		$(document).off('mouseleave', this.unregister_highlight_mode);
 	}
 
@@ -742,7 +743,8 @@ var updraft_backups_selection = {};
 	 */
 	updraft_backups_selection.register_highlight_mode = function() {
 		$(document).on('mouseleave', updraft_backups_selection.unregister_highlight_mode);
-		$('#updraft-navtab-backups-content').on('hover', '.updraft_existing_backups .updraft_existing_backups_row', updraft_backups_selection.hightlight_backup_rows);
+		$('#updraft-navtab-backups-content').on('mouseenter', '.updraft_existing_backups .updraft_existing_backups_row', updraft_backups_selection.hightlight_backup_rows);
+		$('#updraft-navtab-backups-content').on('mouseleave', '.updraft_existing_backups .updraft_existing_backups_row', updraft_backups_selection.hightlight_backup_rows);
 	}
 })(jQuery);
 // @codingStandardsIgnoreEnd
@@ -2007,6 +2009,35 @@ jQuery(function($) {
 			updraft_backups_selection.deselectAll();
 		}
 	});
+
+	$('#updraft-wrap').on('click', '#updraftplus_manual_authorisation_submit_dropbox', function(e) {
+		e.preventDefault();
+		var dropbox_auth_data = $('#updraftplus_manual_authentication_data_dropbox').val();
+		$('#updraftplus_manual_authentication_error_dropbox').text();
+		$('#updraft-wrap #updraftplus_manual_authorisation_template_dropbox .updraftplus_spinner.spinner').addClass('visible');
+		$('#updraftplus_manual_authorisation_submit_dropbox').prop('disabled', true);
+		manual_remote_storage_auth('dropbox', dropbox_auth_data);
+	});
+
+	/**
+	 * This method will send the ajax request to manually authenticate the remote storage method and then update the page with the response
+	 *
+	 * @param {string} method    - the remote storage method
+	 * @param {string} auth_data - the auth data as a base64 json encoded string
+	 */
+	function manual_remote_storage_auth(method, auth_data) {
+		updraft_send_command('manual_remote_storage_authentication', {method: method, auth_data: auth_data}, function(response) {
+			$('#updraft-wrap #updraftplus_manual_authorisation_template_'+method+' .updraftplus_spinner.spinner').removeClass('visible');
+			if (response.hasOwnProperty('result') && 'success' === response.result) {
+				$('#updraft-wrap .updraftplus-top-menu').before(response.data);
+				$('#updraft-wrap #updraftplus_manual_authorisation_template_'+method).parent().remove();
+				$('#updraft-wrap .updraft_authenticate_'+method).remove();
+			} else if (response.hasOwnProperty('result') && 'error' === response.result) {
+				$('#updraftplus_manual_authentication_error_'+method).text(response.data);
+				$('#updraftplus_manual_authorisation_submit_'+method).prop('disabled', false);
+			}
+		});
+	}
 	
 	
 	$('#updraft-navtab-backups-content').on('click', '.js--select-all-backups', function(e) {

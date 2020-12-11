@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -27,7 +27,7 @@ if (!class_exists('Google_Client')) {
  * @author Chirag Shah <chirags@google.com>
  *
  */
-class Google_Http_Request
+class UDP_Google_Http_Request
 {
   const GZIP_UA = " (gzip)";
 

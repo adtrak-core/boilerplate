@@ -21,7 +21,7 @@
  * @author Stuart Langley <slangley@google.com>
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -42,7 +42,7 @@ class Google_IO_Stream extends Google_IO_Abstract
     "verify_peer" => true,
   );
 
-  public function __construct(Google_Client $client)
+  public function __construct(UDP_Google_Client $client)
   {
     if (!ini_get('allow_url_fopen')) {
       $error = 'The stream IO handler requires the allow_url_fopen runtime ' .
@@ -61,7 +61,7 @@ class Google_IO_Stream extends Google_IO_Abstract
    * @return array containing response headers, body, and http code
    * @throws Google_IO_Exception on curl or IO error
    */
-  public function executeRequest(Google_Http_Request $request)
+  public function executeRequest(UDP_Google_Http_Request $request)
   {
     $default_options = stream_context_get_options(stream_context_get_default());
 

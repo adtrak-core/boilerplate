@@ -22,9 +22,12 @@ import {
 	SidebarLayout,
 	Main,
 } from '@woocommerce/base-components/sidebar-layout';
-import { getSetting } from '@woocommerce/settings';
 import withScrollToTop from '@woocommerce/base-hocs/with-scroll-to-top';
-import { CHECKOUT_ALLOWS_GUEST } from '@woocommerce/block-settings';
+import {
+	CHECKOUT_ALLOWS_GUEST,
+	CHECKOUT_ALLOWS_SIGNUP,
+} from '@woocommerce/block-settings';
+import { compareWithWooVersion, getSetting } from '@woocommerce/settings';
 
 /**
  * Internal dependencies
@@ -81,6 +84,12 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 		checkoutHasError &&
 		( hasValidationErrors || hasNoticesOfType( 'default' ) );
 
+	// Checkout signup is feature gated to WooCommerce 4.7 and newer;
+	// uses updated my-account/lost-password screen from 4.7+ for
+	// setting initial password.
+	const allowCreateAccount =
+		attributes.allowCreateAccount && compareWithWooVersion( '4.7.0', '<=' );
+
 	useEffect( () => {
 		if ( hasErrorsToDisplay ) {
 			showAllValidationErrors();
@@ -96,7 +105,7 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 		! isEditor &&
 		! customerId &&
 		! CHECKOUT_ALLOWS_GUEST &&
-		! attributes.allowCreateAccount
+		! ( allowCreateAccount && CHECKOUT_ALLOWS_SIGNUP )
 	) {
 		return (
 			<>
@@ -128,7 +137,7 @@ const Checkout = ( { attributes, scrollToTop } ) => {
 						showPhoneField={ attributes.showPhoneField }
 						requireCompanyField={ attributes.requireCompanyField }
 						requirePhoneField={ attributes.requirePhoneField }
-						allowCreateAccount={ attributes.allowCreateAccount }
+						allowCreateAccount={ allowCreateAccount }
 					/>
 					<div className="wc-block-checkout__actions">
 						{ attributes.showReturnToCart && (

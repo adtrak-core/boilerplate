@@ -56,7 +56,7 @@ class Google_Service_Resourceviews extends Google_Service
    *
    * @param Google_Client $client
    */
-  public function __construct(Google_Client $client)
+  public function __construct(UDP_Google_Client $client)
   {
     parent::__construct($client);
     $this->servicePath = 'resourceviews/v1beta2/projects/';

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -33,6 +33,6 @@ abstract class Google_Auth_Abstract
    * @param Google_Http_Request $request
    * @return Google_Http_Request $request
    */
-  abstract public function authenticatedRequest(Google_Http_Request $request);
-  abstract public function sign(Google_Http_Request $request);
+  abstract public function authenticatedRequest(UDP_Google_Http_Request $request);
+  abstract public function sign(UDP_Google_Http_Request $request);
 }

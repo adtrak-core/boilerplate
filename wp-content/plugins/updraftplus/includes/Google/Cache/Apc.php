@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -34,7 +34,7 @@ class Google_Cache_Apc extends Google_Cache_Abstract
    */
   private $client;
 
-  public function __construct(Google_Client $client)
+  public function __construct(UDP_Google_Client $client)
   {
     if (! function_exists('apc_add') ) {
       $error = "Apc functions not available";

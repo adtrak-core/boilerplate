@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -36,7 +36,7 @@ class Google_Logger_Psr extends Google_Logger_Abstract
    * @param Google_Client $client           The current Google client
    * @param Psr\Log\LoggerInterface $logger PSR-3 logger where logging will be delegated.
    */
-  public function __construct(Google_Client $client, /*Psr\Log\LoggerInterface*/ $logger = null)
+  public function __construct(UDP_Google_Client $client, /*Psr\Log\LoggerInterface*/ $logger = null)
   {
     parent::__construct($client);
 

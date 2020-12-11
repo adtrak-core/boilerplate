@@ -158,24 +158,37 @@ class Checkout extends AbstractRoute {
 		// Ensure order still matches cart.
 		$order_controller->update_order_from_cart( $order_object );
 
+		// Create a new user account as necessary.
+		// Note - CreateAccount class includes feature gating logic (i.e. this
+		// may not create an account depending on build).
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '4.7', '>=' ) ) {
+			// Checkout signup is feature gated to WooCommerce 4.7 and newer;
+			// Because it requires updated my-account/lost-password screen in 4.7+
+			// for setting initial password.
+			try {
+				$create_account = Package::container()->get( CreateAccount::class );
+				$create_account->from_order_request( $request );
+				$order_object->set_customer_id( get_current_user_id() );
+			} catch ( Exception $error ) {
+				$this->handle_error( $error );
+			}
+		}
 		// If any form fields were posted, update the order.
 		$this->update_order_from_request( $order_object, $request );
 
 		// Check order is still valid.
 		$order_controller->validate_order_before_payment( $order_object );
 
-		// Create a new user account as necessary.
-		// Note - CreateAccount class includes feature gating logic (i.e. this
-		// may not create an account depending on build).
-		try {
-			$create_account = Package::container()->get( CreateAccount::class );
-			$create_account->from_order_request( $order_object, $request );
-		} catch ( Exception $error ) {
-			$this->handle_error( $error );
-		}
-
 		// Persist customer address data to account.
 		$order_controller->sync_customer_data_with_order( $order_object );
+
+		/*
+		* Fire woocommerce_blocks_checkout_order_processed, should work the same way as woocommerce_checkout_order_processed
+		* But we're opting for a new action because the original ones attaches POST data.
+		* NOTE: this hook is still experimental, and might change or get removed.
+		* @todo: Document and stabilize __experimental_woocommerce_blocks_checkout_order_processed
+		*/
+		do_action( '__experimental_woocommerce_blocks_checkout_order_processed', $order_object );
 
 		if ( ! $order_object->needs_payment() ) {
 			$payment_result = $this->process_without_payment( $order_object, $request );

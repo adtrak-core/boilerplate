@@ -48,7 +48,7 @@ class Google_Service_Datastore extends Google_Service
    *
    * @param Google_Client $client
    */
-  public function __construct(Google_Client $client)
+  public function __construct(UDP_Google_Client $client)
   {
     parent::__construct($client);
     $this->servicePath = 'datastore/v1beta2/datasets/';

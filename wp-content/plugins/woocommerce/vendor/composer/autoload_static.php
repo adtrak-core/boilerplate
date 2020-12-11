@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbf27e3460edb6c0a8310ea568e5346d0
+class ComposerStaticInit08a6ad0ed5b58cf461fde712d9bcae99
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -109,6 +109,7 @@ class ComposerStaticInitbf27e3460edb6c0a8310ea568e5346d0
         'Automattic\\WooCommerce\\RestApi\\UnitTests\\Helpers\\ShippingHelper' => __DIR__ . '/../..' . '/tests/legacy/unit-tests/rest-api/Helpers/ShippingHelper.php',
         'Automattic\\WooCommerce\\RestApi\\Utilities\\ImageAttachment' => __DIR__ . '/../..' . '/includes/rest-api/Utilities/ImageAttachment.php',
         'Automattic\\WooCommerce\\RestApi\\Utilities\\SingletonTrait' => __DIR__ . '/../..' . '/includes/rest-api/Utilities/SingletonTrait.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'WC_REST_CRUD_Controller' => __DIR__ . '/../..' . '/includes/rest-api/Controllers/Version3/class-wc-rest-crud-controller.php',
         'WC_REST_Controller' => __DIR__ . '/../..' . '/includes/rest-api/Controllers/Version3/class-wc-rest-controller.php',
         'WC_REST_Coupons_Controller' => __DIR__ . '/../..' . '/includes/rest-api/Controllers/Version3/class-wc-rest-coupons-controller.php',
@@ -209,9 +210,9 @@ class ComposerStaticInitbf27e3460edb6c0a8310ea568e5346d0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbf27e3460edb6c0a8310ea568e5346d0::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbf27e3460edb6c0a8310ea568e5346d0::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitbf27e3460edb6c0a8310ea568e5346d0::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit08a6ad0ed5b58cf461fde712d9bcae99::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit08a6ad0ed5b58cf461fde712d9bcae99::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit08a6ad0ed5b58cf461fde712d9bcae99::$classMap;
 
         }, null, ClassLoader::class);
     }

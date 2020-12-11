@@ -4,10 +4,9 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd8549181024b8ec1028b53b81db9a36a
+class ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe
 {
     public static $files = array (
-        'ce89ac35a6c330c55f4710717db9ff78' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/functions.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         '3919eeb97e98d4648304477f8ef734ba' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php',
     );
@@ -15,7 +14,6 @@ class ComposerStaticInitd8549181024b8ec1028b53b81db9a36a
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\EventDispatcher\\' => 34,
         ),
         'P' => 
@@ -25,10 +23,6 @@ class ComposerStaticInitd8549181024b8ec1028b53b81db9a36a
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Component\\Process\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/process',
-        ),
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
@@ -100,20 +94,12 @@ class ComposerStaticInitd8549181024b8ec1028b53b81db9a36a
             array (
                 0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
             ),
-            'ComponentInstaller' => 
-            array (
-                0 => __DIR__ . '/..' . '/robloach/component-installer/src',
-            ),
         ),
         'A' => 
         array (
             'Aws' => 
             array (
                 0 => __DIR__ . '/..' . '/aws/aws-sdk-php/src',
-            ),
-            'Assetic' => 
-            array (
-                0 => __DIR__ . '/..' . '/kriswallsmith/assetic/src',
             ),
         ),
     );
@@ -147,10 +133,10 @@ class ComposerStaticInitd8549181024b8ec1028b53b81db9a36a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd8549181024b8ec1028b53b81db9a36a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd8549181024b8ec1028b53b81db9a36a::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitd8549181024b8ec1028b53b81db9a36a::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitd8549181024b8ec1028b53b81db9a36a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit1b1c6b8d09e309187dcc22aef9db27fe::$classMap;
 
         }, null, ClassLoader::class);
     }

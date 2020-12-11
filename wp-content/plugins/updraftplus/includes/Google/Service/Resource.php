@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -191,7 +191,7 @@ class Google_Service_Resource
         $method['path'],
         $parameters
     );
-    $httpRequest = new Google_Http_Request(
+    $httpRequest = new UDP_Google_Http_Request(
         $url,
         $method['httpMethod'],
         null,

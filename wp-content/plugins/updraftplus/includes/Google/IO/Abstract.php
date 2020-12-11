@@ -62,7 +62,7 @@ abstract class Google_IO_Abstract
    * @return array containing response headers, body, and http code
    * @throws Google_IO_Exception on curl or IO error
    */
-  abstract public function executeRequest(Google_Http_Request $request);
+  abstract public function executeRequest(UDP_Google_Http_Request $request);
 
   /**
    * Set options that update the transport implementation's behavior.
@@ -100,7 +100,7 @@ abstract class Google_IO_Abstract
    * @return bool Returns true if the insertion was successful.
    * Otherwise, return false.
    */
-  public function setCachedRequest(Google_Http_Request $request)
+  public function setCachedRequest(UDP_Google_Http_Request $request)
   {
     // Determine if the request is cacheable.
     if (Google_Http_CacheParser::isResponseCacheable($request)) {
@@ -119,11 +119,11 @@ abstract class Google_IO_Abstract
    * response headers and response body filled in
    * @throws Google_IO_Exception on curl or IO error
    */
-  public function makeRequest(Google_Http_Request $request)
+  public function makeRequest(UDP_Google_Http_Request $request)
   {
     // First, check to see if we have a valid cached version.
     $cached = $this->getCachedRequest($request);
-    if ($cached !== false && $cached instanceof Google_Http_Request) {
+    if ($cached !== false && $cached instanceof UDP_Google_Http_Request) {
       if (!$this->checkMustRevalidateCachedRequest($cached, $request)) {
         return $cached;
       }
@@ -160,7 +160,7 @@ abstract class Google_IO_Abstract
    * @return Google_Http_Request|bool Returns the cached object or
    * false if the operation was unsuccessful.
    */
-  public function getCachedRequest(Google_Http_Request $request)
+  public function getCachedRequest(UDP_Google_Http_Request $request)
   {
     if (false === Google_Http_CacheParser::isRequestCacheable($request)) {
       return false;
@@ -175,7 +175,7 @@ abstract class Google_IO_Abstract
    * @param Google_Http_Request $request
    * @return Google_Http_Request Processed request with the enclosed entity.
    */
-  public function processEntityRequest(Google_Http_Request $request)
+  public function processEntityRequest(UDP_Google_Http_Request $request)
   {
     $postBody = $request->getPostBody();
     $contentType = $request->getRequestHeader("content-type");

@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'd27a6e251a2cd227da3cb31980b4071e29e8db30',
+    'reference' => 'ab477a16a4e1c946f6380f405b5c6cc2c0ce5f60',
     'name' => 'updraftplus/updraftplus',
   ),
   'versions' => 
@@ -19,24 +19,6 @@
       array (
       ),
       'reference' => '64fa4b07f056e338a5f0f29eece75babaa83af68',
-    ),
-    'components/jquery' => 
-    array (
-      'pretty_version' => '3.5.1',
-      'version' => '3.5.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'b33e8f0f9a1cb2ae390cf05d766a900b53d2125b',
-    ),
-    'components/jquery-blockui' => 
-    array (
-      'pretty_version' => '2.70',
-      'version' => '2.70.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '316f6e5d76a33266970778e80507149d9ef6a02d',
     ),
     'eher/oauth' => 
     array (
@@ -210,15 +192,6 @@
         0 => 'v3.9.3',
       ),
     ),
-    'kriswallsmith/assetic' => 
-    array (
-      'pretty_version' => 'v1.4.0',
-      'version' => '1.4.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'e911c437dbdf006a8f62c2f59b15b2d69a5e0aa1',
-    ),
     'phpseclib/phpseclib' => 
     array (
       'pretty_version' => '1.0.19',
@@ -246,15 +219,6 @@
       ),
       'reference' => '9c0ade232ddd1ae23994349406171ffea1127b5d',
     ),
-    'robloach/component-installer' => 
-    array (
-      'pretty_version' => '0.0.12',
-      'version' => '0.0.12.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '1864f25db21fc173e02a359f646acd596c1b0460',
-    ),
     'symfony/event-dispatcher' => 
     array (
       'pretty_version' => 'v2.8.52',
@@ -264,14 +228,14 @@
       ),
       'reference' => 'a77e974a5fecb4398833b0709210e3d5e334ffb0',
     ),
-    'symfony/process' => 
+    'team-updraft/common-libs' => 
     array (
-      'pretty_version' => 'v3.4.46',
-      'version' => '3.4.46.0',
+      'pretty_version' => '3.0.0',
+      'version' => '3.0.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'b8648cf1d5af12a44a51d07ef9bf980921f15fca',
+      'reference' => '997b6453',
     ),
     'updraftplus/updraftplus' => 
     array (
@@ -280,7 +244,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'd27a6e251a2cd227da3cb31980b4071e29e8db30',
+      'reference' => 'ab477a16a4e1c946f6380f405b5c6cc2c0ce5f60',
     ),
   ),
 );

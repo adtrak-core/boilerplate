@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -77,8 +77,8 @@ class Google_Http_MediaFileUpload
    * only used if resumable=True
    */
   public function __construct(
-      Google_Client $client,
-      Google_Http_Request $request,
+      UDP_Google_Client $client,
+      UDP_Google_Http_Request $request,
       $mimeType,
       $data,
       $resumable = false,
@@ -152,14 +152,14 @@ class Google_Http_MediaFileUpload
       'expect' => '',
     );
 
-    $httpRequest = new Google_Http_Request(
+    $httpRequest = new UDP_Google_Http_Request(
         $this->resumeUri,
         'PUT',
         $headers,
         $chunk
     );
 
-    if ($this->client->getClassConfig("Google_Http_Request", "enable_gzip_for_uploads")) {
+    if ($this->client->getClassConfig("UDP_Google_Http_Request", "enable_gzip_for_uploads")) {
       $httpRequest->enableGzip();
     } else {
       $httpRequest->disableGzip();

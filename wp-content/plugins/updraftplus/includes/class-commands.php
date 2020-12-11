@@ -706,6 +706,67 @@ class UpdraftPlus_Commands {
 		$response = $updraftplus_admin->deauth_remote_method($data);
 		return $response;
 	}
+
+	/**
+	 * A handler method to call the relevant remote storage manual authentication methods and return the authentication result
+	 *
+	 * @param array $data - an array of authentication data, normally includes the state and auth code
+	 *
+	 * @return array - an array response to be sent back to the frontend
+	 */
+	public function manual_remote_storage_authentication($data) {
+		if (false === ($updraftplus_admin = $this->_load_ud_admin()) || false === ($updraftplus = $this->_load_ud())) return new WP_Error('no_updraftplus');// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+
+		$response = array(
+			'result' => 'success'
+		);
+
+		$method = $data['method'];
+
+		$enabled_services = UpdraftPlus_Storage_Methods_Interface::get_enabled_storage_objects_and_ids(array($method));
+		
+		if (empty($enabled_services[$method]['object']) || empty($enabled_services[$method]['instance_settings']) || !$enabled_services[$method]['object']->supports_feature('manual_authentication')) {
+			$response['result'] = 'error';
+			$response['data'] = __('Manual authentication is not available for this remote storage method', 'updraftplus') . '(' . $method . ')';
+			return $response;
+		}
+
+		$backup_obj = $enabled_services[$method]['object'];
+
+		$auth_data = json_decode(base64_decode($data['auth_data']), true);
+		$instance_id = '';
+
+		$state = isset($auth_data['state']) ? urldecode($auth_data['state']) : '';
+		$code = isset($auth_data['code']) ? urldecode($auth_data['code']) : '';
+
+		if (empty($state) || empty($code)) {
+			$response['result'] = 'error';
+			$response['data'] = __('Missing authentication data:', 'updraftplus') . " ({$state}) ({$code})";
+			return $response;
+		}
+
+		if (false !== strpos($state, ':')) {
+			$parts = explode(':', $state);
+			$instance_id = $parts[1];
+		}
+
+		if (empty($instance_id)) {
+			$response['result'] = 'error';
+			$response['data'] = __('Missing instance id:', 'updraftplus') . " ($state)";
+			return $response;
+		}
+
+		if (isset($enabled_services[$method]['instance_settings'][$instance_id])) {
+			$opts = $enabled_services[$method]['instance_settings'][$instance_id];
+			$backup_obj->set_options($opts, false, $instance_id);
+		}
+
+		$result = $backup_obj->complete_authentication($state, $code, true);
+		
+		$response['data'] = $result;
+
+		return $response;
+	}
 	
 	/**
 	 * A handler method to call the UpdraftPlus admin wipe settings method

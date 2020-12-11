@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -37,7 +37,7 @@ class Google_Http_Batch
 
   private $base_path;
 
-  public function __construct(Google_Client $client, $boundary = false)
+  public function __construct(UDP_Google_Client $client, $boundary = false)
   {
     $this->client = $client;
     $this->base_path = $this->client->getBasePath();
@@ -46,7 +46,7 @@ class Google_Http_Batch
     $this->boundary = str_replace('"', '', $boundary);
   }
 
-  public function add(Google_Http_Request $request, $key = false)
+  public function add(UDP_Google_Http_Request $request, $key = false)
   {
     if (false == $key) {
       $key = mt_rand();
@@ -70,7 +70,7 @@ class Google_Http_Batch
     $body .= "\n--{$this->boundary}--";
 
     $url = $this->base_path . '/batch';
-    $httpRequest = new Google_Http_Request($url, 'POST');
+    $httpRequest = new UDP_Google_Http_Request($url, 'POST');
     $httpRequest->setRequestHeaders(
         array('Content-Type' => 'multipart/mixed; boundary=' . $this->boundary)
     );
@@ -81,7 +81,7 @@ class Google_Http_Batch
     return $this->parseResponse($response);
   }
 
-  public function parseResponse(Google_Http_Request $response)
+  public function parseResponse(UDP_Google_Http_Request $response)
   {
     $contentType = $response->getResponseHeader('content-type');
     $contentType = explode(';', $contentType);
@@ -110,7 +110,7 @@ class Google_Http_Batch
           $status = $status[1];
 
           list($partHeaders, $partBody) = $this->client->getIo()->ParseHttpResponse($part, false);
-          $response = new Google_Http_Request("");
+          $response = new UDP_Google_Http_Request("");
           $response->setResponseHttpCode($status);
           $response->setResponseHeaders($partHeaders);
           $response->setResponseBody($partBody);

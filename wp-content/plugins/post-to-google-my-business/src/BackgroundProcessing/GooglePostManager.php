@@ -111,7 +111,7 @@ class GooglePostManager
         update_post_meta( $post_id, '_mbp_post_batch_key', $key );
     }
     
-    public function create_google_post( $post_id, $location_name )
+    public function create_google_post( $post_id, $location )
     {
         $form_fields = get_post_meta( $post_id, 'mbp_form_fields', true );
         $parent_post_id = wp_get_post_parent_id( $post_id );
@@ -126,13 +126,13 @@ class GooglePostManager
         $is_autopost = get_post_meta( $post_id, '_mbp_is_autopost', true );
         try {
             $data = new ParseFormFields( $form_fields );
-            $localPost = $data->getLocalPost( $this->api, $parent_post_id, $location_name );
+            $localPost = $data->getLocalPost( $this->api, $parent_post_id, $location );
             
-            if ( array_key_exists( $location_name, $created_posts ) ) {
-                $oldPost = $this->api->get_post( $created_posts[$location_name]['name'] );
+            if ( array_key_exists( $location, $created_posts ) ) {
+                $oldPost = $this->api->get_post( $created_posts[$location]['name'] );
                 $mask = new LocalPostEditMask( $oldPost, $localPost );
                 $localPost = apply_filters( 'mbp_update_post', $localPost, $post_id );
-                $publishedLocalPost = $this->api->update_post( $created_posts[$location_name]['name'], $localPost->getArray(), $mask->getMask() );
+                $publishedLocalPost = $this->api->update_post( $created_posts[$location]['name'], $localPost->getArray(), $mask->getMask() );
             } else {
                 $localPost = apply_filters(
                     'mbp_create_post',
@@ -141,14 +141,14 @@ class GooglePostManager
                     $is_autopost
                 );
                 //Backward compatibility
-                $filtered_post_args = ( $is_autopost ? apply_filters( 'mbp_autopost_post_args', $localPost->getArray(), $location_name ) : $localPost->getArray() );
-                $publishedLocalPost = $this->api->create_post( $location_name, $filtered_post_args );
+                $filtered_post_args = ( $is_autopost ? apply_filters( 'mbp_autopost_post_args', $localPost->getArray(), $location ) : $localPost->getArray() );
+                $publishedLocalPost = $this->api->create_post( $location, $filtered_post_args );
             }
             
-            $created_posts[$location_name] = $publishedLocalPost->getArray();
-            unset( $post_errors[$location_name] );
+            $created_posts[$location] = $publishedLocalPost->getArray();
+            unset( $post_errors[$location] );
         } catch ( \Exception $e ) {
-            $post_errors[$location_name] = new WP_Error( 'post_creation_error', sprintf( __( 'Failed to create/update post: %s', 'post-to-google-my-business' ), $e->getMessage() ) );
+            $post_errors[$location] = new WP_Error( 'post_creation_error', sprintf( __( 'Failed to create/update post: %s', 'post-to-google-my-business' ), $e->getMessage() ) );
         }
         update_post_meta( $post_id, 'mbp_posts', $created_posts );
         update_post_meta( $post_id, 'mbp_errors', $post_errors );

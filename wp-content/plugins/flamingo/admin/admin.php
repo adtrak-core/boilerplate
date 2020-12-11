@@ -6,38 +6,46 @@ require_once FLAMINGO_PLUGIN_DIR . '/admin/includes/privacy.php';
 add_action( 'admin_menu', 'flamingo_admin_menu', 8, 0 );
 
 function flamingo_admin_menu() {
-	global $_wp_last_object_menu;
-
-	$_wp_last_object_menu++;
-
 	add_menu_page(
 		__( 'Flamingo Address Book', 'flamingo' ),
 		__( 'Flamingo', 'flamingo' ),
-		'flamingo_edit_contacts', 'flamingo',
-		'flamingo_contact_admin_page', 'dashicons-feedback',
-		$_wp_last_object_menu
+		'flamingo_edit_contacts',
+		'flamingo',
+		'flamingo_contact_admin_page',
+		'dashicons-feedback',
+		28
 	);
 
-	$contact_admin = add_submenu_page( 'flamingo',
+	$contact_admin = add_submenu_page(
+		'flamingo',
 		__( 'Flamingo Address Book', 'flamingo' ),
 		__( 'Address Book', 'flamingo' ),
-		'flamingo_edit_contacts', 'flamingo',
+		'flamingo_edit_contacts',
+		'flamingo',
 		'flamingo_contact_admin_page'
 	);
 
-	add_action( 'load-' . $contact_admin, 'flamingo_load_contact_admin', 10, 0 );
+	add_action(
+		'load-' . $contact_admin,
+		'flamingo_load_contact_admin',
+		10, 0
+	);
 
-	$inbound_admin = add_submenu_page( 'flamingo',
+	$inbound_admin = add_submenu_page(
+		'flamingo',
 		__( 'Flamingo Inbound Messages', 'flamingo' ),
 		__( 'Inbound Messages', 'flamingo' ),
-		'flamingo_edit_inbound_messages', 'flamingo_inbound',
+		'flamingo_edit_inbound_messages',
+		'flamingo_inbound',
 		'flamingo_inbound_admin_page'
 	);
 
-	add_action( 'load-' . $inbound_admin, 'flamingo_load_inbound_admin', 10, 0 );
+	add_action(
+		'load-' . $inbound_admin,
+		'flamingo_load_inbound_admin',
+		10, 0
+	);
 }
-
-add_filter( 'set-screen-option', 'flamingo_set_screen_options', 10, 3 );
 
 add_filter( 'set_screen_option_flamingo_contacts_per_page',
 	'flamingo_set_screen_options', 10, 3
@@ -388,6 +396,15 @@ function flamingo_load_inbound_admin() {
 
 	$redirect_to = menu_page_url( 'flamingo_inbound', false );
 
+	if ( isset( $_GET['post_status'] ) ) {
+		$redirect_to = add_query_arg(
+			array(
+				'post_status' => $_GET['post_status'],
+			),
+			$redirect_to
+		);
+	}
+
 	if ( 'save' == $action and ! empty( $_REQUEST['post'] ) ) {
 		$post = new Flamingo_Inbound_Message( $_REQUEST['post'] );
 
@@ -451,7 +468,11 @@ function flamingo_load_inbound_admin() {
 
 		if ( ! empty( $trashed ) ) {
 			$redirect_to = add_query_arg(
-				array( 'message' => 'inboundtrashed' ), $redirect_to );
+				array(
+					'message' => 'inboundtrashed',
+				),
+				$redirect_to
+			);
 		}
 
 		wp_safe_redirect( $redirect_to );
@@ -489,7 +510,10 @@ function flamingo_load_inbound_admin() {
 
 		if ( ! empty( $untrashed ) ) {
 			$redirect_to = add_query_arg(
-				array( 'message' => 'inbounduntrashed' ), $redirect_to );
+				array(
+					'message' => 'inbounduntrashed',
+				), $redirect_to
+			);
 		}
 
 		wp_safe_redirect( $redirect_to );
@@ -536,7 +560,11 @@ function flamingo_load_inbound_admin() {
 
 		if ( ! empty( $deleted ) ) {
 			$redirect_to = add_query_arg(
-				array( 'message' => 'inbounddeleted' ), $redirect_to );
+				array(
+					'message' => 'inbounddeleted',
+				),
+				$redirect_to
+			);
 		}
 
 		wp_safe_redirect( $redirect_to );
@@ -571,7 +599,11 @@ function flamingo_load_inbound_admin() {
 
 		if ( ! empty( $submitted ) ) {
 			$redirect_to = add_query_arg(
-				array( 'message' => 'inboundspammed' ), $redirect_to );
+				array(
+					'message' => 'inboundspammed',
+				),
+				$redirect_to
+			);
 		}
 
 		wp_safe_redirect( $redirect_to );
@@ -607,7 +639,11 @@ function flamingo_load_inbound_admin() {
 
 		if ( ! empty( $submitted ) ) {
 			$redirect_to = add_query_arg(
-				array( 'message' => 'inboundunspammed' ), $redirect_to );
+				array(
+					'message' => 'inboundunspammed',
+				),
+				$redirect_to
+			);
 		}
 
 		wp_safe_redirect( $redirect_to );

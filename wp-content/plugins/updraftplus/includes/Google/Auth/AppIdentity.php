@@ -22,7 +22,7 @@
  */
 use google\appengine\api\app_identity\AppIdentityService;
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -36,7 +36,7 @@ class Google_Auth_AppIdentity extends Google_Auth_Abstract
   private $token = false;
   private $tokenScopes = false;
 
-  public function __construct(Google_Client $client, $config = null)
+  public function __construct(UDP_Google_Client $client, $config = null)
   {
     $this->client = $client;
   }
@@ -95,13 +95,13 @@ class Google_Auth_AppIdentity extends Google_Auth_Abstract
    * @return Google_Http_Request The resulting HTTP response including the
    * responseHttpCode, responseHeaders and responseBody.
    */
-  public function authenticatedRequest(Google_Http_Request $request)
+  public function authenticatedRequest(UDP_Google_Http_Request $request)
   {
     $request = $this->sign($request);
     return $this->client->getIo()->makeRequest($request);
   }
 
-  public function sign(Google_Http_Request $request)
+  public function sign(UDP_Google_Http_Request $request)
   {
     if (!$this->token) {
       // No token, so nothing to do.

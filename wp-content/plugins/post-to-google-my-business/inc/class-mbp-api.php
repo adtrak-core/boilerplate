@@ -219,8 +219,8 @@ if(!class_exists('MBP_api')){
 		}
 
 
-		public function delete_post($post_id){
-			return $this->do_post('google/delete_post/', array('post_id' => $post_id));
+		public function delete_post($name){
+			return $this->do_post('google/delete_post/', array('post_id' => $name));
 		}
 
 		/**

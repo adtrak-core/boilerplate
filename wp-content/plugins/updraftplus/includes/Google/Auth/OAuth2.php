@@ -70,7 +70,7 @@ class Google_Auth_OAuth2 extends Google_Auth_Abstract
    * @return Google_Http_Request The resulting HTTP response including the
    * responseHttpCode, responseHeaders and responseBody.
    */
-  public function authenticatedRequest(Google_Http_Request $request)
+  public function authenticatedRequest(UDP_Google_Http_Request $request)
   {
     $request = $this->sign($request);
     return $this->client->getIo()->makeRequest($request);
@@ -89,7 +89,7 @@ class Google_Auth_OAuth2 extends Google_Auth_Abstract
 
     // We got here from the redirect from a successful authorization grant,
     // fetch the access token
-    $request = new Google_Http_Request(
+    $request = new UDP_Google_Http_Request(
         self::OAUTH2_TOKEN_URI,
         'POST',
         array(),
@@ -214,7 +214,7 @@ class Google_Auth_OAuth2 extends Google_Auth_Abstract
    * @return Google_Http_Request
    * @throws Google_Auth_Exception
    */
-  public function sign(Google_Http_Request $request)
+  public function sign(UDP_Google_Http_Request $request)
   {
     // add the developer key to the request before signing it
     if ($this->client->getClassConfig($this, 'developer_key')) {
@@ -326,7 +326,7 @@ class Google_Auth_OAuth2 extends Google_Auth_Abstract
       $this->client->getLogger()->info('OAuth2 access token refresh');
     }
 
-    $http = new Google_Http_Request(
+    $http = new UDP_Google_Http_Request(
         self::OAUTH2_TOKEN_URI,
         'POST',
         array(),
@@ -377,7 +377,7 @@ class Google_Auth_OAuth2 extends Google_Auth_Abstract
         $token = $this->token['access_token'];
       }
     }
-    $request = new Google_Http_Request(
+    $request = new UDP_Google_Http_Request(
         self::OAUTH2_REVOKE_URI,
         'POST',
         array(),
@@ -445,7 +445,7 @@ class Google_Auth_OAuth2 extends Google_Auth_Abstract
 
     // This relies on makeRequest caching certificate responses.
     $request = $this->client->getIo()->makeRequest(
-        new Google_Http_Request(
+        new UDP_Google_Http_Request(
             $url
         )
     );

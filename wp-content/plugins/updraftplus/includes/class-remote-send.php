@@ -442,7 +442,7 @@ abstract class UpdraftPlus_RemoteSend {
 
 			global $updraftplus_admin;
 
-			$ret .= '<input type="checkbox" checked="checked" id="remotesend_backupnow_db"> <label for="remotesend_backupnow_db">'.__("Database", 'updraftplus').'</label><br>';
+			$ret .= '<label class="updraft_checkbox" for="remotesend_backupnow_db"><input type="checkbox" checked="checked" id="remotesend_backupnow_db">'.__("Database", 'updraftplus').'</label>';
 			$ret .= $updraftplus_admin->files_selector_widgetry('remotesend_', false, false);
 
 			$service = $updraftplus->just_one(UpdraftPlus_Options::get_updraft_option('updraft_service'));
@@ -469,7 +469,7 @@ abstract class UpdraftPlus_RemoteSend {
 			}
 
 			$ret .= apply_filters('updraft_backupnow_modal_afteroptions', '', 'remotesend_');
-			$ret .= '<button class="button-primary" style="height:30px; font-size:16px; margin-left: 3px; width:85px;" id="updraft_migrate_send_button" onclick="updraft_migrate_go_backup();">'.__('Send', 'updraftplus').'</button>';
+			$ret .= '<button class="button-primary" style="font-size:16px; margin-left: 3px; width:85px;" id="updraft_migrate_send_button" onclick="updraft_migrate_go_backup();">'.__('Send', 'updraftplus').'</button>';
 
 			return array('success' => 1, 'r' => $ret);
 		} catch (Exception $e) {

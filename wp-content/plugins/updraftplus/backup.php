@@ -2249,7 +2249,7 @@ class UpdraftPlus_Backup {
 				if ((0 === strpos($struct->Type, 'tinyint')) || (0 === strpos(strtolower($struct->Type), 'smallint'))
 					|| (0 === strpos(strtolower($struct->Type), 'mediumint')) || (0 === strpos(strtolower($struct->Type), 'int')) || (0 === strpos(strtolower($struct->Type), 'bigint'))
 				) {
-						$defs[strtolower($struct->Field)] = (null === $struct->Default ) ? 'NULL' : $struct->Default;
+						$defs[strtolower($struct->Field)] = (null === $struct->Default) ? 'NULL' : $struct->Default;
 						$integer_fields[strtolower($struct->Field)] = true;
 				}
 				
@@ -2343,8 +2343,13 @@ class UpdraftPlus_Backup {
 				$thisentry = '';
 				foreach ($table_data as $row) {
 					$total_rows++;
-					$values = array();
+					if ($thisentry) $thisentry .= ",\n ";
+					$thisentry .= '(';
+					$key_count = 0;
 					foreach ($row as $key => $value) {
+					
+						if ($key_count) $thisentry .= ', ';
+						$key_count++;
 					
 						if ($use_primary_key && strtolower($primary_key) == strtolower($key) && $value > $start_record) {
 							$start_record = $value;
@@ -2354,14 +2359,15 @@ class UpdraftPlus_Backup {
 							// make sure there are no blank spots in the insert syntax,
 							// yet try to avoid quotation marks around integers
 							$value = (null === $value || '' === $value) ? $defs[strtolower($key)] : $value;
-							$values[] = ('' === $value) ? "''" : $value;
+							$value = ('' === $value) ? "''" : $value;
+							$thisentry .= $value;
 						} elseif (isset($binary_fields[strtolower($key)])) {
 							if (null === $value) {
-								$values[] = 'NULL';
+								$thisentry .= 'NULL';
 							} elseif ('' === $value) {
-								$values[] = "''";
+								$thisentry .= "''";
 							} else {
-								$values[] = "0x" . bin2hex(str_repeat("0", floor(strspn($value, "0") / 4)).$value);
+								$thisentry .= "0x" . bin2hex(str_repeat("0", floor(strspn($value, "0") / 4)).$value);
 							}
 						} elseif (isset($bit_fields[$key])) {
 							mbstring_binary_safe_encoding();
@@ -2371,17 +2377,23 @@ class UpdraftPlus_Backup {
 							for ($i=0; $i<$val_len; $i++) {
 								$hex .= sprintf('%02X', ord($value[$i]));
 							}
-							$values[] = "b'".str_pad($this->hex2bin($hex), $bit_fields[$key], '0', STR_PAD_LEFT)."'";
+							$thisentry .= "b'".str_pad($this->hex2bin($hex), $bit_fields[$key], '0', STR_PAD_LEFT)."'";
 						} else {
-							$values[] = (null === $value) ? 'NULL' : "'" . str_replace($search, $replace, str_replace('\'', '\\\'', str_replace('\\', '\\\\', $value))) . "'";
+							$thisentry .= (null === $value) ? 'NULL' : "'" . str_replace($search, $replace, str_replace('\'', '\\\'', str_replace('\\', '\\\\', $value))) . "'";
 						}
 					}
+					$thisentry .= ')';
 					
-					if ($thisentry) $thisentry .= ",\n ";
-					$thisentry .= '('.implode(', ', $values).')';
 					// Flush every 512KB
 					if (strlen($thisentry) > 524288) {
-						$this->stow(" \n".$entries.$thisentry.';');
+						$thisentry .= ';';
+						if (strlen($thisentry) > 10485760) {
+							// This is an attempt to prevent avoidable duplication of long strings in-memory, at the cost of one extra write
+							$this->stow(" \n".$entries);
+							$this->stow($thisentry);
+						} else {
+							$this->stow(" \n".$entries.$thisentry);
+						}
 						$thisentry = '';
 						// Potentially indicate that enough has been done to loop
 						if ($this->db_current_raw_bytes > $enough_data_after || time() - $began_writing_at > $enough_time_after) {
@@ -2390,7 +2402,16 @@ class UpdraftPlus_Backup {
 					}
 					
 				}
-				if ($thisentry) $this->stow(" \n".$entries.$thisentry.';');
+				if ($thisentry) {
+					$thisentry .= ';';
+					if (strlen($thisentry) > 10485760) {
+						// This is an attempt to prevent avoidable duplication of long strings in-memory, at the cost of one extra write
+						$this->stow(" \n".$entries);
+						$this->stow($thisentry);
+					} else {
+						$this->stow(" \n".$entries.$thisentry);
+					}
+				}
 				
 				if (!$use_primary_key) {
 					$start_record += $fetch_rows;

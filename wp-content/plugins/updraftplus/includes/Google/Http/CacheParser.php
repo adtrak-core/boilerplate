@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-if (!class_exists('Google_Client')) {
+if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
@@ -36,7 +36,7 @@ class Google_Http_CacheParser
    * @return bool True if the request is cacheable.
    * False if the request is uncacheable.
    */
-  public static function isRequestCacheable(Google_Http_Request $resp)
+  public static function isRequestCacheable(UDP_Google_Http_Request $resp)
   {
     $method = $resp->getRequestMethod();
     if (! in_array($method, self::$CACHEABLE_HTTP_METHODS)) {
@@ -62,7 +62,7 @@ class Google_Http_CacheParser
    * @return bool True if the response is cacheable.
    * False if the response is un-cacheable.
    */
-  public static function isResponseCacheable(Google_Http_Request $resp)
+  public static function isResponseCacheable(UDP_Google_Http_Request $resp)
   {
     // First, check if the HTTP request was cacheable before inspecting the
     // HTTP response.
@@ -114,7 +114,7 @@ class Google_Http_CacheParser
    * @return bool True if the HTTP response is considered to be expired.
    * False if it is considered to be fresh.
    */
-  public static function isExpired(Google_Http_Request $resp)
+  public static function isExpired(UDP_Google_Http_Request $resp)
   {
     // HTTP/1.1 clients and caches MUST treat other invalid date formats,
     // especially including the value “0”, as in the past.
@@ -175,7 +175,7 @@ class Google_Http_CacheParser
    * @param Google_Http_Request $response
    * @return bool True if the entry is expired, else return false.
    */
-  public static function mustRevalidate(Google_Http_Request $response)
+  public static function mustRevalidate(UDP_Google_Http_Request $response)
   {
     // [13.3] When a cache has a stale entry that it would like to use as a
     // response to a client's request, it first has to check with the origin

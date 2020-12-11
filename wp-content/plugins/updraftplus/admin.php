@@ -21,6 +21,8 @@ class UpdraftPlus_Admin {
 
 	private $storage_service_without_settings;
 
+	private $storage_service_with_partial_settings;
+
 	/**
 	 * Constructor
 	 */
@@ -225,15 +227,27 @@ class UpdraftPlus_Admin {
 		if ($this->disk_space_check(1048576*35) === false) add_action('all_admin_notices', array($this, 'show_admin_warning_diskspace'));
 
 		$all_services = UpdraftPlus_Storage_Methods_Interface::get_enabled_storage_objects_and_ids($updraftplus->get_canonical_service_list());
+		
 		$this->storage_service_without_settings = array();
+		$this->storage_service_with_partial_settings = array();
+		
 		foreach ($all_services as $method => $sinfo) {
 			if (empty($sinfo['object']) || empty($sinfo['instance_settings']) || !is_callable(array($sinfo['object'], 'options_exist'))) continue;
 			foreach ($sinfo['instance_settings'] as $opt) {
 				if (!$sinfo['object']->options_exist($opt)) {
-					$this->storage_service_without_settings[] = $updraftplus->backup_methods[$method];
+					if (isset($opt['CSRF'])) {
+						$this->storage_service_with_partial_settings[$method] = $updraftplus->backup_methods[$method];
+					} else {
+						$this->storage_service_without_settings[] = $updraftplus->backup_methods[$method];
+					}
 				}
 			}
 		}
+		
+		if (!empty($this->storage_service_with_partial_settings)) {
+			add_action('all_admin_notices', array($this, 'show_admin_warning_if_remote_storage_with_partial_setttings'));
+		}
+
 		if (!empty($this->storage_service_without_settings)) {
 			add_action('all_admin_notices', array($this, 'show_admin_warning_if_remote_storage_settting_are_empty'));
 		}
@@ -760,15 +774,16 @@ class UpdraftPlus_Admin {
 
 		// Defeat other plugins/themes which dump their jQuery UI CSS onto our settings page
 		wp_deregister_style('jquery-ui');
-		$jquery_ui_css_enqueue_version = $updraftplus->use_unminified_scripts() ? '1.11.4.0'.'.'.time() : '1.11.4.0';
-		wp_enqueue_style('jquery-ui', UPDRAFTPLUS_URL.'/includes/jquery-ui.custom'.$updraft_min_or_not.'.css', array(), $jquery_ui_css_enqueue_version);
+		$jquery_ui_version = version_compare($updraftplus->get_wordpress_version(), '5.6', '>=') ? '1.12.1' : '1.11.4';
+		$jquery_ui_css_enqueue_version = $updraftplus->use_unminified_scripts() ? $jquery_ui_version.'.0'.'.'.time() : $jquery_ui_version.'.0';
+		wp_enqueue_style('jquery-ui', UPDRAFTPLUS_URL."/includes/jquery-ui.custom-v$jquery_ui_version$updraft_min_or_not.css", array(), $jquery_ui_css_enqueue_version);
 	
 		wp_enqueue_style('updraft-admin-css', UPDRAFTPLUS_URL.'/css/updraftplus-admin'.$updraft_min_or_not.'.css', array(), $enqueue_version);
 		// add_filter('style_loader_tag', array($this, 'style_loader_tag'), 10, 2);
 
 		$this->ensure_sufficient_jquery_and_enqueue();
-		$jquery_blockui_enqueue_version = $updraftplus->use_unminified_scripts() ? '2.70.0'.'.'.time() : '2.70.0';
-		wp_enqueue_script('jquery-blockui', UPDRAFTPLUS_URL.'/includes/jquery.blockUI'.$updraft_min_or_not.'.js', array('jquery'), $jquery_blockui_enqueue_version);
+		$jquery_blockui_enqueue_version = $updraftplus->use_unminified_scripts() ? '2.71.0'.'.'.time() : '2.71.0';
+		wp_enqueue_script('jquery-blockui', UPDRAFTPLUS_URL.'/includes/blockui/jquery.blockUI'.$updraft_min_or_not.'.js', array('jquery'), $jquery_blockui_enqueue_version);
 	
 		wp_enqueue_script('jquery-labelauty', UPDRAFTPLUS_URL.'/includes/labelauty/jquery-labelauty'.$updraft_min_or_not.'.js', array('jquery'), $enqueue_version);
 		wp_enqueue_style('jquery-labelauty', UPDRAFTPLUS_URL.'/includes/labelauty/jquery-labelauty'.$updraft_min_or_not.'.css', array(), $enqueue_version);
@@ -6023,6 +6038,24 @@ ENDHERE;
 		}
 		
 		return $version;
+	}
+
+	/**
+	 * Show which remote storage settings are partially setup error, or if manual auth is supported show the manual auth UI
+	 */
+	public function show_admin_warning_if_remote_storage_with_partial_setttings() {
+		if ((isset($_REQUEST['page']) && 'updraftplus' == $_REQUEST['page']) || (defined('DOING_AJAX') && DOING_AJAX)) {
+			$enabled_services = UpdraftPlus_Storage_Methods_Interface::get_enabled_storage_objects_and_ids(array_keys($this->storage_service_with_partial_settings));
+			foreach ($this->storage_service_with_partial_settings as $method => $method_name) {
+				if (empty($enabled_services[$method]['object']) || empty($enabled_services[$method]['instance_settings']) || !$enabled_services[$method]['object']->supports_feature('manual_authentication')) {
+					$this->show_admin_warning(sprintf(__('The following remote storage (%s) have only been partially configured, manual authorization is not supported with this remote storage, please try again and if the problem persists contact support.', 'updraftplus'), $method), 'error');
+				} else {
+					$this->show_admin_warning($enabled_services[$method]['object']->get_manual_authorisation_template(), 'error');
+				}
+			}
+		} else {
+			$this->show_admin_warning('UpdraftPlus: '.sprintf(__('The following remote storage (%s) have only been partially configured, if you are having problems you can try to manually authorise at the UpdraftPlus settings page.', 'updraftplus'), implode(', ', $this->storage_service_with_partial_settings)).' <a href="'.UpdraftPlus_Options::admin_page_url().'?page=updraftplus&amp;tab=settings">'.__('Return to UpdraftPlus configuration', 'updraftplus').'</a>', 'error');
+		}
 	}
 
 	/**

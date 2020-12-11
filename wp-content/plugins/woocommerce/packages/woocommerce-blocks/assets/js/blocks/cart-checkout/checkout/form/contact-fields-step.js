@@ -7,7 +7,7 @@ import { DebouncedValidatedTextInput } from '@woocommerce/base-components/text-i
 import { useCheckoutContext } from '@woocommerce/base-context';
 import {
 	CHECKOUT_ALLOWS_GUEST,
-	isExperimentalBuild,
+	CHECKOUT_ALLOWS_SIGNUP,
 } from '@woocommerce/block-settings';
 import CheckboxControl from '@woocommerce/base-components/checkbox-control';
 
@@ -27,11 +27,10 @@ const ContactFieldsStep = ( {
 		setShouldCreateAccount,
 	} = useCheckoutContext();
 
-	// "Create Account" checkbox is gated to dev builds only.
 	const createAccountUI = ! customerId &&
 		allowCreateAccount &&
 		CHECKOUT_ALLOWS_GUEST &&
-		isExperimentalBuild() && (
+		CHECKOUT_ALLOWS_SIGNUP && (
 			<CheckboxControl
 				className="wc-block-checkout__create-account"
 				label={ __(

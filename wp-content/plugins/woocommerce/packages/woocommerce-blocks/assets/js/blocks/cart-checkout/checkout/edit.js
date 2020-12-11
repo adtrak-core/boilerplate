@@ -17,9 +17,9 @@ import {
 	PRIVACY_URL,
 	TERMS_URL,
 	CHECKOUT_PAGE_ID,
-	isExperimentalBuild,
+	CHECKOUT_ALLOWS_SIGNUP,
 } from '@woocommerce/block-settings';
-import { getAdminLink } from '@woocommerce/settings';
+import { compareWithWooVersion, getAdminLink } from '@woocommerce/settings';
 import { createInterpolateElement } from 'wordpress-element';
 import { useRef } from '@wordpress/element';
 import {
@@ -55,6 +55,13 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 	} = attributes;
 	const { currentPostId } = useEditorContext();
 	const { current: savedCartPageId } = useRef( cartPageId );
+	// Checkout signup is feature gated to WooCommerce 4.7 and newer;
+	// uses updated my-account/lost-password screen from 4.7+ for
+	// setting initial password.
+	// Also implicitly gated to feature plugin, because Checkout
+	// block is gated to plugin
+	const showCreateAccountOption =
+		CHECKOUT_ALLOWS_SIGNUP && compareWithWooVersion( '4.7.0', '<=' );
 	return (
 		<InspectorControls>
 			{ currentPostId !== CHECKOUT_PAGE_ID && (
@@ -156,7 +163,7 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 					/>
 				) }
 			</PanelBody>
-			{ isExperimentalBuild() && (
+			{ showCreateAccountOption && (
 				<PanelBody
 					title={ __(
 						'Account options',
@@ -165,7 +172,7 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 				>
 					<ToggleControl
 						label={ __(
-							'Allow shopper to sign up for a user account during checkout',
+							'Allow shoppers to sign up for a user account during checkout',
 							'woocommerce'
 						) }
 						checked={ allowCreateAccount }
@@ -188,7 +195,7 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 				</p>
 				<ToggleControl
 					label={ __(
-						'Allow customers to optionally add order notes',
+						'Allow shoppers to optionally add order notes',
 						'woocommerce'
 					) }
 					checked={ showOrderNotes }

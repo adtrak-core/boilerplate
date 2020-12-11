@@ -32,12 +32,12 @@ class CreateAccount {
 	 * @return True if Checkout sign-up feature should be made available.
 	 */
 	private static function is_feature_enabled() {
-		// This new checkout signup flow is gated to dev builds for now.
-		// The main reason for this is that we are waiting on an new
-		// set-password endpoint/form in WooCommerce Core.
-		// When that's available we can review this and include in feature
-		// plugin alongside checkout block.
-		return Package::is_experimental_build();
+		// Checkout signup is feature gated to WooCommerce 4.7 and newer;
+		// uses updated my-account/lost-password screen from 4.7+ for
+		// setting initial password.
+		// This service is feature gated to plugin only, to match the
+		// availability of the Checkout block (feature plugin only).
+		return Package::is_feature_plugin_build() && defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '4.7', '>=' );
 	}
 
 	/**
@@ -99,31 +99,27 @@ class CreateAccount {
 	}
 
 	/**
-	 * Create a user account for specified order and request (if necessary).
+	 * Create a user account for specified request (if necessary).
 	 * If a new account is created:
-	 * - The order is associated with the account.
 	 * - The user is logged in.
 	 *
-	 * @param \WC_Order        $order   The order currently being processed.
 	 * @param \WP_REST_Request $request The current request object being handled.
 	 *
 	 * @throws Exception On error.
 	 * @return int The new user id, or 0 if no user was created.
 	 */
-	public function from_order_request( \WC_Order $order, \WP_REST_Request $request ) {
+	public function from_order_request( \WP_REST_Request $request ) {
 		if ( ! self::is_feature_enabled() || ! $this->should_create_customer_account( $request ) ) {
 			return 0;
 		}
 
 		$customer_id = $this->create_customer_account(
-			$order->get_billing_email(),
-			$order->get_billing_first_name(),
-			$order->get_billing_last_name()
+			$request['billing_address']['email'],
+			$request['billing_address']['first_name'],
+			$request['billing_address']['last_name']
 		);
-
 		// Log the customer in and associate with the order.
 		wc_set_customer_auth_cookie( $customer_id );
-		$order->set_customer_id( get_current_user_id() );
 
 		return $customer_id;
 	}
@@ -143,8 +139,19 @@ class CreateAccount {
 		}
 
 		// From here we know that the shopper is not logged in.
+		// check for whether account creation is enabled at the global level.
+		$checkout = WC()->checkout();
+		if ( ! $checkout instanceof \WC_Checkout ) {
+			// If checkout class is not available, we have major problems, don't create account.
+			return false;
+		}
 
-		if ( false === filter_var( get_option( 'woocommerce_enable_guest_checkout' ), FILTER_VALIDATE_BOOLEAN ) ) {
+		if ( false === filter_var( $checkout->is_registration_enabled(), FILTER_VALIDATE_BOOLEAN ) ) {
+			// Registration is not enabled for the store, so return false.
+			return false;
+		}
+
+		if ( true === filter_var( $checkout->is_registration_required(), FILTER_VALIDATE_BOOLEAN ) ) {
 			// Store requires an account for all checkouts (purchases).
 			// Create an account independent of shopper option in $request.
 			// Note - checkbox is not displayed to shopper in this case.
