@@ -192,6 +192,19 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 					if (!empty($response['message'])) $config['error_message'] = $response['message'];
 					$details_retrieved = true;
 					$cache_in_job = true;
+				} elseif (is_array($response) && isset($response['result']) && 'error' == $response['result'] && 'gettempcreds_exception2' == $response['code']) {
+					$this->log("An error occurred while fetching your Vault credentials. Please try again after a few minutes (".$response['code'].")");
+					$config['error'] = array('message' => 'fetch_credentials_error', 'values' => array($response['code']));
+					$config['accesskey'] = '';
+					$config['secretkey'] = '';
+					$config['path'] = '';
+					$config['sessiontoken'] = '';
+					$config['email'] = $opts['email']; // Pass along the email address used, as we need it to display our error message correctly
+					unset($config['quota']);
+					// We want to hide the AWS error message in this case
+					$config['error_message'] = __("An error occurred while fetching your Vault credentials. Please try again after a few minutes.", 'updraftplus');
+					$details_retrieved = true;
+					$cache_in_job = true;
 				} else {
 					if (is_array($response) && !empty($response['result'])) {
 						$cache_in_job = true;
@@ -473,7 +486,7 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 		);
 	}
 	
-	private function connected_html($vault_settings = false) {
+	private function connected_html($vault_settings = false, $error_message = false) {
 		if (!is_array($vault_settings)) {
 			$vault_settings = $this->get_options();
 		}
@@ -485,7 +498,12 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 
 		$ret .= '<br><strong>'.__('Quota:', 'updraftplus').'</strong> ';
 		if (!isset($vault_settings['quota']) || !is_numeric($vault_settings['quota']) || $vault_settings['quota'] < 0) {
-			$ret .= __('Unknown', 'updraftplus');
+			if (!$error_message) {
+				$ret .= __('Unknown', 'updraftplus');
+			} else {
+				$ret .= $error_message;
+				$ret .= $this->get_quota_recount_links();
+			}
 		} else {
 			$ret .= $this->s3_get_quota_info('text', $vault_settings['quota']);
 		}
@@ -580,12 +598,21 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 		} else {
 			$ret .= '0';
 		}
-
-		$ret .= ' - <a href="'.esc_attr($this->get_url('get_more_quota')).'">'.__('Get more quota', 'updraftplus').'</a> - <a href="'.UpdraftPlus::get_current_clean_url().'" id="updraftvault_recountquota">'.__('Refresh current status', 'updraftplus').'</a>';
-
+		
+		$ret .= $this->get_quota_recount_links();
+		
 		if ('text' == $format) set_transient('updraftvault_quota_text', $ret, 86400*3);
 
 		return ('text' == $format) ? $ret : $counted;
+	}
+	
+	/**
+	 * Build the links to recount used vault quota and to purchase more quota
+	 *
+	 * @return string 
+	 */
+	private function get_quota_recount_links() {
+		return ' - <a href="'.esc_attr($this->get_url('get_more_quota')).'">'.__('Get more quota', 'updraftplus').'</a> - <a href="'.UpdraftPlus::get_current_clean_url().'" id="updraftvault_recountquota">'.__('Refresh current status', 'updraftplus').'</a>';
 	}
 
 	public function credentials_test($posted_settings) {
@@ -597,7 +624,12 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 		$config = $this->get_config();
 
 		if (empty($config['accesskey']) && !empty($config['error_message'])) {
-			$results = array('html' => htmlspecialchars($config['error_message']), 'connected' => 0);
+			if (!empty($config['error']) && is_array($config['error']) && 'fetch_credentials_error' == $config['error']['message']) {
+				$opts = array('token' => 'unknown', 'email' => $config['email'], 'quota' => -1);
+				$results = array('html' => $this->connected_html($opts, $config['error_message']), 'connected' => 1);
+			} else {
+				$results = array('html' => htmlspecialchars($config['error_message']), 'connected' => 0);
+			}
 		} else {
 			// Now read the opts
 			$opts = $this->get_options();
@@ -761,6 +793,17 @@ class UpdraftPlus_BackupModule_updraftvault extends UpdraftPlus_BackupModule_s3 
 					}
 				}
 				return new WP_Error('authfailed', __('Your email address and password were not recognised by UpdraftPlus.Com', 'updraftplus'));
+				break;
+			case 'iamfailed':
+				if (!empty($response['authproblem'])) {
+					if ('gettempcreds_exception2' == $response['authproblem'] || 'gettempcreds_exception2' == $response['authproblem']) {
+						$authfail_error = new WP_Error('authfailed', __('An error occurred while fetching your Vault credentials. Please try again after a few minutes.'));
+					} else {
+						$authfail_error = new WP_Error('authfailed', __('An unknown error occurred while connecting to Vault. Please try again.'));
+					}
+					return $authfail_error;
+				}
+				return new WP_Error('unknown_response', __('UpdraftPlus.Com returned a response, but we could not understand it', 'updraftplus'));
 				break;
 			default:
 				return new WP_Error('unknown_response', __('UpdraftPlus.Com returned a response, but we could not understand it', 'updraftplus'));

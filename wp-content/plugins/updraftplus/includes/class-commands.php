@@ -850,7 +850,7 @@ class UpdraftPlus_Commands {
 		if (true !== $result) {
 			if (is_wp_error($result)) {
 				$connection_errors = array();
-				foreach ($result->get_error_messages() as $key => $msg) {
+				foreach ($result->get_error_messages() as $msg) {
 					$connection_errors[] = $msg;
 				}
 			} else {

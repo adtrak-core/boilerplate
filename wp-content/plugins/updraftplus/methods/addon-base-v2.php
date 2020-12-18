@@ -129,13 +129,13 @@ abstract class UpdraftPlus_RemoteStorage_Addons_Base_v2 extends UpdraftPlus_Back
 	/**
 	 * This function handles bootstrapping and calling the remote methods delete function
 	 *
-	 * @param boolean $ret       - A boolean value
-	 * @param array   $files     - An array of files to delete.
-	 * @param boolean $ignore_it - unused parameter
+	 * @param Boolean $ret       - A boolean value
+	 * @param Array   $files     - An array of files to delete.
+	 * @param Boolean $ignore_it - unused parameter
 	 *
 	 * @return - On success returns true, false or WordPress Error on failure
 	 */
-	public function delete_files($ret, $files, $ignore_it = false) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+	public function delete_files($ret, $files, $ignore_it = false) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- $ignore_it is unused
 
 		global $updraftplus;
 
@@ -347,7 +347,7 @@ abstract class UpdraftPlus_RemoteStorage_Addons_Base_v2 extends UpdraftPlus_Back
 		
 		if (is_wp_error($storage)) {
 			echo __("Failed", 'updraftplus').": ";
-			foreach ($storage->get_error_messages() as $key => $msg) {
+			foreach ($storage->get_error_messages() as $msg) {
 				echo "$msg\n";
 			}
 			return;

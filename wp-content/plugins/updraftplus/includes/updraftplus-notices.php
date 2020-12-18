@@ -113,14 +113,13 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 				'supported_positions' => $this->anywhere,
 			),
 			'rate' => array(
-				'prefix' => '',
-				'title' => __('Like UpdraftPlus and can spare one minute?', 'updraftplus'),
-				'text' => __('Please help UpdraftPlus by giving a positive review at wordpress.org.', 'updraftplus'),
-				'image' => 'notices/updraft_logo.png',
+				'text' => __("Hey - We noticed UpdraftPlus has kept your site safe for a while.  If you like us, please consider leaving a positive review to spread the word.  Or if you have any issues or questions please leave us a support message", 'updraftplus') . ' <a href="https://wordpress.org/support/plugin/updraftplus/" target="_blank">' . __('here', 'updraftplus') . '.</a><br>' . __('Thank you so much!', 'updraftplus') . '<br><br> - <b>' . __('Team Updraft', 'updraftplus') . '</b><br>',
+				'image' => 'notices/ud_smile.png',
 				'button_link' => 'https://wordpress.org/support/plugin/updraftplus/reviews/?rate=5#new-post',
 				'button_meta' => 'review',
-				'dismiss_time' => 'dismiss_notice',
-				'supported_positions' => $this->anywhere,
+				'dismiss_time' => 'dismiss_review_notice',
+				'supported_positions' => $this->dashboard_top,
+				'validity_function' => 'show_rate_notice'
 			),
 			'translation_needed' => array(
 				'prefix' => '',
@@ -217,20 +216,6 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 				'valid_to' => '2020-11-30 23:59:59',
 				'supported_positions' => $this->dashboard_top_or_report,
 			),
-			'christmas' => array(
-				'prefix' => '',
-				'title' => __('Christmas sale - 20% off UpdraftPlus Premium until December 25th', 'updraftplus'),
-				'text' => __('To benefit, use this discount code:', 'updraftplus').' ',
-				'image' => 'notices/christmas.png',
-				'button_link' => 'https://updraftplus.com/landing/updraftplus-premium',
-				'campaign' => 'christmas',
-				'button_meta' => 'updraftplus',
-				'dismiss_time' => 'dismiss_season',
-				'discount_code' => 'christmassale2020',
-				'valid_from' => '2020-12-01 00:00:00',
-				'valid_to' => '2020-12-25 23:59:59',
-				'supported_positions' => $this->dashboard_top_or_report,
-			),
 			'newyear' => array(
 				'prefix' => '',
 				'title' => __('Happy New Year - 20% off UpdraftPlus Premium until January 14th', 'updraftplus'),
@@ -310,12 +295,34 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 	protected function translation_needed($plugin_base_dir = null, $product_name = null) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable, Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
 		return parent::translation_needed(UPDRAFTPLUS_DIR, 'updraftplus');
 	}
+
+	/**
+	 * This function will check if we should display the rate notice or not
+	 *
+	 * @return boolean - to indicate if we should show the notice or not
+	 */
+	protected function show_rate_notice() {
+		global $updraftplus;
+
+		$backup_history = UpdraftPlus_Backup_History::get_history();
+		
+		$backup_dir = $updraftplus->backups_dir_location();
+		// N.B. Not an exact proxy for the installed time; they may have tweaked the expert option to move the directory
+		$installed = @filemtime($backup_dir.'/index.html');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		$installed_for = time() - $installed;
+
+		if (!empty($backup_history) && $installed && $installed_for > 28*86400) {
+			return true;
+		}
+
+		return false;
+	}
 	
-	protected function wp_optimize_installed($plugin_base_dir = null, $product_name = null) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
+	protected function wp_optimize_installed($plugin_base_dir = null, $product_name = null) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Filter use
 		if (!function_exists('get_plugins')) include_once(ABSPATH.'wp-admin/includes/plugin.php');
 		$plugins = get_plugins();
 
-		foreach ($plugins as $key => $value) {
+		foreach ($plugins as $value) {
 			if ('wp-optimize' == $value['TextDomain']) {
 				return false;
 			}
@@ -350,12 +357,14 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 		$time_now = defined('UPDRAFTPLUS_NOTICES_FORCE_TIME') ? UPDRAFTPLUS_NOTICES_FORCE_TIME : time();
 	
 		$notice_dismiss = ($time_now < UpdraftPlus_Options::get_updraft_option('dismissed_general_notices_until', 0));
+		$review_dismiss = ($time_now < UpdraftPlus_Options::get_updraft_option('dismissed_review_notice', 0));
 		$seasonal_dismiss = ($time_now < UpdraftPlus_Options::get_updraft_option('dismissed_season_notices_until', 0));
 		$autobackup_dismiss = ($time_now < UpdraftPlus_Options::get_updraft_option('updraftplus_dismissedautobackup', 0));
 
 		$dismiss = false;
 
 		if ('dismiss_notice' == $dismiss_time) $dismiss = $notice_dismiss;
+		if ('dismiss_review_notice' == $dismiss_time) $dismiss = $review_dismiss;
 		if ('dismiss_season' == $dismiss_time) $dismiss = $seasonal_dismiss;
 		if ('dismissautobackup' == $dismiss_time) $dismiss = $autobackup_dismiss;
 

@@ -102,7 +102,7 @@ class UpdraftPlus_S3_Compat {
 	 * @param Null|String    $region        Region. Currently unused, but harmonised with UpdraftPlus_S3 class
 	 * @return void
 	 */
-	public function __construct($access_key = null, $secret_key = null, $use_ssl = true, $ssl_ca_cert = true, $endpoint = null, $session_token = null, $region = null) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+	public function __construct($access_key = null, $secret_key = null, $use_ssl = true, $ssl_ca_cert = true, $endpoint = null, $session_token = null, $region = null) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- $region is unused 
 		if (null !== $access_key && null !== $secret_key)
 			$this->setAuth($access_key, $secret_key, $session_token);
 
@@ -361,7 +361,7 @@ class UpdraftPlus_S3_Compat {
 	 * @param  boolean $return_common_prefixes Set to true to return CommonPrefixes
 	 * @return array
 	 */
-	public function getBucket($bucket, $prefix = null, $marker = null, $max_keys = null, $delimiter = null, $return_common_prefixes = false) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+	public function getBucket($bucket, $prefix = null, $marker = null, $max_keys = null, $delimiter = null, $return_common_prefixes = false) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- $return_common_prefixes is unused (commented out) so kept in just incase it is reused again
 		try {
 			if (0 == $max_keys) $max_keys = null;
 			
@@ -558,7 +558,7 @@ class UpdraftPlus_S3_Compat {
 
 		if ($handle = fopen($file_path, "rb")) {
 			if ($file_offset > 0) fseek($handle, $file_offset);
-			$bytes_read = 0;
+			$bytes_read = 0;// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Its used below on like 564
 			while ($file_bytes > 0 && $read = fread($handle, max($file_bytes, 131072))) {
 				$file_bytes = $file_bytes - strlen($read);
 				$bytes_read += strlen($read);

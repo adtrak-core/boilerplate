@@ -131,7 +131,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 
 			if (!empty($path)) {
 				$nodes = explode('/', $path);
-				foreach ($nodes as $i => $element) {
+				foreach ($nodes as $element) {
 					$found = array();
 					$sub_items = $this->get_subitems($current_parent_id, 'dir', $element);
 
@@ -1027,7 +1027,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 	 * @param Array        $sizeinfo - unused here
 	 * @return Boolean|String - either a boolean true or an error code string
 	 */
-	public function delete($files, $data = null, $sizeinfo = array()) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found
+	public function delete($files, $data = null, $sizeinfo = array()) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- $data and $sizeinfo unused
 
 		if (is_string($files)) $files = array($files);
 

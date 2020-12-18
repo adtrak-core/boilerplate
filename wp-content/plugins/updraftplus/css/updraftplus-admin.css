@@ -3074,6 +3074,10 @@ div#updraft-wrap a {
 	margin-top: 13px;
 }
 
+body.update-core-php #updraft_inpage_backup h2:nth-child(1) {
+	margin-top: 1em !important;
+}
+
 /* Restoration page */
 
 .updraft_restore_container {

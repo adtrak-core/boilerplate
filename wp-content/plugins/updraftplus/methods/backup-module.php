@@ -169,7 +169,7 @@ abstract class UpdraftPlus_BackupModule {
 		$name = '';
 
 		if (is_array($field)) {
-			foreach ($field as $key => $value) {
+			foreach ($field as $value) {
 				$id .= '_'.$value;
 				$name .= '['.$value.']';
 			}

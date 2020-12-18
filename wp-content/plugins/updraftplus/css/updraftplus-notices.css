@@ -5,9 +5,37 @@
 	overflow: hidden;
 }
 
+.updraft_review_notice_container {
+	padding: 12px;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.updraft_advert_button_container {
+	margin-bottom: 10px;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	    align-items: center;
+}
+
+.updraft_advert_button_container .dashicons {
+	margin-left: 10px;
+}
+
 .updraft_advert_content_left {
 	float: none;
 	width: 65px;
+}
+
+.updraft_advert_content_left_extra {
+	float: none;
+	width: 100px;
+	padding-right: 15px;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	    align-items: center;
 }
 
 .updraft_advert_content_right {
@@ -57,7 +85,7 @@ h4.updraft_advert_heading {
 
 @media screen and (min-width: 560px) {
 
-	.updraft_advert_content_left {
+	.updraft_advert_content_left, .updraft_advert_content_left_extra {
 		float: left;
 	}
 

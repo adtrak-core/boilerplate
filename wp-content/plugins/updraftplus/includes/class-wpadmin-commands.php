@@ -76,6 +76,20 @@ class UpdraftPlus_WPAdmin_Commands extends UpdraftPlus_Commands {
 		// return array('response' => $response['response'], 'status' => $response['status'], 'log' => $response['log'] );
 	}
 	
+	/**
+	 * Function to retrieve raw backup history given a timestamp and nonce
+	 *
+	 * @param Array $data - Data parameter; keys: timestamp, nonce
+	 *
+	 * @return String if empty result will be empty string
+	 */
+	public function rawbackup_history($data) {
+
+		$history = UpdraftPlus_Backup_History::get_history();
+
+		return $this->_updraftplus_admin->raw_backup_info($history, $data['timestamp'], $data['nonce'], null);
+	}
+	
 	public function updraftcentral_delete_key($params) {
 		global $updraftcentral_main;
 		if (!is_a($updraftcentral_main, 'UpdraftCentral_Main')) {
@@ -299,6 +313,22 @@ class UpdraftPlus_WPAdmin_Commands extends UpdraftPlus_Commands {
 	 */
 	public function dismiss_notice() {
 		UpdraftPlus_Options::update_updraft_option('dismissed_general_notices_until', time() + 84*86400);
+		return array();
+	}
+
+	/**
+	 * This function is called via ajax and will update the review notice dismiss time
+	 *
+	 * @param array $data - an array that contains the dismiss notice for time
+	 *
+	 * @return array - an empty array
+	 */
+	public function dismiss_review_notice($data) {
+		if (empty($data['dismiss_forever'])) {
+			UpdraftPlus_Options::update_updraft_option('dismissed_review_notice', time() + 84*86400);
+		} else {
+			UpdraftPlus_Options::update_updraft_option('dismissed_review_notice', 100 * (365.25 * 86400));
+		}
 		return array();
 	}
 
