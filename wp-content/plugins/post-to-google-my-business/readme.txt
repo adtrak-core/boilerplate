@@ -4,7 +4,7 @@ Donate link: https://tycoonmedia.net/?utm_source=repository&utm_medium=link&utm_
 Tags: google my business, google, business, auto publish, posts, post, local search, google my business posts, google places, google plus, google+
 Requires at least: 4.9.0
 Tested up to: 5.6
-Stable tag: 2.2.31
+Stable tag: 2.2.33
 Requires PHP: 5.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,13 @@ Post to Google My Business relies on the WP Cron system to send out scheduled po
 6. Auto-post template settings
 
 == Changelog ==
+
+= 2.2.33 =
+* Add extra error message for when Product post type is chosen
+* Fix block editor issue for custom post types that don't have custom-fields enabled
+
+= 2.2.32 =
+* Use wp_get_http_headers instead of get_headers for better compatibility
 
 = 2.2.31 =
 * Testing on WP 5.6, small fixes for PHP8 compatibility

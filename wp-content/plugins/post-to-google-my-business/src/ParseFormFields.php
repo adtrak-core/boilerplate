@@ -70,6 +70,10 @@ class ParseFormFields
             "..."
         );
         $topicType = $this->form_fields['mbp_topic_type'];
+        //Throw an error when the PRODUCT type is chosen
+        if ( $topicType == 'PRODUCT' ) {
+            throw new InvalidArgumentException( __( 'Product posts are no longer supported by the Google My Business API. Please choose a different GMB post type.', 'post-to-google-my-business' ) );
+        }
         $localPost = new LocalPost( $location->languageCode, $summary, $topicType );
         //Set alert type
         if ( $topicType === 'ALERT' ) {
@@ -200,8 +204,11 @@ class ParseFormFields
         if ( $width < 250 || $height < 250 ) {
             throw new InvalidArgumentException( sprintf( __( 'Post image must be at least 250x250px. Selected image is %dx%dpx', 'post-to-google-my-business' ), $width, $height ) );
         }
-        $headers = get_headers( $url, true );
-        $image_file_size = intval( $headers['Content-Length'] );
+        $headers = wp_get_http_headers( $url );
+        if ( !$headers || !isset( $headers['content-length'] ) ) {
+            throw new InvalidArgumentException( __( 'Could not detect post image size. Make sure the image file/url is accessible.', 'post-to-google-my-business' ) );
+        }
+        $image_file_size = intval( $headers['content-length'] );
         
         if ( $image_file_size < 10240 ) {
             throw new InvalidArgumentException( sprintf( __( 'Post image file too small, must be at least 10 KB. Selected image is %s', 'post-to-google-my-business' ), size_format( $image_file_size ) ) );

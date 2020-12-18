@@ -82,6 +82,10 @@ if ( !class_exists( 'MBP_Metabox' ) ) {
         public function register_gutenberg_meta()
         {
             foreach ( $this->enabled_post_types as $post_type ) {
+                //Gutenberg will throw an error if custom-fields is not enabled for the post type
+                if ( !post_type_supports( $post_type, 'custom-fields' ) ) {
+                    continue;
+                }
                 add_filter(
                     "rest_pre_insert_{$post_type}",
                     [ $this, 'catch_rest_request' ],
@@ -105,7 +109,8 @@ if ( !class_exists( 'MBP_Metabox' ) ) {
             /*
              * Not sure why this method isn't used in enqueue_metabox_scripts(), take care...
              */
-            if ( !in_array( get_post_type(), $this->enabled_post_types ) ) {
+            $post_type = get_post_type();
+            if ( !in_array( $post_type, $this->enabled_post_types ) || !post_type_supports( $post_type, 'custom-fields' ) ) {
                 return;
             }
             wp_enqueue_script(
