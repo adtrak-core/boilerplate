@@ -28,7 +28,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_IdentityToolkit extends Google_Service
+class Google_Service_IdentityToolkit extends UDP_Google_Service
 {
 
 

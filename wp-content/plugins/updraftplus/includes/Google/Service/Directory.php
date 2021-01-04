@@ -30,7 +30,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_Directory extends Google_Service
+class Google_Service_Directory extends UDP_Google_Service
 {
   /** View and manage your Chrome OS devices' metadata. */
   const ADMIN_DIRECTORY_DEVICE_CHROMEOS =

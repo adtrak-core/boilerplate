@@ -142,7 +142,7 @@ function set_email_report_storage_interface(value) {
 	jQuery('#cb_not_email_storage_label').css('display', true === value ? 'none' : 'inline');
 	jQuery('#cb_email_storage_label').css('display', true === value ? 'inline' : 'none');
 	if (true === value) {
-		jQuery('#updraft-navtab-settings-content #updraft_report_row_no_addon input#updraft_email').click(function(e) {
+		jQuery('#updraft-navtab-settings-content #updraft_report_row_no_addon input#updraft_email').on('click', function(e) {
 			return false;
 		});
 	} else {
@@ -439,7 +439,7 @@ function updraft_delete_old_dirs() {
 }
 
 function updraft_initiate_restore(whichset) {
-	jQuery('#updraft-navtab-backups-content .updraft_existing_backups button[data-backup_timestamp="'+whichset+'"]').click();
+	jQuery('#updraft-navtab-backups-content .updraft_existing_backups button[data-backup_timestamp="'+whichset+'"]').trigger('click');
 }
 
 function updraft_restore_setoptions(entities) {
@@ -1180,13 +1180,13 @@ function updraft_intervals_monthly_or_not(selector_id, now_showing) {
 		var select_mday = (updraft_interval_month_val === false) ? 1 : updraft_interval_month_val;
 		// Convert from day of the month (ordinal) to option index (starts at 0)
 		select_mday = select_mday - 1;
-		jQuery(selector+" option:eq("+select_mday+")").prop('selected', true);
+		jQuery(selector+" option").eq(select_mday).prop('selected', true);
 	} else {
 		// Save the old value
 		updraft_interval_month_val = jQuery(selector+' option:selected').val();
 		jQuery(selector).html(updraftlion.dayselector);
 		var select_day = (updraft_interval_week_val === false) ? 1 : updraft_interval_week_val;
-		jQuery(selector+" option:eq("+select_day+")").prop('selected', true);
+		jQuery(selector+" option").eq(select_day).prop('selected', true);
 	}
 }
 
@@ -1425,7 +1425,7 @@ function zip_files_jstree(entity, timestamp, type, findex) {
 		}
 	});
 
-	jQuery('#updraft_zip_download_item').click(function(event) {
+	jQuery('#updraft_zip_download_item').on('click', function(event) {
 		
 		event.preventDefault();
 		
@@ -1903,7 +1903,7 @@ jQuery(function($) {
 	});
 
 	// Advanced settings new menu button listeners
-	$('.expertmode .advanced_settings_container .advanced_tools_button').click(function() {
+	$('.expertmode .advanced_settings_container .advanced_tools_button').on('click', function() {
 		advanced_tool_hide($(this).attr("id"));
 	});
 	
@@ -1931,7 +1931,7 @@ jQuery(function($) {
 		$('#updraftcentral_keys_table').slideDown();
 	});
 	
-	$('#updraftcentral_keycreate_altmethod_moreinfo_get').click(function(e) {
+	$('#updraftcentral_keycreate_altmethod_moreinfo_get').on('click', function(e) {
 		e.preventDefault();
 		$(this).remove();
 		$('#updraftcentral_keycreate_altmethod_moreinfo').slideDown();
@@ -2389,7 +2389,7 @@ jQuery(function($) {
 
 				} else {
 					updraftplus_com_login.hide_loader();
-					$('#updraft-navtab-addons-content .wrap .updraftplus_com_login').submit();
+					$('#updraft-navtab-addons-content .wrap .updraftplus_com_login').trigger('submit');
 				}
 			} else if (response.hasOwnProperty('error')) {
 				updraftplus_com_login.hide_loader();
@@ -2475,7 +2475,7 @@ jQuery(function($) {
 						container.find('.tfa_fields').hide();
 						container.find('.non_tfa_fields').show();
 						container.find('input#updraftplus-addons_options_two_factor_code').val('');
-						container.find('input#updraftplus-addons_options_password').val('').focus();
+						container.find('input#updraftplus-addons_options_password').val('').trigger('focus');
 					}
 					if ('no_key_found' === data.code) {
 						this.stage = 'create_key';
@@ -2501,7 +2501,7 @@ jQuery(function($) {
 					$('#updraft-navtab-addons-content .wrap .updraftplus_com_login_status').html('').hide();
 					container.find('.non_tfa_fields').hide();
 					container.find('.tfa_fields').show();
-					container.find('input#updraftplus-addons_options_two_factor_code').focus();
+					container.find('input#updraftplus-addons_options_two_factor_code').trigger('focus');
 					this.stage = 'connect_udc_TFA';
 				}
 
@@ -2516,7 +2516,7 @@ jQuery(function($) {
 
 					// submit the form (to reload the page).
 					setTimeout(function() {
-						$('#updraft-navtab-addons-content .wrap form.updraftplus_com_login').submit();
+						$('#updraft-navtab-addons-content .wrap form.updraftplus_com_login').trigger('submit');
 					}, 1000);
 				}
 
@@ -2552,7 +2552,7 @@ jQuery(function($) {
 				if (response.hasOwnProperty('tfa_enabled') && true == response.tfa_enabled) {
 					$('#updraft-navtab-migrate-content .updraft_migrate_widget_module_content .updraft_migrate_widget_temporary_clone_stage1 .non_tfa_fields').hide();
 					$('#updraft-navtab-migrate-content .updraft_migrate_widget_module_content .updraft_migrate_widget_temporary_clone_stage1 .tfa_fields').show();
-					$('#updraft-navtab-migrate-content .updraft_migrate_widget_module_content .updraft_migrate_widget_temporary_clone_stage1 input#temporary_clone_options_two_factor_code').focus();
+					$('#updraft-navtab-migrate-content .updraft_migrate_widget_module_content .updraft_migrate_widget_temporary_clone_stage1 input#temporary_clone_options_two_factor_code').trigger('focus');
 				}
 
 				if ('authenticated' === response.status) {
@@ -2824,7 +2824,7 @@ jQuery(function($) {
 
 	$('#updraft-navtab-settings-content #remote-storage-holder').on('click', '.updraftplusmethod .updraft_edit_label_instance', function(e) {
 		$(this).find('span').hide();
-		$(this).attr('contentEditable', true).focus();
+		$(this).attr('contentEditable', true).trigger('focus');
 	});
 	
 	$('#updraft-navtab-settings-content #remote-storage-holder').on('keyup', '.updraftplusmethod .updraft_edit_label_instance', function(e) {
@@ -2844,7 +2844,7 @@ jQuery(function($) {
 		if (13 === e.which) {
 			$(this).attr('contentEditable', false);
 			$(this).find('span').show();
-			$(this).blur();
+			$(this).trigger('blur');
 		}
 	});
 
@@ -2870,7 +2870,7 @@ jQuery(function($) {
 			operator_options: updraftlion.conditional_logic.operator_options,
 		};
 		var html = template(context);
-		jQuery(html).hide().insertAfter('.' + method + '_add_instance_container:first').show('slow');
+		jQuery(html).hide().insertAfter('.' + method + '_add_instance_container').first().show('slow');
 	}
 
 	/**
@@ -2988,12 +2988,12 @@ jQuery(function($) {
 		updraft_check_same_times();
 	});
 	
-	$('#backupnow_includefiles_showmoreoptions').click(function(e) {
+	$('#backupnow_includefiles_showmoreoptions').on('click', function(e) {
 		e.preventDefault();
 		$('#backupnow_includefiles_moreoptions').toggle();
 	});
 
-	$('#backupnow_database_showmoreoptions').click(function(e) {
+	$('#backupnow_database_showmoreoptions').on('click', function(e) {
 		e.preventDefault();
 		$('#backupnow_database_moreoptions').toggle();
 	});
@@ -3009,7 +3009,7 @@ jQuery(function($) {
 	});
 	
 	// For Advanced Tools > Site information > Web-server disk space in use by UpdraftPlus
-	$('.advanced_settings_content a.updraft_diskspaceused_update').click(function(e) {
+	$('.advanced_settings_content a.updraft_diskspaceused_update').on('click', function(e) {
 		e.preventDefault();
 		jQuery('.advanced_settings_content .updraft_diskspaceused').html('<em>'+updraftlion.calculating+'</em>');
 		updraft_send_command('get_fragment', { fragment: 'disk_usage', data: 'updraft' }, function(response) {
@@ -3017,23 +3017,23 @@ jQuery(function($) {
 		}, { type: 'GET' });
 	});
 	
-	$('#updraft-navtab-backups-content a.updraft_uploader_toggle').click(function(e) {
+	$('#updraft-navtab-backups-content a.updraft_uploader_toggle').on('click', function(e) {
 		e.preventDefault();
 		$('#updraft-plupload-modal').slideToggle();
 	});
 	
-	$('#updraft-navtab-backups-content a.updraft_rescan_local').click(function(e) {
+	$('#updraft-navtab-backups-content a.updraft_rescan_local').on('click', function(e) {
 		e.preventDefault();
 		updraft_updatehistory(1, 0);
 	});
 	
-	$('#updraft-navtab-backups-content a.updraft_rescan_remote').click(function(e) {
+	$('#updraft-navtab-backups-content a.updraft_rescan_remote').on('click', function(e) {
 		e.preventDefault();
 		if (!confirm(updraftlion.remote_scan_warning)) return;
 		updraft_updatehistory(1, 1);
 	});
 	
-	$('#updraftplus-remote-rescan-debug').click(function(e) {
+	$('#updraftplus-remote-rescan-debug').on('click', function(e) {
 		e.preventDefault();
 		updraft_updatehistory(1, 1, 1);
 	});
@@ -3047,7 +3047,7 @@ jQuery(function($) {
 			} else {
 				jQuery('.updraftcentral_wizard_self_hosted_stage2').show();
 				jQuery('#updraftcentral_keycreate_mothership_firewalled_container').slideDown();
-				jQuery('#updraftcentral_keycreate_mothership').focus();
+				jQuery('#updraftcentral_keycreate_mothership').trigger('focus');
 			}
 		} else {
 			jQuery('#updraftcentral_keycreate_mothership').prop('disabled', true);
@@ -3259,7 +3259,7 @@ jQuery(function($) {
 		});
 	});
 	
-	jQuery('#updraft_reset_sid').click(function(e) {
+	jQuery('#updraft_reset_sid').on('click', function(e) {
 		e.preventDefault();
 		updraft_send_command('reset_site_id', null, function(response) {
 			jQuery('#updraft_show_sid').html(response);
@@ -3269,7 +3269,7 @@ jQuery(function($) {
 	jQuery("#updraft-navtab-settings-content form input:not('.udignorechange'), #updraft-navtab-settings-content form select").on('change', function(e) {
 		updraft_settings_form_changed = true;
 	});
-	jQuery("#updraft-navtab-settings-content form input[type='submit']").click(function (e) {
+	jQuery("#updraft-navtab-settings-content form input[type='submit']").on('click', function (e) {
 		updraft_settings_form_changed = false;
 	});
 	
@@ -3623,7 +3623,7 @@ jQuery(function($) {
 					$('#updraft_restorer_restore_options').val(restore_options);
 					// This must be done last, as it wipes out the section with #updraft_restoreoptions_ui
 					$('#updraft-restore-modal-stage2a').html(updraftlion.restore_proceeding);
-					$('#updraft_restore_form').submit();
+					$('#updraft_restore_form').trigger('submit');
 					// In progress; prevent the button being pressed again
 					updraft_restore_stage = 4;
 				}
@@ -3714,7 +3714,7 @@ jQuery(function($) {
 		buttons: backupnow_modal_buttons,
 		create: function () {
 			$(this).closest(".ui-dialog")
-				.find(".ui-dialog-buttonpane .ui-button:first") // the first button
+				.find(".ui-dialog-buttonpane .ui-button").first() // the first button
 				.addClass("js-tour-backup-now-button");
 		}
 	});
@@ -3723,7 +3723,7 @@ jQuery(function($) {
 		autoOpen: false, height: 600, width: '75%', modal: true,
 	});
 	
-	jQuery('#updraft-navtab-settings-content .enableexpertmode').click(function() {
+	jQuery('#updraft-navtab-settings-content .enableexpertmode').on('click', function() {
 		jQuery('#updraft-navtab-settings-content .expertmode').fadeIn();
 		jQuery('#updraft-navtab-settings-content .enableexpertmode').off('click');
 		return false;
@@ -3749,7 +3749,7 @@ jQuery(function($) {
 		}
 	}
 	
-	jQuery('#updraft-navtab-settings-content .updraft_include_entity').click(function() {
+	jQuery('#updraft-navtab-settings-content .updraft_include_entity').on('click', function() {
 		var has_exclude_field = jQuery(this).data('toggle_exclude_field');
 		if (has_exclude_field) {
 			setup_file_entity_exclude_field(has_exclude_field, false);
@@ -3772,7 +3772,7 @@ jQuery(function($) {
 		event.preventDefault();
 		var wrapper = jQuery(this).hide().closest('.updraft_exclude_entity_wrapper');
 		var input = wrapper.find('input');
-		input.prop('readonly', false).focus();
+		input.prop('readonly', false).trigger('focus');
 
 		// place carret at the end of the text
 		var input_val = input.val();
@@ -3812,11 +3812,11 @@ jQuery(function($) {
 		width: 520,
 		height: 'auto',
 		open: function(event,ui) {
-			$(this).parent().focus();
+			$(this).parent().trigger('focus');
 		}
 	});
 	
-	jQuery('.updraft_exclude_container .updraft_add_exclude_item').click(function(event) {
+	jQuery('.updraft_exclude_container .updraft_add_exclude_item').on('click', function(event) {
 		event.preventDefault();
 		var backup_entity = jQuery(this).data('include-backup-file');
 		jQuery('#updraft_exclude_modal_for').val(backup_entity);
@@ -3828,7 +3828,7 @@ jQuery(function($) {
 		jQuery('#updraft_exclude_modal').dialog('open');
 	});
 	
-	jQuery('.updraft-exclude-link').click(function(event) {
+	jQuery('.updraft-exclude-link').on('click', function(event) {
 		event.preventDefault();
 		var panel = jQuery(this).data('panel');
 		if ('file-dir' == panel) {
@@ -3873,7 +3873,7 @@ jQuery(function($) {
 		jQuery('.updraft-exclude-panel[data-panel='+panel+']').slideDown();
 	});
 	
-	jQuery('.updraft-exclude-modal-reset').click(function(event) {
+	jQuery('.updraft-exclude-modal-reset').on('click', function(event) {
 		event.preventDefault();
 		jQuery('#updraft_exclude_files_folders_jstree').jstree("destroy");
 		jQuery('#updraft_exclude_extension_field').val('');
@@ -3882,7 +3882,7 @@ jQuery(function($) {
 		jQuery('#updraft_exclude_modal_main').slideDown();
 	});
 	
-	jQuery('.updraft-exclude-submit').click(function() {
+	jQuery('.updraft-exclude-submit').on('click', function() {
 		var panel = jQuery(this).data('panel');
 		var exclude_item_val = '';
 		switch (panel) {
@@ -3948,24 +3948,24 @@ jQuery(function($) {
 		jQuery('#updraft-navtab-settings-content .'+active_class).show();
 	});
 
-	jQuery('#updraft-navtab-settings-content a.updraft_show_decryption_widget').click(function(e) {
+	jQuery('#updraft-navtab-settings-content a.updraft_show_decryption_widget').on('click', function(e) {
 		e.preventDefault();
 		jQuery('#updraftplus_db_decrypt').val(jQuery('#updraft_encryptionphrase').val());
 		jQuery('#updraft-manualdecrypt-modal').slideToggle();
 	});
 	
-	jQuery('#updraftplus-phpinfo').click(function(e) {
+	jQuery('#updraftplus-phpinfo').on('click', function(e) {
 		e.preventDefault();
 		updraft_iframe_modal('phpinfo', updraftlion.phpinfo);
 	});
 
-	jQuery('#updraftplus-rawbackuphistory').click(function(e) {
+	jQuery('#updraftplus-rawbackuphistory').on('click', function(e) {
 		e.preventDefault();
 		updraft_iframe_modal('rawbackuphistory', updraftlion.raw);
 	});
 
 	// + Added addons navtab
-	jQuery('#updraft-navtab-status').click(function(e) {
+	jQuery('#updraft-navtab-status').on('click', function(e) {
 		e.preventDefault();
 		updraft_open_main_tab('status');
 		updraft_page_is_visible = 1;
@@ -3973,12 +3973,12 @@ jQuery(function($) {
 		// Refresh the console, as its next update might be far away
 		updraft_activejobs_update(true);
 	});
-	jQuery('#updraft-navtab-expert').click(function(e) {
+	jQuery('#updraft-navtab-expert').on('click', function(e) {
 		e.preventDefault();
 		updraft_open_main_tab('expert');
 		updraft_page_is_visible = 1;
 	});
-	jQuery('#updraft-navtab-settings, #updraft-navtab-settings2, #updraft_backupnow_gotosettings').click(function(e) {
+	jQuery('#updraft-navtab-settings, #updraft-navtab-settings2, #updraft_backupnow_gotosettings').on('click', function(e) {
 		e.preventDefault();
 		// These next two should only do anything if the relevant selector was clicked
 		jQuery(this).parents('.updraftmessage').remove();
@@ -3986,21 +3986,21 @@ jQuery(function($) {
 		updraft_open_main_tab('settings');
 		updraft_page_is_visible = 1;
 	});
-	jQuery('#updraft-navtab-addons').click(function(e) {
+	jQuery('#updraft-navtab-addons').on('click', function(e) {
 		e.preventDefault();
 		jQuery(this).addClass('b#nav-tab-active');
 		updraft_open_main_tab('addons');
 		updraft_page_is_visible = 1;
 	});
 
-	jQuery('#updraft-navtab-backups').click(function(e) {
+	jQuery('#updraft-navtab-backups').on('click', function(e) {
 		e.preventDefault();
 		updraft_console_focussed_tab = 'backups';
 		updraft_historytimertoggle(1);
 		updraft_open_main_tab('backups');
 	});
 	
-	jQuery('#updraft-navtab-migrate').click(function(e) {
+	jQuery('#updraft-navtab-migrate').on('click', function(e) {
 		e.preventDefault();
 		jQuery('#updraft_migrate_tab_alt').html('').hide();
 		updraft_open_main_tab('migrate');
@@ -4161,17 +4161,17 @@ jQuery(function($) {
 	}
 	
 	// Functions in the debugging console
-	jQuery('#updraftplus_httpget_go').click(function(e) {
+	jQuery('#updraftplus_httpget_go').on('click', function(e) {
 		e.preventDefault();
 		updraftplus_httpget_go(0);
 	});
 
-	jQuery('#updraftplus_httpget_gocurl').click(function(e) {
+	jQuery('#updraftplus_httpget_gocurl').on('click', function(e) {
 		e.preventDefault();
 		updraftplus_httpget_go(1);
 	});
 	
-	jQuery('#updraftplus_callwpaction_go').click(function(e) {
+	jQuery('#updraftplus_callwpaction_go').on('click', function(e) {
 		e.preventDefault();
 		params = { wpaction: jQuery('#updraftplus_callwpaction').val() };
 		updraft_send_command('call_wordpress_action', params, function(response) {
@@ -4419,7 +4419,7 @@ jQuery(function($) {
 	// Prevent default event when pressing return in the form
 	$(settings_css_prefix).on('keypress','#updraftvault_settings_connect input', function(e) {
 		if (13 == e.which) {
-			$(settings_css_prefix+'#updraftvault_connect_go').click();
+			$(settings_css_prefix+'#updraftvault_connect_go').trigger('click');
 			return false;
 		}
 	});
@@ -4881,7 +4881,7 @@ jQuery(function($) {
 		$(backup_target).prop('checked', checked);
 	});
 
-	$('#updraftplus-settings-save').click(function(e) {
+	$('#updraftplus-settings-save').on('click', function(e) {
 		e.preventDefault();
 		$.blockUI({
 			css: {
@@ -4930,14 +4930,14 @@ jQuery(function($) {
 			}, nonce: updraftplus_settings_nonce});
 	});
 
-	$('#updraftplus-settings-export').click(function() {
+	$('#updraftplus-settings-export').on('click', function() {
 		if (updraft_settings_form_changed) {
 			alert(updraftlion.unsaved_settings_export);
 		}
 		export_settings();
 	});
 
-	$('#updraftplus-settings-import').click(function() {
+	$('#updraftplus-settings-import').on('click', function() {
 		$.blockUI({
 			css: {
 				width: '300px',
@@ -5350,7 +5350,7 @@ jQuery(function($) {
 						$(modal).find('.updraftcentral_cloud_form_container .tfa_fields').hide();
 						$(modal).find('.updraftcentral_cloud_form_container .non_tfa_fields').show();
 						$(modal).find('input#two_factor_code').val('');
-						$(modal).find('input#password').val('').focus();
+						$(modal).find('input#password').val('').trigger('focus');
 					}
 
 					if ('email_not_registered' === data.code) {
@@ -5369,7 +5369,7 @@ jQuery(function($) {
 					$(modal).find('.updraftcentral_cloud_form_container .non_tfa_fields').hide();
 					$(modal).find('.updraftcentral_cloud_form_container .tfa_fields').show();
 
-					$(modal).find('input#two_factor_code').focus();
+					$(modal).find('input#two_factor_code').trigger('focus');
 				}
 
 				if ('authenticated' === data.status) {
@@ -5418,7 +5418,7 @@ jQuery(function($) {
 		$(modal).find('.updraftcentral_cloud_notices .updraftcentral_cloud_redirect_link').off('click').on('click', function(e) {
 			e.preventDefault();
 
-			form.submit();
+			form.trigger('submit');
 			$(modal).find('.updraftcentral_cloud_notices .updraftcentral_cloud_close_link').trigger('click');
 		});
 

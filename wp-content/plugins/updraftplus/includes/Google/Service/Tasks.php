@@ -28,7 +28,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_Tasks extends Google_Service
+class Google_Service_Tasks extends UDP_Google_Service
 {
   /** Manage your tasks. */
   const TASKS =

@@ -28,7 +28,7 @@
  *
  * @author Google, Inc.
  */
-class UDP_Google_Service_Drive extends Google_Service
+class UDP_Google_Service_Drive extends UDP_Google_Service
 {
   /** View and manage the files in your Google Drive. */
   const DRIVE =

@@ -330,7 +330,7 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 		return true;
 	}
 	
-	protected function url_start($html_allowed = false, $url, $https = false, $website_home = 'updraftplus.com') {
+	protected function url_start($html_allowed, $url, $https = false, $website_home = 'updraftplus.com') {
 		return parent::url_start($html_allowed, $url, $https, $website_home);
 	}
 

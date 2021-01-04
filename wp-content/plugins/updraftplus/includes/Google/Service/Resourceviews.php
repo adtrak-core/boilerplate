@@ -29,7 +29,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_Resourceviews extends Google_Service
+class Google_Service_Resourceviews extends UDP_Google_Service
 {
   /** View and manage your data across Google Cloud Platform services. */
   const CLOUD_PLATFORM =

@@ -59,7 +59,7 @@ if (!class_exists('UpdraftPlus_Remote_Communications')) :
 class UpdraftPlus_Remote_Communications {
 
 	// Version numbers relate to versions of this PHP library only (i.e. it's not a protocol support number, and version numbers of other compatible libraries (e.g. JavaScript) are not comparable)
-	public $version = '1.4.21';
+	public $version = '1.4.22';
 
 	private $key_name_indicator;
 
@@ -853,7 +853,7 @@ class UpdraftPlus_Remote_Communications {
 		if (!empty($_SERVER['REQUEST_METHOD']) && 'OPTIONS' == $_SERVER['REQUEST_METHOD'] && $http_origin) {
 			if (in_array($http_origin, $this->allow_cors_from)) {
 				// @codingStandardsIgnoreLine
-				if (!@constant('UDRPC_DO_NOT_SEND_CORS_HEADERS')) {
+				if (!defined('UDRPC_DO_NOT_SEND_CORS_HEADERS') || !UDRPC_DO_NOT_SEND_CORS_HEADERS) {
 					header("Access-Control-Allow-Origin: $http_origin");
 					header('Access-Control-Allow-Credentials: true');
 					if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) header('Access-Control-Allow-Methods: POST, OPTIONS');

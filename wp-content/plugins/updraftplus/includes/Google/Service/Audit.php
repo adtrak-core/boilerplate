@@ -29,7 +29,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_Audit extends Google_Service
+class Google_Service_Audit extends UDP_Google_Service
 {
 
 

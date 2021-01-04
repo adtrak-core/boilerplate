@@ -28,7 +28,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_GroupsMigration extends Google_Service
+class Google_Service_GroupsMigration extends UDP_Google_Service
 {
   /** Manage messages in groups on your domain. */
   const APPS_GROUPS_MIGRATION =

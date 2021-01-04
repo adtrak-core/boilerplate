@@ -28,7 +28,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_Oauth2 extends Google_Service
+class Google_Service_Oauth2 extends UDP_Google_Service
 {
   /** Know your basic profile info and list of people in your circles.. */
   const PLUS_LOGIN =

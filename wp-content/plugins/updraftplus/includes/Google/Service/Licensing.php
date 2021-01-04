@@ -28,7 +28,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_Licensing extends Google_Service
+class Google_Service_Licensing extends UDP_Google_Service
 {
   /** View and manage Google Apps licenses for your domain. */
   const APPS_LICENSING =

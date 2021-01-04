@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-class Google_Service
+class UDP_Google_Service
 {
   public $rootUrl;
   public $version;

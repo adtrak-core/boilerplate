@@ -2637,7 +2637,7 @@ class UpdraftPlus_Backup {
 	 * @param Array   $exclude               passed by reference so that we can remove elements as they are matched - saves time checking against already-dealt-with objects]
 	 * @return Boolean
 	 */
-	private function makezip_recursive_add($fullpath, $use_path_when_storing, $original_fullpath, $startlevels = 1, &$exclude) {
+	private function makezip_recursive_add($fullpath, $use_path_when_storing, $original_fullpath, $startlevels, &$exclude) {
 
 // $zipfile = $this->zip_basename.(($this->index == 0) ? '' : ($this->index+1)).'.zip.tmp';
 
@@ -3484,7 +3484,7 @@ class UpdraftPlus_Backup {
 
 			$fsize = filesize($file);
 
-			if (@constant('UPDRAFTPLUS_SKIP_FILE_OVER_SIZE') && $fsize > UPDRAFTPLUS_SKIP_FILE_OVER_SIZE) {// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+			if (defined('UPDRAFTPLUS_SKIP_FILE_OVER_SIZE') && UPDRAFTPLUS_SKIP_FILE_OVER_SIZE && $fsize > UPDRAFTPLUS_SKIP_FILE_OVER_SIZE) {// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 				$updraftplus->log("File is larger than the user-configured (UPDRAFTPLUS_SKIP_FILE_OVER_SIZE) maximum (is: ".round($fsize/1024, 1)." KB); will skip: ".$add_as);
 				continue;
 			} elseif ($fsize > UPDRAFTPLUS_WARN_FILE_SIZE) {
