@@ -156,7 +156,7 @@ class ParseFormFields
             return new \PGMB\Google\MediaItem( $this->form_fields['mbp_attachment_type'], $this->form_fields['mbp_post_attachment'] );
         } elseif ( isset( $this->form_fields['mbp_content_image'] ) && $this->form_fields['mbp_content_image'] && ($image_url = $this->get_content_image( $parent_post_id )) ) {
             return new \PGMB\Google\MediaItem( 'PHOTO', $image_url );
-        } elseif ( isset( $this->form_fields['mbp_featured_image'] ) && $this->form_fields['mbp_featured_image'] && ($image_url = get_the_post_thumbnail_url( $parent_post_id, 'large' )) ) {
+        } elseif ( isset( $this->form_fields['mbp_featured_image'] ) && $this->form_fields['mbp_featured_image'] && ($image_url = get_the_post_thumbnail_url( $parent_post_id, 'pgmb-post-image' )) ) {
             $image_id = get_post_thumbnail_id( $parent_post_id );
             $this->validate_wp_image_size( $image_id );
             return new \PGMB\Google\MediaItem( 'PHOTO', $image_url );
@@ -171,7 +171,7 @@ class ParseFormFields
         if ( !($image = reset( $images )) ) {
             return false;
         }
-        $image_details = wp_get_attachment_image_src( $image->ID, 'large' );
+        $image_details = wp_get_attachment_image_src( $image->ID, 'pgmb-post-image' );
         $this->validate_wp_image_size( $image->ID );
         return reset( $image_details );
         //Return the first item in the array (which is the url)
@@ -184,8 +184,95 @@ class ParseFormFields
      */
     public function validate_wp_image_size( $image_id )
     {
-        list( $url, $width, $height ) = wp_get_attachment_image_src( $image_id, 'large' );
-        $this->validate_image_props( $url, $width, $height );
+        $image_meta = wp_get_attachment_metadata( $image_id );
+        list( $url, $width, $height, $is_intermediate ) = wp_get_attachment_image_src( $image_id, 'pgmb-post-image' );
+        $path = $image_meta['file'];
+        
+        if ( $is_intermediate ) {
+            $intermediate = image_get_intermediate_size( $image_id, [ $width, $height ] );
+            $path = $intermediate['path'];
+            $url = $intermediate['url'];
+            $width = $intermediate['width'];
+            $height = $intermediate['height'];
+        }
+        
+        $image_file_size = $this->get_local_file_size( $path, $url );
+        if ( !$image_file_size ) {
+            throw new InvalidArgumentException( __( 'Could not detect post image file size. Make sure the image file/url is accessible remotely.', 'post-to-google-my-business' ) );
+        }
+        $this->validate_image_props( $image_file_size, $width, $height );
+    }
+    
+    /**
+     * Get file size in bytes from a file on the local server
+     *
+     * @param $path
+     *
+     * @return false|int
+     */
+    public function get_file_size_from_path( $path )
+    {
+        return filesize( $path );
+    }
+    
+    /**
+     * Try to determine file size by getting content-length from headers (not always available)
+     *
+     * @param $url
+     *
+     * @return bool|int
+     */
+    public function get_file_size_from_headers( $url )
+    {
+        $headers = wp_get_http_headers( $url );
+        if ( !$headers || !isset( $headers['content-length'] ) ) {
+            return false;
+        }
+        return intval( $headers['content-length'] );
+    }
+    
+    /**
+     * Try to determine the file size by downloading the file
+     *
+     * @param $url
+     *
+     * @return bool|false|int
+     */
+    public function get_file_size_from_download( $url )
+    {
+        $filepath = download_url( $url );
+        if ( is_wp_error( $filepath ) ) {
+            return false;
+        }
+        $file_size = filesize( $filepath );
+        unlink( $filepath );
+        return $file_size;
+    }
+    
+    public function get_local_file_size( $path, $url )
+    {
+        $image_file_size = $this->get_file_size_from_path( $path );
+        if ( $image_file_size ) {
+            return $image_file_size;
+        }
+        $image_file_size = $this->get_remote_file_size( $url );
+        if ( $image_file_size ) {
+            return $image_file_size;
+        }
+        return false;
+    }
+    
+    public function get_remote_file_size( $url )
+    {
+        $image_file_size = $this->get_file_size_from_headers( $url );
+        if ( $image_file_size ) {
+            return $image_file_size;
+        }
+        $image_file_size = $this->get_file_size_from_download( $url );
+        if ( $image_file_size ) {
+            return $image_file_size;
+        }
+        return false;
     }
     
     /**
@@ -196,19 +283,18 @@ class ParseFormFields
     public function validate_external_image_size( $url )
     {
         list( $width, $height ) = getimagesize( $url );
-        $this->validate_image_props( $url, $width, $height );
+        $image_file_size = $this->get_remote_file_size( $url );
+        if ( !$image_file_size ) {
+            throw new InvalidArgumentException( __( 'Could not detect post image file size. Make sure the image file/url is accessible remotely.', 'post-to-google-my-business' ) );
+        }
+        $this->validate_image_props( $image_file_size, $width, $height );
     }
     
-    public function validate_image_props( $url, $width, $height )
+    public function validate_image_props( $image_file_size, $width, $height )
     {
         if ( $width < 250 || $height < 250 ) {
             throw new InvalidArgumentException( sprintf( __( 'Post image must be at least 250x250px. Selected image is %dx%dpx', 'post-to-google-my-business' ), $width, $height ) );
         }
-        $headers = wp_get_http_headers( $url );
-        if ( !$headers || !isset( $headers['content-length'] ) ) {
-            throw new InvalidArgumentException( __( 'Could not detect post image size. Make sure the image file/url is accessible.', 'post-to-google-my-business' ) );
-        }
-        $image_file_size = intval( $headers['content-length'] );
         
         if ( $image_file_size < 10240 ) {
             throw new InvalidArgumentException( sprintf( __( 'Post image file too small, must be at least 10 KB. Selected image is %s', 'post-to-google-my-business' ), size_format( $image_file_size ) ) );

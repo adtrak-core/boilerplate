@@ -3,7 +3,7 @@
 use  PGMB\WeDevsSettingsAPI ;
 class MBP_Plugin
 {
-    const  PLUGIN_VERSION = '2.2.33' ;
+    const  PLUGIN_VERSION = '2.2.34' ;
     protected  $settings_page ;
     private  $taxonomy_fields = array() ;
     private  $enabled_post_types = array() ;
@@ -26,12 +26,18 @@ class MBP_Plugin
         
         $post_type_google_subposts = new MBP_Post_Type_Google_Subposts();
         $this->register_enabled_post_types();
+        $this->register_image_sizes();
         $this->metabox = new MBP_Metabox( self::PLUGIN_VERSION, $this->settings_page, $this->enabled_post_types );
         $this->metabox->init();
         add_action( 'admin_init', array( &$this, 'admin_init' ) );
         $this->show_welcome_message();
         add_action( 'admin_init', [ $this, 'show_review_notifications' ] );
         $this->do_upgrades();
+    }
+    
+    public function register_image_sizes()
+    {
+        add_image_size( 'pgmb-post-image', 1200, 900 );
     }
     
     public function register_post_type( $post_type )
