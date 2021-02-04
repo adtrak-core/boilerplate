@@ -32,6 +32,8 @@
     "gulp-sass": "^4.1.0"
   },
   "dependencies": {
+    "@tailwindcss/custom-forms": "^0.2.1",
+    "@tailwindcss/forms": "^0.2.1",
     "autoprefixer": "^9.8.0",
     "cssnano": "^4.1.10",
     "gulp-if": "^2.0.2",

@@ -65,6 +65,7 @@ module.exports = {
   },
   plugins: [
     require("tailwindcss-filters"), // https://github.com/benface/tailwindcss-filters
+    require('@tailwindcss/forms'),
   ],
   corePlugins: {
     container: false,
