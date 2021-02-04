@@ -12,8 +12,8 @@
     1. [CriticalCSS](#criticalcss)
     1. [Defaults](#defaults)
 1. [Before Deployment](#before-deployment)
-    1. [Building production assets locally](#building-production-assets-locally)
     1. [Building production assets on DeployHQ](#building-production-assets-on-deployhq)
+    1. [Building production assets locally](#building-production-assets-locally)
 
 
 ## Prerequisites ##
@@ -55,12 +55,12 @@
 25. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS nor Javascript
 1. Go to [WordPress Settings](#wordpress-settings)
 
-#### The theme structure has changed for this boilerplate ####
+#### Theme Structure ####
 
 1. All components (```header```, ```footer```, ```phone-top-right``` etc) can be found in ```_views/_components``` 
 2. All functions (```script enqueuing```, ```Custom Post Types```, ```Custom Taxonomies``` etc) can be found in ```_functions```
 3. All page templates (```front-page.twig```, ```page.twig```, etc) can be found in ```_views```
-4. Images, styles, js and fonts can now be found in ```_resources```
+4. Images, styles, js and fonts can be found in ```_resources```
 
 ### Adtrak Child With Woocommerce
 
@@ -81,7 +81,7 @@
 15. Continue to develop our theme
 1. Go to [WordPress Settings](#wordpress-settings)
 
-### Adtrak Child Tailwind Theme (without Twig & Timber)
+### Adtrak Child Tailwind Theme without Twig & Timber (Not Recommended)
 
 To get the Tailwind theme set up:
 
@@ -107,6 +107,8 @@ To get the Tailwind theme set up:
 
 The following are useful locally and when [setting up DeployHQ](http://resources.adtrak.agency/local-working-using-deployhq/).
 
+```npm run dev``` will run your local development
+
 ```
 cd wp-content/themes/your-theme-name
 npm install --save --quiet
@@ -115,8 +117,6 @@ npm run build
 cd wp-content/themes/your-theme-name
 composer install
 ```
-
-```npm run dev``` will run your local development
 
 ## TailwindCSS
 
@@ -132,7 +132,13 @@ You can access the primary, secondary & tertiary colours by using classes as fol
 | tertiary  | tertiary-light  | tertiary-darkk |
 
 
-**Feel free to add your own extensions**
+Feel free to add your own extensions.
+
+You can also use [Tailwind colour generators](https://tailwind.simeongriggs.dev/) to override standard colours. Using this, for example, means you override ```text-red-500``` with your own hex colour of red, instead of using Tailwind's.
+
+### Purge ###
+
+The boilerplate uses Tailwind's in-built Purge - this can be found in your ```tailwind.config``` file.
 
 ### CriticalCSS
 
@@ -149,14 +155,11 @@ The default Tailwind config can be found in ```tailwind.config-default.js```. Th
 For more help with Tailwind, don't forget the [docs](https://tailwindcss.com/docs/installation/)
 
 ## Before Deployment
+
 Before you deploy a project, you need to build the ```production``` assets. 
-To do this you need to run a different ```gulp``` command. You can either do this locally, or through DeployHQ.
+To do this you need to run a different ```gulp``` command.
 
-### Building production assets locally
-
-1. In Terminal / Hyper / CMD, navigate to your theme directory
-2. Run ```npm run build``` (you can also use ```gulp --production``` if you wish)
-3. Check main.min.css is minified before deployment
+It is recommended that [DeployHQ](http://resources.adtrak.agency/local-working-using-deployhq/) handle this.
 
 ### Building production assets on DeployHQ
 1. Open deployHQ and go to your project
@@ -176,3 +179,13 @@ npm run build
 cd wp-content/themes/your-theme-name
 composer install --no-progress
 ```
+
+### Building production assets locally
+
+This is often good to test locally.
+
+1. In Terminal / Hyper / CMD, navigate to your theme directory
+2. Run ```npm run build``` (you can also use ```gulp --production``` if you wish)
+3. Check main.min.css is minified before deployment
+
+Note: it's best that assets are built using DeployHQ
