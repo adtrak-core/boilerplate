@@ -139,7 +139,7 @@ You can also use [Tailwind colour generators](https://tailwind.simeongriggs.dev/
 
 ### Purge ###
 
-The boilerplate uses Tailwind's in-built Purge - this can be found in your ```tailwind.config``` file.
+The ```tailwind-twig-timber``` boilerplate uses Tailwind's in-built Purge - this can be found in your ```tailwind.config``` file.
 
 ### CriticalCSS
 
