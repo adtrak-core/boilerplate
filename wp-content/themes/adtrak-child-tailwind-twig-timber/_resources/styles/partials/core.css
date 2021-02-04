@@ -1,5 +1,6 @@
-/***********************************************************
-Layouts ***************************************************/
+/* ---------------------------------------------------
+Core
+--------------------------------------------------- */
 
 body,
 html {
@@ -8,10 +9,11 @@ html {
 }
 
 body {
-  @apply font-sans antialiased text-black leading-relaxed;
+  @apply font-sans antialiased leading-relaxed text-black;
 }
 
-// Uses IntersectionObserver to identify when the viewport has scrolled, and then show back to top
+/* Uses IntersectionObserver to identify when the viewport has scrolled, and then show back to top */
+
 #pixel-to-watch {
   @apply absolute left-0;
   width: 1px;
@@ -20,8 +22,8 @@ body {
 }
 
 .container {
-  @apply w-full mx-auto px-4;
-  max-width: calc(theme('screens.3xl') + theme('spacing.8'));
+  @apply w-full px-4 mx-auto;
+  max-width: calc(theme("screens.3xl") + theme("spacing.8"));
 }
 
 a {
@@ -33,12 +35,11 @@ Lazyload **************************************************/
 
 .lazyload,
 .lazyloading {
-  opacity: 0;
+  @apply opacity-0;
 }
 
 .lazyloaded {
-  opacity: 1;
-  transition: opacity 300ms;
+  @apply transition duration-300 transform opacity-100;
 }
 
 /***********************************************************

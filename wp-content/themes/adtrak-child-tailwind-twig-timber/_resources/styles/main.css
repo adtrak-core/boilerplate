@@ -1,0 +1,14 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+@import 'partials/core.css';
+@import 'partials/buttons.css';
+@import 'partials/cookies.css';
+@import 'partials/desktop-nav.css';
+@import 'partials/forms.css';
+@import 'partials/mobile-nav.css';
+@import 'partials/typography.css';
+
+@import "tailwindcss/utilities";
+
+/* Custom CSS Here */

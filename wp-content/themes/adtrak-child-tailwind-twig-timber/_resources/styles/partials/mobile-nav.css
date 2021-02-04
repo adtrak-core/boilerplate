@@ -1,46 +1,44 @@
-// --------------------------------------------------------------------------------------------------
-// Mobile Navigation
-// --------------------------------------------------------------------------------------------------
+/* ---------------------------------------------------
+Mobile Nav
+--------------------------------------------------- */
 
 /* Important to set */
-$menuTitleHeight : 59px;
+$menuTitleHeight: 59px;
 
 /* Colours */
-$mobNavBg : theme('colors.gray.100');
+$mobNavBg: theme("colors.gray.100");
 
-$titleBg : theme('colors.gray.300');
-$titleText : theme('colors.gray.600');
+$titleBg: theme("colors.gray.300");
+$titleText: theme("colors.gray.600");
 
-$linkText : theme('colors.gray.800');
-$linkBg : transparent;
-$linkBorder : theme('colors.gray.200');
+$linkText: theme("colors.gray.800");
+$linkBg: transparent;
+$linkBorder: theme("colors.gray.200");
 
-$linkTextActive : theme('colors.white');
-$linkBgActive : theme('colors.gray.600');
+$linkTextActive: theme("colors.white");
+$linkBgActive: theme("colors.gray.600");
 
-$linkTextOn : theme('colors.gray.300');
-$linkBgOn : theme('colors.gray.800');
+$linkTextOn: theme("colors.gray.300");
+$linkBgOn: theme("colors.gray.800");
 
-$dropdownArrowBg : transparent;
-$dropdownArrowText : inherit;
+$dropdownArrowBg: transparent;
+$dropdownArrowText: inherit;
 
-$closeText : theme('colors.white');
-$closeTextBg : theme('colors.red.800');
-
+$closeText: theme("colors.white");
+$closeTextBg: theme("colors.red.800");
 
 .mob-nav {
-  @apply fixed top-0 right-0 bottom-0 h-full w-4/5 duration-300;
+  @apply fixed top-0 bottom-0 right-0 w-4/5 h-full duration-300;
 
   -webkit-transform: translateX(101%);
   transform: translateX(101%);
-  transition: .4s;
+  transition: 0.4s;
 
   background: $mobNavBg;
   display: block !important;
   z-index: 99999999;
 
   &:before {
-
     content: "Menu";
 
     @apply block w-full p-4 text-center;
@@ -52,15 +50,15 @@ $closeTextBg : theme('colors.red.800');
 
   &--active {
     @apply transform translate-x-0;
-    box-shadow: -10px 0 30px rgba(#000, .2);
+    box-shadow: -10px 0 30px rgba(#000, 0.2);
   }
 
   li {
-    @apply list-none relative float-left w-full;
+    @apply relative float-left w-full list-none;
   }
 
   a {
-    @apply p-4 pl-6 pr-16 float-left w-full relative no-underline text-sm;
+    @apply relative float-left w-full p-4 pl-6 pr-16 text-sm no-underline;
     color: $linkText;
     border-bottom: 1px solid $linkBorder;
     background-color: $linkBg;
@@ -69,7 +67,7 @@ $closeTextBg : theme('colors.red.800');
       @apply no-underline;
     }
 
-    >.icon {
+    > .icon {
       @apply hidden;
     }
   }
@@ -79,13 +77,13 @@ $closeTextBg : theme('colors.red.800');
   }
 
   /* Current page states */
-  .current-menu-item>a,
-  .current-menu-parent>a,
-  .current-menu-ancestor>a {
+  .current-menu-item > a,
+  .current-menu-parent > a,
+  .current-menu-ancestor > a {
     color: $linkTextOn;
     background-color: $linkBgOn;
 
-    +.sub-arrow {
+    + .sub-arrow {
       color: $linkTextOn;
     }
   }
@@ -113,7 +111,7 @@ $closeTextBg : theme('colors.red.800');
     background: $linkBgActive;
     color: $linkTextActive;
 
-    +.sub-arrow {
+    + .sub-arrow {
       border-color: $linkBorder;
       color: $linkTextActive;
     }
@@ -123,13 +121,13 @@ $closeTextBg : theme('colors.red.800');
     @apply hidden float-left w-full;
 
     li {
-      @apply pl-6
+      @apply pl-6;
     }
   }
 }
 
 .mob-nav .scroll-container {
-  @apply absolute w-full left-0 overflow-y-scroll;
+  @apply absolute left-0 w-full overflow-y-scroll;
   top: $menuTitleHeight;
   height: calc(100vh - #{$menuTitleHeight});
   -webkit-overflow-scrolling: touch;
@@ -141,7 +139,7 @@ $closeTextBg : theme('colors.red.800');
 }
 
 .mob-nav-close {
-  @apply hidden fixed left-0 transform -translate-x-full w-12 h-12;
+  @apply fixed left-0 hidden w-12 h-12 transform -translate-x-full;
 
   background-color: $closeTextBg;
   bottom: 40%;
@@ -157,14 +155,14 @@ $closeTextBg : theme('colors.red.800');
 }
 
 .mob-nav-underlay {
-  @apply fixed top-0 left-0 bottom-0 right-0 w-full h-full opacity-0 invisible;
+  @apply fixed top-0 bottom-0 left-0 right-0 invisible w-full h-full opacity-0;
   display: block !important;
   /* override critical css */
-  background-color: rgba(#000, .4);
+  background-color: rgba(#000, 0.4);
   z-index: 999999;
-  transition: .3s;
+  transition: 0.3s;
 
   &.mob-nav--active {
-    @apply opacity-100 visible;
+    @apply visible opacity-100;
   }
 }

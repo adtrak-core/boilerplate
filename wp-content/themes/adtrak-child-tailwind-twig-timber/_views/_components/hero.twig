@@ -1,20 +1,65 @@
-<div class="w-full bg-center bg-cover hero min-h-128">
-    {% set hero_small = post.thumbnail.src|resize('800') %}
-    {% set hero_medium = post.thumbnail.src|resize('1200') %}
-    {% set hero_large = post.thumbnail.src|resize('2000') %}
-    <style>
-      .hero {
-        background-image: url('{{hero_small}}');
-      }
-      @media (min-width: 800px) {
-        .hero {
-          background-image: url('{{hero_medium}}');
-        }
-      }
-      @media (min-width: 1200px) {
-        .hero {
-          background-image: url('{{hero_large}}');
-        }
-      }
-    </style>
+<div class="w-full bg-center bg-cover hero">
+	{% set hero_small = post.thumbnail.src|resize('800') %}
+	{% set hero_medium = post.thumbnail.src|resize('1200') %}
+	{% set hero_large = post.thumbnail.src|resize('2000') %}
+	<style>
+		.hero {
+			background-image: url('{{hero_small}}');
+		}
+		@media(min-width: 800px) {
+			.hero {
+				background-image: url('{{hero_medium}}');
+			}
+		}
+		@media(min-width: 1200px) {
+			.hero {
+				background-image: url('{{hero_large}}');
+			}
+		}
+	</style>
+
+	{% include "_components/picture.twig" with {
+    source: post.thumbnail.src,
+    lazyload: false,
+    breakpoints: {
+      "1530px" : {
+        w: 1800,
+        h: 500,
+        crop: 'center'
+      },
+      "1280px" : {
+        w: 1530,
+        h: 500,
+        crop: 'center'
+      },
+      "1024px" : {
+        w: 1280,
+        h: 500,
+        crop: 'center'
+      },
+      "768px" : {
+        w: 1024,
+        h: 500,
+        crop: 'center'
+      },
+      "640px" : {
+        w: 768,
+        h: 400,
+        crop: 'center'
+      },
+      "1px" : {
+        w: 640,
+        h: 640,
+        crop: 'center'
+      },
+    },
+    img: {
+      classes: '',
+      w: 640,
+      h: 640,
+      crop: 'center',
+    }
+  }
+  %}
+
 </div>

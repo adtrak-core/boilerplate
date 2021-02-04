@@ -1,4 +1,24 @@
 module.exports = {
+  purge: {
+    content: ["./_views/**/*.twig"],
+    // These options are passed through directly to PurgeCSS
+    options: {
+      safelist: [
+        /^wp/,
+        /^ld-/,
+        "textarea",
+        "closed",
+        "open",        
+        'sub-menu',
+        "sub-arrow",
+        "show-arrow",
+        'mob-nav--active',
+        'mob-nav-underlay',
+        'mob-nav-close',
+        "current-page-ancestor"
+      ],
+    },
+  },
   theme: {
     screens: {
       "2xs": "375px",
