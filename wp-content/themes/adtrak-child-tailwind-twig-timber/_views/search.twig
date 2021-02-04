@@ -2,60 +2,61 @@
 
 {% block content %}
 
-<div class="container flex-wrap flex-grow my-8 lg:flex lg:my-16">
+	<div class="container flex flex-col my-8 lg:flex-row lg:my-16 lg:space-x-12">
 
-  <main class="lg:w-2/3 lg:pr-16">
+		<main class="lg:w-2/3">
 
-    {% if posts %}
+			{% if posts %}
 
-      <h1>Results for {{search_query}}</h1>
-      
-      {% for post in posts %}       
+				<h1>Results for
+					{{search_query}}</h1>
 
-        <article class="copy">
+				{% for post in posts %}
 
-          {{post.title}}
-          {{post.preview}}
-          <img class="lazyload" data-src="{{post.thumbnail.src|resize(150, 150)}}" alt="{{post.title}}" />
-        
-        </article>
+					<article class="copy">
 
-      {% endfor %}
+						{{post.title}}
+						{{post.preview}}
+						<img class="lazyload" data-src="{{post.thumbnail.src|resize(150, 150)}}" alt="{{post.title}}"/>
 
-      {% if posts.pagination.prev %}
-        <a href="{{posts.pagination.prev.link}}" class="prev {{posts.pagination.prev.link|length ? '' : 'invisible'}}">Prev</a>
-        {% endif %}
-        <ul class="pages">
-          {% for page in posts.pagination.pages %}
-          <li>
-            {% if page.link %}
-            <a href="{{page.link}}" class="{{page.class}}">{{page.title}}</a>
-            {% else %}
-            <span class="{{page.class}}">{{page.title}}</span>
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
-        {% if posts.pagination.next %}
-        <a href="{{posts.pagination.next.link}}" class="next {{posts.pagination.next.link|length ? '' : 'invisible'}}">Next</a>
-      {% endif %}
+					</article>
 
-    {% else %} 
+				{% endfor %}
 
-      <article class="copy">
-      
-        <h1>No results</h1>
-      
-      </article>
+				{% if posts.pagination.prev %}
+					<a href="{{posts.pagination.prev.link}}" class="prev {{posts.pagination.prev.link|length ? '' : 'invisible'}}">Prev</a>
+				{% endif %}
+				<ul class="pages">
+					{% for page in posts.pagination.pages %}
+						<li>
+							{% if page.link %}
+								<a href="{{page.link}}" class="{{page.class}}">{{page.title}}</a>
+							{% else %}
+								<span class="{{page.class}}">{{page.title}}</span>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+				{% if posts.pagination.next %}
+					<a href="{{posts.pagination.next.link}}" class="next {{posts.pagination.next.link|length ? '' : 'invisible'}}">Next</a>
+				{% endif %}
 
-    {% endif %}    
+			{% else %}
 
-  </main>
+				<article class="copy">
 
-  <aside class="bg-gray-100 lg:w-1/3">
-    {% include "_components/sidebar.twig" %}
-  </aside>
+					<h1>No results</h1>
 
-</div>
+				</article>
+
+			{% endif %}
+
+		</main>
+
+		<aside class="bg-gray-100 lg:w-1/3">
+			{% include "_components/blog-sidebar.twig" %}
+		</aside>
+
+	</div>
 
 {% endblock %}

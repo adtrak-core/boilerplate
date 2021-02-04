@@ -1,0 +1,13 @@
+<h2>Search</h2>
+{{ function("get_search_form")}}
+
+<span class="">Categories</span>
+
+<ul>
+	{% for cat in categories %}
+		{# @INTEGRATION - check your permalinks to confirm this URL path is correct #}
+		<li>
+			<a href="/category/{{ cat.slug }}/" class="block">{{ cat.name }}</a>
+		</li>
+	{% endfor %}
+</ul>
