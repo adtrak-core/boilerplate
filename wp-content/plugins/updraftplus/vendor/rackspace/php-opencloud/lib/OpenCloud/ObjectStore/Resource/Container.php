@@ -236,6 +236,19 @@ class Container extends AbstractContainer
     }
 
     /**
+     * Delete an object from the API.
+     *
+     * @param string $name The name of object you want to delete
+     * @throws \Guzzle\Http\Exception\BadResponseException When an error occurred
+     */
+    public function deleteObject($name)
+    {
+        $this->getClient()
+            ->delete($this->getUrl($name))
+            ->send();
+    }
+
+    /**
      * Creates a Collection of objects in the container
      *
      * @param array $params associative array of parameter values.
@@ -323,23 +336,6 @@ class Container extends AbstractContainer
     {
         $headers = $this->createRefreshRequest()->send()->getHeaders();
         $this->setMetadata($headers, true);
-
-        try {
-            if (null !== ($cdnService = $this->getService()->getCDNService())) {
-                $cdn = new CDNContainer($cdnService);
-                $cdn->setName($this->name);
-
-                $response = $cdn->createRefreshRequest()->send();
-
-                if ($response->isSuccessful()) {
-                    $this->cdn = $cdn;
-                    $this->cdn->setMetadata($response->getHeaders(), true);
-                }
-            } else {
-                $this->cdn = null;
-            }
-        } catch (ClientErrorResponseException $e) {
-        }
     }
 
     /**
@@ -587,16 +583,41 @@ class Container extends AbstractContainer
     /**
      * Upload the contents of a local directory to a remote container, effectively syncing them.
      *
-     * @param $path The local path to the directory.
+     * @param string $path      The local path to the directory.
+     * @param string $targetDir The path (or pseudo-directory) that all files will be nested in.
      */
-    public function uploadDirectory($path)
+    public function uploadDirectory($path, $targetDir = null)
     {
-        $sync = DirectorySync::factory($path, $this);
+        $sync = DirectorySync::factory($path, $this, $targetDir);
         $sync->execute();
     }
 
     public function isCdnEnabled()
     {
+        // If CDN object is not already populated, try to populate it.
+        if (null === $this->cdn) {
+            $this->refreshCdnObject();
+        }
         return ($this->cdn instanceof CDNContainer) && $this->cdn->isCdnEnabled();
+    }
+
+    protected function refreshCdnObject()
+    {
+        try {
+            if (null !== ($cdnService = $this->getService()->getCDNService())) {
+                $cdn = new CDNContainer($cdnService);
+                $cdn->setName($this->name);
+
+                $response = $cdn->createRefreshRequest()->send();
+
+                if ($response->isSuccessful()) {
+                    $this->cdn = $cdn;
+                    $this->cdn->setMetadata($response->getHeaders(), true);
+                }
+            } else {
+                $this->cdn = null;
+            }
+        } catch (ClientErrorResponseException $e) {
+        }
     }
 }

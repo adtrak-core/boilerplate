@@ -184,7 +184,7 @@ class Google_Http_MediaFileUpload
       // No problems, but upload not complete.
       return false;
     } else {
-      return Google_Http_REST::decodeHttpResponse($response, $this->client);
+      return UDP_Google_Http_REST::decodeHttpResponse($response, $this->client);
     }
   }
 

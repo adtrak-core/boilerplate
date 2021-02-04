@@ -31,8 +31,12 @@ class CDNService extends AbstractService
     /**
      * List CDN-enabled containers.
      *
-     * @param array $filter
-     * @return \OpenCloud\Common\Collection\PaginatedIterator
+     * @param array $filter Array of filter options such as:
+     *
+     * * `limit`: number of results to limit the list to. Optional.
+     * * `marker`: name of container after which to start the list. Optional.
+     * * `end_marker`: name of container before which to end the list. Optional.
+     * @return \OpenCloud\Common\Collection\PaginatedIterator Iterator to list of CDN-enabled containers
      */
     public function listContainers(array $filter = array())
     {
@@ -40,22 +44,29 @@ class CDNService extends AbstractService
         return $this->resourceList('CDNContainer', $this->getUrl(null, $filter), $this);
     }
 
+    /**
+     * Return an existing CDN-enabled container.
+     *
+     * @param \stdClass $data Data to initialize container.
+     * @return CDNContainer CDN-enabled Container
+     */
     public function cdnContainer($data)
     {
         $container = new CDNContainer($this, $data);
 
-        $metadata = new ContainerMetadata();
-        $metadata->setArray(array(
-            'Streaming-Uri' => $data->cdn_streaming_uri,
-            'Ios-Uri' => $data->cdn_ios_uri,
-            'Ssl-Uri' => $data->cdn_ssl_uri,
-            'Enabled' => $data->cdn_enabled,
-            'Ttl' => $data->ttl,
-            'Log-Retention' => $data->log_retention,
-            'Uri' => $data->cdn_uri,
-        ));
-
-        $container->setMetadata($metadata);
+        if (is_object($data)) {
+            $metadata = new ContainerMetadata();
+            $metadata->setArray(array(
+                'Streaming-Uri' => $data->cdn_streaming_uri,
+                'Ios-Uri'       => $data->cdn_ios_uri,
+                'Ssl-Uri'       => $data->cdn_ssl_uri,
+                'Enabled'       => $data->cdn_enabled,
+                'Ttl'           => $data->ttl,
+                'Log-Retention' => $data->log_retention,
+                'Uri'           => $data->cdn_uri,
+            ));
+            $container->setMetadata($metadata);
+        }
 
         return $container;
     }

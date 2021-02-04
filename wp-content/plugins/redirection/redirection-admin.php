@@ -33,6 +33,7 @@ class Redirection_Admin {
 			return $value;
 		}, 10, 3 );
 		add_action( 'redirection_redirect_updated', [ $this, 'set_default_group' ], 10, 2 );
+		add_action( 'redirection_redirect_updated', [ $this, 'clear_cache' ], 10, 2 );
 
 		if ( defined( 'REDIRECTION_FLYING_SOLO' ) && REDIRECTION_FLYING_SOLO ) {
 			add_filter( 'script_loader_src', [ $this, 'flying_solo' ], 10, 2 );
@@ -69,11 +70,26 @@ class Redirection_Admin {
 		} );
 	}
 
+	/**
+	 * Show the database upgrade nag
+	 *
+	 * @return void
+	 */
 	public function update_nag() {
+		$options = red_get_options();
+
+		// Is the site configured to upgrade automatically?
+		if ( $options['plugin_update'] === 'admin' ) {
+			$this->automatic_upgrade();
+			return;
+		}
+
+		// Can the user perform a manual database upgrade?
 		if ( ! Redirection_Capabilities::has_access( Redirection_Capabilities::CAP_OPTION_MANAGE ) ) {
 			return;
 		}
 
+		// Default manual update, with nag
 		$status = new Red_Database_Status();
 
 		$message = false;
@@ -92,6 +108,32 @@ class Redirection_Admin {
 		// Known HTML and so isn't escaped
 		// phpcs:ignore
 		echo '<div class="update-nag notice notice-warning" style="width: 95%">' . $message . '</div>';
+	}
+
+	/**
+	 * Perform an automatic DB upgrade
+	 *
+	 * @return void
+	 */
+	private function automatic_upgrade() {
+		$loop = 0;
+		$status = new Red_Database_Status();
+		$database = new Red_Database();
+
+		// Loop until the DB is upgraded, or until a max is exceeded (just in case)
+		while ( $loop < 20 ) {
+			if ( ! $status->needs_updating() ) {
+				break;
+			}
+
+			$database->apply_upgrade( $status );
+
+			if ( $status->is_error() ) {
+				// If an error occurs then switch to 'prompt' mode and let the user deal with it.
+				red_set_options( [ 'plugin_update' => 'prompt' ] );
+				return;
+			}
+		}
 	}
 
 	// So it finally came to this... some plugins include their JS in all pages, whether they are needed or not. If there is an error
@@ -223,6 +265,14 @@ class Redirection_Admin {
 
 		wp_enqueue_style( 'redirection', plugin_dir_url( REDIRECTION_FILE ) . 'redirection.css', array(), $build );
 
+		$is_new = false;
+
+		// phpcs:ignore
+		if ( isset( $_GET['page'] ) && $_GET['page'] === 'redirection.php' && strpos( REDIRECTION_VERSION, '-beta' ) === false ) {
+			$major_version = implode( '.', array_slice( explode( '.', REDIRECTION_VERSION ), 0, 2 ) );
+			$is_new = version_compare( $options['update_notice'], $major_version ) < 0;
+		}
+
 		$status = new Red_Database_Status();
 		$status->check_tables_exist();
 
@@ -257,6 +307,7 @@ class Redirection_Admin {
 				'pages' => Redirection_Capabilities::get_available_pages(),
 				'capabilities' => Redirection_Capabilities::get_all_capabilities(),
 			],
+			'update_notice' => $is_new ? $major_version : false,
 		) );
 
 		$this->add_help_tab();
@@ -390,6 +441,19 @@ class Redirection_Admin {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Update the cache key when updating or creating a redirect
+	 *
+	 * @return void
+	 */
+	public function clear_cache() {
+		$settings = red_get_options();
+
+		if ( $settings['cache_key'] > 0 ) {
+			red_set_options( [ 'cache_key' => time() ] );
+		}
 	}
 
 	public function set_default_group( $id, $redirect ) {

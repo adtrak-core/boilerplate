@@ -36,6 +36,11 @@ function red_get_post_types( $full = true ) {
 	return apply_filters( 'redirection_post_types', $post_types );
 }
 
+/**
+ * Get default options. Contains all valid options
+ *
+ * @return array
+ */
 function red_get_default_options() {
 	$flags = new Red_Source_Flags();
 	$defaults = [
@@ -62,12 +67,22 @@ function red_get_default_options() {
 		'relocate'            => '',
 		'preferred_domain'    => '',
 		'aliases'             => [],
+		'permalinks'          => [],
+		'cache_key'           => 0,
+		'plugin_update'       => 'prompt',
+		'update_notice'       => 0,
 	];
 	$defaults = array_merge( $defaults, $flags->get_json() );
 
 	return apply_filters( 'red_default_options', $defaults );
 }
 
+/**
+ * Set options
+ *
+ * @param array $settings Partial settings.
+ * @return array
+ */
 function red_set_options( array $settings = array() ) {
 	$options = red_get_options();
 	$monitor_types = array();
@@ -175,6 +190,10 @@ function red_set_options( array $settings = array() ) {
 		$options['associated_redirect'] = '';
 	}
 
+	if ( isset( $settings['plugin_update'] ) && in_array( $settings['plugin_update'], [ 'prompt', 'admin' ], true ) ) {
+		$options['plugin_update'] = $settings['plugin_update'];
+	}
+
 	$flags = new Red_Source_Flags();
 	$flags_present = [];
 
@@ -196,7 +215,12 @@ function red_set_options( array $settings = array() ) {
 
 	if ( isset( $settings['aliases'] ) && is_array( $settings['aliases'] ) ) {
 		$options['aliases'] = array_values( array_filter( array_map( 'red_parse_domain_only', $settings['aliases'] ) ) );
-		$options['aliases'] = array_slice( $options['aliases'], 0, 10 ); // Max 10 aliases
+		$options['aliases'] = array_slice( $options['aliases'], 0, 20 ); // Max 20
+	}
+
+	if ( isset( $settings['permalinks'] ) && is_array( $settings['permalinks'] ) ) {
+		$options['permalinks'] = array_values( array_filter( array_map( 'trim', $settings['permalinks'] ) ) );
+		$options['permalinks'] = array_slice( $options['permalinks'], 0, 10 ); // Max 10
 	}
 
 	if ( isset( $settings['preferred_domain'] ) && in_array( $settings['preferred_domain'], [ '', 'www', 'nowww' ], true ) ) {
@@ -211,6 +235,24 @@ function red_set_options( array $settings = array() ) {
 			$options['aliases'] = [];
 			$options['https'] = false;
 		}
+	}
+
+	if ( isset( $settings['cache_key'] ) ) {
+		$key = intval( $settings['cache_key'], 10 );
+
+		if ( $settings['cache_key'] === true ) {
+			$key = time();
+		} elseif ( $settings['cache_key'] === false ) {
+			$key = 0;
+		}
+
+		$options['cache_key'] = $key;
+	}
+
+	if ( isset( $settings['update_notice'] ) ) {
+		$major_version = explode( '-', REDIRECTION_VERSION )[0];   // Remove any beta suffix
+		$major_version = implode( '.', array_slice( explode( '.', REDIRECTION_VERSION ), 0, 2 ) );
+		$options['update_notice'] = $major_version;
 	}
 
 	update_option( REDIRECTION_OPTION, apply_filters( 'redirection_save_options', $options ) );
@@ -303,6 +345,12 @@ function red_get_options() {
 	return $options;
 }
 
+/**
+ * Get the current REST API
+ *
+ * @param boolean $type Override with a specific API type.
+ * @return string
+ */
 function red_get_rest_api( $type = false ) {
 	if ( $type === false ) {
 		$options = red_get_options();
@@ -318,6 +366,11 @@ function red_get_rest_api( $type = false ) {
 
 		if ( $relative ) {
 			$url = $relative;
+		}
+
+		if ( $url === '/index.php' ) {
+			// No permalinks. Default to normal REST API
+			$url = home_url( '/?rest_route=/' );
 		}
 	}
 

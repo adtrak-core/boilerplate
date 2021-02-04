@@ -25,7 +25,7 @@ if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
-class Google_IO_Stream extends Google_IO_Abstract
+class UDP_Google_IO_Stream extends UDP_Google_IO_Abstract
 {
   const TIMEOUT = "timeout";
   const ZLIB = "compress.zlib://";
@@ -48,7 +48,7 @@ class Google_IO_Stream extends Google_IO_Abstract
       $error = 'The stream IO handler requires the allow_url_fopen runtime ' .
                'configuration to be enabled';
       $client->getLogger()->critical($error);
-      throw new Google_IO_Exception($error);
+      throw new UDP_Google_IO_Exception($error);
     }
 
     parent::__construct($client);
@@ -59,7 +59,7 @@ class Google_IO_Stream extends Google_IO_Abstract
    *
    * @param Google_Http_Request $request the http request to be executed
    * @return array containing response headers, body, and http code
-   * @throws Google_IO_Exception on curl or IO error
+   * @throws UDP_Google_IO_Exception on curl or IO error
    */
   public function executeRequest(UDP_Google_Http_Request $request)
   {
@@ -176,7 +176,7 @@ if (!empty($this->options['cafile'])) $requestSslContext['cafile'] = $this->opti
       );
 
       $this->client->getLogger()->error('Stream ' . $error);
-      throw new Google_IO_Exception($error, $this->trappedErrorNumber);
+      throw new UDP_Google_IO_Exception($error, $this->trappedErrorNumber);
     }
 
     $response_data = false;
@@ -199,7 +199,7 @@ if (!empty($this->options['cafile'])) $requestSslContext['cafile'] = $this->opti
       );
 
       $this->client->getLogger()->error('Stream ' . $error);
-      throw new Google_IO_Exception($error, $respHttpCode);
+      throw new UDP_Google_IO_Exception($error, $respHttpCode);
     }
 
     $responseHeaders = $this->getHttpResponseHeaders($http_response_header);

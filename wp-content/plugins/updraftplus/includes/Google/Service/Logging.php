@@ -420,7 +420,7 @@ class Google_Service_Logging extends UDP_Google_Service
  *   $projects = $loggingService->projects;
  *  </code>
  */
-class Google_Service_Logging_Projects_Resource extends Google_Service_Resource
+class Google_Service_Logging_Projects_Resource extends UDP_Google_Service_Resource
 {
 }
 
@@ -432,7 +432,7 @@ class Google_Service_Logging_Projects_Resource extends Google_Service_Resource
  *   $logServices = $loggingService->logServices;
  *  </code>
  */
-class Google_Service_Logging_ProjectsLogServices_Resource extends Google_Service_Resource
+class Google_Service_Logging_ProjectsLogServices_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -469,7 +469,7 @@ class Google_Service_Logging_ProjectsLogServices_Resource extends Google_Service
  *   $indexes = $loggingService->indexes;
  *  </code>
  */
-class Google_Service_Logging_ProjectsLogServicesIndexes_Resource extends Google_Service_Resource
+class Google_Service_Logging_ProjectsLogServicesIndexes_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -522,7 +522,7 @@ class Google_Service_Logging_ProjectsLogServicesIndexes_Resource extends Google_
  *   $sinks = $loggingService->sinks;
  *  </code>
  */
-class Google_Service_Logging_ProjectsLogServicesSinks_Resource extends Google_Service_Resource
+class Google_Service_Logging_ProjectsLogServicesSinks_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -621,7 +621,7 @@ class Google_Service_Logging_ProjectsLogServicesSinks_Resource extends Google_Se
  *   $logs = $loggingService->logs;
  *  </code>
  */
-class Google_Service_Logging_ProjectsLogs_Resource extends Google_Service_Resource
+class Google_Service_Logging_ProjectsLogs_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -684,7 +684,7 @@ class Google_Service_Logging_ProjectsLogs_Resource extends Google_Service_Resour
  *   $entries = $loggingService->entries;
  *  </code>
  */
-class Google_Service_Logging_ProjectsLogsEntries_Resource extends Google_Service_Resource
+class Google_Service_Logging_ProjectsLogsEntries_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -718,7 +718,7 @@ class Google_Service_Logging_ProjectsLogsEntries_Resource extends Google_Service
  *   $sinks = $loggingService->sinks;
  *  </code>
  */
-class Google_Service_Logging_ProjectsLogsSinks_Resource extends Google_Service_Resource
+class Google_Service_Logging_ProjectsLogsSinks_Resource extends UDP_Google_Service_Resource
 {
 
   /**

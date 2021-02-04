@@ -24,7 +24,7 @@ if (!class_exists('UDP_Google_Client')) {
  *
  * @see https://developers.google.com/drive/web/handle-errors#implementing_exponential_backoff
  */
-class Google_Task_Runner
+class UDP_Google_Task_Runner
 {
   /**
    * @var integer $maxDelay The max time (in seconds) to wait before a retry.
@@ -88,7 +88,7 @@ class Google_Task_Runner
       $action,
       array $arguments = array()
   ) {
-    $config = (array) $client->getClassConfig('Google_Task_Runner');
+    $config = (array) $client->getClassConfig('UDP_Google_Task_Runner');
 
     if (isset($config['initial_delay'])) {
       if ($config['initial_delay'] < 0) {

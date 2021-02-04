@@ -1282,7 +1282,7 @@ class UDP_Google_Service_Drive extends UDP_Google_Service
  *   $about = $driveService->about;
  *  </code>
  */
-class Google_Service_Drive_About_Resource extends Google_Service_Resource
+class Google_Service_Drive_About_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1318,7 +1318,7 @@ class Google_Service_Drive_About_Resource extends Google_Service_Resource
  *   $apps = $driveService->apps;
  *  </code>
  */
-class Google_Service_Drive_Apps_Resource extends Google_Service_Resource
+class Google_Service_Drive_Apps_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1371,7 +1371,7 @@ class Google_Service_Drive_Apps_Resource extends Google_Service_Resource
  *   $changes = $driveService->changes;
  *  </code>
  */
-class Google_Service_Drive_Changes_Resource extends Google_Service_Resource
+class Google_Service_Drive_Changes_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1442,7 +1442,7 @@ class Google_Service_Drive_Changes_Resource extends Google_Service_Resource
  *   $channels = $driveService->channels;
  *  </code>
  */
-class Google_Service_Drive_Channels_Resource extends Google_Service_Resource
+class Google_Service_Drive_Channels_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1467,7 +1467,7 @@ class Google_Service_Drive_Channels_Resource extends Google_Service_Resource
  *   $children = $driveService->children;
  *  </code>
  */
-class Google_Service_Drive_Children_Resource extends Google_Service_Resource
+class Google_Service_Drive_Children_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1541,7 +1541,7 @@ class Google_Service_Drive_Children_Resource extends Google_Service_Resource
  *   $comments = $driveService->comments;
  *  </code>
  */
-class Google_Service_Drive_Comments_Resource extends Google_Service_Resource
+class Google_Service_Drive_Comments_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1657,7 +1657,7 @@ class Google_Service_Drive_Comments_Resource extends Google_Service_Resource
  *   $files = $driveService->files;
  *  </code>
  */
-class Google_Service_Drive_Files_Resource extends Google_Service_Resource
+class Google_Service_Drive_Files_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1680,13 +1680,13 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    * uploads.
    * @opt_param string timedTextTrackName The timed text track name.
    * @opt_param string timedTextLanguage The language of the timed text.
-   * @return Google_Service_Drive_DriveFile
+   * @return UDP_Google_Service_Drive_DriveFile
    */
-  public function copy($fileId, Google_Service_Drive_DriveFile $postBody, $optParams = array())
+  public function copy($fileId, UDP_Google_Service_Drive_DriveFile $postBody, $optParams = array())
   {
     $params = array('fileId' => $fileId, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('copy', array($params), "Google_Service_Drive_DriveFile");
+    return $this->call('copy', array($params), "UDP_Google_Service_Drive_DriveFile");
   }
 
   /**
@@ -1729,13 +1729,13 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    * downloaded. Ignored unless alt=media is specified.
    * @opt_param string projection This parameter is deprecated and has no
    * function.
-   * @return Google_Service_Drive_DriveFile
+   * @return UDP_Google_Service_Drive_DriveFile
    */
   public function get($fileId, $optParams = array())
   {
     $params = array('fileId' => $fileId);
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_Drive_DriveFile");
+    return $this->call('get', array($params), "UDP_Google_Service_Drive_DriveFile");
   }
 
   /**
@@ -1758,13 +1758,13 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    * uploads.
    * @opt_param string timedTextTrackName The timed text track name.
    * @opt_param string timedTextLanguage The language of the timed text.
-   * @return Google_Service_Drive_DriveFile
+   * @return UDP_Google_Service_Drive_DriveFile
    */
-  public function insert(Google_Service_Drive_DriveFile $postBody, $optParams = array())
+  public function insert(UDP_Google_Service_Drive_DriveFile $postBody, $optParams = array())
   {
     $params = array('postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('insert', array($params), "Google_Service_Drive_DriveFile");
+    return $this->call('insert', array($params), "UDP_Google_Service_Drive_DriveFile");
   }
 
   /**
@@ -1819,13 +1819,13 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    * uploads.
    * @opt_param string timedTextLanguage The language of the timed text.
    * @opt_param string timedTextTrackName The timed text track name.
-   * @return Google_Service_Drive_DriveFile
+   * @return UDP_Google_Service_Drive_DriveFile
    */
-  public function patch($fileId, Google_Service_Drive_DriveFile $postBody, $optParams = array())
+  public function patch($fileId, UDP_Google_Service_Drive_DriveFile $postBody, $optParams = array())
   {
     $params = array('fileId' => $fileId, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('patch', array($params), "Google_Service_Drive_DriveFile");
+    return $this->call('patch', array($params), "UDP_Google_Service_Drive_DriveFile");
   }
 
   /**
@@ -1833,13 +1833,13 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    *
    * @param string $fileId The ID of the file to update.
    * @param array $optParams Optional parameters.
-   * @return Google_Service_Drive_DriveFile
+   * @return UDP_Google_Service_Drive_DriveFile
    */
   public function touch($fileId, $optParams = array())
   {
     $params = array('fileId' => $fileId);
     $params = array_merge($params, $optParams);
-    return $this->call('touch', array($params), "Google_Service_Drive_DriveFile");
+    return $this->call('touch', array($params), "UDP_Google_Service_Drive_DriveFile");
   }
 
   /**
@@ -1847,13 +1847,13 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    *
    * @param string $fileId The ID of the file to trash.
    * @param array $optParams Optional parameters.
-   * @return Google_Service_Drive_DriveFile
+   * @return UDP_Google_Service_Drive_DriveFile
    */
   public function trash($fileId, $optParams = array())
   {
     $params = array('fileId' => $fileId);
     $params = array_merge($params, $optParams);
-    return $this->call('trash', array($params), "Google_Service_Drive_DriveFile");
+    return $this->call('trash', array($params), "UDP_Google_Service_Drive_DriveFile");
   }
 
   /**
@@ -1861,13 +1861,13 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    *
    * @param string $fileId The ID of the file to untrash.
    * @param array $optParams Optional parameters.
-   * @return Google_Service_Drive_DriveFile
+   * @return UDP_Google_Service_Drive_DriveFile
    */
   public function untrash($fileId, $optParams = array())
   {
     $params = array('fileId' => $fileId);
     $params = array_merge($params, $optParams);
-    return $this->call('untrash', array($params), "Google_Service_Drive_DriveFile");
+    return $this->call('untrash', array($params), "UDP_Google_Service_Drive_DriveFile");
   }
 
   /**
@@ -1900,13 +1900,13 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
    * uploads.
    * @opt_param string timedTextLanguage The language of the timed text.
    * @opt_param string timedTextTrackName The timed text track name.
-   * @return Google_Service_Drive_DriveFile
+   * @return UDP_Google_Service_Drive_DriveFile
    */
-  public function update($fileId, Google_Service_Drive_DriveFile $postBody, $optParams = array())
+  public function update($fileId, UDP_Google_Service_Drive_DriveFile $postBody, $optParams = array())
   {
     $params = array('fileId' => $fileId, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('update', array($params), "Google_Service_Drive_DriveFile");
+    return $this->call('update', array($params), "UDP_Google_Service_Drive_DriveFile");
   }
 
   /**
@@ -1942,7 +1942,7 @@ class Google_Service_Drive_Files_Resource extends Google_Service_Resource
  *   $parents = $driveService->parents;
  *  </code>
  */
-class Google_Service_Drive_Parents_Resource extends Google_Service_Resource
+class Google_Service_Drive_Parents_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1965,13 +1965,13 @@ class Google_Service_Drive_Parents_Resource extends Google_Service_Resource
    * @param string $fileId The ID of the file.
    * @param string $parentId The ID of the parent.
    * @param array $optParams Optional parameters.
-   * @return Google_Service_Drive_ParentReference
+   * @return UDP_Google_Service_Drive_ParentReference
    */
   public function get($fileId, $parentId, $optParams = array())
   {
     $params = array('fileId' => $fileId, 'parentId' => $parentId);
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_Drive_ParentReference");
+    return $this->call('get', array($params), "UDP_Google_Service_Drive_ParentReference");
   }
 
   /**
@@ -1980,13 +1980,13 @@ class Google_Service_Drive_Parents_Resource extends Google_Service_Resource
    * @param string $fileId The ID of the file.
    * @param Google_ParentReference $postBody
    * @param array $optParams Optional parameters.
-   * @return Google_Service_Drive_ParentReference
+   * @return UDP_Google_Service_Drive_ParentReference
    */
-  public function insert($fileId, Google_Service_Drive_ParentReference $postBody, $optParams = array())
+  public function insert($fileId, UDP_Google_Service_Drive_ParentReference $postBody, $optParams = array())
   {
     $params = array('fileId' => $fileId, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('insert', array($params), "Google_Service_Drive_ParentReference");
+    return $this->call('insert', array($params), "UDP_Google_Service_Drive_ParentReference");
   }
 
   /**
@@ -2012,7 +2012,7 @@ class Google_Service_Drive_Parents_Resource extends Google_Service_Resource
  *   $permissions = $driveService->permissions;
  *  </code>
  */
-class Google_Service_Drive_Permissions_Resource extends Google_Service_Resource
+class Google_Service_Drive_Permissions_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -2143,7 +2143,7 @@ class Google_Service_Drive_Permissions_Resource extends Google_Service_Resource
  *   $properties = $driveService->properties;
  *  </code>
  */
-class Google_Service_Drive_Properties_Resource extends Google_Service_Resource
+class Google_Service_Drive_Properties_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -2253,7 +2253,7 @@ class Google_Service_Drive_Properties_Resource extends Google_Service_Resource
  *   $realtime = $driveService->realtime;
  *  </code>
  */
-class Google_Service_Drive_Realtime_Resource extends Google_Service_Resource
+class Google_Service_Drive_Realtime_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -2306,7 +2306,7 @@ class Google_Service_Drive_Realtime_Resource extends Google_Service_Resource
  *   $replies = $driveService->replies;
  *  </code>
  */
-class Google_Service_Drive_Replies_Resource extends Google_Service_Resource
+class Google_Service_Drive_Replies_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -2426,7 +2426,7 @@ class Google_Service_Drive_Replies_Resource extends Google_Service_Resource
  *   $revisions = $driveService->revisions;
  *  </code>
  */
-class Google_Service_Drive_Revisions_Resource extends Google_Service_Resource
+class Google_Service_Drive_Revisions_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -3248,7 +3248,7 @@ class Google_Service_Drive_Change extends Google_Model
   protected $internal_gapi_mappings = array(
   );
   public $deleted;
-  protected $fileType = 'Google_Service_Drive_DriveFile';
+  protected $fileType = 'UDP_Google_Service_Drive_DriveFile';
   protected $fileDataType = '';
   public $fileId;
   public $id;
@@ -3265,7 +3265,7 @@ class Google_Service_Drive_Change extends Google_Model
   {
     return $this->deleted;
   }
-  public function setFile(Google_Service_Drive_DriveFile $file)
+  public function setFile(UDP_Google_Service_Drive_DriveFile $file)
   {
     $this->file = $file;
   }
@@ -3971,7 +3971,7 @@ class Google_Service_Drive_CommentReplyList extends Google_Collection
   }
 }
 
-class Google_Service_Drive_DriveFile extends Google_Collection
+class UDP_Google_Service_Drive_DriveFile extends Google_Collection
 {
   protected $collection_key = 'properties';
   protected $internal_gapi_mappings = array(
@@ -3994,12 +3994,12 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   public $headRevisionId;
   public $iconLink;
   public $id;
-  protected $imageMediaMetadataType = 'Google_Service_Drive_DriveFileImageMediaMetadata';
+  protected $imageMediaMetadataType = 'UDP_Google_Service_Drive_DriveFileImageMediaMetadata';
   protected $imageMediaMetadataDataType = '';
-  protected $indexableTextType = 'Google_Service_Drive_DriveFileIndexableText';
+  protected $indexableTextType = 'UDP_Google_Service_Drive_DriveFileIndexableText';
   protected $indexableTextDataType = '';
   public $kind;
-  protected $labelsType = 'Google_Service_Drive_DriveFileLabels';
+  protected $labelsType = 'UDP_Google_Service_Drive_DriveFileLabels';
   protected $labelsDataType = '';
   protected $lastModifyingUserType = 'Google_Service_Drive_User';
   protected $lastModifyingUserDataType = '';
@@ -4015,7 +4015,7 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   public $ownerNames;
   protected $ownersType = 'Google_Service_Drive_User';
   protected $ownersDataType = 'array';
-  protected $parentsType = 'Google_Service_Drive_ParentReference';
+  protected $parentsType = 'UDP_Google_Service_Drive_ParentReference';
   protected $parentsDataType = 'array';
   protected $permissionsType = 'Google_Service_Drive_Permission';
   protected $permissionsDataType = 'array';
@@ -4027,14 +4027,14 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   public $sharedWithMeDate;
   protected $sharingUserType = 'Google_Service_Drive_User';
   protected $sharingUserDataType = '';
-  protected $thumbnailType = 'Google_Service_Drive_DriveFileThumbnail';
+  protected $thumbnailType = 'UDP_Google_Service_Drive_DriveFileThumbnail';
   protected $thumbnailDataType = '';
   public $thumbnailLink;
   public $title;
   protected $userPermissionType = 'Google_Service_Drive_Permission';
   protected $userPermissionDataType = '';
   public $version;
-  protected $videoMediaMetadataType = 'Google_Service_Drive_DriveFileVideoMediaMetadata';
+  protected $videoMediaMetadataType = 'UDP_Google_Service_Drive_DriveFileVideoMediaMetadata';
   protected $videoMediaMetadataDataType = '';
   public $webContentLink;
   public $webViewLink;
@@ -4185,7 +4185,7 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   {
     return $this->id;
   }
-  public function setImageMediaMetadata(Google_Service_Drive_DriveFileImageMediaMetadata $imageMediaMetadata)
+  public function setImageMediaMetadata(UDP_Google_Service_Drive_DriveFileImageMediaMetadata $imageMediaMetadata)
   {
     $this->imageMediaMetadata = $imageMediaMetadata;
   }
@@ -4193,7 +4193,7 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   {
     return $this->imageMediaMetadata;
   }
-  public function setIndexableText(Google_Service_Drive_DriveFileIndexableText $indexableText)
+  public function setIndexableText(UDP_Google_Service_Drive_DriveFileIndexableText $indexableText)
   {
     $this->indexableText = $indexableText;
   }
@@ -4209,7 +4209,7 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   {
     return $this->kind;
   }
-  public function setLabels(Google_Service_Drive_DriveFileLabels $labels)
+  public function setLabels(UDP_Google_Service_Drive_DriveFileLabels $labels)
   {
     $this->labels = $labels;
   }
@@ -4377,7 +4377,7 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   {
     return $this->sharingUser;
   }
-  public function setThumbnail(Google_Service_Drive_DriveFileThumbnail $thumbnail)
+  public function setThumbnail(UDP_Google_Service_Drive_DriveFileThumbnail $thumbnail)
   {
     $this->thumbnail = $thumbnail;
   }
@@ -4417,7 +4417,7 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   {
     return $this->version;
   }
-  public function setVideoMediaMetadata(Google_Service_Drive_DriveFileVideoMediaMetadata $videoMediaMetadata)
+  public function setVideoMediaMetadata(UDP_Google_Service_Drive_DriveFileVideoMediaMetadata $videoMediaMetadata)
   {
     $this->videoMediaMetadata = $videoMediaMetadata;
   }
@@ -4451,11 +4451,11 @@ class Google_Service_Drive_DriveFile extends Google_Collection
   }
 }
 
-class Google_Service_Drive_DriveFileExportLinks extends Google_Model
+class UDP_Google_Service_Drive_DriveFileExportLinks extends Google_Model
 {
 }
 
-class Google_Service_Drive_DriveFileImageMediaMetadata extends Google_Model
+class UDP_Google_Service_Drive_DriveFileImageMediaMetadata extends Google_Model
 {
   protected $internal_gapi_mappings = array(
   );
@@ -4472,7 +4472,7 @@ class Google_Service_Drive_DriveFileImageMediaMetadata extends Google_Model
   public $height;
   public $isoSpeed;
   public $lens;
-  protected $locationType = 'Google_Service_Drive_DriveFileImageMediaMetadataLocation';
+  protected $locationType = 'UDP_Google_Service_Drive_DriveFileImageMediaMetadataLocation';
   protected $locationDataType = '';
   public $maxApertureValue;
   public $meteringMode;
@@ -4587,7 +4587,7 @@ class Google_Service_Drive_DriveFileImageMediaMetadata extends Google_Model
   {
     return $this->lens;
   }
-  public function setLocation(Google_Service_Drive_DriveFileImageMediaMetadataLocation $location)
+  public function setLocation(UDP_Google_Service_Drive_DriveFileImageMediaMetadataLocation $location)
   {
     $this->location = $location;
   }
@@ -4653,7 +4653,7 @@ class Google_Service_Drive_DriveFileImageMediaMetadata extends Google_Model
   }
 }
 
-class Google_Service_Drive_DriveFileImageMediaMetadataLocation extends Google_Model
+class UDP_Google_Service_Drive_DriveFileImageMediaMetadataLocation extends Google_Model
 {
   protected $internal_gapi_mappings = array(
   );
@@ -4688,7 +4688,7 @@ class Google_Service_Drive_DriveFileImageMediaMetadataLocation extends Google_Mo
   }
 }
 
-class Google_Service_Drive_DriveFileIndexableText extends Google_Model
+class UDP_Google_Service_Drive_DriveFileIndexableText extends Google_Model
 {
   protected $internal_gapi_mappings = array(
   );
@@ -4705,7 +4705,7 @@ class Google_Service_Drive_DriveFileIndexableText extends Google_Model
   }
 }
 
-class Google_Service_Drive_DriveFileLabels extends Google_Model
+class UDP_Google_Service_Drive_DriveFileLabels extends Google_Model
 {
   protected $internal_gapi_mappings = array(
   );
@@ -4758,11 +4758,11 @@ class Google_Service_Drive_DriveFileLabels extends Google_Model
   }
 }
 
-class Google_Service_Drive_DriveFileOpenWithLinks extends Google_Model
+class UDP_Google_Service_Drive_DriveFileOpenWithLinks extends Google_Model
 {
 }
 
-class Google_Service_Drive_DriveFileThumbnail extends Google_Model
+class UDP_Google_Service_Drive_DriveFileThumbnail extends Google_Model
 {
   protected $internal_gapi_mappings = array(
   );
@@ -4788,7 +4788,7 @@ class Google_Service_Drive_DriveFileThumbnail extends Google_Model
   }
 }
 
-class Google_Service_Drive_DriveFileVideoMediaMetadata extends Google_Model
+class UDP_Google_Service_Drive_DriveFileVideoMediaMetadata extends Google_Model
 {
   protected $internal_gapi_mappings = array(
   );
@@ -4829,7 +4829,7 @@ class Google_Service_Drive_FileList extends Google_Collection
   protected $internal_gapi_mappings = array(
   );
   public $etag;
-  protected $itemsType = 'Google_Service_Drive_DriveFile';
+  protected $itemsType = 'UDP_Google_Service_Drive_DriveFile';
   protected $itemsDataType = 'array';
   public $kind;
   public $nextLink;
@@ -4893,7 +4893,7 @@ class Google_Service_Drive_ParentList extends Google_Collection
   protected $internal_gapi_mappings = array(
   );
   public $etag;
-  protected $itemsType = 'Google_Service_Drive_ParentReference';
+  protected $itemsType = 'UDP_Google_Service_Drive_ParentReference';
   protected $itemsDataType = 'array';
   public $kind;
   public $selfLink;
@@ -4933,7 +4933,7 @@ class Google_Service_Drive_ParentList extends Google_Collection
   }
 }
 
-class Google_Service_Drive_ParentReference extends Google_Model
+class UDP_Google_Service_Drive_ParentReference extends Google_Model
 {
   protected $internal_gapi_mappings = array(
   );

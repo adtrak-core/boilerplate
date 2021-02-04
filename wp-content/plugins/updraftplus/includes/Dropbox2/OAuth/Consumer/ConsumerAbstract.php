@@ -20,6 +20,13 @@ abstract class Dropbox_ConsumerAbstract
     const ACCESS_TOKEN_METHOD = 'oauth2/token';
     // The next endpoint only exists with APIv1
     const OAUTH_UPGRADE = 'oauth2/token_from_oauth1';
+
+    private $scopes = array(
+        'account_info.read',
+        'files.content.write',
+        'files.content.read',
+        'files.metadata.read',
+    );
     
     /**
      * Signature method, either PLAINTEXT or HMAC-SHA1
@@ -171,6 +178,7 @@ abstract class Dropbox_ConsumerAbstract
             'response_type' => 'code',
             'redirect_uri' => empty($key) ? $this->callback : $this->callbackhome,
             'state' => empty($key) ? "POST:".$CSRF.$this->instance_id.$this->callbackhome : $CSRF.$this->instance_id,
+            'scope' => implode(' ', $this->scopes),
         );
     
         // Build the URL and redirect the user

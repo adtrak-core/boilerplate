@@ -2124,6 +2124,10 @@ small.ud_massactions-tip {
 	font-size: 16px;
 }
 
+div.ui-dialog.ui-widget.ui-widget-content {
+	z-index: 99999 !important;
+}
+
 #updraft_delete_form p {
 	margin-top: 3px;
 	padding-top: 0;
@@ -3358,7 +3362,6 @@ ul.updraft-restore--stages li.active {
 	border-top: 1px solid #EEE;
 	padding: 20px;
 	text-align: center;
-	position: -webkit-sticky;
 	position: sticky;
 	bottom: 0;
 	background: #FFF;

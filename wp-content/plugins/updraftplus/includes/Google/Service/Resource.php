@@ -25,7 +25,7 @@ if (!class_exists('UDP_Google_Client')) {
  * is available in this service, and if so construct an apiHttpRequest representing it.
  *
  */
-class Google_Service_Resource
+class UDP_Google_Service_Resource
 {
   // Valid query parameters that work, but don't appear in discovery.
   private $stackParameters = array(
@@ -186,7 +186,7 @@ class Google_Service_Resource
         )
     );
 
-    $url = Google_Http_REST::createRequestUri(
+    $url = UDP_Google_Http_REST::createRequestUri(
         $this->servicePath,
         $method['path'],
         $parameters

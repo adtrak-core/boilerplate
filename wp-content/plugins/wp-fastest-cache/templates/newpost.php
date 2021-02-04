@@ -77,7 +77,7 @@
 			if(jQuery("div[id^='wpfc-modal-newpost-']").length === 0){
 				Wpfc_New_Dialog.dialog("wpfc-modal-newpost", {close: function(){
 					Wpfc_New_Dialog.clone.find("div.window-content input").each(function(){
-						if(jQuery(this).attr("checked")){
+						if(jQuery(this).is(':checked')){
 							var id = jQuery(this).attr("action-id");
 							jQuery("div.tab1 div[template-id='wpfc-modal-newpost'] div.window-content input#" + id).attr("checked", true);
 						}

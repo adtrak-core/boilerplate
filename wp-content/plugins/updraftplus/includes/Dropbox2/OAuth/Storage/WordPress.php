@@ -40,7 +40,7 @@ class Dropbox_WordPress implements Dropbox_StorageInterface
 	 * Check if an instance of the encrypter is passed, set the encryption object
 	 * @return void
 	 */
-	public function __construct(Dropbox_Encrypter $encrypter = null, $option_name_prefix = 'dropbox_token', $option_array = 'dropbox', $backup_module_object)
+	public function __construct(Dropbox_Encrypter $encrypter = null, $option_name_prefix = 'dropbox_token', $option_array = 'dropbox', $backup_module_object = null)
 	{
 		if ($encrypter instanceof Dropbox_Encrypter) {
 			$this->encrypter = $encrypter;

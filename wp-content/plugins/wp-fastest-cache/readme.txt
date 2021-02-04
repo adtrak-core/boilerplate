@@ -3,8 +3,8 @@ Contributors: emrevona
 Donate link: http://profiles.wordpress.org/emrevona/
 Tags: cache, caching, performance, wp-cache, total cache, super cache, cdn
 Requires at least: 3.3
-Tested up to: 5.5
-Stable tag: 0.9.1.3
+Tested up to: 5.6
+Stable tag: 0.9.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -124,6 +124,11 @@ The free version is enough to speed up your site but in the premium version ther
 18. Database Cleanup
 
 == Changelog ==
+
+= 0.9.1.4 =
+* to fix saving "Update Post" settings issue
+* to fix saving "New Post" settings issue
+* <strong>[FEATURE]</strong> Compatible with AMP Takeover feature of <a target="_blank" href="https://wordpress.org/plugins/accelerated-mobile-pages/">AMP for WP – Accelerated Mobile Pages</a>
 
 = 0.9.1.3 =
 * to fix PHP Notice: Undefined offset: -1 js-utilities.php on line 84

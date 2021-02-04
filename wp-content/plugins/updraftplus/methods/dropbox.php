@@ -387,11 +387,11 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 
 		try {
 			/* Some users could have a large amount of backups, the max search is 1000 entries we should continue to search until there are no more entries to bring back. */
-			$start = 0;
+			$cursor = '';
 			$matches = array();
 
 			while (true) {
-				$search = $dropbox->search($match, $searchpath, 1000, $start);
+				$search = $dropbox->search($match, $searchpath, 1000, $cursor);
 				if (empty($search['code']) || 200 != $search['code']) return new WP_Error('response_error', sprintf(__('%s returned an unexpected HTTP response: %s', 'updraftplus'), 'Dropbox', $search['code']), $search['body']);
 
 				if (empty($search['body'])) return array();
@@ -404,8 +404,8 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 					break;
 				}
 
-				if (isset($search['body']->more) && true == $search['body']->more && isset($search['body']->start)) {
-					$start = $search['body']->start;
+				if (isset($search['body']->has_more) && true == $search['body']->has_more && isset($search['body']->cursor)) {
+					$cursor = $search['body']->cursor;
 				} else {
 					break;
 				}
@@ -970,7 +970,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 		$key = empty($opts['secret']) ? '' : $opts['secret'];
 		$sec = empty($opts['appkey']) ? '' : $opts['appkey'];
 		
-		$oauth2_id = base64_decode('dzQxM3o0cWhqejY1Nm5l');
+		$oauth2_id = defined('UPDRAFTPLUS_DROPBOX_CLIENT_ID') ? UPDRAFTPLUS_DROPBOX_CLIENT_ID : base64_decode('dzQxM3o0cWhqejY1Nm5l');
 
 		// Set the callback URL
 		$callbackhome = UpdraftPlus_Options::admin_page_url().'?page=updraftplus&action=updraftmethod-dropbox-auth';

@@ -201,7 +201,7 @@ public function updraftplus_getResumeUri() { return $this->resumeUri; }
       // No problems, but upload not complete.
       return false;
     } else {
-      return Google_Http_REST::decodeHttpResponse($response, $this->client);
+      return UDP_Google_Http_REST::decodeHttpResponse($response, $this->client);
     }
   }
 

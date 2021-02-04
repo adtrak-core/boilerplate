@@ -928,7 +928,7 @@
 				return false;
 			}
 
-			if(preg_match('/<html[^\>]*>/si', $buffer) && preg_match('/<body[^\>]*>/si', $buffer)){
+			if(preg_match('/<html[^\>]*>/si', $buffer) && preg_match('/<body[^\>]*>/si', $buffer) && preg_match('/<\/body>/si', $buffer)){
 				return false;
 			}
 			// if(strlen($buffer) > 10){
@@ -1081,9 +1081,27 @@
 		}
 
 		public function is_amp($content){
+			global $redux_builder_amp;
+			$action = false;
 			$request_uri = trim($_SERVER["REQUEST_URI"], "/");
 
-			if(preg_match("/^amp/", $request_uri) || preg_match("/\/amp\//", $request_uri) || preg_match("/amp$/", $request_uri)){
+			if(preg_match("/^amp/", $request_uri)){
+				$action = true;
+			}
+
+			if(preg_match("/amp$/", $request_uri)){
+				$action = true;
+			}
+
+			if(preg_match("/\/amp\//", $request_uri)){
+				$action = true;
+			}
+
+			if(isset($redux_builder_amp) && isset($redux_builder_amp['ampforwp-amp-takeover']) && ($redux_builder_amp['ampforwp-amp-takeover'] == true)){
+				$action = true;
+			}
+
+			if($action){
 				if(preg_match("/<html[^\>]+amp[^\>]*>/i", $content)){
 					return true;
 				}

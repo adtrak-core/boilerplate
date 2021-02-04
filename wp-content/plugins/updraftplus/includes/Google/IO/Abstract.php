@@ -23,7 +23,7 @@ if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
-abstract class Google_IO_Abstract
+abstract class UDP_Google_IO_Abstract
 {
   const UNKNOWN_CODE = 0;
   const FORM_URLENCODED = 'application/x-www-form-urlencoded';
@@ -50,7 +50,7 @@ abstract class Google_IO_Abstract
   public function __construct(UDP_Google_Client $client)
   {
     $this->client = $client;
-    $timeout = $client->getClassConfig('Google_IO_Abstract', 'request_timeout_seconds');
+    $timeout = $client->getClassConfig('UDP_Google_IO_Abstract', 'request_timeout_seconds');
     if ($timeout > 0) {
       $this->setTimeout($timeout);
     }
@@ -60,7 +60,7 @@ abstract class Google_IO_Abstract
    * Executes a Google_Http_Request
    * @param Google_Http_Request $request the http request to be executed
    * @return array containing response headers, body, and http code
-   * @throws Google_IO_Exception on curl or IO error
+   * @throws UDP_Google_IO_Exception on curl or IO error
    */
   abstract public function executeRequest(UDP_Google_Http_Request $request);
 
@@ -117,7 +117,7 @@ abstract class Google_IO_Abstract
    * @param Google_Http_Request $request the http request to be executed
    * @return Google_Http_Request http request with the response http code,
    * response headers and response body filled in
-   * @throws Google_IO_Exception on curl or IO error
+   * @throws UDP_Google_IO_Exception on curl or IO error
    */
   public function makeRequest(UDP_Google_Http_Request $request)
   {

@@ -137,7 +137,7 @@ class Google_Service_Datastore extends UDP_Google_Service
  *   $datasets = $datastoreService->datasets;
  *  </code>
  */
-class Google_Service_Datastore_Datasets_Resource extends Google_Service_Resource
+class Google_Service_Datastore_Datasets_Resource extends UDP_Google_Service_Resource
 {
 
   /**

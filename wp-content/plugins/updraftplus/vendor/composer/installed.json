@@ -222,17 +222,17 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.9.3",
-            "version_normalized": "3.9.3.0",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
+                "url": "https://github.com/DavidAnderson684/guzzle3.git",
+                "reference": "33e727db47ca87262814f3ced23642261452c2f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
-                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "url": "https://api.github.com/repos/DavidAnderson684/guzzle3/zipball/33e727db47ca87262814f3ced23642261452c2f0",
+                "reference": "33e727db47ca87262814f3ced23642261452c2f0",
                 "shasum": ""
             },
             "require": {
@@ -276,21 +276,26 @@
             "suggest": {
                 "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
             },
-            "time": "2015-03-18T18:23:50+00:00",
+            "time": "2021-01-05T14:25:32+00:00",
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "3.9-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Guzzle": "src/",
                     "Guzzle\\Tests": "tests/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -308,19 +313,17 @@
             "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
+                "HTTP client",
                 "client",
                 "curl",
                 "framework",
                 "http",
-                "http client",
                 "rest",
                 "web service"
             ],
             "support": {
-                "issues": "https://github.com/guzzle/guzzle3/issues",
-                "source": "https://github.com/guzzle/guzzle3/tree/master"
+                "source": "https://github.com/DavidAnderson684/guzzle3/tree/master"
             },
-            "abandoned": "guzzlehttp/guzzle",
             "install-path": "../guzzle/guzzle"
         },
         {
@@ -406,6 +409,40 @@
                 "source": "https://github.com/kriswallsmith/assetic/tree/master"
             },
             "install-path": "../kriswallsmith/assetic"
+        },
+        {
+            "name": "mikemccabe/json-patch-php",
+            "version": "0.1.0",
+            "version_normalized": "0.1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikemccabe/json-patch-php.git",
+                "reference": "b3af30a6aec7f6467c773cd49b2d974a70f7c0d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikemccabe/json-patch-php/zipball/b3af30a6aec7f6467c773cd49b2d974a70f7c0d4",
+                "reference": "b3af30a6aec7f6467c773cd49b2d974a70f7c0d4",
+                "shasum": ""
+            },
+            "time": "2015-01-05T21:19:54+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "mikemccabe\\JsonPatch\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "description": "Produce and apply json-patch objects",
+            "support": {
+                "issues": "https://github.com/mikemccabe/json-patch-php/issues",
+                "source": "https://github.com/mikemccabe/json-patch-php/tree/master"
+            },
+            "install-path": "../mikemccabe/json-patch-php"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -582,73 +619,70 @@
         },
         {
             "name": "rackspace/php-opencloud",
-            "version": "v1.12.2",
-            "version_normalized": "1.12.2.0",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rackspace/php-opencloud.git",
-                "reference": "9c0ade232ddd1ae23994349406171ffea1127b5d"
+                "url": "https://github.com/DavidAnderson684/php-opencloud.git",
+                "reference": "062bf8bb3432c6e0f68e21a2f6dd5f02f2fc19d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rackspace/php-opencloud/zipball/9c0ade232ddd1ae23994349406171ffea1127b5d",
-                "reference": "9c0ade232ddd1ae23994349406171ffea1127b5d",
+                "url": "https://api.github.com/repos/DavidAnderson684/php-opencloud/zipball/062bf8bb3432c6e0f68e21a2f6dd5f02f2fc19d7",
+                "reference": "062bf8bb3432c6e0f68e21a2f6dd5f02f2fc19d7",
                 "shasum": ""
             },
             "require": {
                 "guzzle/guzzle": "~3.8",
-                "php": ">=5.3.3",
+                "mikemccabe/json-patch-php": "~0.1",
+                "php": ">=5.4",
                 "psr/log": "~1.0"
             },
             "require-dev": {
-                "apigen/apigen": "~2.8",
+                "apigen/apigen": "~4.0",
                 "fabpot/php-cs-fixer": "1.0.*@dev",
                 "jakub-onderka/php-parallel-lint": "0.*",
+                "phpspec/prophecy": "~1.4",
                 "phpunit/phpunit": "4.3.*",
                 "satooshi/php-coveralls": "0.6.*@dev"
             },
-            "time": "2015-03-16T23:57:58+00:00",
+            "time": "2016-01-29T14:18:21+00:00",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "OpenCloud": [
-                        "lib/",
+                        "lib/"
+                    ]
+                }
+            },
+            "autoload-dev": {
+                "psr-0": {
+                    "OpenCloud": [
                         "tests/"
                     ]
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
             "authors": [
                 {
-                    "name": "Glen Campbell",
-                    "email": "glen.campbell@rackspace.com"
-                },
-                {
                     "name": "Jamie Hannaford",
                     "email": "jamie.hannaford@rackspace.com",
                     "homepage": "https://github.com/jamiehannaford"
-                },
-                {
-                    "name": "Shaunak Kashyap",
-                    "email": "shaunak.kashyap@rackspace.com",
-                    "homepage": "https://github.com/ycombinator"
                 }
             ],
             "description": "PHP SDK for Rackspace/OpenStack APIs",
             "keywords": [
-                "Openstack",
                 "nova",
                 "opencloud",
+                "openstack",
                 "rackspace",
                 "swift"
             ],
             "support": {
-                "issues": "https://github.com/rackspace/php-opencloud/issues",
-                "source": "https://github.com/rackspace/php-opencloud/tree/master"
+                "source": "https://github.com/DavidAnderson684/php-opencloud/tree/master"
             },
             "install-path": "../rackspace/php-opencloud"
         },

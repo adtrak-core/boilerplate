@@ -28,7 +28,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_Storage extends UDP_Google_Service
+class UDP_Google_Service_Storage extends UDP_Google_Service
 {
   /** View and manage your data across Google Cloud Platform services. */
   const CLOUD_PLATFORM =
@@ -1028,11 +1028,11 @@ class Google_Service_Storage extends UDP_Google_Service
  * The "bucketAccessControls" collection of methods.
  * Typical usage is:
  *  <code>
- *   $storageService = new Google_Service_Storage(...);
+ *   $storageService = new UDP_Google_Service_Storage(...);
  *   $bucketAccessControls = $storageService->bucketAccessControls;
  *  </code>
  */
-class Google_Service_Storage_BucketAccessControls_Resource extends Google_Service_Resource
+class Google_Service_Storage_BucketAccessControls_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1143,11 +1143,11 @@ class Google_Service_Storage_BucketAccessControls_Resource extends Google_Servic
  * The "buckets" collection of methods.
  * Typical usage is:
  *  <code>
- *   $storageService = new Google_Service_Storage(...);
+ *   $storageService = new UDP_Google_Service_Storage(...);
  *   $buckets = $storageService->buckets;
  *  </code>
  */
-class Google_Service_Storage_Buckets_Resource extends Google_Service_Resource
+class Google_Service_Storage_Buckets_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1181,13 +1181,13 @@ class Google_Service_Storage_Buckets_Resource extends Google_Service_Resource
    * metadata conditional on whether the bucket's current metageneration does not
    * match the given value.
    * @opt_param string projection Set of properties to return. Defaults to noAcl.
-   * @return Google_Service_Storage_Bucket
+   * @return UDP_Google_Service_Storage_Bucket
    */
   public function get($bucket, $optParams = array())
   {
     $params = array('bucket' => $bucket);
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_Storage_Bucket");
+    return $this->call('get', array($params), "UDP_Google_Service_Storage_Bucket");
   }
 
   /**
@@ -1204,13 +1204,13 @@ class Google_Service_Storage_Buckets_Resource extends Google_Service_Resource
    * it defaults to full.
    * @opt_param string predefinedDefaultObjectAcl Apply a predefined set of
    * default object access controls to this bucket.
-   * @return Google_Service_Storage_Bucket
+   * @return UDP_Google_Service_Storage_Bucket
    */
-  public function insert($project, Google_Service_Storage_Bucket $postBody, $optParams = array())
+  public function insert($project, UDP_Google_Service_Storage_Bucket $postBody, $optParams = array())
   {
     $params = array('project' => $project, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('insert', array($params), "Google_Service_Storage_Bucket");
+    return $this->call('insert', array($params), "UDP_Google_Service_Storage_Bucket");
   }
 
   /**
@@ -1252,13 +1252,13 @@ class Google_Service_Storage_Buckets_Resource extends Google_Service_Resource
    * @opt_param string ifMetagenerationNotMatch Makes the return of the bucket
    * metadata conditional on whether the bucket's current metageneration does not
    * match the given value.
-   * @return Google_Service_Storage_Bucket
+   * @return UDP_Google_Service_Storage_Bucket
    */
-  public function patch($bucket, Google_Service_Storage_Bucket $postBody, $optParams = array())
+  public function patch($bucket, UDP_Google_Service_Storage_Bucket $postBody, $optParams = array())
   {
     $params = array('bucket' => $bucket, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('patch', array($params), "Google_Service_Storage_Bucket");
+    return $this->call('patch', array($params), "UDP_Google_Service_Storage_Bucket");
   }
 
   /**
@@ -1279,13 +1279,13 @@ class Google_Service_Storage_Buckets_Resource extends Google_Service_Resource
    * @opt_param string ifMetagenerationNotMatch Makes the return of the bucket
    * metadata conditional on whether the bucket's current metageneration does not
    * match the given value.
-   * @return Google_Service_Storage_Bucket
+   * @return UDP_Google_Service_Storage_Bucket
    */
-  public function update($bucket, Google_Service_Storage_Bucket $postBody, $optParams = array())
+  public function update($bucket, UDP_Google_Service_Storage_Bucket $postBody, $optParams = array())
   {
     $params = array('bucket' => $bucket, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('update', array($params), "Google_Service_Storage_Bucket");
+    return $this->call('update', array($params), "UDP_Google_Service_Storage_Bucket");
   }
 }
 
@@ -1293,11 +1293,11 @@ class Google_Service_Storage_Buckets_Resource extends Google_Service_Resource
  * The "channels" collection of methods.
  * Typical usage is:
  *  <code>
- *   $storageService = new Google_Service_Storage(...);
+ *   $storageService = new UDP_Google_Service_Storage(...);
  *   $channels = $storageService->channels;
  *  </code>
  */
-class Google_Service_Storage_Channels_Resource extends Google_Service_Resource
+class Google_Service_Storage_Channels_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1318,11 +1318,11 @@ class Google_Service_Storage_Channels_Resource extends Google_Service_Resource
  * The "defaultObjectAccessControls" collection of methods.
  * Typical usage is:
  *  <code>
- *   $storageService = new Google_Service_Storage(...);
+ *   $storageService = new UDP_Google_Service_Storage(...);
  *   $defaultObjectAccessControls = $storageService->defaultObjectAccessControls;
  *  </code>
  */
-class Google_Service_Storage_DefaultObjectAccessControls_Resource extends Google_Service_Resource
+class Google_Service_Storage_DefaultObjectAccessControls_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1440,11 +1440,11 @@ class Google_Service_Storage_DefaultObjectAccessControls_Resource extends Google
  * The "objectAccessControls" collection of methods.
  * Typical usage is:
  *  <code>
- *   $storageService = new Google_Service_Storage(...);
+ *   $storageService = new UDP_Google_Service_Storage(...);
  *   $objectAccessControls = $storageService->objectAccessControls;
  *  </code>
  */
-class Google_Service_Storage_ObjectAccessControls_Resource extends Google_Service_Resource
+class Google_Service_Storage_ObjectAccessControls_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1579,11 +1579,11 @@ class Google_Service_Storage_ObjectAccessControls_Resource extends Google_Servic
  * The "objects" collection of methods.
  * Typical usage is:
  *  <code>
- *   $storageService = new Google_Service_Storage(...);
+ *   $storageService = new UDP_Google_Service_Storage(...);
  *   $objects = $storageService->objects;
  *  </code>
  */
-class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
+class Google_Service_Storage_Objects_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -1602,13 +1602,13 @@ class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
    * whether the object's current metageneration matches the given value.
    * @opt_param string destinationPredefinedAcl Apply a predefined set of access
    * controls to the destination object.
-   * @return Google_Service_Storage_StorageObject
+   * @return UDP_Google_Service_Storage_StorageObject
    */
   public function compose($destinationBucket, $destinationObject, Google_Service_Storage_ComposeRequest $postBody, $optParams = array())
   {
     $params = array('destinationBucket' => $destinationBucket, 'destinationObject' => $destinationObject, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('compose', array($params), "Google_Service_Storage_StorageObject");
+    return $this->call('compose', array($params), "UDP_Google_Service_Storage_StorageObject");
   }
 
   /**
@@ -1654,13 +1654,13 @@ class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
    * @opt_param string projection Set of properties to return. Defaults to noAcl,
    * unless the object resource specifies the acl property, when it defaults to
    * full.
-   * @return Google_Service_Storage_StorageObject
+   * @return UDP_Google_Service_Storage_StorageObject
    */
-  public function copy($sourceBucket, $sourceObject, $destinationBucket, $destinationObject, Google_Service_Storage_StorageObject $postBody, $optParams = array())
+  public function copy($sourceBucket, $sourceObject, $destinationBucket, $destinationObject, UDP_Google_Service_Storage_StorageObject $postBody, $optParams = array())
   {
     $params = array('sourceBucket' => $sourceBucket, 'sourceObject' => $sourceObject, 'destinationBucket' => $destinationBucket, 'destinationObject' => $destinationObject, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('copy', array($params), "Google_Service_Storage_StorageObject");
+    return $this->call('copy', array($params), "UDP_Google_Service_Storage_StorageObject");
   }
 
   /**
@@ -1708,13 +1708,13 @@ class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
    * @opt_param string ifMetagenerationNotMatch Makes the operation conditional on
    * whether the object's current metageneration does not match the given value.
    * @opt_param string projection Set of properties to return. Defaults to noAcl.
-   * @return Google_Service_Storage_StorageObject
+   * @return UDP_Google_Service_Storage_StorageObject
    */
   public function get($bucket, $object, $optParams = array())
   {
     $params = array('bucket' => $bucket, 'object' => $object);
     $params = array_merge($params, $optParams);
-    return $this->call('get', array($params), "Google_Service_Storage_StorageObject");
+    return $this->call('get', array($params), "UDP_Google_Service_Storage_StorageObject");
   }
 
   /**
@@ -1746,13 +1746,13 @@ class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
    * @opt_param string name Name of the object. Required when the object metadata
    * is not otherwise provided. Overrides the object metadata's name value, if
    * any.
-   * @return Google_Service_Storage_StorageObject
+   * @return UDP_Google_Service_Storage_StorageObject
    */
-  public function insert($bucket, Google_Service_Storage_StorageObject $postBody, $optParams = array())
+  public function insert($bucket, UDP_Google_Service_Storage_StorageObject $postBody, $optParams = array())
   {
     $params = array('bucket' => $bucket, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('insert', array($params), "Google_Service_Storage_StorageObject");
+    return $this->call('insert', array($params), "UDP_Google_Service_Storage_StorageObject");
   }
 
   /**
@@ -1807,13 +1807,13 @@ class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
    * @opt_param string ifMetagenerationNotMatch Makes the operation conditional on
    * whether the object's current metageneration does not match the given value.
    * @opt_param string projection Set of properties to return. Defaults to full.
-   * @return Google_Service_Storage_StorageObject
+   * @return UDP_Google_Service_Storage_StorageObject
    */
-  public function patch($bucket, $object, Google_Service_Storage_StorageObject $postBody, $optParams = array())
+  public function patch($bucket, $object, UDP_Google_Service_Storage_StorageObject $postBody, $optParams = array())
   {
     $params = array('bucket' => $bucket, 'object' => $object, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('patch', array($params), "Google_Service_Storage_StorageObject");
+    return $this->call('patch', array($params), "UDP_Google_Service_Storage_StorageObject");
   }
 
   /**
@@ -1873,7 +1873,7 @@ class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
    * full.
    * @return Google_Service_Storage_RewriteResponse
    */
-  public function rewrite($sourceBucket, $sourceObject, $destinationBucket, $destinationObject, Google_Service_Storage_StorageObject $postBody, $optParams = array())
+  public function rewrite($sourceBucket, $sourceObject, $destinationBucket, $destinationObject, UDP_Google_Service_Storage_StorageObject $postBody, $optParams = array())
   {
     $params = array('sourceBucket' => $sourceBucket, 'sourceObject' => $sourceObject, 'destinationBucket' => $destinationBucket, 'destinationObject' => $destinationObject, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
@@ -1901,13 +1901,13 @@ class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
    * @opt_param string ifMetagenerationNotMatch Makes the operation conditional on
    * whether the object's current metageneration does not match the given value.
    * @opt_param string projection Set of properties to return. Defaults to full.
-   * @return Google_Service_Storage_StorageObject
+   * @return UDP_Google_Service_Storage_StorageObject
    */
-  public function update($bucket, $object, Google_Service_Storage_StorageObject $postBody, $optParams = array())
+  public function update($bucket, $object, UDP_Google_Service_Storage_StorageObject $postBody, $optParams = array())
   {
     $params = array('bucket' => $bucket, 'object' => $object, 'postBody' => $postBody);
     $params = array_merge($params, $optParams);
-    return $this->call('update', array($params), "Google_Service_Storage_StorageObject");
+    return $this->call('update', array($params), "UDP_Google_Service_Storage_StorageObject");
   }
 
   /**
@@ -1945,7 +1945,7 @@ class Google_Service_Storage_Objects_Resource extends Google_Service_Resource
 
 
 
-class Google_Service_Storage_Bucket extends Google_Collection
+class UDP_Google_Service_Storage_Bucket extends Google_Collection
 {
   protected $collection_key = 'defaultObjectAcl';
   protected $internal_gapi_mappings = array(
@@ -2539,7 +2539,7 @@ class Google_Service_Storage_Buckets extends Google_Collection
   protected $collection_key = 'items';
   protected $internal_gapi_mappings = array(
   );
-  protected $itemsType = 'Google_Service_Storage_Bucket';
+  protected $itemsType = 'UDP_Google_Service_Storage_Bucket';
   protected $itemsDataType = 'array';
   public $kind;
   public $nextPageToken;
@@ -2678,14 +2678,14 @@ class Google_Service_Storage_ComposeRequest extends Google_Collection
   protected $collection_key = 'sourceObjects';
   protected $internal_gapi_mappings = array(
   );
-  protected $destinationType = 'Google_Service_Storage_StorageObject';
+  protected $destinationType = 'UDP_Google_Service_Storage_StorageObject';
   protected $destinationDataType = '';
   public $kind;
   protected $sourceObjectsType = 'Google_Service_Storage_ComposeRequestSourceObjects';
   protected $sourceObjectsDataType = 'array';
 
 
-  public function setDestination(Google_Service_Storage_StorageObject $destination)
+  public function setDestination(UDP_Google_Service_Storage_StorageObject $destination)
   {
     $this->destination = $destination;
   }
@@ -2948,7 +2948,7 @@ class Google_Service_Storage_Objects extends Google_Collection
   protected $collection_key = 'prefixes';
   protected $internal_gapi_mappings = array(
   );
-  protected $itemsType = 'Google_Service_Storage_StorageObject';
+  protected $itemsType = 'UDP_Google_Service_Storage_StorageObject';
   protected $itemsDataType = 'array';
   public $kind;
   public $nextPageToken;
@@ -2996,7 +2996,7 @@ class Google_Service_Storage_RewriteResponse extends Google_Model
   public $done;
   public $kind;
   public $objectSize;
-  protected $resourceType = 'Google_Service_Storage_StorageObject';
+  protected $resourceType = 'UDP_Google_Service_Storage_StorageObject';
   protected $resourceDataType = '';
   public $rewriteToken;
   public $totalBytesRewritten;
@@ -3026,7 +3026,7 @@ class Google_Service_Storage_RewriteResponse extends Google_Model
   {
     return $this->objectSize;
   }
-  public function setResource(Google_Service_Storage_StorageObject $resource)
+  public function setResource(UDP_Google_Service_Storage_StorageObject $resource)
   {
     $this->resource = $resource;
   }
@@ -3052,7 +3052,7 @@ class Google_Service_Storage_RewriteResponse extends Google_Model
   }
 }
 
-class Google_Service_Storage_StorageObject extends Google_Collection
+class UDP_Google_Service_Storage_StorageObject extends Google_Collection
 {
   protected $collection_key = 'acl';
   protected $internal_gapi_mappings = array(

@@ -25,7 +25,7 @@ if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
-class Google_IO_Curl extends Google_IO_Abstract
+class UDP_Google_IO_Curl extends UDP_Google_IO_Abstract
 {
   // cURL hex representation of version 7.30.0
   const NO_QUIRK_VERSION = 0x071E00;
@@ -37,7 +37,7 @@ class Google_IO_Curl extends Google_IO_Abstract
     if (!extension_loaded('curl')) {
       $error = 'The cURL IO handler requires the cURL extension to be enabled';
       $client->getLogger()->critical($error);
-      throw new Google_IO_Exception($error);
+      throw new UDP_Google_IO_Exception($error);
     }
 
     parent::__construct($client);
@@ -48,7 +48,7 @@ class Google_IO_Curl extends Google_IO_Abstract
    *
    * @param Google_Http_Request $request the http request to be executed
    * @return array containing response headers, body, and http code
-   * @throws Google_IO_Exception on curl or IO error
+   * @throws UDP_Google_IO_Exception on curl or IO error
    */
   public function executeRequest(UDP_Google_Http_Request $request)
   {
@@ -84,7 +84,7 @@ class Google_IO_Curl extends Google_IO_Abstract
       curl_setopt($curl, CURLOPT_ENCODING, 'gzip,deflate');
     }
     
-    $options = $this->client->getClassConfig('Google_IO_Curl', 'options');
+    $options = $this->client->getClassConfig('UDP_Google_IO_Curl', 'options');
     if (is_array($options)) {
       $this->setOptions($options);
     }
@@ -111,10 +111,10 @@ class Google_IO_Curl extends Google_IO_Abstract
     if ($response === false) {
       $error = curl_error($curl);
       $code = curl_errno($curl);
-      $map = $this->client->getClassConfig('Google_IO_Exception', 'retry_map');
+      $map = $this->client->getClassConfig('UDP_Google_IO_Exception', 'retry_map');
 
       $this->client->getLogger()->error('cURL ' . $error);
-      throw new Google_IO_Exception($error, $code, null, $map);
+      throw new UDP_Google_IO_Exception($error, $code, null, $map);
     }
     $headerSize = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 
@@ -176,6 +176,6 @@ class Google_IO_Curl extends Google_IO_Abstract
   {
     $ver = curl_version();
     $versionNum = $ver['version_number'];
-    return $versionNum < Google_IO_Curl::NO_QUIRK_VERSION;
+    return $versionNum < UDP_Google_IO_Curl::NO_QUIRK_VERSION;
   }
 }

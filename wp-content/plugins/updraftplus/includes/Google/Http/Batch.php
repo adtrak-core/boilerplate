@@ -125,9 +125,9 @@ class Google_Http_Batch
           }
 
           try {
-            $response = Google_Http_REST::decodeHttpResponse($response, $this->client);
+            $response = UDP_Google_Http_REST::decodeHttpResponse($response, $this->client);
             $responses[$key] = $response;
-          } catch (Google_Service_Exception $e) {
+          } catch (UDP_Google_Service_Exception $e) {
             // Store the exception as the response, so successful responses
             // can be processed.
             $responses[$key] = $e;

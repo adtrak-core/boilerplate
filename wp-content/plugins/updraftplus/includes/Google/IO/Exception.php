@@ -19,7 +19,7 @@ if (!class_exists('UDP_Google_Client')) {
   require_once dirname(__FILE__) . '/../autoload.php';
 }
 
-class Google_IO_Exception extends Google_Exception implements Google_Task_Retryable
+class UDP_Google_IO_Exception extends Google_Exception implements Google_Task_Retryable
 {
   /**
    * @var array $retryMap Map of errors with retry counts.

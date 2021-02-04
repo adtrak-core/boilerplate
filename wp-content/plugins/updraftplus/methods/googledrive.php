@@ -152,9 +152,9 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 						reset($found);
 						$current_parent_id = key($found);
 					} elseif (empty($found)) {
-						$ref = new Google_Service_Drive_ParentReference;
+						$ref = new UDP_Google_Service_Drive_ParentReference;
 						$ref->setId($current_parent_id);
-						$dir = new Google_Service_Drive_DriveFile();
+						$dir = new UDP_Google_Service_Drive_DriveFile();
 						$dir->setMimeType('application/vnd.google-apps.folder');
 						$dir->setParents(array($ref));
 						$dir->setTitle($element);
@@ -177,7 +177,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
 			$this->log("id_from_path failure: exception (".get_class($e)."): ".$msg.' (line: '.$e->getLine().', file: '.$e->getFile().')');
-			if (is_a($e, 'Google_Service_Exception') && false !== strpos($msg, 'Invalid json in service response') && function_exists('mb_strpos')) {
+			if (is_a($e, 'UDP_Google_Service_Exception') && false !== strpos($msg, 'Invalid json in service response') && function_exists('mb_strpos')) {
 				// Aug 2015: saw a case where the gzip-encoding was not removed from the result
 				// https://stackoverflow.com/questions/10975775/how-to-determine-if-a-string-was-compressed
 				// @codingStandardsIgnoreLine
@@ -205,7 +205,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 		foreach (array_keys($this->multi_directories) as $drive_id) {
 			if (!isset($oldest_reference)) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
 				$oldest_id = $drive_id;
-				$oldest_reference = new Google_Service_Drive_ParentReference;
+				$oldest_reference = new UDP_Google_Service_Drive_ParentReference;
 				$oldest_reference->setId($oldest_id);
 				continue;
 			}
@@ -227,7 +227,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 					
 					$this->log("Moving: $title (".$item->getId().") from duplicate folder $drive_id to $oldest_id");
 					
-					$file = new Google_Service_Drive_DriveFile();
+					$file = new UDP_Google_Service_Drive_DriveFile();
 					$file->setParents(array($oldest_reference));
 					
 					$storage->files->patch($item->getId(), $file);
@@ -545,7 +545,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 				$message .= '</ul>';
 			}
 		} catch (Exception $e) {
-			if (is_a($e, 'Google_Service_Exception')) {
+			if (is_a($e, 'UDP_Google_Service_Exception')) {
 				$errs = $e->getErrors();
 				$message .= __('However, subsequent access attempts failed:', 'updraftplus');
 				if (is_array($errs)) {
@@ -704,7 +704,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 
 		$storage = $this->get_storage();
 
-		if (!empty($storage) && is_object($storage) && is_a($storage, 'Google_Service_Drive')) return $storage;
+		if (!empty($storage) && is_object($storage) && is_a($storage, 'UDP_Google_Service_Drive')) return $storage;
 
 		$opts = $this->get_options();
 
@@ -814,7 +814,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 		}
 
 		$config = new UDP_Google_Config();
-		$config->setClassConfig('Google_IO_Abstract', 'request_timeout_seconds', 60);
+		$config->setClassConfig('UDP_Google_IO_Abstract', 'request_timeout_seconds', 60);
 		// In our testing, $storage->about->get() fails if gzip is not disabled when using the stream wrapper
 		if (!function_exists('curl_version') || !function_exists('curl_exec') || (defined('UPDRAFTPLUS_GOOGLEDRIVE_DISABLEGZIP') && UPDRAFTPLUS_GOOGLEDRIVE_DISABLEGZIP)) {
 			$config->setClassConfig('UDP_Google_Http_Request', 'disable_gzip', true);
@@ -845,14 +845,14 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 		$io = $client->getIo();
 		$setopts = array();
 
-		if (is_a($io, 'Google_IO_Curl')) {
+		if (is_a($io, 'UDP_Google_IO_Curl')) {
 			$setopts[CURLOPT_SSL_VERIFYPEER] = UpdraftPlus_Options::get_updraft_option('updraft_ssl_disableverify') ? false : true;
 			if (!UpdraftPlus_Options::get_updraft_option('updraft_ssl_useservercerts')) $setopts[CURLOPT_CAINFO] = UPDRAFTPLUS_DIR.'/includes/cacert.pem';
 			// Raise the timeout from the default of 15
 			$setopts[CURLOPT_TIMEOUT] = 60;
 			$setopts[CURLOPT_CONNECTTIMEOUT] = 15;
 			if (defined('UPDRAFTPLUS_IPV4_ONLY') && UPDRAFTPLUS_IPV4_ONLY) $setopts[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V4;
-		} elseif (is_a($io, 'Google_IO_Stream')) {
+		} elseif (is_a($io, 'UDP_Google_IO_Stream')) {
 			$setopts['timeout'] = 60;
 			// We had to modify the SDK to support this
 			// https://wiki.php.net/rfc/tls-peer-verification - before PHP 5.6, there is no default CA file
@@ -878,7 +878,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 					$parents = $resource->getParents();
 					if (is_array($parents) && count($parents)>0) {
 						$parent = array_shift($parents);
-						$parentid = is_a($parent, 'Google_Service_Drive_ParentReference') ? $parent->getId() : false;
+						$parentid = is_a($parent, 'UDP_Google_Service_Drive_ParentReference') ? $parent->getId() : false;
 					} else {
 						$parentid = false;
 					}
@@ -969,13 +969,13 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 	}
 
 	/**
-	 * Returns array of Google_Service_Drive_DriveFile objects
+	 * Returns array of UDP_Google_Service_Drive_DriveFile objects
 	 *
 	 * @param  string $parent_id This is the Parent ID
 	 * @param  string $type 	 This is the type of file or directory but by default it is set to 'any' unless specified
 	 * @param  string $match 	 This will specify which match is used for the SQL but by default it is set to 'backup_' unless specified
 	 *
-	 * @return array - list of Google_Service_Drive_DriveFile items
+	 * @return array - list of UDP_Google_Service_Drive_DriveFile items
 	 */
 	private function get_subitems($parent_id, $type = 'any', $match = 'backup_') {
 
@@ -1100,10 +1100,10 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 
 		$local_size = filesize($file);
 
-		$gdfile = new Google_Service_Drive_DriveFile();
+		$gdfile = new UDP_Google_Service_Drive_DriveFile();
 		$gdfile->title  = $basename;
 
-		$ref = new Google_Service_Drive_ParentReference;
+		$ref = new UDP_Google_Service_Drive_ParentReference;
 		$ref->setId($parent_id);
 		$gdfile->setParents(array($ref));
 
@@ -1200,7 +1200,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 				$updraftplus->record_uploaded_chunk(round(100*$pointer/$local_size, 1), $media->getProgress(), $file);
 			}
 			
-		} catch (Google_Service_Exception $e) {
+		} catch (UDP_Google_Service_Exception $e) {
 			$this->log("ERROR: upload error (".get_class($e)."): ".$e->getMessage().' (line: '.$e->getLine().', file: '.$e->getFile().')');
 			$client->setDefer(false);
 			fclose($handle);

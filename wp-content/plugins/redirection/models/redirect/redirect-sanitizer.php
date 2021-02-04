@@ -53,6 +53,8 @@ class Red_Item_Sanitize {
 		// Auto-migrate the regex to the source flags
 		$data['match_data'] = [ 'source' => [ 'flag_regex' => $data['regex'] === 1 ? true : false ] ];
 
+		$flags = new Red_Source_Flags();
+
 		// Set flags
 		if ( isset( $details['match_data'] ) && isset( $details['match_data']['source'] ) ) {
 			$defaults = red_get_options();
@@ -91,8 +93,13 @@ class Red_Item_Sanitize {
 		$data['url'] = $this->get_url( $url, $data['regex'] );
 
 		if ( ! is_wp_error( $data['url'] ) ) {
-			$data['match_url'] = new Red_Url_Match( $data['url'] );
-			$data['match_url'] = $data['match_url']->get_url();
+			$matcher = new Red_Url_Match( $data['url'] );
+			$data['match_url'] = $matcher->get_url();
+
+			// If 'exact order' then save the match URL with query params
+			if ( $flags->is_query_exact_order() ) {
+				$data['match_url'] = $matcher->get_url_with_params();
+			}
 		}
 
 		$data['title'] = ! empty( $details['title'] ) ? $details['title'] : null;
@@ -234,17 +241,37 @@ class Red_Item_Sanitize {
 			$url = '/' . $url;
 		}
 
-		// Ensure we URL decode any i10n characters
-		$url = rawurldecode( $url );
+		// Try and URL decode any i10n characters
+		$decoded = $this->remove_bad_encoding( rawurldecode( $url ) );
 
-		// Try and remove bad decoding
-		if ( function_exists( 'iconv' ) ) {
-			$converted = @iconv( 'UTF-8', 'UTF-8//IGNORE', $url );
-			if ( $converted !== false ) {
-				$url = $converted;
+		// Was there any invalid characters?
+		if ( $decoded === false ) {
+			// Yes. Use the url as an undecoded URL, and check for invalid characters
+			$decoded = $this->remove_bad_encoding( $url );
+
+			// Was there any invalid characters?
+			if ( $decoded === false ) {
+				// Yes, it's still a problem. Use the URL as-is and hope for the best
+				return $url;
 			}
 		}
 
-		return $url;
+		// Return the URL
+		return $decoded;
+	}
+
+	/**
+	 * Remove any bad encoding, where possible
+	 *
+	 * @param string $text Text.
+	 * @return string|false
+	 */
+	private function remove_bad_encoding( $text ) {
+		// Try and remove bad decoding
+		if ( function_exists( 'iconv' ) ) {
+			return @iconv( 'UTF-8', 'UTF-8//IGNORE', $text );
+		}
+
+		return $text;
 	}
 }

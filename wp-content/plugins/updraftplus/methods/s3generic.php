@@ -11,18 +11,30 @@ class UpdraftPlus_BackupModule_s3generic extends UpdraftPlus_BackupModule_s3 {
 
 	protected $use_v4 = false;
 
-	protected function set_region($obj, $region = '', $bucket_name = '') {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- $bucket_name is unused, I think we can remove this
+	/**
+	 * Given an S3 object, possibly set the region on it
+	 *
+	 * @param Object $obj		  - like UpdraftPlus_S3
+	 * @param String $region
+	 * @param String $bucket_name
+	 */
+	protected function set_region($obj, $region = '', $bucket_name = '') {
 		$config = $this->get_config();
 		$endpoint = ('' != $region && 'n/a' != $region) ? $region : $config['endpoint'];
 		$log_message = "Set endpoint: $endpoint";
+		$log_message_append = '';
 		if (is_string($endpoint) && preg_match('/^(.*):(\d+)$/', $endpoint, $matches)) {
 			$endpoint = $matches[1];
 			$port = $matches[2];
-			$log_message .= ", port=$port";
+			$log_message_append = ", port=$port";
 			$obj->setPort($port);
 		}
+		// This provider requires domain-style access. In future it might be better to provide an option rather than hard-coding the knowledge.
+		if (is_string($endpoint) && preg_match('/\.aliyuncs\.com$/i', $endpoint)) {
+			$obj->useDNSBucketName(true, $bucket_name);
+		}
 		global $updraftplus;
-		if ($updraftplus->backup_time) $this->log($log_message);
+		if ($updraftplus->backup_time) $this->log($log_message.$log_message_append);
 		$obj->setEndpoint($endpoint);
 	}
 
@@ -121,6 +133,11 @@ class UpdraftPlus_BackupModule_s3generic extends UpdraftPlus_BackupModule_s3 {
 				</tr>';
 	}
 
+	/**
+	 * Perform a test of user-supplied credentials, and echo the result
+	 *
+	 * @param Array $posted_settings - settings to test
+	 */
 	public function credentials_test($posted_settings) {
 		$this->credentials_test_engine($this->get_config(), $posted_settings);
 	}

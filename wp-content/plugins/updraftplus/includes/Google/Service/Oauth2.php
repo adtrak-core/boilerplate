@@ -28,7 +28,7 @@
  *
  * @author Google, Inc.
  */
-class Google_Service_Oauth2 extends UDP_Google_Service
+class UDP_Google_Service_Oauth2 extends UDP_Google_Service
 {
   /** Know your basic profile info and list of people in your circles.. */
   const PLUS_LOGIN =
@@ -87,7 +87,7 @@ class Google_Service_Oauth2 extends UDP_Google_Service
           )
         )
     );
-    $this->base_methods = new Google_Service_Resource(
+    $this->base_methods = new UDP_Google_Service_Resource(
         $this,
         $this->serviceName,
         '',
@@ -154,11 +154,11 @@ class Google_Service_Oauth2 extends UDP_Google_Service
  * The "userinfo" collection of methods.
  * Typical usage is:
  *  <code>
- *   $oauth2Service = new Google_Service_Oauth2(...);
+ *   $oauth2Service = new UDP_Google_Service_Oauth2(...);
  *   $userinfo = $oauth2Service->userinfo;
  *  </code>
  */
-class Google_Service_Oauth2_Userinfo_Resource extends Google_Service_Resource
+class Google_Service_Oauth2_Userinfo_Resource extends UDP_Google_Service_Resource
 {
 
   /**
@@ -179,11 +179,11 @@ class Google_Service_Oauth2_Userinfo_Resource extends Google_Service_Resource
  * The "v2" collection of methods.
  * Typical usage is:
  *  <code>
- *   $oauth2Service = new Google_Service_Oauth2(...);
+ *   $oauth2Service = new UDP_Google_Service_Oauth2(...);
  *   $v2 = $oauth2Service->v2;
  *  </code>
  */
-class Google_Service_Oauth2_UserinfoV2_Resource extends Google_Service_Resource
+class Google_Service_Oauth2_UserinfoV2_Resource extends UDP_Google_Service_Resource
 {
 }
 
@@ -191,11 +191,11 @@ class Google_Service_Oauth2_UserinfoV2_Resource extends Google_Service_Resource
  * The "me" collection of methods.
  * Typical usage is:
  *  <code>
- *   $oauth2Service = new Google_Service_Oauth2(...);
+ *   $oauth2Service = new UDP_Google_Service_Oauth2(...);
  *   $me = $oauth2Service->me;
  *  </code>
  */
-class Google_Service_Oauth2_UserinfoV2Me_Resource extends Google_Service_Resource
+class Google_Service_Oauth2_UserinfoV2Me_Resource extends UDP_Google_Service_Resource
 {
 
   /**

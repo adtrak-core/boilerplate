@@ -5,19 +5,22 @@
 import PropTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import {
-	Subtotal,
-	TotalsFees,
 	TotalsCoupon,
 	TotalsDiscount,
 	TotalsFooterItem,
 	TotalsShipping,
-	TotalsTaxes,
 } from '@woocommerce/base-components/cart-checkout';
+import {
+	Subtotal,
+	TotalsFees,
+	TotalsTaxes,
+	ExperimentalOrderMeta,
+	getCurrencyFromPriceResponse,
+} from '@woocommerce/blocks-checkout';
 import {
 	COUPONS_ENABLED,
 	DISPLAY_CART_PRICES_INCLUDING_TAX,
 } from '@woocommerce/block-settings';
-import { getCurrencyFromPriceResponse } from '@woocommerce/base-utils';
 import { CartExpressPayment } from '@woocommerce/base-components/payment-methods';
 import {
 	useStoreCartCoupons,
@@ -64,6 +67,7 @@ const Cart = ( { attributes } ) => {
 
 	const {
 		cartItems,
+		cartFees,
 		cartTotals,
 		cartIsLoading,
 		cartItemsCount,
@@ -113,7 +117,7 @@ const Cart = ( { attributes } ) => {
 					{ __( 'Cart totals', 'woo-gutenberg-products-block' ) }
 				</Title>
 				<Subtotal currency={ totalsCurrency } values={ cartTotals } />
-				<TotalsFees currency={ totalsCurrency } values={ cartTotals } />
+				<TotalsFees currency={ totalsCurrency } cartFees={ cartFees } />
 				<TotalsDiscount
 					cartCoupons={ appliedCoupons }
 					currency={ totalsCurrency }
@@ -145,6 +149,7 @@ const Cart = ( { attributes } ) => {
 					currency={ totalsCurrency }
 					values={ cartTotals }
 				/>
+				<ExperimentalOrderMeta.Slot />
 				<div className="wc-block-cart__payment-options">
 					{ cartNeedsPayment && <CartExpressPayment /> }
 					<CheckoutButton

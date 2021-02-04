@@ -2313,7 +2313,7 @@ final class UpdraftPlus_S3Request {
 
 		// Parse body into XML
 		// The case in which there is not application/xml content-type header is to support a DreamObjects case seen, April 2018
-		if (false === $this->response->error && isset($this->response->body) && ((isset($this->response->headers['type']) && 'application/xml' == $this->response->headers['type']) || (!isset($this->response->headers['type']) && 0 === strpos($this->response->body, '<?xml')))) {
+		if (false === $this->response->error && isset($this->response->body) && ((isset($this->response->headers['type']) && false  !== strpos($this->response->headers['type'], 'application/xml')) || (!isset($this->response->headers['type']) && 0 === strpos($this->response->body, '<?xml')))) {
 			$this->response->body = simplexml_load_string($this->response->body);
 
 			// Grab S3 errors
