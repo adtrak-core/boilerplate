@@ -9,6 +9,7 @@
 1. [WordPress Settings](#wordpress-settings)
 1. [Useful Commands](#useful-commands)
 1. [TailwindCSS](#tailwindcss)
+    1. [Purge](#purge)
     1. [CriticalCSS](#criticalcss)
     1. [Defaults](#defaults)
 1. [Before Deployment](#before-deployment)
