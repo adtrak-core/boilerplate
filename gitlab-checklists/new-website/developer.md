@@ -14,7 +14,8 @@
 
 ## General
 
-- [ ] Update all your plugins
+- [ ] Delete unused plugins i.e. Slickplan importer, WooCommerce plugins (if applicable) etc.
+- [ ] Update all your plugins & core
 - [ ] Browse the site as a potential end user - are there any problems or irregularities?
 - [ ] Does the site have a favicon?
 - [ ] Ensure that Redirection plugin is active
