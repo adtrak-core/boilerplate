@@ -3,7 +3,7 @@
 ## Contents
 1. [Prerequisites](#prerequisites)
 1. [Theme Setup](#theme-setup)
-    1. [Adtrak Theme with Tailwind, Twig & Timber](#adtrak-theme-with-tailwind-twig-timber)
+    1. [Adtrak Theme with Tailwind, Twig & Timber](#adtrak-theme-with-tailwind-twig--timber)
     1. [Adtrak Theme with Woocommerce](#adtrak-theme-with-woocommerce)
 1. [WordPress Settings](#wordpress-settings)
 1. [Useful Commands](#useful-commands)
