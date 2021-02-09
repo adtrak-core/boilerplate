@@ -3,9 +3,8 @@
 ## Contents
 1. [Prerequisites](#prerequisites)
 1. [Theme Setup](#theme-setup)
-    1. [Adtrak Child Tailwind Theme with Twig & Timber](#adtrak-child-tailwind-theme-with-twig--timber-preferred)
-    1. [Adtrak Child With Woocommerce](#adtrak-child-with-woocommerce)
-    1. [Adtrak Child Tailwind Theme (without Twig & Timber)](#adtrak-child-tailwind-theme-without-twig--timber)
+    1. [Adtrak Theme with Tailwind, Twig & Timber](#adtrak-theme-with-tailwind-twig-timber)
+    1. [Adtrak Theme with Woocommerce](#adtrak-theme-with-woocommerce)
 1. [WordPress Settings](#wordpress-settings)
 1. [Useful Commands](#useful-commands)
 1. [TailwindCSS](#tailwindcss)
@@ -25,7 +24,7 @@
 
 ## Theme Setup
 
-### Adtrak Child Tailwind Theme with Twig & Timber (Preferred)
+### Adtrak Theme with Tailwind, Twig & Timber
 
 1. Create a new repository on gitlab (lowercase/hyphenated) and clone it to your local machine (```git clone [REPO URL] [FOLDER NAME]```)
 2. Download latest release of WordPress [https://wordpress.org/latest.zip](https://wordpress.org/latest.zip) 
@@ -64,7 +63,7 @@
 3. All page templates (```front-page.twig```, ```page.twig```, etc) can be found in ```_views```
 4. Images, styles, js and fonts can be found in ```_resources```
 
-### Adtrak Child With Woocommerce
+### Adtrak Theme with Woocommerce
 
 1. Follow steps 1-23 in the guide above
 2. Go to the Wordpress Admin area
@@ -81,19 +80,6 @@
 13. Scroll to the Product Data section and select your product options.
 14. Publish your products
 15. Continue to develop our theme
-1. Go to [WordPress Settings](#wordpress-settings)
-
-### Adtrak Child Tailwind Theme without Twig & Timber (Not Recommended)
-
-To get the Tailwind theme set up:
-
-1. Activate the theme through the WordPress admin console
-2. Go to ```gulpfile.js``` and make sure the ```serve``` task is serving the correct local URL by changing the ```proxy``` variable.
-3. Open Terminal / Hyper / CMD
-4. Navigate to the ```adtrak-child-tailwind``` theme
-5. Run ```npm install``` 
-6. Once ```npm install``` has finished installing your dependencies, run ```npm run dev``` or ```gulp```
-7. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS or Javascript
 1. Go to [WordPress Settings](#wordpress-settings)
 
 ## WordPress Settings ##
