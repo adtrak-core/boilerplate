@@ -4,7 +4,7 @@ Tags: gutenberg, woocommerce, woo commerce, products, blocks, woocommerce blocks
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 4.4.0
+Stable tag: 4.4.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -84,6 +84,18 @@ Release and roadmap notes available on the [WooCommerce Developers Blog](https:/
 5. WooCommerce Product Blocks in the block inserter menu
 
 == Changelog ==
+
+= 4.4.2 - 2021-02-05 =
+
+#### Bug Fixes
+
+- Adds a default "features" array for payment methods which do not define supported features. Fixes conflicts with 3rd Party payment method integrations.
+
+= 4.4.1 - 2021-02-04 =
+
+#### Bug Fixes
+
+- Update package for WooCommerce core inclusion.
 
 = 4.4.0 - 2021-02-02 =
 
