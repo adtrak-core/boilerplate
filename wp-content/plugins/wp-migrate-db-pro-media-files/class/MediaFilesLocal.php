@@ -350,7 +350,14 @@ class MediaFilesLocal extends MediaFilesBase {
 		$body = '';
 
 		$file_contents = [];
+		$total_size = 0;
 		foreach ( $files_to_migrate as $file_to_migrate ) {
+			$file_size = filesize($upload_dir . $file_to_migrate );
+			$memory_error = $this->maybe_send_memory_error_response( $file_size, $files_to_migrate );
+			if ( false !== $memory_error ) {
+				return $memory_error;
+			}
+			$total_size += $file_size;
 			$file_contents[] = base64_encode( gzencode( $this->http->file_to_serialized( $upload_dir . $file_to_migrate ) ) );
 		}
 
@@ -361,7 +368,19 @@ class MediaFilesLocal extends MediaFilesBase {
 		);
 
 		$post_args['sig']           = $this->http_helper->create_signature( $post_args, $state_data['key'] );
+
+		$memory_error = $this->maybe_send_memory_error_response( $total_size, $files_to_migrate );
+		if( false !== $memory_error ) {
+			return $memory_error;
+		}
+
 		$post_args['file_contents'] = base64_encode( serialize( $file_contents ) );
+		//This check is added multiple time with every serialization or any other memory intensive operation
+		//To check if the remaining free memory is enough to store the result of the operation
+		$memory_error = $this->maybe_send_memory_error_response( $total_size, $files_to_migrate );
+		if( false !== $memory_error ) {
+			return $memory_error;
+		}
 
 		$body .= $this->http->array_to_multipart( $post_args );
 
@@ -658,4 +677,39 @@ class MediaFilesLocal extends MediaFilesBase {
 		return $tmpfname;
 	}
 
+
+	/**
+	 * Returns a boolean indicating if there's enough free memory to allocate for the given size.
+	 *
+	 * @param int $size
+	 *
+	 * @return bool
+	 */
+	private function has_available_memory( $size ) {
+		$memory_limit = $this->util->get_memory_limit();
+		$memory_usage = memory_get_peak_usage();
+
+		return $memory_usage + $size < $memory_limit;
+	}
+
+
+	/**
+	 * Returns an ajax response with memory low error if there's no enough memory to allocate for the given size.
+	 * And returns false otherwise.
+	 *
+	 * @param int $total_size total size to check
+	 * @param array $files array of file names
+	 *
+	 * @return false|null
+	 */
+	private function maybe_send_memory_error_response( $total_size, $files = array() ) {
+		if ( ! $this->has_available_memory( $total_size ) ) {
+			return $this->http->end_ajax( json_encode( [
+				'wpmdb_memory_too_low_error' => 1,
+				'files' => implode( '<br>', $files ),
+			] ) );
+		}
+
+		return false;
+	}
 }

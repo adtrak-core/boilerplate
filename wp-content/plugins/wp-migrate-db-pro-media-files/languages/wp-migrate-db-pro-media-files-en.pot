@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wp-migrate-db-pro-media-files\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2020-02-26 10:31-0500\n"
+"POT-Creation-Date: 2021-02-03 09:08-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,6 +112,7 @@ msgstr ""
 
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesAddon.php:116
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesAddon.php:122
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesAddon.php:117
 msgid "Please select at least one subsite to transfer media files for."
 msgstr ""
 
@@ -154,16 +155,19 @@ msgstr ""
 
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:533
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:528
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:552
 msgid "There were errors when removing local media files"
 msgstr ""
 
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:627
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:622
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:646
 msgid "Invalid URL Provided."
 msgstr ""
 
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:632
 #: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:627
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesLocal.php:651
 msgid "Could not create Temporary file."
 msgstr ""
 
@@ -341,4 +345,8 @@ msgstr ""
 #, php-format
 msgid ""
 "A problem occurred when attempting to move the temp file \"%1$s\" to \"%2$s\""
+msgstr ""
+
+#: src/wp-migrate-db-pro-media-files/class/MediaFilesAddon.php:116
+msgid "Pushing the following file will result in a memory exhaustion error:"
 msgstr ""

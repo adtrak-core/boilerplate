@@ -113,6 +113,7 @@ class MediaFilesAddon extends AddonAbstract {
 			'files_uploaded'               => __( 'Files Uploaded', 'wp-migrate-db-pro-media-files' ),
 			'files_downloaded'             => __( 'Files Downloaded', 'wp-migrate-db-pro-media-files' ),
 			'file_too_large'               => __( 'The following file is too large to migrate:', 'wp-migrate-db-pro-media-files' ),
+			'memory_limit_exceeded'        => __( 'Pushing the following file will result in a memory exhaustion error:', 'wp-migrate-db-pro-media-files' ),
 			'please_select_a_subsite'      => __( 'Please select at least one subsite to transfer media files for.', 'wp-migrate-db-pro-media-files' ),
 		);
 
