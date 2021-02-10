@@ -3,7 +3,7 @@
 Plugin Name: WP Fastest Cache
 Plugin URI: http://wordpress.org/plugins/wp-fastest-cache/
 Description: The simplest and fastest WP Cache system
-Version: 0.9.1.4
+Version: 0.9.1.5
 Author: Emre Vona
 Author URI: http://tr.linkedin.com/in/emrevona
 Text Domain: wp-fastest-cache
@@ -129,8 +129,11 @@ GNU General Public License for more details.
 				add_action('upgrader_process_complete', array($this, 'clear_cache_after_update_theme'), 10, 2);
 			}
 
-			// to clear cache after new Woocommerce orders
-			add_action('woocommerce_checkout_order_processed', array($this, 'clear_cache_after_woocommerce_checkout_order_processed'), 1, 1);
+			if(defined("WPFC_DISABLE_CLEARING_CACHE_AFTER_WOOCOMMERCE_CHECKOUT_ORDER_PROCESSED") && WPFC_DISABLE_CLEARING_CACHE_AFTER_WOOCOMMERCE_CHECKOUT_ORDER_PROCESSED){
+			}else{
+				// to clear cache after new Woocommerce orders
+				add_action('woocommerce_checkout_order_processed', array($this, 'clear_cache_after_woocommerce_checkout_order_processed'), 1, 1);
+			}
 
 			// kk Star Ratings: to clear the cache of the post after voting
 			add_action('kksr_rate', array($this, 'clear_cache_on_kksr_rate'));

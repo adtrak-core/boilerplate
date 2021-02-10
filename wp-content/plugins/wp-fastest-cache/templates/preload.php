@@ -5,8 +5,15 @@
 		float: left !important;
 		width: 108px !important;
 	}
+	div[id^="wpfc-modal-preload"] .wiz-input-cont.ui-sortable-handle{
+		cursor: grab;
+	}
 	.wiz-input-cont label{
 		margin-right: 0 !important;
+	}
+	div[id^="wpfc-modal-preload"] .wiz-input-cont.custom-half{
+		width: 175px !important;
+
 	}
 </style>
 <div template-id="wpfc-modal-preload" style="display:none;top: 10.5px; left: 226px; position: absolute; padding: 6px; height: auto; width: 440px; z-index: 10001;">
@@ -28,40 +35,42 @@
 		</div>
 		<div class="window-content-wrapper" style="padding: 15px;">
 			<div class="window-content" style="z-index: 1000; height: auto; position: relative; display: inline-block; width: 100%;">
-				<div class="wiz-input-cont" style="padding-right: 8px;margin-right: 10px;">
+				<div class="wiz-input-cont" style="padding-right: 8px;margin-right: 10px;" data-type="homepage">
 					<label class="mc-input-label" style="margin-right: 5px;"><input type="checkbox" <?php echo $wpFastestCachePreload_homepage; ?> id="wpFastestCachePreload_homepage" name="wpFastestCachePreload_homepage"></label>
 					<label for="wpFastestCachePreload_homepage"><?php _e('Homepage'); ?></label>
 				</div>
-				<div class="wiz-input-cont" style="padding-right: 8px;margin-right: 10px;">
+				<div class="wiz-input-cont" style="padding-right: 8px;margin-right: 10px;" data-type="post">
 					<label class="mc-input-label" style="margin-right: 5px;"><input type="checkbox" <?php echo $wpFastestCachePreload_post; ?> id="wpFastestCachePreload_post" name="wpFastestCachePreload_post"></label>
 					<label for="wpFastestCachePreload_post"><?php _e('Posts'); ?></label>
 				</div>
-				<div class="wiz-input-cont">
+				<div class="wiz-input-cont" data-type="category">
 					<label class="mc-input-label" style="margin-right: 5px;"><input type="checkbox" <?php echo $wpFastestCachePreload_category; ?> id="wpFastestCachePreload_category" name="wpFastestCachePreload_category"></label>
 					<label for="wpFastestCachePreload_category"><?php _e('Categories'); ?></label>
 				</div>
-				<div class="wiz-input-cont" style="padding-right: 8px;margin-right: 10px;">
+				<div class="wiz-input-cont" style="padding-right: 8px;margin-right: 10px;" data-type="page">
 					<label class="mc-input-label" style="margin-right: 5px;"><input type="checkbox" <?php echo $wpFastestCachePreload_page; ?> id="wpFastestCachePreload_page" name="wpFastestCachePreload_page"></label>
 					<label for="wpFastestCachePreload_page"><?php _e('Pages'); ?></label>
 				</div>
-				<div class="wiz-input-cont" style="padding-right: 8px;margin-right: 10px;">
+				<div class="wiz-input-cont" style="padding-right: 8px;margin-right: 10px;" data-type="tag">
 					<label class="mc-input-label" style="margin-right: 5px;"><input type="checkbox" <?php echo $wpFastestCachePreload_tag; ?> id="wpFastestCachePreload_tag" name="wpFastestCachePreload_tag"></label>
 					<label for="wpFastestCachePreload_tag"><?php _e('Tags'); ?></label>
 				</div>
-				<div class="wiz-input-cont">
+				<div class="wiz-input-cont" data-type="attachment">
 					<label class="mc-input-label" style="margin-right: 5px;"><input type="checkbox" <?php echo $wpFastestCachePreload_attachment; ?> id="wpFastestCachePreload_attachment" name="wpFastestCachePreload_attachment"></label>
 					<label for="wpFastestCachePreload_attachment"><?php _e('Attachments', 'wp-fastest-cache'); ?></label>
 				</div>
 
-				<div class="wiz-input-cont" style="width: 175px !important; margin-right: 10px; margin-bottom: 10px !important;">
+				<div class="wiz-input-cont custom-half" style="margin-right: 10px;" data-type="customposttypes">
 					<label class="mc-input-label" style="margin-right: 5px;"><input type="checkbox" <?php echo $wpFastestCachePreload_customposttypes; ?> id="wpFastestCachePreload_customposttypes" name="wpFastestCachePreload_customposttypes"></label>
 					<label for="wpFastestCachePreload_customposttypes"><?php _e('Custom Post Types', 'wp-fastest-cache'); ?></label>
 				</div>
 
-				<div class="wiz-input-cont" style="width: 175px !important;margin-bottom: 10px !important;">
+				<div class="wiz-input-cont custom-half" data-type="customTaxonomies">
 					<label class="mc-input-label" style="margin-right: 5px;"><input type="checkbox" <?php echo $wpFastestCachePreload_customTaxonomies; ?> id="wpFastestCachePreload_customTaxonomies" name="wpFastestCachePreload_customTaxonomies"></label>
 					<label for="wpFastestCachePreload_customposttypes"><?php _e('Custom Taxonomies', 'wp-fastest-cache'); ?></label>
 				</div>
+			</div>
+			<div class="window-content" style="z-index: 1000; height: auto; position: relative; display: inline-block; width: 100%;">
 
 				<div class="wiz-input-cont" style="width: 94% !important;margin-bottom: 10px !important;">
 					<label class="mc-input-label" style="float:left;">
@@ -93,6 +102,7 @@
 					<a style="margin-left:5px;" target="_blank" href="http://www.wpfastestcache.com/features/restart-preload-after-completed/"><img src="<?php echo plugins_url("wp-fastest-cache/images/info.png"); ?>"></a>
 				</div>
 
+				<input type="hidden" value="<?php echo $wpFastestCachePreload_order; ?>" id="wpFastestCachePreload_order" name="wpFastestCachePreload_order">
 
 			</div>
 		</div>
@@ -105,3 +115,126 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	var WPFC_SPINNER = {
+		id: false,
+		number: false,
+		init: function(id, number){
+			this.id = id;
+			//this.number = number;
+			this.set_number();
+			this.click_event();
+		},
+		set_number: function(){
+			this.number = jQuery("#" + this.id + " input.wpfc-form-spinner-input").val();
+			this.number = parseInt(this.number);
+		},
+		click_event: function(){
+			var id = this.id;
+			var number = this.number;
+
+			jQuery("#" + this.id + " .wpfc-form-spinner-up, #" + this.id + " .wpfc-form-spinner-down").click(function(e){
+				if(jQuery(this).attr('class').match(/up$/)){
+					number = number + 2;
+				}else if(jQuery(this).attr('class').match(/down$/)){
+					number = number - 2;
+				}
+
+				number = number < 2 ? 2 : number;
+				number = number > 12 ? 12 : number;
+
+				jQuery("#" + id + " .wpfc-form-spinner-number").text(number);
+				jQuery("#" + id + " input.wpfc-form-spinner-input").val(number);
+			});
+		}
+	};
+</script>
+<script type="text/javascript">
+	jQuery("#wpFastestCachePreload").click(function(){
+		if(jQuery(this).is(':checked')){
+			if(jQuery("div[id^='wpfc-modal-preload-']").length === 0){
+				Wpfc_New_Dialog.dialog("wpfc-modal-preload", {close: function(){
+					var order_arr = [];
+
+					Wpfc_New_Dialog.clone.find("div.window-content input").each(function(){
+						if(jQuery(this).is(':checked')){
+							jQuery("div.tab1 div[template-id='wpfc-modal-preload'] div.window-content input[name='" + jQuery(this).attr("name") + "']").attr("checked", true);
+						}else{
+							jQuery("div.tab1 div[template-id='wpfc-modal-preload'] div.window-content input[name='" + jQuery(this).attr("name") + "']").attr("checked", false);
+						}
+
+						order_arr.push(jQuery(this).attr("name").replace(/wpFastestCachePreload_/, ""));
+					});
+
+					jQuery("div.tab1 div[template-id='wpfc-modal-preload'] div.window-content input[name='wpFastestCachePreload_order']").val(order_arr.join(","));
+					
+					Wpfc_New_Dialog.clone.remove();
+				}});
+
+				var update_style = function(){
+					var top = 0
+					var item_number = 1;
+
+					jQuery("div[id^='wpfc-modal-preload-'] div.window-content").first().find("div").each(function(i, div){
+						jQuery(div).removeAttr("style");
+
+						top = (i === 0) ? jQuery(div).offset().top : top;
+
+						if(top == jQuery(div).offset().top){
+							if(item_number == 1 || item_number == 2){
+								jQuery(div).css({"padding-right": "8px", "margin-right" : "10px"});
+							}
+						}else{
+							top = jQuery(div).offset().top;
+							jQuery(div).css({"padding-right": "8px", "margin-right" : "10px"});
+							item_number = 1;
+						}
+
+						item_number++;
+					});
+				};
+
+				var sort = function(){
+					var order_string = jQuery("#wpFastestCachePreload_order").val();
+					var order_arr = [];
+					var clone_div;
+
+					if(order_string.length > 0){
+						order_arr = order_string.split(",");
+
+						jQuery.each(order_arr, function(i, value){
+							
+							jQuery("div[id^='wpfc-modal-preload-'] div.window-content").first().find("div").each(function(i, div){
+								if(jQuery(div).attr("data-type") == value){
+									clone_div = jQuery(div).clone();
+
+									div.remove();
+
+									jQuery("div[id^='wpfc-modal-preload-'] div.window-content").first().append(clone_div);
+								}
+							});
+						});
+					}
+
+					update_style();
+				};
+
+				sort();
+				
+				Wpfc_New_Dialog.show_button("close");
+				WPFC_SPINNER.init("wpfc-form-spinner-preload", 6);
+				jQuery("div[id^='wpfc-modal-preload-'] div.window-content").first().sortable({
+				    out: function(event,ui){
+				    	update_style();
+				    },
+				    change: function(event, ui) {
+				        jQuery('.ui-sortable-placeholder').css({
+				            visibility: 'visible',
+				            background: 'lightYellow'
+				        });
+				    }
+			    });
+			}
+		}
+	});
+</script>

@@ -149,7 +149,34 @@
 					$number = $pre_load->number;
 				}
 
+				//START:ORDER
+				if(isset($pre_load->order) && $pre_load->order){
+					$order_arr = explode(",", $pre_load->order);
+				}else{
+					if(isset($options->wpFastestCachePreload_order) && $options->wpFastestCachePreload_order){
+						$order_arr = explode(",", $options->wpFastestCachePreload_order);
+					}
+				}
+
+				if(is_array($order_arr)){
+					foreach ($order_arr as $o_key => $o_value){
+						if($o_value == "order" || $o_value == "number"){
+							unset($order_arr[$o_key]);
+						}
+
+						if(!isset($pre_load->$o_value)){
+							unset($order_arr[$o_key]);
+						}
+
+					}
+					$order_arr = array_values($order_arr);
+				}
 				
+				$current_order = isset($order_arr[0]) ? $order_arr[0] : "go";
+				//START:END
+
+
+
 				$urls_limit = isset($options->wpFastestCachePreload_number) ? $options->wpFastestCachePreload_number : 4; // must be even
 				$urls = array();
 
@@ -159,42 +186,83 @@
 				}else{
 					$mobile_theme = false;
 				}
-				
+
+
 
 				// HOME
-				if(isset($pre_load->homepage) && $pre_load->homepage > -1){
-					if($mobile_theme){
-						array_push($urls, array("url" => get_option("home"), "user-agent" => "mobile"));
-						$number--;
-					}
+				if(isset($current_order) && ($current_order == "homepage" || $current_order == "go")){
+					if(isset($pre_load->homepage) && $pre_load->homepage > -1){
+						if($mobile_theme){
+							array_push($urls, array("url" => get_option("home"), "user-agent" => "mobile"));
+							$number--;
+						}
 
-					array_push($urls, array("url" => get_option("home"), "user-agent" => "desktop"));
-					$number--;
+						array_push($urls, array("url" => get_option("home"), "user-agent" => "desktop"));
+						$number--;
+						
+						$pre_load->homepage = -1;
+					}
 					
-					$pre_load->homepage = -1;
 				}
 
 
 				// CUSTOM POSTS
-				if($number > 0 && isset($pre_load->customposttypes) && $pre_load->customposttypes > -1){
-		    		global $wpdb;
-					$post_types = get_post_types(array('public' => true), "names", "and"); 
-					$where_query = "";
+				if(isset($current_order) && ($current_order == "customposttypes" || $current_order == "go")){
+					if($number > 0 && isset($pre_load->customposttypes) && $pre_load->customposttypes > -1){
+			    		global $wpdb;
+						$post_types = get_post_types(array('public' => true), "names", "and"); 
+						$where_query = "";
 
-					foreach ($post_types as $post_type_key => $post_type_value) {
-						if(!in_array($post_type_key, array("post", "page", "attachment"))){
-							$where_query = $where_query.$wpdb->prefix."posts.post_type = '".$post_type_value."' OR ";
+						foreach ($post_types as $post_type_key => $post_type_value) {
+							if(!in_array($post_type_key, array("post", "page", "attachment"))){
+								$where_query = $where_query.$wpdb->prefix."posts.post_type = '".$post_type_value."' OR ";
+							}
+
 						}
 
+						if($where_query){
+							$where_query = preg_replace("/(\s*OR\s*)$/", "", $where_query);
+				    		
+				    		$recent_custom_posts = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS  ".$wpdb->prefix."posts.ID FROM ".$wpdb->prefix."posts  WHERE 1=1  AND (".$where_query.") AND ((".$wpdb->prefix."posts.post_status = 'publish'))  ORDER BY ".$wpdb->prefix."posts.ID DESC LIMIT ".$pre_load->customposttypes.", ".$number, ARRAY_A);
+
+				    		if(count($recent_custom_posts) > 0){
+				    			foreach ($recent_custom_posts as $key => $post) {
+				    				if($mobile_theme){
+				    					array_push($urls, array("url" => get_permalink($post["ID"]), "user-agent" => "mobile"));
+				    					$number--;
+				    				}
+
+			    					array_push($urls, array("url" => get_permalink($post["ID"]), "user-agent" => "desktop"));
+			    					$number--;
+
+				    				$pre_load->customposttypes = $pre_load->customposttypes + 1;
+				    			}
+				    		}else{
+				    			$pre_load->customposttypes = -1;
+				    		}
+						}
 					}
+				}
 
-					if($where_query){
-						$where_query = preg_replace("/(\s*OR\s*)$/", "", $where_query);
-			    		
-			    		$recent_custom_posts = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS  ".$wpdb->prefix."posts.ID FROM ".$wpdb->prefix."posts  WHERE 1=1  AND (".$where_query.") AND ((".$wpdb->prefix."posts.post_status = 'publish'))  ORDER BY ".$wpdb->prefix."posts.ID DESC LIMIT ".$pre_load->customposttypes.", ".$number, ARRAY_A);
 
-			    		if(count($recent_custom_posts) > 0){
-			    			foreach ($recent_custom_posts as $key => $post) {
+				// POST
+				if(isset($current_order) && ($current_order == "post" || $current_order == "go")){
+					if($number > 0 && isset($pre_load->post) && $pre_load->post > -1){
+			    		// $recent_posts = wp_get_recent_posts(array(
+									// 			'numberposts' => $number,
+									// 		    'offset' => $pre_load->post,
+									// 		    'orderby' => 'ID',
+									// 		    'order' => 'DESC',
+									// 		    'post_type' => 'post',
+									// 		    'post_status' => 'publish',
+									// 		    'suppress_filters' => true
+									// 		    ), ARRAY_A);
+			    		global $wpdb;
+			    		$recent_posts = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS  ".$wpdb->prefix."posts.ID FROM ".$wpdb->prefix."posts  WHERE 1=1  AND (".$wpdb->prefix."posts.post_type = 'post') AND ((".$wpdb->prefix."posts.post_status = 'publish'))  ORDER BY ".$wpdb->prefix."posts.ID DESC LIMIT ".$pre_load->post.", ".$number, ARRAY_A);
+
+
+			    		if(count($recent_posts) > 0){
+			    			foreach ($recent_posts as $key => $post) {
 			    				if($mobile_theme){
 			    					array_push($urls, array("url" => get_permalink($post["ID"]), "user-agent" => "mobile"));
 			    					$number--;
@@ -203,194 +271,185 @@
 		    					array_push($urls, array("url" => get_permalink($post["ID"]), "user-agent" => "desktop"));
 		    					$number--;
 
-			    				$pre_load->customposttypes = $pre_load->customposttypes + 1;
+			    				$pre_load->post = $pre_load->post + 1;
 			    			}
 			    		}else{
-			    			$pre_load->customposttypes = -1;
+			    			$pre_load->post = -1;
 			    		}
 					}
 				}
 
 
-				// POST
-				if($number > 0 && isset($pre_load->post) && $pre_load->post > -1){
-		    		// $recent_posts = wp_get_recent_posts(array(
-								// 			'numberposts' => $number,
-								// 		    'offset' => $pre_load->post,
-								// 		    'orderby' => 'ID',
-								// 		    'order' => 'DESC',
-								// 		    'post_type' => 'post',
-								// 		    'post_status' => 'publish',
-								// 		    'suppress_filters' => true
-								// 		    ), ARRAY_A);
-		    		global $wpdb;
-		    		$recent_posts = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS  ".$wpdb->prefix."posts.ID FROM ".$wpdb->prefix."posts  WHERE 1=1  AND (".$wpdb->prefix."posts.post_type = 'post') AND ((".$wpdb->prefix."posts.post_status = 'publish'))  ORDER BY ".$wpdb->prefix."posts.ID DESC LIMIT ".$pre_load->post.", ".$number, ARRAY_A);
-
-
-		    		if(count($recent_posts) > 0){
-		    			foreach ($recent_posts as $key => $post) {
-		    				if($mobile_theme){
-		    					array_push($urls, array("url" => get_permalink($post["ID"]), "user-agent" => "mobile"));
-		    					$number--;
-		    				}
-
-	    					array_push($urls, array("url" => get_permalink($post["ID"]), "user-agent" => "desktop"));
-	    					$number--;
-
-		    				$pre_load->post = $pre_load->post + 1;
-		    			}
-		    		}else{
-		    			$pre_load->post = -1;
-		    		}
-				}
-
 
 				// ATTACHMENT
-				if($number > 0 && isset($pre_load->attachment) && $pre_load->attachment > -1){
-					global $wpdb;
-		    		$recent_attachments = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS  ".$wpdb->prefix."posts.ID FROM ".$wpdb->prefix."posts  WHERE 1=1  AND (".$wpdb->prefix."posts.post_type = 'attachment') ORDER BY ".$wpdb->prefix."posts.ID DESC LIMIT ".$pre_load->attachment.", ".$number, ARRAY_A);
+				if(isset($current_order) && ($current_order == "attachment" || $current_order == "go")){
+					if($number > 0 && isset($pre_load->attachment) && $pre_load->attachment > -1){
+						global $wpdb;
+			    		$recent_attachments = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS  ".$wpdb->prefix."posts.ID FROM ".$wpdb->prefix."posts  WHERE 1=1  AND (".$wpdb->prefix."posts.post_type = 'attachment') ORDER BY ".$wpdb->prefix."posts.ID DESC LIMIT ".$pre_load->attachment.", ".$number, ARRAY_A);
 
-		    		if(count($recent_attachments) > 0){
-		    			foreach ($recent_attachments as $key => $attachment) {
-		    				if($mobile_theme){
-		    					array_push($urls, array("url" => get_permalink($attachment["ID"]), "user-agent" => "mobile"));
+			    		if(count($recent_attachments) > 0){
+			    			foreach ($recent_attachments as $key => $attachment) {
+			    				if($mobile_theme){
+			    					array_push($urls, array("url" => get_permalink($attachment["ID"]), "user-agent" => "mobile"));
+			    					$number--;
+			    				}
+
+		    					array_push($urls, array("url" => get_permalink($attachment["ID"]), "user-agent" => "desktop"));
 		    					$number--;
-		    				}
 
-	    					array_push($urls, array("url" => get_permalink($attachment["ID"]), "user-agent" => "desktop"));
-	    					$number--;
-
-		    				$pre_load->attachment = $pre_load->attachment + 1;
-		    			}
-		    		}else{
-		    			$pre_load->attachment = -1;
-		    		}
+			    				$pre_load->attachment = $pre_load->attachment + 1;
+			    			}
+			    		}else{
+			    			$pre_load->attachment = -1;
+			    		}
+					}
 				}
 
 				// PAGE
-				if($number > 0 && isset($pre_load->page) && $pre_load->page > -1){
+				if(isset($current_order) && ($current_order == "page" || $current_order == "go")){
+					if($number > 0 && isset($pre_load->page) && $pre_load->page > -1){
 
-					global $wpdb;
-		    		$pages = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS  ".$wpdb->prefix."posts.ID FROM ".$wpdb->prefix."posts  WHERE 1=1  AND (".$wpdb->prefix."posts.post_type = 'page') AND ((".$wpdb->prefix."posts.post_status = 'publish'))  ORDER BY ".$wpdb->prefix."posts.ID DESC LIMIT ".$pre_load->page.", ".$number, ARRAY_A);
+						global $wpdb;
+			    		$pages = $wpdb->get_results("SELECT SQL_CALC_FOUND_ROWS  ".$wpdb->prefix."posts.ID FROM ".$wpdb->prefix."posts  WHERE 1=1  AND (".$wpdb->prefix."posts.post_type = 'page') AND ((".$wpdb->prefix."posts.post_status = 'publish'))  ORDER BY ".$wpdb->prefix."posts.ID DESC LIMIT ".$pre_load->page.", ".$number, ARRAY_A);
 
 
-					if(count($pages) > 0){
-						foreach ($pages as $key => $page) {
-		    				if($mobile_theme){
-		    					array_push($urls, array("url" => get_page_link($page["ID"]), "user-agent" => "mobile"));
+						if(count($pages) > 0){
+							foreach ($pages as $key => $page) {
+			    				if($mobile_theme){
+			    					array_push($urls, array("url" => get_page_link($page["ID"]), "user-agent" => "mobile"));
+			    					$number--;
+			    				}
+
+		    					array_push($urls, array("url" => get_page_link($page["ID"]), "user-agent" => "desktop"));
 		    					$number--;
-		    				}
 
-	    					array_push($urls, array("url" => get_page_link($page["ID"]), "user-agent" => "desktop"));
-	    					$number--;
-
-		    				$pre_load->page = $pre_load->page + 1;
+			    				$pre_load->page = $pre_load->page + 1;
+							}
+						}else{
+							$pre_load->page = -1;
 						}
-					}else{
-						$pre_load->page = -1;
 					}
 				}
 
 				// CATEGORY
-				if($number > 0 && isset($pre_load->category) && $pre_load->category > -1){
-					$categories = get_terms(array(
-												'taxonomy'          => array('category'),
-											    'orderby'           => 'id', 
-											    'order'             => 'ASC',
-											    'hide_empty'        => false, 
-											    'number'            => $number, 
-											    'fields'            => 'all', 
-											    'pad_counts'        => false, 
-											    'offset'            => $pre_load->category
-											));
+				if(isset($current_order) && ($current_order == "category" || $current_order == "go")){
+					if($number > 0 && isset($pre_load->category) && $pre_load->category > -1){
+						$categories = get_terms(array(
+													'taxonomy'          => array('category'),
+												    'orderby'           => 'id', 
+												    'order'             => 'ASC',
+												    'hide_empty'        => false, 
+												    'number'            => $number, 
+												    'fields'            => 'all', 
+												    'pad_counts'        => false, 
+												    'offset'            => $pre_load->category
+												));
 
-					if(count($categories) > 0){
-						foreach ($categories as $key => $category) {
-							if($mobile_theme){
-								array_push($urls, array("url" => get_term_link($category->slug, $category->taxonomy), "user-agent" => "mobile"));
+						if(count($categories) > 0){
+							foreach ($categories as $key => $category) {
+								if($mobile_theme){
+									array_push($urls, array("url" => get_term_link($category->slug, $category->taxonomy), "user-agent" => "mobile"));
+									$number--;
+								}
+
+								array_push($urls, array("url" => get_term_link($category->slug, $category->taxonomy), "user-agent" => "desktop"));
 								$number--;
+
+								$pre_load->category = $pre_load->category + 1;
+
 							}
-
-							array_push($urls, array("url" => get_term_link($category->slug, $category->taxonomy), "user-agent" => "desktop"));
-							$number--;
-
-							$pre_load->category = $pre_load->category + 1;
-
+						}else{
+							$pre_load->category = -1;
 						}
-					}else{
-						$pre_load->category = -1;
 					}
 				}
 
 				// TAG
-				if($number > 0 && isset($pre_load->tag) && $pre_load->tag > -1){
-					$tags = get_terms(array(
-												'taxonomy'          => array('post_tag'),
-											    'orderby'           => 'id', 
-											    'order'             => 'ASC',
-											    'hide_empty'        => false, 
-											    'number'            => $number, 
-											    'fields'            => 'all', 
-											    'pad_counts'        => false, 
-											    'offset'            => $pre_load->tag
-											));
+				if(isset($current_order) && ($current_order == "tag" || $current_order == "go")){
+					if($number > 0 && isset($pre_load->tag) && $pre_load->tag > -1){
+						$tags = get_terms(array(
+													'taxonomy'          => array('post_tag'),
+												    'orderby'           => 'id', 
+												    'order'             => 'ASC',
+												    'hide_empty'        => false, 
+												    'number'            => $number, 
+												    'fields'            => 'all', 
+												    'pad_counts'        => false, 
+												    'offset'            => $pre_load->tag
+												));
 
-					if(count($tags) > 0){
-						foreach ($tags as $key => $tag) {
-							if($mobile_theme){
-								array_push($urls, array("url" => get_term_link($tag->slug, $tag->taxonomy), "user-agent" => "mobile"));
+						if(count($tags) > 0){
+							foreach ($tags as $key => $tag) {
+								if($mobile_theme){
+									array_push($urls, array("url" => get_term_link($tag->slug, $tag->taxonomy), "user-agent" => "mobile"));
+									$number--;
+								}
+
+								array_push($urls, array("url" => get_term_link($tag->slug, $tag->taxonomy), "user-agent" => "desktop"));
 								$number--;
+
+								$pre_load->tag = $pre_load->tag + 1;
+
 							}
-
-							array_push($urls, array("url" => get_term_link($tag->slug, $tag->taxonomy), "user-agent" => "desktop"));
-							$number--;
-
-							$pre_load->tag = $pre_load->tag + 1;
-
+						}else{
+							$pre_load->tag = -1;
 						}
-					}else{
-						$pre_load->tag = -1;
 					}
 				}
 
 				// Custom Taxonomies
-				if($number > 0 && isset($pre_load->customTaxonomies) && $pre_load->customTaxonomies > -1){
-					$taxo = get_taxonomies(array('public'   => true, '_builtin' => false), "names", "and");
+				if(isset($current_order) && ($current_order == "customTaxonomies" || $current_order == "go")){
+					if($number > 0 && isset($pre_load->customTaxonomies) && $pre_load->customTaxonomies > -1){
+						$taxo = get_taxonomies(array('public'   => true, '_builtin' => false), "names", "and");
 
-					if(count($taxo) > 0){
-						$custom_taxos = get_terms(array(
-								'taxonomy'          => array_values($taxo),
-							    'orderby'           => 'id', 
-							    'order'             => 'ASC',
-							    'hide_empty'        => false, 
-							    'number'            => $number, 
-							    'fields'            => 'all', 
-							    'pad_counts'        => false, 
-							    'offset'            => $pre_load->customTaxonomies
-							));
+						if(count($taxo) > 0){
+							$custom_taxos = get_terms(array(
+									'taxonomy'          => array_values($taxo),
+								    'orderby'           => 'id', 
+								    'order'             => 'ASC',
+								    'hide_empty'        => false, 
+								    'number'            => $number, 
+								    'fields'            => 'all', 
+								    'pad_counts'        => false, 
+								    'offset'            => $pre_load->customTaxonomies
+								));
 
-						if(count($custom_taxos) > 0){
-							foreach ($custom_taxos as $key => $custom_tax) {
-								if($mobile_theme){
-									array_push($urls, array("url" => get_term_link($custom_tax->slug, $custom_tax->taxonomy), "user-agent" => "mobile"));
+							if(count($custom_taxos) > 0){
+								foreach ($custom_taxos as $key => $custom_tax) {
+									if($mobile_theme){
+										array_push($urls, array("url" => get_term_link($custom_tax->slug, $custom_tax->taxonomy), "user-agent" => "mobile"));
+										$number--;
+									}
+
+									array_push($urls, array("url" => get_term_link($custom_tax->slug, $custom_tax->taxonomy), "user-agent" => "desktop"));
 									$number--;
+
+									$pre_load->customTaxonomies = $pre_load->customTaxonomies + 1;
+
 								}
-
-								array_push($urls, array("url" => get_term_link($custom_tax->slug, $custom_tax->taxonomy), "user-agent" => "desktop"));
-								$number--;
-
-								$pre_load->customTaxonomies = $pre_load->customTaxonomies + 1;
-
+							}else{
+								$pre_load->customTaxonomies = -1;
 							}
 						}else{
 							$pre_load->customTaxonomies = -1;
 						}
-					}else{
-						$pre_load->customTaxonomies = -1;
 					}
 				}
 
 
+				if($pre_load->$current_order == -1){
+					array_shift($order_arr);
+
+					if(isset($order_arr[0])){
+						$pre_load->order = implode(",", $order_arr);
+						
+						update_option("WpFastestCachePreLoad", json_encode($pre_load));
+
+						self::create_preload_cache($options);
+					}else{
+						unset($pre_load->order);
+					}
+				}
 
 				if(count($urls) > 0){
 					foreach ($urls as $key => $arr) {
@@ -430,7 +489,7 @@
 				}else{
 					if(isset($options->wpFastestCachePreload_restart)){
 						foreach ($pre_load as $pre_load_key => &$pre_load_value) {
-							if($pre_load_key != "number"){
+							if($pre_load_key != "number" && $pre_load_key != "order"){
 								$pre_load_value = 0;
 							}
 						}

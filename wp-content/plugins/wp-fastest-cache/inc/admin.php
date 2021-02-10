@@ -506,6 +506,21 @@
 							if(preg_match("/".preg_quote($homeurl_base_name[1], "/")."$/", trim(ABSPATH, "/"))){
 								$basename = $homeurl_base_name[1]."/".$basename;
 							}
+						}else{
+							if(!preg_match("/\//", $homeurl_base_name[1]) && !preg_match("/\//", $siteurl_base_name[1])){
+								/*
+									site_url() return http://example.com/wordpress
+									home_url() returns http://example.com/blog
+								*/
+
+								$basename = $homeurl_base_name[1]."/".$basename;
+								$tmp_ABSPATH = str_replace(" ", "\ ", ABSPATH);
+
+								if(preg_match("/\/$/", $tmp_ABSPATH)){
+									$tmp_ABSPATH = rtrim($tmp_ABSPATH, "/");
+									$tmp_ABSPATH = dirname($tmp_ABSPATH)."/".$homeurl_base_name[1]."/";
+								}
+							}
 						}
 					}else{
 						/*
@@ -521,7 +536,9 @@
 					$RewriteCond = "RewriteCond %{DOCUMENT_ROOT}/".$basename." -f"."\n";
 				}else{
 					// to escape spaces
-					$tmp_ABSPATH = str_replace(" ", "\ ", ABSPATH);
+					if(!isset($tmp_ABSPATH)){
+						$tmp_ABSPATH = str_replace(" ", "\ ", ABSPATH);
+					}
 
 					$RewriteCond = "RewriteCond %{DOCUMENT_ROOT}/".$basename." -f [or]"."\n";
 					$RewriteCond = $RewriteCond."RewriteCond ".$tmp_ABSPATH."$1.webp -f"."\n";
@@ -970,6 +987,7 @@
 			$wpFastestCachePreload_attachment = isset($this->options->wpFastestCachePreload_attachment) ? 'checked="checked"' : "";
 			$wpFastestCachePreload_number = isset($this->options->wpFastestCachePreload_number) ? esc_attr($this->options->wpFastestCachePreload_number) : 4;
 			$wpFastestCachePreload_restart = isset($this->options->wpFastestCachePreload_restart) ? 'checked="checked"' : "";
+			$wpFastestCachePreload_order = isset($this->options->wpFastestCachePreload_order) ? esc_attr($this->options->wpFastestCachePreload_order) : "";
 
 
 
@@ -2182,62 +2200,6 @@
 			            </div>
 			        </div>
 			</div>
-			<script type="text/javascript">
-				var WPFC_SPINNER = {
-					id: false,
-					number: false,
-					init: function(id, number){
-						this.id = id;
-						//this.number = number;
-						this.set_number();
-						this.click_event();
-					},
-					set_number: function(){
-						this.number = jQuery("#" + this.id + " input.wpfc-form-spinner-input").val();
-						this.number = parseInt(this.number);
-					},
-					click_event: function(){
-						var id = this.id;
-						var number = this.number;
-
-						jQuery("#" + this.id + " .wpfc-form-spinner-up, #" + this.id + " .wpfc-form-spinner-down").click(function(e){
-							if(jQuery(this).attr('class').match(/up$/)){
-								number = number + 2;
-							}else if(jQuery(this).attr('class').match(/down$/)){
-								number = number - 2;
-							}
-
-							number = number < 2 ? 2 : number;
-							number = number > 12 ? 12 : number;
-
-							jQuery("#" + id + " .wpfc-form-spinner-number").text(number);
-							jQuery("#" + id + " input.wpfc-form-spinner-input").val(number);
-						});
-					}
-				};
-			</script>
-			<script type="text/javascript">
-				jQuery("#wpFastestCachePreload").click(function(){
-					if(jQuery(this).is(':checked')){
-						if(jQuery("div[id^='wpfc-modal-preload-']").length === 0){
-							Wpfc_New_Dialog.dialog("wpfc-modal-preload", {close: function(){
-								Wpfc_New_Dialog.clone.find("div.window-content input").each(function(){
-									if(jQuery(this).is(':checked')){
-										jQuery("div.tab1 div[template-id='wpfc-modal-preload'] div.window-content input[name='" + jQuery(this).attr("name") + "']").attr("checked", true);
-									}else{
-										jQuery("div.tab1 div[template-id='wpfc-modal-preload'] div.window-content input[name='" + jQuery(this).attr("name") + "']").attr("checked", false);
-									}
-
-									Wpfc_New_Dialog.clone.remove();
-								});
-							}});
-
-							Wpfc_New_Dialog.show_button("close");
-							WPFC_SPINNER.init("wpfc-form-spinner-preload", 6);
-						}
-					}
-				});
-			</script>
 
 			<?php if(!class_exists("WpFastestCacheImageOptimisation")){ ?>
 				<div id="wpfc-premium-tooltip" style="display:none;width: 160px; height: 60px; position: absolute; margin-left: 354px; margin-top: 112px; color: white;">
