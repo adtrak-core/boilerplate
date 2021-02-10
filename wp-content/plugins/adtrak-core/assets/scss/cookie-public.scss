@@ -4,8 +4,8 @@
     z-index: 9999;
     width: 100%;
     display: none;
-    color: #2d3436;
-    background: #ffeaa7;
+    color: #555;
+    background: #ccc;
 }
 
 #wp-notification.open {
@@ -14,10 +14,8 @@
 
 .wp-notification-container {
     margin: 0 auto;
-    color: #2d3436;
-    max-width: 1280px;
-    text-align: center;
     padding: 10px;
+    font-size: 16px;
 }
 
 .wp-notification-container p {
@@ -26,29 +24,40 @@
 
 .wp-notification-container a {
     display: block;
-    text-decoration: underline;
-    margin-top: 10px;
     padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
+    border: 2px solid #333;
+    text-decoration: none;
+    margin-top: 10px;
     color: #2d3436;
 }
 
 .wp-notification-container a:hover {
-    text-decoration: none;
+    background: white;
 }
 
+.wp-notification-container a,
 #wp-notification-toggle {
     display: block;
-    margin-top: 10px;
-    background: #fff;
     padding: 5px 10px;
-    border-radius: 5px;
-    font-weight: bold;
+    border: 2px solid #12284c;
+    text-decoration: none;
+    margin-top: 10px;
+    color: #12284c;
+    background: white;
+
+    &:hover{
+        background: #c1d3f0;
+    }
+}
+
+
+#wp-notification-toggle {
     cursor: pointer;
+    background: #12284c;
+    color: white;
 
     &:hover {
-        opacity: .8;
+        background: #0b1a31;
     }
 }
 

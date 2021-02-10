@@ -15,6 +15,10 @@ if($cookiePage != null) {
 ?>
 <div id="wp-notification" class="closed">
 	<div class="wp-notification-container">
-		<p>This website uses cookies to enhance your browsing experience... <a href="<?= site_url($url) ?>">More</a><span id="wp-notification-toggle">OK</span></p>
+		<p>This website uses cookies to enhance your browsing experience...</p> 
+		<div>
+			<a href="<?= site_url($url) ?>/">More information</a>
+			<span id="wp-notification-toggle">I understand</span>
+		</div>
 	</div>
 </div>

@@ -31,7 +31,7 @@ class Core
 
 	public function __construct()
 	{
-		$this->version = '0.9.30';
+		$this->version = '0.9.32';
 
 		$this->loader = new Loader;
 
