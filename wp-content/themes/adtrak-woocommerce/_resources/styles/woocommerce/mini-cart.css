@@ -7,19 +7,23 @@
  * @file: /views/partials/shop/ajax-cart.twig
  */
 .cart-slideout {
-  transform: translateX(100%);
   transition: .3s;
   max-width: 340px;
 
   @apply w-full;
-  @apply fixed right-0 top-0 bottom-0;
-  @apply p-5;
-  @apply bg-secondary;
+  @apply fixed top-0 bottom-0 left-full;
+  @apply bg-gray-400;
 
   &.active {
-    transform: translateX(0);
+    transform: translateX(-100%);
+    box-shadow: 0 0 100px rgba(39,39,66,.4);
   }
 }
+
+.cart-slideout-details {
+  @apply p-5;
+}
+
 
 /**
  * WooCommerce Applied/HTMl Applied Classes.
@@ -58,7 +62,7 @@
 }
 
 .woocommerce-mini-cart__total {
-  @apply my-3 py-3;
+  @apply py-3 my-3;
   @apply border-t border-b;
   @apply block;
 }

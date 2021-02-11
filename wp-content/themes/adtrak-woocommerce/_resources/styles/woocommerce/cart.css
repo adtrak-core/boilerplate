@@ -12,7 +12,7 @@
 
   th {
     @apply uppercase;
-    @apply text-xs text-center;
+    @apply text-xs text-left;
   }
 
   td {
@@ -20,7 +20,7 @@
   }
 
   input {
-    @apply p-1 text-xs border-0 text-center;
+    @apply p-1 text-xs border-0;
   }
 
   .screen-reader-text {
@@ -45,7 +45,7 @@
 
 /* Aside Cart upsells */
 .cross-sells {
-  @apply p-4 bg-gray-100 mb-8;
+  @apply p-4 mb-8 bg-gray-100;
 
   h2 {
     @apply text-base;
@@ -58,20 +58,20 @@
 
 /* Aside Cart Totals */
 .cart_totals {
-  @apply bg-gray-300 p-4;
+  @apply p-4 bg-gray-300;
 
   .checkout-button {
-    @apply bg-white font-bold text-primary-dark mt-4;
+    @apply mt-4 font-bold bg-white text-primary-dark;
   }
 }
 
 /* Coupons */
 .woocommerce-cart-form {
   .coupon {
-    @apply w-full flex flex-wrap text-sm;
+    @apply flex flex-wrap w-full text-sm;
 
     label {
-      @apply w-full font-bold mb-2;
+      @apply w-full mb-2 font-bold;
     }
 
     input {
@@ -79,7 +79,7 @@
     } 
 
     button {
-      @apply w-2/5 rounded-l-none font-bold m-0;
+      @apply w-2/5 m-0 font-bold rounded-l-none;
     }
   }
 
@@ -97,7 +97,7 @@
 }
 
 .cart__actions {
-  @apply flex flex-wrap justify-between items-center;
+  @apply flex flex-wrap items-center justify-between;
 
   button.button {
     @apply w-full mt-4 bg-secondary;

@@ -107,7 +107,7 @@ gulp.task("scripts", function () {
  * Task Watch
 **************************/
 gulp.task('watch', () => {
-  gulp.watch(`_resources/styles/**/*.scss`, gulp.series('styles'));
+  gulp.watch(`_resources/styles/**/*.css`, gulp.series('styles'));
   gulp.watch(`_resources/js/**/*.js`, gulp.series('scripts'));
 });
 
