@@ -4,7 +4,8 @@
 
 		<div class="container">
 
-			<nav id="menu-secondary" class="container hidden menu lg:block">
+			<nav id="menu-secondary" class="container hidden menu lg:block" aria-labelledby="secondary-navigation">
+				<span class="sr-only" id="secondary-navigation">Secondary Navigation</span>
 				<ul class="flex flex-wrap justify-center w-full menu-secondary menu-secondary-js">
 					{% for item in secondaryMenu.items %}
 						<li class="{{item.class}}">
@@ -13,7 +14,7 @@
 								<ul class="sub-menu">
 									{% for child in item.children %}
 										<li class="{{child.class}}">
-											<a class="text-gray-500 block p-4 hover:text-black focus:text-black" href="{{child.link}}">{{child.name}}</a>
+											<a class="block p-4 text-gray-500 hover:text-black focus:text-black" href="{{child.link}}">{{child.name}}</a>
 										</li>
 									{% endfor %}
 								</ul>
@@ -39,7 +40,8 @@
 
 	<div class="hidden bg-secondary lg:block">
 
-		<nav id="menu-primary" class="container menu">
+		<nav id="menu-primary" class="container menu" aria-labelledby="primary-navigation">
+			<span class="sr-only" id="primary-navigation">Primary Navigation</span>
 			<ul class="flex flex-wrap justify-center w-full menu-primary">
 				{% for item in primaryMenu.items %}
 					<li class="{{item.class}}">
@@ -48,7 +50,7 @@
 							<ul class="sub-menu">
 								{% for child in item.children %}
 									<li class="{{child.class}}">
-										<a href="{{child.link}}" class="text-gray-500 block p-4 hover:text-black focus:text-black">{{child.name}}</a>
+										<a href="{{child.link}}" class="block p-4 text-gray-500 hover:text-black focus:text-black">{{child.name}}</a>
 									</li>
 								{% endfor %}
 							</ul>

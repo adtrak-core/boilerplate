@@ -4,7 +4,8 @@
 
 		<div class="container">
 
-			<nav id="menu-secondary" class="container hidden menu lg:block">
+			<nav id="menu-secondary" class="container hidden menu lg:block" aria-labelledby="secondary-navigation">
+				<span class="sr-only" id="secondary-navigation">Secondary Navigation</span>
 				<ul class="flex flex-wrap justify-center w-full menu-secondary">
 					{% for item in secondaryMenu.items %}
 						<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
@@ -39,7 +40,8 @@
 
 	<div class="hidden bg-secondary lg:block">
 
-		<nav id="menu-primary" class="container menu">
+		<nav id="menu-primary" class="container menu" aria-labelledby="primary-navigation">
+			<span class="sr-only" id="primary-navigation">Primary Navigation</span>
 			<ul class="flex flex-wrap justify-center w-full menu-primary">
 				{% for item in primaryMenu.items %}
 					<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
