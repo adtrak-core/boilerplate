@@ -36,6 +36,7 @@ require_once(__DIR__ . '/_functions/Image.php');
 require_once(__DIR__ . '/_functions/Svg.php');
 require_once(__DIR__ . '/_functions/CustomFieldBlocks.php');
 require_once(__DIR__ . '/_functions/Adtrak.php');
+require_once(__DIR__ . '/_functions/Icons.php');
 
 new BaseSite();
 new Scripts();
@@ -76,6 +77,13 @@ function inline_svg($filename)
 function get_adtrak_logo($colour = null, $icon = false)
 {
     return Adtrak::getLogo($colour, $icon);
+}
+
+/**
+ * Adding icon function.
+ */
+function icon($iconName, $classes = null) {
+    return Icons::getIcon($iconName, $classes);
 }
 
 /**

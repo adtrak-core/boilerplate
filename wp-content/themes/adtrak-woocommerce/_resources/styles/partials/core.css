@@ -1,0 +1,58 @@
+/***********************************************************
+Layouts ***************************************************/
+
+body,
+html {
+  min-height: 101%;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-sans antialiased leading-relaxed text-black;
+}
+
+
+/***********************************************************
+Uses IntersectionObserver to identify when the viewport has scrolled, and then show back to top 
+***************************************************/
+
+#pixel-to-watch {
+  @apply absolute left-0;
+  width: 1px;
+  height: 1px;
+  top: 300px;
+}
+
+.container {
+  @apply w-full px-4 mx-auto;
+  max-width: calc(theme('screens.3xl') + theme('spacing.8'));
+}
+
+a {
+  @apply transition duration-300;
+}
+
+/***********************************************************
+Lazyload **************************************************/
+
+.lazyload,
+.lazyloading {
+  opacity: 0;
+}
+
+.lazyloaded {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+/***********************************************************
+SVG Icons **************************************************/
+
+.icon {
+  @apply inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}

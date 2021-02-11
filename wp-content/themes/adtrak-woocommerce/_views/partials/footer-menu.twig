@@ -1,7 +1,0 @@
-{% if footer_menu %}
-	<nav class="flex">
-		{% for item in footer_menu.get_items %}
-			<a class="{ item.classes | join(' ') }} mr-2" target="{{ item.target }}" href="{{ item.link }}">{{ item.title }}</a>
-		{% endfor %}
-	</nav>
-{% endif %}

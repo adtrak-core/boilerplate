@@ -1,0 +1,26 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+@import   'partials/core.css';
+@import   'partials/buttons.css';
+@import   'partials/cookies.css';
+@import   'partials/desktop-nav.css';
+@import   'partials/forms.css';
+@import   'partials/mobile-nav.css';
+@import   'partials/typography.css';
+
+@import 'woocommerce/single-product.css'; 
+@import 'woocommerce/mini-cart.css';
+@import 'woocommerce/reviews.css';
+@import 'woocommerce/loop.css';
+@import 'woocommerce/cart.css';
+@import 'woocommerce/checkout.css';
+@import 'woocommerce/pagination.css';
+@import 'woocommerce/account.css';
+@import 'woocommerce/widgets.css';
+@import 'woocommerce/grid.css';
+
+/* Extra Add On Content Normalize */
+@import 'woocommerce/subscriptions.css';
+
+@import "tailwindcss/utilities";

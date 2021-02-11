@@ -1,0 +1,46 @@
+.products .product {
+  @apply relative text-center;
+
+  .button {
+    @apply mx-auto text-white bg-primary-dark;
+  }
+}
+
+.onsale {
+  @apply absolute z-20 top-4 left-4;
+  @apply px-2 py-1;
+  @apply text-sm font-bold text-white uppercase;
+  @apply bg-red-500;
+}
+
+.size-woocommerce_thumbnail {
+  @apply w-full h-auto;
+}
+
+.woocommerce-loop-product__title,
+.product .entry-title {
+  @apply mt-4;
+}
+
+.woocommerce-LoopProduct-link,
+.product__info {
+  @apply text-center;
+  @apply flex flex-col;
+
+  .price {
+    @apply block;
+    @apply mb-3;
+  }
+}
+
+/**
+ * Before Shop Loop 
+ */
+
+.before-shop-loop {
+  @apply flex flex-wrap items-center justify-between my-3;
+}
+
+.woocommerce-notices-wrapper {
+  @apply w-full;
+}

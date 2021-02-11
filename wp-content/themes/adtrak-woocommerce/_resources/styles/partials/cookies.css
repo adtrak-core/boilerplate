@@ -1,0 +1,57 @@
+/* ---------------------------------------------------
+Cookie Notice
+--------------------------------------------------- */
+
+#wp-notification {
+  @apply fixed bottom-0 z-50 hidden w-full text-sm text-gray-500 bg-gray-100;
+}
+
+#wp-notification.open {
+  @apply block;
+}
+
+.wp-notification-container {
+  @apply p-4 mx-auto text-center;
+}
+
+.wp-notification-container p {
+  @apply m-0;
+}
+
+.wp-notification-container a,
+#wp-notification-toggle {
+  @apply block px-4 py-2 mt-4 font-bold text-gray-900 no-underline transition bg-white border-2 border-gray-400;
+
+  &:hover {
+    @apply bg-white;
+  }
+}
+
+#wp-notification-toggle {
+  @apply text-white bg-gray-400 cursor-pointer;
+
+  &:hover {
+    @apply bg-gray-900 border-gray-900;
+  }
+}
+
+
+.wp-notification-container a:hover {
+  @apply no-underline;
+}
+
+#wp-notification-toggle:hover {
+  @apply opacity-75;
+}
+
+@screen md {
+
+  .wp-notification-container {
+    @apply flex flex-wrap items-center justify-between w-full text-left;
+  }
+
+  #wp-notification-toggle,
+  .wp-notification-container a {
+    @apply inline-block mt-0 ml-4;
+  }
+}

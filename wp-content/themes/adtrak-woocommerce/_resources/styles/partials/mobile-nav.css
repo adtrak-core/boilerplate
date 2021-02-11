@@ -1,0 +1,166 @@
+/***********************************************************
+Mobile Nav ************************************************/
+
+/* Important to set */
+$menuTitleHeight :    59px;
+
+/* Colours */
+
+$linkText :           theme('colors.primary.DEFAULT');
+$linkBg :             transparent;
+$linkBorder :         theme('colors.gray.600');
+
+$linkTextActive :     theme('colors.primary.light');
+$linkBgActive :       transparent;
+
+$dropdownArrowBg :    transparent;
+$dropdownArrowText :  inherit;
+
+$closeText :          theme('colors.white');
+$closeTextBg :        theme('colors.red.600');
+
+.mob-nav {
+  @apply
+    fixed top-0 bottom-0 right-0 w-4/5 h-full duration-300 bg-gray-900;
+  
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    transition: .4s;
+    
+  display: block !important;
+  z-index: 99999999;
+        
+  &:before {
+
+    content: "Menu";
+
+    @apply
+      block w-full p-4 text-center text-gray-200 bg-gray-500;
+
+    border-bottom: 1px solid $linkBorder;
+  }
+
+    &--active {
+      @apply
+        transform translate-x-0;
+        box-shadow: -10px 0 30px rgba(#000,.2);
+    }
+
+    li {
+        @apply 
+        relative float-left w-full list-none;
+    }
+
+    a {
+        @apply
+        relative float-left w-full p-4 pl-6 pr-16 text-sm no-underline;
+        color: $linkText;
+        border-bottom: 1px solid $linkBorder;
+        background-color: $linkBg;
+
+        &:hover {
+            @apply no-underline;
+        }
+
+        > .icon {
+          @apply
+            hidden;
+        }
+    }
+
+    br {
+        display: none;
+    }
+
+    /* Current page states */
+    .current-menu-item > a,
+    .current-menu-parent > a,
+    .current-menu-ancestor > a {
+        background-color: $linkBgActive;
+        color: $linkTextActive;
+    }
+
+    .sub-arrow {
+        @apply
+        absolute top-0 right-0 z-10 px-0 text-center cursor-pointer;
+        padding-top: 14px;
+        padding-bottom: 14px;
+        border-left: 1px solid $linkBorder;
+        width: 45px;
+        color: $linkText;
+        background-color: $linkBg;
+
+        .icon {
+          @apply
+            hidden;
+        }
+
+        .icon.active {
+          @apply
+            inline-block;
+        }
+    }
+
+    /* active class is applied to parent link when submenu is activated */
+    a.active {
+        background-color: rgba(#000,.03);
+
+        + .sub-arrow {
+            border-color: $linkBorder;
+        }
+    }
+
+    .sub-menu {
+        @apply
+        hidden float-left w-full;
+
+        li {
+            @apply pl-6
+        }
+    }
+}
+
+.mob-nav .scroll-container {
+    @apply
+      absolute left-0 w-full overflow-y-scroll;
+      top: $menuTitleHeight;
+      height: calc(100vh - #{$menuTitleHeight});
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 100px;
+
+    &::-webkit-scrollbar {
+        @apply hidden;
+    }
+}
+
+.mob-nav-close {
+    @apply
+      fixed left-0 hidden w-12 h-12 transform -translate-x-full;
+
+    background-color: $closeTextBg;
+    bottom: 40%;
+
+    .icon {
+      @apply
+        m-auto text-4xl;
+        color: $closeText;
+    }
+
+    .mob-nav--active & {
+        @apply flex;
+    }
+}
+
+.mob-nav-underlay {
+    @apply
+    fixed top-0 bottom-0 left-0 right-0 invisible w-full h-full opacity-0;
+    display: block !important; /* override critical css */
+    background-color: rgba(#000,.4);
+    z-index: 999999;
+    transition: .3s;
+
+    &.mob-nav--active {
+        @apply
+        visible opacity-100;
+    }
+}

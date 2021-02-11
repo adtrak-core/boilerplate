@@ -1,4 +1,4 @@
-(function (exports) {
+var output = (function (exports) {
   'use strict';
 
   class AjaxCart {
@@ -301,6 +301,8 @@
   delete e[b].onload,e[b]=!0);}f="";q+=1;d();};var p=function(){window.removeEventListener("load",p,!1);l=setTimeout(n,0);};"complete"!==document.readyState?window.addEventListener("load",p,!1):p();}})();
 
   exports.__moduleExports = lazysizes_min;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
 
   return exports;
 
