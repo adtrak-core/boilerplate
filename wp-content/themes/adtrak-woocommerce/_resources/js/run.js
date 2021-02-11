@@ -22,14 +22,6 @@
 		// Copy primary and secondary menus to .mob-nav element
 		var mobNav = document.querySelector('.mob-nav .scroll-container');
 
-		var copyPrimaryMenu = document.querySelector('#menu-primary .menu-primary').cloneNode(true);
-		mobNav.appendChild(copyPrimaryMenu);
-
-		if($('#menu-secondary').length) {
-			var copySecondaryMenu = document.querySelector('#menu-secondary .menu-secondary').cloneNode(true);
-			mobNav.appendChild(copySecondaryMenu);
-		}
-
 		// Add Close Icon element
 		$( "<div class='mob-nav-close'><svg class='icon icon-times'><use xlink:href='"+themeURL.themeURL+"/_resources/images/icons-sprite.svg#icon-times'></use></svg></div>" ).insertAfter( ".mob-nav .scroll-container" );
 
@@ -59,7 +51,7 @@
 	    	$('.mob-nav,.mob-nav-underlay').removeClass('mob-nav--active');
 	    	$('body').removeClass('fixed');
         });
-        
+
 
         // --------------------------------------------------------------------------------------------------
 		// Add icon to menu items with children
@@ -90,7 +82,7 @@
 				gtag('event', 'Contact Form Submission', { 'event-category': 'FORM NAME Submission', 'event_label': 'FORM NAME Submission' });
 			}
 		}, false);
-        
+
 
 	});
 
