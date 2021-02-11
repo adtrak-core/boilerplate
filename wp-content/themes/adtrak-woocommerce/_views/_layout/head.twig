@@ -29,10 +29,37 @@
 
     {{ fn('wp_body_open') }}
 
-    <nav class="mob-nav">
-        <div class="scroll-container">
-        </div>
-    </nav>
+	{# Set up a new mobile menu  #}
+	{% set mobileMenu = primaryMenu.items %}
+
+	{# Get the secondary menu items and set it to a new topMenu var #}
+	{% set topMenu = secondaryMenu.items %}
+
+	{# See if topMenu has content - if so, merge it into the mobileMenu #}
+	{% if topMenu | default(false) %}
+		{% set mobileMenu = mobileMenu|merge(topMenu) %}
+	{% endif %}
+
+	<nav class="mob-nav">
+		<div class="scroll-container">
+		<ul class="">
+			{% for item in mobileMenu %}
+			<li class="{{item.class}} {{ item.current ? 'current-menu-item' }}">
+				<a href="{{item.link}}">{{item.name}}</a>
+				{% if item.children %}
+				<ul class="sub-menu">
+					{% for child in item.children %}
+					<li class="{{child.class}}">
+						<a href="{{child.link}}">{{child.name}}</a>
+					</li>
+					{% endfor %}
+				</ul>
+				{% endif %}
+			</li>
+			{% endfor %}
+		</ul>
+		</div>
+	</nav>
 
     <div class="wrapper">
 

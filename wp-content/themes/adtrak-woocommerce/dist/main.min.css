@@ -741,7 +741,7 @@ Cookie Notice *********************************************/
   --text-opacity: 1;
   color: #212121;
   color: rgba(33, 33, 33, var(--text-opacity));
-  max-width: 72rem;
+  max-width: 1900px;
   text-align: center;
   padding: 1rem;
 }
@@ -806,6 +806,12 @@ Desktop Navs **********************************************/
     position: relative;
   }
 
+  .menu-primary li:focus-within > .sub-menu,
+    .menu-secondary li:focus-within > .sub-menu {
+    display: block;
+    opacity: 1;
+  }
+
   .menu-primary a,
   .menu-secondary a {
     position: relative;
@@ -824,7 +830,6 @@ Desktop Navs **********************************************/
       .menu-secondary a:hover + .sub-menu {
     display: block;
     opacity: 1;
-    visibility: visible;
   }
 
   .menu-primary .icon-angle-down,
@@ -886,6 +891,13 @@ Desktop Navs **********************************************/
     background-color: rgba(255, 255, 255, var(--bg-opacity));
     --transform-translate-x: -50%;
     width: 200px;
+  }
+
+  .menu-primary .sub-menu:focus-within,
+    .menu-secondary .sub-menu:focus-within {
+    display: block;
+    opacity: 1;
+    visibility: visible;
   }
 
   .menu-primary .sub-menu a,
