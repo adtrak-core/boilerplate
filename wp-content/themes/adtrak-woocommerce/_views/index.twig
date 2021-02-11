@@ -6,19 +6,19 @@
 
 	<main class="lg:w-2/3">
 	
-		{% for post in posts %}
-	
+	{% for post in posts %}
+
 		<article class="copy">
 	
-			<h1><a href="{{ function(" get_permalink", post.ID)}}">{{post.title}}</a></h1>
+			<h1><a href="{{post.link}}">{{post.title}}</a></h1>
 	
 			{{post.content}}
 	
-			<a href="{{ function(" get_permalink", post.ID)}}">Read More</a>
+			<a href="{{post.link}}">Read More</a>
 	
 		</article>
-	
-		{% endfor %}
+
+	{% endfor %}
 	
 	</main>
 	
