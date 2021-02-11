@@ -36,6 +36,8 @@ require_once(__DIR__ . '/_functions/Image.php');
 require_once(__DIR__ . '/_functions/CustomFieldBlocks.php');
 require_once(__DIR__ . '/_functions/Adtrak.php');
 require_once(__DIR__ . '/_functions/Icons.php');
+require_once(__DIR__ . '/_functions/AddressOutput.php');
+require_once(__DIR__ . '/_functions/OptionsPages.php');
 
 new BaseSite();
 new Scripts();
@@ -75,6 +77,8 @@ function get_adtrak_logo($colour = null, $icon = false)
 function icon($iconName, $classes = null) {
     return Icons::getIcon($iconName, $classes);
 }
+
+
 
 /**
  * Initialise Commerce Based Class Features
