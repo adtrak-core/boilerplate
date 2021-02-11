@@ -33,7 +33,6 @@ require_once(__DIR__ . '/_functions/Cleanup.php');
 require_once(__DIR__ . '/_functions/Scripts.php');
 require_once(__DIR__ . '/_functions/CustomPostTypes.php');
 require_once(__DIR__ . '/_functions/Image.php');
-require_once(__DIR__ . '/_functions/Svg.php');
 require_once(__DIR__ . '/_functions/CustomFieldBlocks.php');
 require_once(__DIR__ . '/_functions/Adtrak.php');
 require_once(__DIR__ . '/_functions/Icons.php');
@@ -43,7 +42,6 @@ new Scripts();
 new Cleanup();
 new CustomPostTypes();
 new Image();
-new Svg();
 new CustomFieldBlocks();
 new Adtrak();
 
@@ -61,14 +59,6 @@ function responsive_image($image_id, $classes = null)
 function responsive_image_from_thumb($post_id, $classes = null)
 {
     return Image::responsveImageFromThumb($post_id, $classes);
-}
-
-/**
- * You won't need this if you only are only templating with twig
- */
-function inline_svg($filename)
-{
-    return Svg::inlineSvg($filename);
 }
 
 /**
