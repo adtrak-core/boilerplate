@@ -29,12 +29,12 @@ class CommerceMiniCart
         $context = ['cart' => $woocommerce->cart];
 
         $fragments['a.cart-mini-contents'] = Timber::compile(
-            'partials/shop/cart-fragment-link.twig',
+            '_shop/cart-fragment-link.twig',
             $context
         );
 
         $fragments['div.cart-slideout-details'] = Timber::compile(
-            'partials/shop/ajax-cart-content.twig',
+            '_shop/ajax-cart-content.twig',
             $context
         );
 
