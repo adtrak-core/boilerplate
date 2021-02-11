@@ -2,7 +2,12 @@
 
 $context = Timber::context();
 
-$context['post'] = new Timber\Post();
+$context['posts'] = new Timber\PostQuery();
+
+$context['categories'] = get_categories( array(
+    'orderby' => 'name',
+    'order'   => 'ASC'
+) );
 
 $templates = ['index.twig'];
 
