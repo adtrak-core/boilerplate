@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "gulp",
-    "build": "gulp NODE_ENV=production build --production",
+    "build": "cross-env NODE_ENV=production gulp build --production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
