@@ -129,7 +129,7 @@ $closeTextBg: theme("colors.red.800");
 .mob-nav .scroll-container {
   @apply absolute left-0 w-full overflow-y-scroll;
   top: $menuTitleHeight;
-  height: calc(100vh - #{$menuTitleHeight});
+  height: calc(100vh - $menuTitleHeight);
   -webkit-overflow-scrolling: touch;
   padding-bottom: 100px;
 
