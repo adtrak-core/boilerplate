@@ -93,7 +93,7 @@
 
 ## Useful Commands ##
 
-The following are useful locally and when [setting up DeployHQ](http://resources.adtrak.agency/local-working-using-deployhq/).
+The following are useful locally and when [setting up DeployHQ](https://arc.adtrak.co.uk/books/web-design-development/page/deployhq).
 
 ```npm run dev``` will run your local development
 
@@ -104,7 +104,15 @@ npm run build
 
 cd wp-content/themes/your-theme-name
 composer install
+
 ```
+
+You can use the following to exclude `node_modules` from your uploads under "Excluded Files"
+
+```
+wp-content/themes/your-theme-name/node_modules/**
+```
+
 
 ## TailwindCSS
 
