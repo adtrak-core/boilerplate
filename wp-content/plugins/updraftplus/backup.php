@@ -201,7 +201,7 @@ class UpdraftPlus_Backup {
 	public function create_zip($create_from_dir, $whichone, $backup_file_basename, $index, $first_linked_index = false) {
 		// Note: $create_from_dir can be an array or a string
 		
-		set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);
+		if (function_exists('set_time_limit')) set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);
 		
 		$original_index = $index;
 
@@ -275,9 +275,9 @@ class UpdraftPlus_Backup {
 		$match = '_'.$updraftplus->file_nonce."-".$whichone;
 		while (false !== ($e = $d->read())) {
 			if ('.' == $e || '..' == $e || !is_file($this->updraft_dir.'/'.$e)) continue;
-			$ziparchive_match = preg_match("/$match([0-9]+)?\.zip\.tmp\.([A-Za-z0-9]){6}?$/i", $e);
+			$ziparchive_match = preg_match("/$match(?:[0-9]*)\.zip\.tmp\.[A-Za-z0-9]+$/i", $e);
 			$binzip_match = preg_match("/^zi([A-Za-z0-9]){6}$/", $e);
-			$pclzip_match = preg_match("/^pclzip-[a-z0-9]+.tmp$/", $e);
+			$pclzip_match = preg_match("/^pclzip-[a-z0-9]+.(?:gz|tmp)$/", $e);
 			if ($time_now-filemtime($this->updraft_dir.'/'.$e) < 30 && ($ziparchive_match || (0 != $updraftplus->current_resumption && ($binzip_match || $pclzip_match)))) {
 				UpdraftPlus_Job_Scheduler::terminate_due_to_activity($this->updraft_dir.'/'.$e, $time_now, filemtime($this->updraft_dir.'/'.$e));
 			}
@@ -445,7 +445,7 @@ class UpdraftPlus_Backup {
 				$this->last_storage_instance = ($ind+1 >= count($services) && $instance_id_count+1 >= $total_instance_ids && $errors_before_uploads == $updraftplus->error_count()) ? true : false;
 				$log_extra = $this->last_storage_instance ? ' (last)' : '';
 				$updraftplus->log("Cloud backup selection (".($ind+1)."/".count($services)."): ".$service." with instance (".($instance_id_count+1)."/".$total_instance_ids.")".$log_extra);
-				@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+				if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 	
 				if ('none' == $service || '' == $service) {
 					$updraftplus->log('No remote despatch: user chose no remote backup service');
@@ -1609,7 +1609,7 @@ class UpdraftPlus_Backup {
 			$total_tables++;
 
 			// Increase script execution time-limit to 15 min for every table.
-			@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+			if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 			// The table file may already exist if we have produced it on a previous run
 			$table_file_prefix = $file_base.'-db'.$this->whichdb_suffix.'-table-'.$table.'.table';
 
@@ -1993,7 +1993,7 @@ class UpdraftPlus_Backup {
 		// $dump_as_table = ($this->duplicate_tables_exist == false && stripos($table, $this->table_prefix) === 0 && strpos($table, $this->table_prefix) !== 0) ? $this->table_prefix.substr($table, strlen($this->table_prefix)) : $table;
 
 		$pfile = md5(time().rand()).'.tmp';
-		file_put_contents($this->updraft_dir.'/'.$pfile, "[mysqldump]\npassword=".$this->dbinfo['pass']."\n");
+		file_put_contents($this->updraft_dir.'/'.$pfile, "[mysqldump]\npassword=\"".addslashes($this->dbinfo['pass'])."\"\n");
 
 		$where_array = apply_filters('updraftplus_backup_table_sql_where', array(), $table_name, $this);
 		$where = '';
@@ -2025,7 +2025,7 @@ class UpdraftPlus_Backup {
 		$ret = false;
 		$any_output = false;
 		$writes = 0;
-		$handle = popen($exec, "r");
+		$handle = function_exists('popen') ? popen($exec, "r") : false;
 		if ($handle) {
 			while (!feof($handle)) {
 				$w = fgets($handle);
@@ -2316,7 +2316,7 @@ class UpdraftPlus_Backup {
 			// Loop which retrieves data
 			do {
 
-				@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+				if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
 				// Reset back to that which has constructed before the loop began
 				$final_where = $where;
@@ -2728,26 +2728,24 @@ class UpdraftPlus_Backup {
 				if (is_link($fullpath.'/'.$e)) {
 					$deref = realpath($fullpath.'/'.$e);
 					if (is_file($deref)) {
-						if (is_readable($deref)) {
-							$use_stripped = $stripped_storage_path.'/'.$e;
-							if (false !== ($fkey = array_search($use_stripped, $exclude))) {
-								$updraftplus->log("Entity excluded by configuration option: $use_stripped");
-								unset($exclude[$fkey]);
-							} elseif (!empty($this->excluded_extensions) && $this->is_entity_excluded_by_extension($e)) {
-								$updraftplus->log("Entity excluded by configuration option (extension): $use_stripped");
-							} elseif (!empty($this->excluded_prefixes) && $this->is_entity_excluded_by_prefix($e)) {
-								$updraftplus->log("Entity excluded by configuration option (prefix): $use_stripped");
-							} elseif (apply_filters('updraftplus_exclude_file', false, $deref, $use_stripped)) {
-								$updraftplus->log("Entity excluded by filter: $use_stripped");
+						$use_stripped = $stripped_storage_path.'/'.$e;
+						if (false !== ($fkey = array_search($use_stripped, $exclude))) {
+							$updraftplus->log("Entity excluded by configuration option: $use_stripped");
+							unset($exclude[$fkey]);
+						} elseif (!empty($this->excluded_extensions) && $this->is_entity_excluded_by_extension($e)) {
+							$updraftplus->log("Entity excluded by configuration option (extension): $use_stripped");
+						} elseif (!empty($this->excluded_prefixes) && $this->is_entity_excluded_by_prefix($e)) {
+							$updraftplus->log("Entity excluded by configuration option (prefix): $use_stripped");
+						} elseif (apply_filters('updraftplus_exclude_file', false, $deref, $use_stripped)) {
+							$updraftplus->log("Entity excluded by filter: $use_stripped");
+						} elseif (is_readable($deref)) {
+							$mtime = filemtime($deref);
+							if ($mtime > 0 && $mtime > $if_altered_since) {
+								$this->zipfiles_batched[$deref] = $use_path_when_storing.'/'.$e;
+								$this->makezip_recursive_batchedbytes += @filesize($deref);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+								// @touch($zipfile);
 							} else {
-								$mtime = filemtime($deref);
-								if ($mtime > 0 && $mtime > $if_altered_since) {
-									$this->zipfiles_batched[$deref] = $use_path_when_storing.'/'.$e;
-									$this->makezip_recursive_batchedbytes += @filesize($deref);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
-									// @touch($zipfile);
-								} else {
-									$this->zipfiles_skipped_notaltered[$deref] = $use_path_when_storing.'/'.$e;
-								}
+								$this->zipfiles_skipped_notaltered[$deref] = $use_path_when_storing.'/'.$e;
 							}
 						} else {
 							$updraftplus->log("$deref: unreadable file");
@@ -2761,25 +2759,23 @@ class UpdraftPlus_Backup {
 						$this->makezip_recursive_add($deref, $use_path_when_storing.'/'.$e, $original_fullpath, $startlevels, $exclude);
 					}
 				} elseif (is_file($fullpath.'/'.$e)) {
-					if (is_readable($fullpath.'/'.$e)) {
-						$use_stripped = $stripped_storage_path.'/'.$e;
-						if (false !== ($fkey = array_search($use_stripped, $exclude))) {
-							$updraftplus->log("Entity excluded by configuration option: $use_stripped");
-							unset($exclude[$fkey]);
-						} elseif (!empty($this->excluded_extensions) && $this->is_entity_excluded_by_extension($e)) {
-							$updraftplus->log("Entity excluded by configuration option (extension): $use_stripped");
-						} elseif (!empty($this->excluded_prefixes) && $this->is_entity_excluded_by_prefix($e)) {
-							$updraftplus->log("Entity excluded by configuration option (prefix): $use_stripped");
-						} elseif (apply_filters('updraftplus_exclude_file', false, $fullpath.'/'.$e)) {
-							$updraftplus->log("Entity excluded by filter: $use_stripped");
+					$use_stripped = $stripped_storage_path.'/'.$e;
+					if (false !== ($fkey = array_search($use_stripped, $exclude))) {
+						$updraftplus->log("Entity excluded by configuration option: $use_stripped");
+						unset($exclude[$fkey]);
+					} elseif (!empty($this->excluded_extensions) && $this->is_entity_excluded_by_extension($e)) {
+						$updraftplus->log("Entity excluded by configuration option (extension): $use_stripped");
+					} elseif (!empty($this->excluded_prefixes) && $this->is_entity_excluded_by_prefix($e)) {
+						$updraftplus->log("Entity excluded by configuration option (prefix): $use_stripped");
+					} elseif (apply_filters('updraftplus_exclude_file', false, $fullpath.'/'.$e)) {
+						$updraftplus->log("Entity excluded by filter: $use_stripped");
+					} elseif (is_readable($fullpath.'/'.$e)) {
+						$mtime = filemtime($fullpath.'/'.$e);
+						if ($mtime > 0 && $mtime > $if_altered_since) {
+							$this->zipfiles_batched[$fullpath.'/'.$e] = $use_path_when_storing.'/'.$e;
+							$this->makezip_recursive_batchedbytes += @filesize($fullpath.'/'.$e);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 						} else {
-							$mtime = filemtime($fullpath.'/'.$e);
-							if ($mtime > 0 && $mtime > $if_altered_since) {
-								$this->zipfiles_batched[$fullpath.'/'.$e] = $use_path_when_storing.'/'.$e;
-								$this->makezip_recursive_batchedbytes += @filesize($fullpath.'/'.$e);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
-							} else {
-								$this->zipfiles_skipped_notaltered[$fullpath.'/'.$e] = $use_path_when_storing.'/'.$e;
-							}
+							$this->zipfiles_skipped_notaltered[$fullpath.'/'.$e] = $use_path_when_storing.'/'.$e;
 						}
 					} else {
 						$updraftplus->log("$fullpath/$e: unreadable file");
@@ -3560,7 +3556,7 @@ class UpdraftPlus_Backup {
 						}
 					}
 
-					@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+					if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 					$something_useful_sizetest = false;
 
 					if ($data_added_since_reopen > $maxzipbatch) {

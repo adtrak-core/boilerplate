@@ -26,9 +26,9 @@ import {
  * @param {Array} props.shippingRates Array of packages containing shipping rates.
  * @param {boolean} props.shippingRatesLoading True when rates are being loaded.
  * @param {string} props.className Class name for package rates.
- * @param {boolean} props.collapsible If true, when multiple packages are rendered they can be toggled open and closed.
+ * @param {boolean} [props.collapsible] If true, when multiple packages are rendered they can be toggled open and closed.
  * @param {React.ReactElement} props.noResultsMessage Rendered when there are no packages.
- * @param {Function} props.renderOption Function to render a shipping rate.
+ * @param {Function} [props.renderOption] Function to render a shipping rate.
  */
 const ShippingRatesControl = ( {
 	shippingRates,
@@ -47,7 +47,7 @@ const ShippingRatesControl = ( {
 		if ( packageCount === 1 ) {
 			speak(
 				sprintf(
-					// translators: %d number of shipping options found.
+					/* translators: %d number of shipping options found. */
 					_n(
 						'%d shipping option was found.',
 						'%d shipping options were found.',
@@ -60,7 +60,7 @@ const ShippingRatesControl = ( {
 		} else {
 			speak(
 				sprintf(
-					// translators: %d number of shipping packages packages.
+					/* translators: %d number of shipping packages packages. */
 					_n(
 						'Shipping option searched for %d package.',
 						'Shipping options searched for %d packages.',
@@ -71,7 +71,7 @@ const ShippingRatesControl = ( {
 				) +
 					' ' +
 					sprintf(
-						// translators: %d number of shipping options available.
+						/* translators: %d number of shipping options available. */
 						_n(
 							'%d shipping option was found',
 							'%d shipping options were found',
@@ -103,6 +103,7 @@ const ShippingRatesControl = ( {
 				<Packages
 					packages={ shippingRates }
 					noResultsMessage={ noResultsMessage }
+					renderOption={ renderOption }
 				/>
 			</ExperimentalOrderShippingPackages>
 		</LoadingMask>
@@ -120,6 +121,7 @@ const ShippingRatesControl = ( {
  * @param {boolean} props.collapse If the panel should be collapsed by default,
  * only works if collapsible is true.
  * @param {boolean} props.showItems If we should items below the package name.
+ * @param {Function} [props.renderOption] Function to render a shipping rate.
  * @return {React.ReactElement|Array|null} Rendered components.
  */
 const Packages = ( {
@@ -128,6 +130,7 @@ const Packages = ( {
 	showItems,
 	collapsible,
 	noResultsMessage,
+	renderOption,
 } ) => {
 	// If there are no packages, return nothing.
 	if ( ! packages.length ) {
@@ -143,6 +146,7 @@ const Packages = ( {
 			collapse={ collapse }
 			showItems={ showItems }
 			noResultsMessage={ noResultsMessage }
+			renderOption={ renderOption }
 		/>
 	) );
 };

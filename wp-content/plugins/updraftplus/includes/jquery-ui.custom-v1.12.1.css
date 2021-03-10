@@ -289,6 +289,7 @@
 	vertical-align: middle;
 	text-align: center;
 	-webkit-user-select: none;
+	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 	/* Support: IE <= 11 */
@@ -306,7 +307,8 @@
 /* to make room for the icon, a width needs to be set here */
 .ui-button-icon-only {
 	width: 2em;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	text-indent: -9999px;
 	white-space: nowrap;
 }
@@ -375,7 +377,8 @@ button.ui-button::-moz-focus-inner {
 }
 
 .ui-controlgroup-vertical .ui-controlgroup-item {
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 }
 
 .ui-controlgroup .ui-controlgroup-label {
@@ -414,7 +417,8 @@ button.ui-button::-moz-focus-inner {
 }
 
 .ui-checkboxradio-label .ui-icon-background {
-	box-shadow: inset 1px 1px 1px #CCC;
+	-webkit-box-shadow: inset 1px 1px 1px #CCC;
+	        box-shadow: inset 1px 1px 1px #CCC;
 	border-radius: .12em;
 	border: none;
 }
@@ -855,7 +859,8 @@ button.ui-button::-moz-focus-inner {
 /* support: IE8 - See #6727 */
 .ui-slider.ui-state-disabled .ui-slider-handle,
 .ui-slider.ui-state-disabled .ui-slider-range {
-	filter: inherit;
+	-webkit-filter: inherit;
+	        filter: inherit;
 }
 
 .ui-slider-horizontal {
@@ -1113,7 +1118,8 @@ a.ui-button:focus {
 }
 
 .ui-visual-focus {
-	box-shadow: 0 0 3px 1px rgb(94, 158, 214);
+	-webkit-box-shadow: 0 0 3px 1px rgb(94, 158, 214);
+	        box-shadow: 0 0 3px 1px rgb(94, 158, 214);
 }
 
 .ui-state-active,
@@ -1994,5 +2000,6 @@ a.ui-button:active,
 }
 
 .ui-widget-shadow {
+	-webkit-box-shadow: -5px -5px 5px #000;
 	box-shadow: -5px -5px 5px #000;
 }

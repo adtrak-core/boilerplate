@@ -9,8 +9,10 @@
 
 .shepherd-element.shepherd-theme-arrows-plain-buttons .shepherd-content {
 	border-radius: 3px;
-	filter: none;
-	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15), 0px 10px 40px rgba(0, 0, 0, 0.15);
+	-webkit-filter: none;
+	        filter: none;
+	-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15), 0px 10px 40px rgba(0, 0, 0, 0.15);
+	        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15), 0px 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 .shepherd-element-attached-bottom.shepherd-element-attached-right.shepherd-target-attached-top.shepherd-target-attached-left .shepherd-content:before,
@@ -56,24 +58,24 @@
 }
 
 .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-has-title .shepherd-content header a.shepherd-cancel-link::before {
-	color: #FFF;
-	content: attr(data-btntext);
-	position: absolute;
-	right: 20px;
-	padding-right: 10px;
-}
+		color: #FFF;
+		content: attr(data-btntext);
+		position: absolute;
+		right: 20px;
+		padding-right: 10px;
+	}
 
 .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-has-title .shepherd-content header a.shepherd-cancel-link::after {
-	content: "\f335";
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	font-family: dashicons;
-	color: #FFF;
-	position: absolute;
-	left: 2px;
-	line-height: 21px;
-	font-size: 16px;
-}
+		content: "\f335";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-family: dashicons;
+		color: #FFF;
+		position: absolute;
+		left: 2px;
+		line-height: 21px;
+		font-size: 16px;
+	}
 
 .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-has-title .shepherd-content header a.shepherd-cancel-link:hover,
 .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-has-title .shepherd-content header a.shepherd-cancel-link:focus {
@@ -82,12 +84,12 @@
 }
 
 .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-has-title .shepherd-content header a.shepherd-cancel-link:hover::before, .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-has-title .shepherd-content header a.shepherd-cancel-link:focus::before {
-	color: #A04E00;
-}
+		color: #A04E00;
+	}
 
 .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-has-title .shepherd-content header a.shepherd-cancel-link:hover::after, .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-has-title .shepherd-content header a.shepherd-cancel-link:focus::after {
-	color: #A04E00;
-}
+		color: #A04E00;
+	}
 
 .shepherd-element.shepherd-theme-arrows-plain-buttons.shepherd-element-attached-top.shepherd-element-attached-left.shepherd-target-attached-right .shepherd-content:before {
 	top: 44px;
@@ -125,13 +127,14 @@
 label[for=updraft_servicecheckbox_updraftvault] {
 
 	border: 1px solid rgba(204, 204, 204, 0.4);
+	-webkit-transition: border .5s;
 	transition: border .5s
 
 }
 
 label[for=updraft_servicecheckbox_updraftvault].emphasize {
-	border-color: #DD6823;
-}
+		border-color: #DD6823;
+	}
 
 .shepherd-element.shepherd-theme-arrows-plain-buttons .shepherd-content footer .shepherd-buttons li .shepherd-button.udp-tour-back,
 .shepherd-element.shepherd-theme-arrows-plain-buttons .shepherd-content footer .shepherd-buttons li .shepherd-button.udp-tour-end {
@@ -155,7 +158,8 @@ label[for=updraft_servicecheckbox_updraftvault].emphasize {
 	position: absolute;
 	left: 0px;
 	top: 8px;
-	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	        transform: rotate(45deg);
 }
 
 a.shepherd-button.udp-tour-end::before {

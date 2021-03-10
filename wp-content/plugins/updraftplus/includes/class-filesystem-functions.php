@@ -166,6 +166,19 @@ class UpdraftPlus_Filesystem_Functions {
 				} elseif (!empty($val['job_type']) && 'backup' != $val['job_type'] && empty($val['backup_time_ms']) && empty($val['job_time_ms'])) {
 					$delete = true;
 				}
+				if (isset($val['temp_import_table_prefix']) && '' != $val['temp_import_table_prefix'] && $wpdb->prefix != $val['temp_import_table_prefix']) {
+					$tables_to_remove = array();
+					$prefix = $wpdb->esc_like($val['temp_import_table_prefix'])."%";
+					$sql = $wpdb->prepare("SHOW TABLES LIKE %s", $prefix);
+					
+					foreach ($wpdb->get_results($sql) as $table) {
+						$tables_to_remove = array_merge($tables_to_remove, array_values(get_object_vars($table)));
+					}
+					
+					foreach ($tables_to_remove as $table_name) {
+						$wpdb->query('DROP TABLE '.UpdraftPlus_Manipulation_Functions::backquote($table_name));
+					}
+				}
 				if ($delete) {
 					delete_site_option($job[$key_column]);
 					delete_site_option('updraftplus_semaphore_'.$nonce);

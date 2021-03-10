@@ -148,6 +148,7 @@ public function updraftplus_getResumeUri() { return $this->resumeUri; }
 
   /**
    * Send the next part of the file to upload.
+   *
    * @param [$chunk] the next set of bytes to send. If false will used $data passed
    * at construct time.
    */
@@ -165,7 +166,7 @@ public function updraftplus_getResumeUri() { return $this->resumeUri; }
     $headers = array(
       'content-range' => "bytes $this->progress-$lastBytePos/$this->size",
       'content-type' => $this->request->getRequestHeader('content-type'),
-      'content-length' => $this->chunkSize,
+      'content-length' => strlen($chunk),
       'expect' => '',
     );
 

@@ -1123,7 +1123,7 @@ function update_backupnow_modal(response) {
 function updraft_exclude_entity_update(include_entity_name) {
 	var exclude_entities = [];
 	jQuery('#updraft_include_'+include_entity_name+'_exclude_container .updraft_exclude_entity_wrapper .updraft_exclude_entity_field').each(function() {
-		var data_val = jQuery(this).data('val').trim();
+		var data_val = jQuery(this).data('val').toString().trim();
 		if ('' != data_val) {
 			exclude_entities.push(data_val);
 		}
@@ -2038,13 +2038,14 @@ jQuery(function($) {
 		}
 	});
 
-	$('#updraft-wrap').on('click', '#updraftplus_manual_authorisation_submit_dropbox', function(e) {
+	$('#updraft-wrap').on('click', '[id^=updraftplus_manual_authorisation_submit_]', function(e) {
 		e.preventDefault();
-		var dropbox_auth_data = $('#updraftplus_manual_authentication_data_dropbox').val();
-		$('#updraftplus_manual_authentication_error_dropbox').text();
-		$('#updraft-wrap #updraftplus_manual_authorisation_template_dropbox .updraftplus_spinner.spinner').addClass('visible');
-		$('#updraftplus_manual_authorisation_submit_dropbox').prop('disabled', true);
-		manual_remote_storage_auth('dropbox', dropbox_auth_data);
+		var method = $(this).data('method');
+		var auth_data = $('#updraftplus_manual_authentication_data_'+method).val();
+		$('#updraftplus_manual_authentication_error_'+method).text();
+		$('#updraft-wrap #updraftplus_manual_authorisation_template_'+method+' .updraftplus_spinner.spinner').addClass('visible');
+		$('#updraftplus_manual_authorisation_submit_'+method).prop('disabled', true);
+		manual_remote_storage_auth(method, auth_data);
 	});
 
 	/**
@@ -3037,11 +3038,11 @@ jQuery(function($) {
 		$('#backupnow_database_moreoptions').toggle();
 	});
 
-	$('#backupnow_db_anon_all').click(function(e) {
+	$('#backupnow_db_anon_all').on('click', function(e) {
 		if ($('#backupnow_db_anon_non_staff').prop('checked')) $('#backupnow_db_anon_non_staff').prop("checked", false);
 	});
 
-	$('#backupnow_db_anon_non_staff').click(function(e) {
+	$('#backupnow_db_anon_non_staff').on('click', function(e) {
 		if ($('#backupnow_db_anon_all').prop('checked')) $('#backupnow_db_anon_all').prop("checked", false);
 	});
 
@@ -3965,6 +3966,42 @@ jQuery(function($) {
 				},
 				"plugins": ["sort"],
 			});
+		} else if ('contain-clause' == panel) {
+			jQuery('#updraft_exclude_files_folders_wildcards_jstree').jstree({
+				"core": {
+					"multiple": false,
+					"data": function (nodeid, callback) {
+						updraft_send_command('get_jstree_directory_nodes', {entity: 'filebrowser', directories_only: 1, node:nodeid, path: jQuery('#updraft_exclude_modal_path').val(), findex: 0, skip_root_node: 0}, function(response) {
+						if (response.hasOwnProperty('error')) {
+									alert(response.error);
+													   } else {
+		 callback.call(this, response.nodes);
+													   }
+						}, { error_callback: function(response, status, error_code, resp) {
+								if (typeof resp !== 'undefined' && resp.hasOwnProperty('fatal_error')) {
+								console.error(resp.fatal_error_message);
+								jQuery('#updraft_zip_files_jstree').html('<p style="color:red; margin: 5px;">'+resp.fatal_error_message+'</p>');
+								alert(resp.fatal_error_message);
+									} else {
+								var error_message = "updraft_send_command: error: "+status+" ("+error_code+")";
+								jQuery('#updraft_zip_files_jstree').html('<p style="color:red; margin: 5px;">'+error_message+'</p>');
+								console.log(error_message);
+								alert(error_message);
+								console.log(response);
+									}
+								}
+						});
+					},
+					"error": function(error) {
+						alert(error);
+						console.log(error);
+					},
+				},
+				"search": {
+					"show_only_matches": true
+				},
+				"plugins": ["sort"],
+			});
 		}
 		jQuery('#updraft_exclude_modal_main').slideUp();
 		jQuery('.updraft-exclude-panel').hide();
@@ -3974,6 +4011,7 @@ jQuery(function($) {
 	jQuery('.updraft-exclude-modal-reset').on('click', function(event) {
 		event.preventDefault();
 		jQuery('#updraft_exclude_files_folders_jstree').jstree("destroy");
+		jQuery('#updraft_exclude_files_folders_wildcards_jstree').jstree("destroy");
 		jQuery('#updraft_exclude_extension_field').val('');
 		jQuery('#updraft_exclude_prefix_field').val('');
 		jQuery('.updraft-exclude-panel').slideUp();
@@ -4024,6 +4062,39 @@ jQuery(function($) {
 					return;
 				}
 			exclude_item_val = 'prefix:'+prefix;
+				break;
+				
+			case 'contain-clause':
+				var exclude_jstree_selected = jQuery("#updraft_exclude_files_folders_wildcards_jstree").jstree("get_selected");
+				if (0 == exclude_jstree_selected.length) {
+					alert(updraftlion.exclude_select_folder_wildcards_msg);
+					return;
+				}
+				var clause_val = jQuery(this).parents('div.updraft-exclude-panel').find('div.clause-input-container input').val();
+				jQuery(this).parents('div.updraft-exclude-panel').find('div.clause-input-container input').val('');
+				var clause_type = jQuery(this).parents('div.updraft-exclude-panel').find('div.clause-input-container select').val();
+				if ('' == clause_val) {
+					alert(updraftlion.exclude_contain_error_msg);
+					return;
+				}
+				jQuery(this).parents('div.updraft-exclude-panel').find('div.clause-input-container select option').eq(0).prop('selected', true);
+				var selected_file_or_folder = exclude_jstree_selected[0];
+				var prefix_path = jQuery('#updraft_exclude_modal_path').val();
+				if (selected_file_or_folder.substr(0, prefix_path.length) == prefix_path) {
+						selected_file_or_folder = selected_file_or_folder.substr(prefix_path.length, selected_file_or_folder.length);
+				}
+				if ('/' == selected_file_or_folder.charAt(0))  selected_file_or_folder = selected_file_or_folder.substr(1);
+				if ('/' == selected_file_or_folder.charAt(selected_file_or_folder.length - 1))  selected_file_or_folder = selected_file_or_folder.substr(0, selected_file_or_folder.length - 1);
+				exclude_item_val = selected_file_or_folder;
+				if ('' !== exclude_item_val) exclude_item_val += '/';
+				clause_val = clause_val.replace(/\*/g, '\\*');
+				if ('beginning' === clause_type) {
+					exclude_item_val += clause_val + '*';
+				} else if ('middle' === clause_type) {
+					exclude_item_val += '*' + clause_val + '*';
+				} else if ('end' === clause_type) {
+					exclude_item_val += '*' + clause_val;
+				}
 				break;
 		
 			default:

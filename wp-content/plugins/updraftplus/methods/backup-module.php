@@ -654,7 +654,7 @@ abstract class UpdraftPlus_BackupModule {
 		$template .= "<p>".__('To complete manual authentication, at the orange UpdraftPlus authentication screen select the "Having problems authenticating?" link, then copy and paste the code given here.', 'updraftplus')."</p>";
 		$template .= "<label for='updraftplus_manual_authentication_data_{$id}'>".sprintf(__('%s authentication code:', 'updraftplus'), $description)."</label> <input type='text' id='updraftplus_manual_authentication_data_{$id}' name='updraftplus_manual_authentication_data_{$id}'>";
 		$template .= "<p id='updraftplus_manual_authentication_error_{$id}'></p>";
-		$template .= "<button type='button' class='button button-primary' id='updraftplus_manual_authorisation_submit_{$id}'>".__('Complete manual authentication', 'updraftplus')."</button>";
+		$template .= "<button type='button' data-method='{$id}' class='button button-primary' id='updraftplus_manual_authorisation_submit_{$id}'>".__('Complete manual authentication', 'updraftplus')."</button>";
 		$template .= '<span class="updraftplus_spinner spinner">' . __('Processing', 'updraftplus') . '...</span>';
 		$template .= "</div>";
 

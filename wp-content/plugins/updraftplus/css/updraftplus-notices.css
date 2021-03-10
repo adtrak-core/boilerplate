@@ -7,16 +7,19 @@
 
 .updraft_review_notice_container {
 	padding: 12px;
+	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
 }
 
 .updraft_advert_button_container {
 	margin-bottom: 10px;
+	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-align: center;
-	    align-items: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
 }
 
 .updraft_advert_button_container .dashicons {
@@ -32,10 +35,12 @@
 	float: none;
 	width: 100px;
 	padding-right: 15px;
+	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-align: center;
-	    align-items: center;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
 }
 
 .updraft_advert_content_right {

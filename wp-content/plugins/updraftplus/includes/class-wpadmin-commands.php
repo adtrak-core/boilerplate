@@ -137,7 +137,7 @@ class UpdraftPlus_WPAdmin_Commands extends UpdraftPlus_Commands {
 			$warn = array();
 			$err = array();
 
-			@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+			if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 			$max_execution_time = (int) @ini_get('max_execution_time');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
 			if ($max_execution_time>0 && $max_execution_time<61) {
@@ -394,7 +394,7 @@ class UpdraftPlus_WPAdmin_Commands extends UpdraftPlus_Commands {
 	
 		ob_start();
 	
-		phpinfo(INFO_ALL ^ (INFO_CREDITS | INFO_LICENSE));
+		if (function_exists('phpinfo')) phpinfo(INFO_ALL ^ (INFO_CREDITS | INFO_LICENSE));
 
 		echo '<h3 id="ud-debuginfo-constants">'.__('Constants', 'updraftplus').'</h3>';
 		$opts = @get_defined_constants();// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
@@ -568,7 +568,7 @@ class UpdraftPlus_WPAdmin_Commands extends UpdraftPlus_Commands {
 							'id' => UpdraftPlus_Manipulation_Functions::wp_normalize_path($path . DIRECTORY_SEPARATOR . $value),
 							'icon' => 'jstree-folder'
 						);
-					} elseif ('restore' != $page && is_file($path . DIRECTORY_SEPARATOR . $value)) {
+					} elseif (empty($params['directories_only']) && 'restore' != $page && is_file($path . DIRECTORY_SEPARATOR . $value)) {
 						$node_array[] = array(
 							'text' => $value,
 							'children' => false,

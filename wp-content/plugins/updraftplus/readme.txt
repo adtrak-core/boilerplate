@@ -2,8 +2,8 @@
 Contributors: Backup with UpdraftPlus, DavidAnderson, DNutbourne, aporter, snightingale, bcrodua
 Tags: backup, restore, database backup, wordpress backup, cloud backup, s3, dropbox, google drive, onedrive, ftp, backups
 Requires at least: 3.2
-Tested up to: 5.6
-Stable tag: 1.16.47
+Tested up to: 5.7
+Stable tag: 1.16.48
 Author URI: https://updraftplus.com
 Donate link: https://david.dw-perspective.org.uk/donate
 License: GPLv3 or later
@@ -91,7 +91,7 @@ Many thanks to the existing translators - listed at: <a href="https://updraftplu
 
 = More premium plugins =
 
-If you are in the market for other WordPress premium plugins (especially WooCommerce addons), then try <a href="https://www.simbahosting.co.uk/s3/shop/">our sister shop, here</a>.
+If you are in the market for other WordPress premium plugins (especially WooCommerce addons), then try <a href="https://www.simbahosting.co.uk/s3/shop/">our friends' shop, here</a>.
 
 For other useful free plugins see <a href="https://profiles.wordpress.org/davidanderson/#content-plugins">our lead developer's profile, here</a>.
 
@@ -167,6 +167,37 @@ Unfortunately not; since this is free software, there’s no warranty and no gua
 The <a href="https://updraftplus.com/news/">UpdraftPlus backup blog</a> is the best place to learn in more detail about any important changes.
 
 N.B. Paid versions of UpdraftPlus Backup / Restore have a version number which is 1 higher in the first digit, and has an extra component on the end, but the changelog below still applies. i.e. changes listed for 1.16.32.x of the free version correspond to changes made in 2.16.32.x of the paid version.
+
+= 1.16.48 - 09/Mar/2021 =
+
+* FEATURE: If needed database permissions are available then perform an atomic restore to improve chances of successfully restoring the database
+* FEATURE: Added the ability to manually complete authentication with Google Drive (Avoids issues where security modules/plugins break the authentication flow)
+* FEATURE: Added the ability to manually complete authentication with OneDrive (Avoids issues where security modules/plugins break the authentication flow)
+* FEATURE: Google Drive and Google Cloud now allow boosting chunk size for faster transfers
+* FIX: Files/Directories Exclusion not saving correctly when adding numeric directory/file names into the exclusion list
+* FIX: Different PHP versions generate different suffixes length in the temporary ZIP filename resulting in a chance of overlapping runs
+* FIX: an issue with mysqldump password character escaping
+* TWEAK: Avoid unnecessary database writes caused by redundant jobdata updating during backup of files
+* TWEAK: Add "anywhere in their names" syntax option to the exclusion UI
+* TWEAK: Bump the requirement for the S3 enhanced module, and for using the official AWS SDK, up to PHP 5.5 (in preparation for updating the SDK version later)
+* TWEAK: Fix a bug of report emails for incremental backups displaying incorrectly in many email apps
+* TWEAK: Update Select2 library to version 4.1.0-rc.0 to work around deprecated jQuery isFunction
+* TWEAK: Update jQuery-serializeJSON library to version 3.2.0 to work around deprecated jQuery isArray
+* TWEAK: Handle hosts that have disabled some of the PHP functions thus causing a fatal error on PHP 8
+* TWEAK: Correct under-calculation of used memory in verify_free_memory()
+* TWEAK: Fix (inconsequential to this point) double-use of identifier for SQL statement type
+* TWEAK: Remove some compatibility code in Dropbox downloading pertaining to a folder selection bug eliminated ~8 years ago.
+* TWEAK: Remove unneeded sub-site tables when performing a restoration/migration (Multisite)
+* TWEAK: Improve the exclusion UI by adding new "wildcards" option thus allowing the user to add a set of patterns for excluding files/directories
+* TWEAK: Integration of the new files that were previously added for abstracting UpdraftCentral's client code
+* TWEAK: Excluded items (Files or Folders) that are not readable should not trigger a warning about being unreadable
+* TWEAK: Fix some RTL CSS issues
+* TWEAK: OneDrive 4xx error reporting
+* TWEAK: Update the Dropbox SDK to use refresh tokens (long lived token support ends September 2021)
+* TWEAK: implement a multi-delete capabiltiy when deleting from Backblaze
+* TWEAK: On UpdraftClone display the image ID in the advanced tools tab for easier debugging
+* TWEAK: Make it more clear in the restore log that we are starting an AJAX restore
+* TWEAK: The download backup HTML so that there is only one download button per archive type
 
 = 1.16.47 - 25/Jan/2021 =
 
@@ -1229,4 +1260,4 @@ Reliance upon any non-English translation is at your own risk; UpdraftPlus can g
 We recognise and thank those mentioned at https://updraftplus.com/acknowledgements/ for code and/or libraries used and/or modified under the terms of their open source licences.
 
 == Upgrade Notice ==
-* 1.16.47: Various compatibility tweaks and improvements. A recommended update for all.
+* 1.16.48: Added the ability to perform atomic restores. Added the ability to manually complete authentication with Google Drive and OneDrive (Avoids issues where security modules/plugins break the authentication flow). Google Drive and Google Cloud now allow boosting chunk size for faster transfers.

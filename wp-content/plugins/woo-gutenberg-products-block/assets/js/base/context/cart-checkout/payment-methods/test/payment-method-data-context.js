@@ -11,10 +11,8 @@ import {
 	__experimentalDeRegisterPaymentMethod,
 	__experimentalDeRegisterExpressPaymentMethod,
 } from '@woocommerce/blocks-registry';
-import {
-	CheckoutExpressPayment,
-	SavedPaymentMethodOptions,
-} from '@woocommerce/base-components/payment-methods';
+import { default as fetchMock } from 'jest-fetch-mock';
+
 /**
  * Internal dependencies
  */
@@ -22,10 +20,15 @@ import {
 	usePaymentMethodDataContext,
 	PaymentMethodDataProvider,
 } from '../payment-method-data-context';
+import {
+	CheckoutExpressPayment,
+	SavedPaymentMethodOptions,
+} from '../../../../../blocks/cart-checkout/payment-methods';
 import { defaultCartState } from '../../../../../data/default-states';
 
 jest.mock( '@woocommerce/settings', () => {
 	const originalModule = jest.requireActual( '@woocommerce/settings' );
+
 	return {
 		// @ts-ignore We know @woocommerce/settings is an object.
 		...originalModule,
@@ -127,10 +130,11 @@ describe( 'Testing Payment Method Data Context Provider', () => {
 			if ( req.url.match( /wc\/store\/cart/ ) ) {
 				return Promise.resolve( JSON.stringify( previewCart ) );
 			}
+			return Promise.resolve( '' );
 		} );
 		// need to clear the store resolution state between tests.
 		await dispatch( storeKey ).invalidateResolutionForStore();
-		await dispatch( storeKey ).receiveCart( defaultCartState );
+		await dispatch( storeKey ).receiveCart( defaultCartState.cartData );
 	} );
 	afterEach( async () => {
 		resetMockPaymentMethods();

@@ -80,7 +80,6 @@ class Report
 
 		$null_text        = __( 'No known vulnerabilities found to affect this version', 'wpscan' );
 		$not_checked_text = __( 'Not checked yet. Click the Run All button to run a scan', 'wpscan' );
-		$not_found_text   = __( 'Not found in database', 'wpscan' );
 
 		if ( empty( $report ) || ! isset( $report[ $type ] ) ) {
 			return null;
@@ -119,8 +118,6 @@ class Report
 
 			echo empty( $list ) ? $null_text : join( '<br>', $list );
 
-		} elseif ( $report['not_found'] ) {
-			echo esc_html( $not_found_text );
 		} else {
 			echo esc_html( $null_text );
 		}
@@ -283,7 +280,10 @@ class Report
 			$report = $report[ $type ][ $name ];
 		}
 
-		if ( ! isset( $report['vulnerabilities'] ) ) {
+
+		if ( array_key_exists( 'not_found', $report ) ) {
+			$icon = 'dashicons-yes is-green';
+		} elseif ( ! isset( $report['vulnerabilities'] ) ) {
 			$icon = 'dashicons-no-alt is-gray';
 		} elseif ( empty( $report['vulnerabilities'] ) ) {
 			$icon = 'dashicons-yes is-green';

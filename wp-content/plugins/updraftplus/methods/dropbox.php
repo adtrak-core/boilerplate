@@ -566,26 +566,9 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 		try {
 			$get = $storage->download($ufile, $fh, $options);
 		} catch (Exception $e) {
-			// TODO: Remove this October 2013 (we stored in the wrong place for a while...)
-			$try_the_other_one = true;
-			$possible_error = $e->getMessage();
 			$this->log($e);
+			$this->log($e->getMessage(), 'error');
 			$get = false;
-		}
-
-		// TODO: Remove this October 2013 (we stored files in the wrong place for a while...)
-		if ($try_the_other_one) {
-			$dropbox_folder = trailingslashit($opts['folder']);
-			try {
-				$get = $storage->download($dropbox_folder.'/'.$file, $fh, $options);
-				if (isset($get['response']['body'])) {
-					$this->log("downloaded ".round(strlen($get['response']['body'])/1024, 1).' KB');
-				}
-			} catch (Exception $e) {
-				$this->log($possible_error, 'error');
-				$this->log($e->getMessage(), 'error');
-				$get = false;
-			}
 		}
 		
 		return $get;
@@ -767,7 +750,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	}
 
 	/**
-	 * This function will complete the oAuth flow, if admin_notice is true then add the action to display the authed admin notice, otherwise echo this notice to page.
+	 * This function will complete the oAuth flow, if return_instead_of_echo is true then add the action to display the authed admin notice, otherwise echo this notice to page.
 	 *
 	 * @param string  $raw_state              - the state
 	 * @param string  $raw_code               - the oauth code
@@ -789,6 +772,8 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 			if (isset($raw_code)) {
 				// set code so it can be accessed in the next authentication step
 				$opts['code'] = stripslashes($raw_code);
+				// remove our flag so we know this authentication is complete
+				if (isset($opts['auth_in_progress'])) unset($opts['auth_in_progress']);
 				$this->set_options($opts, true);
 				$auth_result = $this->auth_token($return_instead_of_echo);
 				if ($return_instead_of_echo) return $auth_result;
@@ -810,6 +795,8 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 			$opts['tk_access_token'] = '';
 			unset($opts['tk_request_token']);
 			$opts['ownername'] = '';
+			// Set a flag so we know this authentication is in progress
+			$opts['auth_in_progress'] = true;
 			$this->set_options($opts, true);
 
 			$this->set_instance_id($instance_id);

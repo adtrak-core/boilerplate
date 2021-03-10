@@ -76,7 +76,7 @@ class UpdraftPlus_BackupModule_s3 extends UpdraftPlus_BackupModule {
 		$opts = $this->get_config();
 		// UpdraftPlus_S3 is used when not accessing Amazon Web Services
 		$class_to_use = 'UpdraftPlus_S3';
-		if (version_compare(PHP_VERSION, '5.3.3', '>=') && !empty($opts['key']) && ('s3' == $opts['key'] || 'updraftvault' == $opts['key']) && (!defined('UPDRAFTPLUS_S3_OLDLIB') || !UPDRAFTPLUS_S3_OLDLIB)) {
+		if (version_compare(PHP_VERSION, '5.5', '>=') && !empty($opts['key']) && ('s3' == $opts['key'] || 'updraftvault' == $opts['key']) && (!defined('UPDRAFTPLUS_S3_OLDLIB') || !UPDRAFTPLUS_S3_OLDLIB)) {
 			$class_to_use = 'UpdraftPlus_S3_Compat';
 		}
 
@@ -678,7 +678,7 @@ class UpdraftPlus_BackupModule_s3 extends UpdraftPlus_BackupModule {
 		if (is_string($files)) $files = array($files);
 
 		$config = $this->get_config();
-		$sse = (empty($config['server_side_encryption'])) ? false : true;
+		$sse = empty($config['server_side_encryption']) ? false : true;
 		if (empty($config['sessiontoken'])) $config['sessiontoken'] = null;
 
 		if ($s3arr) {
@@ -751,6 +751,11 @@ class UpdraftPlus_BackupModule_s3 extends UpdraftPlus_BackupModule {
 
 	}
 
+	/**
+	* Download a file from the remote storage
+	*
+	* @param String $file The specific file to be downloaded
+	*/
 	public function download($file) {
 
 		global $updraftplus;

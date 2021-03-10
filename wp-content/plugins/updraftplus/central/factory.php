@@ -32,7 +32,7 @@ class UpdraftCentral_Factory {
 			}
 		}
 
-		return $host_class::instance();// phpcs:ignore PHPCompatibility.Syntax.NewDynamicAccessToStatic.Found
+		return call_user_func(array($host_class, 'instance'));
 	}
 }
 

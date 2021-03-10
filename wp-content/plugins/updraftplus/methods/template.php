@@ -73,7 +73,7 @@ class UpdraftPlus_BackupModule_template extends UpdraftPlus_BackupModule {
 	 * download method: takes a file name (base name), and brings it back from the cloud storage into Updraft's directory
 	 * You can register errors with $updraftplus->log("my error message", 'error')
 	 *
-	 * @param string $file The specific file to be downloaded from the Cloud Storage
+	 * @param String $file The specific file to be downloaded from the Cloud Storage
 	 */
 	public function download($file) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- This is a template file and can be ignored
 

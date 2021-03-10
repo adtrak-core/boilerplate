@@ -34,6 +34,15 @@
 
 	$updraftplus_admin->settings_debugrow(__('Web server:', 'updraftplus'), htmlspecialchars($web_server).' ('.htmlspecialchars($uname_info).')');
 
+	if (defined('UPDRAFTPLUS_THIS_IS_CLONE')) {
+		$response = wp_remote_get('http://169.254.169.254/metadata/v1/user-data', array('timeout' => 2));
+		if (!is_wp_error($response) && 200 === wp_remote_retrieve_response_code($response)) {
+			$json_body = wp_remote_retrieve_body($response);
+			$metadata = json_decode($json_body, true);
+			if (isset($metadata['image_id'])) $updraftplus_admin->settings_debugrow(__('UpdraftClone image:', 'updraftplus'), htmlspecialchars($metadata['image_id']));
+		}
+	}
+
 	$updraftplus_admin->settings_debugrow('ABSPATH:', htmlspecialchars(ABSPATH));
 	$updraftplus_admin->settings_debugrow('WP_CONTENT_DIR:', htmlspecialchars(WP_CONTENT_DIR));
 	$updraftplus_admin->settings_debugrow('WP_PLUGIN_DIR:', htmlspecialchars(WP_PLUGIN_DIR));

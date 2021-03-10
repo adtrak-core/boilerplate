@@ -1,7 +1,17 @@
+@-webkit-keyframes spin {
+
+	100% {
+		-webkit-transform: rotate( 360deg );
+		        transform: rotate( 360deg );
+	}
+
+}
+
 @keyframes spin {
 
 	100% {
-		transform: rotate( 360deg );
+		-webkit-transform: rotate( 360deg );
+		        transform: rotate( 360deg );
 	}
 
 }
@@ -36,7 +46,8 @@ body.udp-modal-is-opened {
 	bottom: 0;
 	right: 0;
 	background: #FFF;
-	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.45882);
+	-webkit-box-shadow: 0px 4px 10px rgba(0,0,0,0.45882);
+	        box-shadow: 0px 4px 10px rgba(0,0,0,0.45882);
 	overflow: auto;
 }
 
@@ -47,7 +58,8 @@ body.udp-modal-is-opened {
 
 .udp-modal__content .img {
 	padding: 0 20px;
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 	text-align: center;
 }
 
@@ -73,6 +85,7 @@ body.udp-modal-is-opened {
 	margin-left: -0.5em;
 	margin-top: -0.5em;
 	content: '';
+	-webkit-animation: spin 1s linear infinite;
 	animation: spin 1s linear infinite;
 	background: url('loader.svg') center center;
 	background-size: cover;

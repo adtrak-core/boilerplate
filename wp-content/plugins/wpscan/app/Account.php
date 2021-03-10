@@ -89,8 +89,8 @@ class Account {
 	public function get_account_status() {
 		$defaults = array(
 			'plan'      => 'None',
-			'limit'     => 50,
-			'remaining' => 50,
+			'limit'     => 25,
+			'remaining' => 25,
 			'reset'     => time(),
 		);
 

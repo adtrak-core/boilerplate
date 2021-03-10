@@ -784,7 +784,8 @@ button.ui-button::-moz-focus-inner {
 /* support: IE8 - See #6727 */
 .ui-slider.ui-state-disabled .ui-slider-handle,
 .ui-slider.ui-state-disabled .ui-slider-range {
-	filter: inherit;
+	-webkit-filter: inherit;
+	        filter: inherit;
 }
 
 .ui-slider-horizontal {
@@ -949,7 +950,8 @@ button.ui-button::-moz-focus-inner {
 	position: absolute;
 	z-index: 9999;
 	max-width: 300px;
-	box-shadow: 0 0 5px #AAA;
+	-webkit-box-shadow: 0 0 5px #AAA;
+	        box-shadow: 0 0 5px #AAA;
 }
 
 body .ui-tooltip {

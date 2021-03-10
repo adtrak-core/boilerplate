@@ -47,7 +47,8 @@ class UpdraftPlus_Host implements UpdraftCentral_Host_Interface {
 	 * @return string
 	 */
 	public function get_current_clean_url() {
-		$url = $this->get_class_name()::get_current_clean_url();// phpcs:ignore PHPCompatibility.Syntax.NewDynamicAccessToStatic.Found
+		$class_name = $this->get_class_name();
+		$url = call_user_func(array($class_name, 'get_current_clean_url'));
 		if (!empty($url)) return $url;
 
 		return '';
@@ -249,6 +250,12 @@ class UpdraftPlus_Host implements UpdraftCentral_Host_Interface {
 
 		if ($updraftplus_admin) {
 			return $updraftplus_admin;
+		} else {
+			if (defined('UPDRAFTPLUS_DIR') && file_exists(UPDRAFTPLUS_DIR.'/admin.php')) {
+				include_once(UPDRAFTPLUS_DIR.'/admin.php');
+				$updraftplus_admin = new UpdraftPlus_Admin();
+				return $updraftplus_admin;
+			}
 		}
 
 		return false;
@@ -458,19 +465,12 @@ class UpdraftPlus_Host implements UpdraftCentral_Host_Interface {
 	 * @return void
 	 */
 	private function maybe_initialize_required_objects() {
-		global $updraftplus, $updraftplus_admin;
+		global $updraftplus;
 
 		if (!class_exists('UpdraftPlus')) {
 			if (defined('UPDRAFTPLUS_DIR') && file_exists(UPDRAFTPLUS_DIR.'/class-updraftplus.php')) {
 				include_once(UPDRAFTPLUS_DIR.'/class-updraftplus.php');
 				$updraftplus = new UpdraftPlus();
-			}
-		}
-
-		if (!class_exists('UpdraftPlus_Admin')) {
-			if (defined('UPDRAFTPLUS_DIR') && file_exists(UPDRAFTPLUS_DIR.'/admin.php')) {
-				include_once(UPDRAFTPLUS_DIR.'/admin.php');
-				$updraftplus_admin = new UpdraftPlus_Admin();
 			}
 		}
 

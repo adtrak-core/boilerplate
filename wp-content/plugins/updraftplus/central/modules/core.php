@@ -392,6 +392,7 @@ class UpdraftCentral_Core_Commands extends UpdraftCentral_Commands {
 	 * @return null|array
 	 */
 	private function _get_phpinfo_array() {
+		if (!function_exists('phpinfo')) return null;
 		ob_start();
 		phpinfo(INFO_GENERAL|INFO_CREDITS|INFO_MODULES);
 		$phpinfo = array('phpinfo' => array());

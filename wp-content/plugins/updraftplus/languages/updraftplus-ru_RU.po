@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the UpdraftPlus package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-01-24 14:22:19+0000\n"
+"PO-Revision-Date: 2021-02-17 23:47:10+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: src/udaddons/options.php:305
 msgid "The claim and installation was successful. You can now use your purchase!"
-msgstr ""
+msgstr "Установка успешно завершена. Удачного пользования! "
 
 #: src/udaddons/options.php:261
 msgid "Go to your UpdraftCentral Cloud dashboard"
@@ -117,7 +117,7 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/existing-backups-table.php:170
 msgid "Deselect all backups"
-msgstr ""
+msgstr "Отменить выбор всех резервных копий"
 
 #: src/templates/wp-admin/settings/existing-backups-table.php:169
 msgid "Select all backups"
@@ -125,7 +125,7 @@ msgstr "Выбрать все резервные копии"
 
 #: src/templates/wp-admin/settings/existing-backups-table.php:168
 msgid "Delete selected backups"
-msgstr ""
+msgstr "Удалить выбранные резервные копии"
 
 #: src/templates/wp-admin/settings/existing-backups-table.php:159
 msgid "Show all backups..."
@@ -133,7 +133,7 @@ msgstr "Показать все резервные копии"
 
 #: src/templates/wp-admin/settings/existing-backups-table.php:159
 msgid "Show more backups..."
-msgstr ""
+msgstr "Показать больше резервных копий"
 
 #: src/templates/wp-admin/settings/delete-and-restore-modals.php:63
 msgid "Choose the components to restore:"
@@ -198,7 +198,7 @@ msgstr ""
 
 #: src/methods/updraftvault.php:392
 msgid "Follow this link for help"
-msgstr ""
+msgstr "Перейдите по этой ссылке для получения помощи"
 
 #: src/methods/updraftvault.php:388
 msgid "Please enter your %s password"
@@ -262,11 +262,11 @@ msgstr ""
 
 #: src/methods/ftp.php:148
 msgid "upload failed"
-msgstr ""
+msgstr "загрузка не удалась"
 
 #: src/methods/ftp.php:121, src/methods/ftp.php:289
 msgid "login failure"
-msgstr ""
+msgstr "не удалось войти"
 
 #: src/methods/cloudfiles.php:216, src/methods/cloudfiles.php:217
 msgid "error - failed to upload file"
@@ -4791,7 +4791,7 @@ msgstr "Twitter"
 
 #: src/includes/updraftplus-notices.php:138
 msgid "UpdraftPlus is on social media - check us out!"
-msgstr ""
+msgstr "UpdraftPlus в соцсетях - подробнее:"
 
 #: src/addons/wp-cli.php:849, src/includes/class-filesystem-functions.php:83
 msgid "Why am I seeing this?"

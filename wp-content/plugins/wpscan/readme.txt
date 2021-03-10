@@ -3,7 +3,7 @@ Contributors: ethicalhack3r, xfirefartx, erwanlr
 Tags: wpscan, wpvulndb, security, vulnerability, hack, scan, exploit, secure, alerts
 Requires at least: 3.4
 Tested up to: 5.6
-Stable tag: 1.14.3
+Stable tag: 1.14.4
 Requires PHP: 5.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -89,6 +89,10 @@ The WPScan WordPress Security Plugin will also check for other security issues, 
 3. Site health page.
 
 == Changelog ==
+
+= 1.14.4 =
+* Use new free API defaults
+* Remove "Not found in database" message
 
 = 1.14.3 =
 * Don't use HTTP_HOST in db exports check

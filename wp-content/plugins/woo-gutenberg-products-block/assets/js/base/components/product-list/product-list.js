@@ -6,8 +6,6 @@ import { isEqual } from 'lodash';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Pagination from '@woocommerce/base-components/pagination';
-import ProductSortSelect from '@woocommerce/base-components/product-sort-select';
-import ProductListItem from '@woocommerce/base-components/product-list-item';
 import { useEffect } from '@wordpress/element';
 import {
 	usePrevious,
@@ -18,13 +16,16 @@ import {
 import withScrollToTop from '@woocommerce/base-hocs/with-scroll-to-top';
 import { useInnerBlockLayoutContext } from '@woocommerce/shared-context';
 import { speak } from '@wordpress/a11y';
+import { getSetting } from '@woocommerce/settings';
 
 /**
  * Internal dependencies
  */
-import './style.scss';
 import NoProducts from './no-products';
 import NoMatchingProducts from './no-matching-products';
+import ProductSortSelect from './product-sort-select';
+import ProductListItem from './product-list-item';
+import './style.scss';
 
 const generateQuery = ( { sortValue, currentPage, attributes } ) => {
 	const { columns, rows } = attributes;
@@ -50,11 +51,17 @@ const generateQuery = ( { sortValue, currentPage, attributes } ) => {
 				};
 		}
 	};
+
+	const hideOutOfStockItems = getSetting( 'hideOutOfStockItems', false );
+
 	return {
 		...getSortArgs( sortValue ),
 		catalog_visibility: 'catalog',
 		per_page: columns * rows,
 		page: currentPage,
+		...( hideOutOfStockItems && {
+			stock_status: [ 'instock', 'onbackorder' ],
+		} ),
 	};
 };
 
@@ -83,7 +90,7 @@ const announceLoadingCompletion = ( totalProducts ) => {
 	} else {
 		speak(
 			sprintf(
-				// translators: %s is an integer higher than 0 (1, 2, 3...)
+				/* translators: %s is an integer higher than 0 (1, 2, 3...) */
 				_n(
 					'%d product found',
 					'%d products found',

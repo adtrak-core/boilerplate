@@ -235,7 +235,7 @@ class UpdraftPlus_Admin {
 			if (empty($sinfo['object']) || empty($sinfo['instance_settings']) || !is_callable(array($sinfo['object'], 'options_exist'))) continue;
 			foreach ($sinfo['instance_settings'] as $opt) {
 				if (!$sinfo['object']->options_exist($opt)) {
-					if (isset($opt['CSRF'])) {
+					if (isset($opt['auth_in_progress'])) {
 						$this->storage_service_with_partial_settings[$method] = $updraftplus->backup_methods[$method];
 					} else {
 						$this->storage_service_without_settings[] = $updraftplus->backup_methods[$method];
@@ -276,7 +276,7 @@ class UpdraftPlus_Admin {
 		}
 
 		// Avoid false positives, by attempting to raise the limit (as happens when we actually do a backup)
-		@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 		$max_execution_time = (int) @ini_get('max_execution_time');// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 		if ($max_execution_time>0 && $max_execution_time<20) {
 			add_action('all_admin_notices', array($this, 'show_admin_warning_execution_time'));
@@ -787,7 +787,7 @@ class UpdraftPlus_Admin {
 	
 		wp_enqueue_script('jquery-labelauty', UPDRAFTPLUS_URL.'/includes/labelauty/jquery-labelauty'.$updraft_min_or_not.'.js', array('jquery'), $enqueue_version);
 		wp_enqueue_style('jquery-labelauty', UPDRAFTPLUS_URL.'/includes/labelauty/jquery-labelauty'.$updraft_min_or_not.'.css', array(), $enqueue_version);
-		$serialize_js_enqueue_version = $updraftplus->use_unminified_scripts() ? '2.8.1'.'.'.time() : '2.8.1';
+		$serialize_js_enqueue_version = $updraftplus->use_unminified_scripts() ? '3.2.0'.'.'.time() : '3.2.0';
 		wp_enqueue_script('jquery.serializeJSON', UPDRAFTPLUS_URL.'/includes/jquery.serializeJSON/jquery.serializejson'.$min_or_not.'.js', array('jquery'), $serialize_js_enqueue_version);
 		$handlebars_js_enqueue_version = $updraftplus->use_unminified_scripts() ? '4.1.2'.'.'.time() : '4.1.2';
 		wp_enqueue_script('handlebars', UPDRAFTPLUS_URL.'/includes/handlebars/handlebars'.$min_or_not.'.js', array(), $handlebars_js_enqueue_version);
@@ -988,10 +988,12 @@ class UpdraftPlus_Admin {
 			'current_clean_url' => UpdraftPlus::get_current_clean_url(),
 			'exclude_rule_remove_conformation_msg' => __('Are you sure you want to remove this exclusion rule?', 'updraftplus'),
 			'exclude_select_file_or_folder_msg' => __('Please select a file/folder which you would like to exclude', 'updraftplus'),
+			'exclude_select_folder_wildcards_msg' => __('Please select a folder in which the files/directories you would like to exclude are located'),
 			'exclude_type_ext_msg' => __('Please enter a file extension, like zip', 'updraftplus'),
 			'exclude_ext_error_msg' => __('Please enter a valid file extension', 'updraftplus'),
 			'exclude_type_prefix_msg' => __('Please enter characters that begin the filename which you would like to exclude', 'updraftplus'),
 			'exclude_prefix_error_msg' => __('Please enter a valid file name prefix', 'updraftplus'),
+			'exclude_contain_error_msg' => __('Please enter part of the file name', 'updraftplus'),
 			'duplicate_exclude_rule_error_msg' => __('The exclusion rule which you are trying to add already exists', 'updraftplus'),
 			'clone_key_required' => __('UpdraftClone key is required.', 'updraftplus'),
 			'files_new_backup' => __('Include your files in the backup', 'updraftplus'),
@@ -1421,7 +1423,7 @@ class UpdraftPlus_Admin {
 	 */
 	public function do_updraft_download_backup($findexes, $type, $timestamp, $stage, $close_connection_callable = false, $file_path = '') {
 
-		@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
 		global $updraftplus;
 		
@@ -2516,7 +2518,7 @@ class UpdraftPlus_Admin {
 	public function plupload_action() {
 
 		global $updraftplus;
-		@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 
 		if (!UpdraftPlus_Options::user_can_manage()) return;
 		check_ajax_referer('updraft-uploader');
@@ -2646,7 +2648,7 @@ class UpdraftPlus_Admin {
 	 */
 	public function plupload_action2() {
 
-		@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 		global $updraftplus;
 
 		if (!UpdraftPlus_Options::user_can_manage()) return;
@@ -4127,7 +4129,7 @@ class UpdraftPlus_Admin {
 
 					$ret .= "<div id=\"".$exclude_container_class."\" $display class=\"updraft_exclude_container\">";
 
-					$ret .= '<label class="updraft-exclude-label" for="'.$prefix.'updraft_include_'.$key.'_exclude">'.__('Exclude these from', 'updraftplus').' '.htmlspecialchars($info['description']).':</label>';
+					$ret .= '<label class="updraft-exclude-label" for="'.$prefix.'updraft_include_'.$key.'_exclude">'.__('Exclude these from', 'updraftplus').' '.htmlspecialchars($info['description']).':</label> <span class="updraft-fs-italic">'.__('(the asterisk character matches zero or more characters)', 'updraftplus').'</span>';
 
 					$exclude_input_type = $for_updraftcentral ? "text" : "hidden";
 					$exclude_input_extra_attr = $for_updraftcentral ? 'title="'.__('If entering multiple files/directories, then separate them with commas. For entities at the top level, you can use a * at the start or end of the entry as a wildcard.', 'updraftplus').'" size="54"' : '';
@@ -4386,48 +4388,28 @@ class UpdraftPlus_Admin {
 				$entities .= "/$type=";
 				$whatfiles = $backup[$type];
 				ksort($whatfiles);
+				$total_file_size = 0;
 				foreach ($whatfiles as $findex => $bfile) {
 					$set_contents .= ('' == $set_contents) ? $findex : ",$findex";
 					if ($findex != $expected_index) $index_missing = true;
 					$expected_index++;
+
+					if ($howmanyinset > 0) {
+						if (!empty($backup[$type.(($findex > 0) ? $findex : '')."-size"]) && $findex < $howmanyinset) $total_file_size += $backup[$type.(($findex > 0) ? $findex : '')."-size"];
+					}
 				}
+
+				$ide = __('Press here to download or browse', 'updraftplus').' '.strtolower($info['description']);
+				$ide .= ' '.sprintf(__('(%d archive(s) in set, total %s).', 'updraftplus'), $howmanyinset, '%UP_backups_total_file_size%');
+				if ($index_missing) $ide .= ' '.__('You appear to be missing one or more archives from this multi-archive set.', 'updraftplus');
+
 				$entities .= $set_contents.'/';
 				if (!empty($backup['meta_foreign'])) {
 					$entities .= '/plugins=0//themes=0//uploads=0//others=0/';
 				}
-				$printing_first = true;
-				$total_file_size = 0;
-				foreach ($whatfiles as $findex => $bfile) {
-					
-					$pdescrip = ($findex > 0) ? $sdescrip.' ('.($findex+1).')' : $sdescrip;
-					if ($printing_first) {
-						$ide .= __('Press here to download or browse', 'updraftplus').' '.strtolower($info['description']);
-					} else {
-						$ret .= '<div class="updraft-hidden" style="display:none;">';
-					}
-					if ($howmanyinset >0) {
-						if (!empty($backup[$type.(($findex > 0) ? $findex : '')."-size"]) && $findex < $howmanyinset) $total_file_size += $backup[$type.(($findex > 0) ? $findex : '')."-size"];
-						if ($printing_first) {
-							$ide .= ' '.sprintf(__('(%d archive(s) in set, total %s).', 'updraftplus'), $howmanyinset, '%UP_backups_total_file_size%');
-						}
-					}
-					if ($index_missing) {
-						if ($printing_first) $ide .= ' '.__('You appear to be missing one or more archives from this multi-archive set.', 'updraftplus');
-					}
 
-					if (!$first_entity) {
-					} else {
-						$first_entity = false;
-					}
+				$ret .= $this->download_button($type, $key, 0, null, $ide, $sdescrip, $esc_pretty_date, $set_contents);
 
-					$ret .= $this->download_button($type, $key, $findex, $info, $ide, $pdescrip, $esc_pretty_date, $set_contents);
-
-					if (!$printing_first) {
-						$ret .= '</div>';
-					} else {
-						$printing_first = false;
-					}
-				}
 				$ret = str_replace('%UP_backups_total_file_size%', UpdraftPlus_Manipulation_Functions::convert_numeric_size_to_text($total_file_size), $ret);
 			}
 		}
@@ -4913,6 +4895,8 @@ ENDHERE;
 		$pretty_date = get_date_from_gmt(gmdate('Y-m-d H:i:s', (int) $jobdata['backup_timestamp']), 'M d, Y G:i');
 
 		wp_enqueue_script('updraft-admin-restore', UPDRAFTPLUS_URL . '/js/updraft-admin-restore' . $updraft_min_or_not . '.js', array(), $enqueue_version);
+
+		$updraftplus->log("Restore setup, now closing connection and starting restore over AJAX.");
 
 		echo '<div class="updraft_restore_container">';
 		echo '<div class="error" id="updraft-restore-hidethis">';

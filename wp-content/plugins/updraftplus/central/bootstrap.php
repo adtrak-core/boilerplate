@@ -1,6 +1,9 @@
 <?php
 
-if (!defined('UPDRAFTPLUS_DIR')) die('No access.');
+if (!defined('ABSPATH')) die('No direct access.');
+
+global $updraftcentral_host_plugin;
+if (!$updraftcentral_host_plugin->is_host_dir_set()) die('No access.');
 
 if (defined('UPDRAFTCENTRAL_CLIENT_DIR')) return;
 
@@ -18,15 +21,21 @@ class UpdraftCentral_Main {
 	 */
 	public function __construct() {
 
-		// Add the section to the 'advanced tools' page
-		add_action('updraftplus_debugtools_dashboard', array($this, 'debugtools_dashboard'), 20);
 		add_action('udrpc_log', array($this, 'udrpc_log'), 10, 3);
 		
 		add_action('wp_ajax_updraftcentral_receivepublickey', array($this, 'wp_ajax_updraftcentral_receivepublickey'));
 		add_action('wp_ajax_nopriv_updraftcentral_receivepublickey', array($this, 'wp_ajax_updraftcentral_receivepublickey'));
 	
-		// The 'updraftplus' commands are registered in UpdraftPlus::plugins_loaded()
-		$command_classes = apply_filters('updraftplus_remotecontrol_command_classes', array(
+		// The host plugin's command class is registered in its "plugins_loaded" method (e.g. UpdraftPlus::plugins_loaded()).
+		//
+		// N.B. The new filter "updraftcentral_remotecontrol_command_classes" was introduced on Jan. 2021 and will soon replace the
+		// old filter "updraftplus_remotecontrol_command_classes" (below). This was done in order to synchronize all available filters
+		// and actions related to UpdraftCentral so that we can easily port the UpdraftCentral client code into our other plugins.
+		//
+		// If you happened to use the old filter from any of your projects then you might as well update it with the new filter as the
+		// old filter has already been marked as deprecated, though currently supported as can be seen below but will soon be remove
+		// from this code block.
+		$command_classes = apply_filters('updraftcentral_remotecontrol_command_classes', array(
 			'core' => 'UpdraftCentral_Core_Commands',
 			'updates' => 'UpdraftCentral_Updates_Commands',
 			'users' => 'UpdraftCentral_Users_Commands',
@@ -38,6 +47,10 @@ class UpdraftCentral_Main {
 			'media' => 'UpdraftCentral_Media_Commands',
 			'pages' => 'UpdraftCentral_Pages_Commands'
 		));
+	
+		// N.B. This "updraftplus_remotecontrol_command_classes" filter has been marked as deprecated and will be remove after May 2021.
+		// Please see above code comment for further explanation and its alternative.
+		$command_classes = apply_filters('updraftplus_remotecontrol_command_classes', $command_classes);
 	
 		// If nothing was sent, then there is no incoming message, so no need to set up a listener (or CORS request, etc.). This avoids a DB SELECT query on the option below in the case where it didn't get autoloaded, which is the case when there are no keys.
 		if (!empty($_SERVER['REQUEST_METHOD']) && ('GET' == $_SERVER['REQUEST_METHOD'] || 'POST' == $_SERVER['REQUEST_METHOD']) && (empty($_REQUEST['action']) || 'updraft_central' !== $_REQUEST['action']) && empty($_REQUEST['udcentral_action']) && empty($_REQUEST['udrpc_message'])) return;
@@ -314,7 +327,7 @@ class UpdraftCentral_Main {
 		
 		// Normally, key generation takes seconds, even on a slow machine. However, some Windows machines appear to have a setup in which it takes a minute or more. And then, if you're on a double-localhost setup on slow hardware - even worse. It doesn't hurt to just raise the maximum execution time.
 		
-		@set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
+		if (function_exists('set_time_limit')) @set_time_limit(UPDRAFTPLUS_SET_TIME_LIMIT);// phpcs:ignore Generic.PHP.NoSilencedErrors.Discouraged
 		
 		$key_size = (empty($extra_info['key_size']) || !is_numeric($extra_info['key_size']) || $extra_info['key_size'] < 512) ? 2048 : (int) $extra_info['key_size'];
 

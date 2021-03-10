@@ -432,7 +432,7 @@ class UpdraftPlus_BinZip extends UpdraftPlus_PclZip {
 		// Loop over each destination directory name
 		foreach ($this->addfiles as $rdirname => $files) {
 
-			$process = proc_open($exec, $descriptorspec, $pipes, $rdirname);
+			$process = function_exists('proc_open') ? proc_open($exec, $descriptorspec, $pipes, $rdirname) : false;
 
 			if (!is_resource($process)) {
 				$updraftplus->log('BinZip error: proc_open failed');
@@ -505,7 +505,7 @@ class UpdraftPlus_BinZip extends UpdraftPlus_PclZip {
 			fclose($pipes[1]);
 			fclose($pipes[2]);
 
-			$ret = proc_close($process);
+			$ret = function_exists('proc_close') ? proc_close($process) : -1;
 
 			if (0 != $ret && 12 != $ret) {
 				if ($ret < 128) {
