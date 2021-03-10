@@ -35,6 +35,13 @@ NB: Much of this will be not applicable
 - [ ] Check site search works
 - [ ] Check social feeds are working
 
+### Ecommerce
+- [ ] Register for an account - did everything run smoothly?
+- [ ] Complete a test purchase using 'cash on delivery' payment method, or with a £0.00 product - any issues?
+- [ ] Thank you page for order is styled appropriately
+- [ ] Order Emails are being sent correctly
+- [ ] Order Emails are styled appropriately
+
 ### Development
 
 - [ ] CSS and JS is minifying

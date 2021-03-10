@@ -70,10 +70,13 @@
 - [ ] Shipping zones / fees have been created
 - [ ] Product filters / category pages are working and styled appropriately
 - [ ] Single Product is working and styled appropriately
+- [ ] SinStock management is working correctly (if being used)
+- [ ] Product variations are working correctly
 - [ ] Basket / Checkout is working and styled appropriately
 - [ ] Register/Log in screens are working and styled appropriately
 - [ ] My Account is working and styled appropriately
 - [ ] Complete a test purchase using 'cash on delivery' payment method, or with a £0.00 product
+- [ ] Thank you page for order is styled appropriately
 - [ ] Shipping fees are calculated correctly
 - [ ] Order Emails are being sent correctly
 - [ ] Order Emails are styled appropriately
