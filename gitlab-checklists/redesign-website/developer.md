@@ -71,6 +71,21 @@
 - [ ] Form is sending via an SMTP plugin and `SendInBlue` OR using `noreply@`
 - [ ] Update tracking code to match your form solution
 
+## Ecommerce
+- [ ] WooCommerce store settings have been set up
+- [ ] Payment gateways have been set up
+- [ ] Taxes have been set up if applicable
+- [ ] Shipping zones / fees have been created
+- [ ] Product filters / category pages are working and styled appropriately
+- [ ] Single Product is working and styled appropriately
+- [ ] Basket / Checkout is working and styled appropriately
+- [ ] Register/Log in screens are working and styled appropriately
+- [ ] My Account is working and styled appropriately
+- [ ] Complete a test purchase using 'cash on delivery' payment method, or with a £0.00 product
+- [ ] Shipping fees are calculated correctly
+- [ ] Order Emails are being sent correctly
+- [ ] Order Emails are styled appropriately
+
 ## Proofing
 
 - [ ] Xenu Link Sleuth / Screaming Frog - check for broken links
