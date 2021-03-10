@@ -103,6 +103,9 @@ The deployment/emails/DNS process has its own guides and things to do. Please re
 
 # Post-Live
 
+## UpdraftPlus
+- [ ] Follow [this guide](https://arc.adtrak.co.uk/books/web-design-development/page/updraftplus-backups) to add UpdraftPlus to your website
+
 ## Admin
 
 - [ ] Create the URL in Salesforce adding relevant data
