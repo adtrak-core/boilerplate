@@ -53,7 +53,7 @@ NB: Much of this will be not applicable
 
 - [ ] Does the developer know how the emails and domains are setup, and how they will proceed?
 - [ ] Will there be any parked domains?
-- [ ] `noreply@` or `Send In Blue` has been decided for forms
+- [ ] `thanks@` or `Formspree` or `Send In Blue` has been decided for forms
 - [ ] If the font is via [Adobe Fonts / Typekit](https://adtrak.lightning.force.com/lightning/r/Password__c/a0J0Y000001TSc5UAG/view), is it being used from the shared account?
 
 ## Admin
