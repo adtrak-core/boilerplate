@@ -9,7 +9,7 @@
 - [ ] Is this site having any additional products that need adding, like Data Capture or Mouseflow?
 - [ ] Ensure you know about domains - primary & aliases
 - [ ] Ensure you know how emails will be set up
-- [ ] Ensure `noreply@` email address has been set up if possible (or use Send In Blue)
+- [ ] Ensure `thanks@` email address has been set up if possible (or use Formspree or Send In Blue)
 - [ ] Do they have a PPC campaign running to their old site? If so, that will need pausing!
 
 ## Reviews
@@ -68,7 +68,7 @@
 - [ ] All fields are relevant (postcode/company) - are any more required?
 - [ ] Check the `to` address for each form - will the client get it?
 - [ ] Check the messages each form displays - are they in keeping with the tone of the website?
-- [ ] Form is sending via an SMTP plugin and `SendInBlue` OR using `noreply@`
+- [ ] Form is sending via an SMTP plugin and `thanks@` OR using `Formspree` or `SendInBlue`
 - [ ] Update tracking code to match your form solution
 
 ## Ecommerce
