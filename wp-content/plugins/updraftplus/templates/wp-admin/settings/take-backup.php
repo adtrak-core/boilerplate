@@ -35,13 +35,14 @@
 				</div>
 				<div id="updraft-next-database-backup-inner">
 					<?php
-					$updraftplus_admin->next_scheduled_database_backups_output();
+						$updraftplus_admin->next_scheduled_database_backups_output();
 					?>
-				</div>				
+				</div>
 			</div>
 			<div class="updraft_time_now_wrapper">
 				<?php
-				$current_time = get_date_from_gmt(gmdate('Y-m-d H:i:s'), 'D, F j, Y H:i');
+				// wp_date() is WP 5.3+, but performs translation into the site locale
+				$current_time = function_exists('wp_date') ? wp_date('D, F j, Y H:i') : get_date_from_gmt(gmdate('Y-m-d H:i:s'), 'D, F j, Y H:i');
 				?>
 				<span class="updraft_time_now_label"><?php echo __('Time now', 'updraftplus').': ';?></span>
 				<span class="updraft_time_now"><?php echo $current_time;?></span>

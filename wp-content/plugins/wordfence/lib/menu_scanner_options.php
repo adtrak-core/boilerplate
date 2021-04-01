@@ -63,7 +63,7 @@ if (isset($_GET['source']) && wfPage::isValidPage($_GET['source'])) {
 			<?php
 			echo wfView::create('options/block-controls', array(
 				'backLink' => $backPage->url(),
-				'backLabelHTML' => sprintf(__('<span class="wf-hidden-xs">Back to </span>%s', 'wordfence'), $backPage->label()),
+				'backLabelHTML' => wp_kses(sprintf(__('<span class="wf-hidden-xs">Back to </span>%s', 'wordfence'), $backPage->label()), array('span'=>array('class'=>array()))),
 				'restoreDefaultsSection' => wfConfig::OPTIONS_TYPE_SCANNER,
 				'restoreDefaultsMessage' => __('Are you sure you want to restore the default Scan settings? This will undo any custom changes you have made to the options on this page.', 'wordfence'),
 			))->render();
@@ -96,7 +96,7 @@ else if (wfConfig::get('touppPromptNeeded')) {
 					echo wfView::create('common/section-title', array(
 						'title' => __('Scan Options and Scheduling', 'wordfence'),
 						'helpLink' => wfSupportController::supportURL(wfSupportController::ITEM_SCAN),
-						'helpLabelHTML' => __('Learn more<span class="wf-hidden-xs"> about Scanning</span>', 'wordfence'),
+						'helpLabelHTML' => wp_kses(__('Learn more<span class="wf-hidden-xs"> about Scanning</span>', 'wordfence'), array('span'=>array('classes'=>array()))),
 						'showIcon' => true,
 					))->render();
 					?>

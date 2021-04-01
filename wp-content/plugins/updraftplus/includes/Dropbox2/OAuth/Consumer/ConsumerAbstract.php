@@ -265,7 +265,7 @@ abstract class Dropbox_ConsumerAbstract
      *
      * @return void
      */
-    private function refreshAccessToken() {
+    public function refreshAccessToken() {
         global $updraftplus;
 
         $access_token = $this->storage->get('access_token');
@@ -291,7 +291,8 @@ abstract class Dropbox_ConsumerAbstract
         $body = json_decode(base64_decode($response['body']));
 
         if (isset($body->access_token) && isset($body->expires_in)) {
-            $access_token->access_token = $body->access_token;
+            $access_token->oauth_token_secret = $body->access_token;
+            $access_token->oauth_token = $body->access_token;
             $access_token->expires_in = time() + $body->expires_in - 30;
             $this->storage->set($access_token, 'access_token');
             $updraftplus->log('Successfully updated and refreshed the access token');
@@ -385,7 +386,8 @@ abstract class Dropbox_ConsumerAbstract
                     'headers' => $headers,
                 );
             } elseif (isset($additional['code']) && isset($additional['refresh_token'])) {
-                if (isset($additional['headers'])) {
+                $extra_headers = array();
+                if (isset($additional['headers']) && !empty($additional['headers'])) {
                     foreach ($additional['headers'] as $key => $header) {
                         $extra_headers[] = $key.': '.$header;
                     }

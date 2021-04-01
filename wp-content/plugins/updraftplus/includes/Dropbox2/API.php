@@ -69,6 +69,15 @@ class UpdraftPlus_Dropbox_API {
             $this->root = $root;
         }
     }
+
+    /**
+     * This function will make a request to refresh the access token
+     *
+     * @return void
+     */
+    public function refreshAccessToken() {
+        $this->OAuth->refreshAccessToken();
+    }
     
     /**
      * Retrieves information about the user's account

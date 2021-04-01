@@ -3,8 +3,8 @@ Contributors: emrevona
 Donate link: http://profiles.wordpress.org/emrevona/
 Tags: cache, caching, performance, wp-cache, total cache, super cache, cdn
 Requires at least: 3.3
-Tested up to: 5.6
-Stable tag: 0.9.1.5
+Tested up to: 5.7
+Stable tag: 0.9.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -125,9 +125,17 @@ The free version is enough to speed up your site but in the premium version ther
 
 == Changelog ==
 
+= 0.9.1.6 =
+* to fix Notice: Undefined variable: order_arr in preload.php on line 161
+* to fix Notice: Undefined property: stdClass::$go in preload.php on line 440
+* to start using the API Token system instead of Global API for CLoudflare [<a target="_blank" href="https://www.wpfastestcache.com/tutorial/wp-fastest-cache-cloudflare/">Details</a>]
+* to fix removing backslashes issue in the pre tag
+* to disable cache for the IP based urls on the bitnami servers
+* to disable cdn if the query string contains wc-api
+
 = 0.9.1.5 =
 * <strong>[FEATURE]</strong> to add Re-Order feture for Preload [<a target="_blank" href="https://www.wpfastestcache.com/features/re-order-preload/">Details</a>]
-* to add WPFC_DISABLE_CLEARING_CACHE_AFTER_WOOCOMMERCE_CHECKOUT_ORDER_PROCESSED
+* to add WPFC_DISABLE_CLEARING_CACHE_AFTER_WOOCOMMERCE_CHECKOUT_ORDER_PROCESSED [<a target="_blank" href="https://www.wpfastestcache.com/tutorial/woocommerce-settings/#after-order">Details</a>]
 
 = 0.9.1.4 =
 * to fix saving "Update Post" settings issue

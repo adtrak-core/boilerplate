@@ -75,7 +75,7 @@ if (isset($_GET['source']) && wfPage::isValidPage($_GET['source'])) {
 			<?php
 			echo wfView::create('options/block-controls', array(
 				'backLink' => $backPage->url(),
-				'backLabelHTML' => sprintf(__('<span class="wf-hidden-xs">Back to </span>%s', 'wordfence'), $backPage->label()), 
+				'backLabelHTML' => wp_kses(sprintf(__('<span class="wf-hidden-xs">Back to </span>%s', 'wordfence'), $backPage->label()), array('span'=>array('class'=>array()))),
 				'restoreDefaultsSection' => wfConfig::OPTIONS_TYPE_FIREWALL,
 				'restoreDefaultsMessage' => __('Are you sure you want to restore the default Firewall settings? This will undo any custom changes you have made to the options on this page. If you have manually disabled any rules or added any custom allowlisted URLs, those changes will not be overwritten.', 'wordfence'),
 			))->render();
@@ -121,7 +121,7 @@ else if (wfConfig::get('touppPromptNeeded')) {
 					echo wfView::create('common/section-title', array(
 						'title' => __('Firewall Options', 'wordfence'),
 						'helpLink' => wfSupportController::supportURL(wfSupportController::ITEM_FIREWALL_WAF),
-						'helpLabelHTML' => __('Learn more<span class="wf-hidden-xs"> about the Firewall</span>', 'wordfence'),
+						'helpLabelHTML' => wp_kses(__('Learn more<span class="wf-hidden-xs"> about the Firewall</span>', 'wordfence'), array('span'=>array('class'=>array()))),
 						'showIcon' => true,
 					))->render();
 					?>

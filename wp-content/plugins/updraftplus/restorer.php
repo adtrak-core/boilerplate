@@ -3339,6 +3339,9 @@ class Updraft_Restorer {
 		
 		$previous_table_name = UpdraftPlus_Manipulation_Functions::str_replace_once($this->import_table_prefix, $this->final_import_table_prefix, $this->restoring_table);
 		
+		// If the table names are the same then we do not want to attempt an atomic restore as it will remove the final table
+		if ($previous_table_name == $this->restoring_table) return $previous_table_name;
+		
 		if (!$this->rename_forbidden) {
 			$updraftplus->log_e('Atomic restore: dropping original table (%s)', $previous_table_name);
 			$this->drop_tables(array($previous_table_name));

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { get } from 'lodash';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 /**
  * WordPress dependencies
@@ -95,7 +95,10 @@ class PreviewToggle extends Component {
 				}
 
 				const previewEnabled = ! this.state.previewEnabled;
-				this.setState( { previewEnabled } );
+				this.setState( {
+					previewEnabled,
+					previewUrl: response?.data?.preview_url || '',
+				} );
 
 				this.props.createNotice(
 					'info',

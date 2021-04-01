@@ -196,7 +196,9 @@ class wfCentralAPIResponse {
 	public function returnErrorArray() {
 		return array(
 			'err'      => 1,
-			'errorMsg' => sprintf(__('HTTP %d received from Wordfence Central: %s', 'wordfence'),
+			'errorMsg' => sprintf(
+				/* translators: 1. HTTP status code. 2. Error message. */
+				__('HTTP %1$d received from Wordfence Central: %2$s', 'wordfence'),
 				$this->getStatusCode(), $this->parseErrorJSON($this->getBody())),
 		);
 	}

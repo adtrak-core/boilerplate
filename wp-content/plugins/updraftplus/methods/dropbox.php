@@ -231,6 +231,13 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 				 */
 				$quota_info = $dropbox->quotaInfo();
 
+				// Access token expired try to refresh and then call quota info again
+				if ("401" == $quota_info['code']) {
+					$this->log('HTTP code 401 (unauthorized) code returned from Dropbox; attempting to refresh access token');
+					$dropbox->refreshAccessToken();
+					$quota_info = $dropbox->quotaInfo();
+				}
+
 				if ("200" != $quota_info['code']) {
 					$message = "account/info did not return HTTP 200; returned: ". $quota_info['code'];
 				} elseif (!isset($quota_info['body'])) {
@@ -299,6 +306,10 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 				if (empty($response['code']) || "200" != $response['code']) {
 					$this->log('Unexpected HTTP code returned from Dropbox: '.$response['code']." (".serialize($response).")");
 					if ($response['code'] >= 400) {
+						if ($response['code'] == 401) {
+							$this->log('HTTP code 401 returned from Dropbox, refreshing access token');
+							$dropbox->refreshAccessToken();
+						}
 						$this->log(sprintf(__('error: failed to upload file to %s (see log file for more)', 'updraftplus'), $file), 'error');
 						$file_success = 0;
 					} else {

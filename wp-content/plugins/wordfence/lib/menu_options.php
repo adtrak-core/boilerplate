@@ -93,9 +93,9 @@ if (isset($_GET['source']) && wfPage::isValidPage($_GET['source'])) {
 				'wf-option-alertOn-loginLockout' => __('Alert when someone is locked out from login', 'wordfence'),
 				'wf-option-alertOn-lostPasswdForm' => __('Alert when the "lost password" form is used for a valid user', 'wordfence'),
 				'wf-option-alertOn-adminLogin' => __('Alert me when someone with administrator access signs in', 'wordfence'),
-				'wf-option-alertOn-firstAdminLoginOnly' => __('Only alert me when that administrator signs in from a new device or location', 'wordfence'),
+				'wf-option-alertOn-firstAdminLoginOnly' => __('Only alert me when that administrator signs in from a new device', 'wordfence'),
 				'wf-option-alertOn-nonAdminLogin' => __('Alert me when a non-admin user signs in', 'wordfence'),
-				'wf-option-alertOn-firstNonAdminLoginOnly' => __('Only alert me when that user signs in from a new device or location', 'wordfence'),
+				'wf-option-alertOn-firstNonAdminLoginOnly' => __('Only alert me when that user signs in from a new device', 'wordfence'),
 				'wf-option-wafAlertOnAttacks' => __('Alert me when there\'s a large increase in attacks detected on my site', 'wordfence'),
 				'wf-option-alert-maxHourly' => __('Maximum email alerts to send per hour', 'wordfence'),
 				'wf-option-email-summary-enabled' => __('Enable email summary', 'wordfence'),
@@ -265,7 +265,7 @@ else if (wfConfig::get('touppPromptNeeded')) {
 					))->render();
 					?>
 					
-					<p><?php _e('These options are also available throughout the plugin pages, in the relevant sections. This page is provided for easier setup for experienced Wordfence users.', 'wordfence'); ?></p>
+					<p><?php esc_html_e('These options are also available throughout the plugin pages, in the relevant sections. This page is provided for easier setup for experienced Wordfence users.', 'wordfence'); ?></p>
 					
 					<?php
 					echo wfView::create('common/section-subtitle', array(
@@ -402,7 +402,7 @@ else if (wfConfig::get('touppPromptNeeded')) {
 								<div class="wf-block-header">
 									<div class="wf-block-header-content">
 										<div class="wf-block-title">
-											<strong><?php _e('Import/Export Options', 'wordfence'); ?></strong>
+											<strong><?php esc_html_e('Import/Export Options', 'wordfence'); ?></strong>
 										</div>
 									</div>
 								</div>
@@ -410,9 +410,9 @@ else if (wfConfig::get('touppPromptNeeded')) {
 									<ul class="wf-block-list">
 										<li>
 											<ul class="wf-flex-horizontal wf-flex-vertical-xs wf-flex-full-width wf-add-top wf-add-bottom">
-												<li><?php _e('Importing and exporting of options is available on the Tools page', 'wordfence'); ?></li>
+												<li><?php esc_html_e('Importing and exporting of options is available on the Tools page', 'wordfence'); ?></li>
 												<li class="wf-right wf-left-xs wf-padding-add-top-xs-small">
-													<a href="<?php echo esc_url(network_admin_url('admin.php?page=WordfenceTools&subpage=importexport')); ?>" class="wf-btn wf-btn-primary wf-btn-callout-subtle" id="wf-export-options"><?php _e('Import/Export Options', 'wordfence'); ?></a>
+													<a href="<?php echo esc_url(network_admin_url('admin.php?page=WordfenceTools&subpage=importexport')); ?>" class="wf-btn wf-btn-primary wf-btn-callout-subtle" id="wf-export-options"><?php esc_html_e('Import/Export Options', 'wordfence'); ?></a>
 												</li>
 											</ul>
 											<input type="hidden" id="wf-option-exportOptions">

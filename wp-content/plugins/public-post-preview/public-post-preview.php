@@ -1,19 +1,20 @@
 <?php
 /**
  * Plugin Name: Public Post Preview
- * Version: 2.9.2
+ * Version: 2.9.3
  * Description: Allow anonymous users to preview a post before it is published.
  * Author: Dominik Schilling
  * Author URI: https://dominikschilling.de/
  * Plugin URI: https://dominikschilling.de/wp-plugins/public-post-preview/en/
  * Text Domain: public-post-preview
  * Requires at least: 5.0
+ * Tested up to: 5.7
  * Requires PHP: 5.6
  * License: GPLv2 or later
  *
  * Previously (2009-2011) maintained by Jonathan Dingman and Matt Martz.
  *
- *  Copyright (C) 2012-2020 Dominik Schilling
+ *  Copyright (C) 2012-2021 Dominik Schilling
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -54,7 +55,7 @@ class DS_Public_Post_Preview {
 		add_action( 'post_updated', array( __CLASS__, 'unregister_public_preview_on_edit' ), 20, 2 );
 
 		if ( ! is_admin() ) {
-			add_filter( 'pre_get_posts', array( __CLASS__, 'show_public_preview' ) );
+			add_action( 'pre_get_posts', array( __CLASS__, 'show_public_preview' ) );
 			add_filter( 'query_vars', array( __CLASS__, 'add_query_var' ) );
 			// Add the query var to WordPress SEO by Yoast whitelist.
 			add_filter( 'wpseo_whitelist_permalink_vars', array( __CLASS__, 'add_query_var' ) );
@@ -97,13 +98,14 @@ class DS_Public_Post_Preview {
 
 			wp_set_script_translations( 'public-post-preview-gutenberg', 'public-post-preview' );
 
-			$post = get_post();
+			$post            = get_post();
+			$preview_enabled = self::is_public_preview_enabled( $post );
 			wp_localize_script(
 				'public-post-preview-gutenberg',
 				'DSPublicPostPreviewData',
 				array(
-					'previewEnabled' => self::is_public_preview_enabled( $post ),
-					'previewUrl'     => self::get_preview_link( $post ),
+					'previewEnabled' => $preview_enabled,
+					'previewUrl'     => $preview_enabled ? self::get_preview_link( $post ) : '',
 					'nonce'          => wp_create_nonce( 'public-post-preview_' . $post->ID ),
 				)
 			);
@@ -216,7 +218,7 @@ class DS_Public_Post_Preview {
 
 		<div id="public-post-preview-link" style="margin-top:6px"<?php echo $enabled ? '' : ' class="hidden"'; ?>>
 			<label>
-				<input type="text" name="public_post_preview_link" class="regular-text" value="<?php echo esc_attr( self::get_preview_link( $post ) ); ?>" style="width:99%" readonly />
+				<input type="text" name="public_post_preview_link" class="regular-text" value="<?php echo esc_attr( $enabled ? self::get_preview_link( $post ) : '' ); ?>" style="width:99%" readonly />
 				<span class="description"><?php _e( 'Copy and share this preview URL.', 'public-post-preview' ); ?></span>
 			</label>
 		</div>
@@ -391,7 +393,12 @@ class DS_Public_Post_Preview {
 	 * @since 2.0.0
 	 */
 	public static function ajax_register_public_preview() {
+		if ( ! isset( $_POST['post_ID'], $_POST['checked'] ) ) {
+			wp_send_json_error( 'incomplete_data' );
+		}
+
 		$preview_post_id = (int) $_POST['post_ID'];
+		$checked         = (string) $_POST['checked'];
 
 		check_ajax_referer( 'public-post-preview_' . $preview_post_id );
 
@@ -407,9 +414,9 @@ class DS_Public_Post_Preview {
 
 		$preview_post_ids = self::get_preview_post_ids();
 
-		if ( 'false' === $_POST['checked'] && in_array( $preview_post_id, $preview_post_ids, true ) ) {
+		if ( 'false' === $checked && in_array( $preview_post_id, $preview_post_ids, true ) ) {
 			$preview_post_ids = array_diff( $preview_post_ids, (array) $preview_post_id );
-		} elseif ( 'true' === $_POST['checked'] && ! in_array( $preview_post_id, $preview_post_ids, true ) ) {
+		} elseif ( 'true' === $checked && ! in_array( $preview_post_id, $preview_post_ids, true ) ) {
 			$preview_post_ids = array_merge( $preview_post_ids, (array) $preview_post_id );
 		} else {
 			wp_send_json_error( 'unknown_status' );
@@ -421,7 +428,12 @@ class DS_Public_Post_Preview {
 			wp_send_json_error( 'not_saved' );
 		}
 
-		wp_send_json_success();
+		$data = null;
+		if ( 'true' === $checked ) {
+			$data = array( 'preview_url' => self::get_preview_link( $post ) );
+		}
+
+		wp_send_json_success( $data );
 	}
 
 	/**
@@ -447,7 +459,6 @@ class DS_Public_Post_Preview {
 	 * @since 2.0.0
 	 *
 	 * @param object $query The WP_Query object.
-	 * @return object The WP_Query object, unchanged.
 	 */
 	public static function show_public_preview( $query ) {
 		if (
@@ -460,12 +471,14 @@ class DS_Public_Post_Preview {
 				nocache_headers();
 				header( 'X-Robots-Tag: noindex' );
 			}
-			add_action( 'wp_head', 'wp_no_robots' );
+			if ( function_exists( 'wp_robots_no_robots' ) ) { // WordPress 5.7+
+				add_filter( 'wp_robots', 'wp_robots_no_robots' );
+			} else {
+				add_action( 'wp_head', 'wp_no_robots' );
+			}
 
 			add_filter( 'posts_results', array( __CLASS__, 'set_post_to_publish' ), 10, 2 );
 		}
-
-		return $query;
 	}
 
 	/**

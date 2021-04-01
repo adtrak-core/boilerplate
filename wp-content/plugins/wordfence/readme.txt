@@ -3,8 +3,8 @@ Contributors: mmaunder, wfryan, wfmatt, wfmattr
 Tags: security, firewall, malware scanner, web application firewall, two factor authentication, block hackers, country blocking, clean hacked site, blocklist, waf, login security
 Requires at least: 3.9
 Requires PHP: 5.3
-Tested up to: 5.6
-Stable tag: 7.4.14
+Tested up to: 5.7
+Stable tag: 7.5.2
 
 Secure your website with the most comprehensive WordPress security plugin. Firewall, malware scan, blocking, live traffic, login security & more.
 
@@ -182,6 +182,27 @@ Secure your website with Wordfence.
 9. Logging in is easy with Wordfence 2FA.
 
 == Changelog ==
+
+= 7.5.2 - March 24, 2021 =
+
+* Fix: Fixed fatal error on single-sites running WordPress <4.9.
+
+= 7.5.1 - March 24, 2021 =
+
+* Fix: Fixed fatal error when viewing the Login Security settings page from an allowlisted IP.
+
+= 7.5.0 - March 24, 2021 =
+
+* Improvement: Translation-readiness: All user-facing strings are now run through WordPress's i18n functions.
+* Improvement: Remove legacy admin functions no longer used within the UI.
+* Improvement: Local GeoIP database update.
+* Improvement: Remove Lynwood IP range from allowlist, and add new AWS IP range.
+* Fix: Fixed bug with unlocking a locked out IP without correctly resetting its failure counters.
+* Fix: Sites using deleted premium licenses correctly revert to free license behavior.
+* Fix: When enabled, cookies are now set for the correct roles on previously used devices.
+* Fix: WAF cron jobs are now skipped when running on the CLI.
+* Fix: PHP 8.0 compatibility - prevent syntax error when linting files.
+* Fix: Fixed issue where PHP 8 notice sometimes cannot be dismissed.
 
 = 7.4.14 - December 3, 2020 =
 

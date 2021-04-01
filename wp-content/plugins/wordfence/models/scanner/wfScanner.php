@@ -1197,9 +1197,15 @@ class wfScanner {
 						else if ($dayNumber > 6 && ($dayNumber % 7) == $currentDayOfWeekUTC && $currentHourUTC <= $hourNumber) { //It's one week from today but beyond the current hour, skip it this cycle
 							continue;
 						}
-						
+
 						$scanTime = $periodStart + $dayNumber * 86400 + $hourNumber * 3600 + wfWAFUtils::random_int(0, 3600);
-						wordfence::status(4, 'info', "Scheduled time for day {$dayNumber} hour {$hourNumber} is: " . wfUtils::formatLocalTime('l jS \of F Y h:i:s A P', $scanTime));
+						wordfence::status(4, 'info', sprintf(
+							/* translators: 1. Day of week. 2. Hour of day. 3. Localized date. */
+							__("Scheduled time for day %s hour %s is: %s", 'wordfence'),
+							$dayNumber,
+							$hourNumber,
+							wfUtils::formatLocalTime('l jS \of F Y h:i:s A P', $scanTime)
+						));
 						$this->scheduleSingleScan($scanTime);
 					}
 				}

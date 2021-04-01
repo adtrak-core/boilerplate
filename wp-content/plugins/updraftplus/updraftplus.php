@@ -5,7 +5,7 @@ Plugin Name: UpdraftPlus - Backup/Restore
 Plugin URI: https://updraftplus.com
 Description: Backup and restore: take backups locally, or backup to Amazon S3, Dropbox, Google Drive, Rackspace, (S)FTP, WebDAV & email, on automatic schedules.
 Author: UpdraftPlus.Com, DavidAnderson
-Version: 1.16.48
+Version: 1.16.50
 Donate link: https://david.dw-perspective.org.uk/donate
 License: GPLv3 or later
 Text Domain: updraftplus
@@ -15,7 +15,7 @@ Author URI: https://updraftplus.com
 // @codingStandardsIgnoreEnd
 
 /*
-Portions copyright 2011-20 David Anderson
+Portions copyright 2011-21 David Anderson
 Portions copyright 2010 Paul Kehrer
 Other portions copyright as indicated by authors in the relevant files
 
@@ -187,7 +187,7 @@ if (!function_exists('gzopen') && function_exists('gzopen64')) {
 }
 
 /**
- * For finding mysqldump. Added to include Windows locations
+ * For finding mysqldump. Added to include Windows locations.
  */
 function updraftplus_build_mysqldump_list() {
 	if ('win' == strtolower(substr(PHP_OS, 0, 3)) && function_exists('glob')) {

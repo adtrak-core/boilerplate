@@ -25,28 +25,20 @@ class Assets {
 		add_action( 'admin_body_class', array( __CLASS__, 'add_theme_admin_body_class' ), 1 );
 		add_filter( 'woocommerce_shared_settings', array( __CLASS__, 'get_wc_block_data' ) );
 		add_action( 'woocommerce_login_form_end', array( __CLASS__, 'redirect_to_field' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_scripts' ) );
+		add_filter( 'script_loader_tag', array( __CLASS__, 'async_script_loader_tags' ), 10, 3 );
 	}
 
 	/**
 	 * Register block scripts & styles.
 	 *
 	 * @since 2.5.0
-	 * Moved data related enqueuing to new AssetDataRegistry class
-	 * as part of ongoing refactoring.
+	 * Moved data related enqueuing to new AssetDataRegistry class as part of ongoing refactoring.
 	 */
 	public static function register_assets() {
 		$asset_api = Package::container()->get( AssetApi::class );
 
-		// @todo Remove fix to load our stylesheets after editor CSS.
-		// See #3068 for the rationale of this fix. It should be no longer
-		// necessary when the editor is loaded in an iframe (https://github.com/WordPress/gutenberg/issues/20797).
-		if ( is_admin() ) {
-			$block_style_dependencies = array( 'wp-edit-post' );
-		} else {
-			$block_style_dependencies = array();
-		}
-
-		self::register_style( 'wc-block-vendors-style', plugins_url( $asset_api->get_block_asset_build_path( 'vendors-style', 'css' ), __DIR__ ), $block_style_dependencies );
 		self::register_style( 'wc-block-editor', plugins_url( $asset_api->get_block_asset_build_path( 'editor', 'css' ), __DIR__ ), array( 'wp-edit-blocks' ) );
 		self::register_style( 'wc-block-style', plugins_url( $asset_api->get_block_asset_build_path( 'style', 'css' ), __DIR__ ), array( 'wc-block-vendors-style' ) );
 
@@ -63,6 +55,10 @@ class Assets {
 		$asset_api->register_script( 'wc-shared-hocs', 'build/wc-shared-hocs.js', [], false );
 		$asset_api->register_script( 'wc-price-format', 'build/price-format.js', [], false );
 
+		if ( Package::feature()->is_experimental_build() ) {
+			$asset_api->register_script( 'wc-blocks-google-analytics', 'build/wc-blocks-google-analytics.js', [ 'google-tag-manager' ] );
+		}
+
 		if ( Package::feature()->is_feature_plugin_build() ) {
 			$asset_api->register_script( 'wc-blocks-checkout', 'build/blocks-checkout.js', [], false );
 		}
@@ -75,6 +71,71 @@ class Assets {
 			",
 			'before'
 		);
+	}
+
+	/**
+	 * Get settings from the GA integration extension.
+	 *
+	 * @return array
+	 */
+	private static function get_google_analytics_settings() {
+		return wp_parse_args(
+			get_option( 'woocommerce_google_analytics_settings' ),
+			[
+				'ga_id'                     => '',
+				'ga_event_tracking_enabled' => 'no',
+			]
+		);
+	}
+
+	/**
+	 * Enqueue the Google Tag Manager script if prerequisites are met.
+	 *
+	 * @param AssetApi $asset_api Asset API class Instance.
+	 */
+	private static function maybe_enqueue_google_analytics( $asset_api ) {
+		$settings = self::get_google_analytics_settings();
+
+		if ( is_admin() || ! stristr( $settings['ga_id'], 'G-' ) || apply_filters( 'woocommerce_ga_disable_tracking', ! wc_string_to_bool( $settings['ga_event_tracking_enabled'] ) ) ) {
+			return;
+		}
+
+		if ( ! wp_script_is( 'google-tag-manager', 'registered' ) ) {
+			// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			wp_register_script( 'google-tag-manager', 'https://www.googletagmanager.com/gtag/js?id=' . $settings['ga_id'], [], null, false );
+			wp_add_inline_script(
+				'google-tag-manager',
+				"
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', '" . esc_js( $settings['ga_id'] ) . "', { 'send_page_view': false });"
+			);
+		}
+
+		wp_enqueue_script( 'wc-blocks-google-analytics' );
+	}
+
+	/**
+	 * Register the vendors style file. We need to do it after the other files
+	 * because we need to check if `wp-edit-post` has been enqueued.
+	 */
+	public static function enqueue_scripts() {
+		$asset_api = Package::container()->get( AssetApi::class );
+
+		// @todo Remove fix to load our stylesheets after editor CSS.
+		// See #3068 and #3898 for the rationale of this fix. It should be no
+		// longer necessary when the editor is loaded in an iframe (https://github.com/WordPress/gutenberg/issues/20797).
+		if ( wp_style_is( 'wp-edit-post' ) ) {
+			$block_style_dependencies = array( 'wp-edit-post' );
+		} else {
+			$block_style_dependencies = array();
+		}
+		self::register_style( 'wc-block-vendors-style', plugins_url( $asset_api->get_block_asset_build_path( 'vendors-style', 'css' ), __DIR__ ), $block_style_dependencies );
+
+		if ( Package::feature()->is_experimental_build() ) {
+			self::maybe_enqueue_google_analytics( $asset_api );
+		}
 	}
 
 	/**
@@ -152,6 +213,7 @@ class Assets {
 				'productCount'                  => array_sum( (array) $product_counts ),
 				'attributes'                    => array_values( wc_get_attribute_taxonomies() ),
 				'isShippingCalculatorEnabled'   => filter_var( get_option( 'woocommerce_enable_shipping_calc' ), FILTER_VALIDATE_BOOLEAN ),
+				'shippingCostRequiresAddress'   => filter_var( get_option( 'woocommerce_shipping_cost_requires_address' ), FILTER_VALIDATE_BOOLEAN ),
 				'wcBlocksAssetUrl'              => plugins_url( 'assets/', __DIR__ ),
 				'wcBlocksBuildUrl'              => plugins_url( 'build/', __DIR__ ),
 				'restApiRoutes'                 => [
@@ -271,5 +333,24 @@ class Assets {
 		$filename = str_replace( plugins_url( '/', __DIR__ ), '', $src );
 		$ver      = self::get_file_version( $filename );
 		wp_register_style( $handle, $src, $deps, $ver, $media );
+	}
+
+	/**
+	 * Add async to script tags with defined handles.
+	 *
+	 * @param string $tag HTML for the script tag.
+	 * @param string $handle Handle of script.
+	 * @param string $src Src of script.
+	 * @return string
+	 */
+	public static function async_script_loader_tags( $tag, $handle, $src ) {
+		if ( ! in_array( $handle, array( 'google-tag-manager' ), true ) ) {
+			return $tag;
+		}
+		// If script was output manually in wp_head, abort.
+		if ( did_action( 'woocommerce_gtag_snippet' ) ) {
+			return '';
+		}
+		return str_replace( '<script src', '<script async src', $tag );
 	}
 }

@@ -3,7 +3,7 @@ Contributors: Backup with UpdraftPlus, DavidAnderson, DNutbourne, aporter, snigh
 Tags: backup, restore, database backup, wordpress backup, cloud backup, s3, dropbox, google drive, onedrive, ftp, backups
 Requires at least: 3.2
 Tested up to: 5.7
-Stable tag: 1.16.48
+Stable tag: 1.16.50
 Author URI: https://updraftplus.com
 Donate link: https://david.dw-perspective.org.uk/donate
 License: GPLv3 or later
@@ -167,6 +167,17 @@ Unfortunately not; since this is free software, there’s no warranty and no gua
 The <a href="https://updraftplus.com/news/">UpdraftPlus backup blog</a> is the best place to learn in more detail about any important changes.
 
 N.B. Paid versions of UpdraftPlus Backup / Restore have a version number which is 1 higher in the first digit, and has an extra component on the end, but the changelog below still applies. i.e. changes listed for 1.16.32.x of the free version correspond to changes made in 2.16.32.x of the paid version.
+
+= 1.16.50 - 16/Mar/2021 =
+
+* TWEAK: Reduce and log memory usage in Google upload methods
+* TWEAK: Catch Dropbox HTTP 401 errors and refresh the access token
+* FIX: An issue with refreshing Dropbox access tokens
+
+= 1.16.49 - 10/Mar/2021 =
+
+* FIX: Don't perform an atomic restore for non-WP-prefix tables backed up (Premium feature) - fixes a bug that resulted in the final table being dropped
+* TWEAK: Dates/times shown in the "next scheduled backup(s)" are now translated into the user's locale
 
 = 1.16.48 - 09/Mar/2021 =
 
@@ -1260,4 +1271,4 @@ Reliance upon any non-English translation is at your own risk; UpdraftPlus can g
 We recognise and thank those mentioned at https://updraftplus.com/acknowledgements/ for code and/or libraries used and/or modified under the terms of their open source licences.
 
 == Upgrade Notice ==
-* 1.16.48: Added the ability to perform atomic restores. Added the ability to manually complete authentication with Google Drive and OneDrive (Avoids issues where security modules/plugins break the authentication flow). Google Drive and Google Cloud now allow boosting chunk size for faster transfers.
+* 1.16.50: Improve handling of Dropbox access tokens, and Google upload memory usage/logging.

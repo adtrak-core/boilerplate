@@ -24,14 +24,14 @@ $actionID = 'wf-option-' . preg_replace('/[^a-z0-9]/i', '-', $actionOptionName);
 	<li class="wf-option-spacer"></li>
 	<li class="wf-option-content">
 		<ul>
-			<li class="wf-option-title"><span id="<?php echo esc_attr($rateID); ?>-label"><?php echo esc_html($title); ?></span><?php if (!wfConfig::p() && isset($premium) && $premium) { echo ' <a href="https://www.wordfence.com/gnl1optionUpgrade/wordfence-signup/" target="_blank" rel="noopener noreferrer" class="wf-premium-link">' . __('Premium Feature', 'wordfence') . '</a>'; } ?><?php if (isset($helpLink)) { echo ' <a href="' . esc_attr($helpLink) . '"  target="_blank" rel="noopener noreferrer" class="wf-inline-help"><i class="wf-fa wf-fa-question-circle-o" aria-hidden="true"></i></a>'; } ?></li>
+			<li class="wf-option-title"><span id="<?php echo esc_attr($rateID); ?>-label"><?php echo esc_html($title); ?></span><?php if (!wfConfig::p() && isset($premium) && $premium) { echo ' <a href="https://www.wordfence.com/gnl1optionUpgrade/wordfence-signup/" target="_blank" rel="noopener noreferrer" class="wf-premium-link">' . esc_html__('Premium Feature', 'wordfence') . '</a>'; } ?><?php if (isset($helpLink)) { echo ' <a href="' . esc_attr($helpLink) . '"  target="_blank" rel="noopener noreferrer" class="wf-inline-help"><i class="wf-fa wf-fa-question-circle-o" aria-hidden="true"></i></a>'; } ?></li>
 			<li class="wf-option-select wf-left-xs wf-padding-add-top-xs-small wf-nowrap">
 				<select<?php echo (!(!wfConfig::p() && isset($premium) && $premium) ? '' : ' disabled'); ?> id="<?php echo esc_attr($rateID); ?>" class="wf-rate-limit-rate" aria-labelledby="<?php echo esc_attr($rateID); ?>-label">
 					<?php foreach ($rateOptions as $o): ?>
 						<option class="wf-option-select-option" value="<?php echo esc_attr($o['value']); ?>"<?php if ($o['value'] == $rateValue) { echo ' selected'; } ?>><?php echo esc_html($o['label']); ?></option>
 					<?php endforeach; ?>
 				</select>
-				<span class="wf-padding-add-left-small wf-padding-add-right-small wf-padding-add-top-xs-small wf-padding-add-bottom-xs-small wf-inline-block-xs"><?php _e('then', 'wordfence'); ?></span>
+				<span class="wf-padding-add-left-small wf-padding-add-right-small wf-padding-add-top-xs-small wf-padding-add-bottom-xs-small wf-inline-block-xs"><?php esc_html_e('then', 'wordfence'); ?></span>
 				<select<?php echo (!(!wfConfig::p() && isset($premium) && $premium) ? '' : ' disabled'); ?> id="<?php echo esc_attr($actionID); ?>" class="wf-rate-limit-action" aria-labelledby="<?php echo esc_attr($rateID); ?>-label">
 					<?php foreach ($actionOptions as $o): ?>
 						<option class="wf-option-select-option" value="<?php echo esc_attr($o['value']); ?>"<?php if ($o['value'] == $actionValue) { echo ' selected'; } ?>><?php echo esc_html($o['label']); ?></option>

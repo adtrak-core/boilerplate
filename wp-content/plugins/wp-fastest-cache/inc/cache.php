@@ -288,6 +288,8 @@
 						//
 					}else if(defined('WPFC_CACHE_QUERYSTRING') && WPFC_CACHE_QUERYSTRING){
 						//
+					}else if(isset($_GET["wc-api"]) && $_GET["wc-api"]){
+						//
 					}else{
 						ob_start(array($this, "cdn_rewrite"));
 						
@@ -333,6 +335,14 @@
 								}
 							}
 						}
+					}
+				}
+
+				if(isset($_SERVER["DOCUMENT_ROOT"]) && preg_match("/bitnami/", $_SERVER["DOCUMENT_ROOT"])){
+					// to disable cache for the IP based urls on the bitnami servers
+					// /opt/bitnami/apps/wordpress/htdocs
+					if(preg_match("/(?:[0-9]{1,3}\.){3}[0-9]{1,3}/", get_option("home"))){
+						return 0;
 					}
 				}
 
@@ -864,13 +874,23 @@
 
 				if(isset($pre_content[0]) && isset($pre_content[0][0])){
 					foreach ($pre_content[0] as $key => $value){
-						/*
-						location ~ / {
-						    set $path /path/$1/index.html;
-						}
-						*/
 						if(isset($pre_buffer[0][$key])){
+							/*
+							location ~ / {
+							    set $path /path/$1/index.html;
+							}
+							*/
 							$pre_buffer[0][$key] = preg_replace('/\$(\d)/', '\\\$$1', $pre_buffer[0][$key]);
+
+							/*
+							\\\
+							*/
+							$pre_buffer[0][$key] = preg_replace('/\\\\\\\\\\\/', '\\\\\\\\\\\\\\', $pre_buffer[0][$key]);
+
+							/*
+							\\
+							*/
+							$pre_buffer[0][$key] = preg_replace('/\\\\\\\\/', '\\\\\\\\\\', $pre_buffer[0][$key]);
 
 							$content = preg_replace("/".preg_quote($value, "/")."/", $pre_buffer[0][$key], $content);
 						}

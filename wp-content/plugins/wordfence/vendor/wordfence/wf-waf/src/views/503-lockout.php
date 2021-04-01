@@ -5,7 +5,7 @@ if (!defined('WFWAF_VIEW_RENDERING')) { exit; }
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title><?php echo wfWAFI18n::__('Your access to this site has been limited by the site owner') ?></title>
+	<title><?php wfWAFI18n::esc_html_e('Your access to this site has been limited by the site owner') ?></title>
 	<style>
 		html {
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -322,9 +322,9 @@ if (!defined('WFWAF_VIEW_RENDERING')) { exit; }
 <?php if (!empty($errorNonce)) { echo '<!-- WFWAF NONCE: ' . htmlspecialchars($errorNonce) . ' -->'; } ?>
 <div class="top-accent"></div>
 <div class="container">
-	<h1><?php echo wfWAFI18n::__('Your access to this site has been temporarily limited by the site owner') ?></h1>
-	<p><?php echo wfWAFI18n::__('Your access to this service has been temporarily limited. Please try again in a few minutes. (HTTP response code 503)') ?></p>
-	<p><?php echo wfWAFI18n::__('If you think you have been blocked in error, contact the owner of this site for assistance.') ?></p>
+	<h1><?php wfWAFI18n::esc_html_e('Your access to this site has been temporarily limited by the site owner') ?></h1>
+	<p><?php wfWAFI18n::esc_html_e('Your access to this service has been temporarily limited. Please try again in a few minutes. (HTTP response code 503)') ?></p>
+	<p><?php wfWAFI18n::esc_html_e('If you think you have been blocked in error, contact the owner of this site for assistance.') ?></p>
 	<?php if (!empty($customText)): ?>
 		<hr>
 		<div class="medium"><?php echo $customText; ?></div>
@@ -332,18 +332,18 @@ if (!defined('WFWAF_VIEW_RENDERING')) { exit; }
 	<?php if (!empty($homeURL)): ?>
 	<hr>
 	<ul>
-		<li><a href="<?php echo $homeURL; ?>"><?php echo wfWAFI18n::__('Return to the site home page') ?></a></li>
+		<li><a href="<?php echo $homeURL; ?>"><?php wfWAFI18n::esc_html_e('Return to the site home page') ?></a></li>
 	</ul>
 	<?php
 	endif;
 	$nonce = $waf->createNonce('wf-form');
 	if (!empty($siteURL) && !empty($nonce)) : ?>
 		<hr>
-		<p class="medium"><?php echo wfWAFI18n::__('If you are a WordPress user with administrative privileges on this site, please enter your email address in the box below and click "Send". You will then receive an email that helps you regain access.') ?></p>
+		<p class="medium"><?php wfWAFI18n::esc_html_e('If you are a WordPress user with administrative privileges on this site, please enter your email address in the box below and click "Send". You will then receive an email that helps you regain access.') ?></p>
 
 		<form method="POST" id="unlock-form" action="#">
 			<input type="hidden" name="nonce" value="<?php echo $nonce; ?>">
-			<input type="text" size="50" name="email" id="unlock-email" value="" maxlength="255" placeholder="email@example.com">&nbsp;&nbsp;<input type="submit" class="wf-btn wf-btn-default" id="unlock-submit" name="s" value="<?php echo wfWAFI18n::__('Send Unlock Email') ?>" disabled>
+			<input type="text" size="50" name="email" id="unlock-email" value="" maxlength="255" placeholder="email@example.com">&nbsp;&nbsp;<input type="submit" class="wf-btn wf-btn-default" id="unlock-submit" name="s" value="<?php wfWAFI18n::esc_html_e('Send Unlock Email') ?>" disabled>
 		</form>
 		<script type="application/javascript">
 			(function() {
@@ -356,14 +356,14 @@ if (!defined('WFWAF_VIEW_RENDERING')) { exit; }
 		</script>
 	<?php endif; ?>
 
-	<h2 class="h3"><?php echo wfWAFI18n::__('Block Technical Data') ?></h2>
+	<h2 class="h3"><?php wfWAFI18n::esc_html_e('Block Technical Data') ?></h2>
 	<table border="0" cellspacing="0" cellpadding="0" class="block-data">
 		<tr>
-			<th class="reason"><?php echo wfWAFI18n::__('Block Reason:') ?></th>
-			<td class="reason"><?php echo wfWAFI18n::__('You have been temporarily locked out of this system. This means that you will not be able to log in for a while.') ?></td>
+			<th class="reason"><?php wfWAFI18n::esc_html_e('Block Reason:') ?></th>
+			<td class="reason"><?php wfWAFI18n::esc_html_e('You have been temporarily locked out of this system. This means that you will not be able to log in for a while.') ?></td>
 		</tr>
 		<tr>
-			<th class="time"><?php echo wfWAFI18n::__('Time:') ?></th>
+			<th class="time"><?php wfWAFI18n::esc_html_e('Time:') ?></th>
 			<td class="time"><?php echo htmlspecialchars(gmdate('D, j M Y G:i:s T', wfWAFUtils::normalizedTime())); ?></td>
 		</tr>
 	</table>
@@ -379,14 +379,14 @@ if (!defined('WFWAF_VIEW_RENDERING')) { exit; }
 			?>
 		</div>
 		<div class="about-text">
-			<h3 class="h4"><?php echo wfWAFI18n::__('About Wordfence') ?></h3>
-			<p><?php echo wfWAFI18n::__('Wordfence is a security plugin installed on over 3 million WordPress sites. The owner of this site is using Wordfence to manage access to their site.') ?></p>
-			<p><?php echo wfWAFI18n::__('You can also read the documentation to learn about Wordfence\'s blocking tools, or visit wordfence.com to learn more about Wordfence.') ?></p>
+			<h3 class="h4"><?php wfWAFI18n::esc_html_e('About Wordfence') ?></h3>
+			<p><?php wfWAFI18n::esc_html_e('Wordfence is a security plugin installed on over 3 million WordPress sites. The owner of this site is using Wordfence to manage access to their site.') ?></p>
+			<p><?php wfWAFI18n::esc_html_e('You can also read the documentation to learn about Wordfence\'s blocking tools, or visit wordfence.com to learn more about Wordfence.') ?></p>
 		</div>
 	</div>
 
-	<p class="documentation small"><?php echo wfWAFI18n::__('Click here to learn more: <a href="https://www.wordfence.com/help/?query=locked-out" target="_blank" rel="noopener noreferrer">Documentation</a>') ?></p>
-	<p class="generated small"><em><?php printf(wfWAFI18n::__('Generated by Wordfence at %s.<br>Your computer\'s time: '), gmdate('D, j M Y G:i:s T', wfWAFUtils::normalizedTime())) ?><script type="application/javascript">document.write(new Date().toUTCString());</script>.</em></p>
+	<p class="documentation small"><?php wfWAFI18n::esc_html_e('Click here to learn more: '); ?><a href="https://www.wordfence.com/help/?query=locked-out" target="_blank" rel="noopener noreferrer"><?php wfWAFI18n::esc_html_e('Documentation'); ?></a></p>
+	<p class="generated small"><em><?php printf(wfWAFI18n::esc_html__('Generated by Wordfence at %s.'), gmdate('D, j M Y G:i:s T', wfWAFUtils::normalizedTime())) ?><br><?php wfWAFI18n::esc_html_e('Your computer\'s time: ') ?><script type="application/javascript">document.write(new Date().toUTCString());</script>.</em></p>
 </div>
 </body>
 </html>

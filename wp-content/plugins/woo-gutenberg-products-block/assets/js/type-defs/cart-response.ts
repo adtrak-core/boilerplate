@@ -45,6 +45,10 @@ export interface MetaKeyValue {
 	value: string;
 }
 
+export type ExtensionsData =
+	| Record< string, unknown >
+	| Record< string, never >;
+
 export interface CartResponseShippingRateItemShippingRate
 	extends CurrencyResponseInfo {
 	rate_id: string;
@@ -145,11 +149,11 @@ export interface CartResponseFeeItemTotals extends CurrencyResponseInfo {
 	total_tax: string;
 }
 
-export interface CartResponseFeeItem {
+export type CartResponseFeeItem = {
 	id: string;
 	name: string;
 	totals: CartResponseFeeItemTotals;
-}
+};
 
 export interface CartResponseTotals extends CurrencyResponseInfo {
 	total_items: string;
@@ -186,8 +190,8 @@ export interface CartResponse {
 	needs_shipping: boolean;
 	has_calculated_shipping: boolean;
 	fees: Array< CartResponseFeeItem >;
-	totals: CartResponseTotalsItem;
+	totals: CartResponseTotals;
 	errors: Array< CartResponseErrorItem >;
 	payment_requirements: Array< unknown >;
-	extensions: Array< CartResponseExtensionItem >;
+	extensions: ExtensionsData;
 }

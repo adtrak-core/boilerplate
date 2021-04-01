@@ -127,7 +127,7 @@ class wordfenceURLHoover {
 			else {
 				return;
 			}
-			wordfence::status(4, 'info', 'Found protocol-relative URL: ' . $url);
+			wordfence::status(4, 'info', sprintf(/* translators: URL */ __('Found protocol-relative URL: %s', 'wordfence'), $url));
 		}
 		
 		foreach ($this->_excludedHosts as $h) {
@@ -185,14 +185,14 @@ class wordfenceURLHoover {
 		}
 	}
 	public function getBaddies() {
-		wordfence::status(4, 'info', "Gathering host keys.");
+		wordfence::status(4, 'info', __("Gathering host keys.", 'wordfence'));
 		$allHostKeys = '';
 		if ($this->useDB) {
 			global $wpdb;
 			$dbh = $wpdb->dbh;
 			$useMySQLi = (is_object($dbh) && $wpdb->use_mysqli && wfConfig::get('allowMySQLi', true) && WORDFENCE_ALLOW_DIRECT_MYSQLI);
 			if ($useMySQLi) { //If direct-access MySQLi is available, we use it to minimize the memory footprint instead of letting it fetch everything into an array first
-				wordfence::status(4, 'info', "Using MySQLi directly.");
+				wordfence::status(4, 'info', __("Using MySQLi directly.", 'wordfence'));
 				$result = $dbh->query("SELECT DISTINCT hostKey FROM {$this->table} ORDER BY hostKey ASC LIMIT 100000"); /* We limit to 100,000 prefixes since more than that cannot be reliably checked within the default max_execution_time */
 				if (!is_object($result)) {
 					$this->errorMsg = "Unable to query database";
@@ -230,9 +230,9 @@ class wordfenceURLHoover {
 				}
 			}
 			
-			wordfence::status(2, 'info', "Checking {$allCount} host keys against Wordfence scanning servers.");
+			wordfence::status(2, 'info', sprintf(/* translators: Number of domains. */ __("Checking %d host keys against Wordfence scanning servers.", 'wordfence'), $allCount));
 			$resp = $this->api->binCall('check_host_keys', $allHostKeys);
-			wordfence::status(2, 'info', "Done host key check.");
+			wordfence::status(2, 'info', __("Done host key check.", 'wordfence'));
 			$this->dbg("Done host key check");
 
 			$badHostKeys = '';
@@ -314,9 +314,14 @@ class wordfenceURLHoover {
 				}
 
 				if (count($urlsToCheck) > 0) {
-					wordfence::status(2, 'info', "Checking " . $totalURLs . " URLs from " . sizeof($urlsToCheck) . " sources.");
+					wordfence::status(2, 'info', sprintf(
+						/* translators: 1. Number of URLs. 2. Number of files. */
+						__('Checking %1$d URLs from %2$d sources.', 'wordfence'),
+						$totalURLs,
+						sizeof($urlsToCheck)
+					));
 					$badURLs = $this->api->call('check_bad_urls', array(), array('toCheck' => json_encode($urlsToCheck)));
-					wordfence::status(2, 'info', "Done URL check.");
+					wordfence::status(2, 'info', __("Done URL check.", 'wordfence'));
 					$this->dbg("Done URL check");
 					if (is_array($badURLs) && count($badURLs) > 0) {
 						$finalResults = array();

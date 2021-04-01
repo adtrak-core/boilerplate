@@ -158,7 +158,7 @@
 					}
 				}
 
-				if(is_array($order_arr)){
+				if(isset($order_arr) && is_array($order_arr)){
 					foreach ($order_arr as $o_key => $o_value){
 						if($o_value == "order" || $o_value == "number"){
 							unset($order_arr[$o_key]);
@@ -437,7 +437,7 @@
 				}
 
 
-				if($pre_load->$current_order == -1){
+				if(isset($pre_load->$current_order) && $pre_load->$current_order == -1){
 					array_shift($order_arr);
 
 					if(isset($order_arr[0])){

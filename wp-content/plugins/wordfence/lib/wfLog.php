@@ -306,7 +306,7 @@ class wfLog {
 			} else if($type == 'ruser'){
 				$typeSQL = " and userID > 0 ";
 			} else {
-				wordfence::status(1, 'error', "Invalid log type to wfLog: $type");
+				wordfence::status(1, 'error', sprintf(/* translators: Error message. */ __("Invalid log type to wfLog: %s", 'wordfence'), $type));
 				return false;
 			}
 			array_unshift($sqlArgs, "select h.*, u.display_name from {$this->hitsTable} h
@@ -340,7 +340,7 @@ class wfLog {
 			$results = call_user_func_array(array($this->getDB(), 'querySelect'), $sqlArgs ); 
 
 		} else {
-			wordfence::status(1, 'error', "getHits got invalid hitType: $hitType");
+			wordfence::status(1, 'error', sprintf(/* translators: Error message. */ __("getHits got invalid hitType: %s", 'wordfence'), $hitType));
 			return false;
 		}
 		$this->processGetHitsResults($type, $results);
@@ -552,7 +552,7 @@ class wfLog {
 			if ($b->matchRequest($IP, $userAgent, $referrer) !== wfBlock::MATCH_NONE) {
 				$b->recordBlock();
 				wfActivityReport::logBlockedIP($IP, null, 'advanced');
-				$this->currentRequest->actionDescription = 'UA/Referrer/IP Range not allowed';
+				$this->currentRequest->actionDescription = __('UA/Referrer/IP Range not allowed', 'wordfence');
 				$this->do503(3600, __("Advanced blocking in effect.", 'wordfence')); //exits
 			}
 		}
@@ -579,7 +579,7 @@ class wfLog {
 				wfConfig::inc('totalCountryBlocked');
 				
 				$this->initLogRequest();
-				$this->getCurrentRequest()->actionDescription = sprintf(__('blocked access via country blocking and redirected to URL (%s)', 'wordfence'), wfConfig::get('cbl_redirURL'));
+				$this->getCurrentRequest()->actionDescription = sprintf(/* translators: URL */ __('blocked access via country blocking and redirected to URL (%s)', 'wordfence'), wfConfig::get('cbl_redirURL'));
 				$this->getCurrentRequest()->statusCode = 503;
 				if (!$this->getCurrentRequest()->action) {
 					$this->currentRequest->action = 'blocked:wordfence';
@@ -640,7 +640,7 @@ class wfLog {
 					'reason' => $reason,
 					'duration' => $secsToGo,
 				), $alertCallback);
-				wordfence::status(2, 'info', sprintf(__('Blocking IP %s. %s', 'wordfence'), $IP, $reason));
+				wordfence::status(2, 'info', sprintf(/* translators: 1. IP address. 2. Description of firewall action. */ __('Blocking IP %1$s. %2$s', 'wordfence'), $IP, $reason));
 			}
 			else if ($action == 'throttle') { //Rate limited - throttle
 				$secsToGo = wfBlock::rateLimitThrottleDuration();
@@ -652,7 +652,7 @@ class wfLog {
 					'reason' => $reason,
 					'duration' => $secsToGo,
 				));
-				wordfence::status(2, 'info', sprintf(__('Throttling IP %s. %s', 'wordfence'), $IP, $reason));
+				wordfence::status(2, 'info', sprintf(/* translators: 1. IP address. 2. Description of firewall action. */ __('Throttling IP %1$s. %2$s', 'wordfence'), $IP, $reason));
 				wfConfig::inc('totalIPsThrottled');
 			}
 			$this->do503($secsToGo, $reason, false);

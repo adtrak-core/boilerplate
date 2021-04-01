@@ -15,6 +15,14 @@ class wfWAFI18n {
 		return self::getInstance()->getI18nEngine()->__($text);
 	}
 
+	public static function esc_html__($text) {
+		return htmlentities(self::__($text), ENT_QUOTES, 'UTF-8');
+	}
+
+	public static function esc_html_e($text) {
+		echo self::esc_html__($text);
+	}
+
 	/**
 	 * @return self
 	 */

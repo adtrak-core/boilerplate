@@ -23,7 +23,7 @@ if (!isset($collapseable)) {
 			<div class="wf-block-header">
 				<div class="wf-block-header-content">
 					<div class="wf-block-title">
-						<strong><?php _e('Brute Force Protection', 'wordfence'); ?></strong>
+						<strong><?php esc_html_e('Brute Force Protection', 'wordfence'); ?></strong>
 					</div>
 					<?php if ($collapseable): ?><div class="wf-block-header-action"><div class="wf-block-header-action-disclosure" role="checkbox" aria-checked="<?php echo (wfPersistenceController::shared()->isActive($stateKey) ? 'true' : 'false'); ?>" tabindex="0"></div></div><?php endif; ?>
 				</div>
@@ -35,7 +35,7 @@ if (!isset($collapseable)) {
 						echo wfView::create('options/option-switch', array(
 							'optionName' => 'loginSecurityEnabled',
 							'value' => wfConfig::get('loginSecurityEnabled') ? '1': '0',
-							'titleHTML' => '<strong>' . __('Enable brute force protection', 'wordfence') . '</strong>',
+							'titleHTML' => '<strong>' . esc_html__('Enable brute force protection', 'wordfence') . '</strong>',
 							'subtitle' => __('This option enables all "Brute Force Protection" options, including strong password enforcement and invalid login throttling. You can modify individual options below.', 'wordfence'),
 							'states' => array(
 								array('value' => '0', 'label' => __('Off', 'wordfence')),
@@ -160,7 +160,7 @@ if (!isset($collapseable)) {
 					<li>
 						<?php
 						echo wfView::create('options/option-label', array(
-							'titleHTML' => '<strong>' . __('Additional Options', 'wordfence') . '</strong>',
+							'titleHTML' => '<strong>' . esc_html__('Additional Options', 'wordfence') . '</strong>',
 							'noSpacer' => true,
 						))->render();
 						?>
@@ -247,7 +247,7 @@ if (!isset($collapseable)) {
 							'textValue' => wfConfig::get('blockCustomText'),
 							'title' => __('Custom text shown on block pages', 'wordfence'),
 							'alignTitle' => 'top',
-							'subtitleHTML' => __('HTML tags will be stripped prior to output and line breaks will be converted into the appropriate tags.', 'wordfence'),
+							'subtitleHTML' => esc_html__('HTML tags will be stripped prior to output and line breaks will be converted into the appropriate tags.', 'wordfence'),
 							'subtitlePosition' => 'value',
 							'helpLink' => wfSupportController::supportURL(wfSupportController::ITEM_FIREWALL_WAF_OPTION_CUSTOM_BLOCK_TEXT),
 						))->render();

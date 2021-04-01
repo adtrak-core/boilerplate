@@ -1,11 +1,28 @@
 <?php
 	class CdnWPFC{
+		public static function cloudflare_generate_header($email, $key){
+			if($email == "wpfc"){
+				$header = array(
+								"Authorization" => "Bearer ".$key,
+								"Content-Type" => "application/json"
+								);
+			}else{
+				$header = array(
+								"X-Auth-Email" => $email,
+								"X-Auth-Key" => $key,
+								"Content-Type" => "application/json"
+								);
+			}
+
+			return $header;
+		}
+
 		public static function cloudflare_clear_cache($email = false, $key = false, $zoneid = false){
 			if(isset($GLOBALS["wpfc_cloudflare_purge_cache_executed"])){
 				return;
 			}
 
-			if(!$email && !$key && !$zoneid){
+			if(!$key && !$zoneid){
 				if($cdn_values = get_option("WpFastestCacheCDN")){
 					$std_obj = json_decode($cdn_values);
 
@@ -17,7 +34,7 @@
 						}
 					}
 
-					if($email && $key){
+					if($key){
 						$zone = self::cloudflare_get_zone_id($email, $key, false);
 
 						if($zone["success"]){
@@ -27,13 +44,9 @@
 				}
 			}
 			
-			if($email && $key && $zoneid){
+			if($key && $zoneid){
 				$header = array("method" => "DELETE",
-								'headers' => array(
-												"X-Auth-Email" => $email,
-												"X-Auth-Key" => $key,
-												"Content-Type" => "application/json"
-												),
+								'headers' => self::cloudflare_generate_header($email, $key),
 								"body" => '{"purge_everything":true}'
 								);
 
@@ -54,14 +67,10 @@
 		}
 
 		public static function cloudflare_disable_rocket_loader($email = false, $key = false, $zoneid = false){
-			if($email && $key && $zoneid){
+			if($key && $zoneid){
 				$header = array("method" => "PATCH",
 								'timeout' => 10,
-								'headers' => array(
-												"X-Auth-Email" => $email,
-												"X-Auth-Key" => $key,
-												"Content-Type" => "application/json"
-												),
+								'headers' => self::cloudflare_generate_header($email, $key),
 								'body' => '{"value":"off"}'
 								);
 
@@ -87,14 +96,10 @@
 
 
 		public static function cloudflare_set_browser_caching($email = false, $key = false, $zoneid = false){
-			if($email && $key && $zoneid){
+			if($key && $zoneid){
 				$header = array("method" => "PATCH",
 								'timeout' => 10,
-								'headers' => array(
-												"X-Auth-Email" => $email,
-												"X-Auth-Key" => $key,
-												"Content-Type" => "application/json"
-												),
+								'headers' => self::cloudflare_generate_header($email, $key),
 								'body' => '{"value":16070400}'
 								);
 
@@ -119,14 +124,10 @@
 		}
 
 		public static function cloudflare_disable_minify($email = false, $key = false, $zoneid = false){
-			if($email && $key && $zoneid){
+			if($key && $zoneid){
 				$header = array("method" => "PATCH",
 								'timeout' => 10,
-								'headers' => array(
-												"X-Auth-Email" => $email,
-												"X-Auth-Key" => $key,
-												"Content-Type" => "application/json"
-												),
+								'headers' => self::cloudflare_generate_header($email, $key),
 								'body' => '{"value":{"css":"off","html":"off","js":"off"}}'
 								);
 
@@ -167,11 +168,7 @@
 			}
 			
 			$header = array("method" => "GET",
-							'headers' => array(
-											"X-Auth-Email" => $email,
-											"X-Auth-Key" => $key,
-											"Content-Type" => "application/json"
-											),
+							'headers' => self::cloudflare_generate_header($email, $key)
 							);
 			
 			/*

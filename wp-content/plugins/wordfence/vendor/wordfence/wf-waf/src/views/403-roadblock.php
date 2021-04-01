@@ -37,7 +37,7 @@ foreach ($waf->getFailedRules() as $paramKey => $categories) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?php echo wfWAFI18n::__('403 Forbidden') ?></title>
+	<title><?php wfWAFI18n::esc_html_e('403 Forbidden') ?></title>
 	<style>
 		html {
 			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -354,29 +354,29 @@ foreach ($waf->getFailedRules() as $paramKey => $categories) {
 <?php if (!empty($errorNonce)) { echo '<!-- WFWAF NONCE: ' . htmlspecialchars($errorNonce) . ' -->'; } ?>
 <div class="top-accent"></div>
 <div class="container">
-	<h1><?php echo wfWAFI18n::__('A potentially unsafe operation has been detected in your request to this site') ?></h1>
-	<p><?php echo wfWAFI18n::__('Your access to this service has been limited. (HTTP response code 403)') ?></p>
-	<p><?php echo wfWAFI18n::__('If you think you have been blocked in error, contact the owner of this site for assistance.') ?></p>
+	<h1><?php wfWAFI18n::esc_html_e('A potentially unsafe operation has been detected in your request to this site') ?></h1>
+	<p><?php wfWAFI18n::esc_html_e('Your access to this service has been limited. (HTTP response code 403)') ?></p>
+	<p><?php wfWAFI18n::esc_html_e('If you think you have been blocked in error, contact the owner of this site for assistance.') ?></p>
 	<?php if (!empty($customText)): ?>
 		<hr>
 		<div class="medium"><?php echo $customText; ?></div>
 	<?php endif; ?>
 	<?php if ($urlParamsToWhitelist): ?>
 		<hr>
-		<p><?php echo wfWAFI18n::__('If you are an administrator and you are certain this is a false positive, you can automatically allowlist this request and repeat the same action.') ?></p>
+		<p><?php wfWAFI18n::esc_html_e('If you are an administrator and you are certain this is a false positive, you can automatically allowlist this request and repeat the same action.') ?></p>
 
 		<form id="whitelist-form" action="<?php echo htmlentities($waf->getRequest()->getPath(), ENT_QUOTES, 'utf-8') ?>" method="post">
 			<input type="hidden" name="wfwaf-false-positive-params" value="<?php echo htmlentities(wfWAFUtils::json_encode($urlParamsToWhitelist), ENT_QUOTES, 'utf-8') ?>">
 			<input type="hidden" name="wfwaf-false-positive-nonce" value="<?php echo htmlentities($waf->getAuthCookieValue('nonce', ''), ENT_QUOTES, 'utf-8') ?>">
 
 			<div id="whitelist-actions">
-				<p><label><input id="verified-false-positive-checkbox" type="checkbox" name="wfwaf-false-positive-verified" value="1"> <em><?php echo wfWAFI18n::__('I am certain this is a false positive.') ?></em></label></p>
+				<p><label><input id="verified-false-positive-checkbox" type="checkbox" name="wfwaf-false-positive-verified" value="1"> <em><?php wfWAFI18n::esc_html_e('I am certain this is a false positive.') ?></em></label></p>
 
-				<p><button id="whitelist-button" type="submit"><?php echo wfWAFI18n::__('Allowlist This Action') ?></button></p>
+				<p><button id="whitelist-button" type="submit"><?php wfWAFI18n::esc_html_e('Allowlist This Action') ?></button></p>
 			</div>
 
-			<p id="success" style="color: #35b13a; font-weight: bold; display: none"><em><?php echo wfWAFI18n::__('All set! You can refresh the page to try this action again.') ?></em></p>
-			<p id="error" style="color: #dd422c; font-weight: bold; display: none"><em><?php echo wfWAFI18n::__('Something went wrong allowlisting this request. You can try setting the Firewall Status to Learning Mode under Web App Firewall in the Wordfence menu, and retry this same action.') ?></em></p>
+			<p id="success" style="color: #35b13a; font-weight: bold; display: none"><em><?php wfWAFI18n::esc_html_e('All set! You can refresh the page to try this action again.') ?></em></p>
+			<p id="error" style="color: #dd422c; font-weight: bold; display: none"><em><?php wfWAFI18n::esc_html_e('Something went wrong allowlisting this request. You can try setting the Firewall Status to Learning Mode under Web Application Firewall in the Wordfence menu, and retry this same action.') ?></em></p>
 		</form>
 		<script>
 			var whitelistButton = document.getElementById('whitelist-button');
@@ -414,14 +414,14 @@ foreach ($waf->getFailedRules() as $paramKey => $categories) {
 		<hr>
 	<?php endif ?>
 
-	<h2 class="h3"><?php echo wfWAFI18n::__('Block Technical Data') ?></h2>
+	<h2 class="h3"><?php wfWAFI18n::esc_html_e('Block Technical Data') ?></h2>
 	<table border="0" cellspacing="0" cellpadding="0" class="block-data">
 		<tr>
-			<th class="reason"><?php echo wfWAFI18n::__('Block Reason:') ?></th>
-			<td class="reason"><?php echo wfWAFI18n::__('A potentially unsafe operation has been detected in your request to this site') ?></td>
+			<th class="reason"><?php wfWAFI18n::esc_html_e('Block Reason:') ?></th>
+			<td class="reason"><?php wfWAFI18n::esc_html_e('A potentially unsafe operation has been detected in your request to this site') ?></td>
 		</tr>
 		<tr>
-			<th class="time"><?php echo wfWAFI18n::__('Time:') ?></th>
+			<th class="time"><?php wfWAFI18n::esc_html_e('Time:') ?></th>
 			<td class="time"><?php echo htmlspecialchars(gmdate('D, j M Y G:i:s T', wfWAFUtils::normalizedTime())); ?></td>
 		</tr>
 	</table>
@@ -437,14 +437,14 @@ foreach ($waf->getFailedRules() as $paramKey => $categories) {
 			?>
 		</div>
 		<div class="about-text">
-			<h3 class="h4"><?php echo wfWAFI18n::__('About Wordfence') ?></h3>
-			<p><?php echo wfWAFI18n::__('Wordfence is a security plugin installed on over 3 million WordPress sites. The owner of this site is using Wordfence to manage access to their site.') ?></p>
-			<p><?php echo wfWAFI18n::__('You can also read the documentation to learn about Wordfence\'s blocking tools, or visit wordfence.com to learn more about Wordfence.') ?></p>
+			<h3 class="h4"><?php wfWAFI18n::esc_html_e('About Wordfence') ?></h3>
+			<p><?php wfWAFI18n::esc_html_e('Wordfence is a security plugin installed on over 3 million WordPress sites. The owner of this site is using Wordfence to manage access to their site.') ?></p>
+			<p><?php wfWAFI18n::esc_html_e('You can also read the documentation to learn about Wordfence\'s blocking tools, or visit wordfence.com to learn more about Wordfence.') ?></p>
 		</div>
 	</div>
 
-	<p class="documentation small"><?php echo wfWAFI18n::__('Click here to learn more: <a href="https://www.wordfence.com/help/?query=locked-out" target="_blank" rel="noopener noreferrer">Documentation</a>') ?></p>
-	<p class="generated small"><em><?php printf(wfWAFI18n::__('Generated by Wordfence at %s.<br>Your computer\'s time: '), gmdate('D, j M Y G:i:s T', wfWAFUtils::normalizedTime())) ?><script type="application/javascript">document.write(new Date().toUTCString());</script>.</em></p>
+	<p class="documentation small"><?php wfWAFI18n::esc_html_e('Click here to learn more: '); ?><a href="https://www.wordfence.com/help/?query=locked-out" target="_blank" rel="noopener noreferrer"><?php wfWAFI18n::esc_html_e('Documentation') ?></a></p>
+	<p class="generated small"><em><?php printf(wfWAFI18n::esc_html__('Generated by Wordfence at %s.'), gmdate('D, j M Y G:i:s T', wfWAFUtils::normalizedTime())) ?><br><?php wfWAFI18n::esc_html_e('Your computer\'s time: ') ?><script type="application/javascript">document.write(new Date().toUTCString());</script>.</em></p>
 </div>
 </body>
 </html>

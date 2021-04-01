@@ -1,10 +1,19 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, useCallback } from '@wordpress/element';
+import {
+	useEffect,
+	useRef,
+	useCallback,
+	cloneElement,
+} from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { usePaymentMethodDataContext } from '@woocommerce/base-context';
 import RadioControl from '@woocommerce/base-components/radio-control';
+import {
+	usePaymentMethodInterface,
+	usePaymentMethods,
+} from '@woocommerce/base-hooks';
 import { getPaymentMethods } from '@woocommerce/blocks-registry';
 
 /**
@@ -41,7 +50,7 @@ const getCcOrEcheckPaymentMethodOption = (
 		onChange: ( token ) => {
 			const savedTokenKey = `wc-${ method.gateway }-payment-token`;
 			setActivePaymentMethod( method.gateway );
-			setPaymentStatus().success( {
+			setPaymentStatus().started( {
 				payment_method: method.gateway,
 				[ savedTokenKey ]: token + '',
 				isSavedToken: true,
@@ -75,7 +84,7 @@ const getDefaultPaymentMethodOptions = (
 		onChange: ( token ) => {
 			const savedTokenKey = `wc-${ method.gateway }-payment-token`;
 			setActivePaymentMethod( method.gateway );
-			setPaymentStatus().success( {
+			setPaymentStatus().started( {
 				payment_method: method.gateway,
 				[ savedTokenKey ]: token + '',
 				isSavedToken: true,
@@ -94,6 +103,8 @@ const SavedPaymentMethodOptions = () => {
 		setActiveSavedToken,
 	} = usePaymentMethodDataContext();
 	const standardMethods = getPaymentMethods();
+	const { paymentMethods } = usePaymentMethods();
+	const paymentMethodInterface = usePaymentMethodInterface();
 
 	/**
 	 * @type      {Object} Options
@@ -103,12 +114,9 @@ const SavedPaymentMethodOptions = () => {
 
 	const updateToken = useCallback(
 		( token ) => {
-			if ( token === '0' ) {
-				setPaymentStatus().started();
-			}
 			setActiveSavedToken( token );
 		},
-		[ setActiveSavedToken, setPaymentStatus ]
+		[ setActiveSavedToken ]
 	);
 
 	useEffect( () => {
@@ -152,13 +160,26 @@ const SavedPaymentMethodOptions = () => {
 		standardMethods,
 	] );
 
+	const savedPaymentMethodHandler =
+		!! activeSavedToken &&
+		paymentMethods[ activePaymentMethod ] &&
+		paymentMethods[ activePaymentMethod ]?.savedTokenComponent
+			? cloneElement(
+					paymentMethods[ activePaymentMethod ]?.savedTokenComponent,
+					{ token: activeSavedToken, ...paymentMethodInterface }
+			  )
+			: null;
+
 	return currentOptions.current.length > 0 ? (
-		<RadioControl
-			id={ 'wc-payment-method-saved-tokens' }
-			selected={ activeSavedToken }
-			onChange={ updateToken }
-			options={ currentOptions.current }
-		/>
+		<>
+			<RadioControl
+				id={ 'wc-payment-method-saved-tokens' }
+				selected={ activeSavedToken }
+				onChange={ updateToken }
+				options={ currentOptions.current }
+			/>
+			{ savedPaymentMethodHandler }
+		</>
 	) : null;
 };
 

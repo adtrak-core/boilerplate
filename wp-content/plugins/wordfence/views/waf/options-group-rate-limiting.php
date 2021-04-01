@@ -23,7 +23,7 @@ if (!isset($collapseable)) {
 			<div class="wf-block-header">
 				<div class="wf-block-header-content">
 					<div class="wf-block-title">
-						<strong><?php _e('Rate Limiting', 'wordfence'); ?></strong>
+						<strong><?php esc_html_e('Rate Limiting', 'wordfence'); ?></strong>
 					</div>
 					<?php if ($collapseable): ?><div class="wf-block-header-action"><div class="wf-block-header-action-disclosure" role="checkbox" aria-checked="<?php echo (wfPersistenceController::shared()->isActive($stateKey) ? 'true' : 'false'); ?>" tabindex="0"></div></div><?php endif; ?>
 				</div>
@@ -65,20 +65,20 @@ if (!isset($collapseable)) {
 					<?php
 					$rateOptions = array(
 						array('value' => 'DISABLED', 'label' => __('Unlimited', 'wordfence')),
-						array('value' => 1920, 'label' => sprintf(__('%d per minute', 'wordfence'), 1920)),
-						array('value' => 960, 'label' => sprintf(__('%d per minute', 'wordfence'), 960)),
-						array('value' => 480, 'label' => sprintf(__('%d per minute', 'wordfence'), 480)),
-						array('value' => 240, 'label' => sprintf(__('%d per minute', 'wordfence'), 240)),
-						array('value' => 120, 'label' => sprintf(__('%d per minute', 'wordfence'), 120)),
-						array('value' => 60, 'label' => sprintf(__('%d per minute', 'wordfence'), 60)),
-						array('value' => 30, 'label' => sprintf(__('%d per minute', 'wordfence'), 30)),
-						array('value' => 15, 'label' => sprintf(__('%d per minute', 'wordfence'), 15)),
-						array('value' => 10, 'label' => sprintf(__('%d per minute', 'wordfence'), 10)),
-						array('value' => 5, 'label' => sprintf(__('%d per minute', 'wordfence'), 5)),
-						array('value' => 4, 'label' => sprintf(__('%d per minute', 'wordfence'), 4)),
-						array('value' => 3, 'label' => sprintf(__('%d per minute', 'wordfence'), 3)),
-						array('value' => 2, 'label' => sprintf(__('%d per minute', 'wordfence'), 2)),
-						array('value' => 1, 'label' => sprintf(__('%d per minute', 'wordfence'), 1)),
+						array('value' => 1920, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 1920)),
+						array('value' => 960, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 960)),
+						array('value' => 480, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 480)),
+						array('value' => 240, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 240)),
+						array('value' => 120, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 120)),
+						array('value' => 60, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 60)),
+						array('value' => 30, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 30)),
+						array('value' => 15, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 15)),
+						array('value' => 10, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 10)),
+						array('value' => 5, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 5)),
+						array('value' => 4, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 4)),
+						array('value' => 3, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 3)),
+						array('value' => 2, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 2)),
+						array('value' => 1, 'label' => sprintf(/* translators: Number of HTTP requests. */__('%d per minute', 'wordfence'), 1)),
 					);
 					$actionOptions = array(
 						array('value' => 'throttle', 'label' => __('throttle it', 'wordfence')),
