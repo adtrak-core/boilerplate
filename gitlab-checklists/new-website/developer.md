@@ -81,6 +81,15 @@
 - [ ] Order Emails are being sent correctly
 - [ ] Order Emails are styled appropriately
 
+## Accessibility
+- [ ] Conduct a Lighthouse test (using Chrome Dev Tools) and check for any quick accessibility improvements that can be made
+- [ ] Make sure buttons have `aria-label` attributes
+- [ ] Make sure that the desktop navigation isn't tab-indexable on desktop
+- [ ] Make sure links have :focus attributes
+- [ ] Images have SRC attributes (leave empty if lazyloading) and descriptive ALT tags
+- [ ] Complete the [a11y Checklist](https://www.a11yproject.com/checklist/#toc_Success-criteria)
+- [ ] Rerun a lighthouse test to check for improved score
+
 ## Proofing
 
 - [ ] Xenu Link Sleuth / Screaming Frog - check for broken links
