@@ -101,7 +101,7 @@ gulp.task("core-scripts", function () {
 });
 
 
-var addonScripts = fs.readdirSync('_resources/js/addons/');
+var addonScripts = fs.readdirSync('_resources/js/addon/');
 
 addonScripts.forEach(function(script){  
   var script;
@@ -110,7 +110,7 @@ addonScripts.forEach(function(script){
     return (
       rollup({
         // Point to the entry folder for all JS files
-        input: "_resources/js/addons/" + script,
+        input: "_resources/js/addon/" + script,
         // Apply plugins
         plugins: [commonjs(), nodeResolve(), multi()],
         // Use cache for better performance
@@ -155,7 +155,7 @@ gulp.task("watch", () => {
   gulp.watch(`_resources/js/core/*.js`, gulp.series("core-scripts"));
   
   addonScripts.forEach(function(script){
-    gulp.watch(`_resources/js/addons/` + script, gulp.series(script));
+    gulp.watch(`_resources/js/addon/` + script, gulp.series(script));
   });
 
 });

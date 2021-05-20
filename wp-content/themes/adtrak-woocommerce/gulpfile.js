@@ -1,6 +1,6 @@
 /**************************
  * Gulpfile Dependencies
-**************************/
+ **************************/
 
 const { array } = require("yargs");
 
@@ -10,6 +10,7 @@ let gulp = require("gulp"),
   rename = require("gulp-rename"),
   browserSync = require("browser-sync").create(), // Requires the browser-sync plugin
   argv = require("yargs").argv,
+  fs = require('fs'),
   // CSS plugins
   postcss = require("gulp-postcss"),
   cssImport = require("postcss-import"),
@@ -30,15 +31,9 @@ let gulp = require("gulp"),
   nodeResolve = require("@rollup/plugin-node-resolve");
 
 
-class TailwindExtractor {
-  static extract(content) {
-    return content.match(/[A-z0-9-:\/]+/g);
-  }
-}
-
 /**************************
  * Task Styles
-**************************/
+ **************************/
 gulp.task("styles", function () {
   return gulp
     .src("_resources/styles/main.css")
@@ -64,15 +59,17 @@ gulp.task("styles", function () {
 /**************************
  * Scripts using rollup.js
  * https://stackoverflow.com/questions/47632435/es6-import-module-with-gulp/59786169#59786169
-**************************/
+ **************************/
 
 var cache;
 
-gulp.task("scripts", function () {
+// Core scripts
+gulp.task("core-scripts", function () {
   return (
     rollup({
       // Point to the entry folder for all JS files
-      input: "_resources/**/*.js",
+      // input: "_resources/**/*.js",
+      input: "_resources/js/core/*.js",
       // Apply plugins
       plugins: [commonjs(), nodeResolve(), multi()],
       // Use cache for better performance
@@ -103,30 +100,81 @@ gulp.task("scripts", function () {
   );
 });
 
-/**************************
- * Task Watch
-**************************/
-gulp.task('watch', () => {
-  gulp.watch(`_resources/styles/**/*.css`, gulp.series('styles'));
-  gulp.watch(`_resources/js/**/*.js`, gulp.series('scripts'));
+
+var addonScripts = fs.readdirSync('_resources/js/addon/');
+
+addonScripts.forEach(function(script){  
+  var script;
+
+  gulp.task(script, function () {
+    return (
+      rollup({
+        // Point to the entry folder for all JS files
+        input: "_resources/js/addon/" + script,
+        // Apply plugins
+        plugins: [commonjs(), nodeResolve(), multi()],
+        // Use cache for better performance
+        cache: script,
+        // Output bundle is intended for use in browsers
+        output: {
+          // Output bundle is intended for use in browsers
+          // (iife = "Immediately Invoked Function Expression")
+          format: "iife",
+          // Show source code when debugging in browser
+          sourcemap: false,
+          name: "output",
+        },
+      })
+        .on("bundle", function (bundle) {
+          // Update cache data after every bundle is created
+          cache = bundle;
+        })
+        // Name of the output file.
+        .pipe(source("production-" + script))
+        .pipe(buffer())
+        .pipe(gulpIf(argv.production, terser()))
+        .pipe(gulp.dest("dist/"))
+        .pipe(
+          browserSync.reload({
+            stream: true,
+          })
+        )
+    );
+  });
+
 });
 
 
+
+
+/**************************
+ * Task Watch
+ **************************/
+gulp.task("watch", () => {
+  gulp.watch(`_resources/styles/**/*.css`, gulp.series("styles"));
+  gulp.watch(`_resources/js/core/*.js`, gulp.series("core-scripts"));
+  
+  addonScripts.forEach(function(script){
+    gulp.watch(`_resources/js/addon/` + script, gulp.series(script));
+  });
+
+});
+
 /**************************
  * Task Serve
-**************************/
-gulp.task('serve', () => {
-    browserSync.init({
+ **************************/
+gulp.task("serve", () => {
+  browserSync.init({
     proxy: `adtrak-boilerplate.vm`,
-    files: ['**/*.php', '**/*.js', '**/*.twig', '**/*.scss'],
-    ghostMode : false,
-    open: false
-  })
-})
-
+    files: ["**/*.php", "**/*.js", "**/*.twig", "**/*.css"],
+    ghostMode: false,
+    open: false,
+    notify: false
+  });
+});
 
 /**************************
  * Gulp Automation
-**************************/
-gulp.task('default', gulp.parallel('styles', 'scripts', 'watch', 'serve'));
-gulp.task('build', gulp.parallel('styles', 'scripts'));
+ **************************/
+gulp.task("default", gulp.parallel("styles", "core-scripts", addonScripts, "watch", "serve"));
+gulp.task("build", gulp.parallel("styles", "core-scripts", addonScripts));
