@@ -293,7 +293,7 @@ class wfWAFWordPressObserver extends wfWAFBaseObserver {
 							
 							if ($response instanceof wfWAFHTTPResponse && $response->getBody()) {
 								$jsonData = wfWAFUtils::json_decode($response->getBody(), true);
-								if (array_key_exists('data', $jsonData)) {
+								if (is_array($jsonData) && array_key_exists('data', $jsonData)) {
 									if (preg_match('/^block:(\d+)$/i', $jsonData['data'], $matches)) {
 										wfWAF::getInstance()->getStorageEngine()->blockIP((int)$matches[1] + time(), wfWAF::getInstance()->getRequest()->getIP(), wfWAFStorageInterface::IP_BLOCKS_BLACKLIST);
 										$e = new wfWAFBlockException();
@@ -825,7 +825,9 @@ try {
 		define('WFWAF_STORAGE_ENGINE', 'mysqli');
 	}
 
-	if (defined('WFWAF_STORAGE_ENGINE')) {
+	$specifiedStorageEngine = defined('WFWAF_STORAGE_ENGINE');
+	$fallbackStorageEngine = false;
+	if ($specifiedStorageEngine) {
 		switch (WFWAF_STORAGE_ENGINE) {
 			case 'mysqli':
 				// Find the wp-config.php
@@ -879,9 +881,11 @@ try {
 			WFWAF_LOG_PATH . 'rules.php',
 			WFWAF_LOG_PATH . 'wafRules.rules'
 		);
+		if ($specifiedStorageEngine)
+			$fallbackStorageEngine = true;
 	}
 
-	wfWAF::setSharedStorageEngine($wfWAFStorageEngine);
+	wfWAF::setSharedStorageEngine($wfWAFStorageEngine, $fallbackStorageEngine);
 	wfWAF::setInstance(new wfWAFWordPress(wfWAFWordPressRequest::createFromGlobals(), wfWAF::getSharedStorageEngine()));
 	wfWAF::getInstance()->getEventBus()->attach(new wfWAFWordPressObserver);
 

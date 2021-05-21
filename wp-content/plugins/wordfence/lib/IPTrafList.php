@@ -11,7 +11,7 @@ if (!wfUtils::isAdmin()) {
 	<?php foreach ($results as $key => $v) { ?>
 		<tr>
 			<th><?php esc_html_e('Time:', 'wordfence') ?></th>
-			<td><?php esc_html(sprintf(
+			<td><?php esc_html_e(sprintf(
 				/* translators: 1. Time ago, example: 2 hours, 40 seconds. 2. Localized date. 3. Unix timestamp.  */
 					__('%1$s ago -- %2$s -- %3$s in Unixtime', 'wordfence'), $v['timeAgo'], date(DATE_RFC822, $v['ctime']), $v['ctime'])) ?></td>
 		</tr>

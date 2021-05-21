@@ -922,6 +922,10 @@ class wfWAFStorageFile implements wfWAFStorageInterface {
 	public function setRulesFile($rulesFile) {
 		$this->rulesFile = $rulesFile;
 	}
+
+	public function getDescription() {
+		return __('file system', 'wordfence');
+	}
 }
 
 class wfWAFAttackDataStorageFileEngine {

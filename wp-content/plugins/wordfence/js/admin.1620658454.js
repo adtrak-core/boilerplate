@@ -768,6 +768,18 @@
 					}
 				});
 			},
+			sendTestActivityReport: function(email) {
+				var self = this;
+				this.ajax(
+					'wordfence_email_summary_email_address_debug',
+					{email: email},
+					function(res) {
+						if (res.result) {
+							self.colorboxModalHTML((self.isSmallScreen ? '300px' : '400px'), ("Test Activity Report"), res.result);
+						}
+					}
+				);
+			},
 			updateSwitch: function(elemID, configItem, cb) {
 				var setting = jQuery('#' + elemID).is(':checked');
 				this.updateConfig(configItem, jQuery('#' + elemID).is(':checked') ? 1 : 0, cb);
@@ -1729,16 +1741,18 @@
 				var issuesDOM = container.find('.wf-issue');
 				for (var i = 0; i < issuesDOM.length; i++) {
 					var sourceData = $(issuesDOM[i]).data('sourceData');
-					if (sourceData.data.canDelete) {
-						hasDeleteable = true;
-					}
-					
-					if (sourceData.data.canFix) {
-						hasRepairable = true;
-					}
-					
-					if (hasDeleteable && hasRepairable) {
-						break;
+					if (sourceData) {
+						if (sourceData.data.canDelete) {
+							hasDeleteable = true;
+						}
+
+						if (sourceData.data.canFix) {
+							hasRepairable = true;
+						}
+
+						if (hasDeleteable && hasRepairable) {
+							break;
+						}
 					}
 				}
 
@@ -1815,6 +1829,10 @@
 				} else if (typeof(data) == 'object') {
 					data['action'] = action;
 					data['nonce'] = this.nonce;
+				}
+				if (!cb) {
+					cb = function() {
+					};
 				}
 				if (!cbErr) {
 					cbErr = function() {

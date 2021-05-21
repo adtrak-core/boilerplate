@@ -27,7 +27,7 @@ if (!defined('WORDFENCE_VERSION')) { exit; }
 			<pre class='wf-pre'><?php echo esc_html($currentAutoPrependFile); ?></pre>
 		<?php
 		$contents = file_get_contents($currentAutoPrependFile);
-		$refersToWAF = preg_match('/define\s*\(\s*(["\'])WFWAF_LOG_PATH\1\s*,\s*(["\']).+?\2\s*\)\s*/', $contents);
+		$refersToWAF = preg_match('/define\s*\(\s*(["\'])WFWAF_LOG_PATH\1\s*,\s*(__DIR__\s*\.\s*)?(["\']).+?\3\s*\)\s*/', $contents);
 		
 		if (!$refersToWAF):
 		?>

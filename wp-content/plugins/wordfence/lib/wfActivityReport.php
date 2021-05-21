@@ -259,16 +259,16 @@ SQL
 		}
 		
 		$table_wfBlockedIPLog = wfDB::networkTable('wfBlockedIPLog');
-		$results = $this->db->get_results($this->db->prepare(<<<SQL
-SELECT *,
+		$query=<<<SQL
+SELECT IP, countryCode, unixday, blockType,
 SUM(blockCount) as blockCount
 FROM {$table_wfBlockedIPLog}
 WHERE unixday >= {$interval}
 GROUP BY IP
 ORDER BY blockCount DESC
 LIMIT %d
-SQL
-			, $limit));
+SQL;
+		$results = $this->db->get_results($this->db->prepare($query, $limit));
 		if ($results) {
 			foreach ($results as &$row) {
 				$row->countryName = $this->getCountryNameByCode($row->countryCode);
@@ -299,14 +299,14 @@ SQL
 		}
 	  	
 		$table_wfBlockedIPLog = wfDB::networkTable('wfBlockedIPLog');
-		$results = $this->db->get_results($this->db->prepare(<<<SQL
-SELECT *, COUNT(IP) as totalIPs, SUM(blockCount) as totalBlockCount
-FROM (SELECT * FROM {$table_wfBlockedIPLog} WHERE unixday >= {$interval} GROUP BY IP) t
+		$query=<<<SQL
+SELECT *, COUNT(IP) as totalIPs, SUM(ipBlockCount) as totalBlockCount
+FROM (SELECT *, SUM(blockCount) AS ipBlockCount FROM {$table_wfBlockedIPLog} WHERE unixday >= {$interval} GROUP BY IP) t
 GROUP BY countryCode
 ORDER BY totalBlockCount DESC
 LIMIT %d
-SQL
-			, $limit));
+SQL;
+		$results = $this->db->get_results($this->db->prepare($query, $limit));
 		if ($results) {
 			foreach ($results as &$row) {
 				$row->countryName = $this->getCountryNameByCode($row->countryCode);

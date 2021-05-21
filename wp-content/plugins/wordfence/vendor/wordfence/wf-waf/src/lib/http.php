@@ -367,6 +367,7 @@ class wfWAFHTTPTransportCurl extends wfWAFHTTPTransport {
 			$response = new wfWAFHTTPResponse();
 			$response->setBody($body);
 			$response->setHeaders($header);
+			$response->setStatusCode(curl_getinfo($ch, CURLINFO_HTTP_CODE));
 			return $response;
 		}
 		return false;

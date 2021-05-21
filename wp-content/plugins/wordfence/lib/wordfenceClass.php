@@ -80,6 +80,9 @@ class wordfence {
 	private static $hitID = 0;
 	private static $debugOn = null;
 	private static $runInstallCalled = false;
+
+	const ATTACK_DATA_BODY_LIMIT=41943040; //40MB
+
 	public static function installPlugin(){
 		self::runInstall();
 		
@@ -283,7 +286,7 @@ class wordfence {
 		$table_wfCrawlers = wfDB::networkTable('wfCrawlers');
 		$wfdb->queryWrite("delete from {$table_wfCrawlers} where lastUpdate < unix_timestamp() - (86400 * 7)");
 
-		self::trimWfHits();
+		self::trimWfHits(true);
 
 		$maxRows = absint(wfConfig::get('liveTraf_maxRows', 2000));; //affects stuff further down too
 		
@@ -588,7 +591,7 @@ SQL
 		}
 
 		// Call this before creating the index in cases where the wp-cron isn't running.
-		self::trimWfHits();
+		self::trimWfHits(true);
 		$hitsTable = wfDB::networkTable('wfHits');
 		$hasAttackLogTimeIndex = $wpdb->get_var($wpdb->prepare(<<<SQL
 SELECT COLUMN_KEY FROM information_schema.COLUMNS
@@ -1066,9 +1069,11 @@ SQL
 
 		//Must be the final line
 	}
-	public static function _refreshVulnerabilityCache() {
-		$update_check = new wfUpdateCheck();
-		$update_check->checkAllVulnerabilities();
+	public static function _refreshVulnerabilityCache($upgrader = null, $hook_extra = null) {
+		if($hook_extra ===null || in_array($hook_extra['type'], array('plugin', 'theme'))){
+			$update_check = new wfUpdateCheck();
+			$update_check->checkAllVulnerabilities();
+		}
 	}
 	private static function doEarlyAccessLogging(){
 		$wfLog = self::getLog();
@@ -1266,7 +1271,7 @@ SQL
 			add_action('login_errors', array('wordfence', 'fixGDLimitLoginsErrors'), 11);
 		}
 		
-		add_action('upgrader_process_complete', 'wordfence::_refreshVulnerabilityCache');
+		add_action('upgrader_process_complete', 'wordfence::_refreshVulnerabilityCache', 10, 2);
 		add_action('upgrader_process_complete', 'wfUpdateCheck::syncAllVersionInfo');
 		add_action('upgrader_process_complete', 'wordfence::_scheduleRefreshUpdateNotification', 99, 2);
 		add_action('automatic_updates_complete', 'wordfence::_scheduleRefreshUpdateNotification', 99, 0);
@@ -1327,7 +1332,7 @@ SQL
 		}
 
 		add_action('wordfence_processAttackData', 'wordfence::processAttackData');
-		if (!empty($_GET['wordfence_syncAttackData']) && get_site_option('wordfence_syncingAttackData') <= time() - 60 && get_site_option('wordfence_lastSyncAttackData', 0) < time() - 4) {
+		if (!empty($_GET['wordfence_syncAttackData']) && get_site_option('wordfence_syncingAttackData') <= time() - 60 && get_site_option('wordfence_lastSyncAttackData', 0) < time() - 8) {
 			@ignore_user_abort(true);
 			update_site_option('wordfence_syncingAttackData', time());
 			header('Content-Type: text/javascript');
@@ -2295,7 +2300,7 @@ SQL
 					} else {
 						$lastAttackMicroseconds = $wpdb->get_var("SELECT MAX(attackLogTime) FROM {$table_wfHits}");
 					}
-					if (get_site_option('wordfence_lastSyncAttackData', 0) < time() - 4) {
+					if (get_site_option('wordfence_lastSyncAttackData', 0) < time() - 8) {
 						if ($waf->getStorageEngine()->hasNewerAttackData($lastAttackMicroseconds)) {
 							if (get_site_option('wordfence_syncingAttackData') <= time() - 60) {
 								// Could be the request to itself is not completing, add ajax to the head as a workaround
@@ -3376,7 +3381,6 @@ SQL
 		}
 	}
 	public static function wfsnEndpointType() {
-		$wploginPath = ABSPATH . 'wp-login.php';
 		$type = 0; //Unknown
 		if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {
 			$type = 2;
@@ -3387,7 +3391,7 @@ SQL
 				$type = 301;
 			}
 		}
-		else if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == $wploginPath) {
+		else if (strpos($_SERVER['REQUEST_URI'], '/wp-login.php') !== false) {
 			$type = 1;
 		}
 		return $type;
@@ -5818,16 +5822,18 @@ HTML;
 		if (!WFWAF_SUBDIRECTORY_INSTALL) {
 			try {
 				$authCookie = wfWAF::getInstance()->parseAuthCookie();
+				$capabilities = wordfence::getCurrentUserCapabilities();
 				if (is_user_logged_in() &&
 					(
 						!$authCookie ||
 						(int) $currentUserID !== (int) $authCookie['userID'] ||
-						$role !== $authCookie['role']
+						$role !== $authCookie['role'] ||
+						$authCookie['capabilities'] !== $capabilities //Capability ordering is fixed so a direct equality check is valid
 					)
 				) {
 					wfUtils::setcookie(wfWAF::getInstance()->getAuthCookieName(),
-						$currentUserID . '|' . $role . '|' .
-						wfWAF::getInstance()->getAuthCookieValue($currentUserID, $role),
+						$currentUserID . '|' . $role . '|' . implode(',', $capabilities) . '|' .
+						wfWAF::getInstance()->getAuthCookieValue($currentUserID, $role, $capabilities),
 						time() + 43200, COOKIEPATH, COOKIE_DOMAIN, wfUtils::isFullSSL(), true);
 				}
 			} catch (wfWAFStorageFileException $e) {
@@ -6238,6 +6244,9 @@ HTML;
 				wfSupportController::esc_supportURL(wfSupportController::ITEM_NOTICE_WAF_INACCESSIBLE_CONFIG)
 			) . '</p></div>';
 	}
+	public static function wafStorageEngineFallbackNotice() {
+		echo '<div class="notice notice-warning"><p>'.__('The WAF storage engine is currently set to mysqli, but Wordfence is unable to use the database. The WAF will fall back to using local file system storage instead.', 'wordfence').'</p></div>';
+	}
 	public static function wafConfigNeedsUpdate_mod_php() {
 		if (function_exists('network_admin_url') && is_multisite()) {
 			$wafMenuURL = network_admin_url('admin.php?page=WordfenceWAF&wafconfigfixmodphp=1');
@@ -6356,13 +6365,19 @@ HTML;
 		}
 		
 		$firewall = new wfFirewall();
-		if (!empty($_GET['page']) && preg_match('/^Wordfence/i', $_GET['page']) && !$firewall->testConfig()) {
-			$warningAdded = true;
-			if (wfUtils::isAdminPageMU()) {
-				add_action('network_admin_notices', 'wordfence::wafConfigInaccessibleNotice');
+		if (!empty($_GET['page']) && preg_match('/^Wordfence/i', $_GET['page'])) {
+			if (!$firewall->testConfig()) {
+				$warningAdded = true;
+				if (wfUtils::isAdminPageMU()) {
+					add_action('network_admin_notices', 'wordfence::wafConfigInaccessibleNotice');
+				}
+				else {
+					add_action('admin_notices', 'wordfence::wafConfigInaccessibleNotice');
+				}
 			}
-			else {
-				add_action('admin_notices', 'wordfence::wafConfigInaccessibleNotice');
+			else if (!$warningAdded && method_exists('wfWAF', 'hasFallbackStorageEngine') && wfWAF::hasFallbackStorageEngine()) {
+				$warningAdded = true;
+				add_action(wfUtils::isAdminPageMU()?'network_admin_notices':'admin_notices', 'wordfence::wafStorageEngineFallbackNotice');
 			}
 		}
 		
@@ -7154,13 +7169,13 @@ SQL
 	public static function ajax_email_summary_email_address_debug_callback() {
 		$email = !empty($_REQUEST['email']) ? $_REQUEST['email'] : null;
 		if (!wfUtils::isValidEmail($email)) {
-			return array('err' => __('Invalid email address provided.', 'wordfence'));
+			return array('result' => __('Invalid email address provided', 'wordfence'));
 		}
 		
 		$report = new wfActivityReport();
 		return $report->sendReportViaEmail($email) ?
 			array('ok' => 1, 'result' => __('Test email sent successfully', 'wordfence')) :
-			array('err' => __("Test email failed to send.", 'wordfence'));
+			array('result' => __("Test email failed to send", 'wordfence'));
 	}
 
 	public static function addDashboardWidget() {
@@ -7541,7 +7556,7 @@ SQL
 
 	public static function ajax_updateWAFRules_callback() {
 		try {
-			$event = new wfWAFCronFetchRulesEvent(time() - 2);
+			$event = new wfWAFCronFetchRulesEvent(time() - 2, true);
 			$event->setWaf(wfWAF::getInstance());
 			$success = $event->fire();
 			$failureReason = false;
@@ -8164,7 +8179,9 @@ SQL
 		}
 	}
 
-	public static function trimWfHits() {
+	public static function trimWfHits($force = false) {
+		if(!$force && self::isApiDelayed())
+			return;
 		$wfdb = new wfDB();
 		$lastAggregation = wfConfig::get('lastBlockAggregation', 0);
 		$table_wfHits = wfDB::networkTable('wfHits');
@@ -8214,6 +8231,15 @@ SQL
 		}
 		
 		wfConfig::set('lastBlockAggregation', time());
+	}
+
+	private static function isApiDelayed() {
+		return wfConfig::get('apiDelayedUntil', 0) > time();
+	}
+
+	private static function delaySendAttackData($until) {
+		wfConfig::set('apiDelayedUntil', $until);
+		self::scheduleSendAttackData($until);
 	}
 
 	private static function scheduleSendAttackData($timeToSend = null) {
@@ -8365,10 +8391,21 @@ SQL
 					//Send attack data
 					$limit = 500;
 					$lastSendTime = wfConfig::get('lastAttackDataSendTime');
-					$attackData = $wpdb->get_results($wpdb->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM {$table_wfHits}
+					$lastSendId = wfConfig::get('lastAttackDataSendId');
+					if($lastSendId===false){
+						$query=$wpdb->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM {$table_wfHits}
 						WHERE action in ('blocked:waf', 'learned:waf', 'logged:waf', 'blocked:waf-always')
 						AND attackLogTime > %f
-						LIMIT %d", sprintf('%.6f', $lastSendTime), $limit));
+						LIMIT %d", sprintf('%.6f', $lastSendTime), $limit);
+					}
+					else{
+						$query=$wpdb->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM {$table_wfHits}
+						WHERE action in ('blocked:waf', 'learned:waf', 'logged:waf', 'blocked:waf-always')
+						AND id > %d
+						ORDER BY id LIMIT %d", $lastSendId, $limit);
+					}
+					$params[]=$limit;
+					$attackData = $wpdb->get_results($query);
 					$totalRows = $wpdb->get_var('SELECT FOUND_ROWS()');
 			
 					if ($attackData) { // Build JSON to send
@@ -8397,39 +8434,58 @@ SQL
 								$lastSendTime = $attackDataRow->attackLogTime;
 							}
 						}
-						
-						$homeurl = wfUtils::wpHomeURL();
-						$siteurl = wfUtils::wpSiteURL();
-						$installType = wfUtils::wafInstallationType();
-						$response = wp_remote_post(WFWAF_API_URL_SEC . "?" . http_build_query(array(
-								'action' => 'send_waf_attack_data',
-								'k'      => $waf->getStorageEngine()->getConfig('apiKey', null, 'synced'),
-								's'      => $siteurl,
-								'h'		 => $homeurl,
-								't'		 => microtime(true),
-								'c'		 => $installType,
-								'lang'   => get_site_option('WPLANG'),
-							), null, '&'),
-							array(
-								'body'    => json_encode($dataToSend),
-								'headers' => array(
-									'Content-Type' => 'application/json',
-									'Referer' => false,
-								),
-								'timeout' => 30,
-							));
-	
+
+						$bodyLimit=self::ATTACK_DATA_BODY_LIMIT;
+						$response=null;
+						do {
+							$bodyData=null;
+							do {
+								if($bodyData!==null)
+									array_splice($dataToSend, floor(count($dataToSend)/2));
+								$bodyData=json_encode($dataToSend);
+							} while(strlen($bodyData)>$bodyLimit&&count($dataToSend)>1);
+							
+							$homeurl = wfUtils::wpHomeURL();
+							$siteurl = wfUtils::wpSiteURL();
+							$installType = wfUtils::wafInstallationType();
+							$response = wp_remote_post(WFWAF_API_URL_SEC . "?" . http_build_query(array(
+									'action' => 'send_waf_attack_data',
+									'k'      => $waf->getStorageEngine()->getConfig('apiKey', null, 'synced'),
+									's'      => $siteurl,
+									'h'		 => $homeurl,
+									't'		 => microtime(true),
+									'c'		 => $installType,
+									'lang'   => get_site_option('WPLANG'),
+								), null, '&'),
+								array(
+									'body'    => $bodyData,
+									'headers' => array(
+										'Content-Type' => 'application/json',
+										'Referer' => false,
+									),
+									'timeout' => 30,
+								));
+								$bodyLimit/=2;
+						} while(wp_remote_retrieve_response_code($response)===413&&count($dataToSend)>1);
+
 						if (!is_wp_error($response) && ($body = wp_remote_retrieve_body($response))) {
 							$jsonData = json_decode($body, true);
 							if (is_array($jsonData) && array_key_exists('success', $jsonData)) {
-								// Successfully sent data, remove the full request from the table to reduce storage size
-								foreach ($attackDataToUpdate as $hitID => $dataToUpdate) {
-									$wpdb->update($table_wfHits, $dataToUpdate, array(
-										'id' => $hitID,
-									));
-								}
 								wfConfig::set('lastAttackDataSendTime', $lastSendTime);
-								if ($totalRows > $limit) {
+								$lastSendIndex=count($dataToSend)-1;
+								if($lastSendIndex>=0){
+									$lastSendId = $attackData[$lastSendIndex]->id;
+									wfConfig::set('lastAttackDataSendId', $lastSendId);
+									// Successfully sent data, remove the full request from the table to reduce storage size
+									foreach ($attackDataToUpdate as $hitID => $dataToUpdate) {
+										if ($hitID <= $lastSendId) {
+											$wpdb->update($table_wfHits, $dataToUpdate, array(
+												'id' => $hitID,
+											));
+										}
+									}
+								}
+								if (count($dataToSend) < $totalRows) {
 									self::scheduleSendAttackData();
 								}
 								
@@ -8437,6 +8493,10 @@ SQL
 									$waf->getStorageEngine()->setConfig('watchedIPs', $jsonData['data']['watchedIPList'], 'transient');
 								}
 							}
+						}
+						else{
+							//Delay interactions for 30 minutes if an error occurs
+							self::delaySendAttackData(time() + 30*60);
 						}
 					}
 					
@@ -8523,11 +8583,11 @@ SQL
 					}
 				}
 				else if (is_string($okToSendBody) && preg_match('/next check in: ([0-9]+)/', $okToSendBody, $matches)) {
-					self::scheduleSendAttackData(time() + $matches[1]);
+					self::delaySendAttackData(time() + $matches[1]);
 				}
 			}
 			else { // Could be that the server is down, so hold off on sending data for a little while
-				self::scheduleSendAttackData(time() + 7200);
+				self::delaySendAttackData(time() + 7200);
 			}
 		}
 		else if (!wfConfig::get('other_WFNet', true)) {
@@ -8854,6 +8914,7 @@ SQL
 	}
 
 	public static function getWAFBootstrapContent($currentAutoPrependedFile = null) {
+		$bootstrapPath = dirname(self::getWAFBootstrapPath());
 		$currentAutoPrepend = '';
 		if ($currentAutoPrependedFile && is_file($currentAutoPrependedFile) && !WFWAF_SUBDIRECTORY_INSTALL) {
 			$currentAutoPrepend = sprintf('
@@ -8865,23 +8926,13 @@ if (file_exists(%1$s)) {
 		return sprintf('<?php
 // Before removing this file, please verify the PHP ini setting `auto_prepend_file` does not point to this.
 %3$s
-if (file_exists(%1$s)) {
-	define("WFWAF_LOG_PATH", %2$s);
-	include_once %1$s;
-}
-?>',
-			var_export(WORDFENCE_PATH . 'waf/bootstrap.php', true),
-			var_export(WFWAF_SUBDIRECTORY_INSTALL ? WP_CONTENT_DIR . '/wflogs/' : WFWAF_LOG_PATH, true),
+if (file_exists(__DIR__.%1$s)) {
+	define("WFWAF_LOG_PATH", __DIR__.%2$s);
+	include_once __DIR__.%1$s;
+}',
+			var_export(wfUtils::relativePath(WORDFENCE_PATH . 'waf/bootstrap.php', $bootstrapPath, true), true),
+			var_export(wfUtils::relativePath((WFWAF_SUBDIRECTORY_INSTALL ? WP_CONTENT_DIR . '/wflogs/' : WFWAF_LOG_PATH), $bootstrapPath, true), true),
 			$currentAutoPrepend);
-	}
-
-	public static function checkAndCreateBootstrap() {
-		$bootstrapPath = self::getWAFBootstrapPath();
-		if (!file_exists($bootstrapPath) || !filesize($bootstrapPath)) {
-			@file_put_contents($bootstrapPath, self::getWAFBootstrapContent(), LOCK_EX);
-			clearstatcache();
-		}
-		return file_exists($bootstrapPath) && filesize($bootstrapPath);
 	}
 
 	/**
@@ -8897,7 +8948,26 @@ if (file_exists(%1$s)) {
 				return $role;
 			}
 		}
-		return false;
+		return 'other';
+	}
+
+	private static function getCurrentUserCapabilities() {
+		$capabilities = array(
+			'manage_options',
+			'unfiltered_html',
+			'edit_others_posts',
+			'upload_files',
+			'publish_posts',
+			'edit_posts',
+			'read',
+			'manage_network'
+		);
+		foreach ($capabilities as $index=>$capability) {
+			if (!current_user_can($capability)) {
+				unset($capabilities[$index]);
+			}
+		}
+		return array_values($capabilities);
 	}
 
 	public static function licenseStatusChanged() {

@@ -1720,8 +1720,8 @@ class wfScanEngine {
 		$this->statusIDX['diskSpace'] = wfIssues::statusStart(__('Scanning to check available disk space', 'wordfence'));
 		$this->scanController->startStage(wfScanner::STAGE_SERVER_STATE);
 		wfUtils::errorsOff();
-		$total = @disk_total_space('.');
-		$free = @disk_free_space('.'); //Normally false if unreadable but can return 0 on some hosts even when there's space available
+		$total = function_exists('disk_total_space')?@disk_total_space('.'):false;
+		$free = function_exists('disk_free_space')?@disk_free_space('.'):false; //Normally false if unreadable but can return 0 on some hosts even when there's space available
 		wfUtils::errorsOn();
 		if (!$total || !$free) {
 			$this->status(2, 'info', __('Unable to access available disk space information', 'wordfence'));
@@ -1965,13 +1965,18 @@ class wfScanEngine {
 			foreach ($this->pluginRepoStatus as $slug => $status) {
 				if ($status !== false && !is_wp_error($status) && ((is_object($status) && property_exists($status, 'last_updated')) || (is_array($status) && array_key_exists('last_updated', $status)))) {
 					$statusArray = (array) $status;
+					$hasVersion = array_key_exists('version', $statusArray);
+					if (!$hasVersion) {
+						$statusArray['version'] = null;
+						wordfence::status(3, 'error', "Unable to determine version for plugin $slug");
+					}
 					$lastUpdateTimestamp = strtotime($statusArray['last_updated']);
 					if ($lastUpdateTimestamp > 0 && (time() - $lastUpdateTimestamp) > 63072000 /* ~2 years */) {
 						$statusArray['dateUpdated'] = wfUtils::formatLocalTime(get_option('date_format'), $lastUpdateTimestamp);
 						$severity = wfIssues::SEVERITY_MEDIUM;
 						$statusArray['abandoned'] = true;
 						$statusArray['vulnerable'] = false;
-						$vulnerable = $this->updateCheck->isPluginVulnerable($slug, $statusArray['version']);
+						$vulnerable = $hasVersion && $this->updateCheck->isPluginVulnerable($slug, $statusArray['version']);
 						if ($vulnerable) {
 							$severity = wfIssues::SEVERITY_CRITICAL;
 							$statusArray['vulnerable'] = true;

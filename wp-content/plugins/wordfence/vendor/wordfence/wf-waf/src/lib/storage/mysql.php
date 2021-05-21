@@ -617,6 +617,11 @@ class wfWAFStorageMySQL implements wfWAFStorageInterface {
 		}
 		return $table;
 	}
+
+	public function getDescription() {
+		return __('mysqli', 'wordfence');
+	}
+
 }
 
 interface wfWAFStorageEngineDatabase {

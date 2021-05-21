@@ -9,6 +9,8 @@ interface wfWAFRequestInterface {
 	
 	public function getMd5Body();
 
+	public function getJsonBody();
+
 	public function getQueryString();
 	
 	public function getMd5QueryString();
@@ -263,7 +265,8 @@ class wfWAFRequest implements wfWAFRequestInterface {
 			$request->setRawBody('');
 		}
 		else {
-			$request->setRawBody(wfWAFUtils::rawPOSTBody());
+			$rawBody=wfWAFUtils::rawPOSTBody();
+			$request->setRawBody($rawBody);
 		}
 		
 		$request->setQueryString(wfWAFUtils::stripMagicQuotes($_GET));
@@ -343,6 +346,8 @@ class wfWAFRequest implements wfWAFRequestInterface {
 	private $body;
 	private $rawBody;
 	private $md5Body;
+	private $jsonBody;
+	private $jsonParsed = false;
 	private $cookies;
 	private $fileNames;
 	private $files;
@@ -400,6 +405,18 @@ class wfWAFRequest implements wfWAFRequestInterface {
 			return $this->_arrayValueByKeys($this->md5Body, $args);
 		}
 		return $this->md5Body;
+	}
+
+	public function getJsonBody() {
+		if ($this->jsonParsed === false) {
+			if (defined('WFWAF_DISABLE_RAW_BODY') && WFWAF_DISABLE_RAW_BODY) {
+				$this->setJsonBody(null);
+			}
+			else {
+				$this->setJsonBody(wfWAFUtils::json_decode($this->getRawBody(), true));
+			}
+		}
+		return $this->jsonBody;
 	}
 
 	public function getQueryString() {
@@ -987,6 +1004,11 @@ FORM;
 	 */
 	public function setMd5Body($md5Body) {
 		$this->md5Body = $md5Body;
+	}
+
+	public function setJsonBody($jsonBody) {
+		$this->jsonBody = $jsonBody;
+		$this->jsonParsed = true;
 	}
 
 	/**

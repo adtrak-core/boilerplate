@@ -3048,6 +3048,45 @@ class wfUtils {
 		}
 		return $payload;
 	}
+
+	/**
+	 * Split a path into its components
+	 * @param string $path
+	 */
+	public static function splitPath($path) {
+		return preg_split('/[\\/\\\\]/', $path, -1, PREG_SPLIT_NO_EMPTY);
+	}
+
+	/**
+	 * Convert an absolute path to a path relative to $to
+	 * @param string $absolute the absolute path to convert
+	 * @param string $to the absolute path from which to derive the relative path
+	 * @param bool $leadingSlash if true, prepend the resultant URL with a slash
+	 */
+	public static function relativePath($absolute, $to, $leadingSlash = false) {
+		$trailingSlash = in_array(substr($absolute, -1), array('/', '\\'));
+		$absoluteComponents = self::splitPath($absolute);
+		$toComponents = self::splitPath($to);
+		$relativeComponents = array();
+		do {
+			$currentAbsolute = array_shift($absoluteComponents);
+			$currentTo = array_shift($toComponents);
+		} while($currentAbsolute === $currentTo && $currentAbsolute !== null);
+		while ($currentTo !== null) {
+			array_push($relativeComponents, '..');
+			$currentTo = array_shift($toComponents);
+		}
+		while ($currentAbsolute !== null) {
+			array_push($relativeComponents, $currentAbsolute);
+			$currentAbsolute = array_shift($absoluteComponents);
+		}
+		return implode(array(
+			$leadingSlash ? '/' : '',
+			implode('/', $relativeComponents),
+			($trailingSlash && (count($relativeComponents) > 0 || !$leadingSlash)) ? '/' : ''
+		));
+	}
+
 }
 
 // GeoIP lib uses these as well

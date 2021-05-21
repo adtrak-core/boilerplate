@@ -82,7 +82,8 @@ class wfDiagnostic
 				'description' => __('Current WAF configuration.', 'wordfence'),
 				'tests' => array(
 					'wafAutoPrepend' => __('WAF auto prepend active', 'wordfence'),
-					'wafStorageEngine' => __('WAF storage engine (WFWAF_STORAGE_ENGINE)', 'wordfence'),
+					'wafStorageEngine' => __('Configured WAF storage engine (WFWAF_STORAGE_ENGINE)', 'wordfence'),
+					'wafActiveStorageEngine' => __('Active WAF storage engine', 'wordfence'),
 					'wafLogPath' => __('WAF log path', 'wordfence'),
 					'wafSubdirectoryInstall' => __('WAF subdirectory installation', 'wordfence'),
 					'wafAutoPrependFilePath' => __('wordfence-waf.php path', 'wordfence'),
@@ -358,6 +359,20 @@ class wfDiagnostic
 	}
 	public function wafStorageEngine() {
 		return array('test' => true, 'infoOnly' => true, 'message' => (defined('WFWAF_STORAGE_ENGINE') ? WFWAF_STORAGE_ENGINE : __('(default)', 'wordfence')));
+	}
+	private static function getStorageEngineDescription($storageEngine) {
+		if ($storageEngine === null) {
+			return __('None', 'wordfence');
+		}
+		else if (method_exists($storageEngine, 'getDescription')) {
+			return $storageEngine->getDescription();
+		}
+		else {
+			return __('Unknown (mixed plugin version)', 'wordfence');
+		}
+	}
+	public function wafActiveStorageEngine() {
+		return array('test' => true, 'infoOnly' => true, 'message' => self::getStorageEngineDescription(wfWAF::getSharedStorageEngine()));
 	}
 	public function wafLogPath() {
 		$logPath = __('(not set)', 'wordfence');
