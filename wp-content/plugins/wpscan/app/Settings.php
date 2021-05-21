@@ -12,8 +12,8 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 1.0.0
  */
-class Settings
-{
+class Settings {
+
 	/**
 	 * Class constructor.
 	 *
@@ -58,8 +58,8 @@ class Settings
 			wp_enqueue_style(
 				'wpscan-settings',
 				plugins_url( 'assets/css/settings.css', WPSCAN_PLUGIN_FILE ),
-					array(),
-					$this->parent->wpscan_plugin_version()
+				array(),
+				$this->parent->wpscan_plugin_version()
 			);
 		}
 	}
@@ -125,7 +125,7 @@ class Settings
 		);
 
 		if ( $this->parent->is_interval_scanning_disabled() ) {
-			wp_clear_scheduled_hook( $this->parent->WPSCAN_SCHEDULE );
+			as_unschedule_all_actions( $this->parent->WPSCAN_SCHEDULE );
 		}
 	}
 
@@ -266,7 +266,7 @@ class Settings
 	 */
 	public function field_scanning_interval() {
 		$opt_name = $this->parent->OPT_SCANNING_INTERVAL;
-		$value    = esc_attr( get_option( $opt_name , 'daily' ) );
+		$value    = esc_attr( get_option( $opt_name, 'daily' ) );
 
 		$disabled = $this->parent->is_interval_scanning_disabled() ? "disabled='true'" : null;
 
@@ -288,7 +288,7 @@ class Settings
 		if ( $this->parent->is_interval_scanning_disabled() ) {
 			_e( 'Automated scanning is currently disabled using the <code>WPSCAN_DISABLE_SCANNING_INTERVAL</code> constant.', 'wpscan' );
 		} else {
-			_e( "This setting will change the frequency that the WPScan plugin will run an automatic scan. This is useful if you want your report, or notifications, to be updated more frequently. Please note that the more frequent scans are run, the more API requests are consumed.", 'wpscan' );
+			_e( 'This setting will change the frequency that the WPScan plugin will run an automatic scan. This is useful if you want your report, or notifications, to be updated more frequently. Please note that the more frequent scans are run, the more API requests are consumed.', 'wpscan' );
 		}
 
 		echo '</p><br>';
@@ -304,7 +304,7 @@ class Settings
 	 */
 	public function field_scanning_time() {
 		$opt      = $this->parent->OPT_SCANNING_TIME;
-		$value    = esc_attr( get_option( $opt, date('H:i') ) );
+		$value    = esc_attr( get_option( $opt, date( 'H:i' ) ) );
 		$disabled = $this->parent->is_interval_scanning_disabled() ? "disabled='true'" : null;
 
 		echo "<input type='time' name='$opt' value='$value' $disabled> ";
@@ -318,10 +318,10 @@ class Settings
 		if ( $this->parent->is_interval_scanning_disabled() ) {
 			_e( 'Automated scanning is currently disabled using the <code>WPSCAN_DISABLE_SCANNING_INTERVAL</code> constant.', 'wpscan' );
 		} else {
-			_e( 'This setting allows you to set the scanning hour for the <code>Daily</code> option. For the <code>Twice Daily</code> this will be the first scan and the second will be 12 hours later. For the <code>Hourly</code> it will affect the first scan only.' , 'wpscan' );
+			_e( 'This setting allows you to set the scanning hour for the <code>Daily</code> option. For the <code>Twice Daily</code> this will be the first scan and the second will be 12 hours later. For the <code>Hourly</code> it will affect the first scan only.', 'wpscan' );
 		}
 
-		echo "</p><br/>";
+		echo '</p><br/>';
 	}
 
 	/**
@@ -339,7 +339,7 @@ class Settings
 		// WordPress.
 		echo "<div class='wpscan-ignore-items-section'>";
 
-		echo "<label><input name='{$opt}[wordpress]' type='checkbox' $wp value='1' > " .
+		echo "<label><input name='{$opt}[WordPress]' type='checkbox' $wp value='1' > " .
 			__( 'WordPress Core', 'wpscan' ) . '</label>';
 
 		echo '</div>';
@@ -348,7 +348,7 @@ class Settings
 		$this->ignore_items_section( 'plugins', $value );
 
 		// Themes list
-		$this->ignore_items_section( 'themes', $value) ;
+		$this->ignore_items_section( 'themes', $value );
 	}
 
 	/**
@@ -397,7 +397,7 @@ class Settings
 	 * @return string
 	 */
 	public function sanitize_api_token( $value ) {
-		$value  = trim( $value );
+		$value = trim( $value );
 
 		// update_account_status() calls the /status API endpoint, verifying the validity of the Token passed via $value and updates the account status if needed.
 		if ( empty( $value ) ) {
@@ -420,7 +420,7 @@ class Settings
 			update_option( $this->parent->OPT_ERRORS, array() ); // Clear errors.
 		} else {
 			if ( $this->parent->is_interval_scanning_disabled() ) {
-				wp_clear_scheduled_hook( $this->parent->WPSCAN_SCHEDULE );
+				as_unschedule_all_actions( $this->parent->WPSCAN_SCHEDULE );
 			}
 		}
 
@@ -439,12 +439,26 @@ class Settings
 
 		if ( ! empty( $api_token ) && $old_value !== $value ) {
 			$interval = esc_attr( get_option( $this->parent->OPT_SCANNING_INTERVAL, 'daily' ) );
-			$time     = esc_attr( get_option( $this->parent->OPT_SCANNING_TIME, date('H:i') . ' +1day' ) );
+			$time     = esc_attr( get_option( $this->parent->OPT_SCANNING_TIME, date( 'H:i' ) . ' +1day' ) );
 
-			wp_clear_scheduled_hook( $this->parent->WPSCAN_SCHEDULE );
+			as_unschedule_all_actions( $this->parent->WPSCAN_SCHEDULE );
+
+			switch ( $interval ) {
+				case 'daily':
+					$interval = DAY_IN_SECONDS;
+					break;
+				case 'twicedaily':
+					$interval = HOUR_IN_SECONDS * 12;
+					break;
+				case 'hourly':
+					$interval = HOUR_IN_SECONDS;
+					break;
+			}
 
 			if ( ! $this->parent->is_interval_scanning_disabled() ) {
-				wp_schedule_event( strtotime( $time ), $interval, $this->parent->WPSCAN_SCHEDULE );
+				if ( false === as_next_scheduled_action( $this->parent->WPSCAN_SCHEDULE ) ) {
+					as_schedule_recurring_action( $time, $interval, $this->parent->WPSCAN_SCHEDULE );
+				}
 			}
 		}
 	}

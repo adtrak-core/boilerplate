@@ -66,7 +66,7 @@ class https extends Check {
     // Check if the current page is using HTTPS.
     if ( 'https' !== substr( $wp_url, 0, 5 ) || 'https' !== substr( $site_url, 0, 5 ) ) {
       // No HTTPS used.
-      $this->add_vulnerability( __( 'The website does not seem to be using HTTPS (SSL/TLS) encryption for communications', 'wpscan' ), 'high', 'https' );
+      $this->add_vulnerability( __( 'The website does not seem to be using HTTPS (SSL/TLS) encryption for communications.', 'wpscan' ), 'high', 'https', 'https://blog.wpscan.com/2021/03/23/wordpress-ssl-tls-https.html' );
     }
   }
 }

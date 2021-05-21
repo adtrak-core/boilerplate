@@ -189,10 +189,10 @@
                               <?php $this->parent->classes['checks/system']->list_check_vulnerabilities( $data['instance'] ) ?>
                             </td>
                             <td class="security-check-actions">
-                                <?php $this->parent->classes['checks/system']->list_actions($data['instance']) ?>                              
+                                <?php $this->parent->classes['checks/system']->list_actions($data['instance']) ?>
                                 <span class="spinner"></span>
                             </td>
-                        </tr
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>

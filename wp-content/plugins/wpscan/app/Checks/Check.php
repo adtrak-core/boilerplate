@@ -109,11 +109,12 @@ abstract class Check {
 	 * @access public
 	 * @return void
 	 */
-	final public function add_vulnerability( $title, $severity, $id ) {
+	final public function add_vulnerability( $title, $severity, $id, $remediation_url ) {
 		$vulnerability = array(
-			'title'    => $title,
-			'severity' => $severity,
-			'id'       => $id,
+			'title'           => $title,
+			'severity'        => $severity,
+			'id'              => $id,
+			'remediation_url' => $remediation_url,
 		);
 
 		$this->vulnerabilities[] = $vulnerability;

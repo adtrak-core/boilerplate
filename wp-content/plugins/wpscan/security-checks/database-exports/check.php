@@ -73,7 +73,7 @@ class databaseExports extends Check {
 				$code     = wp_remote_retrieve_response_code( $response );
 
 				if ( 200 === $code ) {
-					$this->add_vulnerability( __( 'A publicly accessible database file  was found in', 'wpscan' ) . " <a href='$url' target='_blank'>$url</a>", 'high', sanitize_title( $name ) );
+					$this->add_vulnerability( __( 'A publicly accessible database file  was found in', 'wpscan' ) . " <a href='$url' target='_blank'>$url</a>.", 'high', sanitize_title( $name ), 'https://blog.wpscan.com/2021/01/28/wordpress-database-backup-files.html' );
 				}
 			}
 		}

@@ -79,18 +79,18 @@ class weakPasswords extends Check {
     if ( ! empty( $found ) ) {
         if ( 1 === count( $found ) ) {
           $text = sprintf(
-            __( 'The %s user was found to have a weak password. The user\'s password should be updated immediately', 'wpscan' ),
+            __( 'The %s user was found to have a weak password. The user\'s password should be updated immediately.', 'wpscan' ),
             esc_html( $found[0] )
           );
         } else {
           $found = implode( ', ', $found );
           $text  = sprintf(
-            __( 'The %s users were found to have weak passwords. The users\' passwords should be updated immediately', 'wpscan' ),
+            __( 'The %s users were found to have weak passwords. The users\' passwords should be updated immediately.', 'wpscan' ),
             esc_html( $found )
           );
         }
 
-        $this->add_vulnerability( $text, 'high', 'weak-passwords' );
+        $this->add_vulnerability( $text, 'high', 'weak-passwords', 'https://blog.wpscan.com/wpscan/2019/09/17/wpscan-brute-force.html' );
     }
   }
 }
