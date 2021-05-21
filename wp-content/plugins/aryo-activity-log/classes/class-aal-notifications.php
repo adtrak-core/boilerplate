@@ -95,14 +95,14 @@ class AAL_Notifications {
 				'unspammed',
 				'downloaded',
 				'installed',
-				'added',
+				'uploaded',
 				'activated',
 				'deactivated',
 				'accessed',
 				'file_updated',
 				'logged_in',
 				'logged_out',
-				'wrong_password',
+				'failed_login',
 			)
 		);
 		$ready = array();

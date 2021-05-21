@@ -127,12 +127,12 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 	public function get_columns() {
 		$columns = array(
 			'date'        => __( 'Date', 'aryo-activity-log' ),
-			'author'      => __( 'Author', 'aryo-activity-log' ),
+			'author'      => __( 'User', 'aryo-activity-log' ),
 			'ip'          => __( 'IP', 'aryo-activity-log' ),
-			'type'        => __( 'Type', 'aryo-activity-log' ),
-			'label'       => __( 'Label', 'aryo-activity-log' ),
+			'type'        => __( 'Topic', 'aryo-activity-log' ),
+			'label'       => __( 'Context', 'aryo-activity-log' ),
+			'description' => __( 'Meta', 'aryo-activity-log' ),
 			'action'      => __( 'Action', 'aryo-activity-log' ),
-			'description' => __( 'Description', 'aryo-activity-log' ),
 		);
 
 		return $columns;
@@ -176,7 +176,6 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 		if ( ! empty( $item->user_id ) && 0 !== (int) $item->user_id ) {
 			$user = get_user_by( 'id', $item->user_id );
 			if ( $user instanceof WP_User && 0 !== $user->ID ) {
-				//$user->display_name
 				return sprintf(
 					'<a href="%s">%s <span class="aal-author-name">%s</span></a><br /><small>%s</small>',
 					get_edit_user_link( $user->ID ),
@@ -202,7 +201,7 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 	public function column_label( $item ) {
 		$return = '';
 		if ( ! empty( $item->object_subtype ) ) {
-			$pt     = get_post_type_object( $item->object_subtype );
+			$pt = get_post_type_object( $item->object_subtype );
 			$return = ! empty( $pt->label ) ? $pt->label : $item->object_subtype;
 		}
 
@@ -212,20 +211,53 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 	
 	public function column_description( $item ) {
 		$return = esc_html( $item->object_name );
+		$actions = [];
 		
 		switch ( $item->object_type ) {
 			case 'Post' :
-				$return = sprintf( '<a href="%s">%s</a>', get_edit_post_link( $item->object_id ), esc_html( $item->object_name ) );
+				$actions = [
+					'view' => sprintf( '<a href="%s">%s</a>', get_permalink( $item->object_id ), __( 'View', 'aryo-activity-log' ) ),
+					'edit' => sprintf( '<a href="%s">%s</a>', get_edit_post_link( $item->object_id ), __( 'Edit', 'aryo-activity-log' ) ),
+				];
+
+				$return = esc_html( $item->object_name );
 				break;
 			
 			case 'Taxonomy' :
-				if ( ! empty( $item->object_id ) )
-					$return = sprintf( '<a href="%s">%s</a>', get_edit_term_link( $item->object_id, $item->object_subtype ), esc_html( $item->object_name ) );
+				if ( ! empty( $item->object_id ) ) {
+					if ( is_taxonomy_viewable( $item->object_subtype ) ) {
+						$term_view_link = get_term_link( absint( $item->object_id ), $item->object_subtype );
+
+						if ( ! is_wp_error( $term_view_link ) ) {
+							$actions['view'] = sprintf( '<a href="%s">%s</a>', $term_view_link, __( 'View', 'aryo-activity-log' ) );
+						}
+					}
+
+					$term_edit_link = get_edit_term_link( $item->object_id, $item->object_subtype );
+					if ( ! empty( $term_edit_link ) ) {
+						$actions['edit'] = sprintf( '<a href="%s">%s</a>', $term_edit_link, __( 'Edit', 'aryo-activity-log' ) );
+					}
+
+					$return = esc_html( $item->object_name );
+				}
 				break;
 			
 			case 'Comments' :
 				if ( ! empty( $item->object_id ) && $comment = get_comment( $item->object_id ) ) {
-					$return = sprintf( '<a href="%s">%s #%d</a>', get_edit_comment_link( $item->object_id ), $item->object_name, $item->object_id );
+					$actions['edit'] = sprintf( '<a href="%s">%s</a>', get_edit_comment_link( $item->object_id ), __( 'Edit', 'aryo-activity-log' ) );
+				}
+
+				$return = esc_html( "{$item->object_name} #{$item->object_id}" );
+				break;
+
+			case 'User' :
+				$user_edit_link = get_edit_user_link( $item->object_id );
+				if ( ! empty( $user_edit_link ) ) {
+					$actions['edit'] = sprintf( '<a href="%s">%s</a>', $user_edit_link, __( 'Edit', 'aryo-activity-log' ) );
+				}
+
+				if ( ! empty( $item->object_name ) ) {
+					$return = __( 'Username:', 'aryo-activity-log' ) . ' ' . $item->object_name;
 				}
 				break;
 			
@@ -245,6 +277,18 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 		}
 		
 		$return = apply_filters( 'aal_table_list_column_description', $return, $item );
+
+		if ( ! empty( $actions ) ) {
+			$i = 0;
+
+			$return .= '<div class="row-actions">';
+			foreach ( $actions as $action_name => $action_label ) {
+				++$i;
+				( 1 === $i ) ? $sep = '' : $sep = ' | ';
+				$return .= "<span class=\"{$action_name}\">{$sep}{$action_label}</span>";
+			}
+			$return .= '</div>';
+		}
 		
 		return $return;
 	}
@@ -405,7 +449,7 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 				$output[] = sprintf( '<option value="%s"%s>%s</option>', $type->object_type, selected( $_REQUEST['typeshow'], $type->object_type, false ), __( $type->object_type, 'aryo-activity-log' ) );
 
 			echo '<select name="typeshow" id="hs-filter-typeshow">';
-			printf( '<option value="">%s</option>', __( 'All Types', 'aryo-activity-log' ) );
+			printf( '<option value="">%s</option>', __( 'All Topics', 'aryo-activity-log' ) );
 			echo implode( '', $output );
 			echo '</select>';
 		}
@@ -500,7 +544,7 @@ class AAL_Activity_Log_List_Table extends WP_List_Table {
 					' . $this->_get_where_by_role()
 		);
 
-		$items_orderby = filter_input( INPUT_GET, 'orderby', FILTER_SANITIZE_STRING );
+		$items_orderby = sanitize_sql_orderby( filter_input( INPUT_GET, 'orderby', FILTER_SANITIZE_STRING ) );
 		if ( empty( $items_orderby ) ) {
 			$items_orderby = 'hist_time'; // Sort by time by default.
 		}
