@@ -26,6 +26,15 @@
 	delete_option("WpFastestCacheCSSSIZE");
 	delete_option("WpFastestCacheJS");
 	delete_option("WpFastestCacheJSSIZE");
+	delete_option("WpFastestCacheXML");
+	delete_option("WpFastestCacheXMLSIZE");
+	delete_option("WpFastestCacheSVG");
+	delete_option("WpFastestCacheSVGSIZE");
+	delete_option("WpFastestCacheJSON");
+	delete_option("WpFastestCacheJSONSIZE");
+	delete_option("WpFastestCacheWOFF");
+	delete_option("WpFastestCacheWOFFSIZE");
+	delete_option("WpFastestCacheToolbarSettings");
 	delete_option("wpfc_server_location");
 	delete_option("wpfc-group");
 	delete_option("WpFc_credit");

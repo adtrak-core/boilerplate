@@ -40,6 +40,7 @@
 					    <div class="wiz-input-cont">
 							<label style="padding-right: 5px;" class="mc-input-label" for="origin-url">API Token:</label><input type="text" name="" value="" class="api-key" id="origin-url">
 							<div id="cdn-url-loading"></div>
+							<label class="wiz-error-msg"></label>
 					    </div>
 					    <p class="wpfc-bottom-note" style="margin-bottom:-10px;"><a target="_blank" href="https://www.wpfastestcache.com/tutorial/wp-fastest-cache-cloudflare/">Note: Please read How to Integrate Cloudflare into WP Fastest Cache</a></p>
 					</div>

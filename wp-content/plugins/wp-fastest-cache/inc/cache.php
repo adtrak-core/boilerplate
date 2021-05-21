@@ -1041,7 +1041,7 @@
 			if($create){
 				if (!is_user_logged_in() && !$this->isCommenter()){
 					if(!is_dir($cachFilePath)){
-						if(is_writable($this->getWpContentDir()) || ((is_dir($this->getWpContentDir()."/cache")) && (is_writable($this->getWpContentDir()."/cache")))){
+						if(is_writable($this->getWpContentDir()) || ((is_dir($this->getWpContentDir("/cache"))) && (is_writable($this->getWpContentDir("/cache"))))){
 							if (@mkdir($cachFilePath, 0755, true)){
 
 								$buffer = (string) apply_filters('wpfc_buffer_callback_filter', $buffer, $extension);
@@ -1060,12 +1060,12 @@
 				   				}
 
 				   				if($extension == "html"){
-				   					if(!file_exists(WPFC_WP_CONTENT_DIR."/cache/index.html")){
-				   						@file_put_contents(WPFC_WP_CONTENT_DIR."/cache/index.html", "");
+				   					if(!file_exists($this->getWpContentDir("/cache/index.html"))){
+				   						@file_put_contents($this->getWpContentDir("/cache/index.html"), "");
 				   					}
 				   				}else{
-				   					if(!file_exists(WPFC_WP_CONTENT_DIR."/cache/wpfc-minified/index.html")){
-				   						@file_put_contents(WPFC_WP_CONTENT_DIR."/cache/wpfc-minified/index.html", "");
+				   					if(!file_exists($this->getWpContentDir("/cache/wpfc-minified/index.html"))){
+				   						@file_put_contents($this->getWpContentDir("/cache/wpfc-minified/index.html"), "");
 				   					}
 				   				}
 
@@ -1114,6 +1114,10 @@
 			}
 
 			if(preg_match("/\/amp\//", $request_uri)){
+				$action = true;
+			}
+
+			if(preg_match("/\?amp\=1$/", $request_uri)){
 				$action = true;
 			}
 

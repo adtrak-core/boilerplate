@@ -3,7 +3,7 @@
 Plugin Name: WP Fastest Cache
 Plugin URI: http://wordpress.org/plugins/wp-fastest-cache/
 Description: The simplest and fastest WP Cache system
-Version: 0.9.1.6
+Version: 0.9.1.8
 Author: Emre Vona
 Author URI: http://tr.linkedin.com/in/emrevona
 Text Domain: wp-fastest-cache
@@ -130,10 +130,12 @@ GNU General Public License for more details.
 			}
 
 			if(defined("WPFC_DISABLE_CLEARING_CACHE_AFTER_WOOCOMMERCE_CHECKOUT_ORDER_PROCESSED") && WPFC_DISABLE_CLEARING_CACHE_AFTER_WOOCOMMERCE_CHECKOUT_ORDER_PROCESSED){
+			}else if(defined("WPFC_DISABLE_CLEARING_CACHE_AFTER_WOOCOMMERCE_ORDER_STATUS_CHANGED") && WPFC_DISABLE_CLEARING_CACHE_AFTER_WOOCOMMERCE_ORDER_STATUS_CHANGED){
 			}else{
 				// to clear cache after new Woocommerce orders
-				add_action('woocommerce_checkout_order_processed', array($this, 'clear_cache_after_woocommerce_checkout_order_processed'), 1, 1);
+				add_action('woocommerce_order_status_changed', array($this, 'clear_cache_after_woocommerce_order_status_changed'), 1, 1);
 			}
+
 
 			// kk Star Ratings: to clear the cache of the post after voting
 			add_action('kksr_rate', array($this, 'clear_cache_on_kksr_rate'));
@@ -145,11 +147,18 @@ GNU General Public License for more details.
 			add_action("wpfc_clear_all_cache", array($this, 'deleteCache'), 10, 1);
 			add_action("wpfc_clear_post_cache_by_id", array($this, 'singleDeleteCache'), 10, 2);
 
-			// to create cache for single content
+
+
 			if(defined("WPFC_AUTOMATIC_CACHE") && WPFC_AUTOMATIC_CACHE){
-				add_action('admin_notices', array( $this, 'single_preload_inline_js'));
+				// to create cache for single content
+				add_action("add_meta_boxes", array($this, "add_meta_box"), 10, 2);
+				add_action('admin_notices', array($this, 'single_preload_inline_js'));
+				add_action('wp_ajax_wpfc_preload_single_save_settings', array($this, "wpfc_preload_single_save_settings_callback"));
 				add_action('wp_ajax_wpfc_preload_single', array($this, "wpfc_preload_single_callback"));
 			}
+
+
+
 
 			// to add settings link
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array($this, 'action_links'));
@@ -281,13 +290,13 @@ GNU General Public License for more details.
 						}
 					}
 				}else{
-					if(preg_match("/wpfc-minified\/([^\/]+)\/([^\/]+)/", $this->current_url(), $path)){
+					if(preg_match("/\/([^\/]+)\/([^\/]+(\.css|\.js))(\?.+)?$/", $this->current_url(), $path)){
 						// for security
 						if(preg_match("/\.{2,}/", $this->current_url())){
 							die("May be Directory Traversal Attack");
 						}
 
-						if($sources = @scandir(WPFC_WP_CONTENT_DIR."/cache/wpfc-minified/".$path[1], 1)){
+						if($sources = @scandir($this->getWpContentDir("/cache/wpfc-minified/").$path[1], 1)){
 							if(isset($sources[0])){
 								// $exist_url = str_replace($path[2], $sources[0], $this->current_url());
 								// header('Location: ' . $exist_url, true, 301);
@@ -299,7 +308,7 @@ GNU General Public License for more details.
 									header('Content-type: text/js');
 								}
 
-								echo file_get_contents(WPFC_WP_CONTENT_DIR."/cache/wpfc-minified/".$path[1]."/".$sources[0]);
+								echo file_get_contents($this->getWpContentDir("/cache/wpfc-minified/").$path[1]."/".$sources[0]);
 								exit;
 							}
 						}
@@ -349,13 +358,20 @@ GNU General Public License for more details.
 			SinglePreloadWPFC::create_cache();
 		}
 
-
 		public function single_preload_inline_js(){
 			include_once('inc/single-preload.php');
 			SinglePreloadWPFC::init();
 			SinglePreloadWPFC::put_inline_js();
 		}
+		public function add_meta_box(){
+			include_once('inc/single-preload.php');
+			SinglePreloadWPFC::add_meta_box();
+		}
 
+		public function wpfc_preload_single_save_settings_callback(){
+			include_once('inc/single-preload.php');
+			SinglePreloadWPFC::save_settings();
+		}
 
 		public function notify($message = array()){
 			if(isset($message[0]) && $message[0]){
@@ -399,7 +415,7 @@ GNU General Public License for more details.
 			$this->singleDeleteCache(false, $id);
 		}
 
-		public function clear_cache_after_woocommerce_checkout_order_processed($order_id = false){
+		public function clear_cache_after_woocommerce_order_status_changed($order_id = false){
 			if(function_exists("wc_get_order")){
 				if($order_id){
 					$order = wc_get_order($order_id);
@@ -823,6 +839,11 @@ GNU General Public License for more details.
 
 				$_GET["path"] = urldecode(esc_url_raw($_GET["path"]));
 
+				// for security
+				if(preg_match("/\.{2,}/", $_GET["path"])){
+					die("May be Directory Traversal Attack");
+				}
+
 				$paths = array();
 
 				array_push($paths, $this->getWpContentDir("/cache/all").$_GET["path"]);
@@ -1100,11 +1121,24 @@ GNU General Public License for more details.
 
 				$permalink = urldecode(get_permalink($post_id));
 
+
+
 				//for trash contents
-				$permalink = rtrim($permalink, "/");
-				$permalink = preg_replace("/__trashed$/", "", $permalink);
-				//for /%postname%/%post_id% : sample-url__trashed/57595
-				$permalink = preg_replace("/__trashed\/(\d+)$/", "/$1", $permalink);
+				if(preg_match("/\/\?p\=\d+/i", $permalink)){
+					$post = get_post($post_id);
+
+					$clone_post = clone $post;
+					$clone_post->post_status = 'publish';
+
+					$permalink = get_permalink($clone_post);
+					$permalink = rtrim($permalink, "/");
+
+					$permalink = preg_replace("/__trashed$/", "", $permalink);
+					//for /%postname%/%post_id% : sample-url__trashed/57595
+					$permalink = preg_replace("/__trashed\/(\d+)$/", "/$1", $permalink);
+				}
+
+
 
 				if(preg_match("/https?:\/\/[^\/]+\/(.+)/", $permalink, $out)){
 					$path = $this->getWpContentDir("/cache/all/").$out[1];
@@ -1300,6 +1334,25 @@ GNU General Public License for more details.
 					//to clear pagination of homepage cache
 					$this->rm_folder_recursively($this->getWpContentDir("/cache/all/").$home_url_path."/page");
 					$this->rm_folder_recursively($this->getWpContentDir("/cache/wpfc-mobile-cache/").$home_url_path."/page");
+				}
+			}
+
+			if(function_exists("wc_get_page_id")){
+				if($shop_id = wc_get_page_id('shop')){
+					$store_url_path = preg_replace("/https?\:\/\/[^\/]+/i", "", get_permalink($shop_id));
+
+					if($store_url_path){
+						$store_url_path = trim($store_url_path, "/");
+
+						if($store_url_path){
+							@unlink($this->getWpContentDir("/cache/all/").$store_url_path."/index.html");
+							@unlink($this->getWpContentDir("/cache/wpfc-mobile-cache/").$store_url_path."/index.html");
+
+							//to clear pagination of store homepage cache
+							$this->rm_folder_recursively($this->getWpContentDir("/cache/all/").$store_url_path."/page");
+							$this->rm_folder_recursively($this->getWpContentDir("/cache/wpfc-mobile-cache/").$store_url_path."/page");
+						}
+					}
 				}
 			}
 

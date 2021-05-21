@@ -247,7 +247,11 @@ var WpfcCDN = {
 		    		modal.find("#cdn-url").css("background-color", "white");
 		    		modal.find("#origin-url").css("background-color", "white");
 		    	}else{
-		    		modal.find(".wpfc-cdn-pages-container div.wiz-cont:visible #cdn-url").nextAll("label").html(res.error_message);
+		    		if(WpfcCDN.id == "cloudflare"){
+		    			modal.find("label.wiz-error-msg").html(res.error_message);
+		    		}else{
+		    			modal.find(".wpfc-cdn-pages-container div.wiz-cont:visible #cdn-url").nextAll("label").html(res.error_message);
+		    		}
 		    	}
 		    },
 		    error: function(e) {
