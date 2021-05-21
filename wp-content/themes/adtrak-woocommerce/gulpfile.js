@@ -101,9 +101,17 @@ gulp.task("core-scripts", function () {
 });
 
 
+var path = require('path');
 var addonScripts = fs.readdirSync('_resources/js/addon/');
+var jsFiles = [];
 
 addonScripts.forEach(function(script){  
+  if(path.extname(script).toLowerCase() === ".js") {
+    jsFiles.push(script);
+  }
+});
+
+jsFiles.forEach(function(script){  
   var script;
 
   gulp.task(script, function () {
@@ -141,7 +149,6 @@ addonScripts.forEach(function(script){
         )
     );
   });
-
 });
 
 
@@ -154,7 +161,7 @@ gulp.task("watch", () => {
   gulp.watch(`_resources/styles/**/*.css`, gulp.series("styles"));
   gulp.watch(`_resources/js/core/*.js`, gulp.series("core-scripts"));
   
-  addonScripts.forEach(function(script){
+  jsFiles.forEach(function(script){
     gulp.watch(`_resources/js/addon/` + script, gulp.series(script));
   });
 
@@ -176,5 +183,5 @@ gulp.task("serve", () => {
 /**************************
  * Gulp Automation
  **************************/
-gulp.task("default", gulp.parallel("styles", "core-scripts", addonScripts, "watch", "serve"));
-gulp.task("build", gulp.parallel("styles", "core-scripts", addonScripts));
+gulp.task("default", gulp.parallel("styles", "core-scripts", jsFiles, "watch", "serve"));
+gulp.task("build", gulp.parallel("styles", "core-scripts", jsFiles));
