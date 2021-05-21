@@ -76,7 +76,7 @@ $generated_i18n_strings = array(
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:75
 	__( 'Skip this Step', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigureMailer.vue:51
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:76
 	__( 'Previous Step', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepImport.vue:54
@@ -100,13 +100,13 @@ $generated_i18n_strings = array(
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationFailure.vue:33
 	__( 'Start Troubleshooting', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:66
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationFailure.vue:34
 	__( 'Send us Feedback', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:67
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationFailure.vue:35
 	__( 'Finish Setup', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:29
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/SmtpCom.vue:34
 	__( 'API Key', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/SmtpCom.vue:35
@@ -120,28 +120,28 @@ $generated_i18n_strings = array(
 	/* Translators: Link to the SMTP.com Senders/Channel settings. */
 	__( '%1$sFollow this link%2$s to get a Sender Name for SMTP.com.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:38
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Smtp.vue:45
 	__( 'From Name', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:39
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Smtp.vue:46
 	__( 'Force From Name', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:40
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Smtp.vue:47
 	__( 'From Email', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:41
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Smtp.vue:48
 	__( 'Force From Email', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:42
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Smtp.vue:52
 	__( 'If enabled, the From Name setting above will be used for all emails, ignoring values set by other plugins.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:43
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Smtp.vue:53
 	__( 'If enabled, the From Email setting above will be used for all emails, ignoring values set by other plugins.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:44
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Smtp.vue:49
 	__( 'The name that emails are sent from.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:45
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Smtp.vue:50
 	__( 'The email address that emails are sent from.', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/SmtpCom.vue:48
@@ -183,13 +183,13 @@ $generated_i18n_strings = array(
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:60
 	__( 'Upgrade to WP Mail SMTP Pro to unlock more awesome features and experience why WP Mail SMTP is used by over 2,000,000 websites.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:61
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:79
 	__( 'Multisite Network Settings', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:62
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:80
 	__( 'Manage Default Notifications', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:63
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:81
 	__( 'Detailed Email Logs', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:64
@@ -198,7 +198,7 @@ $generated_i18n_strings = array(
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:65
 	__( 'Send a Test Email', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:69
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:229
 	/* Translators: Different bold styles and discount value (%5$s). */
 	__( '%1$sBonus:%2$s You can upgrade to the Pro plan and %3$ssave %5$s today%4$s, automatically applied at checkout.', 'wp-mail-smtp' ),
 
@@ -215,7 +215,7 @@ $generated_i18n_strings = array(
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigurationSuccess.vue:93
 	__( 'Rate on WordPress.org', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendgrid.vue:30
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendinblue.vue:35
 	__( 'Sending Domain', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Sendinblue.vue:37
@@ -253,10 +253,10 @@ $generated_i18n_strings = array(
 	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Zoho.vue:36
 	__( 'The data center location used by your Zoho account.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Gmail.vue:36
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Zoho.vue:37
 	__( 'Client ID', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Gmail.vue:37
+	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Zoho.vue:38
 	__( 'Client Secret', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/Outlook.vue:30
@@ -334,19 +334,19 @@ $generated_i18n_strings = array(
 	// Reference: src/modules/setup-wizard/components/steps/configure-mailer/AmazonSES.vue:51
 	__( 'Read how to set up Amazon SES', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/settings/api/index.js:232
+	// Reference: src/modules/settings/store/actions.js:104
 	__( 'It looks like we can\'t load oAuth connected data.', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/settings/store/actions.js:11
 	__( 'It looks like we can\'t load existing settings.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/settings/api/index.js:202
+	// Reference: src/modules/settings/store/actions.js:116
 	__( 'It looks like we can\'t remove oAuth connection.', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/settings/store/actions.js:31
 	__( 'It looks like we can\'t retrieve the Amazon SES Identities.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/settings/api/index.js:84
+	// Reference: src/modules/settings/store/actions.js:40
 	__( 'It looks like we can\'t register the Amazon SES Identity.', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/settings/store/actions.js:95
@@ -371,7 +371,7 @@ $generated_i18n_strings = array(
 	/* Translators: Link to the SMTP Mailer docs page. */
 	__( 'Which mailer would you like to use to send emails? Not sure which mailer to choose? Check out our %1$scomplete mailer guide%2$s for details on each option.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigureMailer.vue:50
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepPluginFeatures.vue:53
 	__( 'Save and Continue', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepChooseMailer.vue:55
@@ -452,6 +452,7 @@ $generated_i18n_strings = array(
 
 	// Reference: src/modules/plugins/api/index.js:69
 	// Reference: src/modules/settings/api/index.js:234
+	// Reference: src/modules/setup-wizard/api/index.js:39
 	/* Translators: Error status and error text. */
 	__( '%1$s, %2$s', 'wp-mail-smtp' ),
 
@@ -514,6 +515,7 @@ $generated_i18n_strings = array(
 	__( 'It looks like we can\'t send the feedback.', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/settings/api/index.js:238
+	// Reference: src/modules/setup-wizard/api/index.js:43
 	__( 'You appear to be offline.', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/settings/components/input/SettingsAmazonSESIdentities.vue:103
@@ -629,13 +631,13 @@ $generated_i18n_strings = array(
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepPluginFeatures.vue:60
 	__( 'Create beautiful contact forms with just a few clicks.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepPluginFeatures.vue:62
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:88
 	__( 'Keep records of every email that\'s sent out from your website.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepPluginFeatures.vue:64
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:89
 	__( 'Control which email notifications your WordPress site sends.', 'wp-mail-smtp' ),
 
-	// Reference: src/modules/setup-wizard/components/steps/WizardStepPluginFeatures.vue:66
+	// Reference: src/modules/setup-wizard/components/steps/WizardStepLicense.vue:90
 	__( 'Save time with powerful WordPress Multisite controls.', 'wp-mail-smtp' ),
 
 	// Reference: src/modules/setup-wizard/components/steps/WizardStepConfigureMailer.vue:48
