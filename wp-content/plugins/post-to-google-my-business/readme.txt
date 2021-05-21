@@ -3,8 +3,8 @@ Contributors: koen12344, freemius
 Donate link: https://tycoonmedia.net/?utm_source=repository&utm_medium=link&utm_campaign=donate
 Tags: google my business, google, business, auto publish, posts, post, local search, google my business posts, google places, google plus, google+
 Requires at least: 4.9.0
-Tested up to: 5.6
-Stable tag: 2.2.34
+Tested up to: 5.7.1
+Stable tag: 2.2.39
 Requires PHP: 5.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,9 @@ Post to Google My Business relies on the WP Cron system to send out scheduled po
 6. Auto-post template settings
 
 == Changelog ==
+
+= 2.2.39 =
+* Fixes "Cannot declare class PGMB\Vendor\Cron\AbstractField, because the name is already in use" error when saving post
 
 = 2.2.34 =
 * Fix for image size detection logic
@@ -407,93 +410,5 @@ Post to Google My Business relies on the WP Cron system to send out scheduled po
 
 == Upgrade Notice ==
 
-= 2.2.9 =
-* Fixes auto-post incorrectly throwing 1500 character error
-
-= 2.2.7 =
-* Fixes compatibility issue with Yoast SEO & Classic Editor
-
-= 2.2.6 =
-* Changes how scheduled posts and re-posts are handled. Please check and confirm your scheduled posts after upgrading.
-
-= 2.1.10 =
-* Fixes error in multisite admin
-
-= 2.1.9 =
-* Security fix
-
-= 2.1.8 =
-* Fixes PHOTO media format error
-
-= 2.1.7 =
-* Cleans up orphaned schedules of deleted WP posts
-
-= 2.1.6 =
-* Spin image URL
-
-= 2.1.5 =
-* Fixes loading 100+ locations
-
-= 2.1.4 =
-* Fixes settings page location selector conflict
-
-= 2.1.3 =
-* Fix auto-post sending campaign posts
-
-= 2.1.2 =
-* Fixes various issues with automatic repost
-
-= 2.1.1 =
-* Various small fixes
-
-= 2.1.0 =
-* Product and Call Now button support
-
-= 2.0.10 =
-* Improved Multisite support
-
-= 2.0.9 =
-* Fix 500 error on PHP 5.4
-
-= 2.0.8 =
-* Better compatibility with external publishing apps and services
-
-= 2.0.7 =
-* Strip HTML from posts
-* Cut posts to 1500 characters
-* Added word and character counters
-* Simplified business selector
-* Allow filtering/searching of locations
-
-= 2.0.6 =
-* Adds ability to save post drafts, various other small fixes
-
-= 2.0.5 =
-* Fixes issues importing posts from older versions
-
-= 2.0.4 =
-* Fixes metabox not working
-
-= 2.0.3 =
-* Fixes update issue
-
-= 2.0.2 =
-* Fixes fatal error on older php versions
-
-= 2.0.1 =
-* Fixes issue with certain Google post fields not updating when updating post
-
-= 2.0.0 =
-* Major update
-
-= 1.2 =
-* Improves admin notices, cleanup options when uninstalling
-
-= 1.1.1 =
-* Fixes PHP compatibility issue
-
-= 1.1 =
-* Improves business selector, fixes various small issues
-
-= 1.0 =
-* Initial release
+= 2.2.39 =
+* Fixes error that stopped WP posts from being saved/published on some sites ("Cannot declare class" error)

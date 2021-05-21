@@ -3,7 +3,7 @@
 use  PGMB\WeDevsSettingsAPI ;
 class MBP_Plugin
 {
-    const  PLUGIN_VERSION = '2.2.34' ;
+    const  PLUGIN_VERSION = '2.2.39' ;
     protected  $settings_page ;
     private  $taxonomy_fields = array() ;
     private  $enabled_post_types = array() ;
