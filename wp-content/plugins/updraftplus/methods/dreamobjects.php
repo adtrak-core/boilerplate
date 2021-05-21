@@ -118,7 +118,7 @@ class UpdraftPlus_BackupModule_dreamobjects extends UpdraftPlus_BackupModule_s3 
 	/**
 	 * Get handlebar partial template string for endpoint of s3 compatible remote storage method. Other child class can extend it.
 	 *
-	 * @return string the partial template string
+	 * @return String the partial template string
 	 */
 	protected function get_partial_configuration_template_for_endpoint() {
 		// When new endpoint introduced in future, Please add it  as hard coded option for below  endpoint dropdown and also add as array value in private $dreamobjects_endpoints variable
@@ -138,7 +138,7 @@ class UpdraftPlus_BackupModule_dreamobjects extends UpdraftPlus_BackupModule_s3 
 	 * Modifies handerbar template options
 	 *
 	 * @param array $opts
-	 * @return array - Modified handerbar template options
+	 * @return Array - Modified handerbar template options
 	 */
 	public function transform_options_for_template($opts) {
 		$opts['endpoint'] = empty($opts['endpoint']) ? '' : $opts['endpoint'];

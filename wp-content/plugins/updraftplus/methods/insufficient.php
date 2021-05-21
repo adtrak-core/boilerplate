@@ -32,7 +32,7 @@ class UpdraftPlus_BackupModule_insufficientphp extends UpdraftPlus_BackupModule 
 	 * backup method: takes an array, and shovels them off to the cloud storage
 	 *
 	 * @param  array $backup_array An array backups
-	 * @return array
+	 * @return Array
 	 */
 	public function backup($backup_array) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		return $this->log_error();
@@ -69,8 +69,8 @@ class UpdraftPlus_BackupModule_insufficientphp extends UpdraftPlus_BackupModule 
 	/**
 	 * $match: a substring to require (tested via strpos() !== false)
 	 *
-	 * @param  string $match THis will specify which match is used for the SQL but by default it is set to 'backup_' unless specified
-	 * @return array
+	 * @param  String $match THis will specify which match is used for the SQL but by default it is set to 'backup_' unless specified
+	 * @return Array
 	 */
 	public function listfiles($match = 'backup_') {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		return new WP_Error('insufficient_php', $this->error_msg_trans);
@@ -79,10 +79,10 @@ class UpdraftPlus_BackupModule_insufficientphp extends UpdraftPlus_BackupModule 
 	/**
 	 * delete method: takes an array of file names (base name) or a single string, and removes them from the cloud storage
 	 *
-	 * @param  string  $files 	 List of files
-	 * @param  boolean $data 	 Specifies data or not
+	 * @param  String  $files 	 List of files
+	 * @param  Boolean $data 	 Specifies data or not
 	 * @param  array   $sizeinfo This is the size info on the file.
-	 * @return array
+	 * @return Array
 	 */
 	public function delete($files, $data = false, $sizeinfo = array()) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		return $this->log_error();
@@ -92,8 +92,8 @@ class UpdraftPlus_BackupModule_insufficientphp extends UpdraftPlus_BackupModule 
 	 * download method: takes a file name (base name), and brings it back from the cloud storage into Updraft's directory
 	 * You can register errors with $updraftplus->log("my error message", 'error')
 	 *
-	 * @param  string $file List of files
-	 * @return array
+	 * @param  String $file List of files
+	 * @return Array
 	 */
 	public function download($file) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		return $this->log_error();

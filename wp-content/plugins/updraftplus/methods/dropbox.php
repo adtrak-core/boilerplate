@@ -378,8 +378,8 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	/**
 	 * This method gets a list of files from the remote stoage that match the string passed in and returns an array of backups
 	 *
-	 * @param  string $match a substring to require (tested via strpos() !== false)
-	 * @return array
+	 * @param  String $match a substring to require (tested via strpos() !== false)
+	 * @return Array
 	 */
 	public function listfiles($match = 'backup_') {
 
@@ -684,7 +684,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	 * Modifies handerbar template options
 	 *
 	 * @param array $opts
-	 * @return array - Modified handerbar template options
+	 * @return Array - Modified handerbar template options
 	 */
 	public function transform_options_for_template($opts) {
 		if (!empty($opts['tk_access_token'])) {
@@ -707,7 +707,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	 * Gives settings keys which values should not passed to handlebarsjs context.
 	 * The settings stored in UD in the database sometimes also include internal information that it would be best not to send to the front-end (so that it can't be stolen by a man-in-the-middle attacker)
 	 *
-	 * @return array - Settings array keys which should be filtered
+	 * @return Array - Settings array keys which should be filtered
 	 */
 	public function filter_frontend_settings_keys() {
 		return array(
@@ -942,7 +942,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	/**
 	 * This basically reproduces the relevant bits of bootstrap.php from the SDK
 	 *
-	 * @param  boolean $deauthenticate indicates if we should bootstrap for a deauth or auth request
+	 * @param  Boolean $deauthenticate indicates if we should bootstrap for a deauth or auth request
 	 * @return object
 	 */
 	public function bootstrap($deauthenticate = false) {

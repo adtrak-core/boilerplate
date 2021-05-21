@@ -3,7 +3,7 @@ Contributors: Backup with UpdraftPlus, DavidAnderson, DNutbourne, aporter, snigh
 Tags: backup, restore, database backup, wordpress backup, cloud backup, s3, dropbox, google drive, onedrive, ftp, backups
 Requires at least: 3.2
 Tested up to: 5.7
-Stable tag: 1.16.50
+Stable tag: 1.16.56
 Author URI: https://updraftplus.com
 Donate link: https://david.dw-perspective.org.uk/donate
 License: GPLv3 or later
@@ -167,6 +167,50 @@ Unfortunately not; since this is free software, there’s no warranty and no gua
 The <a href="https://updraftplus.com/news/">UpdraftPlus backup blog</a> is the best place to learn in more detail about any important changes.
 
 N.B. Paid versions of UpdraftPlus Backup / Restore have a version number which is 1 higher in the first digit, and has an extra component on the end, but the changelog below still applies. i.e. changes listed for 1.16.32.x of the free version correspond to changes made in 2.16.32.x of the paid version.
+
+= 1.16.56 - 29/Apr/2021 =
+
+* FIX: Revert changing of Amazon S3 authentication error handling in 1.16.55, which broke support of S3-compatible providers
+* TWEAK: Remove some unnnecessary methods from the UpdraftPlus_S3 class
+
+= 1.16.55 - 28/Apr/2021 =
+
+* FIX: Wrong prefix being used on non WP tables during an atomic restore
+* FIX: Issue that prevented generic (non-UpdraftPlus) SQL databases being restored
+* TWEAK: JSTree file selector: list folders first, and list entities in alphabetical order
+* TWEAK: Increase efficiency when listing Backblaze files during multi-delete operation
+* TWEAK: Integrate UpdraftVault storage with the scheduled destination backups feature
+* TWEAK: Added bucket access style field to S3-Compatible (Generic) to allow user to choose preferred access style (Path or Virtual-host)
+* TWEAK: Improve handling of Amazon S3 authentication error messages to avoid misunderstanding concerning "wrong bucket region" that occurs after trying further methods
+* TWEAK: Make modal dialogs resizable
+* TWEAK: During the Database scan if the amount of tables found exceeds the PHP max input vars limit then truncate the list, to prevent restore options being lost
+* TWEAK: Update seasonal notices
+* TWEAK: Track the amount of restore options being sent and warn the user if this exceeds the PHP max_input_vars limit
+
+= 1.16.54 - 05/Apr/2021 =
+
+* FIX: Undetected build system error on free version omitted jstree library
+* TWEAK: Reduce plugin size by removing 9 languages that are now fully available from the wordpress.org on-demand system
+
+= 1.16.53 - 03/Apr/2021 =
+
+* FIX: Incorrect final table name being used during an atomic restore when restoring using a different table prefix
+* FIX: Fix variable re-use issue in Backblaze multi-delete code which halted deletion
+* TWEAK: Prevent unnecessary logging when testing data for serialization on PHP 8.0 during migration
+* TWEAK: Update jsTree library to version 3.3.12-rc0 to work around deprecated jQuery functions
+* TWEAK: Add an extra check for whether it looks reasonable to reduce the resumption time, increasing efficiency
+* TWEAK: On the posts table, detect over-sized rows in advance, and fetch them one at a time.
+
+= 1.16.51 - 01/Apr/2021 =
+
+* FIX: Backup before updating dialog was not working on the inline informational pop-up on the Plugins page
+* TWEAK: Refactor how translatable texts are being handled and displayed within the UpdraftCentral client code
+* TWEAK: Fix parameter passing for UpdraftCentral multiplexed request
+* TWEAK: Exclude/skip very large files from the backup operation if the first and second attempt at backing them up didn't succeed
+* TWEAK: Backblaze multi-deletion code did not properly handle files that were already deleted (could abort deletion of others)
+* TWEAK: Replace the table prefix in the constraint name if it is found
+* TWEAK: Don't perform an atomic restore on tables with constraints
+* TWEAK: Add atomic restore support for non-WordPress tables
 
 = 1.16.50 - 16/Mar/2021 =
 
@@ -1271,4 +1315,4 @@ Reliance upon any non-English translation is at your own risk; UpdraftPlus can g
 We recognise and thank those mentioned at https://updraftplus.com/acknowledgements/ for code and/or libraries used and/or modified under the terms of their open source licences.
 
 == Upgrade Notice ==
-* 1.16.50: Improve handling of Dropbox access tokens, and Google upload memory usage/logging.
+* 1.16.56: Fix a regression with S3-compatible providers in 1.16.55. A recommended update for all.

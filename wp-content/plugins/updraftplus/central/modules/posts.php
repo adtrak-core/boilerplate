@@ -209,7 +209,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 	 * @return array
 	 */
 	protected function get_preload_data($timeout, $type = 'post') {
-		global $updraftplus;
+		global $updraftplus, $updraftcentral_host_plugin;
 
 		if (!function_exists('get_page_templates')) {
 			require_once(ABSPATH.'wp-admin/includes/theme.php');
@@ -219,7 +219,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 		if (!empty($templates)) {
 			$templates = array_flip($templates);
 			if (!isset($templates['default'])) {
-				$templates['default'] = __('Default template', 'updraftplus');
+				$templates['default'] = $updraftcentral_host_plugin->retrieve_show_message('default_template');
 			}
 		}
 
@@ -958,7 +958,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 			return $wrap_response ? $this->_response($data) : $data;
 		} else {
 			$error = array(
-				'message' => __($result->get_error_message(), 'updraftplus')
+				'message' => $result->get_error_message()
 			);
 
 			return $wrap_response ? $this->_generic_error_response('post_add_category_failed', $error) : $error;
@@ -1023,7 +1023,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 			return $wrap_response ? $this->_response($data) : $data;
 		} else {
 			$error = array(
-				'message' => __($result->get_error_message(), 'updraftplus')
+				'message' => $result->get_error_message()
 			);
 
 			return $wrap_response ? $this->_generic_error_response('post_add_tag_failed', $error) : $error;
@@ -1057,6 +1057,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 	 * @return array
 	 */
 	public function save($params) {
+		global $updraftcentral_host_plugin;
 
 		$validation_fields = array(
 			'post' => array('publish_posts', 'edit_posts', 'delete_posts'),
@@ -1294,7 +1295,7 @@ class UpdraftCentral_Posts_Commands extends UpdraftCentral_Commands {
 			}
 		} else {
 			// ERROR: no id parameter, invalid request
-			return $this->_generic_error_response('post_invalid_request', array('message' => __('Expected parameter(s) missing.', 'updraftplus')));
+			return $this->_generic_error_response('post_invalid_request', array('message' => $updraftcentral_host_plugin->retrieve_show_message('parameters_missing')));
 		}
 	}
 

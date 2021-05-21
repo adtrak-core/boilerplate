@@ -270,7 +270,7 @@ class UpdraftPlus_BackupModule_remotesend extends UpdraftPlus_RemoteStorage_Addo
 	/**
 	 * This function will send a message to the remote site to inform it that the backup has finished sending, on success will update the jobdata key upload_completed and return true else false
 	 *
-	 * @return boolean - returns true on success or false on error, all errors are logged to the backup log
+	 * @return Boolean - returns true on success or false on error, all errors are logged to the backup log
 	 */
 	public function upload_completed() {
 		global $updraftplus;

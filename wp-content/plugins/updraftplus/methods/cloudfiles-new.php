@@ -149,7 +149,7 @@ class UpdraftPlus_BackupModule_cloudfiles_opencloudsdk extends UpdraftPlus_Backu
 	 * Modifies handerbar template options
 	 *
 	 * @param array $opts handerbar template options
-	 * @return array - Modified handerbar template options
+	 * @return Array - Modified handerbar template options
 	 */
 	public function transform_options_for_template($opts) {
 		$opts['regions'] = array(

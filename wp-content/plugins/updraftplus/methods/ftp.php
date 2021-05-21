@@ -28,14 +28,14 @@ class UpdraftPlus_BackupModule_ftp extends UpdraftPlus_BackupModule {
 	/**
 	 * Get FTP object with parameters set
 	 *
-	 * @param  string  $server 			 Specify Server
-	 * @param  string  $user 			 Specify Username
-	 * @param  string  $pass 			 Specify Password
-	 * @param  boolean $disable_ssl		 Indicate whether to disable SSL
-	 * @param  boolean $disable_verify	 Indicate whether to disable verifiction
-	 * @param  boolean $use_server_certs Indicate whether to use server certificates
-	 * @param  boolean $passive 		 Indicate whether to use passive FTP mode
-	 * @return array
+	 * @param  String  $server 			 Specify Server
+	 * @param  String  $user 			 Specify Username
+	 * @param  String  $pass 			 Specify Password
+	 * @param  Boolean $disable_ssl		 Indicate whether to disable SSL
+	 * @param  Boolean $disable_verify	 Indicate whether to disable verifiction
+	 * @param  Boolean $use_server_certs Indicate whether to use server certificates
+	 * @param  Boolean $passive 		 Indicate whether to use passive FTP mode
+	 * @return Array
 	 */
 	private function getFTP($server, $user, $pass, $disable_ssl = false, $disable_verify = true, $use_server_certs = false, $passive = true) {
 

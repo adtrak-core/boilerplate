@@ -156,6 +156,7 @@ abstract class UpdraftCentral_Commands {
 	 * @return array
 	 */
 	final protected function process_chunk_upload($params, $type) {
+		global $updraftcentral_host_plugin;
 
 		if (!in_array($type, array('plugin', 'theme'))) {
 			return $this->_generic_error_response('upload_type_not_supported');
@@ -271,7 +272,7 @@ abstract class UpdraftCentral_Commands {
 				}
 
 				if (false === $install_result || is_wp_error($install_result)) {
-					$message = __('Unable to connect to the filesystem', 'updraftplus');
+					$message = $updraftcentral_host_plugin->retrieve_show_message('unable_to_connect');
 					if (is_wp_error($install_result)) $message = $install_result->get_error_message();
 
 					return $this->_generic_error_response($type.'_install_failed', array('message' => $message));
@@ -313,7 +314,7 @@ abstract class UpdraftCentral_Commands {
 								global $updraftplus;
 								$wp_version = $updraftplus->get_wordpress_version();
 
-								$message = is_wp_error($activate) ? array('message' => $activate->get_error_message()) : array('message' => sprintf(__('Unable to activate %s successfully. Make sure that this %s is compatible with your remote WordPress version. WordPress version currently installed in your remote website is %s.', 'updraftplus'), $type, $type, $wp_version));
+								$message = is_wp_error($activate) ? array('message' => $activate->get_error_message()) : array('message' => sprintf($updraftcentral_host_plugin->retrieve_show_message('unable_to_activate'), $type, $type, $wp_version));
 								return $this->_generic_error_response('unable_to_activate_'.$type, $message);
 							}
 						}
@@ -342,7 +343,7 @@ abstract class UpdraftCentral_Commands {
 						return $this->_response(
 							array(
 								'installed' => false,
-								'message' => sprintf(__('Unable to install %s. Make sure that the zip file is a valid %s file and a previous version of this %s does not exist. If you wish to overwrite an existing %s then you will have to manually delete it from the %s folder on the remote website and try uploading the file again.', 'updraftplus'), $type, $type, $type, $type, 'wp-content/'.$type.'s'),
+								'message' => sprintf($updraftcentral_host_plugin->retrieve_show_message('unable_to_install'), $type, $type, $type, $type, 'wp-content/'.$type.'s'),
 							)
 						);
 					}

@@ -52,7 +52,7 @@ class UpdraftCentral_Core_Commands extends UpdraftCentral_Commands {
 
 						if (method_exists($instance, $action)) {
 							$params = empty($params) ? array() : $params;
-							$call_result = call_user_func_array(array($instance, $action), $params);
+							$call_result = call_user_func(array($instance, $action), $params);
 
 							$command_results[$command] = $call_result;
 							if ('rpcerror' === $call_result['response'] || (isset($call_result['data']['error']) && $call_result['data']['error'])) {

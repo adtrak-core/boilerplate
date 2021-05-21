@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the UpdraftPlus package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-04-04 10:49:54+0000\n"
+"PO-Revision-Date: 2021-04-05 14:33:28+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1291,7 +1291,7 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/tab-addons.php:30
 msgid "WooCommerce plugins"
-msgstr ""
+msgstr "우커머스 플러그인"
 
 #: src/templates/wp-admin/advanced/wipe-settings.php:14
 msgid "Reset tour"
@@ -2492,7 +2492,7 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/tab-addons.php:166
 msgid "Network / multisite"
-msgstr ""
+msgstr "네트워크 / 멀티사이트"
 
 #: src/templates/wp-admin/settings/tab-addons.php:154
 msgid "Backup WordPress core and non-WP files and databases."
@@ -2547,7 +2547,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/tab-addons.php:79,
 #: src/templates/wp-admin/settings/tab-addons.php:300
 msgid "Installed"
-msgstr ""
+msgstr "설치했습니다"
 
 #: src/templates/wp-admin/settings/tab-addons.php:69
 msgid "Free"
@@ -2782,7 +2782,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/tab-addons.php:269,
 #: src/templates/wp-admin/settings/tab-addons.php:270
 msgid "Lock settings"
-msgstr ""
+msgstr "잠금 설정"
 
 #: src/templates/wp-admin/advanced/site-info.php:5,
 #: src/templates/wp-admin/advanced/tools-menu.php:6
@@ -4422,7 +4422,7 @@ msgstr ""
 #: src/templates/wp-admin/notices/thanks-for-using-main-dash.php:12,
 #: src/templates/wp-admin/settings/tab-addons.php:72
 msgid "UpdraftPlus Premium"
-msgstr ""
+msgstr "UpdraftPlus 프리미엄"
 
 #: src/templates/wp-admin/notices/thanks-for-using-main-dash.php:26
 msgid "Free Newsletter"
@@ -4769,13 +4769,13 @@ msgstr ""
 #: src/includes/updraftplus-notices.php:139,
 #: src/includes/updraftplus-notices.php:140
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: src/includes/updraftplus-notices.php:139,
 #: src/includes/updraftplus-notices.php:140,
 #: src/templates/wp-admin/settings/header.php:16
 msgid "Twitter"
-msgstr "Twitter"
+msgstr "트위터"
 
 #: src/includes/updraftplus-notices.php:138
 msgid "UpdraftPlus is on social media - check us out!"
@@ -6493,7 +6493,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/tab-addons.php:28,
 #: src/templates/wp-admin/settings/tab-addons.php:126
 msgid "Support"
-msgstr ""
+msgstr "지원"
 
 #: src/class-updraftplus.php:4906
 msgid "UpdraftPlus was unable to find the table prefix when scanning the database backup."
@@ -6926,7 +6926,7 @@ msgstr ""
 
 #: src/admin.php:833
 msgid "PHP information"
-msgstr ""
+msgstr "PHP 정보"
 
 #: src/templates/wp-admin/advanced/site-info.php:70
 msgid "zip executable found:"
@@ -6955,7 +6955,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/header.php:11,
 #: src/templates/wp-admin/settings/tab-addons.php:73
 msgid "Premium"
-msgstr ""
+msgstr "프리미엄"
 
 #: src/templates/wp-admin/settings/header.php:15
 msgid "News"
@@ -7827,12 +7827,12 @@ msgstr ""
 #: src/addons/morefiles.php:876, src/admin.php:849,
 #: src/templates/wp-admin/settings/delete-and-restore-modals.php:94
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: src/addons/incremental.php:328, src/addons/reporting.php:259,
 #: src/admin.php:4158
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #: src/templates/wp-admin/settings/form-contents.php:104
 msgid "Choose your remote storage"
@@ -7890,11 +7890,11 @@ msgstr ""
 
 #: src/addons/incremental.php:335, src/admin.php:3873
 msgid "Weekly"
-msgstr ""
+msgstr "주간"
 
 #: src/addons/incremental.php:334, src/admin.php:3872
 msgid "Daily"
-msgstr ""
+msgstr "일간"
 
 #: src/templates/wp-admin/settings/form-contents.php:25
 msgid "Files backup interval"
@@ -7921,7 +7921,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/existing-backups-table.php:168,
 #: src/templates/wp-admin/settings/file-backup-exclude.php:11
 msgid "Delete"
-msgstr ""
+msgstr "지우기"
 
 #: src/admin.php:3560
 msgid "show log"
@@ -8016,7 +8016,7 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/take-backup.php:94
 msgid "Multisite"
-msgstr ""
+msgstr "다중사이트"
 
 #: src/templates/wp-admin/settings/delete-and-restore-modals.php:45
 msgid "Do read this helpful article of useful things to know before restoring."
@@ -8156,7 +8156,7 @@ msgstr ""
 
 #: src/admin.php:848, src/templates/wp-admin/settings/take-backup.php:51
 msgid "Backup Now"
-msgstr ""
+msgstr "지금 백업하기"
 
 #: src/templates/wp-admin/settings/take-backup.php:46
 msgid "Time now"
@@ -8293,7 +8293,7 @@ msgstr ""
 #: src/restorer.php:3344, src/restorer.php:3369, src/restorer.php:3465,
 #: src/udaddons/options.php:225, src/updraftplus.php:157
 msgid "Error"
-msgstr ""
+msgstr "오류"
 
 #: src/admin.php:2095
 msgid "Could not find that job - perhaps it has already finished?"

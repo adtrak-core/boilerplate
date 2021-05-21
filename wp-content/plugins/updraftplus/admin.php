@@ -791,8 +791,8 @@ class UpdraftPlus_Admin {
 		wp_enqueue_script('handlebars', UPDRAFTPLUS_URL.'/includes/handlebars/handlebars'.$min_or_not.'.js', array(), $handlebars_js_enqueue_version);
 		$this->enqueue_jstree();
 
-		$jqueryui_dialog_extended_version = $updraftplus->use_unminified_scripts() ? '1.0.3'.'.'.time() : '1.0.3';
-		wp_enqueue_script('jquery-ui.dialog.extended', UPDRAFTPLUS_URL.'/includes/jquery-ui.dialog.extended/jquery-ui.dialog.extended'.$min_or_not.'.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-dialog'), $jqueryui_dialog_extended_version);
+		$jqueryui_dialog_extended_version = $updraftplus->use_unminified_scripts() ? '1.0.4'.'.'.time() : '1.0.4';
+		wp_enqueue_script('jquery-ui.dialog.extended', UPDRAFTPLUS_URL.'/includes/jquery-ui.dialog.extended/jquery-ui.dialog.extended'.$updraft_min_or_not.'.js', array('jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-dialog'), $jqueryui_dialog_extended_version);
 		
 		do_action('updraftplus_admin_enqueue_scripts');
 		
@@ -1062,6 +1062,7 @@ class UpdraftPlus_Admin {
 					),
 				)
 			),
+			'php_max_input_vars_detected_warning' => __('The number of restore options that will be sent exceeds the configured maximum in your PHP configuration (max_input_vars).', 'updraftplus').' '.__('If you proceed with the restoration then some of the restore options will be lost and you may get unexpected results. See the browser console log for more information.', 'updraftplus')
 		));
 	}
 	
@@ -2167,14 +2168,13 @@ class UpdraftPlus_Admin {
 			if (file_exists($updraft_dir.'/log.'.$job_id.'.txt')) touch($updraft_dir.'/deleteflag-'.$job_id.'.txt');
 			
 			foreach ($cron as $time => $job) {
-				if (isset($job['updraft_backup_resume'])) {
-					foreach ($job['updraft_backup_resume'] as $hook => $info) {
-						if (isset($info['args'][1]) && $info['args'][1] == $job_id) {
-							$args = $cron[$time]['updraft_backup_resume'][$hook]['args'];
-							wp_unschedule_event($time, 'updraft_backup_resume', $args);
-							if (!$found_it) return array('ok' => 'Y', 'c' => 'deleted', 'm' => __('Job deleted', 'updraftplus'));
-							$found_it = true;
-						}
+				if (!isset($job['updraft_backup_resume'])) continue;
+				foreach ($job['updraft_backup_resume'] as $hook => $info) {
+					if (isset($info['args'][1]) && $info['args'][1] == $job_id) {
+						$args = $cron[$time]['updraft_backup_resume'][$hook]['args'];
+						wp_unschedule_event($time, 'updraft_backup_resume', $args);
+						if (!$found_it) return array('ok' => 'Y', 'c' => 'deleted', 'm' => __('Job deleted', 'updraftplus'));
+						$found_it = true;
 					}
 				}
 			}
@@ -3462,13 +3462,12 @@ class UpdraftPlus_Admin {
 		$ret = '';
 
 		foreach ($cron as $time => $job) {
-			if (isset($job['updraft_backup_resume'])) {
-				foreach ($job['updraft_backup_resume'] as $info) {
-					if (isset($info['args'][1])) {
-						$job_id = $info['args'][1];
-						if (false === $this_job_only || $job_id == $this_job_only) {
-							$ret .= $this->print_active_job($job_id, false, $time, $info['args'][0]);
-						}
+			if (!isset($job['updraft_backup_resume'])) continue;
+			foreach ($job['updraft_backup_resume'] as $info) {
+				if (isset($info['args'][1])) {
+					$job_id = $info['args'][1];
+					if (false === $this_job_only || $job_id == $this_job_only) {
+						$ret .= $this->print_active_job($job_id, false, $time, $info['args'][0]);
 					}
 				}
 			}
@@ -5789,7 +5788,7 @@ ENDHERE;
 		if ($already_enqueued) return;
 		
 		$already_enqueued = true;
-		$jstree_enqueue_version = $updraftplus->use_unminified_scripts() ? '3.3'.'.'.time() : '3.3';
+		$jstree_enqueue_version = $updraftplus->use_unminified_scripts() ? '3.3.12-rc.0'.'.'.time() : '3.3.12-rc.0';
 		$min_or_not = $updraftplus->use_unminified_scripts() ? '' : '.min';
 		
 		wp_enqueue_script('jstree', UPDRAFTPLUS_URL.'/includes/jstree/jstree'.$min_or_not.'.js', array('jquery'), $jstree_enqueue_version);

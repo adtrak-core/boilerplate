@@ -5,6 +5,7 @@
  * for it to work and function properly.
  */
 interface UpdraftCentral_Host_Interface {
+	public function retrieve_show_message($key, $echo = false);
 	public function get_current_clean_url();
 	public function get_plugin_name();
 	public function is_host_dir_set();

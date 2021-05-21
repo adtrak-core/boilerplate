@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the UpdraftPlus package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-01-03 08:39:29+0000\n"
+"PO-Revision-Date: 2021-04-05 14:32:49+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3081,7 +3081,7 @@ msgstr ""
 
 #: src/methods/ftp.php:425
 msgid "login"
-msgstr ""
+msgstr "Hasi saioa"
 
 #: src/addons/reporting.php:541, src/addons/reporting.php:541,
 #: src/addons/reporting.php:543, src/methods/email.php:100
@@ -3140,7 +3140,7 @@ msgstr ""
 
 #: src/central/bootstrap.php:550
 msgid "Description"
-msgstr ""
+msgstr "Deskribapena"
 
 #: src/central/bootstrap.php:478
 msgid "Delete..."
@@ -3156,7 +3156,7 @@ msgstr ""
 
 #: src/central/bootstrap.php:492
 msgid "Details"
-msgstr ""
+msgstr "Zehaztasunak"
 
 #: src/central/bootstrap.php:491
 msgid "Key description"
@@ -3212,7 +3212,7 @@ msgstr ""
 
 #: src/admin.php:5240
 msgid "Your settings have been saved."
-msgstr ""
+msgstr "Zure ezarpenak gorde dira."
 
 #: src/admin.php:4163
 msgid "Total backup size:"
@@ -3262,7 +3262,7 @@ msgstr ""
 
 #: src/admin.php:860
 msgid "Saving..."
-msgstr ""
+msgstr "Gordetzen..."
 
 #: src/admin.php:821
 msgid "Error: the server sent us a response which we did not understand."
@@ -3301,7 +3301,7 @@ msgstr ""
 #: src/templates/wp-admin/notices/horizontal-notice.php:16,
 #: src/templates/wp-admin/notices/horizontal-notice.php:18
 msgid "Dismiss"
-msgstr ""
+msgstr "Baztertu"
 
 #: src/admin.php:897
 msgid "Please fill in the required information."
@@ -3410,7 +3410,7 @@ msgstr ""
 
 #: src/admin.php:5112
 msgid "settings"
-msgstr ""
+msgstr "Ezarpenak"
 
 #: src/admin.php:5112
 msgid "Backup won't be sent to any remote storage - none has been saved in the %s"
@@ -3463,7 +3463,7 @@ msgstr ""
 
 #: src/admin.php:694
 msgid "Extensions"
-msgstr ""
+msgstr "Luzapenak"
 
 #: src/admin.php:686, src/admin.php:2896
 msgid "Advanced Tools"
@@ -4021,7 +4021,7 @@ msgstr ""
 #: src/addons/wp-cli.php:373,
 #: src/templates/wp-admin/settings/existing-backups-table.php:106
 msgid "Site"
-msgstr ""
+msgstr "Gunea"
 
 #: src/addons/wp-cli.php:371,
 #: src/templates/wp-admin/settings/existing-backups-table.php:105
@@ -4775,13 +4775,13 @@ msgstr ""
 #: src/includes/updraftplus-notices.php:139,
 #: src/includes/updraftplus-notices.php:140
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: src/includes/updraftplus-notices.php:139,
 #: src/includes/updraftplus-notices.php:140,
 #: src/templates/wp-admin/settings/header.php:16
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
 #: src/includes/updraftplus-notices.php:138
 msgid "UpdraftPlus is on social media - check us out!"
@@ -6499,7 +6499,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/tab-addons.php:28,
 #: src/templates/wp-admin/settings/tab-addons.php:126
 msgid "Support"
-msgstr ""
+msgstr "Euskarria"
 
 #: src/class-updraftplus.php:4906
 msgid "UpdraftPlus was unable to find the table prefix when scanning the database backup."
@@ -6899,7 +6899,7 @@ msgstr ""
 #: src/admin.php:987, src/admin.php:2686, src/class-updraftplus.php:4672,
 #: src/restorer.php:3018
 msgid "Warning:"
-msgstr ""
+msgstr "Kontuz:"
 
 #: src/class-updraftplus.php:4661, src/class-updraftplus.php:4664,
 #: src/restorer.php:732
@@ -6917,7 +6917,7 @@ msgstr ""
 
 #: src/admin.php:855, src/includes/updraftplus-tour.php:96
 msgid "Close"
-msgstr ""
+msgstr "Itxi"
 
 #: src/addons/autobackup.php:370, src/addons/autobackup.php:462,
 #: src/admin.php:809, src/methods/remotesend.php:69,
@@ -7752,7 +7752,7 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/form-contents.php:374
 msgid "Save Changes"
-msgstr ""
+msgstr "Aldaketak gorde"
 
 #: src/templates/wp-admin/settings/form-contents.php:346
 msgid "Choosing this option lowers your security by stopping UpdraftPlus from using SSL for authentication and encrypted transport at all, where possible. Note that some cloud storage providers do not allow this (e.g. Dropbox), so with those providers this setting will have no effect."
@@ -7820,7 +7820,7 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/form-contents.php:304
 msgid "Debug mode"
-msgstr ""
+msgstr "Arazketa modua"
 
 #: src/templates/wp-admin/settings/form-contents.php:289
 msgid "Advanced / Debugging Settings"
@@ -7838,7 +7838,7 @@ msgstr ""
 #: src/addons/incremental.php:328, src/addons/reporting.php:259,
 #: src/admin.php:4158
 msgid "None"
-msgstr ""
+msgstr "Bat ere ez"
 
 #: src/templates/wp-admin/settings/form-contents.php:104
 msgid "Choose your remote storage"
@@ -7856,7 +7856,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/form-contents.php:256,
 #: src/templates/wp-admin/settings/updraftcentral-connect.php:44
 msgid "Email"
-msgstr ""
+msgstr "E-posta"
 
 #: src/templates/wp-admin/settings/form-contents.php:148
 msgid "The above directories are everything, except for WordPress core itself which you can download afresh from WordPress.org."
@@ -7927,7 +7927,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/existing-backups-table.php:168,
 #: src/templates/wp-admin/settings/file-backup-exclude.php:11
 msgid "Delete"
-msgstr ""
+msgstr "Ezabatu"
 
 #: src/admin.php:3560
 msgid "show log"
@@ -7966,7 +7966,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/tab-addons.php:274,
 #: src/templates/wp-admin/settings/tab-addons.php:291
 msgid "No"
-msgstr ""
+msgstr "Ez"
 
 #: src/templates/wp-admin/advanced/site-info.php:63,
 #: src/templates/wp-admin/advanced/site-info.php:66,
@@ -7990,7 +7990,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/tab-addons.php:294,
 #: src/templates/wp-admin/settings/tab-addons.php:300
 msgid "Yes"
-msgstr ""
+msgstr "Bai"
 
 #: src/admin.php:5681, src/admin.php:5685,
 #: src/templates/wp-admin/advanced/site-info.php:45,
@@ -8089,7 +8089,7 @@ msgstr ""
 #: src/methods/remotesend.php:252, src/methods/updraftvault.php:564,
 #: src/restorer.php:412, src/restorer.php:440, src/restorer.php:2069
 msgid "Error:"
-msgstr ""
+msgstr "Errorea:"
 
 #: src/admin.php:814
 msgid "calculating..."
@@ -8178,7 +8178,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/delete-and-restore-modals.php:82,
 #: src/templates/wp-admin/settings/take-backup.php:34
 msgid "Database"
-msgstr ""
+msgstr "Datu-basea"
 
 #: src/admin.php:345, src/admin.php:5468,
 #: src/templates/wp-admin/settings/take-backup.php:24
@@ -8220,7 +8220,7 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/header.php:25
 msgid "Version"
-msgstr ""
+msgstr "Bertsioa"
 
 #: src/templates/wp-admin/settings/header.php:25
 msgid "Lead developer's homepage"

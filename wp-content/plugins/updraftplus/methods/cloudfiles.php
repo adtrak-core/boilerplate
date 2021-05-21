@@ -18,11 +18,11 @@ class UpdraftPlus_BackupModule_cloudfiles_oldsdk extends UpdraftPlus_BackupModul
 	/**
 	 * This function does not catch any exceptions - that should be done by the caller
 	 *
-	 * @param  string  $user
-	 * @param  string  $apikey
-	 * @param  string  $authurl
-	 * @param  boolean $useservercerts
-	 * @return array
+	 * @param  String  $user
+	 * @param  String  $apikey
+	 * @param  String  $authurl
+	 * @param  Boolean $useservercerts
+	 * @return Array
 	 */
 	private function getCF($user, $apikey, $authurl, $useservercerts = false) {
 		
@@ -515,7 +515,7 @@ class UpdraftPlus_BackupModule_cloudfiles_oldsdk extends UpdraftPlus_BackupModul
  * Modifies handerbar template options
  *
  * @param array $opts handerbar template options
- * @return array - Modified handerbar template options
+ * @return Array - Modified handerbar template options
  */
 	public function transform_options_for_template($opts) {
 		$opts['apikey'] = trim($opts['apikey']);

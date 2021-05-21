@@ -60,6 +60,8 @@ class Updraft_Restorer {
 
 	private $final_import_table_prefix = null;
 
+	private $disable_atomic_on_current_table = false;
+
 	private $table_engine = '';
 
 	private $table_name = '';
@@ -526,8 +528,6 @@ class Updraft_Restorer {
 		$backup_set = $this->ud_backup_set;
 		
 		$services = isset($backup_set['service']) ? $updraftplus->get_canonical_service_list($backup_set['service']) : array();
-
-		$entities_to_download = $this->get_entities_to_download($entities_to_restore);
 		
 		$backupable_entities = $updraftplus->get_backupable_file_entities(true, true);
 		
@@ -545,7 +545,7 @@ class Updraft_Restorer {
 		
 		// Get an ordered list of things to restore
 		// This requires the global $updraft_restorer to be set up
-		$second_loop = $this->ensure_restore_files_present($entities_to_download, $backupable_entities, $services);
+		$second_loop = $this->ensure_restore_files_present($entities_to_restore, $backupable_entities, $services);
 		
 		if (!is_array($second_loop)) return $second_loop;
 		
@@ -2186,6 +2186,8 @@ class Updraft_Restorer {
 
 		$updraft_restorer_collate = isset($this->restore_options['updraft_restorer_collate']) ? $this->restore_options['updraft_restorer_collate'] : '';
 
+		$non_wp_table = false;
+
 		// Legacy, less reliable - in case it was not caught before. We added it in here (CREATE) as well as in DROP because of SQL dumps which lack DROP statements.
 		if (null === $this->old_table_prefix && preg_match('/^([a-z0-9]+)_.*$/i', $this->table_name, $tmatches)) {
 			$this->old_table_prefix = $tmatches[1].'_';
@@ -2200,6 +2202,11 @@ class Updraft_Restorer {
 			$this->new_table_name = $import_table_prefix.$this->table_name;
 		} else {
 			$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
+			// if we have a different prefix but the table name has not changed after the replace then we are dealing with a table that does not use the WordPress table prefix, in order for an Atmoic restore to work on this table we need to attach our temporary prefix
+			if (!$this->rename_forbidden && $this->old_table_prefix && $this->new_table_name == $this->table_name) {
+				$non_wp_table = true;
+				$this->new_table_name = $import_table_prefix.$this->table_name;
+			}
 		}
 
 		// This CREATE TABLE command may be the de-facto mark for the end of processing a previous table (which is so if this is not the first table in the SQL dump)
@@ -2215,11 +2222,11 @@ class Updraft_Restorer {
 					if (!empty($updraftplus_addons_migrator->new_blogid)) switch_to_blog($updraftplus_addons_migrator->new_blogid);
 
 					if ('' == $this->old_siteurl) {
-						$this->old_siteurl = untrailingslashit($wpdb->get_row("SELECT option_value FROM $wpdb->options WHERE option_name='siteurl'")->option_value);
+						$this->old_siteurl = untrailingslashit($wpdb->get_row("SELECT option_value FROM ".$import_table_prefix.'options'." WHERE option_name='siteurl'")->option_value);
 						do_action('updraftplus_restore_db_record_old_siteurl', $this->old_siteurl);
 					}
 					if ('' == $this->old_home) {
-						$this->old_home = untrailingslashit($wpdb->get_row("SELECT option_value FROM $wpdb->options WHERE option_name='home'")->option_value);
+						$this->old_home = untrailingslashit($wpdb->get_row("SELECT option_value FROM ".$import_table_prefix.'options'." WHERE option_name='home'")->option_value);
 						do_action('updraftplus_restore_db_record_old_home', $this->old_home);
 					}
 					if ('' == $this->old_content) {
@@ -2236,6 +2243,37 @@ class Updraft_Restorer {
 			}
 
 		}
+
+		// Detect this as early as possible so we can turn off atomic restores if needed. If the table prefix has changed and key constraints are found, make sure they are updated
+		$constraint_change_message = '';
+		$constraints = array();
+		$constraint_found = false;
+		if (preg_match_all('/CONSTRAINT ([\a-zA-Z0-9_\']+) FOREIGN KEY \([a-zA-z0-9_\', ]+\) REFERENCES \'?([a-zA-z0-9_]+)\'? /i', $create_table_statement, $constraint_matches)) {
+			$constraints = $constraint_matches;
+			$constraint_found = true;
+		} elseif (preg_match_all('/ FOREIGN KEY \([a-zA-z0-9_\', ]+\) REFERENCES \'?([a-zA-z0-9_]+)\'? /i', $create_table_statement, $constraint_matches)) {
+			$constraints = $constraint_matches;
+			$constraint_found = true;
+		}
+
+		// Constraints were found so we need to disable the atomic restore for this table, which means resetting the import table prefix and current table name and finally dropping the original table if it exists
+		if ($constraint_found && !$this->rename_forbidden && !$this->is_dummy_db_restore) {
+			
+			$import_table_prefix = $this->final_import_table_prefix;
+			$this->disable_atomic_on_current_table = true;
+			
+			if ('' === $this->old_table_prefix) {
+				$this->new_table_name = $import_table_prefix.$this->table_name;
+			} else {
+				$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
+			}
+
+			$updraftplus->log('Constraints found, will disable atomic restore for current table ('.$this->table_name.')', 'notice-restore');
+
+			$this->drop_tables(array($this->new_table_name));
+
+		}
+
 		$this->table_engine = "(?)";
 		$engine_change_message = '';
 		if (preg_match('/ENGINE=([^\s;]+)/', $create_table_statement, $eng_match)) {
@@ -2268,15 +2306,15 @@ class Updraft_Restorer {
 				}
 			}
 		}
-		// If the table prefix has changed and key constraints are found, make sure they are updated
-		$constraint_change_message = '';
-		if ($this->old_table_prefix != $import_table_prefix && (preg_match_all('/ FOREIGN KEY \([a-zA-z0-9_\', ]+\) REFERENCES \'?([a-zA-z0-9_]+)\'? /i', $create_table_statement, $constraint_matches))) {
-			foreach ($constraint_matches[0] as $constraint) {
-				$updated_constraint = str_replace($this->old_table_prefix, $import_table_prefix, $constraint);
+
+		if (!empty($constraints) && $this->old_table_prefix != $this->final_import_table_prefix) {
+			foreach ($constraints[0] as $constraint) {
+				$updated_constraint = str_replace($this->old_table_prefix, $this->final_import_table_prefix, $constraint);
 				$create_table_statement = str_replace($constraint, $updated_constraint, $create_table_statement);
 			}
 			$constraint_change_message = __('Found and replaced existing table foreign key constraints as the table prefix has changed.', 'updraftplus');
 		}
+
 		$collate_change_message = '';
 		$unsupported_collates_in_sql_line = array();
 		if (!empty($updraft_restorer_collate) && preg_match('/ COLLATE=([a-zA-Z0-9._-]+)/i', $create_table_statement, $collate_match)) {
@@ -2329,7 +2367,7 @@ class Updraft_Restorer {
 			} else {
 				$logline .= ' - skipping';
 			}
-			if ('' === $this->old_table_prefix) {
+			if ('' === $this->old_table_prefix || $non_wp_table) {
 				$create_table_statement = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->new_table_name, $create_table_statement);
 			} else {
 				$create_table_statement = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $create_table_statement);
@@ -2425,6 +2463,12 @@ class Updraft_Restorer {
 
 		$updraftplus->log($logline);
 		$updraftplus->log($print_line, 'notice-restore');
+		// If this is a non wp table we don't want to replace our temp prefix with the final prefix, we need to drop our prefix
+		if ($non_wp_table) {
+			$this->original_table_name = UpdraftPlus_Manipulation_Functions::str_replace_once($this->import_table_prefix, '', $this->new_table_name);
+		} else {
+			$this->original_table_name = UpdraftPlus_Manipulation_Functions::str_replace_once($this->import_table_prefix, $this->final_import_table_prefix, $this->new_table_name);
+		}
 		$this->restoring_table = $this->new_table_name;
 		if ($charset_change_message) $updraftplus->log($charset_change_message, 'notice-restore');
 		if ($constraint_change_message) $updraftplus->log($constraint_change_message, 'notice-restore');
@@ -2680,8 +2724,13 @@ class Updraft_Restorer {
 			}
 		}
 
-		// If this is not a dummy restore and we can rename and drop tables then change the import prefix and proceed with atomic restore
-		if (!$this->rename_forbidden && !$this->is_dummy_db_restore) {
+		if (defined('UPDRAFTPLUS_ATOMIC_RESTORE_DISABLED') && UPDRAFTPLUS_ATOMIC_RESTORE_DISABLED) {
+			$updraftplus->log('Atomic restore disabled by constant UPDRAFTPLUS_ATOMIC_RESTORE_DISABLED - restoration will be non-atomic', 'warning-restore');
+			$this->rename_forbidden = true;
+		}
+
+		// If this is not a dummy restore or not importing a single site into a multisite and we can rename and drop tables then change the import prefix and proceed with atomic restore
+		if (!$this->rename_forbidden && !$this->is_dummy_db_restore && !isset($this->restore_options['updraftplus_migrate_blogname']) && empty($this->ud_foreign)) {
 			add_filter('updraftplus_restore_table_prefix', array($this, 'updraftplus_random_restore_table_prefix'));
 			$import_table_prefix = isset($this->continuation_data['temp_import_table_prefix']) ? $this->continuation_data['temp_import_table_prefix'] : apply_filters('updraftplus_restore_table_prefix', $this->final_import_table_prefix);
 			$this->import_table_prefix = $import_table_prefix;
@@ -2936,11 +2985,19 @@ class Updraft_Restorer {
 
 				$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
 
+				$non_wp_table = false;
+				
+				// if we have a different prefix but the table name has not changed after the replace then we are dealing with a table that does not use the WordPress table prefix, in order for an Atmoic restore to work on this table we need to attach our temporary prefix
+				if (!$this->rename_forbidden && $this->old_table_prefix && $this->new_table_name == $this->table_name) {
+					$non_wp_table = true;
+					$this->new_table_name = $import_table_prefix.$this->table_name;
+				}
+
 				if ($import_table_prefix != $this->old_table_prefix) {
-					if ('' != $this->old_table_prefix) {
-						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
-					} else {
+					if ('' === $this->old_table_prefix || $non_wp_table) {
 						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->new_table_name, $sql_line);
+					} else {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
 					}
 				}
 				
@@ -2982,11 +3039,24 @@ class Updraft_Restorer {
 					$sql_type = -1;
 					continue;
 				}
-				if ($import_table_prefix != $this->old_table_prefix) {
-					if ('' != $this->old_table_prefix) {
-						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
-					} else {
+				
+				$non_wp_table = false;
+
+				$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
+				
+				// if we have a different prefix but the table name has not changed after the replace then we are dealing with a table that does not use the WordPress table prefix, in order for an Atmoic restore to work on this table we need to attach our temporary prefix
+				if (!$this->rename_forbidden && $this->old_table_prefix && $this->new_table_name == $this->table_name) {
+					$non_wp_table = true;
+					$this->new_table_name = $import_table_prefix.$this->table_name;
+				}
+
+				// If this is set then we have disabled atomic restores for this table so we need to make sure we are using the correct prefix when inserting the data
+				$temp_insert_table_prefix = $this->disable_atomic_on_current_table ? $this->final_import_table_prefix : $import_table_prefix;
+				if ($temp_insert_table_prefix != $this->old_table_prefix) {
+					if ('' === $this->old_table_prefix || $non_wp_table) {
 						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->table_name, $this->new_table_name, $sql_line);
+					} else {
+						$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $temp_insert_table_prefix, $sql_line);
 					}
 				}
 			} elseif (preg_match('/^\s*(\/\*\!40000 )?(alter|lock) tables? \`?([^\`\(]*)\`?\s+(write|disable|enable)/i', $sql_line, $matches)) {
@@ -3336,20 +3406,29 @@ class Updraft_Restorer {
 	 */
 	private function maybe_rename_restored_table() {
 		global $updraftplus;
-		
-		$previous_table_name = UpdraftPlus_Manipulation_Functions::str_replace_once($this->import_table_prefix, $this->final_import_table_prefix, $this->restoring_table);
-		
-		// If the table names are the same then we do not want to attempt an atomic restore as it will remove the final table
-		if ($previous_table_name == $this->restoring_table) return $previous_table_name;
-		
-		if (!$this->rename_forbidden) {
-			$updraftplus->log_e('Atomic restore: dropping original table (%s)', $previous_table_name);
-			$this->drop_tables(array($previous_table_name));
-			$updraftplus->log_e('Atomic restore: renaming new table (%s) to final table name (%s)', $this->restoring_table, $previous_table_name);
-			$this->rename_table($this->restoring_table, $previous_table_name);
+
+		// If this is set then we do not want to attempt an atomic restore as it will remove the final table
+		if ($this->disable_atomic_on_current_table) {
+			$this->disable_atomic_on_current_table = false;
+			return $this->original_table_name;
 		}
 		
-		return $previous_table_name;
+		// If the table names are the same then we do not want to attempt an atomic restore as it will remove the final table
+		if ($this->original_table_name == $this->restoring_table) return $this->original_table_name;
+
+		// If we have skipped this table then we don't want to attempt the atomic restore
+		if (!$this->restore_this_table($this->original_table_name)) {
+			return $this->original_table_name;
+		}
+		
+		if (!$this->rename_forbidden) {
+			$updraftplus->log_e('Atomic restore: dropping original table (%s)', $this->original_table_name);
+			$this->drop_tables(array($this->original_table_name));
+			$updraftplus->log_e('Atomic restore: renaming new table (%s) to final table name (%s)', $this->restoring_table, $this->original_table_name);
+			$this->rename_table($this->restoring_table, $this->original_table_name);
+		}
+		
+		return $this->original_table_name;
 	}
 
 	/**

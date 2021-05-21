@@ -562,6 +562,8 @@ var updraft_activejobs_nextupdate = (new Date).getTime() + 1000;
 // Bits: main tab displayed (1); restore dialog open (uses downloader) (2); tab not visible (4)
 var updraft_page_is_visible = 1;
 var updraft_console_focussed_tab = updraftlion.tab;
+var php_max_input_vars = 0;
+var skipped_db_scan = 0;
 
 var updraft_settings_form_changed = false;
 window.onbeforeunload = function(e) {
@@ -1707,6 +1709,12 @@ function updraft_restorer_checkstage2(doalert) {
 							delete info.addui;
 							resp.i = JSON.stringify(info);
 						}
+					}
+					if (info.hasOwnProperty('php_max_input_vars')) {
+						php_max_input_vars = parseInt(info.php_max_input_vars);
+					}
+					if (info.hasOwnProperty('skipped_db_scan')) {
+						skipped_db_scan = parseInt(info.skipped_db_scan);
 					}
 				} catch (err) {
 					console.log(err);
@@ -3652,7 +3660,7 @@ jQuery(function($) {
 							if (jQuery(y).is(':checked') && !jQuery(y).is(':disabled')) anyselected = 1;
 						});
 						
-						if (0 == anyselected) {
+						if (0 == anyselected && !skipped_db_scan) {
 							alert(updraftlion.youdidnotselectany);
 							jQuery('.updraft-restore--next-step, .updraft-restore--cancel').prop('disabled', false);
 							return;
@@ -3690,6 +3698,30 @@ jQuery(function($) {
 					});
 
 					console.log("Restore options: "+restore_options);
+
+					if (typeof php_max_input_vars !== 'undefined') {
+						var restore_options_length = restore_options.split("&").length;
+						var warning_template_start = '<div class="notice notice-warning"><p><span class="dashicons dashicons-warning"></span> <strong>' + updraftlion.warnings +'</strong></p><ul id="updraft_restore_warnings">';
+						var warning_template_end = '</ul></div>';
+
+						// If we can't detect the php_max_input_vars assume the PHP default of 1000
+						if (!php_max_input_vars && 1000 <= restore_options_length) {
+							console.log('Restore options: ' + restore_options_length + ' PHP max input vars not detected; using default: 1000');
+						} else if (php_max_input_vars && restore_options_length >= php_max_input_vars) {
+							var warning = '<li>' + updraftlion.php_max_input_vars_detected_warning + '</li>';
+							if (1 != jQuery('#updraft-restore-modal-stage2a .notice-warning').length) {
+								var final_warning = warning_template_start + warning + warning_template_end;
+								jQuery('#updraft_restoreoptions_ui').prepend(final_warning);
+							} else {
+								jQuery('#updraft-restore-modal-stage2a #updraft_restore_warnings').append(warning);
+							}
+							console.log('Restore options: ' + restore_options_length + ' PHP max input vars: ' + php_max_input_vars);
+							jQuery('.updraft-restore--next-step, .updraft-restore--cancel').prop('disabled', false);
+							php_max_input_vars = undefined;
+							return;
+						}
+					}
+
 					$('#updraft_restorer_restore_options').val(restore_options);
 					// This must be done last, as it wipes out the section with #updraft_restoreoptions_ui
 					$('#updraft-restore-modal-stage2a').html(updraftlion.restore_proceeding);
@@ -4475,7 +4507,7 @@ jQuery(function($) {
 	jQuery("#updraft-upload-modal").dialog({
 		autoOpen: false, modal: true, resizeOnWindowResize: true, scrollWithViewport: true, resizeAccordingToViewport: true, useContentSize: false,
 		open: function(event, ui) {
-			$(this).parent().focus();
+			$(this).parent().trigger('focus');
 			$(this).dialog('option', 'width', 308);
 			if (jQuery(window).height() > 460) {
 				$(this).dialog('option', 'height', 218);
@@ -5005,19 +5037,6 @@ jQuery(function($) {
 					context['instance_conditional_logic'].logic_options = updraftlion.conditional_logic.logic_options;
 					context['instance_conditional_logic'].operand_options = updraftlion.conditional_logic.operand_options;
 					context['instance_conditional_logic'].operator_options = updraftlion.conditional_logic.operator_options;
-					// work around the UpdraftVault conditional logic
-					if ("updraftvault" === method && "object" === typeof context.settings) {
-						for (var ins_id in context['settings']) {
-							if (context['settings'][ins_id]['instance_conditional_logic']['rules'] instanceof Array && context.settings[ins_id]['instance_conditional_logic']['rules'].length > 0) {
-								context['instance_conditional_logic']['rules'] = context.settings[ins_id]['instance_conditional_logic']['rules'];
-							}
-							if ("string" === typeof context['settings'][ins_id]['instance_conditional_logic']['type'] && context.settings[ins_id]['instance_conditional_logic']['type'].length > 0) {
-								context['instance_conditional_logic']['type'] = context.settings[ins_id]['instance_conditional_logic']['type'];
-							}
-							break;
-						}
-					}
-					// #end updraftvault
 
 					context['first_instance'] = first_instance;
 					if ('undefined' == typeof context['instance_enabled']) {

@@ -880,6 +880,80 @@
             "type": "library",
             "installation-source": "source",
             "install-path": "../team-updraft/common-libs"
+        },
+        {
+            "name": "vakata/jstree",
+            "version": "dev-3.3.12-rc.0-distributable",
+            "version_normalized": "dev-3.3.12-rc.0-distributable",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DavidAnderson684/jstree.git",
+                "reference": "9342b0a31b0abd126f2e201a4318328f25673249"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DavidAnderson684/jstree/zipball/9342b0a31b0abd126f2e201a4318328f25673249",
+                "reference": "9342b0a31b0abd126f2e201a4318328f25673249",
+                "shasum": ""
+            },
+            "require": {
+                "components/jquery": ">=1.9.1"
+            },
+            "suggest": {
+                "robloach/component-installer": "Allows installation of Components via Composer"
+            },
+            "time": "2021-03-09T17:23:18+00:00",
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/jstree.js"
+                    ],
+                    "styles": [
+                        "dist/themes/default/style.css"
+                    ],
+                    "images": [
+                        "dist/themes/default/32px.png",
+                        "dist/themes/default/40px.png",
+                        "dist/themes/default/throbber.gif"
+                    ],
+                    "files": [
+                        "dist/jstree.min.js",
+                        "dist/themes/default/style.min.css",
+                        "dist/themes/default/32px.png",
+                        "dist/themes/default/40px.png",
+                        "dist/themes/default/throbber.gif"
+                    ]
+                }
+            },
+            "installation-source": "source",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Bozhanov",
+                    "email": "jstree@jstree.com"
+                }
+            ],
+            "description": "jsTree is jquery plugin, that provides interactive trees.",
+            "homepage": "http://jstree.com",
+            "support": {
+                "issues": "https://github.com/vakata/jstree/issues",
+                "forum": "https://groups.google.com/forum/#!forum/jstree",
+                "source": "https://github.com/vakata/jstree"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/vakata"
+                },
+                {
+                    "type": "custom",
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal@vakata.com&currency_code=USD&amount=&return=http://jstree.com/donation&item_name=Buy+me+a+coffee+for+jsTree"
+                }
+            ],
+            "install-path": "../vakata/jstree"
         }
     ],
     "dev": false,

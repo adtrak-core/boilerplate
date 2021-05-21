@@ -385,7 +385,7 @@ class UpdraftPlus_Manipulation_Functions {
 	public static function max_time_passed($time_passed, $upto, $first_run) {
 		$max_time = 0;
 		$timings_string = "";
-		$run_times_known=0;
+		$run_times_known = 0;
 		for ($i = $first_run; $i <= $upto; $i++) {
 			$timings_string .= "$i:";
 			if (isset($time_passed[$i])) {

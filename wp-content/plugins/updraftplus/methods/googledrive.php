@@ -330,10 +330,10 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 	/**
 	 * Get a Google account access token using the refresh token
 	 *
-	 * @param  string $refresh_token Specify refresh token
-	 * @param  string $client_id 	 Specify Client ID
-	 * @param  string $client_secret Specify client secret
-	 * @return boolean
+	 * @param  String $refresh_token Specify refresh token
+	 * @param  String $client_id 	 Specify Client ID
+	 * @param  String $client_secret Specify client secret
+	 * @return Boolean
 	 */
 	private function access_token($refresh_token, $client_id, $client_secret) {
 
@@ -469,7 +469,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 	 * Returns the parameter fed in, so can be used as a WordPress options filter
 	 * Can be called statically from UpdraftPlus::googledrive_clientid_checkchange()
 	 *
-	 * @param  boolean $unsetopt unset options is set to true unless otherwise specified
+	 * @param  Boolean $unsetopt unset options is set to true unless otherwise specified
 	 */
 	public function gdrive_auth_revoke($unsetopt = true) {
 		$opts = $this->get_options();
@@ -1014,11 +1014,11 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 	/**
 	 * Returns array of UDP_Google_Service_Drive_DriveFile objects
 	 *
-	 * @param  string $parent_id This is the Parent ID
-	 * @param  string $type 	 This is the type of file or directory but by default it is set to 'any' unless specified
-	 * @param  string $match 	 This will specify which match is used for the SQL but by default it is set to 'backup_' unless specified
+	 * @param  String $parent_id This is the Parent ID
+	 * @param  String $type 	 This is the type of file or directory but by default it is set to 'any' unless specified
+	 * @param  String $match 	 This will specify which match is used for the SQL but by default it is set to 'backup_' unless specified
 	 *
-	 * @return array - list of UDP_Google_Service_Drive_DriveFile items
+	 * @return Array - list of UDP_Google_Service_Drive_DriveFile items
 	 */
 	private function get_subitems($parent_id, $type = 'any', $match = 'backup_') {
 
@@ -1506,7 +1506,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 	 * Modifies handerbar template options
 	 *
 	 * @param array $opts
-	 * @return array - Modified handerbar template options
+	 * @return Array - Modified handerbar template options
 	 */
 	public function transform_options_for_template($opts) {
 		$opts['use_master'] = $this->use_master($opts);
@@ -1526,7 +1526,7 @@ class UpdraftPlus_BackupModule_googledrive extends UpdraftPlus_BackupModule {
 	 * Gives settings keys which values should not passed to handlebarsjs context.
 	 * The settings stored in UD in the database sometimes also include internal information that it would be best not to send to the front-end (so that it can't be stolen by a man-in-the-middle attacker)
 	 *
-	 * @return array - Settings array keys which should be filtered
+	 * @return Array - Settings array keys which should be filtered
 	 */
 	public function filter_frontend_settings_keys() {
 		return array(

@@ -18,10 +18,10 @@ class UpdraftPlus_BackupModule_openstack extends UpdraftPlus_BackupModule_openst
 	/**
 	 * Get Openstack service
 	 *
-	 * @param  string  $opts             THis contains: 'tenant', 'user', 'password', 'authurl', (optional) 'region'
-	 * @param  boolean $useservercerts   User server certificates
-	 * @param  string  $disablesslverify Check to disable SSL Verify
-	 * @return array
+	 * @param  String  $opts             THis contains: 'tenant', 'user', 'password', 'authurl', (optional) 'region'
+	 * @param  Boolean $useservercerts   User server certificates
+	 * @param  String  $disablesslverify Check to disable SSL Verify
+	 * @return Array
 	 */
 	public function get_openstack_service($opts, $useservercerts = false, $disablesslverify = null) {
 

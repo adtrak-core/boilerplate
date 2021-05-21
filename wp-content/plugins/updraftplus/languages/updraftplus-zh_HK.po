@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the UpdraftPlus package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2018-01-22 20:53:08+0000\n"
+"PO-Revision-Date: 2021-04-05 14:31:47+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1869,11 +1869,11 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/tab-addons.php:192
 msgid "WP-CLI support"
-msgstr ""
+msgstr "WP-CLI 支援"
 
 #: src/templates/wp-admin/settings/tab-addons.php:191
 msgid "WP CLI"
-msgstr ""
+msgstr "WP CLI"
 
 #: src/addons/wp-cli.php:266
 msgid "Invalid Job Id"
@@ -1927,7 +1927,7 @@ msgstr ""
 
 #: src/templates/wp-admin/notices/thanks-for-using-main-dash.php:4
 msgid "Thank you for installing UpdraftPlus!"
-msgstr ""
+msgstr "多謝您安裝UpdraftPlus！"
 
 #: src/includes/class-remote-send.php:634
 msgid "No keys to allow remote sites to send backup data here have yet been created."
@@ -1959,7 +1959,7 @@ msgstr ""
 
 #: src/admin.php:5293
 msgid "authentication error"
-msgstr ""
+msgstr "驗證錯誤"
 
 #: src/addons/multisite.php:44, src/options.php:38
 msgid "(Nothing has been logged yet)"
@@ -1987,11 +1987,11 @@ msgstr ""
 
 #: src/addons/morestorage.php:81, src/admin.php:930
 msgid "Currently disabled"
-msgstr ""
+msgstr "已停用"
 
 #: src/addons/morestorage.php:81, src/admin.php:929
 msgid "Currently enabled"
-msgstr ""
+msgstr "已啟用"
 
 #: src/templates/wp-admin/settings/tab-addons.php:48
 msgid "If you have purchased from UpdraftPlus.Com, then follow this link to the installation instructions (particularly step 1)."
@@ -2019,7 +2019,7 @@ msgstr ""
 
 #: src/templates/wp-admin/settings/existing-backups-table.php:91
 msgid "remote site"
-msgstr ""
+msgstr "遠端網站"
 
 #: src/addons/backblaze.php:495
 msgid "Invalid bucket name"
@@ -2323,7 +2323,7 @@ msgstr "UpdraftVault"
 
 #: src/includes/class-wpadmin-commands.php:604
 msgid "archive"
-msgstr ""
+msgstr "封裝檔"
 
 #: src/includes/class-wpadmin-commands.php:595
 msgid "Extra database"
@@ -2343,7 +2343,7 @@ msgstr ""
 
 #: src/admin.php:921
 msgid "Loading log file"
-msgstr ""
+msgstr "正在載入日誌檔"
 
 #: src/admin.php:920
 msgid "Unable to download file. This could be caused by a timeout. It would be best to download the zip to your computer."
@@ -2351,7 +2351,7 @@ msgstr ""
 
 #: src/admin.php:919
 msgid "Search"
-msgstr ""
+msgstr "搜尋"
 
 #: src/admin.php:918
 msgid "Select a file to view information about it"
@@ -2407,7 +2407,7 @@ msgstr ""
 
 #: src/admin.php:915
 msgid "HTTP code:"
-msgstr ""
+msgstr "HTTP代碼："
 
 #: src/addons/wp-cli.php:110, src/admin.php:807
 msgid "You have chosen to backup a database, but no tables have been selected"
@@ -2505,7 +2505,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/tab-addons.php:139,
 #: src/templates/wp-admin/settings/tab-addons.php:140
 msgid "Pre-update backups"
-msgstr ""
+msgstr "預先更新備份"
 
 #: src/templates/wp-admin/settings/tab-addons.php:128
 msgid "Provides expert help and support from the developers whenever you need it."
@@ -2542,7 +2542,7 @@ msgstr ""
 #: src/templates/wp-admin/settings/tab-addons.php:82,
 #: src/templates/wp-admin/settings/tab-addons.php:303
 msgid "Upgrade now"
-msgstr ""
+msgstr "現在升級"
 
 #: src/templates/wp-admin/settings/tab-addons.php:79,
 #: src/templates/wp-admin/settings/tab-addons.php:300
@@ -2824,7 +2824,7 @@ msgstr ""
 
 #: src/restorer.php:2581
 msgid "Backup of: %s"
-msgstr ""
+msgstr "備份：%s"
 
 #: src/methods/googledrive.php:357
 msgid "The client has been deleted from the Google Drive API console. Please create a new Google Drive project and reconnect with UpdraftPlus."
@@ -4074,7 +4074,7 @@ msgstr ""
 #: src/admin.php:880, src/includes/class-remote-send.php:438,
 #: src/includes/class-remote-send.php:622
 msgid "Send"
-msgstr ""
+msgstr "傳送"
 
 #: src/admin.php:871, src/includes/class-remote-send.php:616
 msgid "Send to site:"
@@ -4422,7 +4422,7 @@ msgstr ""
 #: src/templates/wp-admin/notices/thanks-for-using-main-dash.php:12,
 #: src/templates/wp-admin/settings/tab-addons.php:72
 msgid "UpdraftPlus Premium"
-msgstr ""
+msgstr "UpdraftPlus 進階版"
 
 #: src/templates/wp-admin/notices/thanks-for-using-main-dash.php:26
 msgid "Free Newsletter"
@@ -4477,7 +4477,7 @@ msgstr "%s 錯誤：初始化失敗"
 #: src/templates/wp-admin/settings/form-contents.php:191
 msgctxt "Uploader: Drop db.gz.crypt files here to upload them for decryption - or - Select Files"
 msgid "or"
-msgstr ""
+msgstr "或"
 
 #: src/admin.php:853
 msgid "You did not select any components to restore. Please select at least one, and then try again."
@@ -4837,7 +4837,7 @@ msgstr "記憶體限額"
 
 #: src/includes/class-filesystem-functions.php:285, src/restorer.php:2383
 msgid "restoration"
-msgstr ""
+msgstr "還原"
 
 #: src/class-updraftplus.php:3375
 msgid "Incremental"
@@ -5178,7 +5178,7 @@ msgstr ""
 
 #: src/methods/dropbox.php:610
 msgid "Dropbox"
-msgstr ""
+msgstr "Dropbox"
 
 #: src/addons/onedrive.php:1213, src/methods/dropbox.php:610
 msgid "Authenticate with %s"
@@ -5239,7 +5239,7 @@ msgstr "%s下載：失敗：找不到檔案"
 
 #: src/addons/googlecloud.php:721, src/methods/googledrive.php:558
 msgid "Name: %s."
-msgstr ""
+msgstr "名稱：%s。"
 
 #: src/methods/googledrive.php:297
 msgid "Google Drive list files: failed to access parent folder"
@@ -5247,7 +5247,7 @@ msgstr "Google 雲端硬碟列出檔案：無法存取主資料夾"
 
 #: src/methods/addon-not-yet-present.php:95, src/methods/insufficient.php:121
 msgid "Your %s version: %s."
-msgstr ""
+msgstr "你的%s版本：%s。"
 
 #: src/methods/addon-not-yet-present.php:94, src/methods/insufficient.php:120
 msgid "You will need to ask your web hosting company to upgrade."
@@ -5334,7 +5334,7 @@ msgstr ""
 
 #: src/addons/wp-cli.php:428, src/admin.php:4186
 msgid "Database (created by %s)"
-msgstr ""
+msgstr "數據庫 (由%s建立)"
 
 #: src/addons/wp-cli.php:426, src/admin.php:4180, src/admin.php:4228
 msgid "unknown source"
@@ -5596,7 +5596,7 @@ msgstr ""
 
 #: src/addons/moredatabase.php:144, src/admin.php:1691
 msgid "Messages:"
-msgstr ""
+msgstr "訊息："
 
 #: src/restorer.php:3018
 msgid "An SQL line that is larger than the maximum packet size and cannot be split was found; this line will not be processed, but will be dropped: %s"
@@ -5936,7 +5936,7 @@ msgstr "最近狀態:"
 
 #: src/class-updraftplus.php:3477
 msgid "Backup contains:"
-msgstr ""
+msgstr "備份內含："
 
 #: src/class-updraftplus.php:3434
 msgid "Backed up: %s"
@@ -6069,7 +6069,7 @@ msgstr ""
 
 #: src/restorer.php:2599
 msgid "Content URL:"
-msgstr ""
+msgstr "內容URL："
 
 #: src/restorer.php:727
 msgid "You should check the file ownerships and permissions in your WordPress installation"
@@ -6306,7 +6306,7 @@ msgstr "%s設定測試結果："
 
 #: src/admin.php:4298, src/admin.php:4300
 msgid "(Not finished)"
-msgstr ""
+msgstr "(未完成)"
 
 #: src/admin.php:4300
 msgid "If you are seeing more backups than you expect, then it is probably because the deletion of old backup sets does not happen until a fresh backup completes."
@@ -6368,7 +6368,7 @@ msgstr "已建立數據庫備份"
 
 #: src/admin.php:3465
 msgid "table: %s"
-msgstr ""
+msgstr "數據表：%s"
 
 #: src/admin.php:3463
 msgid "Creating database backup"
@@ -6384,7 +6384,7 @@ msgstr "正在建立備份zip檔案"
 
 #: src/admin.php:3390
 msgid "Backup begun"
-msgstr ""
+msgstr "備份已開始"
 
 #: src/admin.php:1194
 msgid "The scheduler is disabled in your WordPress install, via the DISABLE_WP_CRON setting. No backups can run (even &quot;Backup Now&quot;) unless either you have set up a facility to call the scheduler manually, or until it is enabled."
@@ -6545,7 +6545,7 @@ msgstr ""
 
 #: src/admin.php:841
 msgid "Upload error"
-msgstr ""
+msgstr "上傳錯誤"
 
 #: src/admin.php:840
 msgid "This file does not appear to be an UpdraftPlus encrypted database archive (such files are .gz.crypt files which have a name like: backup_(time)_(site name)_(code)_db.crypt.gz)."
@@ -6553,7 +6553,7 @@ msgstr ""
 
 #: src/admin.php:839
 msgid "Upload error:"
-msgstr ""
+msgstr "上傳錯誤："
 
 #: src/admin.php:838
 msgid "(make sure that you were trying to upload a zip file previously created by UpdraftPlus)"
@@ -6561,11 +6561,11 @@ msgstr ""
 
 #: src/admin.php:829
 msgid "Download to your computer"
-msgstr ""
+msgstr "下載到你的電腦"
 
 #: src/admin.php:828
 msgid "Delete from your web server"
-msgstr ""
+msgstr "從網頁伺服器刪除"
 
 #: src/admin.php:4269
 msgid "You appear to be missing one or more archives from this multi-archive set."
@@ -6581,7 +6581,7 @@ msgstr ""
 
 #: src/admin.php:819
 msgid "Warnings:"
-msgstr ""
+msgstr "警告："
 
 #: src/admin.php:818
 msgid "Error: the server sent an empty response."
@@ -6697,7 +6697,7 @@ msgstr ""
 
 #: src/class-updraftplus.php:4520
 msgid "Failed to open database file."
-msgstr ""
+msgstr "無法開啟數據庫檔案。"
 
 #: src/admin.php:5461
 msgid "Known backups (raw)"
@@ -6767,7 +6767,7 @@ msgstr ""
 #: src/methods/openstack-base.php:460, src/methods/stream-base.php:304,
 #: src/methods/stream-base.php:311, src/methods/stream-base.php:342
 msgid "%s Error"
-msgstr ""
+msgstr "%s錯誤"
 
 #: src/methods/openstack-base.php:86
 msgid "%s error - failed to upload file"
@@ -6792,7 +6792,7 @@ msgstr ""
 #: src/class-updraftplus.php:4742, src/methods/googledrive.php:486,
 #: src/methods/s3.php:351
 msgid "Error: %s"
-msgstr ""
+msgstr "錯誤：%s"
 
 #: src/admin.php:3891
 msgid "Backup directory specified exists, but is <b>not</b> writable."
@@ -6911,7 +6911,7 @@ msgstr ""
 
 #: src/admin.php:855, src/includes/updraftplus-tour.php:96
 msgid "Close"
-msgstr ""
+msgstr "關閉"
 
 #: src/addons/autobackup.php:370, src/addons/autobackup.php:462,
 #: src/admin.php:809, src/methods/remotesend.php:69,
@@ -7038,7 +7038,7 @@ msgstr ""
 
 #: src/addons/migrator.php:1311, src/admin.php:820
 msgid "Errors:"
-msgstr ""
+msgstr "錯誤："
 
 #: src/addons/migrator.php:1310
 msgid "SQL update commands run:"
@@ -7339,7 +7339,7 @@ msgstr ""
 
 #: src/methods/s3.php:1159
 msgid "API secret"
-msgstr ""
+msgstr "API密鑰"
 
 #: src/methods/s3.php:965
 msgid "Enter only a bucket name or a bucket and path. Examples: mybucket, mybucket/mypath"
@@ -7538,7 +7538,7 @@ msgstr "帳戶未被授權。"
 #: src/methods/googledrive.php:678, src/methods/googledrive.php:680,
 #: src/methods/stream-base.php:228
 msgid "Failed to upload to %s"
-msgstr ""
+msgstr "無法上傳至%s"
 
 #: src/methods/googledrive.php:643
 msgid "Account full: your %s account has only %d bytes left, but the file to be uploaded is %d bytes"
@@ -7599,7 +7599,7 @@ msgstr ""
 #: src/includes/class-storage-methods-interface.php:317, src/restorer.php:410,
 #: src/restorer.php:3348, src/restorer.php:3468
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: src/restorer.php:3342, src/restorer.php:3432
 msgid "Table prefix has changed: changing %s table field(s) accordingly:"
@@ -7611,7 +7611,7 @@ msgstr "執行數據庫查詢: "
 
 #: src/restorer.php:2303
 msgid "will restore as:"
-msgstr ""
+msgstr "將還原為："
 
 #: src/class-updraftplus.php:4650, src/restorer.php:2175,
 #: src/restorer.php:2611, src/restorer.php:2730
@@ -8453,4 +8453,4 @@ msgstr "UpdraftPlus 提醒:"
 #: src/addons/multisite.php:96, src/addons/multisite.php:776,
 #: src/options.php:74
 msgid "UpdraftPlus Backups"
-msgstr "UpdraftPlus Backups"
+msgstr "UpdraftPlus 備份"

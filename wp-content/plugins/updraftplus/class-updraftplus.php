@@ -1128,6 +1128,20 @@ class UpdraftPlus {
 		}
 		unset($this->errors[$uniq_id]);
 	}
+	
+	/**
+	 * Indicate whether or not a warning is logged with a specific identifier
+	 *
+	 * @see self::log()
+	 *
+	 * @param String $uniq_id - the identifier, previously passed to self::log()
+	 *
+	 * @return Boolean
+	 */
+	public function warning_exists($uniq_id) {
+		$warnings = $this->jobdata_get('warnings');
+		return !empty($warnings[$uniq_id]);
+	}
 
 	/**
 	 * For efficiency, you can also feed false or a string into this function
@@ -2229,7 +2243,7 @@ class UpdraftPlus {
 		if ($resumption_no > 0 && isset($runs_started[$prev_resumption])) {
 			$our_expected_start = $runs_started[$prev_resumption] + $resume_interval;
 			// If the previous run increased the resumption time, then it is timed from the end of the previous run, not the start
-			if (isset($time_passed[$prev_resumption]) && $time_passed[$prev_resumption]>0) $our_expected_start += $time_passed[$prev_resumption];
+			if (isset($time_passed[$prev_resumption]) && $time_passed[$prev_resumption] > 0) $our_expected_start += $time_passed[$prev_resumption];
 			$our_expected_start = apply_filters('updraftplus_expected_start', $our_expected_start, $job_type);
 			// More than 12 minutes late?
 			if ($time_now > $our_expected_start + 720) {
@@ -2242,27 +2256,52 @@ class UpdraftPlus {
 
 		$first_run = apply_filters('updraftplus_filerun_firstrun', 0);
 
-		// We just do this once, as we don't want to be in permanent conflict with the overlap detector
+		// We don't want to be in permanent conflict with the overlap detector
 		if ($resumption_no >= $first_run + 8 && $resumption_no < $first_run + 15 && $resume_interval >= 300) {
 
 			// $time_passed is set earlier
 			list($max_time, $timings_string, $run_times_known) = UpdraftPlus_Manipulation_Functions::max_time_passed($time_passed, $resumption_no - 1, $first_run);
 
-			// Do this on resumption 8, or the first time that we have 6 data points
+			// Do this on resumption 8, or the first time that we have 6 data points. This is only done once to prevent any potential for back-and-forth.
 			if (($first_run + 8 == $resumption_no && $run_times_known >= 6) || (6 == $run_times_known && !empty($time_passed[$prev_resumption]))) {
 				$this->log("Time passed on previous resumptions: $timings_string (known: $run_times_known, max: $max_time)");
 				// Remember that 30 seconds is used as the 'perhaps something is still running' detection threshold, and that 45 seconds is used as the 'the next resumption is approaching - reschedule!' interval
-				if ($max_time + 52 < $resume_interval) {
+				if ($resume_interval > $max_time + 52) {
 					$resume_interval = round($max_time + 52);
 					$this->log("Based on the available data, we are bringing the resumption interval down to: $resume_interval seconds");
 					$this->jobdata_set('resume_interval', $resume_interval);
 				}
-				// This next condition was added in response to HS#9174, a case where on one resumption, PHP was allowed to run for >3000 seconds - but other than that, up to 500 seconds. As a result, the resumption interval got stuck at a large value, whilst resumptions were only allowed to run for a much smaller amount.
+				
+			} elseif (isset($time_passed[$prev_resumption]) && $time_passed[$prev_resumption] > 50 && $resume_interval > 300 && $time_passed[$prev_resumption] < $resume_interval/2) {
+				// This next condition was added in response to HS#9174, a case where on one resumption, PHP was allowed to run for >3000 seconds - but other than that, up to 500 seconds. As a result, the resumption interval got stuck at a large value, whilst resumptions were only being allowed to run for a much smaller amount.
 				// This detects whether our last run was less than half the resume interval,  but was non-trivial (at least 50 seconds - so, indicating it didn't just error out straight away), but with a resume interval of over 300 seconds. In this case, it is reduced.
-			} elseif (isset($time_passed[$prev_resumption]) && $time_passed[$prev_resumption] > 50 && $resume_interval > 300 && $time_passed[$prev_resumption] < $resume_interval/2 && 'clouduploading' == $this->jobdata_get('jobstatus')) {
-				$resume_interval = round($time_passed[$prev_resumption] + 52);
-				$this->log("Time passed on previous resumptions: $timings_string (known: $run_times_known, max: $max_time). Based on the available data, we are bringing the resumption interval down to: $resume_interval seconds");
-				$this->jobdata_set('resume_interval', $resume_interval);
+				if ('clouduploading' == $this->jobdata_get('jobstatus')) {
+					$resume_interval = round($time_passed[$prev_resumption] + 52);
+					$this->log("Time passed on previous resumptions: $timings_string (known: $run_times_known, max: $max_time). Based on the available data, we are bringing the resumption interval down to: $resume_interval seconds");
+					$this->jobdata_set('resume_interval', $resume_interval);
+				} elseif ($run_times_known > 4) {
+					// Added in response to the similar HS#66907 - in that case, resumption 0 ran for over an hour; nothing subsequently for more than ~3 minutes; and it didn't reach the uploading stage until resumption 19, so the previous fragment was not helping. The cause was that the backup initially started under WP-CLI, but then resumed through the web - different conditions led to different permitted run-times. (The user could also mitigate this by running WP-Cron in a CLI environment).
+					$examined_values = 0;
+					$matching_values = 0;
+					$looking_at_resumption = $prev_resumption - 1;
+					$largest_recent = false;
+					while ($looking_at_resumption > 0 && $examined_values < 3) {
+						if (isset($time_passed[$looking_at_resumption])) {
+							$examined_values++;
+							if ($time_passed[$looking_at_resumption] > 50 && $time_passed[$looking_at_resumption] < $resume_interval/2) {
+								$matching_values++;
+								$largest_recent = max($largest_recent, $time_passed[$looking_at_resumption]);
+							}
+						}
+						$looking_at_resumption--;
+					}
+					// If the previous three found values were all less than half the resumption interval....
+					if (3 == $examined_values && 3 == $matching_values) {
+						$resume_interval = round($largest_recent + 52);
+						$this->log("Time passed on previous resumptions: $timings_string (known: $run_times_known, max: $max_time). Based on the available data (most recent 3 resumptions compared to longest), we are bringing the resumption interval down to: $resume_interval seconds");
+						$this->jobdata_set('resume_interval', $resume_interval);
+					}
+				}
 			}
 
 		}
@@ -4748,6 +4787,12 @@ class UpdraftPlus {
 			return array($mess, $warn, $err, $info);
 		}
 
+		// If the backup is not from UpdraftPlus and it's not a simple SQL file then we don't want to scan
+		if (!empty($backup['meta_foreign']) && 'genericsql' != $backup['meta_foreign']) {
+			$info['skipped_db_scan'] = 1;
+			return array($mess, $warn, $err, $info);
+		}
+
 		$is_plain = ('.gz' == substr($db_file, -3, 3)) ? false : true;
 
 		$dbhandle = $is_plain ? fopen($db_file, 'r') : UpdraftPlus_Filesystem_Functions::gzopen_for_read($db_file, $warn, $err);
@@ -4939,6 +4984,9 @@ class UpdraftPlus {
 					if (in_array($table, $wanted_tables)) {
 						$wanted_tables = array_diff($wanted_tables, array($table));
 					}
+				}
+				if (empty($old_siteurl) && !empty($backup['meta_foreign'])) {
+					$info['migration'] = true;
 				}
 				if (';' != substr($buffer, -1, 1)) {
 					$processing_create = true;
@@ -5160,7 +5208,12 @@ class UpdraftPlus {
 			$php_max_input_vars_exceeded = true;
 		} elseif (count($tables_found) >= 0.90 * $php_max_input_vars) {
 			$php_max_input_vars_exceeded = true;
+			// If the amount of tables exceed 90% of the php max input vars then truncate the list to 50% of the php max input vars value
+			$tables_found = array_splice($tables_found, 0, $php_max_input_vars / 2);
 		}
+
+		$php_max_input_vars_value = false == $php_max_input_vars ? 0 : $php_max_input_vars;
+		$info['php_max_input_vars'] = $php_max_input_vars_value;
 		
 		// On UD 1.16.30 - 1.16.34 there was a serious bug that did not backup all content in composite key tables, if this is not a migration and the backup was created on one of these versions do not restore this table.
 		$skip_composite_tables = (!empty($info['created_by_version']) && version_compare("1" . substr($info['created_by_version'], 1), '1.16.30', '>=') && version_compare("1" . substr($info['created_by_version'], 1), '1.16.34', '<=')) ? true : false;

@@ -351,6 +351,8 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 	 * @return array
 	 */
 	public function execute_media_action($params) {
+		global $updraftcentral_host_plugin;
+
 		$error = $this->_validate_capabilities(array('upload_files', 'edit_posts'));
 		if (!empty($error)) return $error;
 
@@ -361,9 +363,9 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 				$query_result = $wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET `post_parent` = %d WHERE `post_type` = 'attachment' AND ID = %d", $params['parent_id'], $params['id']));
 
 				if (false === $query_result) {
-					$result['error'] = __('Failed to attach media.', 'updraftplus');
+					$result['error'] = $updraftcentral_host_plugin->retrieve_show_message('failed_to_attach_media');
 				} else {
-					$result['msg'] = __('Media has been attached to post.', 'updraftplus');
+					$result['msg'] = $updraftcentral_host_plugin->retrieve_show_message('media_attached');
 				}
 				break;
 			case 'detach':
@@ -371,9 +373,9 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 				$query_result = $wpdb->query($wpdb->prepare("UPDATE {$wpdb->posts} SET `post_parent` = 0 WHERE `post_type` = 'attachment' AND ID = %d", $params['id']));
 
 				if (false === $query_result) {
-					$result['error'] = __('Failed to detach media.', 'updraftplus');
+					$result['error'] = $updraftcentral_host_plugin->retrieve_show_message('failed_to_detach_media');
 				} else {
-					$result['msg'] = __('Media has been detached from post.', 'updraftplus');
+					$result['msg'] = $updraftcentral_host_plugin->retrieve_show_message('media_detached');
 				}
 				break;
 			case 'delete':
@@ -386,10 +388,10 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 				}
 
 				if (!empty($failed_items)) {
-					$result['error'] = __('Failed to delete selected media.', 'updraftplus');
+					$result['error'] = $updraftcentral_host_plugin->retrieve_show_message('failed_to_delete_media');
 					$result['items'] = $failed_items;
 				} else {
-					$result['msg'] = __('Selected media has been deleted successfully.', 'updraftplus');
+					$result['msg'] = $updraftcentral_host_plugin->retrieve_show_message('selected_media_deleted');
 				}
 				break;
 			default:
@@ -427,7 +429,7 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 	 * @return array
 	 */
 	private function get_type_options() {
-		global $wpdb;
+		global $wpdb, $updraftcentral_host_plugin;
 		$options = array();
 
 		if (!function_exists('get_post_mime_types')) {
@@ -451,7 +453,7 @@ class UpdraftCentral_Media_Commands extends UpdraftCentral_Commands {
 			$options[] = array('label' => $label[0], 'value' => esc_attr($mime_type));
 		}
 
-		$options[] = array('label' => __('Unattached', 'updraftplus'), 'value' => 'detached');
+		$options[] = array('label' => $updraftcentral_host_plugin->retrieve_show_message('unattached'), 'value' => 'detached');
 		return $options;
 	}
 

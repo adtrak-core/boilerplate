@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the UpdraftPlus package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-01-31 17:21:50+0000\n"
+"PO-Revision-Date: 2021-04-05 14:32:42+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -220,7 +220,7 @@ msgstr ""
 
 #: src/methods/updraftvault.php:350
 msgid "Start Trial"
-msgstr ""
+msgstr "بداية تجريبية"
 
 #: src/methods/updraftvault.php:350
 msgid "Start %s Trial"
@@ -329,7 +329,7 @@ msgstr ""
 
 #: src/includes/updraftplus-clone.php:107
 msgid "Clone of %s"
-msgstr ""
+msgstr "استنساخ من %s"
 
 #: src/includes/updraftclone/temporary-clone-dash-notice.php:47
 msgid "%d token"
@@ -483,11 +483,11 @@ msgstr ""
 
 #: src/admin.php:5705
 msgid "This current site"
-msgstr ""
+msgstr "هذا الموقع الحالي"
 
 #: src/admin.php:5703
 msgid "Clone:"
-msgstr ""
+msgstr "استنساخ:"
 
 #: src/admin.php:4782,
 #: src/templates/wp-admin/settings/delete-and-restore-modals.php:98
@@ -649,7 +649,7 @@ msgstr ""
 
 #: src/admin.php:972
 msgid "Try it - 1 month for $1!"
-msgstr ""
+msgstr "جربه - شهر واحد مقابل $1!"
 
 #: src/admin.php:968
 msgid "Try UpdraftVault!"
@@ -689,7 +689,7 @@ msgstr ""
 
 #: src/admin.php:587
 msgid "Dismiss notice"
-msgstr ""
+msgstr "تجاهل الملاحظة"
 
 #: src/admin.php:587
 msgid "You can test running your site on a different PHP (or WordPress) version using UpdraftClone credits."
@@ -3180,7 +3180,7 @@ msgstr ""
 
 #: src/central/bootstrap.php:492
 msgid "Details"
-msgstr "تفاصيل عن المناسبة"
+msgstr "تفاصيل"
 
 #: src/central/bootstrap.php:491
 msgid "Key description"
@@ -3325,7 +3325,7 @@ msgstr ""
 #: src/templates/wp-admin/notices/horizontal-notice.php:16,
 #: src/templates/wp-admin/notices/horizontal-notice.php:18
 msgid "Dismiss"
-msgstr "رفض"
+msgstr "تجاهل"
 
 #: src/admin.php:897
 msgid "Please fill in the required information."
@@ -6516,14 +6516,14 @@ msgstr "غير قادر على قراءة الملف المضغوط (%s) - لم 
 
 #: src/templates/wp-admin/settings/header.php:25
 msgid "More plugins"
-msgstr "مزيد من الملحقات"
+msgstr "مزيد من الإضافات"
 
 #: src/includes/updraftplus-notices.php:31,
 #: src/templates/wp-admin/settings/header.php:17,
 #: src/templates/wp-admin/settings/tab-addons.php:28,
 #: src/templates/wp-admin/settings/tab-addons.php:126
 msgid "Support"
-msgstr "الدعم"
+msgstr "الدعم الفني"
 
 #: src/class-updraftplus.php:4906
 msgid "UpdraftPlus was unable to find the table prefix when scanning the database backup."
@@ -6941,7 +6941,7 @@ msgstr "لا تشمل php خادم السيرفر الخاص بك <strong>الم
 
 #: src/admin.php:855, src/includes/updraftplus-tour.php:96
 msgid "Close"
-msgstr "اغلق"
+msgstr "إغلاق"
 
 #: src/addons/autobackup.php:370, src/addons/autobackup.php:462,
 #: src/admin.php:809, src/methods/remotesend.php:69,
@@ -7028,7 +7028,7 @@ msgstr "UpdraftPlus على وضع تصحيح الأخطاء. قد تشاهد م�
 
 #: src/admin.php:1212, src/admin.php:1265
 msgid "Notice"
-msgstr "لاحظ"
+msgstr "ملاحظة"
 
 #: src/class-updraftplus.php:3401
 msgid "Errors encountered:"
@@ -8182,7 +8182,7 @@ msgstr "رسالة السجل الأخيرة"
 #: src/addons/migrator.php:271, src/admin.php:662, src/admin.php:856,
 #: src/admin.php:4328
 msgid "Restore"
-msgstr "الإستعادة"
+msgstr "استعادة"
 
 #: src/admin.php:848, src/templates/wp-admin/settings/take-backup.php:51
 msgid "Backup Now"
@@ -8287,7 +8287,7 @@ msgstr "العودة إلى اعدادات UpdraftPlus"
 #: src/templates/wp-admin/settings/existing-backups-table.php:19,
 #: src/templates/wp-admin/settings/existing-backups-table.php:143
 msgid "Actions"
-msgstr "الإجراءات"
+msgstr "إجراءات"
 
 #: src/admin.php:2573
 msgid "Bad filename format - this does not look like an encrypted database file created by UpdraftPlus"
@@ -8311,7 +8311,7 @@ msgstr "ملف جاهز."
 
 #: src/admin.php:2328
 msgid "Download failed"
-msgstr "فشل تحميل"
+msgstr "فشل في التنزيل"
 
 #: src/addons/wp-cli.php:497, src/admin.php:824,
 #: src/class-updraftplus.php:1441, src/class-updraftplus.php:1485,

@@ -9,7 +9,7 @@ class UpdraftPlus_Host implements UpdraftCentral_Host_Interface {
 
 	const PLUGIN_NAME = 'updraftplus';
 
-	public $text_domain;
+	private $translations;
 
 	protected static $_instance = null;
 
@@ -32,8 +32,26 @@ class UpdraftPlus_Host implements UpdraftCentral_Host_Interface {
 	public function __construct() {
 		add_action('updraftplus_debugtools_dashboard', array($this, 'debugtools_dashboard'), 20);
 
-		$this->text_domain = self::PLUGIN_NAME;
 		$this->maybe_initialize_required_objects();
+	}
+
+	/**
+	 * Retrieves or shows a message from the translations collection based on its identifier key
+	 *
+	 * @param string $key  The ID of the the message
+	 * @param bool   $echo Indicate whether the message is to be shown directly (echoed) or just for retrieval
+	 *
+	 * @return string/void
+	 */
+	public function retrieve_show_message($key, $echo = false) {
+		if (empty($key) || !isset($this->translations[$key])) return '';
+
+		if ($echo) {
+			echo $this->translations[$key];
+			return;
+		}
+
+		return $this->translations[$key];
 	}
 
 	/**
@@ -470,7 +488,9 @@ class UpdraftPlus_Host implements UpdraftCentral_Host_Interface {
 		if (!class_exists('UpdraftPlus')) {
 			if (defined('UPDRAFTPLUS_DIR') && file_exists(UPDRAFTPLUS_DIR.'/class-updraftplus.php')) {
 				include_once(UPDRAFTPLUS_DIR.'/class-updraftplus.php');
-				$updraftplus = new UpdraftPlus();
+				if (empty($updraftplus) || !is_a($updraftplus, 'UpdraftPlus')) {
+					$updraftplus = new UpdraftPlus();
+				}
 			}
 		}
 
@@ -484,6 +504,11 @@ class UpdraftPlus_Host implements UpdraftCentral_Host_Interface {
 			if (defined('UPDRAFTPLUS_DIR') && file_exists(UPDRAFTPLUS_DIR.'/includes/class-filesystem-functions.php')) {
 				require_once(UPDRAFTPLUS_DIR.'/includes/class-filesystem-functions.php');
 			}
+		}
+
+		// Load updraftplus translations
+		if (defined('UPDRAFTCENTRAL_CLIENT_DIR') && file_exists(UPDRAFTCENTRAL_CLIENT_DIR.'/translations-updraftplus.php')) {
+			$this->translations = include_once(UPDRAFTCENTRAL_CLIENT_DIR.'/translations-updraftplus.php');
 		}
 	}
 }

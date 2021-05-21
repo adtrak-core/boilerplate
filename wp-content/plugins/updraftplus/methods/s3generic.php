@@ -102,7 +102,7 @@ class UpdraftPlus_BackupModule_s3generic extends UpdraftPlus_BackupModule_s3 {
 	 * The function require because It should override parent class's UpdraftPlus_BackupModule_s3::transform_options_for_template() functionality with no operation.
 	 *
 	 * @param array $opts
-	 * @return array - Modified handerbar template options
+	 * @return Array - Modified handerbar template options
 	 */
 	public function transform_options_for_template($opts) {
 		return $opts;
@@ -122,13 +122,22 @@ class UpdraftPlus_BackupModule_s3generic extends UpdraftPlus_BackupModule_s3 {
 	/**
 	 * Get handlebar partial template string for endpoint of s3 compatible remote storage method. Other child class can extend it.
 	 *
-	 * @return string the partial template string
+	 * @return String the partial template string
 	 */
 	protected function get_partial_configuration_template_for_endpoint() {
 		return '<tr class="'.$this->get_css_classes().'">
 					<th>'.sprintf(__('%s end-point', 'updraftplus'), 'S3').'</th>
 					<td>
 						<input data-updraft_settings_test="endpoint" type="text" class="updraft_input--wide" '.$this->output_settings_field_name_and_id('endpoint', true).' value="{{endpoint}}" />
+					</td>
+				</tr>
+				<tr class="'.$this->get_css_classes().'">
+					<th>'.__('Bucket access style', 'updraftplus').':<br><a aria-label="'.esc_attr__('Read more about bucket access style', 'updraftplus').'" href="https://updraftplus.com/faqs/what-is-the-different-between-path-style-and-bucket-style-access-to-an-s3-compatible-bucket/" target="_blank"><em>'.__('(Read more)', 'updraftplus').'</em></a></th>
+					<td>
+						<select data-updraft_settings_test="bucket_access_style" '.$this->output_settings_field_name_and_id('bucket_access_style', true).'>
+							<option value="path_style" {{#ifeq "path_style" bucket_access_style}}selected="selected"{{/ifeq}}>'.__('Path style', 'updraftplus').'</option>
+							<option value="virtual_host_style" {{#ifeq "virtual_host_style" bucket_access_style}}selected="selected"{{/ifeq}}>'.__('Virtual-host style', 'updraftplus').'</option>
+						</select>
 					</td>
 				</tr>';
 	}
@@ -140,5 +149,25 @@ class UpdraftPlus_BackupModule_s3generic extends UpdraftPlus_BackupModule_s3 {
 	 */
 	public function credentials_test($posted_settings) {
 		$this->credentials_test_engine($this->get_config(), $posted_settings);
+	}
+
+	/**
+	 * Use DNS bucket name if the remote storage is found to be using s3generic and its bucket access style is set to virtual-host
+	 *
+	 * @param Object $storage S3 Name
+	 * @param Array  $config  an array of specific options for particular S3 remote storage module
+	 * @return Boolean true if currently processing s3generic remote storage that uses virtual-host style, false otherwise
+	 */
+	protected function maybe_use_dns_bucket_name($storage, $config) {
+		if ((!empty($config['endpoint']) && preg_match('/\.aliyuncs\.com$/i', $config['endpoint'])) || (!empty($config['bucket_access_style']) && 'virtual_host_style' === $config['bucket_access_style'])) {
+			// due to the recent merge of S3-generic bucket access style on March 2021, if virtual-host bucket access style is selected, connecting to an amazonaws bucket location where the user doesn't have an access to it will throw an S3 InvalidRequest exception. It requires the signature to be set to version 4
+			if (preg_match('/\.amazonaws\.com$/i', $config['endpoint'])) { 
+				$this->use_v4 = true;
+				$storage->setSignatureVersion('v4');
+			}
+			return $this->use_dns_bucket_name($storage, '');
+		} else {
+			return false;
+		}
 	}
 }
