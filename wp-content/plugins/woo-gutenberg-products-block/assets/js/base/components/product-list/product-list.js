@@ -7,17 +7,16 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Pagination from '@woocommerce/base-components/pagination';
 import { useEffect } from '@wordpress/element';
+import { usePrevious } from '@woocommerce/base-hooks';
 import {
-	usePrevious,
+	useStoreEvents,
 	useStoreProducts,
 	useSynchronizedQueryState,
 	useQueryStateByKey,
-	useStoreEvents,
-} from '@woocommerce/base-hooks';
+} from '@woocommerce/base-context/hooks';
 import withScrollToTop from '@woocommerce/base-hocs/with-scroll-to-top';
 import { useInnerBlockLayoutContext } from '@woocommerce/shared-context';
 import { speak } from '@wordpress/a11y';
-import { getSetting } from '@woocommerce/settings';
 
 /**
  * Internal dependencies
@@ -28,7 +27,12 @@ import ProductSortSelect from './product-sort-select';
 import ProductListItem from './product-list-item';
 import './style.scss';
 
-const generateQuery = ( { sortValue, currentPage, attributes } ) => {
+const generateQuery = ( {
+	sortValue,
+	currentPage,
+	attributes,
+	hideOutOfStockItems,
+} ) => {
 	const { columns, rows } = attributes;
 	const getSortArgs = ( orderName ) => {
 		switch ( orderName ) {
@@ -52,8 +56,6 @@ const generateQuery = ( { sortValue, currentPage, attributes } ) => {
 				};
 		}
 	};
-
-	const hideOutOfStockItems = getSetting( 'hideOutOfStockItems', false );
 
 	return {
 		...getSortArgs( sortValue ),
@@ -116,12 +118,14 @@ const ProductList = ( {
 	onSortChange,
 	sortValue,
 	scrollToTop,
+	hideOutOfStockItems = false,
 } ) => {
 	const [ queryState ] = useSynchronizedQueryState(
 		generateQuery( {
 			attributes,
 			sortValue,
 			currentPage,
+			hideOutOfStockItems,
 		} )
 	);
 	const { products, totalProducts, productsLoading } = useStoreProducts(
@@ -147,12 +151,10 @@ const ProductList = ( {
 
 	// If the product list changes, trigger an event.
 	useEffect( () => {
-		if ( products.length > 0 ) {
-			dispatchStoreEvent( 'list-products', {
-				products,
-				listName: parentName,
-			} );
-		}
+		dispatchStoreEvent( 'product-list-render', {
+			products,
+			listName: parentName,
+		} );
 	}, [ products, parentName, dispatchStoreEvent ] );
 
 	// If query state (excluding pagination/sorting attributes) changed, reset pagination to the first page.
@@ -252,6 +254,7 @@ const ProductList = ( {
 
 ProductList.propTypes = {
 	attributes: PropTypes.object.isRequired,
+	hideOutOfStockItems: PropTypes.bool,
 	// From withScrollToTop.
 	scrollToTop: PropTypes.func,
 };

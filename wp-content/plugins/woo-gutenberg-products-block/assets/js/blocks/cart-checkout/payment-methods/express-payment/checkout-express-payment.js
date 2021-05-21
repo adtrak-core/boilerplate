@@ -5,13 +5,13 @@ import { __ } from '@wordpress/i18n';
 import {
 	useEmitResponse,
 	useExpressPaymentMethods,
-} from '@woocommerce/base-hooks';
+} from '@woocommerce/base-context/hooks';
 import {
 	StoreNoticesProvider,
 	useEditorContext,
 } from '@woocommerce/base-context';
 import Title from '@woocommerce/base-components/title';
-import { CURRENT_USER_IS_ADMIN } from '@woocommerce/block-settings';
+import { CURRENT_USER_IS_ADMIN } from '@woocommerce/settings';
 
 /**
  * Internal dependencies

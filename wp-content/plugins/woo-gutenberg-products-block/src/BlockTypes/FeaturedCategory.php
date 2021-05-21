@@ -54,7 +54,7 @@ class FeaturedCategory extends AbstractDynamicBlock {
 
 		$desc_str = sprintf(
 			'<div class="wc-block-featured-category__description">%s</div>',
-			wc_format_content( $category->description )
+			wc_format_content( wp_kses_post( $category->description ) )
 		);
 
 		$output  = sprintf( '<div class="%1$s" style="%2$s">', esc_attr( $this->get_classes( $attributes ) ), esc_attr( $this->get_styles( $attributes, $category ) ) );
@@ -164,5 +164,18 @@ class FeaturedCategory extends AbstractDynamicBlock {
 		}
 
 		return $image;
+	}
+
+	/**
+	 * Extra data passed through from server to client for block.
+	 *
+	 * @param array $attributes  Any attributes that currently are available from the block.
+	 *                           Note, this will be empty in the editor context when the block is
+	 *                           not in the post content on editor load.
+	 */
+	protected function enqueue_data( array $attributes = [] ) {
+		parent::enqueue_data( $attributes );
+		$this->asset_data_registry->add( 'min_height', wc_get_theme_support( 'featured_block::min_height', 500 ), true );
+		$this->asset_data_registry->add( 'default_height', wc_get_theme_support( 'featured_block::default_height', 500 ), true );
 	}
 }
