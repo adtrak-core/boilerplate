@@ -6,14 +6,17 @@ import { useEffect } from '@wordpress/element';
 import PropTypes from 'prop-types';
 import { speak } from '@wordpress/a11y';
 import LoadingMask from '@woocommerce/base-components/loading-mask';
-import {
-	ShippingRatesControlPackage,
-	ExperimentalOrderShippingPackages,
-} from '@woocommerce/blocks-checkout';
+import { ExperimentalOrderShippingPackages } from '@woocommerce/blocks-checkout';
 import {
 	getShippingRatesPackageCount,
 	getShippingRatesRateCount,
 } from '@woocommerce/base-utils';
+import { useStoreCart } from '@woocommerce/base-context/hooks';
+
+/**
+ * Internal dependencies
+ */
+import ShippingRatesControlPackage from '../shipping-rates-control-package';
 
 /**
  * @typedef {import('react')} React
@@ -26,9 +29,9 @@ import {
  * @param {Array} props.shippingRates Array of packages containing shipping rates.
  * @param {boolean} props.shippingRatesLoading True when rates are being loaded.
  * @param {string} props.className Class name for package rates.
- * @param {boolean} props.collapsible If true, when multiple packages are rendered they can be toggled open and closed.
+ * @param {boolean} [props.collapsible] If true, when multiple packages are rendered they can be toggled open and closed.
  * @param {React.ReactElement} props.noResultsMessage Rendered when there are no packages.
- * @param {Function} props.renderOption Function to render a shipping rate.
+ * @param {Function} [props.renderOption] Function to render a shipping rate.
  */
 const ShippingRatesControl = ( {
 	shippingRates,
@@ -47,7 +50,7 @@ const ShippingRatesControl = ( {
 		if ( packageCount === 1 ) {
 			speak(
 				sprintf(
-					// translators: %d number of shipping options found.
+					/* translators: %d number of shipping options found. */
 					_n(
 						'%d shipping option was found.',
 						'%d shipping options were found.',
@@ -60,7 +63,7 @@ const ShippingRatesControl = ( {
 		} else {
 			speak(
 				sprintf(
-					// translators: %d number of shipping packages packages.
+					/* translators: %d number of shipping packages packages. */
 					_n(
 						'Shipping option searched for %d package.',
 						'Shipping options searched for %d packages.',
@@ -71,7 +74,7 @@ const ShippingRatesControl = ( {
 				) +
 					' ' +
 					sprintf(
-						// translators: %d number of shipping options available.
+						/* translators: %d number of shipping options available. */
 						_n(
 							'%d shipping option was found',
 							'%d shipping options were found',
@@ -84,6 +87,22 @@ const ShippingRatesControl = ( {
 		}
 	}, [ shippingRatesLoading, shippingRates ] );
 
+	// Prepare props to pass to the ExperimentalOrderShippingPackages slot fill.
+	// We need to pluck out receiveCart.
+	// eslint-disable-next-line no-unused-vars
+	const { extensions, receiveCart, ...cart } = useStoreCart();
+	const slotFillProps = {
+		className,
+		collapsible,
+		noResultsMessage,
+		renderOption,
+		extensions,
+		cart,
+		components: {
+			ShippingRatesControlPackage,
+		},
+	};
+
 	return (
 		<LoadingMask
 			isLoading={ shippingRatesLoading }
@@ -93,16 +112,12 @@ const ShippingRatesControl = ( {
 			) }
 			showSpinner={ true }
 		>
-			<ExperimentalOrderShippingPackages.Slot
-				className={ className }
-				collapsible={ collapsible }
-				noResultsMessage={ noResultsMessage }
-				renderOption={ renderOption }
-			/>
+			<ExperimentalOrderShippingPackages.Slot { ...slotFillProps } />
 			<ExperimentalOrderShippingPackages>
 				<Packages
 					packages={ shippingRates }
 					noResultsMessage={ noResultsMessage }
+					renderOption={ renderOption }
 				/>
 			</ExperimentalOrderShippingPackages>
 		</LoadingMask>
@@ -120,7 +135,8 @@ const ShippingRatesControl = ( {
  * @param {boolean} props.collapse If the panel should be collapsed by default,
  * only works if collapsible is true.
  * @param {boolean} props.showItems If we should items below the package name.
- * @return {React.ReactElement|Array|null} Rendered components.
+ * @param {Function} [props.renderOption] Function to render a shipping rate.
+ * @return {React.ReactElement|null} Rendered components.
  */
 const Packages = ( {
 	packages,
@@ -128,23 +144,29 @@ const Packages = ( {
 	showItems,
 	collapsible,
 	noResultsMessage,
+	renderOption,
 } ) => {
 	// If there are no packages, return nothing.
 	if ( ! packages.length ) {
 		return null;
 	}
 
-	return packages.map( ( { package_id: packageId, ...packageData } ) => (
-		<ShippingRatesControlPackage
-			key={ packageId }
-			packageId={ packageId }
-			packageData={ packageData }
-			collapsible={ collapsible }
-			collapse={ collapse }
-			showItems={ showItems }
-			noResultsMessage={ noResultsMessage }
-		/>
-	) );
+	return (
+		<>
+			{ packages.map( ( { package_id: packageId, ...packageData } ) => (
+				<ShippingRatesControlPackage
+					key={ packageId }
+					packageId={ packageId }
+					packageData={ packageData }
+					collapsible={ collapsible }
+					collapse={ collapse }
+					showItems={ showItems }
+					noResultsMessage={ noResultsMessage }
+					renderOption={ renderOption }
+				/>
+			) ) }
+		</>
+	);
 };
 
 ShippingRatesControl.propTypes = {
@@ -155,4 +177,5 @@ ShippingRatesControl.propTypes = {
 	shippingRates: PropTypes.array,
 	shippingRatesLoading: PropTypes.bool,
 };
+
 export default ShippingRatesControl;

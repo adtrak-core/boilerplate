@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the WooCommerce Admin package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Admin 2.0.2\n"
+"Project-Id-Version: WooCommerce Admin 2.2.6\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/woocommerce-admin\n"
-"POT-Creation-Date: 2021-02-25 07:29:20+00:00\n"
+"POT-Creation-Date: 2021-05-07 21:26:42+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -42,27 +42,28 @@ msgid "South African Rand"
 msgstr ""
 
 #: includes/connect-existing-pages.php:26
-#: client/navigation/components/container/index.js:177
+#: client/navigation/components/container/primary-menu.js:66
 #: client/store-management-links/index.js:168
 msgid "Extensions"
 msgstr ""
 
 #: includes/connect-existing-pages.php:30
+#: src/Features/Navigation/CoreMenu.php:99
 msgid "Reports"
 msgstr ""
 
 #: includes/connect-existing-pages.php:34 src/Features/Analytics.php:245
-#: src/Features/Navigation/CoreMenu.php:102
+#: src/Features/Navigation/CoreMenu.php:110 src/Features/Settings.php:89
 #: client/homescreen/activity-panel/orders/index.js:235
-#: client/layout/controller.js:93
+#: client/layout/controller.js:192
 #: client/marketing/overview/installed-extensions/row.js:45
 #: client/store-management-links/index.js:72
-#: client/task-list/tasks/payments/methods.js:457
+#: client/task-list/tasks/payments/methods.js:557
 msgid "Settings"
 msgstr ""
 
 #: includes/connect-existing-pages.php:38
-#: src/API/Reports/Orders/Controller.php:518
+#: src/API/Reports/Orders/Controller.php:528
 #: src/API/Reports/Products/Controller.php:398
 #: src/API/Reports/Stock/Controller.php:526
 #: src/API/Reports/Variations/Controller.php:420
@@ -74,17 +75,17 @@ msgid "Status"
 msgstr ""
 
 #: includes/connect-existing-pages.php:42
-#: src/Features/Navigation/CoreMenu.php:224
+#: src/Features/Navigation/CoreMenu.php:246
 msgid "System status"
 msgstr ""
 
 #: includes/connect-existing-pages.php:43
-#: src/Features/Navigation/CoreMenu.php:110
+#: src/Features/Navigation/CoreMenu.php:117
 msgid "Tools"
 msgstr ""
 
 #: includes/connect-existing-pages.php:44
-#: src/Features/Navigation/CoreMenu.php:249
+#: src/Features/Navigation/CoreMenu.php:248
 msgid "Logs"
 msgstr ""
 
@@ -92,7 +93,7 @@ msgstr ""
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/connect-existing-pages.php:130 src/API/Leaderboards.php:125
+#: includes/connect-existing-pages.php:132 src/API/Leaderboards.php:125
 #: src/API/Leaderboards.php:255 src/API/Reports/Categories/Controller.php:333
 #: src/API/Reports/Coupons/Controller.php:300
 #: src/API/Reports/Customers/Controller.php:591
@@ -101,12 +102,12 @@ msgstr ""
 #: src/API/Reports/Revenue/Stats/Controller.php:449
 #: src/API/Reports/Taxes/Controller.php:307
 #: src/API/Reports/Variations/Controller.php:416 src/Features/Analytics.php:169
-#: src/Features/Navigation/CoreMenu.php:78 src/ReportCSVEmail.php:36
+#: src/Features/Navigation/CoreMenu.php:84 src/ReportCSVEmail.php:36
 #: client/analytics/report/categories/config.js:36
 #: client/analytics/report/categories/table.js:59
 #: client/analytics/report/coupons/table.js:38
 #: client/analytics/report/customers/table.js:59
-#: client/analytics/report/get-reports.js:82
+#: client/analytics/report/get-reports.js:78
 #: client/analytics/report/orders/config.js:26
 #: client/analytics/report/orders/table.js:347
 #: client/analytics/report/products/config.js:39
@@ -121,37 +122,37 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-#: includes/connect-existing-pages.php:141
-#: includes/connect-existing-pages.php:172
-#: includes/connect-existing-pages.php:202
+#: includes/connect-existing-pages.php:143
+#: includes/connect-existing-pages.php:174
+#: includes/connect-existing-pages.php:204
 msgid "Add New"
 msgstr ""
 
-#: includes/connect-existing-pages.php:151
+#: includes/connect-existing-pages.php:153
 msgid "Edit Order"
 msgstr ""
 
-#: includes/connect-existing-pages.php:161
-#: src/API/Reports/Revenue/Stats/Controller.php:452
-#: src/Features/Analytics.php:199 src/Features/Coupons.php:74
-#: src/Features/Coupons.php:75 src/ReportCSVEmail.php:33
+#: includes/connect-existing-pages.php:163
+#: src/API/Reports/Revenue/Stats/Controller.php:453
+#: src/Features/Analytics.php:199 src/Features/Coupons.php:75
+#: src/Features/Coupons.php:76 src/ReportCSVEmail.php:33
 #: client/analytics/report/coupons/table.js:233
-#: client/analytics/report/get-reports.js:98
+#: client/analytics/report/get-reports.js:94
 #: client/analytics/report/orders/table.js:82
 #: client/analytics/report/revenue/config.js:30
 #: client/analytics/report/revenue/table.js:86
 msgid "Coupons"
 msgstr ""
 
-#: includes/connect-existing-pages.php:182
+#: includes/connect-existing-pages.php:184
 msgid "Edit Coupon"
 msgstr ""
 
-#: includes/connect-existing-pages.php:191
+#: includes/connect-existing-pages.php:193
 #: src/API/Reports/Categories/Controller.php:332 src/Features/Analytics.php:149
-#: src/Features/Navigation/CoreMenu.php:84 src/ReportCSVEmail.php:37
+#: src/Features/Navigation/CoreMenu.php:89 src/ReportCSVEmail.php:37
 #: client/analytics/report/categories/table.js:53
-#: client/analytics/report/get-reports.js:66
+#: client/analytics/report/get-reports.js:62
 #: client/analytics/report/orders/config.js:120
 #: client/analytics/report/orders/table.js:68
 #: client/analytics/report/products/table.js:364
@@ -159,40 +160,40 @@ msgstr ""
 msgid "Products"
 msgstr ""
 
-#: includes/connect-existing-pages.php:212
+#: includes/connect-existing-pages.php:214
 msgid "Edit Product"
 msgstr ""
 
-#: includes/connect-existing-pages.php:222
+#: includes/connect-existing-pages.php:224
 msgid "Import Products"
 msgstr ""
 
-#: includes/connect-existing-pages.php:232
+#: includes/connect-existing-pages.php:234
 msgid "Export Products"
 msgstr ""
 
-#: includes/connect-existing-pages.php:242
+#: includes/connect-existing-pages.php:244
 msgid "Product categories"
 msgstr ""
 
-#: includes/connect-existing-pages.php:252
+#: includes/connect-existing-pages.php:254
 msgid "Edit category"
 msgstr ""
 
-#: includes/connect-existing-pages.php:262
+#: includes/connect-existing-pages.php:264
 msgid "Product tags"
 msgstr ""
 
-#: includes/connect-existing-pages.php:272
+#: includes/connect-existing-pages.php:274
 msgid "Edit tag"
 msgstr ""
 
-#: includes/connect-existing-pages.php:282
-#: src/Features/Navigation/CoreMenu.php:203
+#: includes/connect-existing-pages.php:284
+#: src/Features/Navigation/CoreMenu.php:209
 msgid "Attributes"
 msgstr ""
 
-#: includes/connect-existing-pages.php:292
+#: includes/connect-existing-pages.php:294
 msgid "Edit attribute"
 msgstr ""
 
@@ -262,7 +263,7 @@ msgstr ""
 
 #: src/API/Leaderboards.php:191 src/API/Leaderboards.php:321
 #: src/API/Reports/Categories/Controller.php:330
-#: src/API/Reports/Orders/Controller.php:521
+#: src/API/Reports/Orders/Controller.php:532
 #: src/API/Reports/Products/Controller.php:390
 #: src/API/Reports/Products/Stats/Controller.php:159
 #: src/API/Reports/Variations/Controller.php:414
@@ -436,6 +437,15 @@ msgstr ""
 msgid "Sorry, you cannot manage plugins."
 msgstr ""
 
+#: src/API/NavigationFavorites.php:173 src/API/NavigationFavorites.php:225
+#: src/API/NavigationFavorites.php:266
+msgid "You must be authenticated to use this endpoint"
+msgstr ""
+
+#: src/API/NavigationFavorites.php:198
+msgid "Invalid user_id provided"
+msgstr ""
+
 #: src/API/NoteActions.php:32
 msgid "Unique ID for the Note."
 msgstr ""
@@ -598,58 +608,46 @@ msgid "Whether or not the profile was skipped."
 msgstr ""
 
 #: src/API/OnboardingProfile.php:231
-msgid "How the Jetpack/WooCommerce Shipping & Tax step was handled."
-msgstr ""
-
-#: src/API/OnboardingProfile.php:245
-msgid "Account type used for Jetpack."
-msgstr ""
-
-#: src/API/OnboardingProfile.php:257
 msgid "Industry."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:267
+#: src/API/OnboardingProfile.php:241
 msgid "Types of products sold."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:279
+#: src/API/OnboardingProfile.php:253
 msgid "Number of products to be added."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:293
+#: src/API/OnboardingProfile.php:267
 msgid "Other places the store is selling products."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:307
+#: src/API/OnboardingProfile.php:281
 msgid "Current annual revenue of the store."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:322
+#: src/API/OnboardingProfile.php:297
 msgid "Name of other platform used to sell."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:340
+#: src/API/OnboardingProfile.php:315
 msgid "Name of other platform used to sell (not listed)."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:347
+#: src/API/OnboardingProfile.php:322
 msgid "Extra business extensions to install."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:367
+#: src/API/OnboardingProfile.php:343
 msgid "Selected store theme."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:375
-msgid "Whether or not the user opted to purchase items now or later."
-msgstr ""
-
-#: src/API/OnboardingProfile.php:382
+#: src/API/OnboardingProfile.php:351
 msgid "Whether or not this store was setup for a client."
 msgstr ""
 
-#: src/API/OnboardingProfile.php:389
+#: src/API/OnboardingProfile.php:358
 msgid ""
 "Whether or not the store was connected to WooCommerce.com during the "
 "extension flow."
@@ -729,7 +727,7 @@ msgid "Homepage"
 msgstr ""
 
 #: src/API/OnboardingTasks.php:505
-msgid "Homepage created."
+msgid "Homepage created"
 msgstr ""
 
 #: src/API/OnboardingTasks.php:527
@@ -831,7 +829,7 @@ msgstr ""
 msgid "Sorry, you cannot manage these options."
 msgstr ""
 
-#: src/API/Options.php:199
+#: src/API/Options.php:201
 msgid "Array of options with associated values."
 msgstr ""
 
@@ -839,101 +837,101 @@ msgstr ""
 msgid "Limit result set to orders matching part of an order number."
 msgstr ""
 
-#: src/API/Plugins.php:211 src/API/Plugins.php:376
+#: src/API/Plugins.php:218 src/API/Plugins.php:383
 msgid "Plugins must be a non-empty array."
 msgstr ""
 
-#: src/API/Plugins.php:234
+#: src/API/Plugins.php:241
 #. translators: %s: plugin slug (example: woocommerce-services)
 msgid "The requested plugin `%s` is not in the list of allowed plugins."
 msgstr ""
 
-#: src/API/Plugins.php:257 src/API/Plugins.php:269
+#: src/API/Plugins.php:264 src/API/Plugins.php:276
 #. translators: %s: plugin slug (example: woocommerce-services)
 msgid "The requested plugin `%s` could not be installed. Plugin API call failed."
 msgstr ""
 
-#: src/API/Plugins.php:284
+#: src/API/Plugins.php:291
 #. translators: %s: plugin slug (example: woocommerce-services)
 msgid "The requested plugin `%s` could not be installed."
 msgstr ""
 
-#: src/API/Plugins.php:298
+#: src/API/Plugins.php:305
 #. translators: %s: plugin slug (example: woocommerce-services)
 msgid "The requested plugin `%s` could not be installed.  Upgrader install failed."
 msgstr ""
 
-#: src/API/Plugins.php:316
+#: src/API/Plugins.php:323
 msgid "Plugins were successfully installed."
 msgstr ""
 
-#: src/API/Plugins.php:317
+#: src/API/Plugins.php:324
 msgid "There was a problem installing some of the requested plugins."
 msgstr ""
 
-#: src/API/Plugins.php:392
+#: src/API/Plugins.php:406
 #. translators: %s: plugin slug (example: woocommerce-services)
 msgid "The requested plugin `%s`. is not in the list of allowed plugins."
 msgstr ""
 
-#: src/API/Plugins.php:401
+#: src/API/Plugins.php:415
 #. translators: %s: plugin slug (example: woocommerce-services)
 msgid "The requested plugin `%s`. is not yet installed."
 msgstr ""
 
-#: src/API/Plugins.php:413
+#: src/API/Plugins.php:427
 #. translators: %s: plugin slug (example: woocommerce-services)
 msgid "The requested plugin `%s` could not be activated."
 msgstr ""
 
-#: src/API/Plugins.php:429
+#: src/API/Plugins.php:443
 msgid "Plugins were successfully activated."
 msgstr ""
 
-#: src/API/Plugins.php:430
+#: src/API/Plugins.php:444
 msgid "There was a problem activating some of the requested plugins."
 msgstr ""
 
-#: src/API/Plugins.php:442
+#: src/API/Plugins.php:456
 msgid "Jetpack is not installed or active."
 msgstr ""
 
-#: src/API/Plugins.php:453
+#: src/API/Plugins.php:467
 #: packages/data/build-module/plugins/constants.js:13
 #: packages/data/src/plugins/constants.js:17
 msgid "Jetpack"
 msgstr ""
 
-#: src/API/Plugins.php:466 src/API/Plugins.php:529
+#: src/API/Plugins.php:480 src/API/Plugins.php:543
 msgid "There was an error loading the WooCommerce.com Helper API."
 msgstr ""
 
-#: src/API/Plugins.php:483 src/API/Plugins.php:488 src/API/Plugins.php:545
-#: src/API/Plugins.php:550 src/API/Plugins.php:566
+#: src/API/Plugins.php:497 src/API/Plugins.php:502 src/API/Plugins.php:559
+#: src/API/Plugins.php:564 src/API/Plugins.php:580
 msgid "There was an error connecting to WooCommerce.com. Please try again."
 msgstr ""
 
-#: src/API/Plugins.php:587
+#: src/API/Plugins.php:601
 msgid "There was an error connecting to Square."
 msgstr ""
 
-#: src/API/Plugins.php:639
+#: src/API/Plugins.php:653
 msgid "There was an error communicating with the WooCommerce Payments plugin."
 msgstr ""
 
-#: src/API/Plugins.php:667
+#: src/API/Plugins.php:681
 msgid "Plugin slug."
 msgstr ""
 
-#: src/API/Plugins.php:673
+#: src/API/Plugins.php:687
 msgid "Plugin name."
 msgstr ""
 
-#: src/API/Plugins.php:679
+#: src/API/Plugins.php:693
 msgid "Plugin status."
 msgstr ""
 
-#: src/API/Plugins.php:699
+#: src/API/Plugins.php:713
 msgid "Action that should be completed to connect Jetpack."
 msgstr ""
 
@@ -1050,7 +1048,7 @@ msgid "Add additional piece of info about each category to the report."
 msgstr ""
 
 #: src/API/Reports/Categories/Controller.php:331
-#: src/API/Reports/Revenue/Stats/Controller.php:455
+#: src/API/Reports/Revenue/Stats/Controller.php:456
 msgid "Net Revenue"
 msgstr ""
 
@@ -1804,7 +1802,7 @@ msgid "Limit response to objects that don't have a specified ip address."
 msgstr ""
 
 #: src/API/Reports/Downloads/Controller.php:391
-#: src/API/Reports/Orders/Controller.php:516
+#: src/API/Reports/Orders/Controller.php:526
 #: src/API/Reports/Revenue/Stats/Controller.php:448
 #: client/analytics/report/downloads/table.js:34
 #: client/analytics/report/orders/table.js:35
@@ -1825,7 +1823,7 @@ msgid "File Name"
 msgstr ""
 
 #: src/API/Reports/Downloads/Controller.php:394
-#: src/API/Reports/Orders/Controller.php:517
+#: src/API/Reports/Orders/Controller.php:527
 #: client/analytics/report/downloads/config.js:151
 #: client/analytics/report/downloads/table.js:52
 #: client/analytics/report/orders/table.js:43
@@ -1842,11 +1840,11 @@ msgid "IP"
 msgstr ""
 
 #: src/API/Reports/Downloads/Stats/Controller.php:144
-#: src/Features/Analytics.php:219 src/Features/Onboarding.php:425
+#: src/Features/Analytics.php:219 src/Features/Onboarding.php:427
 #: src/ReportCSVEmail.php:35
 #: client/analytics/report/downloads/config.js:25
 #: client/analytics/report/downloads/table.js:197
-#: client/analytics/report/get-reports.js:129
+#: client/analytics/report/get-reports.js:125
 #: client/dashboard/dashboard-charts/config.js:90
 msgid "Downloads"
 msgstr ""
@@ -2027,27 +2025,33 @@ msgid ""
 "attributes."
 msgstr ""
 
-#: src/API/Reports/Orders/Controller.php:490
+#: src/API/Reports/Orders/Controller.php:500
 #. translators: 1: numeric product quantity, 2: name of product
 msgid "%1$s× %2$s"
 msgstr ""
 
-#: src/API/Reports/Orders/Controller.php:519
+#: src/API/Reports/Orders/Controller.php:529
 #: client/analytics/report/orders/table.js:55
 msgid "Customer"
 msgstr ""
 
-#: src/API/Reports/Orders/Controller.php:520
+#: src/API/Reports/Orders/Controller.php:530
+#: client/analytics/report/orders/config.js:249
+#: client/analytics/report/orders/table.js:61
+msgid "Customer Type"
+msgstr ""
+
+#: src/API/Reports/Orders/Controller.php:531
 #: client/analytics/report/orders/table.js:67
 msgid "Product(s)"
 msgstr ""
 
-#: src/API/Reports/Orders/Controller.php:522
+#: src/API/Reports/Orders/Controller.php:533
 #: client/analytics/report/orders/table.js:81
 msgid "Coupon(s)"
 msgstr ""
 
-#: src/API/Reports/Orders/Controller.php:523
+#: src/API/Reports/Orders/Controller.php:534
 #: src/API/Reports/Products/Controller.php:391
 #: src/API/Reports/Variations/Controller.php:415
 msgid "N. Revenue"
@@ -2234,7 +2238,7 @@ msgstr ""
 
 #: src/API/Reports/Products/Controller.php:394 src/Features/Analytics.php:179
 #: src/ReportCSVEmail.php:41
-#: client/analytics/report/get-reports.js:74
+#: client/analytics/report/get-reports.js:70
 #: client/analytics/report/orders/config.js:162
 #: client/analytics/report/products/table.js:79
 #: client/analytics/report/variations/table.js:277
@@ -2245,7 +2249,7 @@ msgstr ""
 #: src/API/Reports/Stock/Controller.php:527
 #: src/API/Reports/Variations/Controller.php:421 src/Features/Analytics.php:229
 #: src/ReportCSVEmail.php:39
-#: client/analytics/report/get-reports.js:115
+#: client/analytics/report/get-reports.js:111
 #: client/analytics/report/products/table.js:91
 #: client/analytics/report/stock/table.js:198
 #: client/analytics/report/variations/table.js:79
@@ -2275,7 +2279,7 @@ msgid "Method '%s' not implemented. Must be overridden in subclass."
 msgstr ""
 
 #: src/API/Reports/Revenue/Stats/Controller.php:196
-#: src/API/Reports/Revenue/Stats/Controller.php:454
+#: src/API/Reports/Revenue/Stats/Controller.php:455
 #: client/analytics/report/revenue/config.js:50
 #: client/analytics/report/revenue/table.js:107
 #: client/dashboard/dashboard-charts/config.js:85
@@ -2292,7 +2296,7 @@ msgid "Total of taxes."
 msgstr ""
 
 #: src/API/Reports/Revenue/Stats/Controller.php:212
-#: src/API/Reports/Revenue/Stats/Controller.php:451
+#: src/API/Reports/Revenue/Stats/Controller.php:452
 #: client/analytics/report/revenue/config.js:23
 #: client/analytics/report/revenue/table.js:79
 #: client/dashboard/dashboard-charts/config.js:55
@@ -2316,15 +2320,21 @@ msgid "Gross Sales."
 msgstr ""
 
 #: src/API/Reports/Revenue/Stats/Controller.php:450
+#: client/analytics/report/revenue/config.js:16
+#: client/analytics/report/revenue/table.js:72
+msgid "Gross Sales"
+msgstr ""
+
+#: src/API/Reports/Revenue/Stats/Controller.php:451
 #: client/analytics/report/revenue/config.js:56
 #: client/analytics/report/revenue/table.js:114
 #: client/dashboard/dashboard-charts/config.js:30
 msgid "Total Sales"
 msgstr ""
 
-#: src/API/Reports/Revenue/Stats/Controller.php:453
+#: src/API/Reports/Revenue/Stats/Controller.php:454
 #: src/Features/Analytics.php:209 src/ReportCSVEmail.php:40
-#: client/analytics/report/get-reports.js:106
+#: client/analytics/report/get-reports.js:102
 #: client/analytics/report/revenue/config.js:43
 #: client/analytics/report/revenue/table.js:100
 #: client/analytics/report/taxes/table.js:203
@@ -2560,7 +2570,7 @@ msgstr ""
 msgid "A zip file of the theme to be uploaded."
 msgstr ""
 
-#: src/FeaturePlugin.php:231
+#: src/FeaturePlugin.php:233
 #. translators: 1: URL of WooCommerce plugin, 2: The minimum WooCommerce
 #. version number
 msgid ""
@@ -2568,7 +2578,7 @@ msgid ""
 "href=\"%1$s\">WooCommerce</a> %2$s or greater to be installed and active."
 msgstr ""
 
-#: src/FeaturePlugin.php:240
+#: src/FeaturePlugin.php:242
 #. translators: 1: URL of WordPress.org, 2: The minimum WordPress version
 #. number
 msgid ""
@@ -2592,35 +2602,35 @@ msgid ""
 msgstr ""
 
 #: src/Features/Analytics.php:129 src/Features/Analytics.php:249
-#: src/Features/Navigation/CoreMenu.php:90
-#: client/layout/controller.js:126
+#: src/Features/Navigation/CoreMenu.php:94
+#: client/layout/controller.js:134
 #: client/layout/navigation.js:61
 msgid "Analytics"
 msgstr ""
 
-#: src/Features/Analytics.php:139 src/Features/Marketing.php:136
-#: client/layout/controller.js:142
+#: src/Features/Analytics.php:139 src/Features/Marketing.php:137
+#: client/layout/controller.js:151
 msgid "Overview"
 msgstr ""
 
 #: src/Features/Analytics.php:159 src/ReportCSVEmail.php:38
-#: client/analytics/report/get-reports.js:58
+#: client/analytics/report/get-reports.js:54
 #: client/analytics/report/revenue/table.js:277
 msgid "Revenue"
 msgstr ""
 
 #: src/Features/Analytics.php:189 src/ReportCSVEmail.php:32
 #: client/analytics/report/categories/table.js:208
-#: client/analytics/report/get-reports.js:90
+#: client/analytics/report/get-reports.js:86
 #: client/analytics/report/variations/config.js:170
 msgid "Categories"
 msgstr ""
 
-#: src/Features/Analytics.php:239 src/Features/Navigation/CoreMenu.php:186
+#: src/Features/Analytics.php:239 src/Features/Navigation/CoreMenu.php:192
 #: src/ReportCSVEmail.php:34
 #: client/analytics/report/customers/table.js:290
-#: client/analytics/report/get-reports.js:124
-#: client/layout/controller.js:105
+#: client/analytics/report/get-reports.js:120
+#: client/layout/controller.js:112
 msgid "Customers"
 msgstr ""
 
@@ -2628,208 +2638,228 @@ msgstr ""
 msgid "Analytics cache cleared."
 msgstr ""
 
-#: src/Features/CustomerEffortScoreTracks.php:120
+#: src/Features/CustomerEffortScoreTracks.php:104
 #: client/customer-effort-score-tracks/customer-effort-score-tracks.js:38
 msgid "Thank you for your feedback!"
 msgstr ""
 
-#: src/Features/CustomerEffortScoreTracks.php:257
-msgid "How easy was it to add a product?"
+#: src/Features/CustomerEffortScoreTracks.php:246
+#: client/customer-effort-score-tracks/data/actions.js:73
+msgid "How easy was it to use search?"
 msgstr ""
 
-#: src/Features/CustomerEffortScoreTracks.php:282
-msgid "How easy was it to edit your product?"
+#: src/Features/CustomerEffortScoreTracks.php:306
+msgid "How easy was it to add product category?"
 msgstr ""
 
-#: src/Features/CustomerEffortScoreTracks.php:307
-msgid "How easy was it to update an order?"
+#: src/Features/CustomerEffortScoreTracks.php:322
+msgid "How easy was it to add a product tag?"
 msgstr ""
 
-#: src/Features/CustomerEffortScoreTracks.php:368
+#: src/Features/CustomerEffortScoreTracks.php:343
+msgid "How easy was it to import products?"
+msgstr ""
+
+#: src/Features/CustomerEffortScoreTracks.php:369
 msgid "How easy was it to update your settings?"
 msgstr ""
 
-#: src/Features/Features.php:186 src/Features/Features.php:214
+#: src/Features/CustomerEffortScoreTracks.php:394
+msgid "How easy was it to add a product attribute?"
+msgstr ""
+
+#: src/Features/Features.php:212 src/Features/Features.php:240
 msgid "Features"
 msgstr ""
 
-#: src/Features/Features.php:216
+#: src/Features/Features.php:242
 msgid ""
 "Start using new features that are being progressively rolled out to improve "
 "the store management experience."
 msgstr ""
 
-#: src/Features/Homescreen.php:81 src/Features/Navigation/CoreMenu.php:175
-#: client/layout/controller.js:59
+#: src/Features/Homescreen.php:81 src/Features/Navigation/CoreMenu.php:181
+#: client/layout/controller.js:63
 msgid "Home"
 msgstr ""
 
-#: src/Features/Marketing.php:74 src/Features/Marketing.php:75
-#: src/Features/Navigation/CoreMenu.php:96
-#: client/layout/controller.js:141
+#: src/Features/Marketing.php:75 src/Features/Marketing.php:76
+#: src/Features/Navigation/CoreMenu.php:105
+#: client/layout/controller.js:150
 #: client/store-management-links/index.js:34
 msgid "Marketing"
 msgstr ""
 
-#: src/Features/Navigation/CoreMenu.php:214
+#: src/Features/Navigation/CoreMenu.php:220
 msgid "Marketplace"
 msgstr ""
 
-#: src/Features/Navigation/CoreMenu.php:232
-msgid "Import / Export"
-msgstr ""
-
-#: src/Features/Navigation/CoreMenu.php:241
+#: src/Features/Navigation/CoreMenu.php:247
 msgid "Utilities"
 msgstr ""
 
-#: src/Features/Navigation/CoreMenu.php:257
-msgid "Scheduled Actions"
+#: src/Features/Navigation/CoreMenu.php:256
+msgid "Import / Export"
 msgstr ""
 
-#: src/Features/Navigation/Init.php:51
+#: src/Features/Navigation/Favorites.php:57
+#: src/Features/Navigation/Favorites.php:90
+#: src/Features/Navigation/Favorites.php:122
+msgid "Sorry, invalid request"
+msgstr ""
+
+#: src/Features/Navigation/Favorites.php:66
+msgid "Favorite already exists"
+msgstr ""
+
+#: src/Features/Navigation/Favorites.php:99
+msgid "Favorite item not found"
+msgstr ""
+
+#: src/Features/Navigation/Init.php:49
 msgid "Adds the new WooCommerce navigation experience to the dashboard"
 msgstr ""
 
-#: src/Features/Navigation/Init.php:60
+#: src/Features/Navigation/Init.php:58
 #. translators: 1: line break tag, 2: open link to WordPress update link, 3:
 #. close link tag.
 msgid "%1$s %2$sUpdate WordPress to enable the new navigation%3$s"
 msgstr ""
 
-#: src/Features/Navigation/Init.php:68
+#: src/Features/Navigation/Init.php:66
 msgid "Navigation"
 msgstr ""
 
-#: src/Features/Navigation/Menu.php:179
+#: src/Features/Navigation/Menu.php:189
+#: client/header/index.js:31
 msgid "WooCommerce Home"
 msgstr ""
 
-#: src/Features/Navigation/Menu.php:219
+#: src/Features/Navigation/Menu.php:229
 #. translators: 1: Duplicate menu item path.
 msgid ""
 "You have attempted to register a duplicate item with WooCommerce "
 "Navigation: %1$s"
 msgstr ""
 
-#: src/Features/Navigation/Menu.php:355
+#: src/Features/Navigation/Menu.php:374
 #. translators: 1: Duplicate menu item path.
 msgid ""
 "The item ID %1$s attempted to register using an invalid option. The "
 "arguments `menuId` and `parent` are not allowed for add_setting_item()"
 msgstr ""
 
-#: src/Features/Navigation/Menu.php:743
-msgid "WordPress Dashboard"
-msgstr ""
-
-#: src/Features/Onboarding.php:369
+#: src/Features/Onboarding.php:371
 msgid "Fashion, apparel, and accessories"
 msgstr ""
 
-#: src/Features/Onboarding.php:374
+#: src/Features/Onboarding.php:376
 msgid "Health and beauty"
 msgstr ""
 
-#: src/Features/Onboarding.php:379
+#: src/Features/Onboarding.php:381
 msgid "Electronics and computers"
 msgstr ""
 
-#: src/Features/Onboarding.php:384
+#: src/Features/Onboarding.php:386
 msgid "Food and drink"
 msgstr ""
 
-#: src/Features/Onboarding.php:389
+#: src/Features/Onboarding.php:391
 msgid "Home, furniture, and garden"
 msgstr ""
 
-#: src/Features/Onboarding.php:394
+#: src/Features/Onboarding.php:396
 msgid "CBD and other hemp-derived products"
 msgstr ""
 
-#: src/Features/Onboarding.php:399
+#: src/Features/Onboarding.php:401
 msgid "Education and learning"
 msgstr ""
 
-#: src/Features/Onboarding.php:404
+#: src/Features/Onboarding.php:406
 #: client/profile-wizard/steps/business-details/data/platform-options.js:41
 msgid "Other"
 msgstr ""
 
-#: src/Features/Onboarding.php:421
+#: src/Features/Onboarding.php:423
 msgid "Physical products"
 msgstr ""
 
-#: src/Features/Onboarding.php:428
+#: src/Features/Onboarding.php:430
 msgid "Subscriptions"
 msgstr ""
 
-#: src/Features/Onboarding.php:432
+#: src/Features/Onboarding.php:434
 msgid "Memberships"
 msgstr ""
 
-#: src/Features/Onboarding.php:436
+#: src/Features/Onboarding.php:438
 msgid "Bookings"
 msgstr ""
 
-#: src/Features/Onboarding.php:440
+#: src/Features/Onboarding.php:442
 msgid "Bundles"
 msgstr ""
 
-#: src/Features/Onboarding.php:444
+#: src/Features/Onboarding.php:446
 msgid "Customizable products"
 msgstr ""
 
-#: src/Features/Onboarding.php:633
+#: src/Features/Onboarding.php:615
 #. translators: site currency symbol (used to show that the product costs
 #. money)
 msgid " — %s"
 msgstr ""
 
-#: src/Features/Onboarding.php:949 src/Features/Onboarding.php:961
+#: src/Features/Onboarding.php:938 src/Features/Onboarding.php:950
 msgid "Setup wizard"
 msgstr ""
 
-#: src/Features/Onboarding.php:957
+#: src/Features/Onboarding.php:946
 msgid "WooCommerce Onboarding"
 msgstr ""
 
-#: src/Features/Onboarding.php:959
+#: src/Features/Onboarding.php:948
 msgid "Profile Setup Wizard"
 msgstr ""
 
-#: src/Features/Onboarding.php:960
+#: src/Features/Onboarding.php:949
 msgid ""
 "If you need to access the setup wizard again, please click on the button "
 "below."
 msgstr ""
 
-#: src/Features/Onboarding.php:963
+#: src/Features/Onboarding.php:952
 msgid "Task List"
 msgstr ""
 
-#: src/Features/Onboarding.php:964
+#: src/Features/Onboarding.php:953
 msgid ""
 "If you need to enable or disable the task lists, please click on the button "
 "below."
 msgstr ""
 
-#: src/Features/Onboarding.php:966 src/Features/Onboarding.php:973
+#: src/Features/Onboarding.php:955 src/Features/Onboarding.php:962
 msgid "Enable"
 msgstr ""
 
-#: src/Features/Onboarding.php:967 src/Features/Onboarding.php:974
+#: src/Features/Onboarding.php:956 src/Features/Onboarding.php:963
 msgid "Disable"
 msgstr ""
 
-#: src/Features/Onboarding.php:970
+#: src/Features/Onboarding.php:959
 msgid "Extended task List"
 msgstr ""
 
-#: src/Features/Onboarding.php:971
+#: src/Features/Onboarding.php:960
 msgid ""
 "If you need to enable or disable the extended task lists, please click on "
 "the button below."
+msgstr ""
+
+#: src/Features/Settings.php:90
+msgid "Adds the new WooCommerce settings UI."
 msgstr ""
 
 #: src/Features/ShippingLabelBanner.php:107
@@ -2837,12 +2867,17 @@ msgstr ""
 msgid "Shipping Label"
 msgstr ""
 
-#: src/Loader.php:257
-#: client/layout/controller.js:157
+#: src/Loader.php:118
+#. translators: %s: is referring to the plugin's name.
+msgid "You have the %s plugin activated but it is not being used."
+msgstr ""
+
+#: src/Loader.php:311
+#: client/layout/controller.js:167
 msgid "Setup Wizard"
 msgstr ""
 
-#: src/Loader.php:1013
+#: src/Loader.php:968
 #. translators: %1$s: updated title, %2$s: blog info name
 msgid "%1$s &lsaquo; %2$s"
 msgstr ""
@@ -2851,44 +2886,45 @@ msgstr ""
 msgid "WooCommerce Admin"
 msgstr ""
 
-#: src/Loader.php:1184
+#: src/Loader.php:1140
 msgid "Settings for WooCommerce admin reporting."
 msgstr ""
 
-#: src/Loader.php:1203
+#: src/Loader.php:1159
 msgid "Excluded report order statuses"
 msgstr ""
 
-#: src/Loader.php:1204
+#: src/Loader.php:1160
 msgid "Statuses that should not be included when calculating report totals."
 msgstr ""
 
-#: src/Loader.php:1212
+#: src/Loader.php:1168
 msgid "Actionable order statuses"
 msgstr ""
 
-#: src/Loader.php:1213
+#: src/Loader.php:1169
 msgid "Statuses that require extra action on behalf of the store admin."
 msgstr ""
 
-#: src/Loader.php:1221 src/Loader.php:1222
+#: src/Loader.php:1177 src/Loader.php:1178
 msgid "Default Date Range"
 msgstr ""
 
-#: src/Notes/AddFirstProduct.php:61
+#: src/Notes/AddFirstProduct.php:64
+#. translators: %s: line break
 msgid ""
-"Nice one, you’ve created a WooCommerce store! Now it’s time to add your "
-"first product.<br/><br/>"
+"Nice one; you've created a WooCommerce store! Now it's time to add your "
+"first product and get ready to start selling.%s"
 msgstr ""
 
-#: src/Notes/AddFirstProduct.php:62
+#: src/Notes/AddFirstProduct.php:65
 msgid ""
 "There are three ways to add your products: you can <strong>create products "
 "manually, import them at once via CSV file</strong>, or <strong>migrate "
 "them from another service</strong>.<br/><br/>"
 msgstr ""
 
-#: src/Notes/AddFirstProduct.php:63
+#: src/Notes/AddFirstProduct.php:66
 msgid ""
 "<a "
 "href=\"https://docs.woocommerce.com/document/managing-products/?utm_"
@@ -2896,11 +2932,11 @@ msgid ""
 "started!"
 msgstr ""
 
-#: src/Notes/AddFirstProduct.php:71
-msgid "Store setup"
+#: src/Notes/AddFirstProduct.php:74
+msgid "Add your first product"
 msgstr ""
 
-#: src/Notes/AddFirstProduct.php:83
+#: src/Notes/AddFirstProduct.php:86
 msgid "Add a product"
 msgstr ""
 
@@ -2920,7 +2956,7 @@ msgstr ""
 #: src/Notes/CustomizingProductCatalog.php:74 src/Notes/DrawAttention.php:68
 #: src/Notes/EUVATNumber.php:53 src/Notes/EditProductsOnTheMove.php:62
 #: src/Notes/FilterByProductVariationsInReports.php:50
-#: src/Notes/LaunchChecklist.php:54
+#: src/Notes/FirstDownlaodableProduct.php:62 src/Notes/LaunchChecklist.php:54
 #: src/Notes/LearnMoreAboutVariableProducts.php:77
 #: src/Notes/ManageOrdersOnTheGo.php:56
 #: src/Notes/ManageStoreActivityFromHomeScreen.php:58
@@ -2931,7 +2967,7 @@ msgstr ""
 #: src/Notes/StartDropshippingBusiness.php:75
 #: src/Notes/WelcomeToWooCommerceForStoreUsers.php:50
 #: src/Notes/WooCommercePayments.php:117
-#: client/profile-wizard/steps/product-types/label.js:74
+#: client/profile-wizard/steps/product-types/label.js:73
 msgid "Learn more"
 msgstr ""
 
@@ -3013,7 +3049,7 @@ msgid ""
 "looking great in your store."
 msgstr ""
 
-#: src/Notes/DataStore.php:125
+#: src/Notes/DataStore.php:126
 msgid "Invalid admin note"
 msgstr ""
 
@@ -3070,6 +3106,16 @@ msgstr ""
 msgid ""
 "One of the most awaited features has just arrived! You can now have "
 "insights into each product variation in the orders and products reports."
+msgstr ""
+
+#: src/Notes/FirstDownlaodableProduct.php:49
+msgid "Learn more about digital/downloadable products"
+msgstr ""
+
+#: src/Notes/FirstDownlaodableProduct.php:51
+msgid ""
+"Congrats on adding your first digital product! You can learn more about how "
+"to handle digital or downloadable products in our documentation."
 msgstr ""
 
 #: src/Notes/FirstProduct.php:69
@@ -3144,8 +3190,8 @@ msgstr ""
 #: src/Notes/InsightFirstProductAndPayment.php:41
 msgid ""
 "More than 80% of new merchants add the first product and have at least one "
-"payment method set up during the first week. We're here to help your "
-"business succeed! Do you find this type of insight useful?"
+"payment method set up during the first week.<br><br>Do you find this type "
+"of insight useful?"
 msgstr ""
 
 #: src/Notes/InsightFirstProductAndPayment.php:48
@@ -3154,8 +3200,15 @@ msgid "Yes"
 msgstr ""
 
 #: src/Notes/InsightFirstProductAndPayment.php:52
+#: src/Notes/InsightFirstProductAndPayment.php:61
 #: src/Notes/InsightFirstSale.php:56 src/Notes/InsightFirstSale.php:64
 msgid "Thanks for your feedback"
+msgstr ""
+
+#: src/Notes/InsightFirstProductAndPayment.php:57
+#: src/Notes/InsightFirstSale.php:60
+#: client/profile-wizard/steps/business-details/data/selling-venue-options.js:9
+msgid "No"
 msgstr ""
 
 #: src/Notes/InsightFirstSale.php:40
@@ -3166,11 +3219,6 @@ msgstr ""
 msgid ""
 "A WooCommerce powered store needs on average 31 days to get the first sale. "
 "You're on the right track! Do you find this type of insight useful?"
-msgstr ""
-
-#: src/Notes/InsightFirstSale.php:60
-#: client/profile-wizard/steps/business-details/data/selling-venue-options.js:9
-msgid "No"
 msgstr ""
 
 #: src/Notes/InstallJPAndWCSPlugins.php:44
@@ -3235,18 +3283,27 @@ msgid ""
 "activity panels on the Home screen."
 msgstr ""
 
-#: src/Notes/Marketing.php:34
+#: src/Notes/Marketing.php:39
 msgid "Connect with your audience"
 msgstr ""
 
-#: src/Notes/Marketing.php:35
+#: src/Notes/Marketing.php:40
 msgid ""
 "Grow your customer base and increase your sales with marketing tools built "
 "for WooCommerce."
 msgstr ""
 
-#: src/Notes/Marketing.php:42
+#: src/Notes/Marketing.php:47
 msgid "Open marketing hub"
+msgstr ""
+
+#: src/Notes/MerchantEmailNotifications/NotificationEmail.php:35
+msgid "Hi there,"
+msgstr ""
+
+#: src/Notes/MerchantEmailNotifications/NotificationEmail.php:196
+#. translators: %s = merchant name
+msgid "Hi %s,"
 msgstr ""
 
 #: src/Notes/MigrateFromShopify.php:62
@@ -3290,6 +3347,21 @@ msgstr ""
 
 #: src/Notes/NavigationFeedbackFollowUp.php:54
 msgid "Share your thoughts on the new WooCommerce navigation"
+msgstr ""
+
+#: src/Notes/NavigationNudge.php:47
+msgid "You now have access to the WooCommerce navigation"
+msgstr ""
+
+#: src/Notes/NavigationNudge.php:48
+msgid ""
+"We’re introducing a new navigation for a more intuitive and improved user "
+"experience. You can enable the beta version of the new experience in the "
+"Advanced Settings. Enable it now for your store."
+msgstr ""
+
+#: src/Notes/NavigationNudge.php:54
+msgid "Enable in Settings"
 msgstr ""
 
 #: src/Notes/NeedSomeInspiration.php:59
@@ -3391,7 +3463,7 @@ msgid "Sign up for tips, product updates, and inspiration"
 msgstr ""
 
 #: src/Notes/OnboardingEmailMarketing.php:41
-#: client/profile-wizard/steps/benefits/index.js:246
+#: client/profile-wizard/steps/benefits/index.js:187
 msgid "Yes please!"
 msgstr ""
 
@@ -3510,7 +3582,6 @@ msgid "Set up additional payment providers"
 msgstr ""
 
 #: src/Notes/SetUpAdditionalPaymentTypes.php:94
-#: client/task-list/tasks.js:186
 msgid "Set up payments"
 msgstr ""
 
@@ -3561,6 +3632,7 @@ msgid "Activate usage tracking"
 msgstr ""
 
 #: src/Notes/WelcomeToWooCommerceForStoreUsers.php:43
+#: client/homescreen/welcome-from-calypso-modal/welcome-from-calypso-modal.js:23
 msgid "Welcome to your new store management experience"
 msgstr ""
 
@@ -3687,18 +3759,18 @@ msgstr ""
 msgid "Report table data is being deleted."
 msgstr ""
 
-#: src/Schedulers/CustomersScheduler.php:214
+#: src/Schedulers/CustomersScheduler.php:215
 msgid "[deleted]"
 msgstr ""
 
-#: woocommerce-admin.php:39 woocommerce-admin.php:57
+#: woocommerce-admin.php:38 woocommerce-admin.php:56
 #. translators: 1: composer command. 2: plugin directory
 msgid ""
 "Your installation of the WooCommerce Admin feature plugin is incomplete. "
 "Please run %1$s within the %2$s directory."
 msgstr ""
 
-#: woocommerce-admin.php:109
+#: woocommerce-admin.php:108
 #. Translators: %1$s is referring to a php constant name, %2$s is referring to
 #. the wp-config.php file.
 msgid ""
@@ -3707,7 +3779,7 @@ msgid ""
 "from WooCommerce core."
 msgstr ""
 
-#: woocommerce-admin.php:128
+#: woocommerce-admin.php:127
 #. Translators: %1$s, %2$s, and %3$s are all build commands to be run in order.
 msgid ""
 "You have installed a development version of WooCommerce Admin which "
@@ -3715,7 +3787,7 @@ msgid ""
 "install dependencies, then %3$s to build the files."
 msgstr ""
 
-#: woocommerce-admin.php:135
+#: woocommerce-admin.php:134
 #. translators: 1: URL of GitHub Repository build page
 msgid ""
 "Or you can download a pre-built version of the plugin by visiting <a "
@@ -3757,7 +3829,7 @@ msgstr ""
 #: client/homescreen/activity-panel/orders/index.js:247
 #: client/homescreen/activity-panel/reviews/index.js:331
 #: client/homescreen/activity-panel/stock/index.js:93
-#: client/inbox-panel/index.js:95
+#: client/inbox-panel/index.js:93
 msgid "Reload"
 msgstr ""
 
@@ -3782,24 +3854,24 @@ msgid "Previous Year:"
 msgstr ""
 
 # %s = type of report
-#: client/analytics/components/report-table/index.js:207
+#: client/analytics/components/report-table/index.js:208
 msgid "Your %s Report will be emailed to you."
 msgstr ""
 
 # %s = type of report
-#: client/analytics/components/report-table/index.js:221
+#: client/analytics/components/report-table/index.js:222
 msgid "There was a problem exporting your %s Report. Please try again."
 msgstr ""
 
-#: client/analytics/components/report-table/index.js:314
+#: client/analytics/components/report-table/index.js:318
 msgid "Select All"
 msgstr ""
 
-#: client/analytics/components/report-table/index.js:396
+#: client/analytics/components/report-table/index.js:400
 msgid "Check at least two items below to compare"
 msgstr ""
 
-#: client/analytics/components/report-table/index.js:405
+#: client/analytics/components/report-table/index.js:409
 #: client/analytics/report/categories/config.js:100
 #: client/analytics/report/coupons/config.js:82
 #: client/analytics/report/products/config.js:160
@@ -3808,11 +3880,11 @@ msgstr ""
 msgid "Compare"
 msgstr ""
 
-#: client/analytics/components/report-table/index.js:416
+#: client/analytics/components/report-table/index.js:420
 msgid "Search by item name"
 msgstr ""
 
-#: client/analytics/components/report-table/index.js:434
+#: client/analytics/components/report-table/index.js:438
 msgid "Download"
 msgstr ""
 
@@ -4323,11 +4395,6 @@ msgstr ""
 msgid "Select coupon codes"
 msgstr ""
 
-#: client/analytics/report/orders/config.js:249
-#: client/analytics/report/orders/table.js:61
-msgid "Customer Type"
-msgstr ""
-
 #: client/analytics/report/orders/config.js:250
 msgid "Remove customer filter"
 msgstr ""
@@ -4566,11 +4633,6 @@ msgstr[1] ""
 msgid "Search by product name or SKU"
 msgstr ""
 
-#: client/analytics/report/revenue/config.js:16
-#: client/analytics/report/revenue/table.js:72
-msgid "Gross Sales"
-msgstr ""
-
 #: client/analytics/report/revenue/table.js:235
 msgid "gross sales"
 msgstr ""
@@ -4788,7 +4850,7 @@ msgstr ""
 #: packages/components/build-module/advanced-filters/date-filter.js:35
 #: packages/components/build-module/date-range-filter-picker/index.js:29
 #: packages/data/build-module/import/reducer.js:26
-#: packages/date/build-module/index.js:628
+#: packages/date/build-module/index.js:634
 msgid "MM/DD/YYYY"
 msgstr ""
 
@@ -4895,7 +4957,7 @@ msgstr ""
 msgid "Pencil icon"
 msgstr ""
 
-#: client/customer-effort-score-tracks/data/actions.js:55
+#: client/customer-effort-score-tracks/data/actions.js:58
 msgid "How easy was it to filter your store analytics?"
 msgstr ""
 
@@ -4922,17 +4984,17 @@ msgid "Buy now"
 msgstr ""
 
 #: client/dashboard/components/connect/index.js:77
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:784
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:353
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:499
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:389
 #: packages/components/build-module/plugins/index.js:138
 msgid "Retry"
 msgstr ""
 
 #: client/dashboard/components/connect/index.js:91
 #: client/homescreen/stats-overview/install-jetpack-cta.js:76
-#: client/profile-wizard/steps/benefits/index.js:255
+#: client/profile-wizard/steps/benefits/index.js:196
 #: client/profile-wizard/steps/usage-modal.js:122
-#: client/task-list/tasks/payments/wcpay-usage-modal.js:55
+#: client/task-list/tasks/payments/wcpay/wcpay-usage-modal.js:55
 #: client/wp-admin-scripts/navigation-opt-out/container.js:46
 #: packages/components/build-module/plugins/index.js:162
 msgid "No thanks"
@@ -5001,42 +5063,42 @@ msgid "Charts"
 msgstr ""
 
 #: client/dashboard/dashboard-charts/index.js:220
-#: packages/components/build-module/chart/index.js:454
+#: packages/components/build-module/chart/index.js:458
 msgid "Line chart"
 msgstr ""
 
 #: client/dashboard/dashboard-charts/index.js:236
-#: packages/components/build-module/chart/index.js:463
+#: packages/components/build-module/chart/index.js:467
 msgid "Bar chart"
 msgstr ""
 
 #: client/dashboard/dashboard-charts/index.js:60
-#: packages/components/build-module/chart/index.js:307
+#: packages/components/build-module/chart/index.js:311
 msgid "By hour"
 msgstr ""
 
 #: client/dashboard/dashboard-charts/index.js:61
-#: packages/components/build-module/chart/index.js:308
+#: packages/components/build-module/chart/index.js:312
 msgid "By day"
 msgstr ""
 
 #: client/dashboard/dashboard-charts/index.js:62
-#: packages/components/build-module/chart/index.js:309
+#: packages/components/build-module/chart/index.js:313
 msgid "By week"
 msgstr ""
 
 #: client/dashboard/dashboard-charts/index.js:63
-#: packages/components/build-module/chart/index.js:310
+#: packages/components/build-module/chart/index.js:314
 msgid "By month"
 msgstr ""
 
 #: client/dashboard/dashboard-charts/index.js:64
-#: packages/components/build-module/chart/index.js:311
+#: packages/components/build-module/chart/index.js:315
 msgid "By quarter"
 msgstr ""
 
 #: client/dashboard/dashboard-charts/index.js:65
-#: packages/components/build-module/chart/index.js:312
+#: packages/components/build-module/chart/index.js:316
 msgid "By year"
 msgstr ""
 
@@ -5110,51 +5172,45 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: client/header/activity-panel/highlight-tooltip/index.js:140
+#: client/header/activity-panel/highlight-tooltip/index.js:172
 #: packages/components/build-module/calendar/phrases.js:7
 msgid "Close"
 msgstr ""
 
-#: client/header/activity-panel/index.js:160
+#: client/header/activity-panel/index.js:123
 #: client/header/activity-panel/panels/help.js:42
 msgid "Inbox"
 msgstr ""
 
-#: client/header/activity-panel/index.js:169
-msgid "Store Setup"
+#: client/header/activity-panel/index.js:132
+#: client/marketing/overview/installed-extensions/row.js:112
+msgid "Finish setup"
 msgstr ""
 
-#: client/header/activity-panel/index.js:198
+#: client/header/activity-panel/index.js:165
 msgid "Help"
 msgstr ""
 
-#: client/header/activity-panel/index.js:282
-msgid "View Activity Panel, you have unread activity"
+#: client/header/activity-panel/index.js:179
+msgid "Preview site"
 msgstr ""
 
-#: client/header/activity-panel/index.js:286
-msgid "View Activity Panel"
-msgstr ""
-
-#: client/header/activity-panel/index.js:291
+#: client/header/activity-panel/index.js:252
 msgid "Store Activity"
 msgstr ""
 
-#: client/header/activity-panel/index.js:304
-msgid "Close Activity Panel"
-msgstr ""
-
-#: client/header/activity-panel/index.js:348
+#: client/header/activity-panel/index.js:287
 msgid "We're here for help"
 msgstr ""
 
-#: client/header/activity-panel/index.js:352
+#: client/header/activity-panel/index.js:288
 msgid ""
 "If you have any questions, feel free to explore the WooCommerce docs listed "
 "here."
 msgstr ""
 
-#: client/header/activity-panel/index.js:356
+#: client/header/activity-panel/index.js:292
+#: client/navigation/components/favorites-tooltip/index.js:51
 msgid "Got it"
 msgstr ""
 
@@ -5287,8 +5343,34 @@ msgid "unread activity"
 msgstr ""
 
 # 1: document title. 2: page title
-#: client/header/index.js:45
+#: client/header/index.js:132
 msgid "%1$s &lsaquo; %2$s &#8212; WooCommerce"
+msgstr ""
+
+#: client/header/index.js:70
+#: client/task-list/tasks.js:194
+msgid "Choose payment methods"
+msgstr ""
+
+#: client/header/index.js:71
+#: client/task-list/tasks.js:210
+msgid "Add tax rates"
+msgstr ""
+
+#: client/header/index.js:72
+#: client/task-list/tasks.js:238
+msgid "Personalize your store"
+msgstr ""
+
+#: client/header/index.js:73
+#: client/store-management-links/index.js:43
+#: client/task-list/tasks.js:140
+msgid "Add products"
+msgstr ""
+
+#: client/header/index.js:74
+#: client/task-list/tasks.js:223
+msgid "Set up shipping costs"
 msgstr ""
 
 #: client/homescreen/activity-panel/orders/index.js:111
@@ -5329,7 +5411,7 @@ msgstr ""
 
 #: client/homescreen/activity-panel/reviews/index.js:115
 #: client/homescreen/activity-panel/stock/card.js:102
-#: client/inbox-panel/action.js:90
+#: client/inbox-panel/action.js:87
 #: client/task-list/list.js:175
 msgid "Undo"
 msgstr ""
@@ -5378,7 +5460,7 @@ msgstr ""
 
 # %s = name of the product having stock updated
 #: client/homescreen/activity-panel/stock/card.js:120
-msgid "%s stock could not be updated."
+msgid "%s stock could not be updated"
 msgstr ""
 
 #: client/homescreen/activity-panel/stock/card.js:137
@@ -5388,7 +5470,7 @@ msgid "Save"
 msgstr ""
 
 #: client/homescreen/activity-panel/stock/card.js:140
-#: client/inbox-panel/card.js:226
+#: client/inbox-panel/card.js:232
 #: packages/customer-effort-score/build-module/customer-feedback-modal/index.js:128
 msgid "Cancel"
 msgstr ""
@@ -5409,18 +5491,18 @@ msgstr ""
 
 # %s = name of the product having stock updated
 #: client/homescreen/activity-panel/stock/card.js:96
-msgid "%s stock updated."
+msgid "%s stock updated"
 msgstr ""
 
 #: client/homescreen/activity-panel/stock/index.js:89
 msgid "There was an error getting your low stock products. Please try again."
 msgstr ""
 
-#: client/homescreen/layout.js:92
+#: client/homescreen/layout.js:95
 msgid "Your store today"
 msgstr ""
 
-#: client/homescreen/layout.js:93
+#: client/homescreen/layout.js:96
 msgid "To do's, tips, and insights for your business"
 msgstr ""
 
@@ -5476,10 +5558,6 @@ msgid ""
 "Jetpack plugin and a WordPress.com account."
 msgstr ""
 
-#: client/homescreen/welcome-from-calypso-modal/welcome-from-calypso-modal.js:23
-msgid "Welcome to your new store management experience."
-msgstr ""
-
 #: client/homescreen/welcome-from-calypso-modal/welcome-from-calypso-modal.js:28
 msgid ""
 "We've designed your navigation and home screen to help you focus on the "
@@ -5488,7 +5566,7 @@ msgid ""
 msgstr ""
 
 #: client/homescreen/welcome-from-calypso-modal/welcome-from-calypso-modal.js:73
-#: client/homescreen/welcome-modal/index.js:82
+#: client/homescreen/welcome-modal/index.js:83
 msgid "Let's go"
 msgstr ""
 
@@ -5504,7 +5582,7 @@ msgid ""
 msgstr ""
 
 #: client/homescreen/welcome-modal/index.js:38
-msgid "A personalized inbox full of relevant advice."
+msgid "A personalized inbox full of relevant advice"
 msgstr ""
 
 #: client/homescreen/welcome-modal/index.js:42
@@ -5515,44 +5593,51 @@ msgid ""
 msgstr ""
 
 #: client/homescreen/welcome-modal/index.js:53
-msgid "Good data leads to smart business decisions."
+msgid "Good data leads to smart business decisions"
 msgstr ""
 
-#: client/inbox-panel/action.js:112
-msgid "Message could not be dismissed."
+#: client/homescreen/welcome-modal/index.js:57
+msgid ""
+"Monitor your stats to improve performance, increase sales, and track your "
+"progress toward revenue goals. The more you know, the better you can serve "
+"your customers and grow your store."
+msgstr ""
+
+#: client/inbox-panel/action.js:109
+msgid "Message could not be dismissed"
 msgstr ""
 
 #: client/inbox-panel/action.js:51
-msgid "Message dismissed."
+msgid "Message dismissed"
 msgstr ""
 
 #: client/inbox-panel/action.js:83
-msgid "All messages dismissed."
+msgid "All messages dismissed"
 msgstr ""
 
-#: client/inbox-panel/card.js:153
+#: client/inbox-panel/card.js:159
 #: client/task-list/list.js:353
 msgid "Dismiss"
 msgstr ""
 
-#: client/inbox-panel/card.js:167
+#: client/inbox-panel/card.js:173
 msgid "Dismiss this message"
 msgstr ""
 
-#: client/inbox-panel/card.js:180
+#: client/inbox-panel/card.js:186
 msgid "Dismiss all messages"
 msgstr ""
 
-#: client/inbox-panel/card.js:199
+#: client/inbox-panel/card.js:205
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: client/inbox-panel/card.js:210
+#: client/inbox-panel/card.js:216
 #: client/wp-admin-scripts/print-shipping-label-banner/dismiss-modal/index.js:54
 msgid "Are you sure?"
 msgstr ""
 
-#: client/inbox-panel/card.js:216
+#: client/inbox-panel/card.js:222
 msgid "Dismissed messages cannot be viewed again"
 msgstr ""
 
@@ -5567,39 +5652,39 @@ msgid ""
 "recommendations and more!"
 msgstr ""
 
-#: client/inbox-panel/index.js:91
+#: client/inbox-panel/index.js:89
 msgid "There was an error getting your inbox. Please try again."
 msgstr ""
 
-#: client/layout/store-alerts/index.js:101
+#: client/layout/store-alerts/index.js:100
 msgid "Tomorrow"
 msgstr ""
 
-#: client/layout/store-alerts/index.js:112
+#: client/layout/store-alerts/index.js:111
 msgid "Next Week"
 msgstr ""
 
-#: client/layout/store-alerts/index.js:123
+#: client/layout/store-alerts/index.js:122
 msgid "Next Month"
 msgstr ""
 
-#: client/layout/store-alerts/index.js:147
+#: client/layout/store-alerts/index.js:146
 msgid "Remind Me Later"
 msgstr ""
 
-#: client/layout/store-alerts/index.js:218
+#: client/layout/store-alerts/index.js:223
 msgid "Previous Alert"
 msgstr ""
 
-#: client/layout/store-alerts/index.js:231
+#: client/layout/store-alerts/index.js:236
 msgid "{{current /}} of {{total /}}"
 msgstr ""
 
-#: client/layout/store-alerts/index.js:252
+#: client/layout/store-alerts/index.js:257
 msgid "Next Alert"
 msgstr ""
 
-#: client/layout/store-alerts/index.js:90
+#: client/layout/store-alerts/index.js:89
 msgid "Later Today"
 msgstr ""
 
@@ -5685,11 +5770,6 @@ msgstr ""
 msgid "Activate"
 msgstr ""
 
-#: client/marketing/overview/installed-extensions/row.js:112
-#: client/task-list/index.js:138
-msgid "Finish setup"
-msgstr ""
-
 #: client/marketing/overview/installed-extensions/row.js:31
 msgid "Docs"
 msgstr ""
@@ -5724,107 +5804,155 @@ msgstr ""
 msgid "Install"
 msgstr ""
 
+#: client/navigation/components/container/primary-menu.js:26
+msgid "WordPress Dashboard"
+msgstr ""
+
+#: client/navigation/components/favorite-button/index.js:53
+msgid "Add this item to your favorites."
+msgstr ""
+
+#: client/navigation/components/favorite-button/index.js:57
+msgid "Remove this item from your favorites."
+msgstr ""
+
+#: client/navigation/components/favorites-tooltip/index.js:46
+msgid "Introducing favorites"
+msgstr ""
+
+#: client/navigation/components/favorites-tooltip/index.js:47
+msgid ""
+"You can now favorite your extensions to pin them in the top level of the "
+"navigation."
+msgstr ""
+
 #: client/navigation/components/header/index.js:99
 msgid "Site Icon"
 msgstr ""
 
-#: client/profile-wizard/index.js:121
+#: client/navigation/components/intro-modal/index.js:102
+msgid "All of your store management features in one place"
+msgstr ""
+
+#: client/navigation/components/intro-modal/index.js:109
+msgid "Focus on managing your store"
+msgstr ""
+
+#: client/navigation/components/intro-modal/index.js:110
+msgid "Give your attention to key areas of WooCommerce with little distraction"
+msgstr ""
+
+#: client/navigation/components/intro-modal/index.js:117
+msgid "Easily find and favorite your extensions"
+msgstr ""
+
+#: client/navigation/components/intro-modal/index.js:121
+msgid "They'll appear in the top level of the navigation for quick access"
+msgstr ""
+
+#: client/navigation/components/intro-modal/index.js:98
+msgid "A new navigation for WooCommerce"
+msgstr ""
+
+#: client/profile-wizard/index.js:110
 msgid "Store Details"
 msgstr ""
 
-#: client/profile-wizard/index.js:129
+#: client/profile-wizard/index.js:118
 msgid "Industry"
 msgstr ""
 
-#: client/profile-wizard/index.js:137
+#: client/profile-wizard/index.js:126
 msgid "Product Types"
 msgstr ""
 
-#: client/profile-wizard/index.js:147
+#: client/profile-wizard/index.js:136
 msgid "Business Details"
 msgstr ""
 
-#: client/profile-wizard/index.js:155
+#: client/profile-wizard/index.js:144
 msgid "Theme"
 msgstr ""
 
-#: client/profile-wizard/index.js:271
-msgid "There was a problem skipping the setup wizard."
+#: client/profile-wizard/index.js:257
+msgid "There was a problem skipping the setup wizard"
 msgstr ""
 
-#: client/profile-wizard/index.js:60
-msgid "There was a problem finishing the profile wizard."
+#: client/profile-wizard/index.js:63
+msgid "There was a problem finishing the setup wizard"
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:114
-#: client/profile-wizard/steps/usage-modal.js:53
-msgid "There was a problem updating your preferences."
-msgstr ""
-
-#: client/profile-wizard/steps/benefits/index.js:146
+#: client/profile-wizard/steps/benefits/benefits.js:20
 msgid "Store management on the go"
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:148
+#: client/profile-wizard/steps/benefits/benefits.js:25
 msgid ""
 "Your store in your pocket. Manage orders, receive sales notifications, and "
 "more. Only with a Jetpack connection."
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:155
+#: client/profile-wizard/steps/benefits/benefits.js:33
 msgid "Automated sales taxes"
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:157
+#: client/profile-wizard/steps/benefits/benefits.js:35
 msgid ""
 "Ensure that the correct rate of tax is charged on all of your orders "
 "automatically, and print shipping labels at home."
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:164
+#: client/profile-wizard/steps/benefits/benefits.js:43
 msgid "Improved speed & security"
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:166
+#: client/profile-wizard/steps/benefits/benefits.js:48
 msgid ""
 "Automatically block brute force attacks and speed up your store using our "
 "powerful, global server network to cache images."
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:173
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:626
+#: client/profile-wizard/steps/benefits/benefits.js:56
 msgid "Print shipping labels at home"
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:178
+#: client/profile-wizard/steps/benefits/benefits.js:61
 msgid ""
 "Save time at the post office by printing shipping labels for your orders at "
 "home."
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:207
-#: client/task-list/tasks/payments/index.js:129
+#: client/profile-wizard/steps/benefits/index.js:137
+#: client/profile-wizard/steps/usage-modal.js:53
+msgid "There was a problem updating your preferences"
+msgstr ""
+
+#: client/profile-wizard/steps/benefits/index.js:150
+#: client/task-list/tasks/payments/index.js:161
 msgid "and"
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:214
+#: client/profile-wizard/steps/benefits/index.js:152
 msgid "plugin"
 msgid_plural "plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/profile-wizard/steps/benefits/index.js:228
+# %s = names of plugins to install, e.g. Jetpack and Woocommerce Services
+#: client/profile-wizard/steps/benefits/index.js:167
 msgid "Enhance your store with %s"
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:264
+# %1$s: names of plugins to install, e.g. Jetpack and Woocommerce Services, %2$s: singular or plural form of 'plugins'
+#: client/profile-wizard/steps/benefits/index.js:207
 msgid ""
-"%s %s will be installed & activated for free, and you agree to our "
+"%1$s %2$s will be installed & activated for free, and you agree to our "
 "{{link}}Terms of Service{{/link}}."
 msgstr ""
 
-#: client/profile-wizard/steps/benefits/index.js:282
-msgid "%s %s will be installed & activated for free."
+# %1$s: names of plugins to install, e.g. Jetpack and Woocommerce Services, %2$s: singular or plural form of 'plugins'
+#: client/profile-wizard/steps/benefits/index.js:226
+msgid "%1$s %2$s will be installed & activated for free."
 msgstr ""
 
 #: client/profile-wizard/steps/benefits/logo.js:16
@@ -5832,45 +5960,53 @@ msgid "WooCommerce + Jetpack"
 msgstr ""
 
 #: client/profile-wizard/steps/business-details/data/extension-benefits.js:11
+msgid "The default all-in-one solution for WooCommerce email."
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/data/extension-benefits.js:18
+msgid "Market on Facebook"
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/data/extension-benefits.js:20
 msgid ""
 "Grow your business by targeting the right people and driving sales with "
 "Facebook."
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/data/extension-benefits.js:18
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:602
-msgid "Contact customers with Mailchimp"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/data/extension-benefits.js:20
-msgid ""
-"Send targeted campaigns, recover abandoned carts and much more with "
-"Mailchimp."
-msgstr ""
-
 #: client/profile-wizard/steps/business-details/data/extension-benefits.js:27
-msgid "Email marketing for WooCommerce with Creative Mail"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/data/extension-benefits.js:32
-msgid ""
-"Create on-brand store campaigns, fast email promotions and customer "
-"retargeting with Creative Mail."
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/data/extension-benefits.js:39
 msgid "Drive traffic to your store with Google Ads & Marketing by Kliken"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/data/extension-benefits.js:44
+#: client/profile-wizard/steps/business-details/data/extension-benefits.js:32
 msgid ""
 "Get in front of shoppers and drive traffic so you can grow your business "
 "with Smart Shopping Campaigns and free listings."
 msgstr ""
 
+#: client/profile-wizard/steps/business-details/data/extension-benefits.js:39
+msgid "Contact customers with Mailchimp"
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/data/extension-benefits.js:41
+msgid ""
+"Send targeted campaigns, recover abandoned carts and much more with "
+"Mailchimp."
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/data/extension-benefits.js:48
+msgid "Email marketing for WooCommerce with Creative Mail"
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/data/extension-benefits.js:53
+msgid ""
+"Create on-brand store campaigns, fast email promotions and customer "
+"retargeting with Creative Mail."
+msgstr ""
+
 #: client/profile-wizard/steps/business-details/data/extension-benefits.js:9
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:590
-msgid "Market on Facebook"
+#: packages/data/build-module/plugins/constants.js:29
+#: packages/data/src/plugins/constants.js:69
+msgid "MailPoet"
 msgstr ""
 
 #: client/profile-wizard/steps/business-details/data/platform-options.js:13
@@ -5909,6 +6045,10 @@ msgstr ""
 msgid "I don't have any products yet."
 msgstr ""
 
+#: client/profile-wizard/steps/business-details/data/revenue-options.js:102
+msgid "I'd rather not say"
+msgstr ""
+
 # %s: $0 revenue amount
 #: client/profile-wizard/steps/business-details/data/revenue-options.js:53
 msgid "%s (I'm just getting started)"
@@ -5940,200 +6080,175 @@ msgstr ""
 msgid "Yes, on another platform and in person at physical stores and/or events"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:223
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:150
-msgid "There was a problem updating your business details."
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:202
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:159
+msgid "There was a problem updating your business details"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:278
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:205
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:257
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:214
 msgid "This field is required"
 msgstr ""
 
 # %s: a comma separated list of plugins, e.g. Jetpack, Woocommerce Shipping
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:387
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:167
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:294
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:221
 msgid "Installing the following plugin: %s"
 msgid_plural "Installing the following plugins: %s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:399
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:184
-msgid "User accounts are required to use these features."
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:408
-msgid "The following plugin will be installed for free: %s. %s"
-msgid_plural "The following plugins will be installed for free: %s. %s"
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:309
+msgid "The following plugin will be installed for free: %s."
+msgid_plural "The following plugins will be installed for free: %s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:421
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:206
-msgid ""
-"By installing Jetpack and WooCommerce Shipping plugins for free you agree "
-"to our {{link}}Terms of Service{{/link}}."
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:490
-msgid "Install recommended {{strong}}free{{/strong}} business features"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:499
-msgid "Requires an account"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:507
-#: client/profile-wizard/steps/product-types/label.js:38
-msgid "Learn more about recommended free business features"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:542
-msgid "Manage your store on the go with the WooCommerce mobile app"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:554
-msgid "Accept credit cards with WooCommerce Payments"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:566
-msgid "Speed & security enhancements"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:578
-msgid "Automatic sales taxes"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:614
-msgid "Drive sales with Google Ads"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:678
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:252
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:393
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:282
 msgid "Tell us about your business"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:684
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:258
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:399
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:288
 msgid ""
 "We'd love to know if you are just getting started or you already have a "
 "business in place."
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:693
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:267
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:408
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:298
 msgid "How many products do you plan to display?"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:703
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:277
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:418
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:309
 msgid "Currently selling elsewhere?"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:719
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:293
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:434
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:326
 msgid "What's your current annual revenue?"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:736
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:314
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:451
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:350
 msgid "Which platform is the store using?"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:749
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:327
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:464
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:363
 msgid "What is the platform name?"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:780
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:349
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:495
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:385
 #: client/profile-wizard/steps/industry.js:255
 #: client/profile-wizard/steps/product-types/index.js:169
-#: client/profile-wizard/steps/store-details/index.js:315
+#: client/profile-wizard/steps/store-details/index.js:311
 #: client/task-list/tasks/payments/klarna.js:71
+#: client/task-list/tasks/payments/mercadopago.js:96
 #: client/task-list/tasks/payments/mollie.js:69
+#: client/task-list/tasks/payments/payu-india.js:69
 #: client/task-list/tasks/steps/location.js:96
 #: packages/components/build-module/plugins/index.js:152
 msgid "Continue"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:793
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:362
+#: client/profile-wizard/steps/business-details/flows/bundle/index.js:508
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:398
 #: packages/components/build-module/plugins/index.js:140
 msgid "Continue without installing"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:385
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:423
 msgid "Included business features"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:391
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:429
 msgid "We recommend enhancing your store with these free extensions"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:397
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:435
 msgid "No commitment required - you can remove them at any time."
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:438
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:479
 msgid "Business details"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:446
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/index.js:487
 msgid "Free features"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:103
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:125
+msgid "Enhance speed and security with {{link}}Jetpack{{/link}}"
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:140
+msgid "Level up your email marketing with {{link}}Mailpoet{{/link}}"
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:151
+msgid "Market on {{link}}Facebook{{/link}}"
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:161
+msgid "Drive sales with {{link}}Google Ads{{/link}}"
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:171
 msgid "Contact customers with {{link}}Mailchimp{{/link}}"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:113
-msgid "Reach new customers with {{link}}Creative Mail{{/link}}"
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:181
+msgid "Emails made easy with {{link}}Creative Mail{{/link}}"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:141
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:195
 #: client/profile-wizard/steps/theme/index.js:278
 msgid "Free"
 msgstr ""
 
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:238
+msgid "User accounts are required to use these features."
+msgstr ""
+
 # %1$s: a comma separated list of plugins, e.g. Jetpack, Woocommerce Shipping, %2$s: text: 'User accounts are required to use these features.'
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:193
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:247
 msgid "The following plugin will be installed for free: %1$s. %2$s"
 msgid_plural "The following plugins will be installed for free: %1$s. %2$s"
 msgstr[0] ""
 msgstr[1] ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:293
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:260
+msgid ""
+"By installing Jetpack and WooCommerce Shipping plugins for free you agree "
+"to our {{link}}Terms of Service{{/link}}."
+msgstr ""
+
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:391
 msgid "Add recommended business features to my site"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:43
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:58
 msgid "Get the basics"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:48
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:63
 msgid "Accept credit cards with {{link}}WooCommerce Payments{{/link}}"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:58
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:81
 msgid "Print shipping labels with {{link}}WooCommerce Shipping{{/link}}"
 msgstr ""
 
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:68
-msgid "Enhance speed and security with {{link}}Jetpack{{/link}}"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:83
-msgid "Market on {{link}}Facebook{{/link}}"
-msgstr ""
-
-#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:93
-msgid "Drive sales with {{link}}Google Ads{{/link}}"
+#: client/profile-wizard/steps/business-details/flows/selective-bundle/selective-extensions-bundle/index.js:99
+msgid "Get automated sales tax with {{link}}WooCommerce Tax{{/link}}"
 msgstr ""
 
 #: client/profile-wizard/steps/industry.js:104
-msgid "There was a problem updating your industries."
+msgid "There was a problem updating your industries"
 msgstr ""
 
 #: client/profile-wizard/steps/industry.js:115
@@ -6169,37 +6284,41 @@ msgid "Please select at least one product type"
 msgstr ""
 
 #: client/profile-wizard/steps/product-types/index.js:75
-msgid "There was a problem updating your product types."
+msgid "There was a problem updating your product types"
 msgstr ""
 
-#: client/profile-wizard/steps/product-types/label.js:25
+#: client/profile-wizard/steps/product-types/label.js:26
 msgid ""
 "This product type requires a paid extension.\n"
 "We'll add this to a cart so that\n"
 "you can purchase and install it later."
 msgstr ""
 
+#: client/profile-wizard/steps/product-types/label.js:39
+msgid "Learn more about recommended free business features"
+msgstr ""
+
 # Dollar amount (example: $4.08 )
-#: client/profile-wizard/steps/product-types/label.js:89
+#: client/profile-wizard/steps/product-types/label.js:88
 msgid "$%f per month"
 msgstr ""
 
 # Dollar amount (example: $49.00 )
-#: client/profile-wizard/steps/product-types/label.js:94
+#: client/profile-wizard/steps/product-types/label.js:93
 msgid "$%f per year"
 msgstr ""
 
-#: client/profile-wizard/steps/store-details/index.js:179
-msgid "There was a problem saving your store details."
+#: client/profile-wizard/steps/store-details/index.js:180
+msgid "There was a problem saving your store details"
 msgstr ""
 
-#: client/profile-wizard/steps/store-details/index.js:197
+#: client/profile-wizard/steps/store-details/index.js:198
 msgid ""
 "Manual setup is only recommended for\n"
 " experienced WooCommerce users or developers."
 msgstr ""
 
-#: client/profile-wizard/steps/store-details/index.js:202
+#: client/profile-wizard/steps/store-details/index.js:203
 msgid ""
 "Your store address will help us configure currency\n"
 " options and shipping rules automatically.\n"
@@ -6207,32 +6326,32 @@ msgid ""
 " easily be changed later."
 msgstr ""
 
-#: client/profile-wizard/steps/store-details/index.js:212
+#: client/profile-wizard/steps/store-details/index.js:213
 msgid "Welcome to WooCommerce"
 msgstr ""
 
-#: client/profile-wizard/steps/store-details/index.js:215
+#: client/profile-wizard/steps/store-details/index.js:216
 msgid "Tell us about your store and we'll get you set up in no time"
 msgstr ""
 
-#: client/profile-wizard/steps/store-details/index.js:222
+#: client/profile-wizard/steps/store-details/index.js:223
 msgid "Learn more about store details"
 msgstr ""
 
-#: client/profile-wizard/steps/store-details/index.js:296
+#: client/profile-wizard/steps/store-details/index.js:292
 msgid "I'm setting up a store for a client"
 msgstr ""
 
-#: client/profile-wizard/steps/store-details/index.js:333
+#: client/profile-wizard/steps/store-details/index.js:329
 msgid "Skip setup store details"
 msgstr ""
 
 #: client/profile-wizard/steps/theme/index.js:117
-msgid "%s was installed on your site."
+msgid "%s was installed on your site"
 msgstr ""
 
 #: client/profile-wizard/steps/theme/index.js:143
-msgid "%s was activated on your site."
+msgid "%s was activated on your site"
 msgstr ""
 
 #: client/profile-wizard/steps/theme/index.js:213
@@ -6244,7 +6363,7 @@ msgid "Continue with my active theme"
 msgstr ""
 
 #: client/profile-wizard/steps/theme/index.js:252
-#: client/profile-wizard/steps/theme/preview.js:106
+#: client/profile-wizard/steps/theme/preview.js:111
 msgid "Choose"
 msgstr ""
 
@@ -6291,10 +6410,10 @@ msgid "Skip this step"
 msgstr ""
 
 #: client/profile-wizard/steps/theme/index.js:76
-msgid "There was a problem selecting your store theme."
+msgid "There was a problem selecting your store theme"
 msgstr ""
 
-#: client/profile-wizard/steps/theme/preview.js:69
+#: client/profile-wizard/steps/theme/preview.js:73
 msgid "{{strong}}%s{{/strong}} developed by WooCommerce"
 msgstr ""
 
@@ -6333,14 +6452,6 @@ msgstr ""
 msgid "Yes, count me in!"
 msgstr ""
 
-#: client/settings/index.js:43
-msgid "Mutable settings should be accessed via data store."
-msgstr ""
-
-#: client/settings/index.js:68
-msgid "Mutable settings should be mutated via data store."
-msgstr ""
-
 #: client/store-management-links/index.js:180
 msgid "Store management"
 msgstr ""
@@ -6349,12 +6460,7 @@ msgstr ""
 msgid "Marketing & Merchandising"
 msgstr ""
 
-#: client/store-management-links/index.js:43
-msgid "Add products"
-msgstr ""
-
 #: client/store-management-links/index.js:52
-#: client/task-list/tasks.js:227
 msgid "Personalize my store"
 msgstr ""
 
@@ -6363,7 +6469,7 @@ msgid "View my store"
 msgstr ""
 
 #: client/store-management-links/index.js:75
-#: client/task-list/tasks.js:105
+#: client/task-list/tasks.js:113
 msgid "Store details"
 msgstr ""
 
@@ -6375,7 +6481,11 @@ msgstr ""
 msgid "Tax"
 msgstr ""
 
-#: client/task-list/index.js:149
+#: client/task-list/index.js:138
+msgid "Get ready to start selling"
+msgstr ""
+
+#: client/task-list/index.js:152
 msgid "Extensions setup"
 msgstr ""
 
@@ -6391,58 +6501,46 @@ msgstr ""
 msgid "Hide this"
 msgstr ""
 
-#: client/task-list/tasks.js:113
+#: client/task-list/tasks.js:103
+msgid "Add %s to your store"
+msgstr ""
+
+#: client/task-list/tasks.js:121
 msgid "4 minutes"
 msgstr ""
 
-#: client/task-list/tasks.js:132
-msgid "Add my products"
-msgstr ""
-
-#: client/task-list/tasks.js:140
+#: client/task-list/tasks.js:148
 msgid "1 minute per product"
 msgstr ""
 
-#: client/task-list/tasks.js:145
+#: client/task-list/tasks.js:153
 msgid "Set up WooCommerce Payments"
 msgstr ""
 
-#: client/task-list/tasks.js:177
+#: client/task-list/tasks.js:185
 msgid ""
 "By setting up, you are agreeing to the <a "
 "href=\"https://wordpress.com/tos/\" target=\"_blank\">Terms of Service</a>"
 msgstr ""
 
-#: client/task-list/tasks.js:199
-msgid "Set up tax"
-msgstr ""
-
-#: client/task-list/tasks.js:212
-msgid "Set up shipping"
-msgstr ""
-
-#: client/task-list/tasks.js:222
+#: client/task-list/tasks.js:233
 msgid "1 minute"
 msgstr ""
 
-#: client/task-list/tasks.js:235
+#: client/task-list/tasks.js:246
 msgid "2 minutes"
 msgstr ""
 
-#: client/task-list/tasks.js:88
-msgid "Add paid extensions to my store"
-msgstr ""
-
-#: client/task-list/tasks.js:95
-msgid "Add %s to my store"
+#: client/task-list/tasks.js:96
+msgid "Add paid extensions to your store"
 msgstr ""
 
 #: client/task-list/tasks/appearance.js:118
-msgid "There was an error importing some of the sample products."
+msgid "There was an error importing some of the sample products"
 msgstr ""
 
 #: client/task-list/tasks/appearance.js:126
-msgid "All sample products have been imported."
+msgid "All sample products have been imported"
 msgstr ""
 
 #: client/task-list/tasks/appearance.js:161
@@ -6450,11 +6548,11 @@ msgid "Customize"
 msgstr ""
 
 #: client/task-list/tasks/appearance.js:213
-msgid "Store logo updated sucessfully."
+msgid "Store logo updated sucessfully"
 msgstr ""
 
 #: client/task-list/tasks/appearance.js:246
-msgid "🎨 Your store is looking great! Don't forget to continue personalizing it."
+msgid "🎨 Your store is looking great! Don't forget to continue personalizing it"
 msgstr ""
 
 #: client/task-list/tasks/appearance.js:269
@@ -6493,7 +6591,7 @@ msgstr ""
 
 #: client/task-list/tasks/appearance.js:343
 #: client/task-list/tasks/payments/eway.js:117
-#: client/task-list/tasks/payments/payfast.js:137
+#: client/task-list/tasks/payments/generic-payment-step.js:134
 #: client/task-list/tasks/payments/paypal.js:428
 #: client/task-list/tasks/payments/razorpay.js:113
 #: client/task-list/tasks/payments/stripe.js:250
@@ -6552,7 +6650,7 @@ msgstr ""
 
 #: client/task-list/tasks/payments/bacs.js:59
 #: client/task-list/tasks/payments/eway.js:61
-#: client/task-list/tasks/payments/payfast.js:73
+#: client/task-list/tasks/payments/generic-payment-step.js:79
 #: client/task-list/tasks/payments/razorpay.js:56
 #: client/task-list/tasks/payments/stripe.js:146
 msgid "There was a problem saving your payment settings"
@@ -6598,16 +6696,40 @@ msgstr ""
 msgid "Customer API Key"
 msgstr ""
 
-#: client/task-list/tasks/payments/index.js:134
+#: client/task-list/tasks/payments/generic-payment-step.js:101
+msgid "%(title)s account"
+msgstr ""
+
+#: client/task-list/tasks/payments/generic-payment-step.js:155
+msgid "Connect your %(title)s account"
+msgstr ""
+
+#: client/task-list/tasks/payments/generic-payment-step.js:47
+msgid "Please enter your "
+msgstr ""
+
+#: client/task-list/tasks/payments/generic-payment-step.js:74
+msgid " connected successfully"
+msgstr ""
+
+#: client/task-list/tasks/payments/generic-payment-step.js:89
+msgid "Your API details can be obtained from your {{link/}}"
+msgstr ""
+
+#: client/task-list/tasks/payments/index.js:166
 msgid "Install %s"
 msgstr ""
 
-#: client/task-list/tasks/payments/index.js:228
+#: client/task-list/tasks/payments/index.js:252
 msgid "Set up"
 msgstr ""
 
-#: client/task-list/tasks/payments/index.js:314
-#: client/task-list/tasks/products/products.js:23
+#: client/task-list/tasks/payments/index.js:320
+msgid "Local Partner"
+msgstr ""
+
+#: client/task-list/tasks/payments/index.js:321
+#: client/task-list/tasks/products/products.js:30
 msgid "Recommended"
 msgstr ""
 
@@ -6621,145 +6743,202 @@ msgstr ""
 msgid "Connect your Klarna account"
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:103
-msgid "Credit cards - powered by Stripe"
+#: client/task-list/tasks/payments/mercadopago.js:38
+msgid "Connect to your Mercado Pago account"
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:109
+#: client/task-list/tasks/payments/mercadopago.js:82
 msgid ""
-"Accept debit and credit cards in 135+ currencies, methods such as Alipay, "
-"and one-touch checkout with Apple Pay."
+"Mercado Pago can be configured under your {{settingsLink}}store "
+"settings.{{/settingsLink}} Create your Mercado Pago account "
+"{{accountLink}}here.{{/accountLink}}"
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:130
-msgid "PayPal Payments"
+#: client/task-list/tasks/payments/methods.js:104
+msgid "Paystack"
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:133
+#: client/task-list/tasks/payments/methods.js:107
 msgid ""
-"Safe and secure payments using credit cards or your customer's PayPal "
-"account."
+"Paystack helps African merchants accept one-time and recurring payments "
+"online with a modern, safe, and secure payment gateway."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:135
+msgid "Live Public Key"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:139
+msgid "Live Secret Key"
 msgstr ""
 
 #: client/task-list/tasks/payments/methods.js:155
-msgid "Klarna Checkout"
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:179
-msgid "Klarna Payments"
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:180
-msgid ""
-"Choose the payment that you want, pay now, pay later or slice it. No credit "
-"card numbers, no passwords, no worries."
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:214
-msgid "Mollie Payments for WooCommerce"
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:222
-msgid ""
-"Effortless payments by Mollie: Offer global and local payment methods, get "
-"onboarded in minutes, and supported in your language."
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:249
-msgid "Square"
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:252
-msgid ""
-"Securely accept credit and debit cards with one low rate, no surprise fees "
-"(custom rates available). Sell online and in store and track sales and "
-"inventory in one place."
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:259
-msgid " Selling CBD products is only supported by Square."
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:290
 msgid "PayFast"
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:293
+#: client/task-list/tasks/payments/methods.js:158
 msgid ""
 "The PayFast extension for WooCommerce enables you to accept payments by "
 "Credit Card and EFT via one of South Africa’s most popular payment "
 "gateways. No setup fees or monthly subscription costs."
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:298
+#: client/task-list/tasks/payments/methods.js:163
 msgid ""
 "Selecting this extension will configure your store to use South African "
 "rands as the selected currency."
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:326
+#: client/task-list/tasks/payments/methods.js:192
+msgid "Merchant ID"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:196
+msgid "Merchant Key"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:200
+msgid "Passphrase"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:215
+msgid "Mercado Pago Checkout Pro & Custom"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:221
+msgid ""
+"Accept credit and debit cards, offline (cash or bank transfer) and "
+"logged-in payments with money in Mercado Pago. Safe and secure payments "
+"with the leading payment processor in LATAM."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:247
+msgid "PayPal Payments"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:250
+msgid ""
+"Safe and secure payments using credit cards or your customer's PayPal "
+"account."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:272
+msgid "Klarna Checkout"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:296
+msgid "Klarna Payments"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:297
+msgid ""
+"Choose the payment that you want, pay now, pay later or slice it. No credit "
+"card numbers, no passwords, no worries."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:331
+msgid "Mollie Payments for WooCommerce"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:339
+msgid ""
+"Effortless payments by Mollie: Offer global and local payment methods, get "
+"onboarded in minutes, and supported in your language."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:366
+msgid "Square"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:369
+msgid ""
+"Securely accept credit and debit cards with one low rate, no surprise fees "
+"(custom rates available). Sell online and in store and track sales and "
+"inventory in one place."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:376
+msgid " Selling CBD products is only supported by Square."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:407
 msgid "eWAY"
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:329
+#: client/task-list/tasks/payments/methods.js:410
 msgid ""
 "The eWAY extension for WooCommerce allows you to take credit card payments "
 "directly on your store without redirecting your customers to a third party "
 "site to make payment."
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:355
-#: packages/data/build-module/plugins/constants.js:25
-#: packages/data/src/plugins/constants.js:56
+#: client/task-list/tasks/payments/methods.js:436
+#: packages/data/build-module/plugins/constants.js:28
+#: packages/data/src/plugins/constants.js:68
 msgid "Razorpay"
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:358
+#: client/task-list/tasks/payments/methods.js:439
 msgid ""
 "The official Razorpay extension for WooCommerce allows you to accept credit "
 "cards, debit cards, netbanking, wallet, and UPI payments."
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:379
-msgid "Cash on delivery"
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:380
-msgid "Take payments in cash upon delivery."
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:393
-msgid "Direct bank transfer"
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:394
-msgid "Take payments via bank transfer."
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:41
-msgid ""
-"There was an error connecting to WooCommerce Payments. Please try again or "
-"connect later in store settings."
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:421
-msgid "By clicking \"Set up,\" you agree to the {{link}}Terms of Service{{/link}}"
-msgstr ""
-
-#: client/task-list/tasks/payments/methods.js:441
-msgid "Setting up a store for a client? {{link}}Start here{{/link}}"
+#: client/task-list/tasks/payments/methods.js:460
+msgid "PayU for WooCommerce"
 msgstr ""
 
 #: client/task-list/tasks/payments/methods.js:463
+msgid ""
+"Enable PayU’s exclusive plugin for WooCommerce to start accepting payments "
+"in 100+ payment methods available in India including credit cards, debit "
+"cards, UPI, & more!"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:479
+msgid "Cash on delivery"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:480
+msgid "Take payments in cash upon delivery."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:493
+msgid "Direct bank transfer"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:494
+msgid "Take payments via bank transfer."
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:521
+msgid "By clicking \"Set up,\" you agree to the {{link}}Terms of Service{{/link}}"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:541
+msgid "Setting up a store for a client? {{link}}Start here{{/link}}"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:571
+msgid ""
+"Accept credit card payments the easy way! {{feesLink}}No setup fees. No "
+"monthly fees.{{/feesLink}}"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:582
 #: packages/data/build-module/plugins/constants.js:21
 #: packages/data/src/plugins/constants.js:46
 msgid "WooCommerce Payments"
 msgstr ""
 
-#: client/task-list/tasks/payments/methods.js:466
+#: client/task-list/tasks/payments/methods.js:77
+msgid "Credit cards - powered by Stripe"
+msgstr ""
+
+#: client/task-list/tasks/payments/methods.js:83
 msgid ""
-"Accept credit card payments the easy way! No setup fees. No monthly fees. "
-"Just 2.9% + $0.30 per transaction on U.S. issued cards. "
+"Accept debit and credit cards in 135+ currencies, methods such as Alipay, "
+"and one-touch checkout with Apple Pay."
 msgstr ""
 
 #: client/task-list/tasks/payments/mollie.js:20
@@ -6770,42 +6949,6 @@ msgstr ""
 msgid ""
 "Create a {{accountLink}}Mollie account{{/accountLink}} and finish the "
 "configuration in the {{settingsLink}}Mollie settings.{{/settingsLink}}"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:109
-msgid "Merchant ID"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:117
-msgid "Merchant Key"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:125
-msgid "Passphrase"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:160
-msgid "Connect your PayFast account"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:26
-msgid "Please enter your merchant ID"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:33
-msgid "Please enter your merchant key"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:40
-msgid "Please enter your passphrase"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:68
-msgid "PayFast connected successfully"
-msgstr ""
-
-#: client/task-list/tasks/payments/payfast.js:84
-msgid "Your API details can be obtained from your {{link}}PayFast account{{/link}}"
 msgstr ""
 
 #: client/task-list/tasks/payments/paypal.js:104
@@ -6889,6 +7032,17 @@ msgstr ""
 msgid ""
 "A PayPal account is required to process payments. Connect your store to "
 "your PayPal account."
+msgstr ""
+
+#: client/task-list/tasks/payments/payu-india.js:20
+msgid "Connect to your PayU account"
+msgstr ""
+
+#: client/task-list/tasks/payments/payu-india.js:55
+msgid ""
+"PayU can be configured under your {{settingsLink}}store "
+"settings.{{/settingsLink}} Create your PayU account "
+"{{accountLink}}here.{{/accountLink}}"
 msgstr ""
 
 #: client/task-list/tasks/payments/razorpay.js:104
@@ -6981,27 +7135,33 @@ msgstr ""
 msgid "Stripe connected successfully."
 msgstr ""
 
-#: client/task-list/tasks/payments/wcpay-usage-modal.js:29
+#: client/task-list/tasks/payments/wcpay/install-activate-and-connect.js:19
+msgid ""
+"There was an error connecting to WooCommerce Payments. Please try again or "
+"connect later in store settings."
+msgstr ""
+
+#: client/task-list/tasks/payments/wcpay/wcpay-usage-modal.js:29
 msgid "Help us build a better WooCommerce Payments experience"
 msgstr ""
 
-#: client/task-list/tasks/payments/wcpay-usage-modal.js:34
+#: client/task-list/tasks/payments/wcpay/wcpay-usage-modal.js:34
 msgid ""
 "By agreeing to share non-sensitive {{link}}usage data{{/link}}, you’ll help "
 "us improve features and optimize the WooCommerce Payments experience. You "
 "can opt out at any time."
 msgstr ""
 
-#: client/task-list/tasks/payments/wcpay-usage-modal.js:54
+#: client/task-list/tasks/payments/wcpay/wcpay-usage-modal.js:54
 msgid "I agree"
 msgstr ""
 
-#: client/task-list/tasks/payments/wcpay.js:17
+#: client/task-list/tasks/payments/wcpay/wcpay.js:17
 msgid "WooCommerce Payments connected successfully."
 msgstr ""
 
 #: client/task-list/tasks/products/product-template-modal.js:100
-#: client/task-list/tasks/products/products.js:22
+#: client/task-list/tasks/products/products.js:29
 msgid "Start with a template"
 msgstr ""
 
@@ -7033,38 +7193,38 @@ msgstr ""
 msgid "Products with several versions that customers can choose from"
 msgstr ""
 
-#: client/task-list/tasks/products/products.js:26
+#: client/task-list/tasks/products/products.js:33
 msgid "Use a template to add physical, digital, and variable products"
 msgstr ""
 
-#: client/task-list/tasks/products/products.js:39
+#: client/task-list/tasks/products/products.js:46
 msgid "Add manually"
 msgstr ""
 
-#: client/task-list/tasks/products/products.js:40
+#: client/task-list/tasks/products/products.js:47
 msgid "For small stores we recommend adding products manually"
 msgstr ""
 
-#: client/task-list/tasks/products/products.js:54
-msgid "Import"
+#: client/task-list/tasks/products/products.js:61
+msgid "Import via CSV"
 msgstr ""
 
-#: client/task-list/tasks/products/products.js:55
+#: client/task-list/tasks/products/products.js:62
 msgid "For larger stores we recommend importing all products at once via CSV file"
 msgstr ""
 
-#: client/task-list/tasks/products/products.js:69
-msgid "Migrate"
+#: client/task-list/tasks/products/products.js:76
+msgid "Import from another service"
 msgstr ""
 
-#: client/task-list/tasks/products/products.js:70
+#: client/task-list/tasks/products/products.js:77
 msgid ""
 "For stores currently selling elsewhere we suggest using a product migration "
 "service"
 msgstr ""
 
 #: client/task-list/tasks/shipping/index.js:149
-msgid "📦 Shipping is done! Don't worry, you can always change it later."
+msgid "📦 Shipping is done! Don't worry, you can always change it later"
 msgstr ""
 
 #: client/task-list/tasks/shipping/index.js:180
@@ -7115,29 +7275,29 @@ msgstr ""
 msgid "Rest of the world"
 msgstr ""
 
-#: client/task-list/tasks/shipping/rates.js:124
-msgid "Your shipping rates have been updated."
+#: client/task-list/tasks/shipping/rates.js:125
+msgid "Your shipping rates have been updated"
 msgstr ""
 
-#: client/task-list/tasks/shipping/rates.js:154
+#: client/task-list/tasks/shipping/rates.js:155
 msgid "Free shipping"
 msgstr ""
 
-#: client/task-list/tasks/shipping/rates.js:202
+#: client/task-list/tasks/shipping/rates.js:203
 msgid "Shipping rates can not be negative numbers."
 msgstr ""
 
-#: client/task-list/tasks/shipping/rates.js:286
+#: client/task-list/tasks/shipping/rates.js:285
 msgid "Shipping cost"
 msgstr ""
 
-#: client/task-list/tasks/shipping/rates.js:323
+#: client/task-list/tasks/shipping/rates.js:322
 #: packages/components/build-module/date-range-filter-picker/content.js:153
 msgid "Update"
 msgstr ""
 
 #: client/task-list/tasks/steps/location.js:48
-msgid "There was a problem saving your store location."
+msgid "There was a problem saving your store location"
 msgstr ""
 
 #: client/task-list/tasks/tax.js:144
@@ -7145,7 +7305,7 @@ msgid "You're awesome! One less item on your to-do list ✅"
 msgstr ""
 
 #: client/task-list/tasks/tax.js:157
-msgid "There was a problem updating your tax settings."
+msgid "There was a problem updating your tax settings"
 msgstr ""
 
 #: client/task-list/tasks/tax.js:199
@@ -7228,6 +7388,14 @@ msgstr ""
 msgid "I don't charge sales tax"
 msgstr ""
 
+#: client/wc-admin-settings/index.js:43
+msgid "Mutable settings should be accessed via data store."
+msgstr ""
+
+#: client/wc-admin-settings/index.js:68
+msgid "Mutable settings should be mutated via data store."
+msgstr ""
+
 #: client/wp-admin-scripts/beta-features-tracking-modal/container.js:65
 msgid "Build a Better WooCommerce"
 msgstr ""
@@ -7264,7 +7432,7 @@ msgstr ""
 
 #: client/wp-admin-scripts/onboarding-homepage-notice/index.js:82
 #: client/wp-admin-scripts/onboarding-product-notice/index.js:20
-#: client/wp-admin-scripts/onboarding-tax-notice/index.js:44
+#: client/wp-admin-scripts/onboarding-tax-notice/index.js:50
 msgid "Continue setup."
 msgstr ""
 
@@ -7276,7 +7444,7 @@ msgstr ""
 msgid "🎉 Congrats on adding your first product!"
 msgstr ""
 
-#: client/wp-admin-scripts/onboarding-tax-notice/index.js:38
+#: client/wp-admin-scripts/onboarding-tax-notice/index.js:44
 msgid "You've added your first tax rate!"
 msgstr ""
 
@@ -7535,7 +7703,7 @@ msgstr ""
 msgid "You may select up to %d items."
 msgstr ""
 
-#: packages/components/build-module/chart/index.js:475
+#: packages/components/build-module/chart/index.js:479
 #: packages/components/build-module/table/index.js:248
 msgid "Your requested data is loading"
 msgstr ""
@@ -7645,28 +7813,25 @@ msgid "Clear all selected items"
 msgstr ""
 
 #: packages/components/build-module/search-list-control/index.js:39
-msgid "Results"
-msgstr ""
-
-#: packages/components/build-module/search-list-control/index.js:40
 msgid "No items found."
 msgstr ""
 
-#: packages/components/build-module/search-list-control/index.js:41
+#: packages/components/build-module/search-list-control/index.js:40
 msgid "No results for %s"
 msgstr ""
 
-#: packages/components/build-module/search-list-control/index.js:42
+#: packages/components/build-module/search-list-control/index.js:41
 msgid "Search for items"
 msgstr ""
 
-#: packages/components/build-module/search-list-control/index.js:44
+# Number of items selected from list.
+#: packages/components/build-module/search-list-control/index.js:45
 msgid "%d item selected"
 msgid_plural "%d items selected"
 msgstr[0] ""
 msgstr[1] ""
 
-#: packages/components/build-module/search-list-control/index.js:46
+#: packages/components/build-module/search-list-control/index.js:47
 msgid "Search results updated."
 msgstr ""
 
@@ -7694,7 +7859,7 @@ msgstr ""
 msgid "All taxes with codes that include {{query /}}"
 msgstr ""
 
-#: packages/components/build-module/select-control/control.js:245
+#: packages/components/build-module/select-control/control.js:247
 msgid "Move backward for selected items"
 msgstr ""
 
@@ -7872,18 +8037,23 @@ msgstr ""
 msgid "WooCommerce PayFast"
 msgstr ""
 
-#: packages/data/build-module/plugins/constants.js:22
-#: packages/data/src/plugins/constants.js:47
+#: packages/data/build-module/plugins/constants.js:24
+#: packages/data/src/plugins/constants.js:55
 msgid "WooCommerce Shipping & Tax"
 msgstr ""
 
-#: packages/data/build-module/plugins/constants.js:23
-#: packages/data/src/plugins/constants.js:51
+#: packages/data/build-module/plugins/constants.js:25
+#: packages/data/src/plugins/constants.js:59
 msgid "WooCommerce ShipStation Gateway"
 msgstr ""
 
-#: packages/data/build-module/plugins/constants.js:24
-#: packages/data/src/plugins/constants.js:55
+#: packages/data/build-module/plugins/constants.js:26
+#: packages/data/src/plugins/constants.js:63
+msgid "Mercado Pago payments for WooCommerce"
+msgstr ""
+
+#: packages/data/build-module/plugins/constants.js:27
+#: packages/data/src/plugins/constants.js:67
 msgid "Google Ads"
 msgstr ""
 
@@ -7931,35 +8101,35 @@ msgstr ""
 msgid "Last Year"
 msgstr ""
 
-#: packages/date/build-module/index.js:584
+#: packages/date/build-module/index.js:590
 msgid "Week of %B %-d, %Y"
 msgstr ""
 
-#: packages/date/build-module/index.js:629
+#: packages/date/build-module/index.js:635
 msgid "MMMM D, YYYY"
 msgstr ""
 
-#: packages/date/build-module/index.js:630
+#: packages/date/build-module/index.js:636
 msgid "D MMMM YYYY LT"
 msgstr ""
 
-#: packages/date/build-module/index.js:631
+#: packages/date/build-module/index.js:637
 msgid "dddd, D MMMM YYYY LT"
 msgstr ""
 
-#: packages/date/build-module/index.js:632
+#: packages/date/build-module/index.js:638
 msgid "HH:mm"
 msgstr ""
 
-#: packages/date/build-module/index.js:639
+#: packages/date/build-module/index.js:645
 msgid "Invalid date"
 msgstr ""
 
-#: packages/date/build-module/index.js:640
+#: packages/date/build-module/index.js:646
 msgid "Select a date in the past"
 msgstr ""
 
-#: packages/date/build-module/index.js:642
+#: packages/date/build-module/index.js:648
 msgid "Start date must be before end date"
 msgstr ""
 
@@ -8062,13 +8232,11 @@ msgid "Variations Match {{select /}} Filters"
 msgstr ""
 
 #: client/profile-wizard/steps/business-details/data/product-options.js:19
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:349
 msgctxt "store product count or revenue"
 msgid "%s+"
 msgstr ""
 
 #: client/profile-wizard/steps/business-details/data/product-options.js:25
-#: client/profile-wizard/steps/business-details/flows/bundle/index.js:359
 msgctxt "store product count or revenue range"
 msgid "%1$s - %2$s"
 msgstr ""

@@ -91,6 +91,8 @@ class Onboarding {
 			10,
 			2
 		);
+		add_action( 'woocommerce_admin_plugins_pre_activate', array( $this, 'activate_and_install_jetpack_ahead_of_wcpay' ) );
+		add_action( 'woocommerce_admin_plugins_pre_install', array( $this, 'activate_and_install_jetpack_ahead_of_wcpay' ) );
 
 		// Always hook into Jetpack connection even if outside of admin.
 		add_action( 'jetpack_site_registered', array( $this, 'set_woocommerce_setup_jetpack_opted_in' ) );
@@ -535,7 +537,7 @@ class Onboarding {
 			'price'                   => '0.00',
 			'is_installed'            => true,
 			'image'                   => $theme->get_screenshot(),
-			'has_woocommerce_support' => self::has_woocommerce_support( $theme ),
+			'has_woocommerce_support' => true,
 		);
 	}
 
@@ -560,33 +562,13 @@ class Onboarding {
 	 * Check if theme has declared support for WooCommerce.
 	 *
 	 * @param WP_Theme $theme Theme to check.
+	 * @link https://developer.woocommerce.com/2017/12/09/wc-3-3-will-look-great-on-all-the-themes/
+	 * @deprecated 2.2.0
 	 * @return bool
 	 */
 	public static function has_woocommerce_support( $theme ) {
-		$themes = array( $theme );
-		if ( $theme->get( 'Template' ) ) {
-			$parent_theme = wp_get_theme( $theme->get( 'Template' ) );
-			$themes[]     = $parent_theme;
-		}
-
-		foreach ( $themes as $theme ) {
-			$stylesheet_file = $theme->theme_root . '/' . $theme->stylesheet;
-			if ( ! file_exists( $stylesheet_file ) ) {
-				continue;
-			}
-			$directory = new \RecursiveDirectoryIterator( $stylesheet_file );
-			$iterator  = new \RecursiveIteratorIterator( $directory );
-			$files     = new \RegexIterator( $iterator, '/^.+\.php$/i', \RecursiveRegexIterator::GET_MATCH );
-
-			foreach ( $files as $file ) {
-				$content = file_get_contents( $file[0] );
-				if ( preg_match( '/add_theme_support\(([^(]*)(\'|\")woocommerce(\'|\")([^(]*)/si', $content, $matches ) ) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+		wc_deprecated_function( 'Onboarding::has_woocommerce_support', '5.3' ); // Deprecated since WooCommerce 5.3.
+		return true; // All themes are supported since WooCommerce 3.3.
 	}
 
 	/**
@@ -656,7 +638,7 @@ class Onboarding {
 			return false;
 		}
 
-		return in_array( $current_page['path'], $allowed_paths );
+		return in_array( $current_page['path'], $allowed_paths, true );
 	}
 
 	/**
@@ -723,12 +705,14 @@ class Onboarding {
 		$options[] = 'woocommerce_task_list_tracked_completed_tasks';
 		$options[] = 'woocommerce_task_list_dismissed_tasks';
 		$options[] = 'woocommerce_allow_tracking';
+		$options[] = 'woocommerce_woo-mercado-pago-basic_settings';
 		$options[] = 'woocommerce_stripe_settings';
 		$options[] = 'woocommerce-ppcp-settings';
 		$options[] = 'woocommerce_ppcp-gateway_settings';
 		$options[] = 'wc_square_refresh_tokens';
 		$options[] = 'woocommerce_square_credit_card_settings';
 		$options[] = 'woocommerce_payfast_settings';
+		$options[] = 'woocommerce_paystack_settings';
 		$options[] = 'woocommerce_kco_settings';
 		$options[] = 'woocommerce_klarna_payments_settings';
 		$options[] = 'woocommerce_cod_settings';
@@ -737,6 +721,7 @@ class Onboarding {
 		$options[] = 'woocommerce_woocommerce_payments_settings';
 		$options[] = 'woocommerce_eway_settings';
 		$options[] = 'woocommerce_razorpay_settings';
+		$options[] = 'woocommerce_payubiz_settings';
 		$options[] = 'woocommerce_mollie_payments_settings';
 
 		return $options;
@@ -779,10 +764,14 @@ class Onboarding {
 				'woocommerce-square'                  => 'woocommerce-square/woocommerce-square.php',
 				'woocommerce-shipstation-integration' => 'woocommerce-shipstation-integration/woocommerce-shipstation.php',
 				'woocommerce-payfast-gateway'         => 'woocommerce-payfast-gateway/gateway-payfast.php',
+				'woo-paystack'                        => 'woo-paystack/woo-paystack.php',
 				'woocommerce-payments'                => 'woocommerce-payments/woocommerce-payments.php',
 				'woocommerce-gateway-eway'            => 'woocommerce-gateway-eway/woocommerce-gateway-eway.php',
 				'woo-razorpay'                        => 'woo-razorpay/woo-razorpay.php',
 				'mollie-payments-for-woocommerce'     => 'mollie-payments-for-woocommerce/mollie-payments-for-woocommerce.php',
+				'payu-india'                          => 'payu-india/index.php',
+				'mailpoet'                            => 'mailpoet/mailpoet.php',
+				'woocommerce-mercadopago'             => 'woocommerce-mercadopago/woocommerce-mercadopago.php',
 			)
 		);
 		return array_merge( $plugins, $onboarding_plugins );
@@ -1115,5 +1104,24 @@ class Onboarding {
 		$onboarding_data['completed'] = true;
 		update_option( self::PROFILE_DATA_OPTION, $onboarding_data );
 		update_option( 'woocommerce_task_list_hidden', 'yes' );
+	}
+
+	/**
+	 * Ensure that Jetpack gets installed and activated ahead of WooCommerce Payments
+	 * if both are being installed/activated at the same time.
+	 *
+	 * See: https://github.com/Automattic/woocommerce-payments/issues/1663
+	 * See: https://github.com/Automattic/jetpack/issues/19624
+	 *
+	 * @param array $plugins A list of plugins to install or activate.
+	 *
+	 * @return array
+	 */
+	public static function activate_and_install_jetpack_ahead_of_wcpay( $plugins ) {
+		if ( in_array( 'jetpack', $plugins, true ) && in_array( 'woocommerce-payments', $plugins, true ) ) {
+			array_unshift( $plugins, 'jetpack' );
+			$plugins = array_unique( $plugins );
+		}
+		return $plugins;
 	}
 }

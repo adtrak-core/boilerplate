@@ -11,6 +11,12 @@ use Exception;
  * @since 2.5.0
  */
 class Api {
+	/**
+	 * Stores inline scripts already enqueued.
+	 *
+	 * @var array
+	 */
+	private $inline_scripts = [];
 
 	/**
 	 * Reference to the Package instance
@@ -93,7 +99,7 @@ class Api {
 						'admin_notices',
 						function() use ( $handle ) {
 								echo '<div class="error"><p>';
-								// Translators: %s file handle name.
+								/* translators: %s file handle name. */
 								printf( esc_html__( 'Script with handle %s had a dependency on itself which has been removed. This is an indicator that your JS code has a circular dependency that can cause bugs.', 'woocommerce' ), esc_html( $handle ) );
 								echo '</p></div>';
 						}
@@ -116,12 +122,14 @@ class Api {
 	 * @since 2.5.0
 	 * @since 2.6.0 Changed $name to $script_name and added $handle argument.
 	 * @since 2.9.0 Made it so scripts are not loaded in admin pages.
+	 * @deprecated 4.5.0 Block types register the scripts themselves.
 	 *
 	 * @param string $script_name  Name of the script used to identify the file inside build folder.
 	 * @param string $handle       Optional. Provided if the handle should be different than the script name. `wc-` prefix automatically added.
 	 * @param array  $dependencies Optional. An array of registered script handles this script depends on. Default empty array.
 	 */
 	public function register_block_script( $script_name, $handle = '', $dependencies = [] ) {
+		_deprecated_function( 'register_block_script', '4.5.0' );
 		if ( is_admin() ) {
 			return;
 		}
@@ -165,5 +173,25 @@ class Api {
 			? ''
 			: '-legacy';
 		return "build/$filename$suffix.$type";
+	}
+
+	/**
+	 * Adds an inline script, once.
+	 *
+	 * @param string $handle Script handle.
+	 * @param string $script Script contents.
+	 */
+	public function add_inline_script( $handle, $script ) {
+		if ( ! empty( $this->inline_scripts[ $handle ] ) && in_array( $script, $this->inline_scripts[ $handle ], true ) ) {
+			return;
+		}
+
+		wp_add_inline_script( $handle, $script );
+
+		if ( isset( $this->inline_scripts[ $handle ] ) ) {
+			$this->inline_scripts[ $handle ][] = $script;
+		} else {
+			$this->inline_scripts[ $handle ] = array( $script );
+		}
 	}
 }
