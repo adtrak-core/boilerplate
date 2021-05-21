@@ -1,0 +1,88 @@
+[
+    {
+        "field": "id",
+        "required": 1,
+        "desc": "Your product’s unique identifier",
+        "wAttribute": "ID"
+    },
+    {
+        "field": "title",
+        "required": 1,
+        "desc": "Your product’s name",
+        "wAttribute": "post_title"
+    },
+    {
+        "field": "description",
+        "required": 1,
+        "desc": "Your product’s description",
+        "wAttribute": "post_excerpt"
+    },
+    {
+        "field": "price",
+        "required": 1,
+        "desc": "Your product’s price",
+        "wAttribute": "_regular_price"
+    },
+    {
+        "field": "sale price",
+        "desc": "Your product’s sale price",
+        "wAttribute": "_sale_price"
+    },
+    {
+        "field": "brand",
+        "desc": "Your product’s brand name"
+    },
+    {
+        "field": "gtin",
+        "desc": "Your product’s Global Trade Item Number (GTIN). Required for all new products with an assigned GTIN."
+    },
+    {
+        "field": "mpn",
+        "desc": "Your product’s Global Trade Item Number (GTIN). Required for all new products with an assigned GTIN."
+    },
+    {
+        "field": "age_group",
+        "desc": "The demographic for which your product is intended",
+        "fixed_options":"newborn,infant,toddler,kids,adult"
+    },
+    {
+        "field": "color",
+        "desc": "Your product’s color(s)"
+    },
+    {
+        "field": "sizes",
+        "desc": "Your product’s size"
+    },
+    {
+        "field": "gender",
+        "desc": "The gender for which your product is intended",
+        "fixed_options":"male,female,unisex"
+    },
+    {        
+        "field": "shipping",
+        "desc": "Your product's shipping cost and the locations your product ships to"
+    },
+    {        
+        "field": "tax",
+        "desc": "Your product’s sales tax rate in percent"
+    },
+    {
+        "field": "content_language",
+        "desc": "content language"
+    },
+    {
+        "field": "target_country",
+        "desc": "Country for Google Shopping Listing"
+    },
+    {
+        "field": "availability",
+        "desc": "Your product's availability",
+        "wAttribute": "_stock_status"
+    },
+    {
+        "field": "condition",
+        "desc": "The condition of your product at time of sale",
+        "fixed_options":"new,refurbished,used",
+        "wAttribute": "new"
+    }
+]
