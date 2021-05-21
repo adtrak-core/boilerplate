@@ -113,7 +113,8 @@ Thumbs.db
 
 !wp-content/plugins/woocommerce/
 !wp-content/plugins/woocommerce-gateway-stripe/
-!wp-content/plugins/woo-gutenberg-products-block/
+!wp-content/plugins/enhanced-e-commerce-for-woocommerce-store/
+!wp-content/plugins/woocommerce-pdf-invoices-packing-slips/
 
 !wp-content/plugins/contact-form-7/
 !wp-content/plugins/flamingo/
