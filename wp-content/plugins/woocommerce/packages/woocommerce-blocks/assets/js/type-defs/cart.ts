@@ -5,7 +5,7 @@
  */
 import {
 	MetaKeyValue,
-	ShippingRateItemItem,
+	ShippingRateItem,
 	ExtensionsData,
 } from './cart-response';
 export interface CurrencyInfo {
@@ -43,7 +43,7 @@ export interface BaseAddress {
 	country: string;
 }
 
-export interface CartShippingRateItemShippingRate extends CurrencyInfo {
+export interface CartShippingPackageShippingRate extends CurrencyInfo {
 	rate_id: string;
 	name: string;
 	description: string;
@@ -56,12 +56,12 @@ export interface CartShippingRateItemShippingRate extends CurrencyInfo {
 	selected: boolean;
 }
 
-export interface CartShippingRateItem {
+export interface CartShippingRate {
 	package_id: number;
 	name: string;
 	destination: BaseAddress;
-	items: Array< ShippingRateItemItem >;
-	shipping_rates: Array< CartShippingRateItemShippingRate >;
+	items: Array< ShippingRateItem >;
+	shipping_rates: Array< CartShippingPackageShippingRate >;
 }
 
 export interface CartShippingAddress extends BaseAddress, FirstNameLastName {
@@ -108,17 +108,20 @@ export interface CartItemTotals extends CurrencyInfo {
 	line_total_tax: string;
 }
 
+export type CatalogVisibility = 'catalog' | 'hidden' | 'search' | 'visible';
+
 export interface CartItem {
 	key: string;
 	id: number;
 	quantity: number;
+	catalog_visibility: CatalogVisibility;
 	quantity_limit: number;
 	name: string;
 	summary: string;
 	short_description: string;
 	description: string;
 	sku: string;
-	low_stock_remaining: string;
+	low_stock_remaining: null | number;
 	backorders_allowed: boolean;
 	show_backorder_badge: boolean;
 	sold_individually: boolean;
@@ -128,6 +131,7 @@ export interface CartItem {
 	prices: CartItemPrices;
 	totals: CartItemTotals;
 	extensions: ExtensionsData;
+	item_data: Record< string, unknown >[];
 }
 
 export interface CartTotalsTaxLineItem {
@@ -167,7 +171,7 @@ export interface CartErrorItem {
 
 export interface Cart {
 	coupons: Array< CartCouponItem >;
-	shippingRates: Array< CartShippingRateItem >;
+	shippingRates: Array< CartShippingRate >;
 	shippingAddress: CartShippingAddress;
 	billingAddress: CartBillingAddress;
 	items: Array< CartItem >;

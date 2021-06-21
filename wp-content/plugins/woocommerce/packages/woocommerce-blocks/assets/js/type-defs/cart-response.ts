@@ -1,4 +1,15 @@
 /* eslint-disable camelcase -- API responses have camelcase properties */
+/**
+ * External dependencies
+ */
+import {
+	CartImageItem,
+	CartItemPrices,
+	CartItemTotals,
+	CartVariationItem,
+	CatalogVisibility,
+} from '@woocommerce/type-defs/cart';
+
 export interface CurrencyResponseInfo {
 	currency_code: string;
 	currency_symbol: string;
@@ -34,7 +45,7 @@ export interface ResponseBaseAddress {
 	country: string;
 }
 
-export interface ShippingRateItemItem {
+export interface ShippingRateItem {
 	key: string;
 	name: string;
 	quantity: number;
@@ -49,7 +60,7 @@ export type ExtensionsData =
 	| Record< string, unknown >
 	| Record< string, never >;
 
-export interface CartResponseShippingRateItemShippingRate
+export interface CartResponseShippingPackageShippingRate
 	extends CurrencyResponseInfo {
 	rate_id: string;
 	name: string;
@@ -63,12 +74,13 @@ export interface CartResponseShippingRateItemShippingRate
 	selected: boolean;
 }
 
-export interface CartResponseShippingRateItem {
-	package_id: number;
+export interface CartResponseShippingRate {
+	/* PackageId can be a string, WooCommerce Subscriptions uses strings for example, but WooCommerce core uses numbers */
+	package_id: number | string;
 	name: string;
 	destination: ResponseBaseAddress;
-	items: Array< ShippingRateItemItem >;
-	shipping_rates: Array< CartResponseShippingRateItemShippingRate >;
+	items: Array< ShippingRateItem >;
+	shipping_rates: Array< CartResponseShippingPackageShippingRate >;
 }
 
 export interface CartResponseShippingAddress
@@ -122,21 +134,24 @@ export interface CartResponseItem {
 	key: string;
 	id: number;
 	quantity: number;
+	catalog_visibility: CatalogVisibility;
 	quantity_limit: number;
 	name: string;
 	summary: string;
 	short_description: string;
 	description: string;
 	sku: string;
-	low_stock_remaining: string;
+	low_stock_remaining: null | number;
 	backorders_allowed: boolean;
 	show_backorder_badge: boolean;
 	sold_individually: boolean;
 	permalink: string;
-	images: Array< CartResponseImageItem >;
-	variation: Array< CartResponseVariationItem >;
-	prices: CartResponseItemPrices;
-	totals: CartResponseItemTotals;
+	images: Array< CartImageItem >;
+	variation: Array< CartVariationItem >;
+	prices: CartItemPrices;
+	totals: CartItemTotals;
+	extensions: ExtensionsData;
+	item_data: Record< string, unknown >[];
 }
 
 export interface CartResponseTotalsTaxLineItem {
@@ -180,7 +195,7 @@ export interface CartResponseExtensionItem {
 
 export interface CartResponse {
 	coupons: Array< CartResponseCouponItem >;
-	shipping_rates: Array< CartResponseShippingRateItem >;
+	shipping_rates: Array< CartResponseShippingRate >;
 	shipping_address: CartResponseShippingAddress;
 	billing_address: CartResponseBillingAddress;
 	items: Array< CartResponseItem >;

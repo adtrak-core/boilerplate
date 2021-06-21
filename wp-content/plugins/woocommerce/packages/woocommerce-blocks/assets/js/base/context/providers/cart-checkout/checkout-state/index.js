@@ -12,7 +12,7 @@ import {
 } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { usePrevious } from '@woocommerce/base-hooks';
-
+import deprecated from '@wordpress/deprecated';
 /**
  * Internal dependencies
  */
@@ -50,9 +50,11 @@ const CheckoutContext = createContext( {
 	orderNotes: '',
 	customerId: 0,
 	onSubmit: () => void null,
+	// deprecated for onCheckoutValidationBeforeProcessing
+	onCheckoutBeforeProcessing: ( callback ) => void callback,
+	onCheckoutValidationBeforeProcessing: ( callback ) => void callback,
 	onCheckoutAfterProcessingWithSuccess: ( callback ) => void callback,
 	onCheckoutAfterProcessingWithError: ( callback ) => void callback,
-	onCheckoutBeforeProcessing: ( callback ) => void callback,
 	dispatchActions: {
 		resetCheckout: () => void null,
 		setRedirectUrl: ( url ) => void url,
@@ -118,6 +120,35 @@ export const CheckoutStateProvider = ( {
 	useEffect( () => {
 		currentObservers.current = observers;
 	}, [ observers ] );
+	/**
+	 * @deprecated use onCheckoutValidationBeforeProcessing instead
+	 *
+	 * To prevent the deprecation message being shown at render time
+	 * we need an extra function between useMemo and emitterObservers
+	 * so that the deprecated message gets shown only at invocation time.
+	 * (useMemo calls the passed function at render time)
+	 * See: https://github.com/woocommerce/woocommerce-gutenberg-products-block/pull/4039/commits/a502d1be8828848270993264c64220731b0ae181
+	 */
+	const onCheckoutBeforeProcessing = useMemo( () => {
+		const callback = emitterObservers( observerDispatch )
+			.onCheckoutValidationBeforeProcessing;
+
+		return function ( ...args ) {
+			deprecated( 'onCheckoutBeforeProcessing', {
+				alternative: 'onCheckoutValidationBeforeProcessing',
+				plugin: 'WooCommerce Blocks',
+			} );
+
+			return callback( ...args );
+		};
+	}, [ observerDispatch ] );
+
+	const onCheckoutValidationBeforeProcessing = useMemo(
+		() =>
+			emitterObservers( observerDispatch )
+				.onCheckoutValidationBeforeProcessing,
+		[ observerDispatch ]
+	);
 	const onCheckoutAfterProcessingWithSuccess = useMemo(
 		() =>
 			emitterObservers( observerDispatch )
@@ -128,10 +159,6 @@ export const CheckoutStateProvider = ( {
 		() =>
 			emitterObservers( observerDispatch )
 				.onCheckoutAfterProcessingWithError,
-		[ observerDispatch ]
-	);
-	const onCheckoutBeforeProcessing = useMemo(
-		() => emitterObservers( observerDispatch ).onCheckoutBeforeProcessing,
 		[ observerDispatch ]
 	);
 
@@ -197,7 +224,7 @@ export const CheckoutStateProvider = ( {
 			removeNotices( 'error' );
 			emitEvent(
 				currentObservers.current,
-				EMIT_TYPES.CHECKOUT_BEFORE_PROCESSING,
+				EMIT_TYPES.CHECKOUT_VALIDATION_BEFORE_PROCESSING,
 				{}
 			).then( ( response ) => {
 				if ( response !== true ) {
@@ -233,6 +260,26 @@ export const CheckoutStateProvider = ( {
 		) {
 			return;
 		}
+
+		const handleErrorResponse = ( observerResponses ) => {
+			let errorResponse = null;
+			observerResponses.forEach( ( response ) => {
+				const { message, messageContext } = response;
+				if (
+					( isErrorResponse( response ) ||
+						isFailResponse( response ) ) &&
+					message
+				) {
+					const errorOptions = messageContext
+						? { context: messageContext }
+						: undefined;
+					errorResponse = response;
+					addErrorNotice( message, errorOptions );
+				}
+			} );
+			return errorResponse;
+		};
+
 		if ( checkoutState.status === STATUS.AFTER_PROCESSING ) {
 			const data = {
 				redirectUrl: checkoutState.redirectUrl,
@@ -248,21 +295,14 @@ export const CheckoutStateProvider = ( {
 					currentObservers.current,
 					EMIT_TYPES.CHECKOUT_AFTER_PROCESSING_WITH_ERROR,
 					data
-				).then( ( response ) => {
-					if (
-						isErrorResponse( response ) ||
-						isFailResponse( response )
-					) {
-						if ( response.message ) {
-							const errorOptions = {
-								id: response?.messageContext,
-								context: response?.messageContext,
-							};
-							addErrorNotice( response.message, errorOptions );
-						}
+				).then( ( observerResponses ) => {
+					const errorResponse = handleErrorResponse(
+						observerResponses
+					);
+					if ( errorResponse !== null ) {
 						// irrecoverable error so set complete
-						if ( ! shouldRetry( response ) ) {
-							dispatch( actions.setComplete( response ) );
+						if ( ! shouldRetry( errorResponse ) ) {
+							dispatch( actions.setComplete( errorResponse ) );
 						} else {
 							dispatch( actions.setIdle() );
 						}
@@ -299,21 +339,34 @@ export const CheckoutStateProvider = ( {
 					currentObservers.current,
 					EMIT_TYPES.CHECKOUT_AFTER_PROCESSING_WITH_SUCCESS,
 					data
-				).then( ( response ) => {
-					if ( isSuccessResponse( response ) ) {
-						dispatch( actions.setComplete( response ) );
-					} else if (
-						isErrorResponse( response ) ||
-						isFailResponse( response )
-					) {
-						if ( response.message ) {
-							const errorOptions = response.messageContext
-								? { context: response.messageContext }
-								: undefined;
-							addErrorNotice( response.message, errorOptions );
+				).then( ( observerResponses ) => {
+					let successResponse, errorResponse;
+					observerResponses.forEach( ( response ) => {
+						if ( isSuccessResponse( response ) ) {
+							// the last observer response always "wins" for success.
+							successResponse = response;
 						}
-						if ( ! shouldRetry( response ) ) {
-							dispatch( actions.setComplete( response ) );
+						if (
+							isErrorResponse( response ) ||
+							isFailResponse( response )
+						) {
+							errorResponse = response;
+						}
+					} );
+					if ( successResponse && ! errorResponse ) {
+						dispatch( actions.setComplete( successResponse ) );
+					} else if ( errorResponse ) {
+						if ( errorResponse.message ) {
+							const errorOptions = errorResponse.messageContext
+								? { context: errorResponse.messageContext }
+								: undefined;
+							addErrorNotice(
+								errorResponse.message,
+								errorOptions
+							);
+						}
+						if ( ! shouldRetry( errorResponse ) ) {
+							dispatch( actions.setComplete( errorResponse ) );
 						} else {
 							// this will set an error which will end up
 							// triggering the onCheckoutAfterProcessingWithError emitter.
@@ -367,9 +420,10 @@ export const CheckoutStateProvider = ( {
 		isAfterProcessing: checkoutState.status === STATUS.AFTER_PROCESSING,
 		hasError: checkoutState.hasError,
 		redirectUrl: checkoutState.redirectUrl,
+		onCheckoutBeforeProcessing,
+		onCheckoutValidationBeforeProcessing,
 		onCheckoutAfterProcessingWithSuccess,
 		onCheckoutAfterProcessingWithError,
-		onCheckoutBeforeProcessing,
 		dispatchActions,
 		isCart,
 		orderId: checkoutState.orderId,

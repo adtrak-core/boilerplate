@@ -1451,7 +1451,7 @@ body.admin-color-sunrise {
   border: 1px solid #b5bfc9;
   border-radius: 4px;
   background: #f0f2f4; }
-  .woocommerce-pagination__page-arrows-buttons .components-button:not(:disabled):not([aria-disabled='true']) {
+  .woocommerce-pagination__page-arrows-buttons .components-button {
     color: #24292d;
     height: 30px;
     width: 32px;

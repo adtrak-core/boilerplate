@@ -10,7 +10,10 @@ import {
 	useState,
 	useMemo,
 } from '@wordpress/element';
-import { formatStoreApiErrorMessage } from '@woocommerce/base-utils';
+import {
+	emptyHiddenAddressFields,
+	formatStoreApiErrorMessage,
+} from '@woocommerce/base-utils';
 
 /**
  * Internal dependencies
@@ -34,7 +37,7 @@ import { useStoreNotices } from '../../../../hooks/use-store-notices';
 const CheckoutProcessor = () => {
 	const {
 		hasError: checkoutHasError,
-		onCheckoutBeforeProcessing,
+		onCheckoutValidationBeforeProcessing,
 		dispatchActions,
 		redirectUrl,
 		isProcessing: checkoutIsProcessing,
@@ -144,7 +147,7 @@ const CheckoutProcessor = () => {
 	useEffect( () => {
 		let unsubscribeProcessing;
 		if ( ! expressPaymentMethodActive ) {
-			unsubscribeProcessing = onCheckoutBeforeProcessing(
+			unsubscribeProcessing = onCheckoutValidationBeforeProcessing(
 				checkValidation,
 				0
 			);
@@ -155,7 +158,7 @@ const CheckoutProcessor = () => {
 			}
 		};
 	}, [
-		onCheckoutBeforeProcessing,
+		onCheckoutValidationBeforeProcessing,
 		checkValidation,
 		expressPaymentMethodActive,
 	] );
@@ -164,8 +167,12 @@ const CheckoutProcessor = () => {
 		setIsProcessingOrder( true );
 		removeNotice( 'checkout' );
 		let data = {
-			billing_address: currentBillingData.current,
-			shipping_address: currentShippingAddress.current,
+			billing_address: emptyHiddenAddressFields(
+				currentBillingData.current
+			),
+			shipping_address: emptyHiddenAddressFields(
+				currentShippingAddress.current
+			),
 			customer_note: orderNotes,
 			should_create_account: shouldCreateAccount,
 		};

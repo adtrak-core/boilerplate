@@ -61,6 +61,10 @@ class FeaturePlugin {
 	 * Init the feature plugin, only if we can detect both Gutenberg and WooCommerce.
 	 */
 	public function init() {
+		// Load the page controller functions file first to prevent fatal errors when disabling WooCommerce Admin.
+		$this->define_constants();
+		require_once WC_ADMIN_ABSPATH . '/includes/page-controller-functions.php';
+
 		/**
 		 * Filter allowing WooCommerce Admin to be disabled.
 		 *
@@ -70,12 +74,9 @@ class FeaturePlugin {
 			return;
 		}
 
-		$this->define_constants();
-
 		require_once WC_ADMIN_ABSPATH . '/src/Notes/DeprecatedNotes.php';
 		require_once WC_ADMIN_ABSPATH . '/includes/core-functions.php';
 		require_once WC_ADMIN_ABSPATH . '/includes/feature-config.php';
-		require_once WC_ADMIN_ABSPATH . '/includes/page-controller-functions.php';
 		require_once WC_ADMIN_ABSPATH . '/includes/wc-admin-update-functions.php';
 
 		register_activation_hook( WC_ADMIN_PLUGIN_FILE, array( $this, 'on_activation' ) );
@@ -155,7 +156,7 @@ class FeaturePlugin {
 		$this->define( 'WC_ADMIN_PLUGIN_FILE', WC_ADMIN_ABSPATH . 'woocommerce-admin.php' );
 		// WARNING: Do not directly edit this version number constant.
 		// It is updated as part of the prebuild process from the package.json value.
-		$this->define( 'WC_ADMIN_VERSION_NUMBER', '2.2.6' );
+		$this->define( 'WC_ADMIN_VERSION_NUMBER', '2.3.1' );
 	}
 
 	/**
@@ -175,6 +176,7 @@ class FeaturePlugin {
 		Events::instance()->init();
 		API\Init::instance();
 		ReportExporter::init();
+		PluginsInstaller::init();
 
 		// CRUD classes.
 		Notes::init();

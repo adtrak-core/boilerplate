@@ -21,7 +21,7 @@ if ( ! function_exists( 'wc_admin_get_feature_config' ) ) {
 			'shipping-label-banner' => true,
 			'store-alerts' => true,
 			'wcpay' => true,
-			'wcpay/support-international-countries' => false,
+			'wcpay/support-international-countries' => true,
 		);
 	}
 }

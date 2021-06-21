@@ -4,9 +4,9 @@
 import { __ } from '@wordpress/i18n';
 import { getCurrencyFromPriceResponse } from '@woocommerce/price-format';
 import { useEffect, useRef } from '@wordpress/element';
-import { DISPLAY_CART_PRICES_INCLUDING_TAX } from '@woocommerce/block-settings';
 import PaymentMethodLabel from '@woocommerce/base-components/cart-checkout/payment-method-label';
 import PaymentMethodIcons from '@woocommerce/base-components/cart-checkout/payment-method-icons';
+import { getSetting } from '@woocommerce/settings';
 
 /**
  * Internal dependencies
@@ -85,9 +85,10 @@ export const usePaymentMethodInterface = () => {
 		isComplete,
 		isIdle,
 		isProcessing,
+		onCheckoutBeforeProcessing,
+		onCheckoutValidationBeforeProcessing,
 		onCheckoutAfterProcessingWithSuccess,
 		onCheckoutAfterProcessingWithError,
-		onCheckoutBeforeProcessing,
 		onSubmit,
 		customerId,
 	} = useCheckoutContext();
@@ -167,14 +168,18 @@ export const usePaymentMethodInterface = () => {
 			cartTotal: currentCartTotal.current,
 			currency: getCurrencyFromPriceResponse( cartTotals ),
 			cartTotalItems: currentCartTotals.current,
-			displayPricesIncludingTax: DISPLAY_CART_PRICES_INCLUDING_TAX,
+			displayPricesIncludingTax: getSetting(
+				'displayCartPricesIncludingTax',
+				false
+			),
 			appliedCoupons,
 			customerId,
 		},
 		eventRegistration: {
+			onCheckoutBeforeProcessing,
+			onCheckoutValidationBeforeProcessing,
 			onCheckoutAfterProcessingWithSuccess,
 			onCheckoutAfterProcessingWithError,
-			onCheckoutBeforeProcessing,
 			onShippingRateSuccess,
 			onShippingRateFail,
 			onShippingRateSelectSuccess,

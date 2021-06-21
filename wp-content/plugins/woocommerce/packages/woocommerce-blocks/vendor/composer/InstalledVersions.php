@@ -30,19 +30,19 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'a074162193ff8cf2dde019272e070963db4acd83',
+    'reference' => 'e78f5855b8ec80e32b265081f2286250074298dc',
     'name' => 'woocommerce/woocommerce-blocks',
   ),
   'versions' => 
   array (
     'automattic/jetpack-autoloader' => 
     array (
-      'pretty_version' => 'v2.9.1',
-      'version' => '2.9.1.0',
+      'pretty_version' => '2.10.1',
+      'version' => '2.10.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'd6ca2cc26ad6963e1be19b3338a9e98f40d9bd88',
+      'reference' => '20393c4677765c3e737dcb5aee7a3f7b90dce4b3',
     ),
     'composer/installers' => 
     array (
@@ -74,7 +74,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'a074162193ff8cf2dde019272e070963db4acd83',
+      'reference' => 'e78f5855b8ec80e32b265081f2286250074298dc',
     ),
   ),
 );
