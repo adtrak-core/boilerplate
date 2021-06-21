@@ -3,7 +3,7 @@
 Plugin Name: WP Fastest Cache
 Plugin URI: http://wordpress.org/plugins/wp-fastest-cache/
 Description: The simplest and fastest WP Cache system
-Version: 0.9.1.8
+Version: 0.9.1.9
 Author: Emre Vona
 Author URI: http://tr.linkedin.com/in/emrevona
 Text Domain: wp-fastest-cache
@@ -120,6 +120,10 @@ GNU General Public License for more details.
 			add_action( 'user_register', array($this, 'modify_htaccess_for_new_user'), 10, 1);
 			add_action( 'profile_update', array($this, 'modify_htaccess_for_new_user'), 10, 1);
 			add_action( 'edit_terms', array($this, 'delete_cache_of_term'), 10, 1);
+
+			if(defined("WPFC_CLEAR_CACHE_AFTER_SWITCH_THEME") && WPFC_CLEAR_CACHE_AFTER_SWITCH_THEME){
+				add_action('after_switch_theme', array($this, 'clear_cache_after_switch_theme'));
+			}
 
 			if(defined("WPFC_CLEAR_CACHE_AFTER_PLUGIN_UPDATE") && WPFC_CLEAR_CACHE_AFTER_PLUGIN_UPDATE){
 				add_action('upgrader_process_complete', array($this, 'clear_cache_after_update_plugin'), 10, 2);
@@ -330,6 +334,10 @@ GNU General Public License for more details.
 					}
 				}
 			}
+		}
+
+		public function clear_cache_after_switch_theme(){
+			$this->deleteCache(true);
 		}
 
 		public function clear_cache_after_update_plugin($upgrader_object, $options){

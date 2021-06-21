@@ -254,6 +254,10 @@
 
 
 	        	jQuery(document).ready(function(){
+	        		if(!jQuery("#auto_cache_custom_meta_box").is(":visible")){
+	        			return;
+	        		}
+	        		
 	        		if(jQuery("#message").find("a").attr("href")){
 			        	WpfcSinglePreload.init();
 
