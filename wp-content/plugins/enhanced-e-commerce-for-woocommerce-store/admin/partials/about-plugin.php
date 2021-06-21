@@ -1,6 +1,6 @@
 <?php
 $message = new Enhanced_Ecommerce_Google_Settings();
-$obj = new Enhanced_Ecommerce_Google_Analytics_Admin($plugin_name = 'enhanced-e-commerce-for-woocommerce-store', $version = PLUGIN_NAME_VERSION);
+$obj = new Enhanced_Ecommerce_Google_Analytics_Admin($plugin_name = 'enhanced-e-commerce-for-woocommerce-store', $version = PLUGIN_TVC_VERSION);
 $today = $obj->today();
 $start = $obj->start_date();
 $end = $obj->end_date();
@@ -161,7 +161,7 @@ $endtime = $obj->end_time();
                                             <tr>
                                                 <th class="w-25"></th>
                                                 <th class="w-25"></th>
-                                                <th class=""><a href="https://codecanyon.net/item/actionable-google-analytics-for-woocommerce/9899552?utm_source=TatvicEE&utm_medium=DashboardBuyBottom&utm_campaign=WPlisting" target="_blank"><button class="btn btn-primary"><strong>Get premium plugin</strong>
+                                                <th class=""><a href="#" target="_blank"><button class="btn btn-primary"><strong>Get premium plugin</strong>
                                                 <?php if($today >= $start && $today <= $end  && $currentime <= $endtime) {?>
                                                 <img class="new-img-blink-side" src='<?php echo plugins_url('../images/discount.gif', __FILE__ )  ?>' />
                                                 <?php }?>

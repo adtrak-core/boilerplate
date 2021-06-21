@@ -58,6 +58,17 @@ if ( ! class_exists( 'TVC_Admin_DB_Helper' ) ) {
 			return ;
 		}
 
+		public function tvc_check_row($table, $where){
+			global $wpdb;
+			$tablename = $wpdb->prefix .$table;
+			if($table =="" ||  $where == ""){
+				return;
+			}else{
+				$sql = "select count(*) from ".$tablename." where ".$where;
+				return $wpdb->get_var($sql);
+			}
+		}
+
 		public function tvc_get_results_in_array($table, $where, $fields, $concat = false){
 			global $wpdb;
 			$tablename = $wpdb->prefix .$table;
@@ -73,6 +84,27 @@ if ( ! class_exists( 'TVC_Admin_DB_Helper' ) ) {
 					$sql = "select ".$fields." from ".$tablename." where ".$where;
 					return $wpdb->get_results($sql, ARRAY_A);
 				}				
+			}
+		}
+
+		public function tvc_get_results($table, $where = null, $fields = array()){
+			global $wpdb;
+			$tablename = $wpdb->prefix .$table;
+			if($table =="" ){
+				return;
+			}else {
+				$p_where ="";
+				if($where){
+					$p_where = "where";
+				}
+				if( !empty($fields) )	{			
+					$fields = implode(',', $fields);
+					$sql = "select ".$fields." from ".$tablename." ".$p_where." ".$where;
+					return $wpdb->get_results($sql);
+				}else{
+					$sql = "select * from ".$tablename." ".$p_where." ".$where;
+					return $wpdb->get_results($sql);
+				}							
 			}
 		}
 
@@ -92,10 +124,23 @@ if ( ! class_exists( 'TVC_Admin_DB_Helper' ) ) {
 			}
 		}
 
-		
+		public function tvc_get_counts_groupby($table, $fields_by){
+			global $wpdb;
+			$tablename = $wpdb->prefix .$table;
+			if($table =="" ||  $fields_by == ""){
+				return;
+			}else{
+				$sql = "select ".$fields_by.", count(*) as count from ".$tablename." GROUP BY ".$fields_by." ORDER BY count DESC ";
+				return $wpdb->get_results($sql, ARRAY_A);
+			}
+		}	
 
-
+		public function tvc_safe_truncate_table($table){
+			global $wpdb;
+			$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) );   
+      if ( $wpdb->get_var( $query ) === $table ) {
+      	$wpdb->query("TRUNCATE TABLE IF EXISTS ".$table);
+      }
+		}
 	}
 }
-
-?>

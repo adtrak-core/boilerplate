@@ -28,7 +28,7 @@ class Enhanced_Ecommerce_Google_Analytics_Public {
      * @return void
      */
     //set plugin version
-     public $tvc_eeVer = PLUGIN_NAME_VERSION;
+     public $tvc_eeVer = PLUGIN_TVC_VERSION;
     /**
      * @var mixed $tvc_aga
      */
@@ -177,7 +177,29 @@ class Enhanced_Ecommerce_Google_Analytics_Public {
     function tvc_store_meta_data() {
         //only on home page
         global $woocommerce;
-
+        $TVC_Admin_Helper = new TVC_Admin_Helper();
+        $google_detail = $TVC_Admin_Helper->get_ee_options_data();
+        $sub_data = array();
+        if(isset($google_detail['setting'])){
+            $googleDetail = $google_detail['setting'];
+            $sub_data['sub_id'] = $googleDetail->id;
+            $sub_data['cu_id']=$googleDetail->customer_id;
+            $sub_data['pl_id']=$googleDetail->plan_id;
+            $sub_data['ga_tra_option']=$googleDetail->tracking_option;
+            $sub_data['ga_property_id']=$googleDetail->google_ads_id;
+            $sub_data['ga_measurement_id']=$googleDetail->measurement_id;
+            $sub_data['ga_ads_id']=$googleDetail->google_ads_id;
+            $sub_data['ga_gmc_id']=$googleDetail->google_merchant_center_id;
+            $sub_data['op_gtag_js']=$googleDetail->add_gtag_snippet;
+            $sub_data['op_en_e_t']=$googleDetail->enhanced_e_commerce_tracking;
+            $sub_data['op_rm_t_t']=$googleDetail->remarketing_tags;
+            $sub_data['op_dy_rm_t_t']=$googleDetail->dynamic_remarketing_tags;
+            $sub_data['op_li_ga_wi_ads']=$googleDetail->link_google_analytics_with_google_ads;
+            $sub_data['gmc_is_product_sync']=$googleDetail->is_product_sync;
+            $sub_data['gmc_is_site_verified']=$googleDetail->is_site_verified;
+            $sub_data['gmc_is_domain_claim']=$googleDetail->is_domain_claim;
+            $sub_data['gmc_product_count']=$googleDetail->product_count;            
+        }
         $tvc_sMetaData = array(
             'tvc_wcv' => $woocommerce->version,
             'tvc_wpv' => get_bloginfo('version'),
@@ -190,8 +212,9 @@ class Enhanced_Ecommerce_Google_Analytics_Public {
                 't_thr' => $this->ga_imTh,
                 't_IPA' => $this->ga_IPA,
                 't_OptOut' => $this->ga_OPTOUT,
-                't_PrivacyPolicy' => $this->ga_PrivacyPolicy,
-            )
+                't_PrivacyPolicy' => $this->ga_PrivacyPolicy
+            ),
+            'tvc_sub_data'=> $sub_data
         );
         $this->wc_version_compare("tvc_smd=" . json_encode($tvc_sMetaData) . ";");
     }

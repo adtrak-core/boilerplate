@@ -45,5 +45,12 @@ var tvc_helper = {
 		let tvc_popup_box = document.getElementById('tvc_popup_box');
 		tvc_popup_box.classList.add("tvc_popup_box_close");
 		//tvc_popup_box.style.display = "none";
+	},
+	loaderSection:function(isShow) {
+	  if (isShow){
+	    $('#feed-spinner').show();
+	  }else{
+	    $('#feed-spinner').hide();
+	  }
 	}
 };

@@ -24,28 +24,64 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
     add_action('wp_ajax_tvcajax-get-campaign-categories', array($this, 'tvcajax_get_campaign_categories'));
     add_action('wp_ajax_tvcajax-update-campaign-status', array($this, 'tvcajax_update_campaign_status'));
     add_action('wp_ajax_tvcajax-delete-campaign', array($this, 'tvcajax_delete_campaign'));
-    add_action('wp_ajax_tvcajax-get-next-categories', array($this, 'tvcajax_read_next_categories'));
-    add_action('wp_ajax_tvcajax-get-category-lists', array($this, 'tvcajax_read_category_lists'));
-    add_action('wp_ajax_tvcajax-delete-feed-file', array($this, 'tvcajax_delete_feed_file'));
-    add_action('wp_ajax_tvcajax-update-feed-file', array($this, 'tvcajax_update_feed_file'));
-    add_action('wp_ajax_tvcajax-log-message', array($this, 'tvcajax_log_message'));
-    add_action('wp_ajax_tvcajax-auto-feed-fix-mode-selection', array($this, 'tvcajax_auto_feed_fix_mode_selection'));
-    add_action('wp_ajax_tvcajax-background-processing-mode-selection', array($this, 'tvcajax_background_processing_mode_selection'));
-    add_action('wp_ajax_tvcajax-feed-logger-status-selection', array($this, 'tvcajax_feed_logger_status_selection'));
-    add_action('wp_ajax_tvcajax-show-product-identifiers-selection', array($this, 'tvcajax_show_product_identifiers_selection'));
-    add_action('wp_ajax_tvcajax-debug-mode-selection', array($this, 'tvcajax_debut_mode_selection'));
-    add_action('wp_ajax_tvcajax-third-party-attribute-keywords', array($this, 'tvcajax_set_third_party_attribute_keywords'));
-    add_action('wp_ajax_tvcajax-set-notice-mailaddress', array($this, 'tvcajax_set_notice_mailaddress'));
-    add_action('wp_ajax_tvcajax-clear-feed-process-data', array($this, 'tvcajax_clear_feed_process_data'));
-    add_action('wp_ajax_tvcajax-reinitiate-plugin', array($this, 'tvcajax_reinitiate_plugin'));
+    
     add_action('wp_ajax_tvcajax-product-syncup', array($this, 'tvcajax_product_syncup'));
     add_action('wp_ajax_tvcajax-gmc-category-lists', array($this, 'tvcajax_get_gmc_categories'));
     add_action('wp_ajax_tvcajax-custom-metrics-dimension', array($this, 'tvcajax_custom_metrics_dimension'));
     add_action('wp_ajax_tvcajax-store-time-taken', array($this, 'tvcajax_store_time_taken'));
+
     add_action('wp_ajax_tvc_call_api_sync', array($this, 'tvc_call_api_sync'));
     add_action('wp_ajax_tvc_call_domain_claim', array($this, 'tvc_call_domain_claim'));
     add_action('wp_ajax_tvc_call_site_verified', array($this, 'tvc_call_site_verified'));
     add_action('wp_ajax_tvc_call_notice_dismiss', array($this, 'tvc_call_notice_dismiss'));
+    add_action('wp_ajax_tvc_call_notification_dismiss', array($this, 'tvc_call_notification_dismiss'));
+    add_action('wp_ajax_tvc_call_active_licence', array($this, 'tvc_call_active_licence'));
+  }
+  //active licence key
+  public function tvc_call_active_licence(){
+    if ( is_admin() ) {
+      $licence_key = isset($_POST['licence_key'])?$_POST['licence_key']:"";
+      $TVC_Admin_Helper = new TVC_Admin_Helper();
+      $subscription_id = $TVC_Admin_Helper->get_subscriptionId();      
+      if($subscription_id!="" && $licence_key != ""){
+        $response = $TVC_Admin_Helper->active_licence($licence_key, $subscription_id);
+        
+        if($response->error== false){
+          //$key, $html, $title = null, $link = null, $link_title = null, $overwrite= false
+          $TVC_Admin_Helper->add_ee_msg_nofification("active_licence_key", "Your plan is now successfully activated.", "Congratulations!!", "", "", true);
+          $TVC_Admin_Helper->update_subscription_details_api_to_db();
+          echo json_encode(array('error' => false, "is_connect"=>true, 'message' => "The licence key has been activated."));
+        }else{
+          echo json_encode(array('error' => true, "is_connect"=>true, 'message' => $response->message));
+        }       
+      }else if($licence_key != ""){ 
+        $ee_additional_data = $TVC_Admin_Helper->get_ee_additional_data();
+        $ee_additional_data['temp_active_licence_key'] = $licence_key;
+        $TVC_Admin_Helper->set_ee_additional_data($ee_additional_data);       
+        echo json_encode(array('error' => true, "is_connect"=>false, 'message' => ""));
+      }else{
+        echo json_encode(array('error' => true, "is_connect"=>false, 'message' => "Licence key is required."));
+      }      
+    }
+    exit;
+  }
+
+  public function tvc_call_notification_dismiss(){
+    if($this->safe_ajax_call(filter_input(INPUT_POST, 'TVCNonce'), 'tvc_call_notification_dismiss-nonce')){      
+      $ee_dismiss_id = isset($_POST['data']['ee_dismiss_id'])?$_POST['data']['ee_dismiss_id']:"";
+      if($ee_dismiss_id != ""){
+        $TVC_Admin_Helper = new TVC_Admin_Helper();
+        $ee_msg_list = $TVC_Admin_Helper->get_ee_msg_nofification_list();
+        if( isset($ee_msg_list[$ee_dismiss_id]) ){          
+          unset($ee_msg_list[$ee_dismiss_id]);
+          $ee_msg_list[$ee_dismiss_id]["active"]=0;
+          $TVC_Admin_Helper->set_ee_msg_nofification_list($ee_msg_list);
+          echo json_encode(array('status' => 'success', 'message' => $ee_additional_data));
+        }
+        
+      }       
+    }
+    exit;
   }
   public function tvc_call_notice_dismiss(){
     if($this->safe_ajax_call(filter_input(INPUT_POST, 'apiNoticDismissNonce'), 'tvc_call_notice_dismiss-nonce')){      
@@ -63,8 +99,12 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
   public function tvc_call_api_sync(){
     if($this->safe_ajax_call(filter_input(INPUT_POST, 'apiSyncupNonce'), 'tvc_call_api_sync-nonce')){
         $TVC_Admin_Helper = new TVC_Admin_Helper();
-        $tvc_msg = $TVC_Admin_Helper->set_update_api_to_db();
-        echo json_encode(array('status' => 'success', 'message' => $tvc_msg));
+        $api_rs = $TVC_Admin_Helper->set_update_api_to_db();
+        if(isset($api_rs['error']) && isset($api_rs['message']) && $api_rs['message']){
+          echo json_encode($api_rs);
+        }else{
+          echo json_encode(array('error' => true, 'message' => "Please try after some time."));
+        }
         exit;
     }
     exit;
@@ -310,298 +350,6 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
   }
 
   /**
-   * Returns the sub-categories from a selected category
-   */
-  public function tvcajax_read_next_categories(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'nextCategoryNonce'), 'tvcajax-next-category-nonce')){
-          $file_class = new TVC_File();
-
-          $channel_id = filter_input(INPUT_POST, 'channelId');
-          $requested_level = filter_input(INPUT_POST, 'requestedLevel');
-          $parent_category = filter_input(INPUT_POST, 'parentCategory');
-          $file_language = filter_input(INPUT_POST, 'fileLanguage');
-          $categories = $file_class->get_categories_for_list($channel_id, $requested_level, $parent_category, $file_language);
-
-          if(!is_array($categories)){
-              if('0' === substr($categories, - 1)){
-                  chop($categories, '0');
-              }
-          }
-
-          echo json_encode($categories);
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Read the category list
-   */
-  public function tvcajax_read_category_lists(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'categoryListsNonce'), 'tvcajax-category-lists-nonce')){
-          $file_class = new TVC_File();
-
-          $channel_id = filter_input(INPUT_POST, 'channelId');
-          $main_categories_string = filter_input(INPUT_POST, 'mainCategories');
-          $file_language = filter_input(INPUT_POST, 'fileLanguage');
-          $categories_array = explode(' > ', $main_categories_string);
-          $categories = array();
-          $required_levels = count($categories_array) > 0 ? ( count($categories_array) + 1 ) : count($categories_array);
-
-          for($i = 0; $i < $required_levels; $i ++){
-              $parent_category = $i > 0 ? $categories_array[$i - 1] : '';
-              $c = $file_class->get_categories_for_list($channel_id, $i, $parent_category, $file_language);
-              if($c){
-                  array_push($categories, $c);
-              }
-          }
-
-          echo json_encode($categories);
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Delete a specific feed file
-   */
-  public function tvcajax_delete_feed_file(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'deleteFeedNonce'), 'tvcajax-delete-feed-nonce')){
-          $file_name = filter_input(INPUT_POST, 'fileTitle');
-
-          if(file_exists(WP_PLUGIN_DIR . '/tvc-product-feed-manager-support/feeds/' . $file_name)){
-              $file = WP_PLUGIN_DIR . '/tvc-product-feed-manager-support/feeds/' . $file_name;
-          }else{
-              $file = TVC_FEEDS_DIR . '/' . $file_name;
-          }
-
-          // only return results when the user is an admin with manage options
-          if(is_admin()){
-              /* translators: %s: Title of the feed file */
-              echo file_exists($file) ? unlink($file) : tvc_show_wp_error(sprintf(esc_html__('Could not find file %s.', 'tvc-product-feed-manager'), $file));
-          }else{
-              echo tvc_show_wp_error(esc_html__('Error deleting the feed. You do not have the correct authorities to delete the file.', 'tvc-product-feed-manager'));
-          }
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * This function fetches the posted data and triggers the update of the feed file on the server.
-   */
-  public function tvcajax_update_feed_file(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'updateFeedFileNonce'), 'tvcajax-update-feed-file-nonce')){
-
-          // fetch the data from $_POST
-          $feed_id = filter_input(INPUT_POST, 'feedId');
-          $background_mode_disabled = get_option('tvc_disabled_background_mode', 'false');
-
-          TVC_Feed_Controller::add_id_to_feed_queue($feed_id);
-
-          // if there is no feed processing in progress, of background processing is switched off, start updating the current feed
-          if(!TVC_Feed_Controller::feed_is_processing() || 'true' === $background_mode_disabled){
-              do_action('tvc_manual_feed_update_activated', $feed_id);
-
-              $feed_master_class = new TVC_Feed_Master_Class($feed_id);
-              $feed_master_class->update_feed_file(false);
-          }else{
-              $data_class = new TVC_Data();
-              $data_class->update_feed_status($feed_id, 4); // feed status to waiting in queue
-              echo 'pushed_to_queue';
-          }
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Logs a message from a javascript call to the server
-   */
-  public function tvcajax_log_message(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'logMessageNonce'), 'tvcajax-log-message-nonce')){
-          // fetch the data from $_POST
-          $message = filter_input(INPUT_POST, 'messageList');
-          $file_name = filter_input(INPUT_POST, 'fileName');
-          $text_message = strip_tags($message);
-
-          // only return results when the user is an admin with manage options
-          if(is_admin()){
-              //tvc_write_log_file( $text_message, $file_name );
-          }else{
-              echo tvc_show_wp_error(esc_html__('Error writing the feed. You do not have the correct authorities to write the file.', 'tvc-product-feed-manager'));
-          }
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Changes the Auto Feed Fix setting from the Settings page
-   *
-   * @since 1.7.0
-   */
-  public function tvcajax_auto_feed_fix_mode_selection(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'updateAutoFeedFixNonce'), 'tvcajax-auto-feed-fix-nonce')){
-          $selection = filter_input(INPUT_POST, 'fix_selection');
-          update_option('tvc_auto_feed_fix', $selection);
-
-          echo get_option('tvc_auto_feed_fix');
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Changes the Disable Background processing setting from the Settings page
-   *
-   * @since 2.0.7
-   */
-  public function tvcajax_background_processing_mode_selection(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'backgroundModeNonce'), 'tvcajax-background-mode-nonce')){
-          $selection = filter_input(INPUT_POST, 'mode_selection');
-          update_option('tvc_disabled_background_mode', $selection);
-
-          echo get_option('tvc_disabled_background_mode');
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Changes the Feed Process Logger setting from the Settings page.
-   *
-   * @since 2.8.0
-   */
-  public function tvcajax_feed_logger_status_selection(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'feedLoggerStatusNonce'), 'tvcajax-logger-status-nonce')){
-          $selection = filter_input(INPUT_POST, 'statusSelection');
-          update_option('tvc_process_logger_status', $selection);
-
-          echo get_option('tvc_process_logger_status');
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Changes the Show Product Identifiers setting from the Settings page.
-   *
-   * @since 2.10.0
-   */
-  public function tvcajax_show_product_identifiers_selection(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'showPINonce'), 'tvcajax-show-pi-nonce')){
-          $selection = filter_input(INPUT_POST, 'showPiSelection');
-          update_option('tvc_show_product_identifiers', $selection);
-
-          echo get_option('tvc_show_product_identifiers');
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Changes the Debug setting from the Settings page
-   *
-   * @since 1.9.0
-   */
-  public function tvcajax_debug_mode_selection(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'debugNonce'), 'tvcajax-debug-nonce')){
-          $selection = filter_input(INPUT_POST, 'debug_selection');
-          update_option('tvc_debug_mode', $selection);
-
-          echo get_option('tvc_debug_mode');
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  public function tvcajax_set_third_party_attribute_keywords(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'thirdPartyKeywordsNonce'), 'tvcajax-set-third-party-keywords-nonce')){
-          $keywords = filter_input(INPUT_POST, 'keywords');
-          update_option('tvc_third_party_attribute_keywords', $keywords);
-
-          echo get_option('tvc_third_party_attribute_keywords');
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  public function tvcajax_set_notice_mailaddress(){
-      // make sure this call is legal
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'noticeMailaddressNonce'), 'tvcajax-set-notice-mailaddress-nonce')){
-          $mailaddress = filter_input(INPUT_POST, 'mailaddress');
-          update_option('tvc_notice_mailaddress', $mailaddress);
-
-          echo get_option('tvc_notice_mailaddress');
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Re-initiates the plugin, updates the database and loads all cron jobs
-   *
-   * @since 1.9.0
-   */
-  public function tvcajax_reinitiate_plugin(){
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'reInitiateNonce'), 'tvcajax-reinitiate-nonce')){
-
-          if(tvc_reinitiate_plugin()){
-              echo 'Plugin re-initiated';
-          }else{
-              echo 'Re-initiation failed!';
-          }
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
-   * Clears all option data that is related to the feed processing
-   *
-   * @since 1.10.0
-   */
-  public function tvcajax_clear_feed_process_data(){
-      if($this->safe_ajax_call(filter_input(INPUT_POST, 'clearFeedNonce'), 'tvcajax-clear-feed-nonce')){
-
-          if(tvc_clear_feed_process_data()){
-              echo esc_html__('Feed processing data cleared', 'tvc-product-feed-manager');
-          }else{
-              /* translators: clearing the feed data failed */
-              echo esc_html__('Clearing failed!', 'tvc-product-feed-manager');
-          }
-      }
-
-      // IMPORTANT: don't forget to exit
-      exit;
-  }
-
-  /**
    * Returns the campaign categories from a selected country
    */
   public function tvcajax_get_gmc_categories(){
@@ -654,16 +402,6 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
 
       // IMPORTANT: don't forget to exit
       exit;
-  }
-
-  public function getPostMetaData($id){
-      $queries = new TVC_Queries();
-      $column2 = json_decode(json_encode($queries->getTablePostMeta($id)), true);
-      $arr = array();
-      foreach($column2 as $val){
-          $arr[$val['meta_key']] = $val['meta_value'];
-      }
-      return $arr;
   }
 
   /**
@@ -755,7 +493,6 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
       }
       
       $entries = [];
-      //print_r($mappedCats);
       if(!empty($mappedCats)){
         foreach($mappedCats as $mc_key => $mappedCat){
           $all_products = get_posts(array(
@@ -775,7 +512,7 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
           foreach($all_products as $postkey => $postvalue){
             
             $postmeta = [];
-            $postmeta = $this->getPostMetaData($postvalue->ID);
+            $postmeta = $TVC_Admin_Helper->tvc_get_post_meta($postvalue->ID);
             $prd = wc_get_product($postvalue->ID);
             $postObj = (object) array_merge((array) $postvalue, (array) $postmeta);
             
@@ -818,7 +555,7 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
                 $p_variations = $prd->get_available_variations();                
                 if(!empty($p_variations)){                  
                   foreach ($p_variations as $v_key => $v_value) {
-                    $postmeta_var = (object)$this->getPostMetaData($v_value['variation_id']);
+                    $postmeta_var = (object)$TVC_Admin_Helper->tvc_get_post_meta($v_value['variation_id']);
                     $product['title'] = (isset($postObj->$formArray['title']))?$postObj->$formArray['title']:get_the_title($postvalue->ID);
                     $tvc_temp_desc_key = $formArray['description'];
                     $product['description'] = (isset($v_value['variation_description']) && $v_value['variation_description'] != "")?$v_value['variation_description']:$postObj->$tvc_temp_desc_key;
@@ -944,8 +681,6 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
                 'method' => 'insert',
                 'product' => $product
               ];
-              //print_r($entrie);
-              //exit;
               $entries[] = $entrie;
             }
 
@@ -970,15 +705,13 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
           'body' => wp_json_encode($data)
         );
         
-        $request = wp_remote_post($url, $args);
-        //print_r($request); 
+        $request = wp_remote_post($url, $args); 
          
         // Retrieve information
         $response_code = wp_remote_retrieve_response_code($request);
         $response_message = wp_remote_retrieve_response_message($request);
         $response_body = json_decode(wp_remote_retrieve_body($request));
-        //print_r($response_body);
-        //die;
+        
         if((isset($response_body->error) && $response_body->error == '')){
           $TVC_Admin_Auto_Product_sync_Helper = new TVC_Admin_Auto_Product_sync_Helper();
           $TVC_Admin_Auto_Product_sync_Helper->update_last_sync_in_db();
@@ -1021,7 +754,7 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
           $subscriptionId = filter_input(INPUT_POST, 'subscriptionId');
           $data = filter_input(INPUT_POST, 'data');
           parse_str($data, $formArray);
-          //print_r($formArray); // Only for print array
+          // Only for print array
 
           $customDimension = [];
           $customMetrics = [];
@@ -1084,10 +817,7 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
             $response_message = wp_remote_retrieve_response_message($request);
             $response_body = json_decode(wp_remote_retrieve_body($request)); */
 
-//                 print_r($dimenResponse);
-//                 echo "=======";
-//                 print_r($metrResponse);
-//                 exit;
+
 
 
           if((isset($dimenResponse->error) && $dimenResponse->error == '' && isset($metrResponse->error) && $metrResponse->error == '')){
@@ -1104,12 +834,11 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
               $dimenError = '';
               $message = NULL;
               if($dimenResponse->errors){
-                  /* print_r($dimenResponse->errors); */
+                  
                   $dimenError = $dimenResponse->errors[0];
                   $message = str_replace('this entity', 'dimensions ', $dimenError);
               }
               if($metrResponse->errors){
-                  /* print_r($metrResponse->errors); */
                   $metrError = str_replace('this entity', 'metrics ', $metrResponse->errors[0]);
                   $message = is_null($message) ? $metrError : $message . ' ' . $metrError;
               }
@@ -1211,18 +940,8 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
           return $access_token;
       }
   }
-  public function woo_country(){
-      // The country/state
-      $store_raw_country = get_option('woocommerce_default_country');
-      // Split the country/state
-      $split_country = explode(":", $store_raw_country);
-      return $split_country;
-  }
 
 }
-
 // End of TVC_Ajax_File_Class
-
 endif;
-
 $tvcajax_file_class = new TVC_Ajax_File();

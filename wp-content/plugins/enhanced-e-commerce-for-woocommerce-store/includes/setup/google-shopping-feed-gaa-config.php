@@ -16,7 +16,7 @@ class GAAConfiguration {
     $this->subscriptionId = $this->TVC_Admin_Helper->get_subscriptionId(); 
     $this->country = $this->TVC_Admin_Helper->get_woo_country(); 
     $this->site_url = "admin.php?page=enhanced-ecommerce-google-analytics-admin-display&tab=";     
-    $this->url = $this->TVC_Admin_Helper->get_connect_url();       
+    $this->url = $this->TVC_Admin_Helper->get_connect_url();     
     $this->html_run();
   }
   public function includes() {
@@ -31,11 +31,10 @@ class GAAConfiguration {
   }    
 
   public function wooCommerceAttributes() {
-    $queries = new TVC_Queries();
     global $wpdb;
     $tve_table_prefix = $wpdb->prefix;
-    $column1 = json_decode(json_encode($queries->getTableColumns($tve_table_prefix.'posts')), true);
-    $column2 = json_decode(json_encode($queries->getTableData($tve_table_prefix.'postmeta', ['meta_key'])), true);
+    $column1 = json_decode(json_encode($this->TVC_Admin_Helper->getTableColumns($tve_table_prefix.'posts')), true);
+    $column2 = json_decode(json_encode($this->TVC_Admin_Helper->getTableData($tve_table_prefix.'postmeta', ['meta_key'])), true);
     return array_merge($column1, $column2);
   }
 
@@ -62,104 +61,102 @@ class GAAConfiguration {
         $googleDetail = $google_detail['setting'];
       }
     }?>
-<div class="container-fluid">
-	<div class="row">
-		<div class= "col col-12">
-			<div class="card mw-100" style="padding:0;">
-				<div class="card-body">
-	        <div class="tab-pane show active" id="googleShoppingFeed">
-	          <div class="row">
-	            <div class="col-md-6 col-lg-8 border-right">
-                <div class="configuration-section" id="config-pt1">
-                  <?php echo get_google_shopping_tabs_html($this->site_url,(isset($googleDetail->google_merchant_center_id))?$googleDetail->google_merchant_center_id:""); ?>
-                </div>
-	              <div class="mt-3" id="config-pt2">
-	                <div class="google-account-analytics" id="gaa-config">
-                    <div class="licence">
-                      <p>You are using our free plugin, no licence needed ! Happy analyzing..!! :)</p>
-                      <p>To unlock more features of google products, consider our <a href="https://codecanyon.net/item/actionable-google-analytics-for-woocommerce/9899552?utm_source=TatvicEE&utm_medium=DashboardBuyBottom&utm_campaign=WPlisting" target="_blank" class="text-underline">pro version.</a></p>
-                    </div>
-	                  <div class="row mb-3">
-                    <div class="col-6 col-md-6">
-                      <h2 class="ga-title">Connected Google Merchant center account:</h2>
-                    </div>
-                    <div class="col-6 col-md-3">
-                      <p class="ga-text"><?php echo (isset($googleDetail->google_merchant_center_id) && $googleDetail->google_merchant_center_id != '' ? $googleDetail->google_merchant_center_id : 'N/A'); ?></p>
-                    </div>
-                    <div class="col-6 col-md-3">
-                    <?php
-                    if(isset($googleDetail->google_merchant_center_id) && $googleDetail->google_merchant_center_id != ''){
-                      echo '<p class="ga-text text-right">Click here to <a target="_blank" href="' . $this->url . '" class="text-underline">update</a></p>';
-                    }else{
-                      echo '<p class="ga-text text-right">Click here to <a href="#" class="text-underline" data-toggle="modal" data-target="#tvc_google_connect">connect</a></p>';
-                    }?>
-                    </div>
-	                </div>
-	               <div class="row mb-3">
-                    <div class="col-6 col-md-6">
-                      <h2 class="ga-title">Linked Google Ads Account:</h2>
-                    </div>
-                    <div class="col-6 col-md-3">
-                     <p class="ga-text"><?php echo (isset($googleDetail->google_ads_id) && $googleDetail->google_ads_id != '' ? $googleDetail->google_ads_id : 'N/A');?></p>
-                    </div>
-                    <div class="col-6 col-md-3">
-                    <?php
-                    if (isset($googleDetail->google_ads_id) && $googleDetail->google_ads_id != '') {
-                      echo '<p class="ga-text text-right">Click here to <a target="_blank" href="' . $this->url . '" class="text-underline">update</a></p>';
-                    } else {
-                      echo '<p class="ga-text text-right">Click here to <a href="#"  data-toggle="modal" data-target="#tvc_google_connect" class="text-underline">connect</a></p>';
-                    } ?>
-                    </div>
-	                </div>
+<div class="tab-content">
+	<div class="tab-pane show active" id="googleShoppingFeed">
+    <div class="tab-card">
+      <div class="row">
+        <div class="col-md-6 col-lg-8 edit-section">
+          <div class="edit-header-section">           
+            <script>
+              var back_img = '<img src="<?php echo ENHANCAD_PLUGIN_URL.'/admin/images/icon/left-angle-arrow.svg'; ?>" alt="back"/>';
+              document.write('<a href="' + document.referrer + '" class="back-btn">'+back_img+'<span>Back</span></a>');
+            </script>
+          </div>
+          <div class="configuration-section" id="config-pt1">
+            <?php echo get_google_shopping_tabs_html($this->site_url,(isset($googleDetail->google_merchant_center_id))?$googleDetail->google_merchant_center_id:""); ?>
+          </div>
+          <div class="mt-3" id="config-pt2">
+            <div class="google-account-analytics" id="gaa-config">
+              <div class="row mb-3">
+              <div class="col-6 col-md-6 col-lg-6">
+                <h2 class="ga-title">Connected Google Merchant center account:</h2>
+              </div>
+              <div class="col-6 col-md-6 col-lg-6 text-right">
+                <div class="acc-num">
+                  <p class="ga-text"><?php echo ((isset($googleDetail->google_merchant_center_id) && $googleDetail->google_merchant_center_id != '') ? $googleDetail->google_merchant_center_id : '<span>Get started</span>'); ?></p>
                   <?php
-                  if (isset($googleDetail->google_merchant_center_id) && $googleDetail->google_merchant_center_id != '') {?>
-                  <div class="row mb-3">
-                    <div class="col-6 col-md-6">
-                      <h2 class="ga-title">Sync Products:</h2>
-                    </div>
-                    <div class="col-6 col-md-6">
-                      <button id="tvc_btn_product_sync" type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#syncProduct">Sync New Products</button>                        
-                    </div>
-	                </div>
-                  <div class="row mb-3">
-                    <div class="col-6 col-md-6">
-                      <h2 class="ga-title">Smart Shopping Campaigns:</h2>
-                    </div>
-                    <div class="col-6 col-md-6">
-                      <a href="admin.php?page=enhanced-ecommerce-google-analytics-admin-display&tab=add_campaign_page" class="btn btn-primary btn-success">Create Smart Shopping Campaign</a>
-                    </div>
-                  </div>
-                  <?php }else{ ?>
-                  <div class="row mb-3">
-                    <div class="col-6 col-md-6">
-                      <h2 class="ga-title">Sync Products:</h2>
-                    </div>
-                    <div class="col-6 col-md-6">                     
-                      <button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#tvc_google_connect">Sync New Products</button>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <div class="col-6 col-md-6">
-                      <h2 class="ga-title">Smart Shopping Campaigns:</h2>
-                    </div>
-                    <div class="col-6 col-md-6">
-                      <a href="#" class="btn btn-primary btn-success" data-toggle="modal" data-target="#tvc_google_connect">Create Smart Shopping Campaign</a>
-                    </div>
-                  </div>
-                  <?php } ?>
-                  </div>
+                    if(isset($googleDetail->google_merchant_center_id) && $googleDetail->google_merchant_center_id != ''){
+                      echo '<p class="ga-text text-right"><a target="_blank" href="' . $this->url . '" class="text-underline"><img src="'. ENHANCAD_PLUGIN_URL.'/admin/images/icon/refresh.svg" alt="refresh"/></a></p>';
+                    }else{
+                      echo '<p class="ga-text text-right"><a href="#" class="text-underline" data-toggle="modal" data-target="#tvc_google_connect"><img src="'. ENHANCAD_PLUGIN_URL.'/admin/images/icon/add.svg" alt="connect account"/></a></p>';
+                    }?>
                 </div>
               </div>
-              <div class="col-md-6 col-lg-4">
-                <div class="right-content"> <?php echo get_tvc_help_html(); ?></div>
+              
+            </div>
+           <div class="row mb-3">
+              <div class="col-6 col-md-6 col-lg-6">
+                <h2 class="ga-title">Linked Google Ads Account:</h2>
+              </div>
+              <div class="col-6 col-md-6 col-lg-6 text-right">
+                <div class="acc-num">
+                  <p class="ga-text"><?php echo (isset($googleDetail->google_ads_id) && $googleDetail->google_ads_id != '' ? $googleDetail->google_ads_id : '<span>Get started</span>');?></p>
+                  <?php
+                  if (isset($googleDetail->google_ads_id) && $googleDetail->google_ads_id != '') {
+                    echo '<p class="ga-text text-right"><a target="_blank" href="' . $this->url . '" class="text-underline"><img src="'. ENHANCAD_PLUGIN_URL.'/admin/images/icon/refresh.svg" alt="refresh"/></a></p>';
+                  } else {
+                    echo '<p class="ga-text text-right"><a href="#"  data-toggle="modal" data-target="#tvc_google_connect" class="text-underline"><img src="'. ENHANCAD_PLUGIN_URL.'/admin/images/icon/add.svg" alt="connect account"/></a></p>';
+                  } ?>
+                </div>
               </div>
             </div>
+            <?php
+            if (isset($googleDetail->google_merchant_center_id) && $googleDetail->google_merchant_center_id != '') {?>
+            <div class="row mb-3">
+              <div class="col-6 col-md-4">
+                <h2 class="ga-title">Sync Products:</h2>
+              </div>
+              <div class="col-6 col-md-4">
+                <button id="tvc_btn_product_sync" type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#syncProduct">Sync New Products</button>                        
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-6 col-md-4">
+                <h2 class="ga-title">Smart Shopping Campaigns:</h2>
+              </div>
+              <div class="col-6 col-md-6">
+                <a href="admin.php?page=enhanced-ecommerce-google-analytics-admin-display&tab=add_campaign_page" class="btn btn-primary btn-success">Create Smart Shopping Campaign</a>
+              </div>
+            </div>
+            <?php }else{ ?>
+            <div class="row mb-3">
+              <div class="col-6 col-md-4">
+                <h2 class="ga-title">Sync Products:</h2>
+              </div>
+              <div class="col-6 col-md-4">                     
+                <button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#tvc_google_connect">Sync New Products</button>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-6 col-md-4">
+                <h2 class="ga-title">Smart Shopping Campaigns:</h2>
+              </div>
+              <div class="col-6 col-md-6">
+                <a href="#" class="btn btn-primary btn-success" data-toggle="modal" data-target="#tvc_google_connect">Create Smart Shopping Campaign</a>
+              </div>
+            </div>
+            <?php } ?>
+            </div>
           </div>
-				</div>
-			</div>
-		</div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+           <?php echo get_tvc_help_html(); ?>
+        </div>
+      </div>
+    </div>
 	</div>
 </div>
+		
 <div class="modal fade popup-modal create-campa overlay" id="syncProduct" data-backdrop="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">      
@@ -205,8 +202,12 @@ class GAAConfiguration {
                   echo '<div class="row">
                     <div class="col-6 align-self-center">
                       <div class="form-group">
-                        <span class="td-head">' . $attribute["field"] . " " . (isset($attribute["required"]) && $attribute["required"] == 1 ? '<span style="color: red;"> *</span>' : "") . '</span> 
-                        <small class="form-label-control">' . (isset($attribute["desc"])? $attribute["desc"]:"") . '</small>
+                        <span class="td-head">' . $attribute["field"] . " " . (isset($attribute["required"]) && $attribute["required"] == 1 ? '<span style="color: red;"> *</span>' : "") . '
+                        <div class="tvc-tooltip">
+                          <span class="tvc-tooltiptext tvc-tooltip-right">'.(isset($attribute["desc"])? $attribute["desc"]:"") .'</span>
+                          <img src="'. ENHANCAD_PLUGIN_URL.'/admin/images/icon/informationI.svg" alt=""/>
+                        </div>
+                        </span>                       
                       </div>
                     </div>
                     <div class="col-6 align-self-center">
@@ -359,7 +360,7 @@ function submitProductSyncUp() {
             window.location.replace("<?php echo $this->site_url.'sync_product_page'; ?>");
           }, 7000);
       } else {
-        vc_helper.tvc_alert("error","",rsp.message);
+        tvc_helper.tvc_alert("error","",rsp.message);
       }
     }
   );

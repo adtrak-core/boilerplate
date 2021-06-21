@@ -8,8 +8,8 @@ Author: Tatvic
 Requires at least: 1.4.1
 Tested up to: 5.7
 Requires PHP: 5.6 or Higher
-Stable tag: 3.0.5
-Version: 3.0.5
+Stable tag: 3.1.1
+Version: 3.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -355,6 +355,16 @@ You can resolve the duplication of data by removing the manually implemented GA 
 
 
 == Changelog ==
+
+= 3.1.1 - 15/06/2021 =
+ * DB related bug fixed
+
+= 3.1.0 - 15/06/2021 =
+ * Enhanced user experience with new UI
+ * Earlier some users were able to see 25 products only on product sync dashboard, the issue is fixed now
+ * Added customized notifications to track the activty and functioning of plugin
+ * Added customer support number to quickly reach out to us for any query
+ * API performance enhancements
 
 = 3.0.5 - 12/04/2021 =
  * Add auto product sync feature enhancement - In the background, every month runs a process to sync the product, Run only those products who are completed the manual product sync.

@@ -15,7 +15,6 @@ if ( ! class_exists( 'Tatvic_Category_Wrapper' ) ) :
 		 */
 		public function category_table_content( $mode = 'normal' ) {
 			$shop_categories = TVC_Taxonomies::get_shop_categories_list();
-
 			return $this->category_rows( $shop_categories, 0, $mode );
 		}
 
@@ -42,8 +41,8 @@ if ( ! class_exists( 'Tatvic_Category_Wrapper' ) ) :
 			for ( $i = 0; $i < $category_depth_level; $i ++ ) {
 				$level_indicator .= '— ';
 			}
-
-			if ( $shop_categories ) {
+			
+			if (!empty((array)$shop_categories ) ) {
 				foreach ( $shop_categories as $category ) {
 
 					$category_children = $this->get_sub_categories( $category );
@@ -57,7 +56,6 @@ if ( ! class_exists( 'Tatvic_Category_Wrapper' ) ) :
 			} else {
 				$html_code .= esc_html__( 'No shop categories found.', 'tvc-product-feed-manager' );
 			}
-
 			return $html_code;
 		}
 

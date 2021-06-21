@@ -28,20 +28,10 @@ if ( ! class_exists( 'Tatvic_Category_Selector_Element' ) ) :
 			
 			$category_row_class = 'mapping' === $mode ? 'tvc-category-mapping-selector' : 'tvc-category-selector';
 			$mode_column  = 'mapping' === $mode ? self::category_mapping_selector( 'catmap', $category->term_id, true, $ee_prod_mapped_cats ) : self::category_description_data_item( $category->term_id );
-			//print_r($ee_prod_mapped_cats);
-			
-			// return '<tr id="category-' . $category->term_id . '"><th class="check-column" scope="row" id="shop-category-selector">
-			// 	<input class="' . $category_row_class . '" data-children="' . $category_children . '" id="feed-selector-' . $category->term_id . '"
-			// 	type="checkbox" value="' . $category->term_id . '" title="Select ' . $category->name . '">
-			// 	</th><td id="shop-category" class="col30w">' .
-			// 	$level_indicator . $category->name .
-			// 	'</td><td class="field-header col55w"><div id="feed-category-' . $category->term_id . '"></div>' .
-			// 	$mode_column . '</td>
-			// 	<td class="category-count col10w">' . $category->category_count . '</td></tr>';
 			return '<div class="row">
-	                <div class="col-6 align-self-center">
-	                    <div class="form-group" id="shop-category">
-	                        <label class="form-label-control">' .$level_indicator . $category->name .'</label>
+	                <div class="col-6">
+	                    <div class="form-group shop-category">
+	                        <label class="form-label-control">' . $category->name . ' '.$level_indicator .'</label>
 	                    </div>
 	                </div>
 	                <div class="col-6 align-self-center">

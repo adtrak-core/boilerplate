@@ -6,15 +6,18 @@ protected $TVC_Admin_Helper;
 protected $currentCustomerId;
 protected $subscriptionId;
 protected $country;
+protected $TVC_Admin_DB_Helper;
 public function __construct(){
 	$this->includes();
 	$this->TVC_Admin_Helper = new TVC_Admin_Helper();
+  $this->TVC_Admin_DB_Helper = new TVC_Admin_DB_Helper();
 	$this->merchantId = $this->TVC_Admin_Helper->get_merchantId();
 	$this->accountId = $this->TVC_Admin_Helper->get_main_merchantId();
 	$this->currentCustomerId = $this->TVC_Admin_Helper->get_currentCustomerId();
   $this->subscriptionId = $this->TVC_Admin_Helper->get_subscriptionId();       
   $this->country = $this->TVC_Admin_Helper->get_woo_country();
-  $this->site_url = "admin.php?page=enhanced-ecommerce-google-analytics-admin-display&tab="; 	
+  $this->site_url = "admin.php?page=enhanced-ecommerce-google-analytics-admin-display&tab=";
+  $this->TVC_Admin_Helper->need_auto_update_db(); 	
   $this->html_run();
 }
 
@@ -30,12 +33,11 @@ public function html_run(){
 }
 
 public function wooCommerceAttributes() {
-    $queries = new TVC_Queries();
-    global $wpdb;
-    $tve_table_prefix = $wpdb->prefix;
-    $column1 = json_decode(json_encode($queries->getTableColumns($tve_table_prefix.'posts')), true);
-    $column2 = json_decode(json_encode($queries->getTableData($tve_table_prefix.'postmeta', ['meta_key'])), true);
-    return array_merge($column1, $column2);
+  global $wpdb;
+  $tve_table_prefix = $wpdb->prefix;
+  $column1 = json_decode(json_encode($this->TVC_Admin_Helper->getTableColumns($tve_table_prefix.'posts')), true);
+  $column2 = json_decode(json_encode($this->TVC_Admin_Helper->getTableData($tve_table_prefix.'postmeta', ['meta_key'])), true);
+  return array_merge($column1, $column2);
 }
 
 public function create_form(){
@@ -64,11 +66,12 @@ public function create_form(){
       $syncProductStat = $google_detail['prod_sync_status'];
     }
   }
-  if(isset($google_detail['prod_sync_list'])){
+  /*if(isset($google_detail['prod_sync_list'])){
     if ($google_detail['prod_sync_list']) {
       $syncProductList = $google_detail['prod_sync_list'];
     }
-  }
+  }*/
+  $syncProductList = $this->TVC_Admin_DB_Helper->tvc_get_results("ee_products_sync_list");
 	if(isset($google_detail['setting'])){
     if ($google_detail['setting']) {
       $googleDetail = $google_detail['setting'];
@@ -83,130 +86,146 @@ public function create_form(){
     $last_api_sync_up = date( $date_formate, $google_detail['sync_time']);      
   }
   $is_need_to_update = $this->TVC_Admin_Helper->is_need_to_update_api_to_db();
+  $args = array('post_type' => 'product', 'post_status' => 'publish', 'posts_per_page' => -1);
+  $products = new WP_Query($args);
+  $woo_product = $products->found_posts;
 ?>
-<div class="container-fluid">
-	<div class="row">
-		<div class= "col col-12">
-			<div class="card mw-100" style="padding:0;">
-				<div class="card-body">
-	        <div class="tab-pane show active" id="googleShoppingFeed">
-	          <div class="row">
-	            <div class="col-md-6 col-lg-8 border-right">
-                <div class="configuration-section" id="config-pt1">
-                  <?php if($this->subscriptionId != ""){?>
-                  <div class="tvc-api-sunc">
-                    <span>
-                    <?php if($last_api_sync_up){
-                      echo "Details last synced at ".$last_api_sync_up; 
-                    }else{
-                      echo "Refresh sync up";
-                    }?></span><img id="refresh_api" onclick="call_tvc_api_sync_up();" src="<?php echo ENHANCAD_PLUGIN_URL.'/admin/images/refresh.png'; ?>">
+
+<div class="tab-content">
+	<div class="tab-pane show active" id="googleShoppingFeed">
+    <div class="tab-card">
+      <div class="row">
+        <div class="col-md-6 col-lg-8 edit-section">
+          <div class="edit-header-section">           
+            <script>
+              var back_img = '<img src="<?php echo ENHANCAD_PLUGIN_URL.'/admin/images/icon/left-angle-arrow.svg'; ?>" alt="back"/>';
+              document.write('<a href="' + document.referrer + '" class="back-btn">'+back_img+'<span>Back</span></a>');
+          </script>
+          </div>
+          <div class="configuration-section" id="config-pt1">
+            <?php if($this->subscriptionId != ""){?>
+            <div class="tvc-api-sunc">
+              <span>
+              <?php if($last_api_sync_up){
+                echo "Details last synced at ".$last_api_sync_up; 
+              }else{
+                echo "Refresh sync up";
+              }?></span><img id="refresh_api" onclick="call_tvc_api_sync_up();" src="<?php echo ENHANCAD_PLUGIN_URL.'/admin/images/refresh.png'; ?>">
+            </div>
+          <?php } ?>
+          <?php echo get_google_shopping_tabs_html($this->site_url,(isset($googleDetail->google_merchant_center_id))?$googleDetail->google_merchant_center_id:""); ?>                          
+          </div>
+          <div class="mt-3" id="config-pt2">
+            <div class="sync-new-product" id="sync-product">
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex justify-content-between ">
+                    <p class="mb-0 align-self-center product-title">Products in your Merchant Center account</p>
+                    <button id="tvc_btn_product_sync" class="btn btn-outline-primary align-self-center" data-toggle="modal" data-target="#syncProduct">Sync New Products</button>
                   </div>
-                <?php } ?>
-                <?php echo get_google_shopping_tabs_html($this->site_url,(isset($googleDetail->google_merchant_center_id))?$googleDetail->google_merchant_center_id:""); ?>                          
                 </div>
-	              <div class="mt-3" id="config-pt2">
-	                <div class="sync-new-product" id="sync-product">
-	                  <div class="row">
-                      <div class="col-12">
-                        <div class="d-flex justify-content-between ">
-                          <p class="mb-0 align-self-center">Products in your Merchant Center account</p>
-                          <button id="tvc_btn_product_sync" class="btn btn-primary btn-success align-self-center" data-toggle="modal" data-target="#syncProduct">Sync New Products</button>
-                          <a href="admin.php?page=enhanced-ecommerce-google-analytics-admin-display&amp;tab=add_campaign_page" class="btn btn-primary btn-success">Create Smart Shopping Campaign</a>
-                        </div>
+            	</div>
+              <?php
+              $sync_product_total = (property_exists($syncProductStat,"total")) ? $syncProductStat->total : "0";
+              $sync_product_approved = (property_exists($syncProductStat,"approved")) ? $syncProductStat->approved : "0";
+              $sync_product_disapproved = (property_exists($syncProductStat,"disapproved")) ? $syncProductStat->disapproved : "0";
+              $sync_product_pending = (property_exists($syncProductStat,"pending")) ? $syncProductStat->pending : "0"; ?>
+              <div class="product-card">
+                <div class="row row-cols-5">
+                    <div class="col">
+                      <div class="card">
+                        <h3 class="pro-count"><?php 
+                        echo (($woo_product) ? $woo_product : "0"); ?></h3>
+                        <p class="pro-title">Total Products</p>                      
                       </div>
-                  	</div>
-                    <div class="product-card">
-                      <div class="row">
-                        <div class="col-sm-6 col-lg-3">
-                          <div class="card">
-                            <h3 class="pro-title">Total Products</h3>
-                            <p class="pro-count"><?php 
-                            echo ((!empty($syncProductStat)) ? $syncProductStat->total : "0"); ?></p>
-                          </div>
-                        </div>
-                          <div class="col-sm-6 col-lg-3">
-                            <div class="card pending">
-                              <h3 class="pro-title">Pending Review</h3>
-                              <p class="pro-count">
-                              <?php echo (!empty($syncProductStat)) ? $syncProductStat->pending : "0";?></p>
-                            </div>
-                          </div>
-                          <div class="col-sm-6 col-lg-3">
-                            <div class="card approved">
-                              <h3 class="pro-title">Approved</h3>
-                              <p class="pro-count"><?php echo (!empty($syncProductStat)) ? $syncProductStat->approved : "0";?></p>
-                            </div>
-                          </div>
-                          <div class="col-sm-6 col-lg-3">
-                            <div class="card disapproved">
-                              <h3 class="pro-title">Disapproved</h3>
-                              <p class="pro-count"><?php
-                              echo (!empty($syncProductStat)) ? $syncProductStat->disapproved : "0"; ?></p>
-                            </div>
-                          </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <h3 class="pro-count"><?php 
+                        echo $sync_product_total ; ?></h3>
+                        <p class="pro-title">Sync Products</p>                      
                       </div>
-                		</div>
-	                  <div class="row">
-	                    <div class="col-12">
-	                      <div class="account-performance">
-	                        <div class="table-section">
-	                          <div class="table-responsive">
-	                            <table class="table" style="width:100%">
-	                            	<thead>
-	                              	<tr>
-	                                	<th></th>
-	                                	<th style="vertical-align: top;">Product</th>
-	                                	<th style="vertical-align: top;">Google status</th>
-	                                	<th style="vertical-align: top;">Issues</th>
-	                              	</tr>
-	                            	</thead>
-	                            	<tbody>
-	                            	<?php
-					                      if (isset($syncProductList) && count($syncProductList) > 0) {
-				                          foreach ($syncProductList as $skey => $sValue) {
-				                            echo '<tr><td class="product-image">
-					                            <img src="'.$sValue->imageLink.'" alt=""/></td>
-					                            <td>'.$sValue->name.'</td>
-					                            <td>'.$sValue->googleStatus.'</td>
-					                            <td>';
-					                            if (count($sValue->issues) > 0) {
-				                                $str = '';
-				                                foreach ($sValue->issues as $key => $issue) {
-				                                  if ($key <= 2) {
-				                                    ($key <= 1) ? $str .= $issue.", <br>" : "";
-				                                  }
-				                                    ($key == 3) ? $str .= "..." : "";      			
-				                                 }
-				                                 echo $str;
-				                              } else {
-					                              echo "---";
-					                            }
-					                            echo '</td></tr>';
-				                          }	
-	                              }else{
-	                                echo '<tr><td colspan="4">Record not found</td></tr>';
-	                              } ?>
-			                          </tbody>
-				                      </table>
-			                      </div>
-		                      </div>
-	                      </div>
-	                    </div>
-	                  </div>
-	              	</div>
-	  						</div>
-	      			</div>                            
-	            <div class="col-md-6 col-lg-4">
-	              <div class="right-content"> <?php echo get_tvc_help_html(); ?></div>
-	            </div>
-        		</div>
-    			</div>
-				</div>
-			</div>
+                    </div>
+                    <div class="col">
+                      <div class="card pending">
+                        <h3 class="pro-count">
+                        <?php echo $sync_product_pending;?></h3>
+                        <p class="pro-title">Pending Review</p>                        
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card approved">
+                        <h3 class="pro-count"><?php echo $sync_product_approved;?></h3>
+                        <p class="pro-title">Approved</p>                        
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card disapproved">
+                        <h3 class="pro-count"><?php
+                        echo $sync_product_disapproved; ?></h3>
+                        <p class="pro-title">Disapproved</p>                        
+                      </div>
+                    </div>
+                </div>
+          		</div>
+              <div class="total-products">                
+                  <div class="account-performance tvc-sync-product-list-wapper">
+                    <div class="table-section">
+                      <div class="table-responsive">
+                        <table id="tvc-sync-product-list" class="table table-striped" style="width:100%">
+                        	<thead>
+                          	<tr>
+                            	<th></th>
+                            	<th style="vertical-align: top;">Product</th>
+                            	<th style="vertical-align: top;">Google status</th>
+                            	<th style="vertical-align: top;">Issues</th>
+                          	</tr>
+                        	</thead>
+                        	<tbody>
+                        	<?php
+		                      if (isset($syncProductList) && count($syncProductList) > 0) {
+	                          foreach ($syncProductList as $skey => $sValue) {
+	                            echo '<tr><td class="product-image">
+		                            <img src="'.$sValue->image_link.'" alt=""/></td>
+		                            <td>'.$sValue->name.'</td>
+		                            <td>'.$sValue->google_status.'</td>
+		                            <td>';
+                                $p_issues = json_decode($sValue->issues);
+		                            if (count($p_issues) > 0) {
+	                                $str = '';
+	                                foreach ($p_issues as $key => $issue) {
+	                                  if ($key <= 2) {
+	                                    ($key <= 1) ? $str .= $issue.", <br>" : "";
+	                                  }
+	                                    ($key == 3) ? $str .= "..." : "";      			
+	                                 }
+	                                 echo $str;
+	                              } else {
+		                              echo "---";
+		                            }
+		                            echo '</td></tr>';
+	                          }	
+                          }else{
+                            echo '<tr><td colspan="4">Record not found</td></tr>';
+                          } ?>
+                          </tbody>
+	                      </table>
+                      </div>
+                    </div>
+                  </div>
+                
+              </div>
+          	</div>
+					</div>
+  			</div>                            
+        <div class="col-md-6 col-lg-4">
+          <?php echo get_tvc_help_html(); ?>
+        </div>
+  		</div>
 		</div>
 	</div>
 </div>
+		
 <div class="modal fade popup-modal create-campa overlay" id="syncProduct" data-backdrop="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">      
@@ -252,8 +271,12 @@ public function create_form(){
                   echo '<div class="row">
                     <div class="col-6 align-self-center">
                       <div class="form-group">
-                        <span class="td-head">' . $attribute["field"] . " " . (isset($attribute["required"]) && $attribute["required"] == 1 ? '<span style="color: red;"> *</span>' : "") . '</span> 
-                        <small class="form-label-control">' . (isset($attribute["desc"])? $attribute["desc"]:"") . '</small>
+                        <span class="td-head">' . $attribute["field"] . " " . (isset($attribute["required"]) && $attribute["required"] == 1 ? '<span style="color: red;"> *</span>' : "") . '
+                        <div class="tvc-tooltip">
+                          <span class="tvc-tooltiptext tvc-tooltip-right">'.(isset($attribute["desc"])? $attribute["desc"]:"") .'</span>
+                          <img src="'. ENHANCAD_PLUGIN_URL.'/admin/images/icon/informationI.svg" alt=""/>
+                        </div>
+                        </span>                       
                       </div>
                     </div>
                     <div class="col-6 align-self-center">
@@ -272,10 +295,10 @@ public function create_form(){
                           $sel_val = (isset($ee_mapped_attrs[$attribute["field"]]))?$ee_mapped_attrs[$attribute["field"]]:$sel_val_def;
                           echo $this->TVC_Admin_Helper->tvc_text($attribute["field"], 'number', '', 'Add TAX flat (%)', $sel_val, $require);
                         }else if($attribute["field"]=='content_language'){
-                          echo $this->TVC_Admin_Helper->tvc_language_select($attribute["field"], '', 'Please Select Attribute', 'en',$require);
+                          echo $this->TVC_Admin_Helper->tvc_language_select($attribute["field"], 'content_language', 'Please Select Attribute', 'en',$require);
                         }else if($attribute["field"]=='target_country'){
                           //$name, $class_id, bool $require = false
-                          echo $this->TVC_Admin_Helper->tvc_countries_select($attribute["field"], '', 'Please Select Attribute', $require);
+                          echo $this->TVC_Admin_Helper->tvc_countries_select($attribute["field"], 'target_country', 'Please Select Attribute', $require);
                         }else{
                           if(isset($attribute['fixed_options']) && $attribute['fixed_options'] !=""){
                             $tvc_select_option_t = explode(",", $attribute['fixed_options']);
@@ -284,13 +307,12 @@ public function create_form(){
                               $tvc_select_option[]['field'] = $o_val;
                             } 
                             $sel_val = $sel_val_def;
-                            $this->TVC_Admin_Helper->tvc_select($attribute["field"],'','Please Select Attribute', $sel_val, $require, $tvc_select_option);
+                            $this->TVC_Admin_Helper->tvc_select($attribute["field"],$attribute["field"],'Please Select Attribute', $sel_val, $require, $tvc_select_option);
                           }else{
                             $sel_val = (isset($ee_mapped_attrs[$attribute["field"]]))?$ee_mapped_attrs[$attribute["field"]]:$sel_val_def;
                           //$name, $class_id, $label="Please Select", $sel_val, $require, $option_list
-                          $this->TVC_Admin_Helper->tvc_select($attribute["field"],'','Please Select Attribute', $sel_val, $require, $tvc_select_option);
-                          }
-                          
+                          $this->TVC_Admin_Helper->tvc_select($attribute["field"],$attribute["field"],'Please Select Attribute', $sel_val, $require, $tvc_select_option);
+                          }                          
                         }
                       echo '</div>
                     </div>
@@ -312,12 +334,19 @@ if(isset($googleDetail->google_merchant_center_id) && $googleDetail->google_merc
 }?>
 <script type="text/javascript">
 $(document).ready(function() {
-  var is_need_to_update = "<?php echo $is_need_to_update; ?>";
+  //data table js
+  $('#tvc-sync-product-list').DataTable({
+    "ordering": false,
+    "scrollY": "600px",
+    "lengthMenu": [ 10, 20, 50, 100, 200 ]
+  });
+  //auto syncup call
+  var is_need_to_update = "<?php echo $is_need_to_update; ?>";  
   if(is_need_to_update == 1 || is_need_to_update == true){
-    tvc_helper.tvc_alert("error","Attention !","Auto-sync up is in the process do not refresh the page.");
+    //tvc_helper.tvc_alert("error","Attention !","Auto-sync up is in the process do not refresh the page.");
     call_tvc_api_sync_up();
   } 
-
+  //custom call for domain clain while product sync call
   $(document).on("click", "#tvc_btn_product_sync", function(event){
     var is_need_to_domain_claim = "<?php echo $is_need_to_domain_claim; ?>";
     if(is_need_to_domain_claim == 1 || is_need_to_domain_claim == true){
@@ -329,23 +358,27 @@ $(document).ready(function() {
         
       });
     }
-  });   
+  });
 });
+//Update syncup detail by ajax call
 function call_tvc_api_sync_up(){
   var tvs_this = $("#refresh_api");
   $("#tvc_msg").remove();
   $("#refresh_api").css("visibility","hidden");
   $(tvs_this).after('<div class="tvc-nb-spinner" id="tvc-nb-spinner"></div>');
+  tvc_helper.tvc_alert("error","Attention !","Sync up is in the process do not refresh the page. it may take few minutes, if GMC product sync count is large.");
   jQuery.post(myAjaxNonces.ajaxurl,{
     action: "tvc_call_api_sync",
     apiSyncupNonce: myAjaxNonces.apiSyncupNonce
   },function( response ){
     var rsp = JSON.parse(response);    
-    if(rsp.status == "success"){
+    if(rsp.error == false){
       $("#tvc-nb-spinner").remove();
-      tvc_helper.tvc_alert("success","",rsp.message,true);
-      setTimeout(function(){ location.reload();}, 5000);
-    }    
+      tvc_helper.tvc_alert("success","",rsp.message,true,2000);
+    }else{
+      tvc_helper.tvc_alert("error","",rsp.message,true,2000);
+    }
+    setTimeout(function(){ location.reload();}, 2000); 
   });
 }  
 
@@ -431,7 +464,7 @@ function submitProductSyncUp() {
             window.location.replace("<?php echo $this->site_url.'sync_product_page'; ?>");
           }, 7000);
       } else {
-        vc_helper.tvc_alert("error","",rsp.message);
+        tvc_helper.tvc_alert("error","",rsp.message);
       }
     }
   );

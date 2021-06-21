@@ -60,8 +60,6 @@ class CustomApi{
             // ));
             // $this->response = curl_exec($ch);
             // $this->response = json_decode($this->response);
-            // echo "<pre>";
-            // print_r($this->response);
             // die;
 
             $url = $this->apiDomain . '/plans/feature-list';
@@ -103,6 +101,10 @@ class CustomApi{
     public function getGoogleAnalyticDetail() {
         try {
             $url = $this->apiDomain . '/customer-subscriptions/subscription-detail';
+            $header = array(
+                "Authorization: Bearer ".$this->token,
+                "content-type: application/json"
+            );
             $ee_options_data = unserialize(get_option('ee_options'));
             if(isset($ee_options_data['subscription_id'])) {
                 $ee_subscription_id = $ee_options_data['subscription_id'];
@@ -114,22 +116,18 @@ class CustomApi{
                 'subscription_id' => $ee_subscription_id,
                 'domain' => $actual_link
             ];
-            $args = array(
-                'headers' => array(
-                    'Authorization' => "Bearer $this->token",
-                    'Content-Type' => 'application/json',
-                ),
-                'body' => wp_json_encode($data)
-            );
-            
-            $request = wp_remote_post($url, $args);
-
-            // Retrieve information
-            $response_code = wp_remote_retrieve_response_code($request);
-            $response_message = wp_remote_retrieve_response_message($request);
-            $response_body = json_decode(wp_remote_retrieve_body($request));
-            
-            if ((isset($response_body->error) && $response_body->error == '')) {
+            $postData = json_encode($data);
+            $ch = curl_init();
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 1000,
+                CURLOPT_HTTPHEADER => $header,
+                CURLOPT_POSTFIELDS => $postData
+            ));
+            $response = curl_exec($ch);
+            $response_body = json_decode($response);         
+            if((isset($response_body->error) && $response_body->error == '')) {
                 if ($response_body->data) {
                     $store_raw_country = get_option('woocommerce_default_country');
                     // Split the country/state
@@ -148,20 +146,31 @@ class CustomApi{
                     $GLOBALS['tatvicData']['refresh_token'] = $response_body->data->refresh_token;
                     $_SESSION['access_token'] = $response_body->data->access_token;
                     $_SESSION['refresh_token'] = $response_body->data->refresh_token;
-                    //exit;
-                                       
                 }
-
-                return new WP_REST_Response(
-                        array(
-                    'status' => $response_code,
-                    'message' => $response_message,
-                    'data' => $response_body->data
-                        )
-                );
-            } else {
-                return new WP_Error($response_code, $response_message, $response_body);
-            }
+                $return = new \stdClass();
+                if (isset($response_body->error) && $response_body->error == '') {
+                    $return->error = false;
+                    $return->data = $response_body->data;
+                    $return->message = $response_body->message;
+                    return $return;
+                } else {
+                    if (isset($response_body->data)) {
+                        $return->error = false;
+                        $return->data = $response_body->data;
+                        $return->message = $response_body->message;
+                    } else {
+                        $return->error = true;
+                        $return->data = [];
+                        if(isset($response_body->errors->key[0])){
+                            $return->message = $response_body->errors->key[0]; 
+                        }else{
+                            $return->message = "Please try after some time.";
+                        }
+                    }
+                    return $return;
+                }
+                //return (object) array( 'status' => $response_code, 'message' => $response_message, 'data' => $response_body->data );
+            } 
         } catch (Exception $e) {
             return $e->getMessage();
         }
@@ -204,14 +213,62 @@ class CustomApi{
             return $e->getMessage();
         }
     }
-
-    public function verifyLicenceKey($postData) {
+    public function active_licence_Key($licence_key, $subscription_id) {
         try {
-            $url = $this->apiDomain . '/licence/verify-key';
+            $header = array(
+                "Authorization: Bearer MTIzNA==",
+                "content-type: application/json"
+            );
+            $curl_url = $this->apiDomain . "/licence/activation";
+            $postData = [
+                'key' => $licence_key,
+                'domain' => get_site_url(),
+                'subscription_id'=>$subscription_id
+            ];
+            $postData = json_encode($postData);
+            $ch = curl_init();
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => esc_url($curl_url),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 1000,
+                CURLOPT_HTTPHEADER => $header,
+                CURLOPT_POSTFIELDS => $postData
+            ));
+            $response = curl_exec($ch);
+            $response = json_decode($response);
+            $return = new \stdClass();
+            if (isset($response->error) && $response->error == '') {
+                $return->error = false;
+                $return->data = $response->data;
+                $return->message = $response->message;
+                return $return;
+            } else {
+                if (isset($response->data)) {
+                    $return->error = false;
+                    $return->data = $response->data;
+                    $return->message = $response->message;
+                } else {
+                    $return->error = true;
+                    $return->data = [];
+                    if(isset($response->errors->key[0])){
+                        $return->message = $response->errors->key[0]; 
+                    }else{
+                        $return->message = "Check your entered licese key.";
+                    }  
 
+                }
+                return $return;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function verifyLicenceKey($licence_key, $subscription_id) {
+        try {
+            echo $url = $this->apiDomain . '/licence/verify-key';
             $data = [
-                'key' => $postData['licence_key'], //TEST-RHNZL-MT8YR-M555K-NFDE5
-                'domain' => $_SERVER['HTTP_HOST'],
+                'key' => $licence_key,
+                'domain' => get_site_url()
             ];
             $args = array(
                 'headers' => array(
@@ -221,23 +278,14 @@ class CustomApi{
                 'method' => 'POST',
                 'body' => wp_json_encode($data)
             );
-
             // Send remote request
             $request = wp_remote_post($url, $args);
-
             // Retrieve information
             $response_code = wp_remote_retrieve_response_code($request);
             $response_message = wp_remote_retrieve_response_message($request);
             $response_body = json_decode(wp_remote_retrieve_body($request));
             if ((isset($response_body->error) && $response_body->error == '')) {
-
-                return new WP_REST_Response(
-                        array(
-                    'status' => $response_code,
-                    'message' => $response_message,
-                    'data' => $response_body->data
-                        )
-                );
+                return new WP_REST_Response(array('status' => $response_code, 'message' => $response_message,'data' => $response_body->data ));
             } else {
                 return new WP_Error($response_code, $response_message, $response_body);
             }
@@ -323,7 +371,8 @@ class CustomApi{
     }
 
     public function getSyncProductList($postData) {
-        try {
+        try { 
+            $postData["maxResults"] = 100;
             $header = array(
                 "Authorization: Bearer MTIzNA==",
                 "content-type: application/json",
@@ -335,7 +384,7 @@ class CustomApi{
             curl_setopt_array($ch, array(
                 CURLOPT_URL => esc_url($curl_url),
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_TIMEOUT => 20,
+                CURLOPT_TIMEOUT => 1000,
                 CURLOPT_HTTPHEADER => $header,
                 CURLOPT_POSTFIELDS => $postData
             ));
@@ -357,32 +406,6 @@ class CustomApi{
                 }
                 return $return;
             }
-
-            // $url = $this->apiDomain . '/products/list';
-            // $args = array(
-            //     'headers' => array(
-            //         'Authorization' => "Bearer $this->token",
-            //         'Content-Type' => 'application/json'
-            //     ),
-            //     'body' => wp_json_encode($postData)
-            // );
-            // // Send remote request
-            // $request = wp_remote_post($url, $args);
-            // // Retrieve information
-            // $response_code = wp_remote_retrieve_response_code($request);
-            // $response_message = wp_remote_retrieve_response_message($request);
-            // $response_body = json_decode(wp_remote_retrieve_body($request));
-            // if ((isset($response_body->error) && $response_body->error == '')) {
-            //     return new WP_REST_Response(
-            //             array(
-            //         'status' => $response_code,
-            //         'message' => $response_message,
-            //         'data' => $response_body->data
-            //             )
-            //     );
-            // } else {
-            //     return new WP_Error($response_code, $response_message, $response_body);
-            // }
         } catch (Exception $e) {
             return $e->getMessage();
         }

@@ -11,7 +11,7 @@ class ShoppingApi {
         $this->customApiObj = new CustomApi();
         $this->customApiObj->getGoogleAnalyticDetail();
 
-        $queries = new TVC_Queries();
+        //$queries = new TVC_Queries();
         $this->apiDomain = TVC_API_CALL_URL;
         //$this->apiDomain = 'http://127.0.0.1:8000/api';
         $this->token = 'MTIzNA==';
@@ -37,7 +37,6 @@ class ShoppingApi {
 
             // Send remote request
             $request = wp_remote_post($url, $args);
-            //print_r($request);
             // Retrieve information
             $response_code = wp_remote_retrieve_response_code($request);
             $response_message = wp_remote_retrieve_response_message($request);
@@ -310,11 +309,10 @@ class ShoppingApi {
                 'body' => wp_json_encode($data)
             );
 
-            /* echo "<pre>";
-              print_r($args); */
+            
             // Send remote request
             $request = wp_remote_post($url, $args);
-            /* print_r($request); */
+            
 
             // Retrieve information
             $response_code = wp_remote_retrieve_response_code($request);
@@ -359,20 +357,16 @@ class ShoppingApi {
                 ),
                 'body' => wp_json_encode($data)
             );
-            /* echo "<pre>"; */
-            /* print_r($args); */
+             
+
             // Send remote request
             $request = wp_remote_post($url, $args);
-            /* print_r($request); */
-
+            
             // Retrieve information
             $response_code = wp_remote_retrieve_response_code($request);
             $response_message = wp_remote_retrieve_response_message($request);
             $response_body = json_decode(wp_remote_retrieve_body($request));
-//            echo "<pre>";
-//            print_r($response_message);
-//            print_r($response_body);
-//            exit;
+//            
             if (!is_wp_error($request) && (isset($response_body->error) && $response_body->error == '')) {
 //                return new WP_REST_Response(
 //                    array(
@@ -418,11 +412,10 @@ class ShoppingApi {
                 'body' => wp_json_encode($data)
             );
 
-            /* echo "<pre>";
-              print_r($args); */
+            
             // Send remote request
             $request = wp_remote_request($url, $args);
-            /* print_r($request); */
+            
 
             // Retrieve information
             $response_code = wp_remote_retrieve_response_code($request);

@@ -67,8 +67,8 @@ class Enhanced_Ecommerce_Google_Analytics {
      * @since    1.0.0
      */
     public function __construct() {
-        if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-            $this->version = PLUGIN_NAME_VERSION;
+        if ( defined( 'PLUGIN_TVC_VERSION' ) ) {
+            $this->version = PLUGIN_TVC_VERSION;
         } else {
             $this->version = '2.0';
         }
@@ -110,17 +110,10 @@ class Enhanced_Ecommerce_Google_Analytics {
          * of the plugin.
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-enhanced-ecommerce-google-analytics-i18n.php'; 
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-tvc-admin-db-helper.php';       
-        // Feed Manager Files
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/data/class-tvc-queries.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/data/class-tvc-file.php';        
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/user-interface/tvc-url-functions.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-tvc-admin-db-helper.php';
         
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/data/class-tvc-ajax-calls.php';
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/data/class-tvc-ajax-data.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/data/class-tvc-ajax-file.php';
-        
-        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/data/class-tvc-feed-crud-handler.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/data/class-tvc-taxonomies.php';
         
         require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-tvc-register-scripts.php';

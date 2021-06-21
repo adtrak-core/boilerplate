@@ -14,17 +14,12 @@ if ( ! class_exists( 'TVC_Register_Scripts' ) ) :
     class TVC_Register_Scripts {
         // @private storage of scripts version
         private $_version_stamp;
-        // @private register minified scripts
-        private $_js_min;
         public function __construct() {
-            $premium_version_nr   = TVC_EDD_SL_ITEM_NAME === 'Google Product Feed Manager' ? 'fr-' : 'pr-'; // prefix for version stamp depending on premium or free version
-            $action_level         = 2; // for future use
-            $this->_version_stamp = defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : $premium_version_nr . '1.0';
-            $this->_js_min        = defined( 'WP_DEBUG' ) && WP_DEBUG ? '' : '.min';
-            
+           $this->_version_stamp = defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : PLUGIN_TVC_VERSION;
+
             add_action( 'admin_enqueue_scripts', array( $this, 'tvc_register_required_nonce' ) );
             // only load the next hooks when on the Settings page
-            if ( tvc_on_plugins_settings_page() ) {
+            if ( isset($_GET['page']) && $_GET['page'] == 'enhanced-ecommerce-google-analytics-admin-display' ) {
                 add_action( 'admin_enqueue_scripts', array( $this, 'tvc_register_required_options_page_scripts' ) );
                 add_action( 'admin_enqueue_scripts', array( $this, 'tvc_register_required_options_page_nonce' ) );
             }
@@ -54,7 +49,7 @@ if ( ! class_exists( 'TVC_Register_Scripts' ) ) :
          */
         public function tvc_register_required_options_page_scripts() {
             // enqueue notice handling script
-            wp_enqueue_script( 'tvc_data-handling-script', ENHANCAD_PLUGIN_URL . '/includes/data/js/tvc_ajaxdatahandling' . $this->_js_min . '.js', array( 'jquery' ), $this->_version_stamp, true );
+            wp_enqueue_script( 'tvc_data-handling-script', ENHANCAD_PLUGIN_URL . '/includes/data/js/tvc_ajaxdatahandling.js', array( 'jquery' ), $this->_version_stamp, true );
         }
         /**
          * Generate the nonce's for the Settings page.
