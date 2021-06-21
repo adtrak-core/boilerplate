@@ -1,56 +1,53 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-trunk',
-    'version' => 'dev-trunk',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-trunk',
+        'version' => 'dev-trunk',
+        'type' => 'wordpress-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => '5267d0532574e451d5f12552b35c01b66099d58d',
+        'name' => 'woocommerce/woocommerce-blocks',
+        'dev' => false,
     ),
-    'reference' => 'e78f5855b8ec80e32b265081f2286250074298dc',
-    'name' => 'woocommerce/woocommerce-blocks',
-  ),
-  'versions' => 
-  array (
-    'automattic/jetpack-autoloader' => 
-    array (
-      'pretty_version' => '2.10.1',
-      'version' => '2.10.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '20393c4677765c3e737dcb5aee7a3f7b90dce4b3',
+    'versions' => array(
+        'automattic/jetpack-autoloader' => array(
+            'pretty_version' => '2.10.1',
+            'version' => '2.10.1.0',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/../automattic/jetpack-autoloader',
+            'aliases' => array(),
+            'reference' => '20393c4677765c3e737dcb5aee7a3f7b90dce4b3',
+            'dev_requirement' => false,
+        ),
+        'composer/installers' => array(
+            'pretty_version' => 'v1.10.0',
+            'version' => '1.10.0.0',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/./installers',
+            'aliases' => array(),
+            'reference' => '1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d',
+            'dev_requirement' => false,
+        ),
+        'roundcube/plugin-installer' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'shama/baton' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'woocommerce/woocommerce-blocks' => array(
+            'pretty_version' => 'dev-trunk',
+            'version' => 'dev-trunk',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => '5267d0532574e451d5f12552b35c01b66099d58d',
+            'dev_requirement' => false,
+        ),
     ),
-    'composer/installers' => 
-    array (
-      'pretty_version' => 'v1.10.0',
-      'version' => '1.10.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d',
-    ),
-    'roundcube/plugin-installer' => 
-    array (
-      'replaced' => 
-      array (
-        0 => '*',
-      ),
-    ),
-    'shama/baton' => 
-    array (
-      'replaced' => 
-      array (
-        0 => '*',
-      ),
-    ),
-    'woocommerce/woocommerce-blocks' => 
-    array (
-      'pretty_version' => 'dev-trunk',
-      'version' => 'dev-trunk',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'e78f5855b8ec80e32b265081f2286250074298dc',
-    ),
-  ),
 );
