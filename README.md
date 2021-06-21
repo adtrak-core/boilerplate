@@ -42,7 +42,7 @@
 12. Run ```npm install```
 13. Run ```composer install```
 14. Open ```gulpfile.js``` in the theme folder
-15. Edit line ~ ```113``` to the name of your local site. *(e.g. my-new-site.vm)*
+15. Edit line ~ ```174``` to the name of your local site. *(e.g. my-new-site.vm)*
 16. Save the ```gulpfile```
 17. Open ```_views/_layout/head.twig```in your theme folder
 18. Edit line ```12``` to the name of your local site. *(e.g. my-new-site.vm)*
