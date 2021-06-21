@@ -80,6 +80,7 @@ class wordfence {
 	private static $hitID = 0;
 	private static $debugOn = null;
 	private static $runInstallCalled = false;
+	private static $userDat = false;
 
 	const ATTACK_DATA_BODY_LIMIT=41943040; //40MB
 
@@ -2661,7 +2662,7 @@ SQL
 		$secEnabled = wfConfig::get('loginSecurityEnabled');
 		
 		$twoFactorUsers = wfConfig::get_ser('twoFactorUsers', array());
-		$userDat = (isset($_POST['wordfence_userDat']) ? $_POST['wordfence_userDat'] : false);
+		$userDat = self::$userDat;
 		
 		$checkBreachList = $secEnabled &&
 			!wfBlock::isWhitelisted($IP) &&
@@ -3432,7 +3433,7 @@ SQL
 				$user = get_user_by('ID', $userID);
 				$username = $user->user_login;
 				$passwd = $twoFactorNonce;
-				$_POST['wordfence_userDat'] = $user;
+				self::$userDat = $user;
 				return;
 			}
 		}
@@ -3446,7 +3447,7 @@ SQL
 			$userDat = get_user_by('email', $username);
 		}
 		
-		$_POST['wordfence_userDat'] = $userDat;
+		self::$userDat = $userDat;
 		if(preg_match(self::$passwordCodePattern, $passwd, $matches)){
 			$_POST['wordfence_authFactor'] = $matches[1];
 			$passwd = preg_replace('/^(.+)\s+wf([a-z0-9 ]+)$/i', '$1', $passwd);
@@ -3468,7 +3469,7 @@ SQL
 				$user = get_user_by('ID', $userID);
 				$username = $user->user_login;
 				$passwd = $twoFactorNonce;
-				$_POST['wordfence_userDat'] = $user;
+				self::$userDat = $user;
 				return;
 			}
 		}
@@ -3482,7 +3483,7 @@ SQL
 			$userDat = get_user_by('email', $username);
 		}
 		
-		$_POST['wordfence_userDat'] = $userDat;
+		self::$userDat = $userDat;
 		if(preg_match(self::$passwordCodePattern, $passwd, $matches)){
 			$_POST['wordfence_authFactor'] = $matches[1];
 			$passwd = preg_replace('/^(.+)\s+wf([a-z0-9 ]+)$/i', '$1', $passwd);
