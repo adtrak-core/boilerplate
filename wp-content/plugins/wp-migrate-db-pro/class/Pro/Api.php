@@ -43,18 +43,24 @@ class Api {
 	 *
 	 */
 	const DBRAINS_API_BASE = 'https://api.deliciousbrains.com';
+	/**
+	 * @var UsageTracking
+	 */
+	private $usage_tracking;
 
 	public function __construct(
 		Util $util,
 		Settings $settings,
 		ErrorLog $error_log,
-		Properties $properties
+		Properties $properties,
+		UsageTracking $usage_tracking
 	) {
 		$this->util            = $util;
 		$this->props           = $properties;
 		$this->settings        = $settings->get_settings();
 		$this->error_log       = $error_log;
 		$this->dbrains_api_url = self::$api_url = $this->get_dbrains_api_base() . '/?wc-api=delicious-brains';
+		$this->usage_tracking = $usage_tracking;
 	}
 
 	public static function get_api_url() {
@@ -71,7 +77,7 @@ class Api {
 
 		if ( 'check_support_access' === $request || 'activate_licence' === $request ) {
 			//@TODO refactor usage of Container here
-			$args['last_used'] = urlencode( Container::getInstance()->get( 'usage_tracking' )->get_last_usage_time() );
+			$args['last_used'] = urlencode( $this->usage_tracking->get_last_usage_time() );
 		}
 
 		$url = add_query_arg( $args, $url );
@@ -94,7 +100,7 @@ class Api {
 		$trans = get_site_transient( 'wpmdb_dbrains_api_down' );
 
 		if ( false !== $trans ) {
-			$api_down_message = sprintf( '<div class="updated warning inline-message">%s</div>', $trans );
+			$api_down_message = sprintf( '<div>%s</div>', $trans );
 
 			return json_encode( array( 'dbrains_api_down' => $api_down_message ) );
 		}
@@ -118,7 +124,7 @@ class Api {
 				$trans = get_site_transient( 'wpmdb_dbrains_api_down' );
 
 				if ( false !== $trans ) {
-					$api_down_message = sprintf( '<div class="updated warning inline-message">%s</div>', $trans );
+					$api_down_message = sprintf( '<div>%s</div>', $trans );
 
 					return json_encode( array( 'dbrains_api_down' => $api_down_message ) );
 				}

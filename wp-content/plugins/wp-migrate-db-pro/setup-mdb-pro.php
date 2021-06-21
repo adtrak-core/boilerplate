@@ -1,23 +1,29 @@
 <?php
 
+use DeliciousBrains\WPMDB\Pro\Cli\Export;
+use DeliciousBrains\WPMDB\WPMDBDI;
+
 
 /**
  * Populate the $wpmdbpro global with an instance of the WPMDBPro class and return it.
  *
  * @return WPMigrateDBPro|$wpmdbpro The one true global instance of the WPMDBPro class.
  */
-function wp_migrate_db_pro() {
-	// @TODO don't use globals to store instances of plugins
-	global $wpmdbpro;
+function wp_migrate_db_pro(){
+    // Load in front-end code
+    require_once __DIR__ . '/react-wp-scripts.php';
 
-	if ( ! is_null( $wpmdbpro ) ) {
-		return $wpmdbpro;
-	}
+    // @TODO don't use globals to store instances of plugins
+    global $wpmdbpro;
 
-	$wpmdbpro = new DeliciousBrains\WPMDB\Pro\WPMigrateDBPro( true );
-	$wpmdbpro->register();
+    if (!is_null($wpmdbpro)) {
+        return $wpmdbpro;
+    }
 
-	return $wpmdbpro;
+    $wpmdbpro = new DeliciousBrains\WPMDB\Pro\WPMigrateDBPro(true);
+    $wpmdbpro->register();
+
+    return $wpmdbpro;
 }
 
 function wpmdb_pro_cli_loaded() {
@@ -38,7 +44,7 @@ function wpmdb_pro_cli() {
 
 	do_action( 'wp_migrate_db_pro_cli_before_load' );
 
-	$wpmdbpro_cli = \DeliciousBrains\WPMDB\Container::getInstance()->get( 'cli_export' );
+	$wpmdbpro_cli = WPMDBDI::getInstance()->get( Export::class );
 
 	do_action( 'wp_migrate_db_pro_cli_after_load' );
 
@@ -82,8 +88,9 @@ function wp_migrate_db_pro_loaded() {
 		return true;
 	}
 
+	// @TODO revisit since we're reming is_admin()
 	// exit quickly unless: standalone admin; one of our AJAX calls
-	if ( ! is_admin() || ( is_multisite() && ! current_user_can( 'manage_network_options' ) && ! wpmdbpro_is_ajax() ) ) {
+	if ( ( is_multisite() && ! current_user_can( 'manage_network_options' ) && ! wpmdbpro_is_ajax() ) ) {
 		return false;
 	}
 	// Remove the compatibility plugin when the plugin is deactivated

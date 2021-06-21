@@ -4,257 +4,364 @@ namespace DeliciousBrains\WPMDBMF\CliCommand;
 
 use DeliciousBrains\WPMDB\Common\Cli\Cli;
 use DeliciousBrains\WPMDB\Common\Cli\CliManager;
+use DeliciousBrains\WPMDB\Common\Filesystem\Filesystem;
 use DeliciousBrains\WPMDB\Common\MigrationState\StateDataContainer;
 use DeliciousBrains\WPMDB\Common\Properties\Properties;
 use DeliciousBrains\WPMDB\Common\Util\Util;
-use DeliciousBrains\WPMDB\Container;
 use DeliciousBrains\WPMDB\Pro\Addon\Addon;
-use DeliciousBrains\WPMDB\Pro\UI\Template;
+use DeliciousBrains\WPMDB\WPMDBDI;
+use DeliciousBrains\WPMDBMF\MediaFilesLocal;
 
-class MediaFilesCli extends \DeliciousBrains\WPMDBMF\MediaFilesAddon {
+class MediaFilesCli extends \DeliciousBrains\WPMDBMF\MediaFilesAddon
+{
+    /**
+     * @var Cli
+     */
+    private $cli;
+    /**
+     * @var CliManager
+     */
+    private $cli_manager;
+    /**
+     * @var Util
+     */
+    protected $util;
+    /**
+     * @var StateDataContainer
+     */
+    private $state_data_container;
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
 
-	/**
-	 * @var Cli
-	 */
-	private $cli;
-	/**
-	 * @var CliManager
-	 */
-	private $cli_manager;
-	/**
-	 * @var Util
-	 */
-	protected $util;
-	/**
-	 * @var StateDataContainer
-	 */
-	private $state_data_container;
+    public function __construct(
+        Addon $addon,
+        Properties $properties,
+        Cli $cli,
+        CliManager $cli_manager,
+        Util $util,
+        StateDataContainer $state_data_container,
+        \DeliciousBrains\WPMDB\Pro\Transfers\Files\Util $transfers_util,
+        Filesystem $filesystem
+    ) {
+        parent::__construct(
+            $addon,
+            $properties,
+            $util,
+            $transfers_util,
+            $filesystem
+        );
 
-	public function __construct(
-		Addon $addon,
-		Properties $properties,
-		Template $template,
-		Cli $cli,
-		CliManager $cli_manager,
-		Util $util,
-		StateDataContainer $state_data_container
-	) {
-		parent::__construct(
-			$addon,
-			$properties,
-			$template
-		);
-		$this->cli                  = $cli;
-		$this->cli_manager          = $cli_manager;
-		$this->util                 = $util;
-		$this->state_data_container = $state_data_container;
-	}
+        $this->cli                  = $cli;
+        $this->cli_manager          = $cli_manager;
+        $this->util                 = $util;
+        $this->state_data_container = $state_data_container;
+        $this->filesystem           = $filesystem;
+    }
 
-	public function register() {
-		add_filter( 'wpmdb_pro_cli_finalize_migration', array( $this, 'cli_migration' ), 10, 5 );
-		$this->media_files_local = Container::getInstance()->get('media_files_addon_local');
-	}
+    public function register()
+    {
+        // Accepted profile fields exclusive to Media Files.
+        add_filter('wpmdb_accepted_profile_fields', [$this, 'accepted_profile_fields']);
 
-	/**
-	 * Run the media migration from the CLI
-	 *
-	 * @param bool  $outcome
-	 * @param array $profile
-	 * @param array $verify_connection_response
-	 * @param array $initiate_migration_response
-	 *
-	 * @return bool
-	 */
-	function cli_migration( $outcome, $profile, $verify_connection_response, $initiate_migration_response, $post_data ) {
-		$this->state_data_container->setData( $post_data );
+        // Announce extra args for Media Files.
+        add_filter('wpmdb_cli_filter_get_extra_args', [$this, 'filter_extra_args'], 10, 1);
 
-		if ( true !== $outcome ) {
-			return $outcome;
-		}
-		if ( empty( $profile['media_files'] ) ) {
-			return $outcome;
-		}
+        // Add extra args for Media Files migrations.
+        add_filter('wpmdb_cli_filter_get_profile_data_from_args', [$this, 'add_mf_profile_args'], 11, 3);
 
-		if ( ! isset( $verify_connection_response['media_files_max_file_uploads'] ) ) {
-			return $this->cli->cli_error( __( 'WP Migrate DB Pro Media Files does not seem to be installed/active on the remote website.', 'wp-migrate-db-pro-media-files' ) );
-		}
+        // Add the Media Files stage.
+        add_filter('wpmdb_cli_profile_before_migration', [$this, 'add_mf_stage']);
 
-		\WP_CLI::log( __( 'Initiating media migration...', 'wp-migrate-db-pro-media-files' ) );
+        // Initialize the CLI Migration.
+        add_filter('wpmdb_pro_cli_finalize_migration', [$this, 'cli_migration'], 10, 4);
 
-		$this->util->set_time_limit();
+        $this->media_files_local = WPMDBDI::getInstance()->get(MediaFilesLocal::class);
+    }
 
-		$this->cli_manager->set_cli_migration();
+    /**
+     * Checks if the current migration includes a Media Files migration.
+     *
+     * @param array $profile
+     *
+     * @return bool
+     */
+    public function is_mf_migration($profile)
+    {
+        if (!isset($profile['media_files']) || true !== $profile['media_files']['enabled']) {
+            return false;
+        }
 
-		$intent                      = $profile['action'];
-		$_POST['migration_state_id'] = $initiate_migration_response['migration_state_id'];
+        return true;
+    }
 
-		$media_type         = ( isset( $profile['media_migration_option'] ) ) ? $profile['media_migration_option'] : 'compare';
-		$copy_entire_media  = ( 'entire' === $media_type ) ? 1 : 0;
-		$remove_local_media = ( 'compare' === $media_type && isset( $profile['remove_local_media'] ) ) ? $profile['remove_local_media'] : 0;
-		if ( 'compare-remove' == $media_type ) {
-			$media_type         = 'compare';
-			$remove_local_media = 1;
-		}
+    /**
+     * Adds extra profile fields used by the Media Files addon.
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
+    public function accepted_profile_fields($fields)
+    {
+        $fields[] = 'exclude_media';
+        $fields[] = 'media_date';
 
-		// Set migration_state_id so migration state can be grabbed from the DB
-		$_POST['migration_state_id'] = $post_data['migration_state_id'];
+        return $fields;
+    }
 
-		// seems like this value needs to be different depending on pull/push?
-		$bottleneck = $this->util->get_bottleneck();
+    /**
+     * Add extra CLI args used by the Media Files addon.
+     * Hooks on: wpmdb_cli_filter_get_extra_args
+     *
+     * @param array $args
+     *
+     * @return array
+     */
+    public function filter_extra_args($args)
+    {
+        $args[] = 'media';
+        $args[] = 'exclude-media';
+        $args[] = 'media-date';
 
-		// if skipping comparison delete all files before migration
-		if ( 'entire' === $media_type ) {
-			do_action( 'wpmdb_cli_before_remove_files_recursive', $profile, $verify_connection_response, $initiate_migration_response );
-			\WP_CLI::log( $this->get_string( 'removing_all_files_' . $intent ) . '...' );
+        return $args;
+    }
 
-			$compare      = 0;
-			$offset       = 0;
-			$remove_files = 1;
+    /**
+     * Adds extra args for Media Files migrations.
+     * Hooks on: wpmdb_cli_filter_get_profile_data_from_args
+     *
+     * @param array $profile
+     * @param array $args
+     * @param array $assoc_args
+     *
+     * @return array|WP_Error
+     */
+    public function add_mf_profile_args($profile, $args, $assoc_args)
+    {
+        if (!isset($assoc_args['media'])) {
+            return $profile; // Not a media files migration.
+        }
 
-			while ( 1 == $remove_files ) {
-				$_POST['compare'] = $compare;
-				$_POST['offset']  = json_encode( $offset );
+        if (!in_array($assoc_args['media'], ['all', 'since-date'])) {
+            return $this->cli->cli_error(__('--media must be set to an acceptable value, see: wp help migratedb ' . $assoc_args['action'], 'wp-migrate-db-pro-media-files'));
+        }
 
-				$response = $this->media_files_local->ajax_remove_files_recursive();
-				if ( is_wp_error( $remove_files_recursive_response = $this->cli->verify_cli_response( $response, 'ajax_remove_files_recursive()' ) ) ) {
-					return $remove_files_recursive_response;
-				}
+        $media_files = [
+            'enabled'          => true,
+            'option'           => $assoc_args['media'],
+            'version_mismatch' => false,
+            'available'        => true,
+        ];
 
-				$remove_files = $remove_files_recursive_response['remove_files'];
-				$compare      = $remove_files_recursive_response['compare'];
-				$offset       = $remove_files_recursive_response['offset'];
-			} // END recursive removal of files
-		}
+        if ('since-date' === $assoc_args['media']) {
+            if (!isset($assoc_args['media-date'])) {
+                return $this->cli->cli_error(__('--media-date required when using --media=since-date, see: wp help migratedb ' . $assoc_args['action'], 'wp-migrate-db-pro-media-files'));
+            }
 
-		// start the recursive determine
-		do_action( 'wpmdb_cli_before_determine_media_to_migrate', $profile, $verify_connection_response, $initiate_migration_response );
+            $media_date = $assoc_args['media-date'];
+            $valid_date = false;
 
-		$response = $this->media_files_local->ajax_prepare_determine_media();
-		if ( is_wp_error( $prepare_media_to_migrate_response = $this->cli->verify_cli_response( $response, 'ajax_prepare_determine_media()' ) ) ) {
-			return $prepare_media_to_migrate_response;
-		}
+            if (preg_match('/^\d\d\d\d-\d\d-\d\d( \d\d:\d\d:\d\d)?$/', $media_date)) {
+                $mm         = substr($media_date, 5, 2);
+                $jj         = substr($media_date, 8, 2);
+                $aa         = substr($media_date, 0, 4);
+                $valid_date = wp_checkdate($mm, $jj, $aa, $media_date);
+            }
 
-		$attachment_batch_limit = $prepare_media_to_migrate_response['attachment_batch_limit'];
-		$remote_uploads_url     = $prepare_media_to_migrate_response['remote_uploads_url'];
-		$attachment_count       = $prepare_media_to_migrate_response['attachment_count'];
-		$blogs                  = $prepare_media_to_migrate_response['blogs'];
-		$determine_progress     = 0;
+            if (!$valid_date) {
+                return $this->cli->cli_error(__('--media-date parameter received an invalid date format, see wp help migratedb ' . $assoc_args['action'], 'wp-migrate-db-pro-media-files'));
+            }
 
-		// determine the media to migrate in batches
-		while ( $determine_progress < $attachment_count ) {
+            $media_files['date'] = $media_date;
+        }
 
-			$_POST['attachment_batch_limit'] = $attachment_batch_limit;
-			$_POST['remote_uploads_url']     = $remote_uploads_url;
-			$_POST['attachment_count']       = $attachment_count;
-			$_POST['blogs']                  = $blogs;
-			$_POST['determine_progress']     = $determine_progress;
-			$_POST['copy_entire_media']      = $copy_entire_media;
-			$_POST['remove_local_media']     = $remove_local_media;
+        if (!empty($assoc_args['exclude-media'])) {
+            $media_files['excludes'] = str_replace(',', "\n", $assoc_args['exclude-media']);
+        }
 
-			$response = $this->media_files_local->ajax_determine_media_to_migrate_recursive();
-			if ( is_wp_error( $determine_media_to_migrate_recursive_response = $this->cli->verify_cli_response( $response, 'ajax_determine_media_to_migrate_recursive_response()' ) ) ) {
-				return $determine_media_to_migrate_recursive_response;
-			}
+        $profile['media_files'] = $media_files;
 
-			$blogs              = $determine_media_to_migrate_recursive_response['blogs'];
-			$determine_progress = $determine_media_to_migrate_recursive_response['determine_progress'];
-			$total_size         = $determine_media_to_migrate_recursive_response['total_size'];
-			$files_to_migrate   = $determine_media_to_migrate_recursive_response['files_to_migrate'];
+        return $profile;
+    }
 
-			$percent = ( $determine_progress / $attachment_count ) * 100;
-			\WP_CLI::log( sprintf( $this->get_string( 'determining_progress' ), $determine_progress, $attachment_count, round( $percent ) ) );
+    /**
+     * Adds the Media Files stage to the current migration.
+     *
+     * @param array $profile
+     *
+     * @return array
+     */
+    public function add_mf_stage($profile)
+    {
+        if (is_wp_error($profile)) {
+            return $profile;
+        }
 
-			$total_files = count( $files_to_migrate );
-			if ( $total_files > 0 ) {
-				$migrate_bar = $this->make_progress_bar( sprintf( $this->get_string( 'migrate_media_files_cli_' . $intent ), 0, $total_files ), 0 );
-				$migrate_bar->setTotal( $total_size );
+        if ($this->is_mf_migration($profile)) {
+            $profile['current_migration']['stages'][] = 'media_files';
+        }
 
-				$current_file_index = 0;
+        return $profile;
+    }
 
-				// start the recursive migration of the files we have just determined
-				while ( ! empty( $files_to_migrate ) ) {
+    /**
+     * Gets the correct folder based on the migration type.
+     *
+     * @param array $profile
+     * @param array $post_data
+     *
+     * @return string
+     */
+    public function get_folder($profile, $post_data)
+    {
+        $site_details = json_decode($post_data['site_details'], true);
 
-					$file_chunk_to_migrate      = array();
-					$file_chunk_size            = 0;
-					$number_of_files_to_migrate = 0;
-					foreach ( $files_to_migrate as $file_to_migrate => $file_size ) {
-						if ( empty( $file_chunk_to_migrate ) ) {
-							$file_chunk_to_migrate[] = $file_to_migrate;
-							$file_chunk_size         += $file_size;
-							unset( $files_to_migrate[ $file_to_migrate ] );
-							++ $number_of_files_to_migrate;
-						} else {
-							if ( ( $file_chunk_size + $file_size ) > $bottleneck || $number_of_files_to_migrate >= $verify_connection_response['media_files_max_file_uploads'] ) {
-								break;
-							} else {
-								$file_chunk_to_migrate[] = $file_to_migrate;
-								$file_chunk_size         += $file_size;
-								unset( $files_to_migrate[ $file_to_migrate ] );
-								++ $number_of_files_to_migrate;
-							}
-						}
-					}
+        if ('push' === $profile['action']) {
+            $folder = $site_details['local']['uploads']['basedir'];
+        } else {
+            $folder = $site_details['remote']['uploads']['basedir'];
+        }
 
-					$current_file_index += $number_of_files_to_migrate;
-					$migrate_bar->setMessage( sprintf( $this->get_string( 'migrate_media_files_cli_' . $intent ), $current_file_index, $total_files ) );
+        return apply_filters('wpmdb_cli_media_files_folder', $folder);
+    }
 
-					$_POST['file_chunk'] = $file_chunk_to_migrate;
+    /**
+     * Initialize the MF stage.
+     *
+     * @param array $profile
+     * @param array $post_data
+     *
+     * @return array|WP_Error
+     */
+    public function initialize_mf_migration($profile, $post_data)
+    {
+        \WP_CLI::log(__('Initiating media migration...', 'wp-migrate-db-pro-media-files'));
 
-					do_action( 'wpmdb_media_files_cli_before_migrate_media' );
+        $date        = new \DateTime();
+        $tz          = $date->getTimezone();
+        $mf_options  = $profile['media_files'];
 
-					$response = $this->media_files_local->ajax_migrate_media();
-					if ( is_wp_error( $migrate_media_response = $this->cli->verify_cli_response( $response, 'ajax_migrate_media()' ) ) ) {
-						return $migrate_media_response;
-					}
+        $_POST = [
+            'action'             => $profile['action'],
+            'migration_state_id' => $profile['current_migration']['migration_id'],
+            'folder'             => $this->get_folder($profile, $post_data),
+            'date'               => null,
+            'timezone'           => $tz->getName(),
+            'stage'              => 'media_files',
+        ];
 
-					$migrate_bar->tick( $file_chunk_size );
-				} // END recursive media migration
+        if (!empty($mf_options['excludes'])) {
+            $_POST['excludes'] = json_encode($mf_options['excludes']);
+        }
 
-				// force migrate bar to show completion
-				$migrate_bar->setMessage( sprintf( $this->get_string( 'migrate_media_files_cli_' . $intent ), $total_files, $total_files ) );
-				$migrate_bar->finish();
-			}
-		} // END recursive media determine
+        if ('all' !== $mf_options['option'] && isset($mf_options['date'])) {
+            $_POST['date'] = $mf_options['date'];
+        }
 
-		// if removing local media not found on remote after comparison
-		if ( 1 == $remove_local_media ) {
-			// start recursive batch delete of local files not found on remote
-			do_action( 'wpmdb_cli_before_remove_files_not_found_recursive', $profile, $verify_connection_response, $initiate_migration_response );
-			\WP_CLI::log( $this->get_string( 'removing_files_' . $intent ) . '...' );
-			$compare      = 1;
-			$offset       = '';
-			$remove_files = 1;
-			while ( 1 == $remove_files ) {
-				$_POST['compare'] = $compare;
-				$_POST['offset']  = json_encode( $offset );
+        $response = $this->media_files_local->ajax_initiate_media_file_migration();
 
-				$response = $this->media_files_local->ajax_remove_files_recursive();
-				if ( is_wp_error( $remove_files_recursive_response = $this->cli->verify_cli_response( $response, 'ajax_remove_files_recursive()' ) ) ) {
-					return $remove_files_recursive_response;
-				}
+        return $this->cli->verify_cli_response($response, 'initialize_mf_migration()');
+    }
 
-				$remove_files = $remove_files_recursive_response['remove_files'];
-				$compare      = $remove_files_recursive_response['compare'];
-				$offset       = $remove_files_recursive_response['offset'];
-			} // END recursive removal of files
-		}
+    /**
+     * Transfers files during the MF stage.
+     *
+     * @param array $profile
+     * @param array $post_data
+     *
+     * @return array|WP_Error
+     */
+    public function mf_transfer_files($profile, $post_data)
+    {
+        $_POST = [
+            'action'             => $profile['action'],
+            'stage'              => 'media_files',
+            'migration_state_id' => $profile['current_migration']['migration_id'],
+        ];
 
-		return true;
-	}
+        $response = $this->media_files_local->ajax_mf_transfer_files();
 
-	/**
-	 * Like WP_CLI\Utils\make_progress_bar, but uses our own wrapper classes
-	 *
-	 * @param $message
-	 * @param $count
-	 *
-	 * @return MediaFilesCliBar|MediaFilesCliBarNoOp
-	 */
-	function make_progress_bar( $message, $count ) {
-		if ( method_exists( 'cli\Shell', 'isPiped' ) && \cli\Shell::isPiped() ) {
-			return new MediaFilesCliBarNoOp();
-		}
+        return $this->cli->verify_cli_response($response, 'tansfer_mf_files()');
+    }
 
-		return new  MediaFilesCliBar( $message, $count );
-	}
+    /**
+     * Run the media migration from the CLI.
+     *
+     * @param bool  $outcome
+     * @param array $profile
+     * @param array $verify_connection_response
+     * @param array $post_data
+     *
+     * @return bool|WP_Error
+     */
+    public function cli_migration($outcome, $profile, $verify_connection_response, $post_data)
+    {
+        if (true !== $outcome || !$this->is_mf_migration($profile)) {
+            return $outcome;
+        }
+
+        if (!isset($verify_connection_response['media_files_max_file_uploads'])) {
+            return $this->cli->cli_error(__('WP Migrate DB Pro Media Files does not seem to be installed/active on the remote website.', 'wp-migrate-db-pro-media-files'));
+        }
+
+        $intent = $profile['action'];
+
+        // Kick off the Media Files stage.
+        $mf_initialize_response = $this->initialize_mf_migration($profile, $post_data);
+        if (is_wp_error($mf_initialize_response)) {
+            return $mf_initialize_response;
+        }
+
+        $queue_status = $mf_initialize_response['queue_status'];
+        $total_size   = isset($queue_status['size']) ? (int) $queue_status['size'] : 0;
+
+        $migrate_bar = $this->make_progress_bar($this->get_string('migrate_media_files_' . $intent), 0);
+        $migrate_bar->setTotal($total_size);
+
+        $result = ['status' => 0];
+        while (!is_wp_error($result) && $result['status'] !== 'complete') {
+            // Delay between requests
+            do_action('wpmdb_media_files_cli_before_migrate_media');
+
+            // Migrate the files.
+            $result = $this->mf_transfer_files($profile, $post_data);
+
+            if (isset($result['status']['error'])) {
+                return new \WP_Error('wpmdb_cli_mf_migration_failed', $result['status']['message']);
+            }
+
+            $batch_size = is_array($result['status']) ? array_sum(array_column($result['status'], 'batch_size')) : 0;
+
+            // Update progress.
+            $migrate_bar->tick($batch_size);
+        }
+
+        if (is_wp_error($result)) {
+            return $result;
+        }
+
+        // Finish things up.
+        $migrate_bar->finish();
+
+        return true;
+    }
+
+    /**
+     * Like WP_CLI\Utils\make_progress_bar, but uses our own wrapper classes
+     *
+     * @param $message
+     * @param $count
+     *
+     * @return MediaFilesCliBar|MediaFilesCliBarNoOp
+     */
+    public function make_progress_bar($message, $count)
+    {
+        if (method_exists('cli\Shell', 'isPiped') && \cli\Shell::isPiped()) {
+            return new MediaFilesCliBarNoOp();
+        }
+
+        return new  MediaFilesCliBar($message, $count);
+    }
 }

@@ -191,14 +191,14 @@ class Receiver {
 	 * @return bool|null
 	 * @throws \Exception
 	 */
-	public function receive_post_data( $stage, $content ) {
+	public function receive_post_data( $state_data, $content ) {
 		try {
 			$stream = $this->payload->unpack_payload( $content );
 		} catch ( \Exception $e ) {
 			$this->util->catch_general_error( $e->getMessage() );
 		}
 
-		return $this->payload->process_payload( $stage, $stream );
+		return $this->payload->process_payload( $state_data, $stream );
 	}
 
 	/**
@@ -222,7 +222,7 @@ class Receiver {
 		stream_filter_prepend( $handle, 'zlib.inflate' );
 		rewind( $handle );
 
-		$meta = $this->payload->process_payload( $state_data['stage'], $handle, true );
+		$meta = $this->payload->process_payload( $state_data, $handle, true );
 
 		if ( ! $meta ) {
 			throw new \Exception( __( 'Unable to process payload.', 'wp-migrate-db' ) );

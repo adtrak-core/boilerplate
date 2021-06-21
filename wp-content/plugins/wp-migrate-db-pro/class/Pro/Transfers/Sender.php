@@ -80,20 +80,6 @@ class Sender {
 		exit;
 	}
 
-	protected function print_vars( $vars, $encode = true ) {
-		foreach ( $vars as $key => $val ) {
-			$this->print_var( $key, $val, $encode );
-		}
-	}
-
-	protected function print_var( $key, $val, $encode = true ) {
-		if ( $encode ) {
-			$key .= '-encoded';
-			$val = base64_encode( $val );
-		}
-		echo "[$key]$val\n";
-	}
-
 	protected function print_end() {
 		echo "\n" . static::$end_sig;
 	}

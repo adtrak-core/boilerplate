@@ -7,310 +7,354 @@ use DeliciousBrains\WPMDB\Common\Filesystem\Filesystem;
 use DeliciousBrains\WPMDB\Common\FormData\FormData;
 use DeliciousBrains\WPMDB\Common\Http\Helper;
 use DeliciousBrains\WPMDB\Common\Http\Http;
+use DeliciousBrains\WPMDB\Common\Http\WPMDBRestAPIServer;
+use DeliciousBrains\WPMDB\Common\MigrationPersistence\Persistence;
 use DeliciousBrains\WPMDB\Common\MigrationState\MigrationStateManager;
 use DeliciousBrains\WPMDB\Common\MigrationState\StateDataContainer;
 use DeliciousBrains\WPMDB\Common\Properties\DynamicProperties;
 use DeliciousBrains\WPMDB\Common\Properties\Properties;
 use DeliciousBrains\WPMDB\Common\Settings\Settings;
 use DeliciousBrains\WPMDB\Pro\UI\Template;
+use DeliciousBrains\WPMDB\WPMDBDI;
 
-class UsageTracking {
+class UsageTracking
+{
 
-	/**
-	 * @var StateDataContainer
-	 */
-	private $state_container;
-	/**
-	 * @var Settings
-	 */
-	private $settings;
-	/**
-	 * @var License
-	 */
-	private $license;
-	/**
-	 * @var Properties
-	 */
-	private $props;
-	/**
-	 * @var Filesystem
-	 */
-	private $filesystem;
-	/**
-	 * @var ErrorLog
-	 */
-	private $error_log;
-	/**
-	 * @var Template
-	 */
-	private $template;
+    /**
+     * @var StateDataContainer
+     */
+    private $state_container;
+    /**
+     * @var Settings
+     */
+    private $settings;
+    /**
+     * @var Properties
+     */
+    private $props;
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+    /**
+     * @var ErrorLog
+     */
+    private $error_log;
+    /**
+     * @var Template
+     */
+    private $template;
 
-	private $dynamic_props;
-	/**
-	 * @var FormData
-	 */
-	private $form_data;
-	/**
-	 * @var MigrationStateManager
-	 */
-	private $migration_state_manager;
-	/**
-	 * @var Http
-	 */
-	private $http;
+    private $dynamic_props;
+    /**
+     * @var FormData
+     */
+    private $form_data;
+    /**
+     * @var MigrationStateManager
+     */
+    private $migration_state_manager;
+    /**
+     * @var Http
+     */
+    private $http;
 
-	private $api_url;
-	/**
-	 * @var Helper
-	 */
-	private $http_helper;
+    private $api_url;
+    /**
+     * @var Helper
+     */
+    private $http_helper;
+    /**
+     * @var WPMDBRestAPIServer
+     */
+    private $rest_API_server;
 
-	public function __construct(
-		Settings $settings,
-		License $license,
-		Filesystem $filesystem,
-		ErrorLog $error_log,
-		Template $template,
-		FormData $form_data,
-		StateDataContainer $state_data_container,
-		Properties $properties,
-		MigrationStateManager $migration_state_manager,
-		Http $http,
-		Helper $http_helper
-	) {
+    public function __construct(
+        Settings $settings,
+        Filesystem $filesystem,
+        ErrorLog $error_log,
+        Template $template,
+        FormData $form_data,
+        StateDataContainer $state_data_container,
+        Properties $properties,
+        MigrationStateManager $migration_state_manager,
+        Http $http,
+        Helper $http_helper,
+        WPMDBRestAPIServer $rest_API_server
+    ) {
+        $this->state_container         = $state_data_container;
+        $this->settings                = $settings->get_settings();
+        $this->props                   = $properties;
+        $this->filesystem              = $filesystem;
+        $this->error_log               = $error_log;
+        $this->template                = $template;
+        $this->dynamic_props           = DynamicProperties::getInstance();
+        $this->form_data               = $form_data;
+        $this->migration_state_manager = $migration_state_manager;
+        $this->http                    = $http;
+        $this->http_helper             = $http_helper;
 
-		$this->state_container         = $state_data_container;
-		$this->settings                = $settings->get_settings();
-		$this->license                 = $license;
-		$this->props                   = $properties;
-		$this->filesystem              = $filesystem;
-		$this->error_log               = $error_log;
-		$this->template                = $template;
-		$this->dynamic_props           = DynamicProperties::getInstance();
-		$this->form_data               = $form_data;
-		$this->migration_state_manager = $migration_state_manager;
-		$this->http                    = $http;
-		$this->http_helper             = $http_helper;
+        $this->api_url         = apply_filters('wpmdb_logging_endpoint_url', 'https://api2.deliciousbrains.com');
+        $this->rest_API_server = $rest_API_server;
+    }
 
-		$this->api_url = apply_filters( 'wpmdb_logging_endpoint_url', 'https://api2.deliciousbrains.com' );
-	}
+    /**
+     * Adds/updates the `wpmdb_usage` option with most recent 'qualified' plugin use,
+     * stores time as well as the action (push/pull/export/find-replace)
+     *
+     * @param string $action
+     */
+    public static function log_usage($action = '')
+    {
+        update_site_option('wpmdb_usage', array('action' => $action, 'time' => time()));
+    }
 
-	/**
-	 * Adds/updates the `wpmdb_usage` option with most recent 'qualified' plugin use,
-	 * stores time as well as the action (push/pull/export/find-replace)
-	 *
-	 * @param string $action
-	 */
-	public static function log_usage( $action = '' ) {
-		update_site_option( 'wpmdb_usage', array( 'action' => $action, 'time' => time() ) );
-	}
+    /**
+     * Gets just the timestamp of the latest usage to send with the API requests
+     *
+     * @return int
+     */
+    public function get_last_usage_time()
+    {
+        $option = get_site_option('wpmdb_usage');
 
-	/**
-	 * Gets just the timestamp of the latest usage to send with the API requests
-	 *
-	 * @return int
-	 */
-	public function get_last_usage_time() {
-		$option = get_site_option( 'wpmdb_usage' );
+        return ($option && $option['time']) ? $option['time'] : 0;
+    }
 
-		return ( $option && $option['time'] ) ? $option['time'] : 0;
-	}
+    public function register()
+    {
+        add_action('wpmdb_additional_settings_advanced', array($this, 'template_toggle_usage_tracking'));
 
-	public function register() {
-		add_action( 'wpmdb_additional_settings_advanced', array( $this, 'template_toggle_usage_tracking' ) );
+        // REST endpoints
+        add_action('rest_api_init', [$this, 'register_rest_routes']);
+        add_action('wp_ajax_nopriv_wpmdb_track_migration_complete', [$this, 'send_migration_complete']);
+        add_action('wp_ajax_wpmdb_track_migration_complete', [$this, 'send_migration_complete']);
 
-		add_action( 'wp_ajax_wpmdb_maybe_collect_data', [ $this, 'log_migration_event' ] );
-		add_action( 'wp_ajax_wpmdb_track_migration_complete', [ $this, 'send_migration_complete' ] );
-		add_action( 'wp_ajax_nopriv_wpmdb_track_migration_complete', [ $this, 'send_migration_complete' ] );
+        add_filter('wpmdb_notification_strings', array($this, 'template_notice_enable_usage_tracking'));
+    }
 
-		if ( false !== $this->settings['allow_tracking'] ) {
-			add_action( 'wpmdb_notices', array( $this, 'template_notice_enable_usage_tracking' ) );
-		}
-	}
+    public function register_rest_routes()
+    {
+        $this->rest_API_server->registerRestRoute(
+            '/log-migration',
+            [
+                'methods'  => 'POST',
+                'callback' => [$this, 'log_migration_event'],
+            ]
+        );
 
-	public function send_migration_complete() {
-		if ( is_user_logged_in() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			$this->http->check_ajax_referer( 'send-migration-complete' );
-		}
-
-		$key_rules = array(
-			'action'             => 'key',
-			'migration_state_id' => 'key',
-		);
-
-		$state_data = $this->migration_state_manager->set_post_data( $key_rules );
-
-		//if not logged in
-		$filtered_post = $this->http_helper->filter_post_elements(
-			$state_data,
-			array(
-				'action',
-				'migration_state_id',
-			) );
+//        $this->rest_API_server->registerRestRoute(
+//            '/log-migration-complete',
+//            [
+//                'methods'  => 'POST',
+//                'callback' => [$this, 'send_migration_complete'],
+//            ]
+//        );
+    }
 
 
-		$settings = $this->settings;
+    public function send_migration_complete()
+    {
+        $this->http->check_ajax_referer('flush');
 
-		if ( true !== $settings['allow_tracking'] ) {
-			return false;
-		}
+        $key_rules = array(
+            'complete'     => 'bool',
+            'migration_id' => 'string',
+        );
 
-		$migration_guid = md5( $filtered_post['migration_state_id'] . $settings['licence'] );
+        $state_data = $this->migration_state_manager->set_post_data($key_rules);
 
-		$log_data = [
-			'migration_complete_time' => time(),
-			'migration_guid'          => $migration_guid,
-		];
+        $existing_state_data = Persistence::getStateData();
+        $state_data          += $existing_state_data;
+        //if not logged in
+        $filtered_post = $this->http_helper->filter_post_elements(
+            $state_data,
+            array(
+                'action',
+                'migration_state_id',
+            )
+        );
 
-		$remote_post_args = array(
-			'timeout' => 60,
-			'method'  => 'POST',
-			'headers' => array( 'Content-Type' => 'application/json' ),
-			'body'    => json_encode( $log_data ),
-		);
+        $settings = $this->settings;
 
-		$api_url = $this->api_url . '/complete';
+        if (true !== $settings['allow_tracking']) {
+            return false;
+        }
 
-		$result = wp_safe_remote_post( $api_url, $remote_post_args );
+        $migration_guid = $state_data['migration_id'];
 
-		if ( is_wp_error( $result ) || $result['response']['code'] >= 400 ) {
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				error_log( 'Error logging migration event' );
-				error_log( print_r( $result, true ) );
-			}
-			$this->error_log->log_error( 'Error logging Migration event', $result );
-			$this->http->end_ajax( json_encode( $result ) );
-		}
+        $log_data = [
+            'migration_complete_time' => time(),
+            'migration_guid'          => $migration_guid,
+        ];
 
-		$this->http->end_ajax( $result['body'] );
-	}
+        $remote_post_args = array(
+            'timeout'            => 60,
+            'method'             => 'POST',
+            'headers'            => array('Content-Type' => 'application/json'),
+            'body'               => json_encode($log_data),
+            'reject_unsafe_urls' => false,
+        );
 
-	public function log_migration_event() {
-		$this->http->check_ajax_referer( 'track-usage' );
+        $api_url = $this->api_url . '/complete';
 
-		$key_rules = array(
-			'action'             => 'key',
-			'migration_state_id' => 'key',
-		);
+        $result = wp_remote_post($api_url, $remote_post_args);
 
-		$state_data = $this->migration_state_manager->set_post_data( $key_rules );
+        if (is_wp_error($result) || $result['response']['code'] >= 400) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Error logging migration event');
+                error_log(print_r($result, true));
+            }
+            $this->error_log->log_error('Error logging Migration event', $result);
+            $this->http->end_ajax(json_encode($result));
+        }
 
-		$settings = $this->settings;
+        $this->http->end_ajax($result['body']);
+    }
 
-		if ( true !== $settings['allow_tracking'] ) {
-			return false;
-		}
+    public function log_migration_event()
+    {
+        $_POST   = $this->http_helper->convert_json_body_to_post();
+        $license = WPMDBDI::getInstance()->get(License::class);
 
-		$api_url = $this->api_url . '/event';
+        $license_key = $license->get_licence_key();
+        if (empty($license_key)) {
+            return;
+        }
 
-		$log_data = array(
-			'local_timestamp'                        => time(),
-			'licence_key'                            => $this->license->get_licence_key(),
-			'cli'                                    => $this->dynamic_props->doing_cli_migration,
-			'setting-compatibility_plugin_installed' => $this->filesystem->file_exists( $this->props->mu_plugin_dest ),
-		);
+        $key_rules = array(
+            'complete'     => 'bool',
+            'migration_id' => 'string',
+        );
 
-		foreach ( $this->form_data->parse_migration_form_data( $state_data['form_data'] ) as $key => $val ) {
-			if ( 'connection_info' === $key ) {
-				continue;
-			}
-			$log_data[ 'profile-' . $key ] = $val;
-		}
+        $state_data = $this->migration_state_manager->set_post_data($key_rules);
 
-		foreach ( $settings as $key => $val ) {
-			if ( 'profiles' === $key || 'key' === $key ) {
-				continue;
-			}
-			$log_data[ 'setting-' . $key ] = $val;
-		}
+        $existing_state_data = Persistence::getStateData();
+        $state_data          += $existing_state_data;
 
-		foreach ( $GLOBALS['wpmdb_meta'] as $plugin => $arr ) {
-			$log_data[ $plugin . '-active' ]  = true;
-			$log_data[ $plugin . '-version' ] = $arr['version'];
-		}
+        $settings = $this->settings;
 
-		foreach ( $state_data['site_details'] as $site => $info ) {
-			$log_data[ $site . '-site_url' ] = $info['site_url'];
-			$log_data[ $site . '-home_url' ] = $info['home_url'];
-			$log_data[ $site . '-prefix' ]   = $info['prefix'];
+        if (true !== $settings['allow_tracking']) {
+            return false;
+        }
 
-			$log_data[ $site . '-is_multisite' ] = $info['is_multisite'];
+        $api_url = $this->api_url . '/event';
 
-			if ( isset( $info['subsites'] ) && is_array( $info['subsites'] ) ) {
-				$log_data[ $site . '-subsite_count' ] = count( $info['subsites'] );
-			}
+        $log_data = array(
+            'local_timestamp'                        => time(),
+            'licence_key'                            => $license_key,
+            'cli'                                    => $this->dynamic_props->doing_cli_migration,
+            'setting-compatibility_plugin_installed' => $this->filesystem->file_exists($this->props->mu_plugin_dest),
+        );
 
-			$log_data[ $site . '-is_subdomain_install' ] = $info['is_subdomain_install'];
-		}
+        // ***+=== @TODO - revisit usage of parse_migration_form_data
+        foreach ($this->form_data->parse_and_save_migration_form_data($state_data['form_data']) as $key => $val) {
+            if ('connection_info' === $key) {
+                continue;
+            }
+            $log_data['profile-' . $key] = $val;
+        }
 
-		$diagnostic_log = [];
+        foreach ($settings as $key => $val) {
+            if ('profiles' === $key || 'key' === $key) {
+                continue;
+            }
+            $log_data['setting-' . $key] = $val;
+        }
 
-		foreach ( $this->error_log->get_diagnostic_info() as $group_name => $data ) {
-			foreach ( $data as $key => $val ) {
-				if ( 0 === $key ) {
-					continue 1;
-				}
-				$key_name = $group_name;
-				if ( is_string( $key ) ) {
-					$key_name .= "-{$key}";
-				}
-				$diagnostic_log[ $key_name ] = $val;
-			}
-		}
+        foreach ($GLOBALS['wpmdb_meta'] as $plugin => $arr) {
+            $log_data[$plugin . '-active']  = true;
+            $log_data[$plugin . '-version'] = $arr['version'];
+        }
 
-		$log_data['diagnostic_log'] = $diagnostic_log;
+        foreach ($state_data['site_details'] as $site => $info) {
+            $log_data[$site . '-site_url'] = $info['site_url'];
+            $log_data[$site . '-home_url'] = $info['home_url'];
+            $log_data[$site . '-prefix']   = $info['prefix'];
 
-		foreach ( $log_data as $key => $val ) {
-			if ( strstr( $key, 'count' ) || is_array( $val ) ) {
-				continue;
-			}
-			if ( '1' === $val ) {
-				$log_data[ $key ] = true;
-				continue;
-			}
-			if ( '0' === $val ) {
-				$log_data[ $key ] = false;
-				continue;
-			}
-			if ( 'true' === $val ) {
-				$log_data[ $key ] = true;
-				continue;
-			}
-			if ( 'false' === $val ) {
-				$log_data[ $key ] = false;
-				continue;
-			}
-		}
+            $log_data[$site . '-is_multisite'] = $info['is_multisite'];
 
-		$log_data['migration_guid'] = md5( $state_data['migration_state_id'] . $settings['licence'] );
+            if (isset($info['subsites']) && is_array($info['subsites'])) {
+                $log_data[$site . '-subsite_count'] = count($info['subsites']);
+            }
 
-		$remote_post_args = array(
-			'timeout' => 60,
-			'method'  => 'POST',
-			'headers' => array( 'Content-Type' => 'application/json' ),
-			'body'    => json_encode( $log_data ),
-		);
+            $log_data[$site . '-is_subdomain_install'] = $info['is_subdomain_install'];
+        }
 
-		$result = wp_safe_remote_post( $api_url, $remote_post_args );
-		if ( is_wp_error( $result ) || $result['response']['code'] >= 400 ) {
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				error_log( 'Error logging migration event' );
-				error_log( print_r( $result, true ) );
-			}
-			$this->error_log->log_error( 'Error logging Migration event', $result );
-			$this->http->end_ajax( json_encode( $result ) );
-		}
+        $diagnostic_log = [];
 
-		$this->http->end_ajax( $result['body'] );
-	}
+        foreach ($this->error_log->get_diagnostic_info() as $group_name => $data) {
+            foreach ($data as $key => $val) {
+                if (0 === $key) {
+                    continue 1;
+                }
+                $key_name = $group_name;
+                if (is_string($key)) {
+                    $key_name .= "-{$key}";
+                }
+                $diagnostic_log[$key_name] = $val;
+            }
+        }
 
-	public function template_notice_enable_usage_tracking() {
-		if ( 'boolean' !== gettype( $this->settings['allow_tracking'] ) ) {
-			$this->template->template( 'notice-enable-usage-tracking', 'pro' );
-		}
-	}
+        $log_data['diagnostic_log'] = $diagnostic_log;
 
-	public function template_toggle_usage_tracking() {
-		$this->template->template( 'toggle-usage-tracking', 'pro' );
-	}
+        foreach ($log_data as $key => $val) {
+            if (strpos($key, 'count') !== false || is_array($val)) {
+                continue;
+            }
+            if ('1' === $val) {
+                $log_data[$key] = true;
+                continue;
+            }
+            if ('0' === $val) {
+                $log_data[$key] = false;
+                continue;
+            }
+            if ('true' === $val) {
+                $log_data[$key] = true;
+                continue;
+            }
+            if ('false' === $val) {
+                $log_data[$key] = false;
+                continue;
+            }
+        }
+
+        $log_data['migration_guid'] = $state_data['migration_id'];
+
+        $remote_post_args = array(
+            'timeout'            => 60,
+            'method'             => 'POST',
+            'headers'            => array('Content-Type' => 'application/json'),
+            'body'               => json_encode($log_data),
+            'reject_unsafe_urls' => false,
+        );
+
+        $result = wp_remote_post($api_url, $remote_post_args);
+        if (is_wp_error($result) || $result['response']['code'] >= 400) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('Error logging migration event');
+                error_log(print_r($result, true));
+            }
+            $this->error_log->log_error('Error logging Migration event', $result);
+            $this->http->end_ajax(json_encode($result));
+        }
+
+        $this->http->end_ajax($result['body']);
+    }
+
+    public function template_notice_enable_usage_tracking($notifications)
+    {
+        if (!is_bool($this->settings['allow_tracking'])) {
+            $notifications['notice-enable-usage-tracking'] = [
+                'message'     => $this->template->template_to_string('notice-enable-usage-tracking', 'pro'),
+                'link'        => false,
+                'id'          => 'notice-enable-usage-tracking',
+                'custom_link' => 'usage_tracking',
+            ];
+        }
+
+        return $notifications;
+    }
+
 }

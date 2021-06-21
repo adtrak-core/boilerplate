@@ -2,10 +2,12 @@
 
 namespace DeliciousBrains\WPMDB\Pro\Cli;
 
-class Command extends \DeliciousBrains\WPMDB\Common\Cli\Command {
+class Command extends \DeliciousBrains\WPMDB\Common\Cli\Command
+{
 
-	public static function register() {
-		\WP_CLI::add_command( 'migratedb', 'DeliciousBrains\WPMDB\Pro\Cli\Command' );
+	public static function register()
+	{
+		\WP_CLI::add_command('migratedb', 'DeliciousBrains\WPMDB\Pro\Cli\Command');
 	}
 	/**
 	 * Export local DB to file.
@@ -72,8 +74,9 @@ class Command extends \DeliciousBrains\WPMDB\Common\Cli\Command {
 	 * @param array $args
 	 * @param array $assoc_args
 	 */
-	public function export( $args, $assoc_args ) {
-		parent::export( $args, $assoc_args );
+	public function export($args, $assoc_args)
+	{
+    		parent::export($args, $assoc_args);
 	}
 
 	/**
@@ -105,16 +108,6 @@ class Command extends \DeliciousBrains\WPMDB\Common\Cli\Command {
 	 * will run a find & replace on all tables in your database that begin with your
 	 * installation's table prefix, e.g. wp_.
 	 *
-	 * [--backup=<prefix|selected|table_one,table_two,table_etc>]
-	 * : Perform a backup of the destination site's database tables before replacing it.
-	 *
-	 *     Accepted values:
-	 *
-	 *     * prefix - Backup only tables that begin with your installation's
-	 *                table prefix (e.g. wp_)
-	 *     * selected - Backup only tables selected for migration (as in --include-tables)
-	 *     * A comma separated list of the tables to backup.
-	 *
 	 * [--exclude-post-types=<post-types>]
 	 * : A comma separated list of post types to exclude from the find & replace.
 	 * Excluding this parameter will run a find & replace on all post types.
@@ -143,7 +136,8 @@ class Command extends \DeliciousBrains\WPMDB\Common\Cli\Command {
 	 *
 	 * @subcommand find-replace
 	 */
-	public function find_replace( $args, $assoc_args ) {
-		parent::find_replace( $args, $assoc_args );
+	public function find_replace($args, $assoc_args)
+	{
+		parent::find_replace($args, $assoc_args);
 	}
 }
