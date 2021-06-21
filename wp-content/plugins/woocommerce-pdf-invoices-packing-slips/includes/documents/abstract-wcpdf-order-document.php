@@ -332,8 +332,8 @@ abstract class Order_Document {
 		if ( $this->get_type() == 'credit-note' ) {
 			$refund_id = $order->get_id();
 			$parent_order = wc_get_order( $order->get_parent_id() );
-		}
-		$note = $refund_id ? sprintf( __( '%s (refund #%s) was regenerated.', 'woocommerce-pdf-invoices-packing-slips' ), ucfirst( $this->get_title() ), $refund_id ) : sprintf( __( '%s was regenerated', 'woocommerce-pdf-invoices-packing-slips' ), ucfirst( $this->get_title() ) );
+		} /*translators: 1. credit note title, 2. refund id */
+		$note = $refund_id ? sprintf( __( '%1$s (refund #%2$s) was regenerated.', 'woocommerce-pdf-invoices-packing-slips' ), ucfirst( $this->get_title() ), $refund_id ) : sprintf( __( '%s was regenerated', 'woocommerce-pdf-invoices-packing-slips' ), ucfirst( $this->get_title() ) );
 		$parent_order ? $parent_order->add_order_note( $note ) : $order->add_order_note( $note );
 
 		do_action( 'wpo_wcpdf_regenerate_document', $this );
@@ -648,7 +648,11 @@ abstract class Order_Document {
 	 * Return/Show shop/company footer imprint, copyright etc.
 	 */
 	public function get_footer() {
-		return $this->get_settings_text( 'footer' );
+		ob_start();
+		do_action( 'wpo_wcpdf_before_footer', $this->get_type(), $this->order );
+		echo $this->get_settings_text( 'footer' );
+		do_action( 'wpo_wcpdf_after_footer', $this->get_type(), $this->order );
+		return ob_get_clean();
 	}
 	public function footer() {
 		echo $this->get_footer();

@@ -5,7 +5,7 @@ Tags: woocommerce, pdf, invoices, packing slips, print, delivery notes, invoice,
 Requires at least: 3.5
 Tested up to: 5.7
 Requires PHP: 7.1
-Stable tag: 2.8.3
+Stable tag: 2.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,20 @@ There's a setting on the Status tab of the settings page that allows you to togg
 6. Set shop name, address, header logo, etc.
 
 == Changelog ==
+
+= 2.9.0 =
+* New: Setting to log document generation time & context to order notes
+* New: template hooks 'wpo_wcpdf_before_footer' and 'wpo_wcpdf_after_footer'
+* New: Save and Cancel buttons for the Document Data metabox
+* Fix: Fallback to bundled fonts when temporary folder is not writable
+* Fix: empty first page under specific conditions
+* Fix: HTML line breaks and special characters in invoice notes
+* Fix: Allow setting document date prior to generating it
+* Fix: variable not set for filename
+* Fix: ensure unique filename in case order number or document number not accessible
+* Fix: Fallback if no template is selected
+* Translations: Added hints for translators, use numbered placeholders
+* Translations: Added Arabic (thanks to [Nabil Moqbel](https://profiles.wordpress.org/nabilmoqbel/))
 
 = 2.8.3 =
 * New: Allow filtering action button classes
