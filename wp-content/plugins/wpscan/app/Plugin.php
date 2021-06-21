@@ -14,10 +14,11 @@ defined( 'ABSPATH' ) || exit;
  */
 class Plugin {
 	// Settings.
-	public $OPT_API_TOKEN = 'wpscan_api_token';
+	public $OPT_API_TOKEN         = 'wpscan_api_token';
 	public $OPT_SCANNING_INTERVAL = 'wpscan_scanning_interval';
-	public $OPT_SCANNING_TIME = 'wpscan_scanning_time';
-	public $OPT_IGNORE_ITEMS = 'wpscan_ignore_items';
+	public $OPT_SCANNING_TIME     = 'wpscan_scanning_time';
+	public $OPT_IGNORE_ITEMS      = 'wpscan_ignore_items';
+	public $OPT_DISABLE_CHECKS    = 'wpscan_disable_security_checks';
 
 	// Account.
 	public $OPT_ACCOUNT_STATUS = 'wpscan_account_status';
@@ -554,18 +555,20 @@ class Plugin {
 		}
 
 		// Security checks.
-		$this->report['security-checks'] = array();
+		if ( get_option( $this->OPT_DISABLE_CHECKS, array() ) !== '1' ) {
+			$this->report['security-checks'] = array();
 
-		foreach ( $this->classes['checks/system']->checks as $id => $data ) {
-			$data['instance']->perform();
-			$this->report['security-checks'][ $id ]['vulnerabilities'] = array();
+			foreach ( $this->classes['checks/system']->checks as $id => $data ) {
+				$data['instance']->perform();
+				$this->report['security-checks'][ $id ]['vulnerabilities'] = array();
 
-			if ( $data['instance']->vulnerabilities ) {
-				$this->report['security-checks'][ $id ]['vulnerabilities'] = $data['instance']->get_vulnerabilities();
+				if ( $data['instance']->vulnerabilities ) {
+					$this->report['security-checks'][ $id ]['vulnerabilities'] = $data['instance']->get_vulnerabilities();
 
-				$this->maybe_fire_issue_found_action( 'security-check', $id, $this->report['security-checks'][ $id ] );
+					$this->maybe_fire_issue_found_action( 'security-check', $id, $this->report['security-checks'][ $id ] );
+				}
 			}
-		}
+	  }
 
 		// Caching.
 		$this->report['cache'] = strtotime( current_time( 'mysql' ) );

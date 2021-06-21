@@ -24,6 +24,7 @@ class System {
 
 	// Current running events.
 	public $current_running = '';
+
 	/**
 	 * A list of registered checks.
 	 *
@@ -159,50 +160,11 @@ class System {
 	}
 
 	/**
-	 * List vulnerabilities in the report.
-	 *
-	 * @param object $check - The check instance.
-	 *
-	 * @access public
-	 * @return string
-	 * @since 1.0.0
-	 *
-	 */
-	public function list_check_vulnerabilities( $instance ) {
-		$vulnerabilities = $instance->get_vulnerabilities();
-		$count           = $instance->get_vulnerabilities_count();
-		$ignored         = $this->parent->get_ignored_vulnerabilities();
-
-		$not_checked_text = __( 'Not checked yet. Click the Run button to run a scan', 'wpscan' );
-
-		if ( ! isset( $vulnerabilities ) ) {
-			echo esc_html( $not_checked_text );
-		} elseif ( empty( $vulnerabilities ) || 0 === $count ) {
-			echo esc_html( $instance->success_message() );
-		} else {
-			$list = array();
-
-			foreach ( $vulnerabilities as $item ) {
-				if ( in_array( $item['id'], $ignored, true ) ) {
-					continue;
-				}
-
-				$html  = "<div class='vulnerability'>";
-				$html .= "<span class='vulnerability-severity'>";
-				$html .= "<span class='wpscan-" . esc_attr( $item['severity'] ) . "'>" . esc_html( $item['severity'] ) ."</span>";
-				$html .= '</span>';
-				$html .= "<div class='vulnerability-title'>" . wp_kses( $item['title'], array( 'a' => array( 'href' => array() ) ) ) . '</div>';
-				$html .= "<div class='vulnerability-remediation'> <a href='" . $item['remediation_url'] . "' target='_blank'>Click here for further info</a></div>";
-				$html .= '</div>';
-				$list[] = $html;
-			}
-
-			echo join( '<br>', $list );
-		}
-	}
-
-	/**
 	 * Return vulnerabilities in the report.
+	 * 
+	 * This is very similar, but subtly different to
+	 *  Report->list_security_check_vulnerabilities().
+	 * Should see if they could be merged.
 	 *
 	 * @param object $check - The check instance.
 	 *

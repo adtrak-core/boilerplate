@@ -360,8 +360,7 @@ jQuery(document).ready(function ($) {
 
     const topTableBorder = is_wordpress_section ? 'WPTableLine' : 'tableLine';
 
-    // name
-
+    // Name
     table.table.body[1].push({
       text: 'Name',
       style: 'tableHeader',
@@ -369,7 +368,7 @@ jQuery(document).ready(function ($) {
     });
     table.table.widths.push(149);
 
-    // version
+    // Version
     if (!is_security_checks) {
       table.table.body[1].push({
         text: 'Version',
@@ -407,9 +406,9 @@ jQuery(document).ready(function ($) {
       .each(function () {
         let row = [];
 
-        // Item title
-        let itemTitle = $(this).find('.plugin-title strong').text().trim();
-
+        // Item name
+        let itemTitle = is_wordpress_section ? 'WordPress' : $(this).find('.plugin-title strong').text().trim();
+        
         if ($(this).find('.plugin-title .item-closed').length) {
           itemTitle =
             itemTitle +
@@ -425,12 +424,11 @@ jQuery(document).ready(function ($) {
         });
 
         // Item version
+        let itemVersion = is_wordpress_section ? $(this).find('#wordpress-version').text().trim() : $(this).find('.plugin-title .item-version span').text().trim();
+
         if (!is_security_checks) {
           row.push({
-            text: $(this)
-              .find('.plugin-title .item-version span')
-              .text()
-              .trim(),
+            text: itemVersion,
             style: 'resTable',
             borderColor,
           });
@@ -450,19 +448,20 @@ jQuery(document).ready(function ($) {
             .find('.vulnerabilities .vulnerability')
             .each(function () {
               let item = $(this).clone();
-              let linkText =
-                item.find('.vulnerability-severity span').text().trim() + ' - ';
-              item.find('.vulnerability-severity span').remove();
-              linkText = linkText + item.text().trim();
-              linkText = linkText.charAt(0).toUpperCase() + linkText.slice(1);
+              let title     = item.find('.vulnerability-title').text().trim();
+              let status    = item.find('.vulnerability-status').text().trim();
+              let severity  = item.find('.vulnerability-severity span').text().trim();
+              let link_text = item.find('.vulnerability-link').text().trim();
+              let link_href = item.find('.vulnerability-link a').attr('href');
 
-              col.stack.push({
-                text: linkText,
-                link: $(this).attr('href'),
-                style: 'resTable',
-                lineHeight: 2,
-                borderColor,
-              });
+              let vulnerability_text = [
+                { text: title, style: 'resTable' },
+                { text: status, style: 'resTable' },
+                { text: severity.charAt(0).toUpperCase() + severity.slice(1), style: 'resTable' },
+                { text: link_text, link: link_href, style: 'resTable' }
+              ]
+
+              col.stack.push( vulnerability_text );
             });
 
           row.push(col);
@@ -478,7 +477,7 @@ jQuery(document).ready(function ($) {
         table.table.body.push(row);
       });
 
-    // push the table
+    // Push the table
     is_wordpress_section
       ? wpscanReport.content.push(wordpressTable)
       : wpscanReport.content.push(mainTable);

@@ -50,11 +50,8 @@
               <tr>
                 <th scope="row" class="check-column" style="text-align: center">
                   <?php echo $this->get_status( 'wordpress', get_bloginfo( 'version' ) ) ?></th>
-                <td class="plugin-title column-primary">
-                  <strong>WordPress</strong> 
-                  <span class='item-version'>
-                    <?php echo sprintf( __( 'Version <span>%s</span>', 'wpscan' ), get_bloginfo( 'version' ) ) ?>
-                  </span>
+                <td class="wordpress-title column-primary">
+                  <strong>WordPress <span id="wordpress-version"><?php echo get_bloginfo( 'version' ) ?></span></strong> 
                 </td>
                 <td class="vulnerabilities">
                   <?php 
@@ -93,7 +90,7 @@
                   </th>
                   
                   <td class="plugin-title column-primary">
-                    <strong><?php echo esc_html($details['Name']) ?></strong>
+                    <strong><?php echo esc_html( $details['Name'] ) ?></strong>
                     <span class='item-version'>
                       <?php echo sprintf( __( 'Version <span>%s</span>', 'wpscan' ), esc_html($details['Version']) ) ?>
                     </span>
@@ -162,41 +159,45 @@
 
           </div>
 
-          <div class="wpscan-report-section security-checks">
-            <h3><?php _e('Security Checks', 'wpscan') ?></h3>
+          <?php if ( get_option( $this->parent->OPT_DISABLE_CHECKS, array() ) !== '1' ) { ?>
 
-            <table class="wp-list-table widefat striped plugins">
-                <thead>
-                    <tr>
-                        <td scope="col" class="manage-column check-column"></td>
-                        <th scope="col" class="manage-column column-name column-primary"><?php _e('Name', 'wpscan') ?></th>
-                        <th scope="col" class="manage-column column-description"><?php _e('Result', 'wpscan') ?></th>
-                        <th scope="col" class="manage-column column-description"><?php _e('Actions', 'wpscan') ?></th>
-                    </tr>
-                </thead>
-                <tbody id="report-themes">
-                    <?php foreach ( $this->parent->classes['checks/system']->checks as $id => $data ) : ?>
-                        <tr>
-                            <th scope="row" class="check-column" style="text-align: center">
-                              <?php echo $this->get_status('security-checks', $id) ?></th>
-                            </th>
-                            <td class="plugin-title column-primary">
-                                <strong title="<?php echo esc_attr($data['instance']->description()) ?>">
-                                  <?php echo esc_html($data['instance']->title()) ?>
-                                </strong>
-                            </td>
-                            <td class="vulnerabilities">
-                              <?php $this->parent->classes['checks/system']->list_check_vulnerabilities( $data['instance'] ) ?>
-                            </td>
-                            <td class="security-check-actions">
-                                <?php $this->parent->classes['checks/system']->list_actions($data['instance']) ?>
-                                <span class="spinner"></span>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-          </div>
+            <div class="wpscan-report-section security-checks">
+              <h3><?php _e('Security Checks', 'wpscan') ?></h3>
+
+              <table class="wp-list-table widefat striped plugins">
+                  <thead>
+                      <tr>
+                          <td scope="col" class="manage-column check-column"></td>
+                          <th scope="col" class="manage-column column-name column-primary"><?php _e('Name', 'wpscan') ?></th>
+                          <th scope="col" class="manage-column column-description"><?php _e('Result', 'wpscan') ?></th>
+                          <th scope="col" class="manage-column column-description"><?php _e('Actions', 'wpscan') ?></th>
+                      </tr>
+                  </thead>
+                  <tbody id="report-themes">
+                      <?php foreach ( $this->parent->classes['checks/system']->checks as $id => $data ) : ?>
+                          <tr>
+                              <th scope="row" class="check-column" style="text-align: center">
+                                <?php echo $this->get_status('security-checks', $id) ?></th>
+                              </th>
+                              <td class="plugin-title column-primary">
+                                  <strong title="<?php echo esc_attr($data['instance']->description()) ?>">
+                                    <?php echo esc_html( $data['instance']->title() ) ?>
+                                  </strong>
+                              </td>
+                              <td class="vulnerabilities">
+                                <?php $this->list_security_check_vulnerabilities( $data['instance'] ) ?>
+                              </td>
+                              <td class="security-check-actions">
+                                  <?php $this->parent->classes['checks/system']->list_actions($data['instance']) ?>
+                                  <span class="spinner"></span>
+                              </td>
+                          </tr>
+                      <?php endforeach; ?>
+                  </tbody>
+              </table>
+            </div>
+
+        <?php } ?>
         
           <?php if ( get_option( $this->parent->OPT_API_TOKEN ) ) { ?>
             <a href="#" class='button button-secondary download-report'><?php _e( 'Download as PDF', 'wpscan' ) ?></a>

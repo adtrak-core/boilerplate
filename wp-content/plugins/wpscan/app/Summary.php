@@ -25,7 +25,11 @@ class Summary {
 
 		add_action( 'admin_init', array( $this, 'add_meta_box_summary' ) );
 		add_action( 'wp_ajax_wpscan_check_now', array( $this, 'ajax_check_now' ) );
-		add_action( 'wp_ajax_wpscan_security_check_now', array( $this, 'ajax_security_check_now' ) );
+
+		if ( get_option( $this->parent->OPT_DISABLE_CHECKS, array() ) !== '1' ) {
+		  add_action( 'wp_ajax_wpscan_security_check_now', array( $this, 'ajax_security_check_now' ) );
+		}
+
 		add_action( 'wp_ajax_' . $this->parent->WPSCAN_TRANSIENT_CRON, array( $this, 'ajax_doing_cron' ) );
 	}
 
@@ -161,7 +165,7 @@ class Summary {
 	}
 
 	/**
-	 * Ajax scurity check now
+	 * Ajax security check now
 	 *
 	 * @return void
 	 * @since 1.0.0
