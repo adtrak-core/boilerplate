@@ -125,7 +125,6 @@ You can access the primary, secondary & tertiary colours by using classes as fol
 |-----------|-----------------|----------------|
 | primary   | primary-light   | primary-dark   |
 | secondary | secondary-light | secondary-dark |
-| tertiary  | tertiary-light  | tertiary-darkk |
 
 
 Feel free to add your own extensions.
