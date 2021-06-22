@@ -68,7 +68,6 @@ module.exports = {
     padding: ['responsive', 'group-hover', 'hover', 'focus', 'group-focus'],
   },
   plugins: [
-    require("tailwindcss-filters"), // https://github.com/benface/tailwindcss-filters
     require('@tailwindcss/forms'),
   ],
   corePlugins: {
