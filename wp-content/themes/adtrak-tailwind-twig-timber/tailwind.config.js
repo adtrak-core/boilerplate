@@ -1,23 +1,7 @@
 module.exports = {
+  mode: 'jit',
   purge: {
-    content: ["./_views/**/*.twig"],
-    // These options are passed through directly to PurgeCSS
-    options: {
-      safelist: [
-        /^wp/,
-        /^ld-/,
-        "textarea",
-        "closed",
-        "open",        
-        'sub-menu',
-        "sub-arrow",
-        "show-arrow",
-        'mob-nav--active',
-        'mob-nav-underlay',
-        'mob-nav-close',
-        "current-page-ancestor"
-      ],
-    },
+      content: ["./_views/**/*.twig"],
   },
   theme: {
     screens: {
