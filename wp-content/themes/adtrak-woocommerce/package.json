@@ -43,7 +43,7 @@
     "postcss-import": "^13.0.0",
     "postcss-simple-vars": "^6.0.1",
     "rollup": "^2.10.4",
-    "tailwindcss": "^2.0.1",
+    "tailwindcss": "^2.2.2",
     "tailwindcss-filters": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",

@@ -1,6 +1,8 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 
+@import "tailwindcss/utilities";
+
 @import   'partials/core.css';
 @import   'partials/buttons.css';
 @import   'partials/cookies.css';
@@ -22,5 +24,3 @@
 
 /* Extra Add On Content Normalize */
 @import 'woocommerce/subscriptions.css';
-
-@import "tailwindcss/utilities";

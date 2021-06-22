@@ -5,12 +5,7 @@ input,
 textarea,
 select {
     @apply
-    w-full px-4 py-3 text-sm text-gray-900 bg-white border border-gray-300 border-solid;
-
-    @screen sm {
-        @apply
-        px-6;
-    }
+    w-full px-4 py-3 text-sm text-gray-900 bg-white border border-gray-300 border-solid sm:px-6;
 
     &[aria-invalid="true"] {
         background-color: #f3e2e2;

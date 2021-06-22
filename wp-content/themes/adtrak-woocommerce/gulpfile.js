@@ -158,7 +158,7 @@ jsFiles.forEach(function(script){
  * Task Watch
  **************************/
 gulp.task("watch", () => {
-  gulp.watch(`_resources/styles/**/*.css`, gulp.series("styles"));
+  gulp.watch(['_resources/styles/**/*.css', '_views/**/*.twig'], gulp.series("styles"));
   gulp.watch(`_resources/js/core/*.js`, gulp.series("core-scripts"));
   
   jsFiles.forEach(function(script){
