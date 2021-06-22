@@ -2,6 +2,18 @@ module.exports = {
   mode: 'jit',
   purge: {
       content: ["./_views/**/*.twig"],
+      safelist: [
+        "textarea",
+        "closed",
+        "open",        
+        'sub-menu',
+        "sub-arrow",
+        "show-arrow",
+        'mob-nav--active',
+        'mob-nav-underlay',
+        'mob-nav-close',
+        "current-page-ancestor"
+      ],
   },
   theme: {
     screens: {
