@@ -44,16 +44,14 @@
 14. Open ```gulpfile.js``` in the theme folder
 15. Edit line ~ ```174``` to the name of your local site. *(e.g. my-new-site.vm)*
 16. Save the ```gulpfile```
-17. Open ```_views/_layout/head.twig```in your theme folder
-18. Edit line ```12``` to the name of your local site. *(e.g. my-new-site.vm)*
-19. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the ```wp-config``` file will be ignored by GIT)  
-20. You may need to edit the ```wp-config.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
-21. Log in and activate relevant plugins (except WooCoommerce plugins if you're site will not use them - delete these if so)
-22. Activate your theme through the WordPress admin console
-22. Delete the ```adtrak-skips``` folder from your theme if you are not using it
-23. Open the Command Line / Terminal and make sure you're in your theme folder
-24. Run ```npm run dev``` or ```gulp```
-25. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS nor Javascript
+17. Visit your new site in the browser and set up Wordpress **MAKE SURE YOU USE ```adtrakwp_``` AS YOUR TABLE PREFIX** (the ```wp-config``` file will be ignored by GIT)  
+18. You may need to edit the ```wp-config.php``` file to change charset. Add this line if this is the case: ```define( 'DB_CHARSET', 'utf8mb4' );```
+19. Log in and activate relevant plugins (except WooCoommerce plugins if you're site will not use them - delete these if so)
+20. Activate your theme through the WordPress admin console
+21. Delete the ```adtrak-skips``` folder from your theme if you are not using it
+22. Open the Command Line / Terminal and make sure you're in your theme folder
+23. Run ```npm run dev``` or ```gulp```
+24. ```npm run dev``` will run the ```development``` tasks, and won't minify your SCSS nor Javascript
 1. Go to [WordPress Settings](#wordpress-settings)
 
 #### Theme Structure ####
