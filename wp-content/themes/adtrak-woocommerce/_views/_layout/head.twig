@@ -8,7 +8,9 @@
     {# <title>{{ site.title }}</title> #}
 
     {% block htmlheader %}
-    <link rel="stylesheet" href="{{ theme.link ~ '/dist/main.min.css' }}">
+		<style>
+			{{source("/dist/main.min.css")}}
+		</style>
     {% endblock %}
 
     {% if options.google_analytics %}

@@ -8,15 +8,9 @@
   {# <title>{{ site.title }}</title> #}
 
 		{% block htmlheader %}
-
-			{% if (site.url == "http://localhost:3000" or site.url == "http://adtrak-boilerplate.vm") %}
-				<link rel="stylesheet" href="{{ theme.link ~ '/dist/main.min.css' }}">
-			{% else %}
 				<style>
 					{{source("/dist/main.min.css")}}
 				</style>
-			{% endif %}
-
 		{% endblock %}
 
   {% if options.google_analytics %}
