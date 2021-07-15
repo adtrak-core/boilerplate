@@ -4,7 +4,7 @@
  * @property {string} ajaxurl URL for ajax request set by WordPress
  *
  * Translations
- * @property {Array} mbp_localize_script[] Array containing translations
+ * @property {Array} mbp_localize_gutenberg[] Array containing translations
  */
 import "jquery";
 
@@ -29,8 +29,8 @@ import AdminNotice from "./components/AdminNotice";
                     isAlreadyUpdating = true;
                     const data = {
                         'action': 'mbp_get_post_rows',
-                        'mbp_post_nonce': mbp_localize_script.post_nonce,
-                        'mbp_post_id': mbp_localize_script.post_id
+                        'mbp_post_nonce': mbp_localize_gutenberg.post_nonce,
+                        'mbp_post_id': mbp_localize_gutenberg.post_id
                     };
                     setTimeout(function () {
                         $.post(ajaxurl, data, function (response) {

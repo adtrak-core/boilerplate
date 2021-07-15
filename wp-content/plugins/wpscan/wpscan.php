@@ -3,7 +3,7 @@
  * Plugin Name:   WPScan
  * Plugin URI:    http://wordpress.org/plugins/wpscan/
  * Description:   WPScan WordPress Security Scanner. Scans your system for security vulnerabilities listed in the WPScan Vulnerability Database.
- * Version:       1.15.3
+ * Version:       1.15.4
  * Author:        WPScan Team
  * Author URI:    https://wpscan.com/
  * License:       GPLv3

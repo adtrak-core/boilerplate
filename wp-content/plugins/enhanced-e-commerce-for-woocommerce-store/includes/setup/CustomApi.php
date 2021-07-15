@@ -213,6 +213,38 @@ class CustomApi{
             return $e->getMessage();
         }
     }
+    public function add_survey_of_deactivate_plugin($data) {
+        try {
+            $header = array(
+                "Authorization: Bearer MTIzNA==",
+                "content-type: application/json"
+            );
+            $curl_url = $this->apiDomain . "/customersurvey";            
+            $postData = json_encode($data);           
+            $ch = curl_init();
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => esc_url($curl_url),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 1000,
+                CURLOPT_HTTPHEADER => $header,
+                CURLOPT_POSTFIELDS => $postData
+            ));
+            $response = curl_exec($ch);
+            $response = json_decode($response);
+            $return = new \stdClass();
+            if (isset($response->error) && $response->error == '') {
+                $return->error = false;
+                $return->message = $response->message;
+                return $return;
+            } else {                
+                $return->error = false;
+                $return->message = $response->message;                
+                return $return;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
     public function active_licence_Key($licence_key, $subscription_id) {
         try {
             $header = array(
@@ -256,6 +288,53 @@ class CustomApi{
                         $return->message = "Check your entered licese key.";
                     }  
 
+                }
+                return $return;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function get_remarketing_snippets($customer_id) {
+        try {
+            $header = array(
+                "Authorization: Bearer MTIzNA==",
+                "content-type: application/json"
+            );
+            $curl_url = $this->apiDomain . "/google-ads/remarketing-snippets";
+            $postData = [
+                'customer_id' => $customer_id
+            ];
+            $postData = json_encode($postData);
+            $ch = curl_init();
+            curl_setopt_array($ch, array(
+                CURLOPT_URL => esc_url($curl_url),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 1000,
+                CURLOPT_HTTPHEADER => $header,
+                CURLOPT_POSTFIELDS => $postData
+            ));
+            $response = curl_exec($ch);
+            $response = json_decode($response);
+            $return = new \stdClass();
+            if (isset($response->error) && $response->error == '') {
+                $return->error = false;
+                $return->data = $response->data;
+                $return->message = $response->message;
+                return $return;
+            } else {
+                if (isset($response->data)) {
+                    $return->error = false;
+                    $return->data = $response->data;
+                    $return->message = $response->message;
+                } else {
+                    $return->error = true;
+                    $return->data = [];
+                    if(isset($response->errors->key[0])){
+                        $return->message = $response->errors->key[0]; 
+                    }else{
+                        $return->message = "";
+                    }
                 }
                 return $return;
             }

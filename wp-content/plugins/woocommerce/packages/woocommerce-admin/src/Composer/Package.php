@@ -12,6 +12,8 @@ namespace Automattic\WooCommerce\Admin\Composer;
 defined( 'ABSPATH' ) || exit;
 
 use Automattic\WooCommerce\Admin\Notes\DeactivatePlugin;
+use Automattic\WooCommerce\Admin\Notes\Notes;
+use Automattic\WooCommerce\Admin\Notes\NotesUnavailableException;
 use Automattic\WooCommerce\Admin\FeaturePlugin;
 
 /**
@@ -24,7 +26,7 @@ class Package {
 	 *
 	 * @var string
 	 */
-	const VERSION = '2.3.1';
+	const VERSION = '2.4.1';
 
 	/**
 	 * Package active.
@@ -152,8 +154,8 @@ class Package {
 	 */
 	private static function is_notes_initialized() {
 		try {
-			\WC_Data_Store::load( 'admin-note' );
-		} catch ( \Exception $e ) {
+			Notes::load_data_store();
+		} catch ( NotesUnavailableException $e ) {
 			return false;
 		}
 		return true;

@@ -8,7 +8,7 @@
 
 <div class="wrap">
   <h1>
-    <?php echo file_get_contents($this->parent->plugin_dir. 'assets/svg/logo.svg'); ?>
+    <?php echo file_get_contents( plugin_dir_url( dirname( __FILE__ ) ) . 'assets/svg/logo.svg'); ?>
   </h1>
   
   <hr class="wp-header-end">

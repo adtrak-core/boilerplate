@@ -3,8 +3,8 @@ Contributors: koen12344, freemius
 Donate link: https://tycoonmedia.net/?utm_source=repository&utm_medium=link&utm_campaign=donate
 Tags: google my business, google, business, auto publish, posts, post, local search, google my business posts, google places, google plus, google+
 Requires at least: 4.9.0
-Tested up to: 5.7.1
-Stable tag: 2.2.39
+Tested up to: 5.8
+Stable tag: 2.2.43
 Requires PHP: 5.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,23 @@ Post to Google My Business relies on the WP Cron system to send out scheduled po
 6. Auto-post template settings
 
 == Changelog ==
+
+= 2.2.43 =
+* Tested on WordPress 5.8
+* Fixed issue with metabox not working in block editor
+
+> **Premium**
+>
+> * Fixed issue with automatic re-post that made a post go out every minute(!) instead of every day of the month
+> * Added "Daily" option to re-post feature
+
+= 2.2.42 =
+* Add Brazilian Portuguese translations (thanks to @valdemirmaran)
+
+= 2.2.41 =
+* Add selection function for location groups
+* Add note for Block Editor CPTs without "custom-fields" support enabled
+* Update Freemius SDK
 
 = 2.2.39 =
 * Fixes "Cannot declare class PGMB\Vendor\Cron\AbstractField, because the name is already in use" error when saving post
@@ -409,6 +426,3 @@ Post to Google My Business relies on the WP Cron system to send out scheduled po
 * Initial release
 
 == Upgrade Notice ==
-
-= 2.2.39 =
-* Fixes error that stopped WP posts from being saved/published on some sites ("Cannot declare class" error)

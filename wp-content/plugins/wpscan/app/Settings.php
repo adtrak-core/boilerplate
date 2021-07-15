@@ -206,7 +206,7 @@ class Settings {
 	 */
 	public function page() {
 		echo '<div class="wrap">';
-			echo '<h1><img src="' . $this->parent->plugin_url . 'assets/svg/logo.svg" alt="WPScan"></h1>';
+			echo '<h1><img src="' . plugin_dir_url( dirname( __FILE__ ) ) . 'assets/svg/logo.svg" alt="WPScan"></h1>';
 
 			echo '<h2>' . __( 'Settings', 'wpscan' ) . '</h2>';
 

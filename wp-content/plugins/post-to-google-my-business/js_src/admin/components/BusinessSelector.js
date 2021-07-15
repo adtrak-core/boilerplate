@@ -57,6 +57,17 @@ let BusinessSelector = function(container, ajax_prefix){
     });
 
     /**
+     * Hook function to toggle the selection of groups
+     */
+    $(".pgmb-toggle-group", container).click(function(event){
+        event.preventDefault();
+
+        let checkboxes = $(this).closest('tbody').find('.mbp-checkbox-container input:checkbox:visible');
+
+        checkboxes.prop("checked", !checkboxes.prop("checked"));
+    });
+
+    /**
      * Checks if any of the businesses are not allowed to use the localPostAPI and show an informational message if one is
      */
     this.checkForDisabledLocations = function(){

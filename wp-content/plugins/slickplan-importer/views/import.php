@@ -11,7 +11,7 @@
 <form action="" method="post" id="slickplan-importer">
     <h3><?php echo $is_summary ? 'Success!' : 'Importing Pages&hellip;'; ?></h3>
     <div class="updated slickplan-show-summary"<?php if (!$is_summary) { ?> style="display: none"<?php } ?>>
-        <p>Pages have been imported. Thank you for using <a href="http://slickplan.com/" target="_blank">Slickplan</a> Importer.</p>
+        <p>Pages have been imported. Thank you for using <a href="https://slickplan.com/" target="_blank">Slickplan</a> Importer.</p>
     </div>
     <?php if (!$is_summary) { ?>
         <div id="slickplan-progressbar" class="progressbar"><div class="progress-label">0%</div></div>

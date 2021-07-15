@@ -53,9 +53,6 @@ class Plugin {
 	// Plugin path.
 	public $plugin_dir = '';
 
-	// Plugin URI.
-	public $plugin_url = '';
-
 	// Page.
 	public $page_hook = 'toplevel_page_wpscan';
 
@@ -74,7 +71,6 @@ class Plugin {
 	 */
 	public function __construct() {
 		$this->plugin_dir = trailingslashit( str_replace( '\\', '/', dirname( WPSCAN_PLUGIN_FILE ) ) );
-		$this->plugin_url = site_url( str_replace( str_replace( '\\', '/', ABSPATH ), '', $this->plugin_dir ) );
 
 		// Languages.
 		load_plugin_textdomain( 'wpscan', false, $this->plugin_dir . 'languages' );
@@ -388,7 +384,7 @@ class Plugin {
 			$this->WPSCAN_ROLE,
 			'wpscan',
 			array( $this->classes['report'], 'page' ),
-			$this->plugin_url . 'assets/svg/menu-icon.svg',
+			plugin_dir_url( dirname( __FILE__ ) ) . 'assets/svg/menu-icon.svg',
 			null
 		);
 	}

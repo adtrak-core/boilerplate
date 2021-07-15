@@ -18,7 +18,7 @@
                         : $xml['title'];
                     $checkboxes = array();
                     if ($title) {
-                        $checkboxes[] = $this->_displayCheckbox(
+                        $checkboxes[] = $this->displayCheckbox(
                             'settings_title',
                             'Set website title to <cite>&bdquo;' . $title . '&rdquo;</cite>',
                             false,
@@ -26,7 +26,7 @@
                         );
                     }
                     if (isset($xml['settings']['tagline']) and $xml['settings']['tagline']) {
-                        $checkboxes[] = $this->_displayCheckbox(
+                        $checkboxes[] = $this->displayCheckbox(
                             'settings_tagline',
                             'Set website tagline to <cite>&bdquo;' . $xml['settings']['tagline'] . '&rdquo;</cite>',
                             false,
@@ -36,7 +36,7 @@
                     if (isset($xml['settings']['language']) and $xml['settings']['language']) {
                         $languages = wp_get_available_translations();
                         if (is_array($languages) and isset($languages[$xml['settings']['language']])) {
-                            $checkboxes[] = $this->_displayCheckbox(
+                            $checkboxes[] = $this->displayCheckbox(
                                 'settings_language',
                                 'Set website language to <cite>&bdquo;' . $languages[$xml['settings']['language']]['native_name'] . '&rdquo;</cite>',
                                 false,
@@ -44,7 +44,7 @@
                             );
                         }
                     }
-                    $checkboxes[] = $this->_displayCheckbox(
+                    $checkboxes[] = $this->displayCheckbox(
                         'create_menu',
                         'Create menu from imported pages, menu name: ',
                         false,
@@ -62,20 +62,20 @@
                 <td id="slickplan-page-titles-radios">
                     <?php
                     $radios = array();
-                    $radios[] = $this->_displayRadio(
+                    $radios[] = $this->displayRadio(
                         'titles_change',
                         'No change',
                         '',
                         '',
                         true
                     );
-                    $radios[] = $this->_displayRadio(
+                    $radios[] = $this->displayRadio(
                         'titles_change',
                         'Make just the first character uppercase',
                         'ucfirst',
                         'This is an example page title'
                     );
-                    $radios[] = $this->_displayRadio(
+                    $radios[] = $this->displayRadio(
                         'titles_change',
                         'Uppercase the first character of each word',
                         'ucwords',
@@ -92,7 +92,7 @@
                 </th>
                 <td id="slickplan-page-content-radios">
                     <?php
-                    $radio = $this->_displayRadio(
+                    $radio = $this->displayRadio(
                         'content',
                         'Import page content from Content Planner',
                         'contents',
@@ -102,13 +102,13 @@
                     if (isset($no_of_files) and $no_of_files) {
                         $radio .= '<br class="content-suboption-br">'
                             . '<span class="content-suboption" style="display: inline-block; padding: 3px 0 0 20px;">'
-                            . $this->_displayCheckbox(
+                            . $this->displayCheckbox(
                                 'content_files',
                                 'Import files to media library',
                                 true,
                                 'Downloading files may take a while'
                                     . ((isset($filesize_total) and $filesize_total)
-                                        ? ' approx total size: ' . size_format($filesize_total)
+                                        ? ', approx total size: ' . size_format($filesize_total)
                                         : ''
                                     )
                             )
@@ -116,12 +116,12 @@
                     }
                     $radios = array();
                     $radios[] = $radio;
-                    $radios[] = $this->_displayRadio(
+                    $radios[] = $this->displayRadio(
                         'content',
                         'Import notes as page content',
                         'desc'
                     );
-                    $radios[] = $this->_displayRadio(
+                    $radios[] = $this->displayRadio(
                         'content',
                         'Don&#8217;t import any content',
                         ''
@@ -160,7 +160,7 @@
                                     ?>
                                     <tr>
                                         <td><?php echo implode(' ', $name); ?>:</td>
-                                        <td><?php $this->_displayUsersDropdown('users_map][' . $user_id); ?></td>
+                                        <td><?php $this->displayUsersDropdown('users_map][' . $user_id); ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

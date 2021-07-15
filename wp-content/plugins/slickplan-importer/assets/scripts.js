@@ -24,7 +24,6 @@ jQuery(document).ready(function($) {
     var $form = $('form#slickplan-importer');
     var $summary = $form.find('.slickplan-summary');
     var $progress = $('#slickplan-progressbar');
-    var $wpbody = $('#wpbody-content');
 
     $progress.progressbar({
         value: 0,
@@ -95,9 +94,6 @@ jQuery(document).ready(function($) {
                         $form.find('h3').text('Success!');
                         $form.find('.slickplan-show-summary').show();
                         $window.trigger('resize');
-                        //setTimeout(function() {
-                        //    $progress.remove();
-                        //}, 500);
                     }
                 }
             },

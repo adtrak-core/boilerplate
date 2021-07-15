@@ -68,7 +68,7 @@ class debuglogFiles extends Check {
 			$code     = wp_remote_retrieve_response_code( $response );
 
 			if ( 200 === $code ) {
-				$this->add_vulnerability( __( 'A publicly accessible debug.log file was found in', 'wpscan' ) . " <a href='$url' target='_blank'>$url</a>", 'high', sanitize_title( $file ), 'https://blog.wpscan.com/2021/03/18/wordpress-debug-log-files.html' );
+				$this->add_vulnerability( __( 'A publicly accessible debug.log file was found in', 'wpscan' ) . " <a href='$url' target='_blank'>$url</a>", 'high', sanitize_title( $file ), 'https://blog.wpscan.com/wordpress-debug-log-files/' );
 			}
 		}
 	}

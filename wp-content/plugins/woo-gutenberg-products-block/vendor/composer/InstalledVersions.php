@@ -249,13 +249,7 @@ class InstalledVersions
         @trigger_error('getRawData only returns the first dataset loaded, which may not be what you expect. Use getAllRawData() instead which returns all datasets for all autoloaders present in the process.', E_USER_DEPRECATED);
 
         if (null === self::$installed) {
-            // only require the installed.php file if this file is loaded from its dumped location,
-            // and not from its source location in the composer/composer package, see https://github.com/composer/composer/issues/9937
-            if (substr(__DIR__, -8, 1) !== 'C') {
-                self::$installed = include __DIR__ . '/installed.php';
-            } else {
-                self::$installed = array();
-            }
+            self::$installed = include __DIR__ . '/installed.php';
         }
 
         return self::$installed;
@@ -322,13 +316,7 @@ class InstalledVersions
         }
 
         if (null === self::$installed) {
-            // only require the installed.php file if this file is loaded from its dumped location,
-            // and not from its source location in the composer/composer package, see https://github.com/composer/composer/issues/9937
-            if (substr(__DIR__, -8, 1) !== 'C') {
-                self::$installed = require __DIR__ . '/installed.php';
-            } else {
-                self::$installed = array();
-            }
+            self::$installed = require __DIR__ . '/installed.php';
         }
         $installed[] = self::$installed;
 

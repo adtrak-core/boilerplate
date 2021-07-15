@@ -36,6 +36,19 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
     add_action('wp_ajax_tvc_call_notice_dismiss', array($this, 'tvc_call_notice_dismiss'));
     add_action('wp_ajax_tvc_call_notification_dismiss', array($this, 'tvc_call_notification_dismiss'));
     add_action('wp_ajax_tvc_call_active_licence', array($this, 'tvc_call_active_licence'));
+    add_action('wp_ajax_tvc_call_add_survey', array($this, 'tvc_call_add_survey'));
+  }
+
+  public function tvc_call_add_survey(){
+    if ( is_admin() ) {
+      if(!class_exists('CustomApi')){
+        include(ENHANCAD_PLUGIN_DIR . 'includes/setup/CustomApi.php');
+      }
+      $customObj = new CustomApi();
+      unset($_POST['action']);    
+      echo json_encode($customObj->add_survey_of_deactivate_plugin($_POST));
+      exit;
+    }
   }
   //active licence key
   public function tvc_call_active_licence(){
@@ -704,6 +717,8 @@ class TVC_Ajax_File extends TVC_Ajax_Calls {
           ),
           'body' => wp_json_encode($data)
         );
+
+
         
         $request = wp_remote_post($url, $args); 
          

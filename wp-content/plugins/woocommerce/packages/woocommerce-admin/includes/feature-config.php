@@ -17,9 +17,12 @@ if ( ! function_exists( 'wc_admin_get_feature_config' ) ) {
 			'navigation' => false,
 			'onboarding' => true,
 			'remote-inbox-notifications' => true,
+			'remote-extensions-list' => true,
+			'payment-gateway-suggestions' => false,
 			'settings' => false,
 			'shipping-label-banner' => true,
 			'store-alerts' => true,
+			'transient-notices' => true,
 			'wcpay' => true,
 			'wcpay/support-international-countries' => true,
 		);

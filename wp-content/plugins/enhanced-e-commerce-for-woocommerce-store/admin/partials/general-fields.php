@@ -100,6 +100,7 @@ if (isset($_GET['connect']) && isset($_GET['subscription_id'])) {
       Enhanced_Ecommerce_Google_Settings::add_update_settings('ee_options');
       //save data in DB
       $TVC_Admin_Helper->set_update_api_to_db($googleDetail, false);
+      $TVC_Admin_Helper->update_remarketing_snippets();
       if(isset($googleDetail->google_merchant_center_id) || isset($googleDetail->google_ads_id) ){
         if( $googleDetail->google_merchant_center_id != "" && $googleDetail->google_ads_id != ""){                    
           wp_redirect("admin.php?page=enhanced-ecommerce-google-analytics-admin-display&tab=sync_product_page&welcome_msg=true");

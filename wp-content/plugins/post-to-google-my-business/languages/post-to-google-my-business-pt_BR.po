@@ -1,0 +1,1628 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Post to Google My Business\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/post-to-google-my-"
+"business\n"
+"POT-Creation-Date: 2021-05-17 09:16:34+00:00\n"
+"PO-Revision-Date: 2021-05-18 11:24-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: post-to-google-my-business.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+
+#: inc/class-mbp-admin-page-settings.php:108
+#: src/Components/BusinessSelector.php:139
+msgid "Refresh locations"
+msgstr "Atualizar locais"
+
+#: inc/class-mbp-admin-page-settings.php:109
+msgid "Please wait..."
+msgstr "Por favor aguarde..."
+
+#: inc/class-mbp-admin-page-settings.php:144
+msgid "Dashboard"
+msgstr "Painel"
+
+#: inc/class-mbp-admin-page-settings.php:148
+msgid "Google settings"
+msgstr "Configurações do Google"
+
+#: inc/class-mbp-admin-page-settings.php:153
+msgid "Auto-post settings"
+msgstr "Configurações de postagem automática"
+
+#: inc/class-mbp-admin-page-settings.php:157
+msgid "Post type settings"
+msgstr "Configurações de tipo de postagem"
+
+#: inc/class-mbp-admin-page-settings.php:161
+msgid "Debug"
+msgstr "Depuração"
+
+#: inc/class-mbp-admin-page-settings.php:171
+msgid "Default location"
+msgstr "Localização padrão"
+
+#: inc/class-mbp-admin-page-settings.php:172
+#: inc/class-mbp-admin-page-settings.php:249
+msgid "Select the post-types where the GMB metabox should be displayed"
+msgstr "Selecione os tipos de postagem onde a metabox do GMB deve ser exibida"
+
+#: inc/class-mbp-admin-page-settings.php:179
+msgid "Post to GMB by default"
+msgstr "Postar no GMB por padrão"
+
+#: inc/class-mbp-admin-page-settings.php:180
+msgid ""
+"The Auto-post checkbox will be checked by default, and your WordPress posts "
+"will be automatically published to GMB, unless you uncheck it."
+msgstr ""
+"A caixa de seleção Postagem Automática será marcada por padrão e suas "
+"postagens do WordPress serão publicadas automaticamente no GMB, a menos que "
+"você a desmarque."
+
+#: inc/class-mbp-admin-page-settings.php:186
+msgid "Default template"
+msgstr "Modelo padrão"
+
+#: inc/class-mbp-admin-page-settings.php:187
+msgid ""
+"The template for new Google posts when using quick post. Supports <a target="
+"\"_blank\" href=\"%s\">variables</a> and <a target=\"_blank\" href=\"%s"
+"\">spintax</a> (premium only)"
+msgstr ""
+"O modelo para novas postagens do Google ao usar postagem rápida. Suporta <a "
+"target=\"_blank\" href=\"%s\">variáveis</a> e <a target=\"_blank\" href=\"%s"
+"\">spintax</a> (somente premium)"
+
+#: inc/class-mbp-admin-page-settings.php:248
+msgid "Enabled for post types"
+msgstr "Ativado para tipos de postagem"
+
+#: inc/class-mbp-admin-page-settings.php:297
+#: inc/class-mbp-admin-page-settings.php:308 templates/settings.php:2
+msgid "Post to Google My Business settings"
+msgstr "Configurações do Post to Google My Business"
+
+#: inc/class-mbp-admin-page-settings.php:298
+msgid "Post to GMB %s"
+msgstr "Post to GMB %s"
+
+#: inc/class-mbp-admin-page-settings.php:309
+msgid "Settings %s"
+msgstr "Configurações %s"
+
+#: inc/class-mbp-admin-page-settings.php:331
+msgid "Connected"
+msgstr "Conectado"
+
+#: inc/class-mbp-admin-page-settings.php:333
+msgid "Not connected"
+msgstr "Desconectado"
+
+#: inc/class-mbp-admin-page-settings.php:338
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Você não tem permissões suficientes para acessar esta página."
+
+#: inc/class-mbp-admin-page-settings.php:371
+msgid ""
+"Your WordPress version does not yet support the WP_Debug_Data class, please "
+"update."
+msgstr ""
+"Sua versão WordPress ainda não suporta a classe WP_Debug_Data, por favor, "
+"atualize."
+
+#: inc/class-mbp-admin-page-settings.php:377
+msgid "Please supply the debug data below with your support requests"
+msgstr ""
+"Por favor, forneça os dados de depuração abaixo com suas solicitações de "
+"suporte"
+
+#: inc/class-mbp-admin-page-settings.php:390
+msgid "Copy site info to clipboard"
+msgstr "Copiar as informações do site para a área de transferência"
+
+#: inc/class-mbp-admin-page-settings.php:392
+msgid "Copied!"
+msgstr "Copiado!"
+
+#: inc/class-mbp-admin-page-settings.php:481
+msgid "Reconnect to Google My Business"
+msgstr "Reconecte-se ao Google My Business"
+
+#: inc/class-mbp-admin-page-settings.php:481
+msgid "Connect to Google My Business"
+msgstr "Conecte-se ao Google My Business"
+
+#: inc/class-mbp-admin-page-settings.php:487
+msgid "Disconnect this website from Google My Business"
+msgstr "Desconecte este site do Google My Business"
+
+#: inc/class-mbp-admin-page-settings.php:492
+msgid "Revoke Google account authorization"
+msgstr "Revogar a autorização da conta do Google"
+
+#: inc/class-mbp-admin-page-settings.php:507
+#: inc/class-mbp-admin-page-settings.php:522
+msgid "Dismiss this notice."
+msgstr "Dispensar esse aviso."
+
+#: inc/class-mbp-admin-page-settings.php:551
+msgid "Manage multiple businesses or locations?"
+msgstr "Gerenciar várias empresas ou locais?"
+
+#: inc/class-mbp-admin-page-settings.php:553
+#: inc/class-mbp-admin-page-settings.php:559
+#: inc/class-mbp-admin-page-settings.php:565
+#: inc/class-mbp-admin-page-settings.php:571
+#: inc/class-mbp-admin-page-settings.php:577
+#: inc/class-mbp-admin-page-settings.php:588
+msgid "Upgrade to Premium"
+msgstr "Atualizar para Premium"
+
+#: inc/class-mbp-admin-page-settings.php:554
+msgid "to pick a location per post, or post to multiple locations at once."
+msgstr ""
+"para escolher um local por post, ou postar em vários locais ao mesmo tempo."
+
+#: inc/class-mbp-admin-page-settings.php:557
+msgid "Not the right time?"
+msgstr "Não é a hora certa?"
+
+#: inc/class-mbp-admin-page-settings.php:560
+msgid "and schedule your posts to be automagically published at a later time."
+msgstr ""
+"e agende suas postagens para serem publicadas automaticamente em um momento "
+"posterior."
+
+#: inc/class-mbp-admin-page-settings.php:563
+msgid "Wonder how well your Google My Business post is doing?"
+msgstr "Quer saber como está sua postagem no Google My Business?"
+
+#: inc/class-mbp-admin-page-settings.php:566
+msgid ""
+"to view post statistics and easily include Google Analytics UTM parameters."
+msgstr ""
+"para visualizar estatísticas de postagem e incluir facilmente os parâmetros "
+"UTM do Google Analytics."
+
+#: inc/class-mbp-admin-page-settings.php:569
+msgid ""
+"Use Post to Google My Business for your pages, projects, WooCommerce "
+"products and more."
+msgstr ""
+"Use o Post to Google My Business para suas páginas, projetos, produtos "
+"WooCommerce e muito mais."
+
+#: inc/class-mbp-admin-page-settings.php:572
+msgid "to enable Post to Google my Business for any post type."
+msgstr ""
+"para habilitar o Post to Google My Business para qualquer tipo de postagem."
+
+#: inc/class-mbp-admin-page-settings.php:575
+msgid ""
+"Automatically repost your GMB posts a specific or unlimited amount of times."
+msgstr ""
+"Reposte automaticamente suas postagens do GMB, uma quantidade específica ou "
+"ilimitada de vezes."
+
+#: inc/class-mbp-admin-page-settings.php:578
+msgid "to set custom intervals and specify the amount of reposts."
+msgstr ""
+"para definir intervalos personalizados e especificar a quantidade de "
+"repostagens."
+
+#: inc/class-mbp-admin-page-settings.php:581
+msgid ""
+"I hope you enjoy using my Post to Google My Business plugin! Help spread the "
+"word with a"
+msgstr ""
+"Espero que você esteja gostando de usar meu plugin Post to Google My "
+"Business! Ajude indicando para seus amigos"
+
+#: inc/class-mbp-admin-page-settings.php:582
+msgid "5-star rating on WordPress.org"
+msgstr "Classificação de 5 estrelas no WordPress.org"
+
+#: inc/class-mbp-admin-page-settings.php:583
+msgid ". Many thanks! - Koen Reus, plugin developer"
+msgstr ". Muito Obrigado! - Koen Reus, desenvolvedor de plugins"
+
+#: inc/class-mbp-admin-page-settings.php:586
+msgid "Create unique posts every time."
+msgstr "Crie postagens exclusivas todas as vezes."
+
+#: inc/class-mbp-admin-page-settings.php:589
+msgid "to use spintax and %variables% in your post text."
+msgstr "para usar spintax e %variables% no texto da postagem."
+
+#: inc/class-mbp-connector.php:32 inc/class-mbp-connector.php:58
+msgid "No permission to edit options"
+msgstr "Sem permissão para editar opções"
+
+#: inc/class-mbp-connector.php:46
+msgid "Something went wrong: %s"
+msgstr "Algo deu errado: %s"
+
+#: inc/class-mbp-connector.php:60
+msgid "Invalid nonce"
+msgstr "Nonce inválido"
+
+#: inc/class-mbp-currency-codes.php:6
+msgid "Afghan Afghani"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:7
+msgid "Aruban Florin"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:8
+msgid "Australian Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:9
+msgid "Argentine Pes"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:10
+msgid "Azerbaijanian Manat"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:11
+msgid "Bahamian Dollar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:12
+msgid "Bangladeshi Taka"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:13
+msgid "Barbados Dollar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:14
+msgid "Belarussian Rouble"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:15
+msgid "Bolivian Boliviano"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:16
+msgid "Brazilian Real"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:17
+msgid "British Pounds Sterling"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:18
+msgid "Bulgarian Lev"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:19
+msgid "Cambodia Riel"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:20
+msgid "Canadian Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:21
+msgid "Cayman Islands Dollar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:22
+msgid "Chilean Peso"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:23
+msgid "Chinese Renminbi Yuan"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:24
+msgid "Colombian Peso"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:25
+msgid "Costa Rican Colon"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:26
+msgid "Croatia Kuna"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:27
+msgid "Cypriot Pounds"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:28
+msgid "Czech Koruna"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:29
+msgid "Danish Krone"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:30
+msgid "Dominican Republic Peso"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:31
+msgid "East Caribbean Dollar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:32
+msgid "Egyptian Pound"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:33
+msgid "Eritrean Nakfa"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:34
+msgid "Estonia Kroon"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:35
+msgid "Euro"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:36
+msgid "Georgian Lari"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:37
+msgid "Ghana Cedi"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:38
+msgid "Gibraltar Pound"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:39
+msgid "Guatemala Quetzal"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:40
+msgid "Honduras Lempira"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:41
+msgid "Hong Kong Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:42
+msgid "Hungary Forint"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:43
+msgid "Icelandic Krona"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:44
+msgid "Indian Rupee"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:45
+msgid "Indonesia Rupiah"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:46
+msgid "Israel Shekel"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:47
+msgid "Jamaican Dollar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:48
+msgid "Japanese yen"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:49
+msgid "Kazakhstan Tenge"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:50
+msgid "Kenyan Shilling"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:51
+msgid "Kuwaiti Dinar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:52
+msgid "Latvia Lat"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:53
+msgid "Lebanese Pound"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:54
+msgid "Lithuania Litas"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:55
+msgid "Macau Pataca"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:56
+msgid "Macedonian Denar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:57
+msgid "Malagascy Ariary"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:58
+msgid "Malaysian Ringgit"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:59
+msgid "Maltese Lira"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:60
+msgid "Marka"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:61
+msgid "Mauritius Rupee"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:62
+msgid "Mexican Pesos"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:63
+msgid "Mozambique Metical"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:64
+msgid "Nepalese Rupee"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:65
+msgid "Netherlands Antilles Guilder"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:66
+msgid "New Taiwanese Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:67
+msgid "New Zealand Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:68
+msgid "Nicaragua Cordoba"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:69
+msgid "Nigeria Naira"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:70
+msgid "North Korean Won"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:71
+msgid "Norwegian Krone"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:72
+msgid "Omani Riyal"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:73
+msgid "Pakistani Rupee"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:74
+msgid "Paraguay Guarani"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:75
+msgid "Peru New Sol"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:76
+msgid "Philippine Pesos"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:77
+msgid "Qatari Riyal"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:78
+msgid "Romanian New Leu"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:79
+msgid "Russian Federation Ruble"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:80
+msgid "Saudi Riyal"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:81
+msgid "Serbian Dinar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:82
+msgid "Seychelles Rupee"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:83
+msgid "Singapore Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:84
+msgid "Slovak Koruna"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:85
+msgid "Slovenia Tolar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:86
+msgid "South African Rand"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:87
+msgid "South Korean Won"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:88
+msgid "Sri Lankan Rupee"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:89
+msgid "Surinam Dollar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:90
+msgid "Swedish Krona"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:91
+msgid "Swiss Francs"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:92
+msgid "Tanzanian Shilling"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:93
+msgid "Thai Baht"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:94
+msgid "Trinidad and Tobago Dollar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:95
+msgid "Turkish New Lira"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:96
+msgid "UAE Dirham"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:97
+msgid "US Dollars"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:98
+msgid "Ugandian Shilling"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:99
+msgid "Ukraine Hryvna"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:100
+msgid "Uruguayan Peso"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:101
+msgid "Uzbekistani Som"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:102
+msgid "Venezuela Bolivar"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:103
+msgid "Vietnam Dong"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:104
+msgid "Zambian Kwacha"
+msgstr ""
+
+#: inc/class-mbp-currency-codes.php:105
+msgid "Zimbabwe Dollar"
+msgstr ""
+
+#: inc/class-mbp-metabox.php:153
+msgid ""
+"You're working on a Google My Business post, but it has not yet been "
+"published/scheduled. Press OK to publish/schedule it now, or Cancel to save "
+"it as a draft."
+msgstr ""
+"Você está trabalhando em uma postagem do Google My Business, mas ela ainda "
+"não foi publicada/programada. Pressione OK para publicar/agendar agora, ou "
+"Cancelar para salvá-la como um rascunho."
+
+#: inc/class-mbp-metabox.php:154
+msgid "Please Wait..."
+msgstr "Por favor aguarde..."
+
+#: inc/class-mbp-metabox.php:155
+msgid "Publish"
+msgstr "Publicar"
+
+#: inc/class-mbp-metabox.php:156
+msgid "Update"
+msgstr "Atualizar"
+
+#: inc/class-mbp-metabox.php:157 templates/PostEditor.php:415
+msgid "Save draft"
+msgstr "Salvar rascunho"
+
+#: inc/class-mbp-metabox.php:158 templates/PostEditor.php:334
+msgid "Schedule post"
+msgstr "Agendar postagem"
+
+#: inc/class-mbp-metabox.php:159
+msgid "Save template"
+msgstr "Salvar modelo"
+
+#: inc/class-mbp-metabox.php:168
+msgid "Min"
+msgstr "Min"
+
+#: inc/class-mbp-metabox.php:169
+msgid "Price"
+msgstr "Preço"
+
+#: inc/class-mbp-metabox.php:188
+msgid "Auto-post to GMB"
+msgstr "Postagem automática no GMB"
+
+#. Plugin Name of the plugin/theme
+msgid "Post to Google My Business"
+msgstr "Publicar no Google My Business"
+
+#: inc/class-mbp-metabox.php:217
+msgid "Please configure Post to Google My Business first"
+msgstr "Por favor, configure o Post to Google My Business primeiro"
+
+#: inc/class-mbp-metabox.php:219
+msgid "(Connect, pick a default location and Save Changes)"
+msgstr "(Conecte-se, escolha um local padrão e salve as alterações)"
+
+#: inc/class-mbp-metabox.php:425 templates/PostEditor.php:10
+msgid "What's New"
+msgstr "Novidades"
+
+#: inc/class-mbp-metabox.php:429 templates/PostEditor.php:13
+msgid "Event"
+msgstr "Eventos"
+
+#: inc/class-mbp-metabox.php:433 templates/PostEditor.php:16
+msgid "Offer"
+msgstr "Ofertas"
+
+#: inc/class-mbp-metabox.php:437 templates/PostEditor.php:19
+msgid "Product"
+msgstr "Produtos"
+
+#: inc/class-mbp-metabox.php:441 templates/PostEditor.php:6
+msgid "COVID-19 update"
+msgstr "Atualização da COVID-19"
+
+#: inc/class-mbp-metabox.php:542
+msgid "No GMB posts found."
+msgstr "Nenhuma postagem do GMB encontrada."
+
+#: inc/class-mbp-metabox.php:574
+msgid "Repost enabled"
+msgstr "Repostagem habilitada"
+
+#: inc/class-mbp-metabox.php:580
+msgid "List created posts"
+msgstr "Listar postagens criadas"
+
+#: inc/class-mbp-metabox.php:582 inc/class-mbp-post-type-google-posts.php:28
+msgid "Edit"
+msgstr "Editar"
+
+#: inc/class-mbp-metabox.php:583
+msgid "Duplicate"
+msgstr "Duplicar"
+
+#: inc/class-mbp-metabox.php:584
+msgid "Delete"
+msgstr "Excluir"
+
+#: inc/class-mbp-metabox.php:588
+msgid "Draft"
+msgstr "Rascunho"
+
+#: inc/class-mbp-metabox.php:611
+msgid "You do not have permission to publish posts"
+msgstr "Você não tem permissão para publicar postagens"
+
+#: inc/class-mbp-metabox.php:646
+msgid "Error creating post: %s"
+msgstr "Erro ao criar postagem: %s"
+
+#: inc/class-mbp-metabox.php:675
+msgid "Auto-post template successfully updated"
+msgstr "Modelo de postagem automática atualizado com sucesso"
+
+#: inc/class-mbp-metabox.php:688
+msgid "You do not have permission to edit posts"
+msgstr "Você não tem permissão para editar postagens"
+
+#: inc/class-mbp-metabox.php:706
+msgid "Post could not be loaded"
+msgstr "A postagem não pôde ser carregada"
+
+#: inc/class-mbp-metabox.php:714
+msgid "You do not have permission to delete posts"
+msgstr "Você não tem permissão para excluir postagens"
+
+#: inc/class-mbp-metabox.php:726
+msgid "Invalid post ID"
+msgstr "ID de postagem inválido"
+
+#: inc/class-mbp-metabox.php:754
+msgid ""
+"No posts found. The posting process may still be in progress, or no location "
+"was selected."
+msgstr ""
+"Nenhuma postagem encontrada. O processo de postagem ainda pode estar em "
+"andamento ou nenhum local foi selecionado."
+
+#: inc/class-mbp-metabox.php:768
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: inc/class-mbp-plugin.php:120
+msgid "Autopost to GMB"
+msgstr "Postagem automática no GMB"
+
+#. translators: %s refers to category/categories tag/tags or other terms
+#: inc/class-mbp-plugin.php:122
+msgid ""
+"Automatically post items with this %s to GMB. Autopost will only occur once, "
+"even when this option is enabled for multiple %s."
+msgstr ""
+"Publique itens automaticamente com este %s no GMB. A postagem automática "
+"ocorrerá apenas uma vez, mesmo quando esta opção estiver habilitada para "
+"vários %s."
+
+#: inc/class-mbp-plugin.php:164
+msgid "Getting started with Post to Google My Business"
+msgstr "Primeiros passos com o Post to Google My Business"
+
+#: inc/class-mbp-plugin.php:166
+msgid ""
+"Hi %1$s,\n"
+"\n"
+"Thanks for installing Post to Google My Business! To get started, connect "
+"the plugin to your Google account on the Google settings tab.\n"
+"\n"
+"Need help? Check out the %2$s\n"
+"\n"
+"%3$s"
+msgstr ""
+"Olá %1$s,\n"
+"\n"
+"Obrigado por instalar o Post to Google My Business! Para começar, conecte o "
+"plugin à sua conta do Google na guia configurações do Google.\n"
+"\n"
+"Precisa de ajuda? Confira o %2$s\n"
+"\n"
+"%3$s"
+
+#: inc/class-mbp-plugin.php:171
+msgid "tutorial video"
+msgstr "vídeo tutorial"
+
+#: inc/class-mbp-plugin.php:176 inc/class-mbp-plugin.php:216
+#: src/Upgrader/Upgrade_2_2_11.php:38
+msgid "Plugin Developer"
+msgstr "Desenvolvedor do Plugin"
+
+#: inc/class-mbp-plugin.php:180 inc/class-mbp-plugin.php:239
+#: src/Upgrader/Upgrade_2_2_11.php:42
+msgid "Developer profile photo"
+msgstr "Foto de perfil do desenvolvedor"
+
+#: inc/class-mbp-plugin.php:210
+msgid "WordPress Repository"
+msgstr "Repositório WordPress"
+
+#: inc/class-mbp-plugin.php:222
+msgid "Ok, you deserve it"
+msgstr "Ok, você merece"
+
+#: inc/class-mbp-plugin.php:227
+msgid "Maybe later"
+msgstr "Talvez mais tarde"
+
+#: inc/class-mbp-plugin.php:232
+msgid "I already did"
+msgstr "Eu já fiz isso"
+
+#: inc/class-mbp-plugin.php:247
+msgid "7 posts!"
+msgstr "7 postagens!"
+
+#: inc/class-mbp-plugin.php:249
+msgid ""
+"Hey %1$s,\n"
+"\n"
+"I noticed you've just created your 7th GMB post through my plugin, awesome!\n"
+"\n"
+"If you like the plugin and have a moment to leave a 5-star rating on the "
+"%2$s, that really helps spread the word and move the development forwards!\n"
+"\n"
+"%3$s\n"
+"\n"
+"%4$s\n"
+"%5$s\n"
+"%6$s"
+msgstr ""
+"Ei %1$s,\n"
+"\n"
+"Percebi que você acabou de criar seu 7º post no GMB, através do meu plugin. "
+"Incrível!\n"
+"\n"
+"Se você está gostando do plugin e tem um momento para fazer uma "
+"classificação de 5 estrelas no %2$s, isso realmente me ajudaria a melhorar "
+"ainda mais e levar o desenvolvimento para um próximo nível!\n"
+"\n"
+"%3$s\n"
+"\n"
+"%4$s\n"
+"%5$s\n"
+"%6$s"
+
+#: inc/class-mbp-plugin.php:266
+msgid "28 posts! Awesome"
+msgstr "28 postagens! incrível"
+
+#: inc/class-mbp-plugin.php:268
+msgid ""
+"Hi %1$s,\n"
+"\n"
+"I hope you find my GMB plugin useful! I noticed you've already created 28 "
+"GMB posts with it.\n"
+"\n"
+"If you like the plugin and have a moment to leave a 5-star rating on the "
+"%2$s, that really helps boost my motivation!\n"
+"\n"
+"Thanks!\n"
+"\n"
+"%3$s\n"
+"\n"
+"%4$s\n"
+"%5$s\n"
+"%6$s"
+msgstr ""
+"Oi %1$s,\n"
+"\n"
+"Espero que esteja achando meu plugin GMB útil! Notei que você já criou 28 "
+"postagens GMB com ele.\n"
+"\n"
+"Se você está gostando do plugin e tem um momento para deixar uma "
+"classificação de 5 estrelas no %2$s, isso realmente ajudaria a aumentar "
+"ainda mais a minha motivação!\n"
+"\n"
+"Obrigado!\n"
+"\n"
+"%3$s\n"
+"\n"
+"%4$s\n"
+"%5$s\n"
+"%6$s"
+
+#: inc/class-mbp-plugin.php:285
+msgid "Wow! 100 posts!"
+msgstr "Uau! 100 postagens!"
+
+#: inc/class-mbp-plugin.php:287
+msgid ""
+"Hi %1$s,\n"
+"\n"
+"You've just published your 100th GMB post through the Post to Google My "
+"Business plugin, awesome!\n"
+"\n"
+"If you find the plugin useful and have a moment to leave a 5-star rating on "
+"the %2$s, you'd do me a BIG favour and it really motivates me to continue "
+"adding awesome features!\n"
+"\n"
+"Don't worry, this will be the last time I bother you about it.\n"
+"\n"
+"Thanks!\n"
+"\n"
+"%3$s\n"
+"\n"
+"%4$s\n"
+"%5$s\n"
+"%6$s"
+msgstr ""
+"Oi %1$s,\n"
+"\n"
+"Você acaba de publicar sua 100ª postagem no GMB, através do plugin Post to "
+"Google My Business. Incrível!\n"
+"\n"
+"Se você está achando o plugin útil e tem um momento para deixar uma "
+"classificação de 5 estrelas no %2$s, você me faria um grande favor e isso "
+"realmente me motivaria a continuar adicionando mais recursos incríveis!\n"
+"\n"
+"Não se preocupe! Esta será a última vez que te incomodo!\n"
+"\n"
+"Obrigado!\n"
+"\n"
+"%3$s\n"
+"\n"
+"%4$s\n"
+"%5$s\n"
+"%6$s"
+
+#: inc/class-mbp-post-type-google-posts.php:24
+msgid "Post campaigns"
+msgstr "Publicar campanhas"
+
+#: inc/class-mbp-post-type-google-posts.php:25
+msgid "Post campaign"
+msgstr "Publicar campanha"
+
+#: inc/class-mbp-post-type-google-posts.php:26
+msgid "New"
+msgstr "Nova"
+
+#: inc/class-mbp-post-type-google-posts.php:27
+msgid "Add new GMB campaign"
+msgstr "Adicionar nova campanha GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:29
+msgid "Edit GMB post campaign"
+msgstr "Editar postagem de campanha no GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:30
+msgid "New GMB post campaign"
+msgstr "Nova postagem de campanha no GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:31
+msgid "View"
+msgstr "Visualizar"
+
+#: inc/class-mbp-post-type-google-posts.php:32
+msgid "View GMB post campaign"
+msgstr "Visualizar postagem de campanha no GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:33
+msgid "Find GMB post campaign"
+msgstr "Encontrar postagem de campanha no GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:34
+msgid "No GMB post campaigns found"
+msgstr "Nenhuma postagem de campanha no GMB"
+
+#: inc/class-mbp-post-type-google-posts.php:35
+msgid "No GMB post campaigns found in the trash"
+msgstr "Nenhuma postagem de campanha do GMB na lixeira"
+
+#: src/BackgroundProcessing/GooglePostManager.php:175
+msgid "Failed to create/update post: %s"
+msgstr "Falha ao criar/atualizar postagem: %s"
+
+#: src/Components/BusinessSelector.php:47
+msgid ""
+"No user account or location groups found. Did you log in to the correct "
+"Google account?"
+msgstr ""
+"Nenhuma conta de usuário ou grupo de locais foi encontrado. Você fez login "
+"na conta correta do Google?"
+
+#: src/Components/BusinessSelector.php:62
+msgid "No businesses found."
+msgstr "Nenhuma empresa encontrada."
+
+#: src/Components/BusinessSelector.php:123
+msgid "Location grayed out?"
+msgstr "Local esmaecido?"
+
+#: src/Components/BusinessSelector.php:124
+msgid ""
+"It means the location is blocked from using the LocalPostAPI, and can't be "
+"posted to using the plugin."
+msgstr ""
+"Isso significa que o local está bloqueado para usar a LocalPostAPI e não "
+"pode ser postado usando o plugin."
+
+#: src/Components/BusinessSelector.php:125
+msgid "Learn more..."
+msgstr "Saiba mais..."
+
+#: src/Components/BusinessSelector.php:131
+msgid "Search/Filter locations..."
+msgstr "Pesquisar/Filtrar locais..."
+
+#: src/Components/BusinessSelector.php:134
+msgid "Select all"
+msgstr "Selecionar todos"
+
+#: src/Components/BusinessSelector.php:135
+msgid "Select none"
+msgstr "Nenhuma Seleção"
+
+#: src/Components/PostEditor.php:71
+msgid ", Timezone: "
+msgstr ", Fuso horário: "
+
+#: src/Google/AbstractGoogleJsonObject.php:27
+msgid "Unknown property"
+msgstr "Propriedade desconhecida"
+
+#: src/Google/CallToAction.php:29
+msgid "Invalid call to action"
+msgstr "Chamada para a ação inválida"
+
+#: src/Google/CallToAction.php:41
+msgid "Invalid URL supplied for call to action"
+msgstr "URL inválido fornecido para chamada para a ação"
+
+#: src/Google/Date.php:42
+msgid "Year must be from 1 to 9999, or 0 if specifying a date without a year."
+msgstr "O ano deve ser de 1 a 9999, ou 0 se especificar uma data sem um ano."
+
+#: src/Google/Date.php:52
+msgid ""
+"Month must be from 1 to 12, or 0 if specifying a year without a month and "
+"day. "
+msgstr "O mês deve ser de 1 a 12, ou 0 se especificar um ano sem mês e dia. "
+
+#: src/Google/Date.php:62
+msgid ""
+"Day must be from 1 to 31 and valid for the year and month, or 0 if "
+"specifying a year by itself or a year and month where the day is not "
+"significant. "
+msgstr ""
+"O dia deve ser de 1 a 31 e válido para o ano e mês, ou 0 se especificar um "
+"ano sozinho ou um ano e mês em que o dia não é significativo. "
+
+#: src/Google/LocalPost.php:72
+msgid "Invalid Topic type"
+msgstr "Tipo de Tópico inválido"
+
+#: src/Google/LocalPost.php:88
+msgid "Invalid Alert type"
+msgstr "Tipo de Alerta inválido"
+
+#: src/Google/LocalPost.php:114
+msgid "Post text should be between 1 and 1500 characters"
+msgstr "O texto da postagem deve ter entre 1 e 1.500 caracteres"
+
+#: src/Google/LocalPost.php:151
+msgid "Posts can only have 1 image"
+msgstr "As postagens podem ter apenas 1 imagem"
+
+#: src/Google/LocalPostEvent.php:18
+msgid "Event/offer title is required"
+msgstr "O título do evento/oferta é obrigatório"
+
+#: src/Google/LocalPostOffer.php:21
+msgid "Offer redeem online URL is invalid"
+msgstr "O URL do resgate da oferta online é inválido"
+
+#: src/Google/MediaItem.php:23
+msgid "Invalid media format"
+msgstr "Formato de mídia inválido"
+
+#: src/Google/MediaItem.php:26
+msgid "Creating posts with videos is currently not supported by Google"
+msgstr "Criar posts com vídeos atualmente não é suportado pelo Google"
+
+#: src/Google/MediaItem.php:33
+msgid "Invalid media URL"
+msgstr "URL de mídia inválido"
+
+#: src/Google/TimeInterval.php:47
+msgid "End date is before start date"
+msgstr "A data de término é anterior à data de início"
+
+#: src/Google/TimeOfDay.php:20
+msgid "Hour should be from 0 to 23"
+msgstr "A hora deve ser de 0 a 23"
+
+#: src/Google/TimeOfDay.php:27
+msgid "Minutes should be between 0 and 59"
+msgstr "Os minutos devem ser entre 0 e 59"
+
+#: src/Google/TimeOfDay.php:34
+msgid "Seconds should be between 0 and 59"
+msgstr "Os segundos devem ser entre 0 e 59"
+
+#: src/Google/TimeOfDay.php:41
+msgid "Nanos should be between 0 and 999,999,999"
+msgstr "Os nanos devem ser entre 0 e 999.999.999"
+
+#: src/ParseFormFields.php:192
+msgid ""
+"Product posts are no longer supported by the Google My Business API. Please "
+"choose a different GMB post type."
+msgstr ""
+"As postagens de produtos não são mais suportadas pela API do Google My "
+"Business. Por favor, escolha um tipo de postagem GMB diferente."
+
+#: src/ParseFormFields.php:319 src/ParseFormFields.php:404
+msgid ""
+"Could not detect post image file size. Make sure the image file/url is "
+"accessible remotely."
+msgstr ""
+"Não foi possível detectar o tamanho do arquivo de imagem da postagem. "
+"Certifique-se de que o arquivo/url de imagem esteja acessível remotamente."
+
+#: src/ParseFormFields.php:412
+msgid "Post image must be at least 250x250px. Selected image is %dx%dpx"
+msgstr ""
+"A imagem da postagem deve ter pelo menos 250x250px. A imagem selecionada é "
+"%dx%dpx"
+
+#: src/ParseFormFields.php:416
+msgid "Post image file too small, must be at least 10 KB. Selected image is %s"
+msgstr ""
+"Arquivo de imagem da postagem muito pequeno, deve ter pelo menos 10 KB. A "
+"imagem selecionada é %s"
+
+#: src/ParseFormFields.php:418
+msgid "Post image file too big, must be 5 MB at most. Selected image is %s"
+msgstr ""
+"Arquivo de imagem da postagem muito grande, deve ter 5 MB no máximo. A "
+"imagem selecionada é %s"
+
+#: src/ParseFormFields.php:439
+msgid "Could not parse post locations"
+msgstr "Não foi possível analisar os locais das postagens"
+
+#: src/Taxonomy/TaxonomyField.php:21
+msgid "The taxonomy does not exist"
+msgstr "A taxonomia não existe"
+
+#: src/Taxonomy/TaxonomyField.php:25
+msgid "Invalid field type"
+msgstr "Tipo de campo inválido"
+
+#: src/Upgrader/Upgrade_2_2_11.php:26
+msgid "Thanks for updating Post to Google My Business!"
+msgstr "Obrigado por atualizar o Post to Google My Business!"
+
+#: src/Upgrader/Upgrade_2_2_11.php:28
+msgid ""
+"Hi %1$s,\n"
+"\n"
+"Thanks for updating Post to Google My Business to the latest version. I've "
+"added this new dashboard section, check out the new features section below!\n"
+"\n"
+"If you're enjoying the plugin and have a moment to %2$s, that's really "
+"appreciated and really helps me move the plugin forward.\n"
+"\n"
+"%3$s"
+msgstr ""
+"Olá %1$s,\n"
+"\n"
+"Obrigado por atualizar o Post to Google My Business para a versão mais "
+"recente. Eu adicionei esta nova seção de painel, verifique a seção de novos "
+"recursos abaixo!\n"
+"\n"
+"Se você está gostando do plugin e tem um momento para %2$s, eu apreciaria "
+"muito e realmente me ajuda a avançar com o plugin.\n"
+"\n"
+"%3$s"
+
+#: src/Upgrader/Upgrade_2_2_11.php:33
+msgid "leave a review"
+msgstr "deixe um comentário"
+
+#: src/Upgrader/Upgrade_2_2_11.php:49
+msgid "[Pro] Auto-post only with specific tag/category"
+msgstr "[Pro] Postagem automática apenas com tag/categoria específica"
+
+#: src/Upgrader/Upgrade_2_2_11.php:50
+msgid ""
+"This allows you to limit auto-post to a specific tag or category. Your post "
+"will be auto-posted when they have a tag/category where this option is "
+"enabled."
+msgstr ""
+"Isso permite limitar a postagem automática a uma tag ou categoria "
+"específica. Sua postagem será postada automaticamente quando tiver uma tag/"
+"categoria onde essa opção estiver ativada."
+
+#: src/Upgrader/Upgrade_2_2_11.php:52 src/Upgrader/Upgrade_2_2_11.php:62
+#: src/Upgrader/Upgrade_2_2_11.php:72 src/Upgrader/Upgrade_2_2_11.php:82
+msgid "Screenshot"
+msgstr "Captura de tela"
+
+#: src/Upgrader/Upgrade_2_2_11.php:59
+msgid "Post calendar"
+msgstr "Calendário de postagem"
+
+#: src/Upgrader/Upgrade_2_2_11.php:60
+msgid ""
+"Track your posts in time with the new post calender. For easy scheduling and "
+"planning."
+msgstr ""
+"Acompanhe suas publicações em tempo real, com o novo calendário de "
+"postagens. Para facilitar o agendamento e planejamento."
+
+#: src/Upgrader/Upgrade_2_2_11.php:69
+msgid "Full editor for auto-post template"
+msgstr "Editor completo para modelo de postagem automática"
+
+#: src/Upgrader/Upgrade_2_2_11.php:70
+msgid ""
+"Fine-tune one template for all your automated posts to follow.  The new "
+"editor gives you complete control over the auto-post template."
+msgstr ""
+"Ajuste um modelo para todas as suas postagens automatizadas a seguir. O novo "
+"editor oferece controle completo sobre o modelo de postagem automática."
+
+#: src/Upgrader/Upgrade_2_2_11.php:79
+msgid "COVID-19 alert/update post support"
+msgstr "Alerta COVID-19/atualização de suporte de postagem"
+
+#: src/Upgrader/Upgrade_2_2_11.php:80
+msgid ""
+"A very effective way to keep your customers up-to-date on any changes to "
+"your business due to the corona virus (COVID-19)"
+msgstr ""
+"Uma maneira muito eficaz de manter seus clientes atualizados sobre quaisquer "
+"alterações em seus negócios, devido ao corona vírus (COVID-19)"
+
+#: src/WeDevsSettingsAPI.php:372
+msgid "Choose File"
+msgstr "Escolher Arquivo"
+
+#: templates/PostEditor.php:47
+msgid "Post image/video"
+msgstr "Publicar imagem/vídeo"
+
+#: templates/PostEditor.php:56
+msgid "JPG or PNG, 720x540px minimum size"
+msgstr "JPG ou PNG, tamanho mínimo de 720x540px"
+
+#: templates/PostEditor.php:62
+msgid "Post text"
+msgstr "Texto do post"
+
+#: templates/PostEditor.php:69
+msgid "Characters:"
+msgstr "Caracteres:"
+
+#: templates/PostEditor.php:71
+msgid "Word count:"
+msgstr "Contagem de palavras:"
+
+#: templates/PostEditor.php:74
+msgid ""
+"The text that should appear on your post. Recommended 150-300 characters. 80 "
+"characters show in the Google Search results. 1500 characters maximum."
+msgstr ""
+"O texto que deve aparecer em sua postagem. Recomendado de 150 a 300 "
+"caracteres. Os primeiros 80 caracteres, aparecem nos resultados da Pesquisa "
+"Google. Máximo de 1.500 caracteres."
+
+#: templates/PostEditor.php:82
+msgid "Event title"
+msgstr "Título do evento"
+
+#: templates/PostEditor.php:93
+msgid "All day event (time will be ignored)"
+msgstr "Evento de dia inteiro (o horário será ignorado)"
+
+#: templates/PostEditor.php:98
+msgid "Start date"
+msgstr "Data de início"
+
+#: templates/PostEditor.php:110
+msgid "End date"
+msgstr "Data de término"
+
+#: templates/PostEditor.php:125
+msgid "Offer title"
+msgstr "Título da oferta"
+
+#: templates/PostEditor.php:132
+msgid "Example: 20% off in store or online"
+msgstr "Exemplo: 20% de desconto na loja ou online"
+
+#: templates/PostEditor.php:137
+msgid "Coupon code (optional)"
+msgstr "Código de cupom (opcional)"
+
+#: templates/PostEditor.php:147
+msgid "Link to redeem offer (optional)"
+msgstr "Link para resgatar oferta (opcional)"
+
+#: templates/PostEditor.php:157
+msgid "Terms and conditions (optional)"
+msgstr "Termos e condições (opcional)"
+
+#: templates/PostEditor.php:170
+msgid ""
+"The ability to create Product posts has been (temporarily?) removed from the "
+"Google My Business API."
+msgstr ""
+"A capacidade de criar postagens de produtos foi (temporariamente) removida "
+"da API do Google My Business."
+
+#: templates/PostEditor.php:175
+msgid ""
+"Check out %s for (auto-)publishing your WooCommerce products on Google My "
+"Business."
+msgstr ""
+"Confira %s para (auto-)publicar seus produtos WooCommerce no Google My "
+"Business."
+
+#: templates/PostEditor.php:178
+msgid "this workaround"
+msgstr "esta solução alternativa"
+
+#: templates/PostEditor.php:217
+msgid "Details"
+msgstr "Detalhes"
+
+#: templates/PostEditor.php:220
+msgid ""
+"The text that should appear on your post. Recommended 150-300 characters. 80 "
+"characters show in the SERPS. 1500 characters maximum."
+msgstr ""
+"O texto que deve aparecer em sua postagem. Recomendado de 150 a 300 "
+"caracteres. Os primeiros 80 caracteres são mostrados nas SERPS. Máximo de "
+"1.500 caracteres."
+
+#: templates/PostEditor.php:229
+msgid "Button"
+msgstr "Botão"
+
+#: templates/PostEditor.php:234
+msgid "Add a button"
+msgstr "Adicionar um botão"
+
+#: templates/PostEditor.php:239
+msgid "Button type"
+msgstr "Tipo de botão"
+
+#: templates/PostEditor.php:243
+msgid "Book"
+msgstr "Reservar"
+
+#: templates/PostEditor.php:247
+msgid "Order"
+msgstr "Fazer o pedido"
+
+#: templates/PostEditor.php:251
+msgid "Shop"
+msgstr "Comprar"
+
+#: templates/PostEditor.php:255
+msgid "Learn more"
+msgstr "Saiba mais"
+
+#: templates/PostEditor.php:259
+msgid "Sign up"
+msgstr "Inscrever-se"
+
+#: templates/PostEditor.php:263
+msgid "Get offer"
+msgstr "Obter oferta"
+
+#: templates/PostEditor.php:267
+msgid "Call now (uses primary phone number of business)"
+msgstr "Ligar agora (usa o número de telefone principal da empresa)"
+
+#: templates/PostEditor.php:270
+msgid "The text that should appear on your button"
+msgstr "O texto que deve aparecer no seu botão"
+
+#: templates/PostEditor.php:275
+msgid "Alternative button URL"
+msgstr "URL do botão alternativo"
+
+#: templates/PostEditor.php:283
+msgid ""
+"Optional. Where the user should go when clicking the button. Leave at "
+"default to send them to your newly created WordPress post."
+msgstr ""
+"Opcional. Para onde o usuário deve ir ao clicar no botão. Deixe como padrão "
+"para enviá-lo para seu post WordPress recém-criado."
+
+#: templates/PostEditor.php:291
+msgid "Advanced post settings"
+msgstr "Configurações avançadas de postagem"
+
+#: templates/PostEditor.php:297
+msgid "Image settings"
+msgstr "Configurações de imagem"
+
+#: templates/PostEditor.php:303
+msgid "Fetch image from post content"
+msgstr "Obter imagem do conteúdo da postagem"
+
+#: templates/PostEditor.php:306
+msgid ""
+"Try to get an image from the post content (when no custom image is set). "
+"This takes priority over the featured image."
+msgstr ""
+"Tente obter uma imagem do conteúdo da postagem (quando nenhuma imagem "
+"personalizada está definida). Isso tem prioridade sobre a imagem em destaque."
+
+#: templates/PostEditor.php:310
+msgid "Use Featured Image as GMB post image"
+msgstr "Use a imagem em destaque como imagem de postagem do GMB"
+
+#: templates/PostEditor.php:313
+msgid "Use the Featured Image as GMB Post image (when no custom image is set)"
+msgstr ""
+"Use a imagem em destaque como imagem de postagem do GMB (quando nenhuma "
+"imagem personalizada estiver definida)"
+
+#: templates/PostEditor.php:319
+msgid ""
+"Schedule your Google My Business posts, automatically repost them at "
+"specified interval, and pick one or more locations to post to. And many more "
+"features!"
+msgstr ""
+"Agende suas postagens no Google My Business, repita-as automaticamente em um "
+"intervalo especificado e escolha um ou mais locais para postar. E muitos "
+"mais recursos!"
+
+#: templates/PostEditor.php:322
+msgid "Upgrade now!"
+msgstr "Atualize agora!"
+
+#: templates/PostEditor.php:344
+msgid "When the post should be first published"
+msgstr "Quando a postagem deve ser publicada pela primeira vez"
+
+#: templates/PostEditor.php:355
+msgid "Automatic repost"
+msgstr "Repostagem automática"
+
+#: templates/PostEditor.php:365
+msgid "Stop after"
+msgstr "Pare depois"
+
+#: templates/PostEditor.php:369
+msgid "Never"
+msgstr "Nunca"
+
+#: templates/PostEditor.php:371
+msgid "Date"
+msgstr "Data"
+
+#: templates/PostEditor.php:373
+msgid "Executions"
+msgstr "Execuções"
+
+#: templates/PostEditor.php:386
+msgid "executions"
+msgstr "execuções"
+
+#: templates/PostEditor.php:393
+msgid "Post to location(s)"
+msgstr "Postar no(s) local(is)"
+
+#: templates/PostEditor.php:413
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: templates/PostEditor.php:419
+msgid "Publish Now"
+msgstr "Publicar Agora"
+
+#: templates/dashboard.php:5
+msgid "Notifications (%s)"
+msgstr "Notificações (%s)"
+
+#: templates/dashboard.php:17
+msgid "New features (%s)"
+msgstr "Novos recursos (%s)"
+
+#: templates/dashboard.php:35
+msgid "Calendar"
+msgstr "Calendário"
+
+#: templates/metabox.php:9
+msgid "Edit auto-post template"
+msgstr "Editar modelo de postagem automática"
+
+#: templates/metabox.php:10 templates/metabox.php:13
+msgid "New GMB Post"
+msgstr "Nova postagem no GMB"
+
+#: templates/metabox.php:23
+msgid "Post type"
+msgstr "Tipo de postagem"
+
+#: templates/metabox.php:24
+msgid "Publish date"
+msgstr "Data de publicação"
+
+#: templates/metabox.php:25
+msgid "Created"
+msgstr "Criado"
+
+#: templates/metabox.php:39
+msgid "Location"
+msgstr "Local"
+
+#: templates/metabox.php:41
+msgid "Status"
+msgstr "Status"
+
+#: templates/settings.php:3
+msgid ""
+"Thanks for choosing Post to Google My Business! The easiest and most "
+"versatile Google My Business plugin for WordPress."
+msgstr ""
+"Obrigado por escolher Post to Google My Business! O plugin do Google My "
+"Business mais fácil e versátil para WordPress."
+
+#: templates/settings.php:4
+msgid ""
+"Need help getting started? Check out the <a target=\"_blank\" href=\"https://"
+"tycoonmedia.net/gmb-tutorial-video/\">tutorial video</a>"
+msgstr ""
+"Precisa de ajuda para começar? Confira o <a target=\"_blank\" href=\"https://"
+"tycoonmedia.net/gmb-tutorial-video/\">vídeo tutorial</a>"
+
+#. Plugin URI of the plugin/theme
+msgid "https://tycoonmedia.net"
+msgstr "https://tycoonmedia.net"
+
+#. Description of the plugin/theme
+msgid ""
+"Automatically create a post on Google My Business when creating a new "
+"WordPress post"
+msgstr ""
+"Crie automaticamente uma postagem no Google My Business ao criar uma nova "
+"postagem no WordPress"
+
+#. Author of the plugin/theme
+msgid "Koen Reus"
+msgstr "Koen Reus"
+
+#. Author URI of the plugin/theme
+msgid "https://koenreus.com"
+msgstr "https://koenreus.com"
+
+#: inc/class-mbp-metabox.php:588
+msgctxt "%s = human-readable time difference"
+msgid "%s ago"
+msgstr "%s atrás"

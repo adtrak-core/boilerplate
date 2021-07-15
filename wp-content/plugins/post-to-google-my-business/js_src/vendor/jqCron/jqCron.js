@@ -7,18 +7,6 @@
  * file that was distributed with this source code.
  */
 
-
-
- /*
- TODO
- -----
- 1) Add possibility to set the language while using @import.
- Currently the language is set by default at line: 870
- 2) Replace window<Object> context with own context: jQuery.fn.jqCron?.context.
- Instead of attaching Objects directly to the global window<Object>. Example: jqCronDefaultSettings, jqCron
- */
-
-
 /**
  * Default settings
  */
@@ -27,8 +15,12 @@
 	texts: {},
 	monthdays: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
 	hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-	hour_labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
 	minutes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59],
+	// Optional, use labels if you want to customize hours and/or minutes.
+	// By default integers of each list will be converted into strings.
+	// monthday_labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"],
+	// hour_labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"],
+	// minute_labels: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59"],
 	lang: 'en',
 	enabled_minute: false,
 	enabled_hour: true,
@@ -223,19 +215,19 @@ jQuery(document).ready(function($) {
 		// disable the selector
 		this.disable = function(){
 			_$obj.addClass('disable');
-			settings.disable = true;
+			settings.disabled = true;
 			_self.closeSelectors();
 		};
 
 		// return if the selector is disabled
 		this.isDisabled = function() {
-			return settings.disable == true;
+			return settings.disabled == true;
 		};
 
 		// enable the selector
 		this.enable = function(){
 			_$obj.removeClass('disable');
-			settings.disable = false;
+			settings.disabled = false;
 		};
 
 		// get cron value
@@ -266,7 +258,7 @@ jQuery(document).ready(function($) {
 			if(!str) return;
 			try {
 				str = str.replace(/\s+/g, ' ').replace(/^ +/, '').replace(/ +$/, ''); // sanitize
-				var mask = str.replace(/[^\* ]/g, '-').replace(/-+/g, '-').replace(/ +/g, '');
+				var mask = str.replace(/\*\//g, '').replace(/[^\* ]/g, '-').replace(/-+/g, '-').replace(/ +/g, '');
 				var items = str.split(' ');
 				if (items.length != 5) _self.error(_self.getText('error2'));
 				if(mask == '*****') {						// 1 possibility
@@ -322,7 +314,7 @@ jQuery(document).ready(function($) {
 		// get the main element id
 		this.getId = function(){
 			return _$elt.attr('id');
-		}
+		};
 
 		// get the translated text
 		this.getText = function(key) {
@@ -336,16 +328,16 @@ jQuery(document).ready(function($) {
 
 		// get the human readable text
 		this.getHumanText = function() {
-		    var texts=[];
-		    _$obj
-		    .find('> span > span:visible')
-		    .find('.jqCron-text, .jqCron-selector > span')
-		    .each(function() {
-		        var text = $(this).text().replace(/\s+$/g, '').replace(/^\s+/g, '');
-		        text && texts.push(text);
-		    });
-		    return texts.join(' ').replace(/\s:\s/g, ':');
-		}
+				var texts=[];
+				_$obj
+				.find('> span > span:visible')
+				.find('.jqCron-text, .jqCron-selector > span')
+				.each(function() {
+						var text = $(this).text().replace(/\s+$/g, '').replace(/^\s+/g, '');
+						text && texts.push(text);
+				});
+				return texts.join(' ').replace(/\s:\s/g, ':');
+		};
 
 		// get settings
 		this.getSettings = function(){
@@ -381,6 +373,15 @@ jQuery(document).ready(function($) {
 			if(_initialized) return;
 
 			settings = jqCronMergeSettings(settings);
+
+			// copy 'disable' into 'disabled' if it exists
+			// (there was typo bug for several year and I don't want to break legacy code)
+			if('disable' in settings && !settings.disabled) settings.disabled = settings.disable;
+
+			if(!('hour_labels' in settings)) settings.hour_labels = settings.hours.map(function(x) { return String(x); });
+			if(!('minute_labels' in settings)) settings.minute_labels = settings.minutes.map(function(x) { return String(x); });
+			if(!('monthday_labels' in settings)) settings.monthday_labels = settings.monthdays.map(function(x) { return String(x); });
+
 			settings.jquery_element || _self.error(_self.getText('error3'));
 			_$elt = settings.jquery_element;
 			_$elt.append(_$obj);
@@ -388,10 +389,16 @@ jQuery(document).ready(function($) {
 			_$obj.data('jqCron', _self);
 			_$obj.append(_$blocks);
 			settings.no_reset_button || _$obj.append(_$cross);
-			(!settings.disable) || _$obj.addClass('disable');
+			(!settings.disabled) || _$obj.addClass('disable');
 			_$blocks.append(_$blockPERIOD);
-			_$blocks.append(_$blockDOM);
-			_$blocks.append(_$blockMONTH);
+
+			if ( /^(ko)$/i.test(settings.lang) ) {
+				_$blocks.append(_$blockMONTH, _$blockDOM);
+			}
+			else {
+				_$blocks.append(_$blockDOM, _$blockMONTH);
+			}
+
 			_$blocks.append(_$blockMINS);
 			_$blocks.append(_$blockDOW);
 			_$blocks.append(_$blockTIME);
@@ -459,8 +466,8 @@ jQuery(document).ready(function($) {
 				_selectorTimeH.add(list[i], labelsList[i]);
 			}
 			_selectorTimeM = newSelector(_$blockTIME, settings.multiple_time_minutes, 'time_minutes');
-			for(i=0, list=settings.minutes; i<list.length; i++){
-				_selectorTimeM.add(list[i], list[i]);
+			for(i=0, list=settings.minutes, labelsList=settings.minute_labels; i<list.length; i++){
+				_selectorTimeM.add(list[i], labelsList[i]);
 			}
 
 			// DOW  (day of week)
@@ -473,8 +480,8 @@ jQuery(document).ready(function($) {
 			// DOM  (day of month)
 			_$blockDOM.append(_self.getText('text_dom'));
 			_selectorDom = newSelector(_$blockDOM, settings.multiple_dom, 'day_of_month');
-			for(i=0, list=settings.monthdays; i<list.length; i++){
-				_selectorDom.add(list[i], list[i]);
+			for(i=0, list=settings.monthdays, labelsList=settings.monthday_labels; i<list.length; i++){
+				_selectorDom.add(list[i], labelsList[i]);
 			}
 
 			// MONTH  (day of week)
@@ -544,6 +551,51 @@ jQuery(document).ready(function($) {
 			return a;
 		}
 
+		this.getTotalItem = function(multiple){
+			var total = 0;
+			switch (_type) {
+				case 'minutes':
+				case 'time_minutes':
+					total = 60 - this.itemStartAt();
+					break;
+				case 'time_hours':
+					total = 24 - this.itemStartAt();
+					break;
+				case 'day_of_month':
+					total = 31 - this.itemStartAt();
+					break;
+				case 'month':
+					total = 12 - this.itemStartAt();
+					break;
+				case 'day_of_week':
+					total = 7 - this.itemStartAt();
+					break;
+			}
+
+			if (multiple) {
+				var lastMultiple = 0;
+				for (var i = 0; i < total; i++) {
+					if (i % multiple !== 0) continue;
+					lastMultiple = i;
+				}
+				return (lastMultiple / multiple) + 1
+			}
+			return total;
+		};
+
+		this.itemStartAt = function(){
+			switch (_type) {
+				case 'minutes':
+				case 'time_minutes':
+				case 'time_hours':
+					return 0;
+				case 'day_of_month':
+				case 'month':
+				case 'day_of_week':
+					return 1;
+			}
+		};
+
 		// get the value (an array if multiple, else a single value)
 		this.getValue = function(){
 			return _multiple ? _value : _value[0];
@@ -553,7 +605,7 @@ jQuery(document).ready(function($) {
 		this.getCronValue = function(){
 			if(_value.length == 0) return '*';
 			var cron = [_value[0]], i, s = _value[0], c = _value[0], n = _value.length;
-			for(i=1; i<n; i++) {
+			for(var i=1; i<n; i++) {
 				if(_value[i] == c+1) {
 					c = _value[i];
 					cron[cron.length-1] = s+'-'+c;
@@ -563,6 +615,30 @@ jQuery(document).ready(function($) {
 					cron.push(c);
 				}
 			}
+
+			if (cron.length > 1) {
+				var multiple = cron[0] === 0 ? cron[1] : cron[0];
+				var total = this.getTotalItem(multiple);
+
+				if (total === cron.length) {
+					var valid = true;
+					var counter = 0;
+
+					for(var i=1; i<cron.length; i++) {
+						counter += multiple;
+						if (cron[i] % multiple !== 0 || multiple*i !== counter) {
+							valid = false;
+							break;
+						}
+					}
+
+					if (valid) {
+						_self.multipleOf = multiple;
+						return '*/' + multiple;
+					}
+				}
+			}
+
 			return cron.join(',');
 		};
 
@@ -662,6 +738,7 @@ jQuery(document).ready(function($) {
 				if(ta==tb && ta=="number") return a-b;
 				else return String(a) == String(b) ? 0 : (String(a) < String(b) ? -1 : 1);
 			});
+
 			if(_multiple) {
 				for(i=0; i<keys.length; i++){
 					if(keys[i] in _values) {
@@ -705,6 +782,30 @@ jQuery(document).ready(function($) {
 					cron.push(getValueText(c));
 				}
 			}
+
+			if (cron.length > 1) {
+				var multiple = cron[0] === "0" ? +cron[1] : +cron[0];
+				var total = this.getTotalItem(multiple);
+				console && console.log(_type, total, cron.length, _self.multipleOf);
+
+				if (total === cron.length) {
+					var valid = true;
+					var counter = 0;
+
+					for(i=1; i<cron.length; i++) {
+						counter += multiple;
+						if (+cron[i] % multiple !== 0 || multiple*i !== counter) {
+							valid = false;
+							break;
+						}
+					}
+
+					if (valid) {
+						return 'every ' + multiple;
+					}
+				}
+			}
+
 			return cron.join(',');
 		};
 
@@ -724,14 +825,51 @@ jQuery(document).ready(function($) {
 			var $item = $('<li>' + value + '</li>');
 			_$list.append($item);
 			_values[key] = $item;
-			$item.click(function(){
-				if(_multiple && $(this).hasClass('selected')) {
-					_self.removeValue(key);
+
+			var DELAY = 200, clicks = 0, timer = null;
+			var total = this.getTotalItem();
+			var startAt = this.itemStartAt();
+			$item.click(function(e) {
+		 		clicks++;
+	 			var $this = $(this);
+				if(clicks === 1) {
+					// SINGLE CLICK
+					timer = setTimeout(function() {
+						if(_multiple && $this.hasClass('selected')) {
+							_self.removeValue(key);
+						}
+						else {
+							_self.addValue(key);
+							if(!_multiple) _self.close();
+						}
+						clicks = 0;
+					}, DELAY);
+				} else if(_multiple) {
+					var multiple = +value;
+					var itemValues = [];
+					var list = [];
+					for (var i = startAt; i < total; i++) {
+
+						_self.removeValue(i);
+						if (i % multiple === 0 && _self.multipleOf !== multiple) {
+							itemValues.push(i);
+						}
+					}
+
+					if (_self.multipleOf !== multiple) {
+						_self.multipleOf = multiple;
+						for(i=0; i<itemValues.length; i++){
+							_self.addValue(itemValues[i]);
+						}
+					} else {
+						_self.multipleOf = null;
+					}
+
+					clearTimeout(timer);	//prevent single-click action
+					clicks = 0;			 //after action performed, reset counter
 				}
-				else {
-					_self.addValue(key);
-					if(!_multiple) _self.close();
-				}
+			}).dblclick(function(e) {
+				e.preventDefault();
 			});
 		};
 
@@ -807,62 +945,17 @@ jQuery(document).ready(function($) {
 	$.extend($.expr[':'], {
 		container: function(a) {
 			return (a.tagName+'').toLowerCase() in {
-				a:1,
-				abbr:1,
-				acronym:1,
-				address:1,
-				b:1,
-				big:1,
-				blockquote:1,
-				button:1,
-				cite:1,
-				code:1,
-				dd: 1,
-				del:1,
-				dfn:1,
-				div:1,
-				dt:1,
-				em:1,
-				fieldset:1,
-				form:1,
-				h1:1,
-				h2:1,
-				h3:1,
-				h4:1,
-				h5:1,
-				h6: 1,
-				i:1,
-				ins:1,
-				kbd:1,
-				label:1,
-				li:1,
-				p:1,
-				pre:1,
-				q:1,
-				samp:1,
-				small:1,
-				span:1,
-				strong:1,
-				sub: 1,
-				sup:1,
-				td:1,
-				tt:1
+				a:1, abbr:1, acronym:1, address:1, b:1, big:1, blockquote:1, button:1,
+				cite:1, code:1, dd: 1, del:1, dfn:1, div:1, dt:1,
+				em:1, fieldset:1, form:1, h1:1, h2:1, h3:1, h4:1, h5:1, h6: 1,
+				i:1, ins:1, kbd:1, label:1, li:1, p:1, pre:1, q:1,
+				samp:1, small:1, span:1, strong:1, sub: 1, sup:1, td:1, tt:1
 			};
 		},
 		autoclose: function(a) {
 			return (a.tagName+'').toLowerCase() in {
-				area:1,
-				base:1,
-				basefont:1,
-				br:1,
-				col:1,
-				frame:1,
-				hr:1,
-				img:1,
-				input:1,
-				link:1,
-				meta:1,
-				param:1
+				area:1, base:1, basefont:1, br:1, col:1, frame:1, hr:1,
+				img:1, input:1, link:1, meta:1, param:1
 			};
 		}
 	});

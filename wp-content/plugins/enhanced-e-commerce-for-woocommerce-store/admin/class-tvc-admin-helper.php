@@ -156,6 +156,23 @@ Class TVC_Admin_Helper{
 		return array("error"=>false, "message"=>"Details updated successfully.");
 	}
 	/*
+   * update remarketing snippets
+   */
+	public function update_remarketing_snippets(){
+		$customer_id = $this->get_currentCustomerId();
+		if($customer_id != ""){
+			$rs = $this->customApiObj->get_remarketing_snippets($customer_id);
+			$remarketing_snippets=array();
+			if(property_exists($rs,"error") && $rs->error == false){
+				if(property_exists($rs,"data") && $rs->data != "") {
+					$remarketing_snippets["snippets"]=base64_encode($rs->data->snippets);
+					$remarketing_snippets["id"]=$rs->data->id;
+	      }
+			}
+			update_option("ee_remarketing_snippets", serialize($remarketing_snippets));
+		}
+	}
+	/*
    * import GMC products in DB
    */
 	public function import_gmc_products_sync_in_db($next_page_token = null){
@@ -355,6 +372,13 @@ Class TVC_Admin_Helper{
 	  }
 	}
 	
+	public function get_api_customer_id(){
+		$google_detail = $this->get_ee_options_data();
+		if(isset($google_detail['setting'])){
+      $googleDetail = (array) $google_detail['setting'];
+			return ((isset($googleDetail['customer_id']))?$googleDetail['customer_id']:"");
+		}
+	}
 	//tvc_customer = >google_ads_id
 	public function get_currentCustomerId(){
 		if(!empty($this->currentCustomerId)){
@@ -382,12 +406,6 @@ Class TVC_Admin_Helper{
 			$this->user_currency_symbol = $currency_symbol;
 			return $this->user_currency_symbol;
 		}
-	}
-
-	public function add_tvc_log($log_string){
-		$log  = "User: ".date("F j, Y, g:i a").PHP_EOL." Attempt: ".$log_string;
-		//Save string to log, use FILE_APPEND to append.
-		file_put_contents('log_tvc.log', $log, FILE_APPEND);
 	}
 	
 	public function add_spinner_html(){
@@ -995,4 +1013,22 @@ Class TVC_Admin_Helper{
 	  	return false;
 	  }
   }
+   /*
+   * get user plan id
+   */
+  public function get_plan_id(){
+  	if(!empty($this->plan_id)){
+			return $this->plan_id;
+		}else{
+			$plan_id = 1;
+	  	if(isset($google_detail['setting'])){
+			  $googleDetail = $google_detail['setting'];
+			  if(isset($googleDetail->plan_id) && !in_array($googleDetail->plan_id, array("1"))){
+			    $plan_id = $googleDetail->plan_id;
+			  }
+			}
+			return $this->plan_id = $plan_id;
+  	}
+	}
+  
 }

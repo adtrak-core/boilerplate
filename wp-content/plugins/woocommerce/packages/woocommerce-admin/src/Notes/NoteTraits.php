@@ -21,15 +21,27 @@ trait NoteTraits {
 	 * @param int $seconds Time in seconds to check.
 	 * @return bool Whether or not WooCommerce admin has been active for $seconds.
 	 */
-	public static function wc_admin_active_for( $seconds ) {
+	private static function wc_admin_active_for( $seconds ) {
 		return WCAdminHelper::is_wc_admin_active_for( $seconds );
 	}
 
 	/**
+	 * Test if WooCommerce Admin has been active within a pre-defined range.
+	 *
+	 * @param string $range range available in WC_ADMIN_STORE_AGE_RANGES.
+	 * @return bool Whether or not WooCommerce admin has been active within the range.
+	 */
+	private static function is_wc_admin_active_in_date_range( $range ) {
+		return WCAdminHelper::is_wc_admin_active_in_date_range( $range );
+	}
+
+	/**
 	 * Check if the note has been previously added.
+	 *
+	 * @throws NotesUnavailableException Throws exception when notes are unavailable.
 	 */
 	public static function note_exists() {
-		$data_store = \WC_Data_Store::load( 'admin-note' );
+		$data_store = Notes::load_data_store();
 		$note_ids   = $data_store->get_notes_with_name( self::NOTE_NAME );
 		return ! empty( $note_ids );
 	}
@@ -38,6 +50,7 @@ trait NoteTraits {
 	 * Checks if a note can and should be added.
 	 *
 	 * @return bool
+	 * @throws NotesUnavailableException Throws exception when notes are unavailable.
 	 */
 	public static function can_be_added() {
 		$note = self::get_note();
@@ -62,6 +75,8 @@ trait NoteTraits {
 
 	/**
 	 * Add the note if it passes predefined conditions.
+	 *
+	 * @throws NotesUnavailableException Throws exception when notes are unavailable.
 	 */
 	public static function possibly_add_note() {
 		$note = self::get_note();
@@ -75,6 +90,8 @@ trait NoteTraits {
 
 	/**
 	 * Alias this method for backwards compatibility.
+	 *
+	 * @throws NotesUnavailableException Throws exception when notes are unavailable.
 	 */
 	public static function add_note() {
 		self::possibly_add_note();
@@ -84,9 +101,11 @@ trait NoteTraits {
 	 * Possibly delete the note, if it exists in the database. Note that this
 	 * is a hard delete, for where it doesn't make sense to soft delete or
 	 * action the note.
+	 *
+	 * @throws NotesUnavailableException Throws exception when notes are unavailable.
 	 */
 	public static function possibly_delete_note() {
-		$data_store = \WC_Data_Store::load( 'admin-note' );
+		$data_store = Notes::load_data_store();
 		$note_ids   = $data_store->get_notes_with_name( self::NOTE_NAME );
 
 		foreach ( $note_ids as $note_id ) {
@@ -102,9 +121,10 @@ trait NoteTraits {
 	 * Get if the note has been actioned.
 	 *
 	 * @return bool
+	 * @throws NotesUnavailableException Throws exception when notes are unavailable.
 	 */
 	public static function has_note_been_actioned() {
-		$data_store = \WC_Data_Store::load( 'admin-note' );
+		$data_store = Notes::load_data_store();
 		$note_ids   = $data_store->get_notes_with_name( self::NOTE_NAME );
 
 		if ( ! empty( $note_ids ) ) {

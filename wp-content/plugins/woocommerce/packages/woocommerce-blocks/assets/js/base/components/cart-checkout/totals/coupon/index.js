@@ -51,11 +51,11 @@ const TotalsCoupon = ( {
 			title={
 				<Label
 					label={ __(
-						'Coupon Code?',
+						'Coupon code',
 						'woocommerce'
 					) }
 					screenReaderLabel={ __(
-						'Introduce Coupon Code',
+						'Apply a coupon code',
 						'woocommerce'
 					) }
 					htmlFor={ textInputId }

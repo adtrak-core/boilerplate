@@ -131,6 +131,8 @@ if ( !class_exists( 'MBP_Metabox' ) ) {
             );
             wp_localize_script( 'mbp-gutenberg', 'mbp_localize_gutenberg', [
                 'checked_by_default' => $this->settings->get_current_setting( 'invert', 'mbp_quick_post_settings', 'off' ) == 'on',
+                'post_id'            => get_the_ID(),
+                'post_nonce'         => wp_create_nonce( 'mbp_post_nonce' ),
             ] );
         }
         

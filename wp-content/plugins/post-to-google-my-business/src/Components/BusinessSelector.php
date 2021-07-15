@@ -50,8 +50,13 @@ class BusinessSelector {
 		$rows = '';
 		$accounts->accounts = apply_filters('mbp_business_selector_accounts', $accounts->accounts);
 		foreach($accounts->accounts as $account){
-			$rows .= sprintf( "<tr><td colspan=\"2\"><strong>%s</strong></td></tr>", $account->accountName );
+			$rows .= "<tbody><tr><td colspan='2'><strong>{$account->accountName}</strong>";
+			if($this->multiple){
+				$rows .= sprintf(" [ <a href='#' class='pgmb-toggle-group'>%s</a> ]", __('Toggle selection', 'post-to-google-my-business'));
+			}
+			$rows .= '</td></tr>';
 			$rows .= $this->location_rows($account->name);
+			$rows .= '</tbody>';
 		}
 		return $rows;
 	}

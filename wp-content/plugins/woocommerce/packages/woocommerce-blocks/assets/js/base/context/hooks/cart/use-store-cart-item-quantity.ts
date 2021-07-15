@@ -7,19 +7,20 @@ import { CART_STORE_KEY as storeKey } from '@woocommerce/block-data';
 import { useDebounce } from 'use-debounce';
 import { usePrevious } from '@woocommerce/base-hooks';
 import { triggerFragmentRefresh } from '@woocommerce/base-utils';
-import type { CartItem, StoreCartItemQuantity } from '@woocommerce/types';
+import {
+	CartItem,
+	StoreCartItemQuantity,
+	isNumber,
+	isObject,
+	isString,
+	objectHasProp,
+} from '@woocommerce/types';
 
 /**
  * Internal dependencies
  */
 import { useStoreCart } from './use-store-cart';
 import { useCheckoutContext } from '../../providers/cart-checkout';
-import {
-	isNumber,
-	isObject,
-	isString,
-	objectHasProp,
-} from '../../../utils/type-guards';
 
 /**
  * Ensures the object passed has props key: string and quantity: number
@@ -82,7 +83,6 @@ export const useStoreCartItemQuantity = (
 		},
 		[ cartItemKey ]
 	);
-	const previousIsPending = usePrevious( isPending );
 
 	const removeItem = () => {
 		return cartItemKey
@@ -111,32 +111,30 @@ export const useStoreCartItemQuantity = (
 	] );
 
 	useEffect( () => {
-		if ( typeof previousIsPending === 'undefined' ) {
-			return;
-		}
-		if ( previousIsPending.quantity !== isPending.quantity ) {
-			if ( isPending.quantity ) {
-				dispatchActions.incrementCalculating();
-			} else {
-				dispatchActions.decrementCalculating();
-			}
-		}
-		if ( previousIsPending.delete !== isPending.delete ) {
-			if ( isPending.delete ) {
-				dispatchActions.incrementCalculating();
-			} else {
-				dispatchActions.decrementCalculating();
-			}
+		if ( isPending.delete ) {
+			dispatchActions.incrementCalculating();
+		} else {
+			dispatchActions.decrementCalculating();
 		}
 		return () => {
-			if ( isPending.quantity ) {
-				dispatchActions.decrementCalculating();
-			}
 			if ( isPending.delete ) {
 				dispatchActions.decrementCalculating();
 			}
 		};
-	}, [ dispatchActions, isPending, previousIsPending ] );
+	}, [ dispatchActions, isPending.delete ] );
+
+	useEffect( () => {
+		if ( isPending.quantity || debouncedQuantity !== quantity ) {
+			dispatchActions.incrementCalculating();
+		} else {
+			dispatchActions.decrementCalculating();
+		}
+		return () => {
+			if ( isPending.quantity || debouncedQuantity !== quantity ) {
+				dispatchActions.decrementCalculating();
+			}
+		};
+	}, [ dispatchActions, isPending.quantity, debouncedQuantity, quantity ] );
 
 	return {
 		isPendingDelete: isPending.delete,

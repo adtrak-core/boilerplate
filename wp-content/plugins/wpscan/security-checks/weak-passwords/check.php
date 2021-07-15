@@ -90,7 +90,7 @@ class weakPasswords extends Check {
           );
         }
 
-        $this->add_vulnerability( $text, 'high', 'weak-passwords', 'https://blog.wpscan.com/wpscan/2019/09/17/wpscan-brute-force.html' );
+        $this->add_vulnerability( $text, 'high', 'weak-passwords', 'https://blog.wpscan.com/wpscan-brute-force/' );
     }
   }
 }

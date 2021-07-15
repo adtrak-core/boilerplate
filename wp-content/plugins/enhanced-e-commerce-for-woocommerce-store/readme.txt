@@ -8,61 +8,88 @@ Author: Tatvic
 Requires at least: 1.4.1
 Tested up to: 5.7
 Requires PHP: 5.6 or Higher
-Stable tag: 3.1.1
-Version: 3.1.1
+Stable tag: 3.1.3
+Version: 3.1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Automates eCommerce tracking in Google Analytics and the complete Google Shopping solution with dynamic remarketing tags.
 
-== Description ==
+== Product Description ==
 
 ###GOOGLE ANALYTICS PLUGIN FOR WOOCOMMERCE
 
-With the mission to help global eCommerce businesses in scaling faster, we have devised Enhanced Ecommerce Google Analytics Plugin for WooCommerce. This plugin helps you in automating eCommerce tracking in Google Analytics for both the Universal Analytics (Google Analytics v3) and the Google Analytics 4 properties. 
+The new and enhanced Ecommerce Google Analytics Plugin for WooCommerce is there to help you - Know And Measure What Matters To Your Business.
 
-###GOOGLE SHOPPING PLUGIN FOR WOOCOMMERCE WITH DYNAMIC REMARKETING TAGS FOR ECOMMERCE EVENTS
+As a Premium Google Ads Partner, we are delighted to bring a new and enhanced Google Analytics Plugin that does all the eCommerce tracking in Google Analytics. We have 40000+ active eCommerce businesses across 150 countries using, benefitting, growing from this plugin. 
 
-With the recent release of Enhanced Ecommerce Google Analytics plugin for WooCommerce, we have introduced new features like Dynamic Remarketing tags for eCommerce events and complete Google Shopping solution features that include management of Google Merchant Center account, seamless product sync from your WooCommerce stores, linking of Google Ads and Google Merchant Center account, Smart Shopping Campaign management and Shopping Campaign reports.
+By opening an e-commerce store, your job is half done. To run it efficiently, drive traffic to your website, and increase conversions, you have to do one more thing. Know Your Shoppers Well! 
 
-By connecting Google Analytics, Google Ads and Google Merchant Center account, eCommerce businesses can start making data driven decisions, re-targeting the customers based on their past site behavior and get eligible for free listing across Google to reach millions of interested shoppers across Google.
+And how will you do that? Well, Start with Understanding, Measuring, and Tracking their entire user journey with the help of Google Analytics Tracking for Woocommerce. 
 
-The best part is NO CODING REQUIRED or NO NEED TO HIRE A DEVELOPER for the set up. You can configure the plugin under 5 minutes and with a few clicks from your Wordpress backend. <a target="_blank" href="http://plugins.tatvic.com/help-center/Installation-Manual.pdf">Here is how you can configure the plugin without any hassle and start scaling your eCommerce business faster.</a>
+* Know users likes & preferences
+* Offer them better experiences 
+* Simplify their shopping process
+* Remove all the roadblocks that slow down or come in the way of conversion
+
+The enhanced eCommerce Google Analytics plugin for woo-commerce will show you all the stats that matter. The plugin is apt in helping global eCommerce businesses scale faster by automating eCommerce tracking in Google Analytics for both the Universal Analytics (Google Analytics v3) and the Google Analytics 4 properties.
+
+###DYNAMIC REMARKETING TAGS FOR ECOMMERCE EVENTS - NEW FEATURE OF THE GOOGLE SHOPPING PLUGIN FOR WOOCOMMERCE
+
+Check the recent release of the Enhanced Ecommerce Google Analytics plugin for WooCommerce, loaded with new features!
+
+* Dynamic Remarketing tags for eCommerce events and Google Shopping solution features include management of Google Merchant Center account. 
+* Seamless product sync from your WooCommerce stores. 
+* Link Google Ads and Google Merchant Center account, Smart Shopping Campaign management, and Shopping Campaign report.
+
+###YOU GET BIG BENEFITS 
+
+eCommerce businesses can -
+* Start making data-driven decisions. 
+* Re-targeting the shoppers based on their past site behavior. 
+* Become eligible for free listing across Google to reach millions of interested shoppers across Google. 
+* Run your google shopping campaigns smoothly. 
+
+Achieve all this by connecting Google Analytics, Google Ads, and Google Merchant Center accounts. Want to know what is the best part?
+
+* NO CODING REQUIRED or NO NEED TO HIRE A DEVELOPER for the setup. You can configure the plugin instantly in under 5 minutes and with a few clicks from your WordPress backend.
+
+<a target="_blank" href="http://plugins.tatvic.com/help-center/Installation-Manual.pdf">Here is how you can configure the plugin without any hassle and start scaling your eCommerce business faster.</a>
 
 Create a new Google Ads account using the plugin and get a Google ads coupon upto USD 150 (amount differs based on the country you are in) on the spends you make in the first 31 days. <a target="_blank" href ="http://plugins.tatvic.com/help-center/Google-Spend-Match.pdf">See terms and condition.</a>
 
-###GOOGLE ANALYTICS + ENHANCED ECOMMERCE REPORTS
+###AN INTERESTING AMALGAM OF - GOOGLE ANALYTICS + ENHANCED ECOMMERCE REPORTS - THE BEST YOU CAN GET!
 
-Enhanced eCommerce Google analytics plugin tracks the entire user journey on your ecommerce store from home page to product views and from cart page to checkout page to thank you page.
+Enhanced eCommerce Google analytics plugin tracks the entire user journey on your eCommerce store from the home page to product views and from cart page to checkout page to thank you page.
 
-* For any eCommerce business, the most important is to know the accurate conversion %. If you know the accurate conversion % for your eCommerce store and you have the visibility on the entire eCommerce funnel, then only you can better channelize your marketing as well as UI/UX efforts to reach an optimum conversion %.
+* For any eCommerce business, the most important thing is to know the accurate conversion %. Know the accurate conversion % for your eCommerce store and you have visibility on the entire eCommerce funnel to better channel marketing and UX/UI efforts to reach an optimum conversion %.
 
-* Using this plugin, you can track the performance of your merchandising efforts by monitoring how certain products are performing on home page or on product listing page and accordingly take informed merchandising decisions.
+* Using this plugin, you can track your merchandising efforts by monitoring how certain products are performing on the home page or the product listing page and make better and well-informed merchandising decisions.
 
-* You can track which products have a greater view to cart ratio or a greater view to conversion ratio and based on the data, you can take informed pricing or product decisions and beyond.
+* You can track which products have a better view-to-cart ratio or a better view-to-conversion ratio, and based on this data, make better and well-informed pricing or product decisions.
 
-* Track users who are abandoning the cart, which products are abandoned more in the cart etc. and reach out to the users or update your product listing.
+* Track users who are abandoning the cart, which products are abandoned more in the cart, etc., and reach out to the users or update your product listing.
 
-* You can track how your checkout form is performing and accordingly work on the UI/UX to increase the conversion rate for your ecommerce business.
+* You can track the performance of your checkout form and accordingly work on the UI/UX to increase the conversion rate for your eCommerce business.
 
-* Basically, you can track each and every impression and click of product, from which page they are added to cart, how users interact with your checkout page before making the final purchase by our Enhanced ecommerce Google analytics plugin.
+* The best part is, you can track every impression and click of the product from which page they are added to the cart, how users interact with your checkout page before making the final purchase by our new and enhanced eCommerce Google analytics plugin.
 
+### GOOGLE ANALYTICS + AUDIENCE REPORTS + BEHAVIOUR REPORTS + ACQUISITION REPORTS
 
-####GOOGLE ANALYTICS + AUDIENCE REPORTS + BEHAVIOUR REPORTS + ACQUISITION REPORTS
+* Audience reports help know your customers in a whole new way. It gives you much-needed detailed insights like - from which countries your users are coming from, their age, gender, interests, devices, and much more. Considering this, you can easily set up your content and design to match your audience preferences.
 
-* Audience reports help you in knowing your customers in a whole new way. It gives you detailed insights like from which countries your users are coming from, their age, gender, interests, devices and much more. This helps you in setting up your content and design based on the audience.
+* Behaviour reports help you get to know how users are interacting with your website, how much time they are spending, how much they browse before making a final purchase, and a whole lot more.
 
-* Behaviour reports help you get to know how users are interacting with your website, how much time they are spending, how much they browse before making a final purchase and a whole lot more.
+* Acquisition reports tell you which sources are attributing the traffic to your website, their performance when it comes to conversion, and much more. You can channel your efforts in better marketing ROI.
 
-* Acquisition reports tell you which are the sources that are attributing traffic to your website, how are they performing in terms of conversion and much more so that you can channelize your efforts in better marketing ROI.
 
 ###GOOGLE SHOPPING FOR WOOCOMMERCE
 
-* Get your WooCommerce products in front of the millions of shoppers across Google. 
+* Get your WooCommerce products in front of the millions of shoppers across Google.
 
-* Opt your product data into programmes, like surfaces across Google, Shopping ads, local inventory ads and Shopping Actions, to highlight your products to shoppers across Google.
+* Opt your product data into programmes, like surfaces across Google, Shopping ads, local inventory ads, and Shopping Actions, and highlight your products to shoppers across Google.
 
-* Reach out to customers leaving your WooCommerce store by running smart shopping campaigns based on their past site behavior. <a target="_blank" href = "https://support.google.com/faqs/answer/2987537?hl=en">Learn more about Google Shopping</a>
+* Reach out to customers leaving your WooCommerce store by running Smart Google shopping campaigns based on their past site behavior.<a target="_blank" href = "https://support.google.com/faqs/answer/2987537?hl=en"> Learn more about Google Shopping</a>
 
 ###HOW IT WORKS
 
@@ -107,8 +134,8 @@ Enhanced eCommerce Google analytics plugin tracks the entire user journey on you
 16. Shopping campaign performance dashboard
 17. Product Sync dashboard 
 
+<strong><a target="_blank" href=" https://codecanyon.net/item/actionable-google-analytics-for-woocommerce/9899552?utm_source=Wordpress&utm_medium=Listingcontent&utm_campaign=WPlisting"> Fast track and scale your eCommerce business to new heights by unlocking more advanced tracking and enabling complete google shopping solutions for your WooCommerce store. Give a try to our pro version.</a></strong>
 
-<strong>Scale your eCommerce businesses faster by unlocking more advanced tracking and enabling complete google shopping solutions for your WooCommerce store. <a target="_blank" href=" https://codecanyon.net/item/actionable-google-analytics-for-woocommerce/9899552?utm_source=Wordpress&utm_medium=Listingcontent&utm_campaign=WPlisting">Give a try to our pro version.</a></strong>
 
 == Features of our <a target="_blank" href=" https://codecanyon.net/item/actionable-google-analytics-for-woocommerce/9899552?utm_source=Wordpress&utm_medium=Listingcontent&utm_campaign=WPlisting">pro version</a>: ==
 
@@ -355,6 +382,12 @@ You can resolve the duplication of data by removing the manually implemented GA 
 
 
 == Changelog ==
+
+= 3.1.3 - 8/07/2021 =
+ * Bug fix - product_count notice was being displayed for some users, it is resolved now. 
+
+= 3.1.2 - 29/06/2021 =
+ * Fixed remarketing code bug
 
 = 3.1.1 - 15/06/2021 =
  * DB related bug fixed

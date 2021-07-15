@@ -739,10 +739,10 @@ class CartController {
 			$index > 1 ?
 				sprintf(
 					/* translators: %d: shipping package number */
-					_x( 'Shipping %d', 'shipping packages', 'woocommerce' ),
+					_x( 'Shipping method %d', 'shipping packages', 'woocommerce' ),
 					$index
 				) :
-				_x( 'Shipping', 'shipping packages', 'woocommerce' ),
+				_x( 'Shipping method', 'shipping packages', 'woocommerce' ),
 			$package['package_id'],
 			$package
 		);

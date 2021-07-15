@@ -4,13 +4,14 @@
 import { __ } from '@wordpress/i18n';
 import { useCheckoutSubmit } from '@woocommerce/base-context/hooks';
 import { Icon, done } from '@woocommerce/icons';
-import { Button } from '@woocommerce/blocks-checkout';
+import Button from '@woocommerce/base-components/button';
 
 const PlaceOrderButton = () => {
 	const {
 		submitButtonText,
 		onSubmit,
 		isCalculating,
+		isDisabled,
 		waitingForProcessing,
 		waitingForRedirect,
 	} = useCheckoutSubmit();
@@ -20,7 +21,10 @@ const PlaceOrderButton = () => {
 			className="wc-block-components-checkout-place-order-button"
 			onClick={ onSubmit }
 			disabled={
-				isCalculating || waitingForProcessing || waitingForRedirect
+				isCalculating ||
+				isDisabled ||
+				waitingForProcessing ||
+				waitingForRedirect
 			}
 			showSpinner={ waitingForProcessing }
 		>

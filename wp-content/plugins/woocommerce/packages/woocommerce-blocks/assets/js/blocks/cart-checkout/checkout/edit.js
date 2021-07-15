@@ -52,6 +52,7 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 		showReturnToCart,
 		cartPageId,
 		hasDarkControls,
+		showRateAfterTaxName,
 	} = attributes;
 	const { currentPostId } = useEditorContext();
 	const { current: savedCartPageId } = useRef( cartPageId );
@@ -297,6 +298,30 @@ const BlockSettings = ( { attributes, setAttributes } ) => {
 							),
 						} }
 					/>
+				) }
+			{ getSetting( 'taxesEnabled' ) &&
+				getSetting( 'displayItemizedTaxes', false ) &&
+				! getSetting( 'displayCartPricesIncludingTax', false ) && (
+					<PanelBody
+						title={ __( 'Taxes', 'woocommerce' ) }
+					>
+						<ToggleControl
+							label={ __(
+								'Show rate after tax name',
+								'woocommerce'
+							) }
+							help={ __(
+								'Show the percentage rate alongside each tax line in the summary.',
+								'woocommerce'
+							) }
+							checked={ showRateAfterTaxName }
+							onChange={ () =>
+								setAttributes( {
+									showRateAfterTaxName: ! showRateAfterTaxName,
+								} )
+							}
+						/>
+					</PanelBody>
 				) }
 			<PanelBody title={ __( 'Style', 'woocommerce' ) }>
 				<ToggleControl

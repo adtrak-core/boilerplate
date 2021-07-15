@@ -14,6 +14,7 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
         const  NEW_FEATURES_SECTION = "feature-notifications" ;
         private  $settings_api ;
         protected  $business_selector ;
+        private  $gutenberg_post_types_without_fields = false ;
         /**
          * @var NotificationManager
          */
@@ -61,6 +62,7 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             add_action( 'wsa_form_top_mbp_quick_post_settings', array( $this, 'quick_post_top' ) );
             add_action( 'wsa_form_bottom_mbp_debug_info', array( &$this, 'debug_info' ) );
             add_action( 'wsa_form_bottom_mbp_dashboard', [ $this, 'dashboard' ] );
+            add_action( 'wsa_form_bottom_mbp_post_type_settings', [ $this, 'gutenberg_post_types_info' ] );
             //add_action('wsa_form_bottom_mbp_google_settings', array(&$this, 'google_form_bottom'));
         }
         
@@ -573,6 +575,14 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             return false;
         }
         
+        public function gutenberg_post_types_info()
+        {
+            if ( !$this->gutenberg_post_types_without_fields ) {
+                return;
+            }
+            echo  __( '* This post type does not support "custom-fields". Custom post types with the block editor/Gutenberg enabled need to support "custom-fields" in order for auto-post to work properly.', 'post-to-google-my-business' ) ;
+        }
+        
         public function settings_field_post_types()
         {
             $query_args = array(
@@ -581,7 +591,14 @@ if ( !class_exists( 'MBP_Admin_Page_Settings' ) ) {
             //Maybe add some additional filtering later
             $post_types = array();
             foreach ( get_post_types( $query_args, 'objects' ) as $type ) {
-                $post_types[$type->name] = $type->label;
+                $unsupported_gutenberg = false;
+                
+                if ( post_type_supports( $type->name, 'editor' ) && !post_type_supports( $type->name, 'custom-fields' ) ) {
+                    $this->gutenberg_post_types_without_fields = true;
+                    $unsupported_gutenberg = true;
+                }
+                
+                $post_types[$type->name] = $type->label . (( $unsupported_gutenberg ? '*' : '' ));
             }
             return $post_types;
         }

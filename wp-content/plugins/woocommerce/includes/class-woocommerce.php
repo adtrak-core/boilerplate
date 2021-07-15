@@ -9,6 +9,7 @@
 defined( 'ABSPATH' ) || exit;
 
 use Automattic\WooCommerce\Internal\DownloadPermissionsAdjuster;
+use Automattic\WooCommerce\Internal\RestockRefundedItemsAdjuster;
 use Automattic\WooCommerce\Internal\AssignDefaultCategory;
 use Automattic\WooCommerce\Internal\ProductAttributesLookup\DataRegenerator;
 use Automattic\WooCommerce\Proxies\LegacyProxy;
@@ -25,7 +26,7 @@ final class WooCommerce {
 	 *
 	 * @var string
 	 */
-	public $version = '5.4.1';
+	public $version = '5.5.1';
 
 	/**
 	 * WooCommerce Schema version.
@@ -212,6 +213,7 @@ final class WooCommerce {
 		wc_get_container()->get( DownloadPermissionsAdjuster::class );
 		wc_get_container()->get( AssignDefaultCategory::class );
 		wc_get_container()->get( DataRegenerator::class );
+		wc_get_container()->get( RestockRefundedItemsAdjuster::class );
 	}
 
 	/**
